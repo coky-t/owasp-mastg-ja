@@ -57,7 +57,6 @@ Unless some mean anti-decompilation tricks have been applied, Java bytecode can 
 ```
 $ wget https://github.com/OWASP/owasp-mstg/raw/master/OMTG-Files/02_Crackmes/01_Android/Level_01/UnCrackable-Level1.apk
 $ adb install UnCrackable-Level1.apk
-
 ```
 
 ![Crackme Main Screen](Images/Chapters/0x05c/crackme-1.jpg)
@@ -90,10 +89,13 @@ In the standard case, all the Java bytecode and data related to the app is conta
 
 For this example, let's pick CFR as our decompiler of choice. CFR is under active development, and brand-new releases are made available regularly on the author's website [13]. Conveniently, CFR has been released under a MIT license, which means that it can be used freely for any purposes, even though its source code is not currently available.
 
-For convenience, I have packaged the dex2jar and CFR libraries along with a Python script that can be downloaded from the OWASP MSTG GitHub repo [14]. Download apkx.py and apkx-libs.jar from the repository and you are ready to go. Run apkx.py to extract and decompile that Java classes from the APK:
+For convenience, we have packaged the dex2jar and CFR libraries along with a Python script that can be downloaded from the OWASP MSTG GitHub repo [14]. Download apkx.py and apkx-libs.jar from the repository and you are ready to go. Run apkx.py to extract and decompile that Java classes from the APK:
 
 ```
-$ python apkx.py UnCrackable-Level1.apk 
+$ wget https://raw.githubusercontent.com/OWASP/owasp-mstg/master/OMTG-Files/Download/apkx.tgz
+$ tar xzf apkx.tgz 
+$ chmod +x apkx.py
+$ ./apkx.py UnCrackable-Level1.apk 
 Extracting UnCrackable-Level1.apk to UnCrackable-Level1
 dex2jar UnCrackable-Level1/classes.dex -> UnCrackable-Level1/classes.jar
 Processing UnCrackable-Level1/classes.jar (use silent to silence)
@@ -172,39 +174,28 @@ An alternative (and faster) way of getting the decrypted string is by adding a b
 
 #### ネイティブコードの静的解析
 
-When dealing with obfuscated apps, you'll often find that developers purposely "hide away" data and functionality in native libraries. You'll find an example for this in level 2 of the "UnCrackable App'.
+-- TODO [Native Code Analysis - HelloWorld-JNI] --
 
-Download the APK from the OWASP MSTG repositorty and decompile it. At first glance, the code looks similar to the prior challenge. A class called "CodeCheck" is responsible for verifying the code entered by the user. The actual check appears to happen in the method "bar()", which is declared as a *native* method.
+Dalvik and ART both support the Java Native Interface (JNI), which defines defines a way for Java code to interact with native code written in C/C++. Just like on other Linux-based operating systes, native code is packaged into ELF dynamic libraries ("*.so"), which are then loaded by the Android app during runtime using the <code>System.load</code> method.
 
-```java
-package sg.vantagepoint.uncrackable2;
+Disassemblers with support for ELF/ARM binaries (i.e. all disassemblers in existence) can deal with Android native libraries without issues. 
 
-public class CodeCheck {
-    public CodeCheck() {
-        super();
-    }
-
-    public boolean a(String arg2) {
-        return this.bar(arg2.getBytes());
-    }
-
-    private native boolean bar(byte[] arg1) {
-    }
-}
+Download HelloWorld-JNI.apk from the OWASP MSTG repository and decompile it with apkx.py
+```bash
+$ wget https://raw.githubusercontent.com/OWASP/owasp-mstg/master/OMTG-Files/03_Examples/01_Android/01_HelloWorld-JNI/HelloWorld-JNI.apk
+$ ./apkx.py HelloWorld-JNI.apk
 ```
 
-
-```
-    static {
-        System.loadLibrary("foo");
-    }
-```
-
--- TODO [Native Code Analysis] --
 
 #### デバッグとトレース
 
 Android apps support two different types of debugging: Java-runtime-level debugging using Java Debug Wire Protocol (JDWP) and Linux ptrace-style debugging on the native layer.
+
+##### Activating Developer Options
+
+Since Android 4.2, the "Developer options" submenu is hidden by default in the Settings app. To activate it, you need to tap the "Build number" section of the "About phone" view 7 times. Note that the location of the build number field can vary slightly on different devices - for example, on LG Phones, it is found under "About phone > Software information" instead. Once you have done this, "Developer options" will be shown at bottom of the Settings menu. Once developer options are activated, debugging can be enabled with the "USB debugging" switch.
+
+The Developer options also contain the useful "Wait for Debugger" setting that allows you to suspend an app during startup. We'll revisit this option in a bit.
 
 ##### Java コードのデバッグ
 
@@ -226,7 +217,21 @@ A pretty neat trick is setting up a project in an IDE with the decompiled source
 
 ##### ネイティブコードのデバッグ
 
--- TODO [Write introduction to debugging native code (UnCrackable 2)] --
+Native code on Android is packed into ELF shared libraries and runs just like any other native Linux program. Consequently, you can debug them using standard tools, including GDB and the built-in native debuggers of IDEs such as IDA Pro and JEB, as long as they support the processor architecture of the device (most devices are based on ARM chipsets, as well as sometimes Intel or MIPS).
+
+To try it out, let's install HelloWorld-JNI.apk.
+
+```bash
+$ adb install HelloWorld-JNI.apk
+```
+
+If you followed the instructions at the start of this chapter, you should already have the Android NDK. The NDK ships with prebuilt versions of gdbserver for various architectures. Copy gdbserver to your device:
+
+```bash
+$ adb push prebuilt/android-arm/gdbserver/gdbserver /data/local/tmp
+```
+
+-- TODO [Write introduction to debugging native code (HelloWorld-JNI)] --
 
 ##### 実行トレース
 
@@ -631,7 +636,6 @@ Java.perform(function () {
 ~~~
 
 Besides loading scripts via `frida CLI`, Frida also provides Python, C, NodeJS, Swift and various other bindings.
-
 
 ### バイナリ解析フレームワーク
 
