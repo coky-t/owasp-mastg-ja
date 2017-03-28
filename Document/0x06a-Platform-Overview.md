@@ -50,11 +50,11 @@ Apple は iPhone 3GS のリリース以降 iOS デバイスのハードウェア
 
 #### 一般的な緩和策
 
-iOS currently implements two specific security mechanisms, namely address space layout randomization (ASLR) and eXecute Never (XN) bit, to prevent code execution attacks.
+iOS は現在2つのセキュリティメカニズムを実装しています。アドレス空間配置のランダム化 (ASLR) と eXecute Never (XN) ビットはコード実行攻撃を防止します。
 
-ASLR is a technique that does the job of randomizing the memory location of the program executable, data, heap and stack on every execution of the program. As the shared libraries need to be static in order to be shared by multiple processes, the addresses of shared libraries are randomized every time the OS boots instead of every time when the program is invoked.
+ASLR はプログラムの実行ごとにプログラムの実行可能ファイル、データ、ヒープ、スタックのメモリ位置をランダム化する技術です。共有ライブラリが複数のプロセスにより共有されるためには静的である必要があるため、プログラムが呼び出されるたびにではなく、OS が起動するたびに共有ライブラリのアドレスがランダム化されます。
 
-Thus, this makes the specific memory addresses of functions and libraries hard to predict, thereby preventing attacks such as a return-to-libc attack, which relies upon knowing the memory addresses of basic libc functions. 
+したがって、これにより関数やライブラリの特定のメモリアドレスを予測することが難しくなり、基本的な libc 関数のメモリアドレスを知ることに依存する、return-to-libc 攻撃などの攻撃を防ぐことができます。
 
 -- TODO [Further develop section on iOS General Exploit Mitigation] --
 
@@ -63,33 +63,33 @@ Thus, this makes the specific memory addresses of functions and libraries hard t
 
 ### iOS アプリの理解
 
-iOS applications are distributed in IPA (iOS App Store Package) archives. This IPA file contains all the necessary (for ARM compiled) application code and resources required to execute the application. The container is in fact a ZIP compressed file, which can be easily decompressed.
-An IPA has a built-in structure for iTunes and App Store to recognize, The example below shows the high level structure of an IPA.
-* /Payload/ folder contains all the application data. We will come back to the content of this folder in more detail.
-* /Payload/Application.app contains the application data itself (ARM compiled code) and associated static resources
-* /iTunesArtwork is a 512x512 pixel PNG images used as the application’s icon
-* /iTunesMetadata.plist contains various bits of information, ranging from the developer's name and ID, the bundle identifier, copyright information, genre, the name of the app, release date, purchase date, etc.
-* /WatchKitSupport/WK is an example of an extension bundle. This specific bundle contains the extension delegate and the controllers for managing the interfaces and for responding to user interactions on an Apple watch.
+iOS アプリケーションは IPA (iOS App Store Package) アーカイブで配布されています。この IPA ファイルにはアプリケーションを実行するために必要な(ARM コンパイルされた)アプリケーションコードとリソースがすべて含まれています。コンテナは ZIP 圧縮ファイルであり、簡単に展開できます。
+IPA には iTunes および App Store が認識するための構造が組み込まれています。以下の例は IPA の上位構造を示しています。
+* /Payload/ フォルダにはすべてのアプリケーションデータが格納されています。このフォルダの内容を更に詳しく説明します。
+* /Payload/Application.app にはアプリケーションデータ自体(ARM コンパイルされたコード)と関連する静的リソースが格納されています
+* /iTunesArtwork はアプリケーションのアイコンとして使用される 512x512 ピクセルの PNG 画像です
+* /iTunesMetadata.plist には開発者の名前とID、バンドルID、著作権情報、ジャンル、アプリ名、リリース日、購入日など、さまざまな情報が格納されています。
+* /WatchKitSupport/WK は extension バンドルの一例です。この固有のバンドルには Apple watch でのインタフェースを管理およびユーザーインタラクションに応答する extension delegate とコントローラが含まれています。
 
 #### IPA ペイロードの内容
 
-Let’s take a closer look now at the different files that are to be found in the ZIP compressed IPA container. It is necessary to understand that this is the raw architecture of the bundle container and not the definitive form after installation on the device. It uses a relatively flat structure with few extraneous directories in an effort to save disk space and simplify access to the files. The bundle contains the application executable and any resources used by the application (for instance, the application icon, other images, and localized content) in the top-level bundle directory.
+ZIP 圧縮された IPA コンテナにあるさまざまなファイルを見てみます。これはバンドルコンテナの未加工のアーキテクチャであり、デバイスにインストールされたあとの最終的な形態ではないことを理解する必要があります。ディスク領域を節約し、ファイルへのアクセスを簡素化するために、余計なディレクトリをほとんど使用しない比較的フラットな構造を使用します。バンドルにはアプリケーション実行可能ファイルとアプリケーションで使用されるリソース(アプリケーションアイコン、その他の画像、ローカライズされたコンテンツなど)が最上位のバンドルディレクトリに格納されます。
 
-* **MyApp**: The executable containing the application’s code, which is compiled and not in a ‘readable’ format.
-* **Application**: Icons used at specific times to represent the application.
-* **Info.plist**: Containing configuration information, such as its bundle ID, version number, and display name.
-* **Launch images**: Images showing the initial interface of the application in a specific orientation. The system uses one of the provided launch images as a temporary background until the application is fully loaded.
-* **MainWindow.nib**: Contains the default interface objects to load at application launch time. Other interface objects are then either loaded from additional nib files or created programmatically by the application.
-* **Settings.bundle**: Contains any application-specific preferences using property lists and other resource files to configure and display them.
-* **Custom resource files**: Non-localized resources are placed at the top level directory and localized resources are placed in language-specific subdirectories of the application bundle. Resources consist of nib files, images, sound files, configuration files, strings files, and any other custom data files you need for your application.
+* **MyApp**: アプリケーションコードを含む実行可能ファイル。コンパイルされており、「読み取り可能」な形式ではありません。
+* **Application**: アプリケーションを表すために特定のときに使用されるアイコン。
+* **Info.plist**: バンドルID、バージョン番号、表示名などの構成情報が含まれています。
+* **起動画像**: 特定の向きでのアプリケーションの初期インタフェースを示す画像。システムはアプリケーションが完全にロードされるまで、提供された起動画像のひとつを一時的な背景として使用します。
+* **MainWindow.nib**: アプリケーション起動時にロードするデフォルトのインタフェースオブジェクトを含みます。他のインタフェースオブジェクトは追加の nib ファイルからロードされるか、アプリケーションによりプログラムで作成されます。
+* **Settings.bundle**: プロパティリストや他のリソースファイルを使用して設定や表示するためのアプリケーション固有プリファレンスを含みます。
+* **カスタムリソースファイル**: ローカライズされていないリソースは最上位ディレクトリに配置され、ローカライズされたリソースはアプリケーションバンドルの言語固有のサブディレクトリに配置されます。リソースは nib ファイル、画像、音声ファイル、設定ファイル、文字列ファイル、およびアプリケーションに必要なその他のカスタムデータで構成されます。
 
-A language.lproj folder is defined for each language that the application supports. It contains the a storyboard and strings files.
-* A storyboard is a visual representation of the user interface of an iOS application, showing screens of content and the connections between those screens.
-* The strings file format consists of one or more key-value pairs along with optional comments.
+言語.lproj フォルダはアプリケーションがサポートする言語ごとに定義されています。これにはストーリーボードと文字列ファイルを含んでいます。
+* ストーリーボードは iOS アプリケーションのユーザーインタフェースを視覚的に表現したもので、コンテンツの画面と画面間の接続を示します。
+* 文字列ファイル形式は1つ以上のキー・バリューのペアとオプションのコメントで構成されます。
 
 ![iOS App Folder Structure](http://bb-conservation.de/sven/iOS_project_folder.png)
 
-On a jailbroken device, you can recover the IPA for an installed iOS app using IPA Installer (see also [Testing Processes and Techniques](Document/0x05b-Testing-Process-and-Techniques-iOS.md)). Note that during mobile security assessments, developers will often provide you with the IPA directly. They could send you the actual file, or provide access to the development specific distribution platform they use e.g. [HockeyApp] or [Testflight].
+脱獄済みデバイスでは、IPA インストーラを使用して、インストールされた iOS アプリの IPA を復元できます([テストプロセスと技法](Document/0x05b-Testing-Process-and-Techniques-iOS.md)も参照ください)。注意。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがあります。あなたに実際のファイルを送ったり、[HockeyApp] や [Testflight] などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
 #### iOS ファイルシステム上のアプリ構造
 
