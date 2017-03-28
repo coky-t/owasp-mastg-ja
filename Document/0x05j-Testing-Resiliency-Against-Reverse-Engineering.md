@@ -207,7 +207,7 @@ The Android Debug system class offers a static method for checking whether a deb
     }
 ```
 
-Native check:
+The same API can be called from native code by accessing the DvmGlobals global structure.
 
 ```
 JNIEXPORT jboolean JNICALL Java_com_test_debugging_DebuggerConnectedJNI(JNIenv * env, jobject obj) {
@@ -219,7 +219,7 @@ JNIEXPORT jboolean JNICALL Java_com_test_debugging_DebuggerConnectedJNI(JNIenv *
 
 ###### Timer Checks
 
-Code Sample from [1]
+The <code>Debug.threadCpuTimeNanos</code> indicates the amount of time that the current thread has spent executing code. As debugging slows down execution of the process, The difference in execution time can be used to make an educated guess on whether a debugger is attached [2].
 
 ```
 static boolean detect_threadCpuTimeNanos(){ 
@@ -342,13 +342,13 @@ JNIEXPORT void JNICALL Java_sg_vantagepoint_jdwptest_MainActivity_JDWPfun(
 
 ##### Sample Anti-Native-Debugging Methods
 
-Most Anti-JDWP tricks (safe for maybe timer-based checks) won't catch "classical", ptrace-based debuggers, so separate defenses are needed to defend against this type of debugging. 
+Most Anti-JDWP tricks (safe for maybe timer-based checks) won't catch classical, ptrace-based debuggers, so separate defenses are needed to defend against this type of debugging. Many "traditional" Linux anti-debugging tricks are employed here.
 
-###### Checking for TracerPid
+###### Checking TracerPid
 
-When the ptrace API is used to attach to a process, the "TracerPid" field in the status file of the debugged process shows the PID of the attaching process. The default value of "TracerPid" is "0" (no other process attached). Consequently, finding anything else than "0" in that field is a sign of debugging or other ptrace shenanigans.
+When the ptrace API is used to attach to a process, the "TracerPid" field in the status file of the debugged process shows the PID of the attaching process. The default value of "TracerPid" is "0" (no other process attached). Consequently, finding anything else than "0" in that field is a sign of debugging or other ptrace-shenanigans.
 
-Code Sample from [3]
+The following implementation is taken from Tim Strazzere's Anti-Emulator project [3].
 
 ```
     public static boolean hasTracerPid() throws IOException {
@@ -397,7 +397,34 @@ As usual, there is no generic way of bypassing anti-debugging: It depends on the
 2. Using Frida or Xposed to hook APIs on the Java and native layers. Manipulate the return values of functions such as isDebuggable and isDebuggerConnected to hide the debugger.
 3. Change the environment. Android is an open enviroment. If nothing else works, you can modify the operating system to subvert the assumptions the developers made when designing the anti-debugging tricks.
 
--- TODO [Bypassing Debugger Detection] --
+###### Example: UnCrackable App for Android Level 2
+
+-- TODO [Bypassing Debugger Detection - Solve UnCrackable Level 2] --
+
+When dealing with obfuscated apps, you'll often find that developers purposely "hide away" data and functionality in native libraries. You'll find an example for this in level 2 of the "UnCrackable App'.
+
+At first glance, the code looks similar to the prior challenge. A class called "CodeCheck" is responsible for verifying the code entered by the user. The actual check appears to happen in the method "bar()", which is declared as a *native* method.
+
+```java
+package sg.vantagepoint.uncrackable2;
+
+public class CodeCheck {
+    public CodeCheck() {
+        super();
+    }
+
+    public boolean a(String arg2) {
+        return this.bar(arg2.getBytes());
+    }
+
+    private native boolean bar(byte[] arg1) {
+    }
+}
+
+    static {
+        System.loadLibrary("foo");
+    }
+```
 
 ```python
 
@@ -860,4 +887,3 @@ out_file.close()
 
 -- TODO [Add links to relevant tools for "Testing Obfuscation"] --
 * Enjarify - https://github.com/google/enjarify
-
