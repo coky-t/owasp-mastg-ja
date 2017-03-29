@@ -94,8 +94,8 @@
 
 #### 静的解析
 
-Apple provides libraries with implementations of most commonly used cryptographic algorithms. A good point of reference is [Cryptographic Services Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/GeneralPurposeCrypto/GeneralPurposeCrypto.html). It containts broad documentation on how to use standard library to initialize and use cryptographic primitives, which is also useful when performing source code analysis. 
-For black-box testing, more useful is native C API, for instance CommonCryptor, that is most frequently used when performing cryptographic operations. Source code is partially available at [opensource.apple.com](https://opensource.apple.com).
+Apple は最も一般的に使用される暗号アルゴリズムの実装でのライブラリを提供しています。[Cryptographic Services Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/GeneralPurposeCrypto/GeneralPurposeCrypto.html)を参照ください。標準ライブラリを使用して暗号プリミティブを初期化および使用する方法についての広範な文書を含んでいます。ソースコード解析を実行する際にも役立ちます。
+ブラックボックステストでは、CommonCryptor などのネイティブ C API がより便利で、暗号操作を実行する際に最も頻繁に使用されます。ソースコードの一部は [opensource.apple.com](https://opensource.apple.com) から入手できます。
 
 ##### ソースコードあり
 
@@ -103,8 +103,8 @@ For black-box testing, more useful is native C API, for instance CommonCryptor, 
 
 ##### ソースコードなし
 
-If the appliaction is using standard cryptographic implementations provided by Apple, the easiest way is to decompile the application and check for calls to functions from `CommonCryptor`, such as `CCCrypt`, `CCCryptorCreate`, etc. The [source code](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h) contains signatures of all functions. 
-For instance, `CCCryptorCreate` has following signature:
+アプリケーションが Apple により提供される標準的な暗号実装を使用している場合、最も簡単な方法はアプリケーションを逆コンパイルし、`CCCrypt`, `CCCryptorCreate` などの `CommonCryptor` から関数への呼び出しををチェックすることです。[
+例えば、`CCCryptorCreate` は以下のシグネチャを持っています。
 ```
 CCCryptorStatus CCCryptorCreate(
 	CCOperation op,             /* kCCEncrypt, etc. */
@@ -116,8 +116,8 @@ CCCryptorStatus CCCryptorCreate(
 	CCCryptorRef *cryptorRef);  /* RETURNED */
 ```
 
-You can then compare all the `enum` types to understand which algorithm, padding and key material is being used. Pay attention to the keying material, if it's coming directly from a password (which is bad), or if it's comming from Key Generation Function (e.g. PBKDF2). 
-Obviously, there are other non-standard libraries that your application might be using (for instance `openssl`), so you should check for these too. 
+すべての `enum` 型を比較して、どのアルゴリズム、パディング、鍵マテリアルが使用されているかを理解することができます。(悪い)パスワードが直接入力された場合や、鍵生成機能(PBKDF2など)から入力された場合は、鍵マテリアルに注意します。
+明らかに、アプリケーションが使用している可能性がある他の非標準のライブラリ(`openssl`など)がある場合、それらもチェックします。
 
 #### 動的解析
 
