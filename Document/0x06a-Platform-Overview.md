@@ -35,15 +35,15 @@ iOS サンドボックスはカーネル拡張 'Seatbelt' により実装され�
 
 #### コード署名
 
-Application code signing is different than in Android. In the latter you can sign with self-signed key and main purpose would be to establish root of trust for future application updates. In other words, to make sure that only the original developer of a given application would be able to update it. In Android, applications can be distributed freely as APK files or from Google Play. 
-On the contrary, Apple allows app distribution only via App Store.
+アプリケーションコードの署名は Android とは異なります。後者は自己署名鍵で署名でき、主な目的は将来のアプリケーション更新のために信頼されたルートを確立することです。言い換えれば、提供されるアプリケーションのオリジナルの開発者だけがそのアプリケーションを更新できるようにすることです。Android では、アプリケーションを APK ファイルとして、または Google Play から自由に配布できます。
+それに対して、Apple は App Store 経由でのみアプリの配布を許可します。
 
-There exist at least two scenarios where you can install an application without App Store:
-1. via Enterprise Mobile Device Management. This requires the company to have company-wise certificate signed by Apple
-2. via sideloading - i.e. by signing the app with developer's certificate and installing it on one device. There is an upper limit of number of devices that can be used with the same certificate
+App Store を使用せずにアプリケーションをインストールできるシナリオが少なくとも2つあります。
+1. エンタープライズモバイルデバイス管理を経由する。これは企業が Apple により署名された企業の証明書を持っていることが必要となります。
+2. サイトローディングを経由する。つまり、開発者の証明書でアプリに署名して開発者のデバイスにインストールします。同じ証明書で使用できるデバイス数には上限があります。
 
-Developer Profile and Apple-signed certificate is required in order to deploy and run an application. 
-Developers need to register with Apple and join the Apple Developer Program and pay subscription fee[https://developer.apple.com/support/compare-memberships/] to get full range of development and deployment possibilites. Free account still allows you to compile and deploy an application via sideload.  
+開発者プロファイルと Apple 署名付き証明書はアプリケーションを配布および実行するために必要です。
+開発者は、開発や配布に必要なもの一式を得るには、Apple に登録して Apple Developer Program に参加し、サブスクリプション料金 [https://developer.apple.com/support/compare-memberships/] を支払う必要があります。無料アカウントではサイドロードを介してアプリケーションをコンパイルおよび配布できます。
 
 #### 暗号化とデータ保護
 
