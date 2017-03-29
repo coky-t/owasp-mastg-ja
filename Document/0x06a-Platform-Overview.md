@@ -16,22 +16,22 @@ iOS セキュリティアーキテクチャの主な機能：
 - 暗号化とデータ保護
 - 一般的な緩和策
 
-A very good and detailed analysis of iOS security architecture has been done by [Johnatan Levin in MacOS and iOS Internals Vol. 3](http://www.newosxbook.com/2ndUpdate.html) [4]
+iOS セキュリティアーキテクチャに関する非常に詳細な分析は [Johnatan Levin in MacOS and iOS Internals Vol. 3](http://www.newosxbook.com/2ndUpdate.html) により行われました [4]
 
 #### セキュアブート
 
-When the iOS device is powered on, it reads the initial instructions from the read-only Boot ROM, which bootstraps the system. This memory contains immutable code, together with Apple Root CA, which is etched in the silicon die during fabrication process, creating root of trust. In the next step, the Boot ROM code checks if signature of iBoot bootloader is correct. Once the signature is validated, the iBoot checks the signature of next boot stage, which is iOS kernel. If any of these step failed, the boot process is immediately terminated and the devices enters recovery mode and displays "Connect to iTunes" screen. If, however, the Boot ROM fails to load, the device enters special low level recovery mode, which is called Device Firmware Upgrade (DFU). This is the last resort to recover the device to original state. There will be no sign of activity of the device, i.e. the screen will not display anything. 
+iOS デバイスの電源を入れると、読み取り専用ブート ROM から初期命令を読み込み、システムをブートストラップします。このメモリには、製造プロセス中にシリコンダイにエッチングされ、信頼されたルートを作成する Apple Root CA とともに、不変コードが含まれています。次にステップでは、ブート ROM コードが iBoot ブートローダーの署名が正しいかどうかをチェックします。署名が検証されると、iBoot は iOS カーネルである次のブートステージの署名をチェックします。これらの手順のいずれかが失敗すると、ブートプロセスは直ちに終了し、デバイスはリカバリモードに入り、"Connect to iTunes" 画面が表示されます。但し、ブート ROM がロードに失敗した場合、デバイスはデバイスファームウェアアップグレード (DFU) と呼ばれる低レベルリカバリモードに入ります。これはデバイスを元の状態に戻すための最後の手段です。これはデバイスの動作の兆候はなく、画面には何も表示されません。
 
-The entire process is called "Secure Boot Chain" and ensures that it is running only on Apple-manufactured devices. The Secure Boot chain consists of kernel, bootloaders, kernel extensions and baseband firmware. 
-All new devices that have Secure Enclave coprocessor, i.e. starting from iPhone 5s also use secure boot process to ensure that the firmware within Secure Enclave is trusted. 
+このプロセス全体を「セキュアブートチェーン」と呼び、Apple が製造したデバイス上でのみ実行していることを保証します。セキュアブートチェーンはカーネル、ブートローダー、カーネル拡張、ベースバンドファームウェアで構成されます。
+Secure Enclave コプロセッサを搭載したすべての新しいデバイス、つまり iPhone 5s から起動する場合にもセキュアブートプロセスを使用し、Secure Enclave 内のファームウェアが信頼されていることを保証します。
 
 #### サンドボックス
 
 サンドボックスは iOS 向けに提供されたアクセス制御技術であり、カーネルレベルで実施されています。これはアプリが侵害されたときに発生する可能性のあるシステムやユーザーデータへの影響や損害を制限することを目的としています。
 
-The iOS Sandbox is derived from TrustedBSD MAC framework implemented as kernel extension 'Seatbelt'. 
-[iPhone Dev Wiki](http://iphonedevwiki.net/index.php/Seatbelt) provides some (a bit outdated) information about the sandbox. 
-As a principle, all user applications run under the same user `mobile`, with only a few system applications and services running as `root`. Access to all resources, like files, network sockets, IPCs, shared memory, etc. will be then controlled by the sandbox.
+iOS サンドボックスはカーネル拡張 'Seatbelt' により実装されている TrustedBSD MAC フレームワークから派生しました。
+[iPhone Dev Wiki](http://iphonedevwiki.net/index.php/Seatbelt) ではサンドボックスに関する(少し古くなった)情報を提供しています。
+原則として、すべてのユーザーアプリケーションは同じユーザー `mobile` の下で実行されますが、ほんの一部のシステムアプリケーションやサービルは `root` として実行されます。ファイル、ネットワークソケット、IPC、共有メモリなどのすべてのリソースへのアクセスはサンドボックスによってコントロールされます。
 
 #### コード署名
 
