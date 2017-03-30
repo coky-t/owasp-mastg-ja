@@ -103,7 +103,7 @@ Apple は最も一般的に使用される暗号アルゴリズムの実装で�
 
 ##### ソースコードなし
 
-アプリケーションが Apple により提供される標準的な暗号実装を使用している場合、最も簡単な方法はアプリケーションを逆コンパイルし、`CCCrypt`, `CCCryptorCreate` などの `CommonCryptor` から関数への呼び出しををチェックすることです。[
+アプリが Apple により提供される標準的な暗号実装を使用している場合、最も簡単な方法はアプリケーションを逆コンパイルし、`CCCrypt`, `CCCryptorCreate` などの `CommonCryptor` から関数への呼び出しををチェックすることです。[
 例えば、`CCCryptorCreate` は以下のシグネチャを持っています。
 ```
 CCCryptorStatus CCCryptorCreate(
