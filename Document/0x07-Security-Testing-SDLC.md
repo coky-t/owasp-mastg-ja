@@ -125,13 +125,13 @@ DevOps という言葉は開発チームと運用チームの間のコラボレ�
 - explain the importance of Separation of Duties (developers VS testers, ...)
 - internal VS sub-contracted pentests
 
-### Security Testing in the DevOps environments
+### DevOps 環境でのセキュリティテスト
 
-#### Overview
+#### 概要
 
-As the frequency of deployments to production increases, and DevOps high-performers deploy to production many times a day, it is elementary to automated as many of the security verification tasks as possible. The best approach to facilitate that is by integrating security into the deployment pipeline. A deployment pipeline is a combination of continuous integration and continous delivery practices, which have been created to facilitate rapid development and receive almost instantaneous feedback upon every commit. More details on the deployment pipeline are provided in the section below.
+プロダクションへのデプロイメントの頻度が増え、DevOps ハイパフォーマーは1日に何度もプロダクションへデプロイするため、可能な限りセキュリティ検証タスクの多くを自動化することが基本です。これを容易にするベストアプローチはデプロイメントパイプラインにセキュリティを統合することです。デプロイメントパイプラインは継続的な統合と継続的なデリバリープラクティスの組み合わせであり、ラピッド開発を容易にしてすべてのコミット時にほぼ同時にフィードバックを受け取るために作成されます。デプロイメントパイプラインの詳細については以下のセクションで説明します。
 
-#### The Deployment Pipeline
+#### デプロイメントパイプライン
 
 Depending on the maturity of the organisation, or development team, the deployment pipeline can be very sophisticated. In it's simplest form, the deployment pipeline consists of a commit phase. The commit phase commonly runs simple compiler checks, the unit tests suite, as well as creates a deployable artefact of the application which is called release candidate. A release candidate is the latest version of changes that has been checked into the trunk of the versioning control system and will be evaluated by the deployment pipeline to verify if it is in-line with the established standards to be potentially deployed to production.
 
