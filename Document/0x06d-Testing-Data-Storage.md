@@ -177,32 +177,39 @@ tail -f /var/log/syslog
 
 #### 概要
 
--- TODO [Add content on overview of "Testing for Sensitive Data in the Keyboard Cache"] --
+In order to simplify keyboard input by providing autocorrection, predicative input, spell checking, etc., most of keyboard input by default is cached in /private/var/mobile/Library/Keyboard/dynamic-text.dat
+
+This behavior is achieved by means of UITextInputTraits protocol, which is adopted by UITextField, UITextView and UISearchBar. Keyboard caching is influenced by following properties:
+
+* `var autocorrectionType: UITextAutocorrectionType` determines whether autocorrection is enabled or disabled during typing. With autocorrection enabled, the text object tracks unknown words and suggests a more suitable replacement candidate to the user, replacing the typed text automatically unless the user explicitly overrides the action. The default value for this property is `UIText​Autocorrection​Type​Default`, which for most input methods results in autocorrection being enabled.
+* `var secureTextEntry: BOOL` identifies whether text copying and text caching should be disabled and in case of UITextField hides the text being entered. This property is set to `NO` by default. 
 
 #### ブラックボックステスト
 
-1.) iOS デバイスのキーボードキャッシュをリセットします。設定 > 一般 > リセット > キーボードの変換学習をリセット
+1. iOS デバイスのキーボードキャッシュをリセットします。設定 > 一般 > リセット > キーボードの変換学習をリセット
 
-2.) アプリケーションの機能を使用していきます。ユーザーが機密データを入力できる機能を特定します。
+2. アプリケーションの機能を使用していきます。ユーザーが機密データを入力できる機能を特定します。
 
-3.) 以下のディレクトリにあるキーボードキャッシュファイル dynamic-text.dat をダンプします(8.0 未満の iOS では異なる場合があります)。
+3. 以下のディレクトリにあるキーボードキャッシュファイル dynamic-text.dat をダンプします(8.0 未満の iOS では異なる場合があります)。
 /private/var/mobile/Library/Keyboard/
 
-4.) ユーザー名、電子メールアドレス、クレジットカード番号などの機密データを探します。機密データがキーボードキャッシュファイルから取得できる場合、このテストは失敗となります。
+4. ユーザー名、パスワード、電子メールアドレス、クレジットカード番号などの機密データを探します。機密データがキーボードキャッシュファイルから取得できる場合、このテストは失敗となります。
 
 #### ホワイトボックステスト
 
 キーボードキャッシュを無効にする実装があるかどうかは開発者に直接確認します。
 
-提供されたソースコードを検索して、以下と同様の実装を探します。
+* 提供されたソースコードを検索して、以下と同様の実装を探します。
 
-```
-textField.autocorrectionType = UITextAutocorrectionTypeNo;
-```
+  ```
+  textObject.autocorrectionType = UITextAutocorrectionTypeNo;
+  textObject.secureTextEntry = YES;
+  ```
+* Open xib and storyboard files in Interface Builder and verify states of Secure Text Entry and Correction in Attributes Inspector for appropriate objects.
 
 #### 改善方法
 
-アプリケーションはテキストフィールドに入力された機密情報を含むデータをキャッシュしないことを保証する必要があります。これは目的の UITextFields で `textField.autocorrectionType = UITextAutocorrectionTypeNo` ディレクティブを使用して、プログラムで機能を無効にすることで実現できます。PIN やパスワードなどのマスクする必要のあるデータについては、textField.secureTextEntry に YES を設定します。
+アプリケーションはテキストフィールドに入力された機密情報を含むデータをキャッシュしないことを保証する必要があります。これは目的の UITextFields, UITextViews, UISearchBars で `textObject.autocorrectionType = UITextAutocorrectionTypeNo` ディレクティブを使用して、プログラムで機能を無効にすることで実現できます。PIN やパスワードなどのマスクする必要のあるデータについては、`textObject.secureTextEntry` に `YES` を設定します。
 
 ```#ObjC
 UITextField *textField = [ [ UITextField alloc ] initWithFrame: frame ];
@@ -211,7 +218,7 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 
 #### 参考情報
 
--- TODO [Add link to relevant how-tos, papers, etc.] --
+* [UIText​Input​Traits protocol](https://developer.apple.com/reference/uikit/uitextinputtraits)
 
 
 ### 機密データに関するテスト(クリップボード)
