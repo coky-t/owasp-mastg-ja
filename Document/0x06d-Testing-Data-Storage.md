@@ -177,12 +177,12 @@ tail -f /var/log/syslog
 
 #### 概要
 
-In order to simplify keyboard input by providing autocorrection, predicative input, spell checking, etc., most of keyboard input by default is cached in /private/var/mobile/Library/Keyboard/dynamic-text.dat
+キーボード入力を簡素化するため、オートコレクト、予測入力、スペルチェックなどを提供します。キーボード入力のほとんどはデフォルトで /private/var/mobile/Library/Keyboard/dynamic-text.dat にキャッシュされます。
 
-This behavior is achieved by means of UITextInputTraits protocol, which is adopted by UITextField, UITextView and UISearchBar. Keyboard caching is influenced by following properties:
+この動作は、UITextField, UITextView, UISearchBar で採用されている UITextInputTraits プロトコルによって実現されます。キーボードキャッシュは以下のプロパティの影響を受けます。
 
-* `var autocorrectionType: UITextAutocorrectionType` determines whether autocorrection is enabled or disabled during typing. With autocorrection enabled, the text object tracks unknown words and suggests a more suitable replacement candidate to the user, replacing the typed text automatically unless the user explicitly overrides the action. The default value for this property is `UIText​Autocorrection​Type​Default`, which for most input methods results in autocorrection being enabled.
-* `var secureTextEntry: BOOL` identifies whether text copying and text caching should be disabled and in case of UITextField hides the text being entered. This property is set to `NO` by default. 
+* `var autocorrectionType: UITextAutocorrectionType` はタイピング中にオートコレクトが有効か無効かを決定します。オートコレクトを有効にすると、テキストオブジェクトは未知語を追跡してより適切な置換候補をユーザーに提案します。ユーザーが明示的にアクションをオーバーライドしない限り、自動的に入力したテキストを置換します。このプロパティのデフォルト値は `UIText​Autocorrection​Type​Default` です。ほとんどの入力メソッドはオートコレクトが有効になります。
+* `var secureTextEntry: BOOL` はテキストコピーやテキストキャッシュを無効にするべきかどうかを識別し、UITextField の場合は入力されるテキストを隠します。このプロパティはデフォルトで `NO` に設定されています。
 
 #### ブラックボックステスト
 
@@ -205,7 +205,7 @@ This behavior is achieved by means of UITextInputTraits protocol, which is adopt
   textObject.autocorrectionType = UITextAutocorrectionTypeNo;
   textObject.secureTextEntry = YES;
   ```
-* Open xib and storyboard files in Interface Builder and verify states of Secure Text Entry and Correction in Attributes Inspector for appropriate objects.
+* Interface Builder で xib と storyboard ふぁいるを開き、適切なオブジェクトの Attributes Inspector の Secure Text Entry and Correction の状態を確認します。
 
 #### 改善方法
 
