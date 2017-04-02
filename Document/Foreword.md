@@ -2,7 +2,7 @@
 
 ---
 
-**Welcome to the work-in-progress version of the OWASP Mobile Security Testing Guide. Feel free to explore the exiting content, but do note  that it is still incomplete and may change at any time. If you have feedback or suggestions, or want to contribute, create an issue on GitHub or ping us on Slack. See the README for instructions:**
+**作業中バージョンのOWASP モバイルセキュリティテストガイドにようこそ。終了したコンテンツを自由に探検してください。但し、まだ不完全であり、いつでも変更される可能性があります。ご意見やご提案がある場合、また貢献したい場合は、GitHub で issue を作成するか、Slack で ping してください。手順については [README](https://github.com/OWASP/owasp-mstg/blob/master/README.md) を参照ください。**
 
 https://www.github.com/OWASP/owasp-mstg/
 
