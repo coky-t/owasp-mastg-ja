@@ -102,14 +102,14 @@ ZIP 圧縮された IPA コンテナにあるさまざまなファイルを見�
 
 #### iOS ファイルシステム上のアプリ構造
 
-Since iOS 8, changes were made to the way an application is stored on the device. On versions before iOS 8, applications would be unpacked to a folder in the /var/mobile/applications/ folder. The application would be identified by its UUID (Universal Unique Identifier), a 128-bit number. This would be the name of the folder in which we will find the application itself. Since iOS 8 this has changed however, so we will see that the static bundle and the application data folders are now stored in different locations on the filesystem. These folders contain information that we will need to closely examine during application security assessments.
+iOS 8 以降、アプリケーションがデバイスに格納される方法が変更されました。iOS 8 より前のバージョンでは、アプリケーションは /var/mobile/applications/ にフォルダ内のフォルダにアンパックされます。アプリケーションは UUID (Universal Unique Identifier) 128ビット値によって識別されます。これはアプリケーション自体を見つけるフォルダの名前です。しかし iOS 8 以降これは変更されているので、静的バンドルとアプリケーションデータフォルダはファイルシステムの別の場所に格納されるようになります。これらのフォルダにはアプリケーションセキュリティアセスメント時に綿密に検討する必要がある情報が含まれています。
 
-* /var/mobile/Containers/Bundle/Application/[UUID]/Application.app contains the previously mentioned application.app data and stores the static content as well as the ARM compiled binary of the application. The content of this folder will be used to validate the code signature.
-* /var/mobile/Containers/Data/Application/[UUID]/Documents contains all the data stored for the application itself. The creation of this data is initiated by the application’s end user.
-* /var/mobile/Containers/Data/Application/[UUID]/Library contains files necessary for the application e.g. caches, preferences, cookies, property list (plist) configuration files, etc.
-* /var/mobile/Containers/Data/Application/[UUID]/Temp contains temporary files which do not need persistence in between application launches.
+* /var/mobile/Containers/Bundle/Application/[UUID]/Application.app には前述の application.app データが含まれ、アプリケーションの ARM コンパイル済みバイナリだけでなく静的コンテンツも格納されます。このフォルダのコンテンツはコード署名の検証に使用されます。
+* /var/mobile/Containers/Data/Application/[UUID]/Documents にはアプリケーション自体に格納されているすべてのデータが含まれます。このデータの作成はアプリケーションのエンドユーザーによって開始されます。
+* /var/mobile/Containers/Data/Application/[UUID]/Library にはアプリケーションに必要なファイルが含まれます。キャッシュ、プリファレンス、クッキー、プロパティリスト (plist) 設定ファイルなど。
+* /var/mobile/Containers/Data/Application/[UUID]/Temp にはアプリケーションの起動の間に永続性を必要としない一時ファイルが含まれています。
 
-The following figure represents the application’s folder structure:
+以下の図はアプリケーションのフォルダ構造を表しています。
 
 ![iOS App Folder Structure](http://bb-conservation.de/sven/iOS.png)
 
