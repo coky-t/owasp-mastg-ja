@@ -137,12 +137,12 @@ Apple は複雑な DRM システムを実装しており、有効で承認され
 
 #### アプリサンドボックス
 
-In line with the "crystal prison" theme, sandboxing has been is a core security feature since the first releasees of iOS. Regular apps on iOS are confined to a "container" that restrict access to the app's own files and a very limited amount of system APIs. Restrictions include [3]:
+"crystal prison" のテーマに則して、サンドボックスは iOS の最初のリリース以来の中心的なセキュリティ機能です。iOS の通常アプリはアプリ独自のファイルへのアクセスやシステム API のアクセスを制限する「コンテナ」に限定されています。制限事項は [3] を参照ください。
 
-- The app process is restricted to it's own directory(below /var/mobile/Containers/Bundle/Application/) using a chroot-like mechanism.
-- The mmap and mmprotect() system calls are modified to prevent apps from make writeable memory pages executable, preventing processes  from executing dynamically generated code. In combination with code signing and FairPlay, this places strict limitations on what code can be run under specific circumstances (e.g., all code in apps distributed via the app store is approved by Apple).
-- Isolation from other running processes, even if they are owned by the same UID;
-- Hardware drivers cannot be accessed directly. Instead, any access goes through Apple's frameworks.
+- アプリプロセスは chroot 風の仕組みを使用して、自身のディレクトリ(/var/mobile/Containers/Bundle/Application/ 以下)に制限されています。
+- mmap と mmprotect() システムコールはアプリが書き込み可能なメモリページを実行可能にしないように変更され、プロセスが動的に生成したコードを実行することを防ぎます。コード署名や FairPlay と組み合わせることで、特定の状況下で実行されるコードが厳しく制限されています(例えば、App Store 経由で配布されるアプリ内のすべてのコードは Apple によって承認されています)。
+- 同じ UID によって所有されていても、他の実行中のプロセスから分離します。
+- ハードウェアドライバに直接アクセスすることはできません。代わりに、Apple のフレームワークを経由してアクセスします。
 
 ### 参考情報
 
