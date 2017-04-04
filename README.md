@@ -30,7 +30,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### iOS Testing Guide
 
-- [Platform Overview] <!-- (Document/0x06a-Platform-Overview.md) -->
+- [Platform Overview](Document/0x06a-Platform-Overview.md)
 - [Basic Security Testing on iOS] <!-- (Document/0x06b-Basic-Security-Testing.md) -->
 - [Tampering and Reverse Engineering on iOS](Document/0x06c-Reverse-Engineering-and-Tampering.md)
 - [Testing Data Storage](Document/0x06d-Testing-Data-Storage.md)
