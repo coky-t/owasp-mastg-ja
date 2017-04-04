@@ -129,11 +129,11 @@ $ ipainstaller App_in_scope.ipa
 
 #### コード署名と暗号化
 
-Apple has implemented an intricate DRM system to make sure that only valid & approved code runs on Apple devices. In other words, on a non-jailbroken device, you won't be able to run any code unless Apple explicitly allows you to. You can't even opt to run code on your own device unless you enroll with the Apple developer program and obtain a provisioning profile and signing certificate. For this and other reasons, iOS has been compared to a crystal prison [1].
+Apple は複雑な DRM システムを実装しており、有効で承認されたコードだけが Apple デバイス上で動作するようにしています。つまり、脱獄されていないデバイスでは、Apple が明示的に許可しない限りコードを実行することはできません。Apple 開発者プログラムに登録してプロビジョニングプロファイルと署名証明書を取得しない限り、自分のデバイスでコードを実行することもできません。このような理由から、iOS は crystal prison [1] に例えられます。
 
 -- TODO [Develop section on iOS Code Signing and Encryption] --
 
-In addition to code signing, *FairPlay Code Encryption* is applied to apps downloaded from the App Store. Originally, FairPlay was developed as a means of DRM for multimedia content purchased via iTunes. In that case, encryption was applied to MPEG and Quicktime streams, but the same basic concepts can also be applied to executable files. The basic idea is as follows: Once you register a new Apple user account, a public/private key pair is created and assigned to your account. The private key is stored securely on your device. This means that Fairplay-encrypted code can be decrypted only on devices associated with your account -- TODO [Be more specific] --. The usual way to obtain reverse FairPlay encryption is to run the app on the device and then dump the decrypted code from memory (see also "Basic Security Testing on iOS").
+コード署名に加えて、*FairPlay コード暗号化* が App Store からダウンロードしたアプリに適用されます。もともと、FairPlay は iTunes 経由で購入したマルチメディアコンテンツの DRM の手段として開発されました。その場合、暗号化は MPEG や Quicktime ストリームに適用されましたが、同じ基本概念を実行可能ファイルに適用することもできます。基本的な考え方は次のとおりです。新しい Apple ユーザーアカウントを登録すると、公開鍵/秘密鍵のペアがアカウントに割り当てられます。秘密鍵はデバイスにセキュアに格納されます。つまり FairPlay で暗号化されたコードはあなたのアカウントに関連付けられたデバイスでのみ復号化できます -- TODO [Be more specific] -- 。FairPlay 暗号を復号して取得する一般的な方法は、デバイス上でアプリを実行して、メモリから復号化されたコードをダンプすることです(「セキュリティテスト入門 (iOS)」も参照ください)。
 
 #### アプリサンドボックス
 
