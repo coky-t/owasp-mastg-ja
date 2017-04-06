@@ -4,39 +4,77 @@
 
 #### 概要
 
-App Signing is the process of attaching a public-key certificate to the APK in order to identifiy/verify its owner who hold the corresponding private-key.
+Android requires that all APKs be digitally signed with a certificate before they can be installed. The digital signature is required by the Android system before installing/running an application, and it's also used to verify the identity of the owner for future updates of the application. This process can prevents an app from being tampered with, or modified to include malicious code.
 
-The digital signature is required by the Android system before installing/running an application, and it's also used to verify the identity of the owner for future updates of the application. This process can prevent an app from being trojanized with malicious code.
+When an is signed APK, a public-key certificate is attached to the APK. This certificate uniquely associates the APK to the developer and their corresponding private key. When building an app in debug mode, the Android SDK signs the app with a debug key specifically created for debugging purposes. An app signed with a debug key is not be meant for distribution and won't be accepted in most app stores, including the Google Play Store. To prepare the app for final release, the app must be signed with a release key belonging to the developer.
 
-This test case aims to verify that the app uses a strong passwords for the keystore and private key, and the configuration files doesn't leack the signing information.
+When testing the final release build of an app, you should verify that the APK has been signed with a valid certificate. Note that Android expects any updates to the app to be signed with the same certificate, so a validity period of 25 years or more is recommended. Apps published on Google Play must be signed with a certificate that is valid at least until October 22th, 2033.
 
-#### ホワイトボックステスト
+#### 静的解析
 
-Analyze the source code in order review the signing information using the following keywords:
-* storePassword
-* keyPassword
-* keyAlias
-* storeFile
+Unsigned APK:
 
-The test fails, if the application:
-* leaks the keystore/key password or
-* uses a weak password for the keystore or private key.
+```
+jarsigner -verify -verbose -certs Unsigned.apk
 
+  s = signature was verified 
+  m = entry is listed in manifest
+  k = at least one certificate was found in keystore
+  i = at least one certificate was found in identity scope
 
-#### ブラックボックステスト
+no manifest.
+jar is unsigned. (signatures missing or not parsable)
+```
 
--- TODO [Add content for black-box testing of "Verifying That the App is Properly Signed"] --
+Signed with debug certificate:
+
+```
+$ jarsigner -verify -verbose -certs example-debug.apk 
+
+sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
+
+      X.509, CN=Android Debug, O=Android, C=US
+      [certificate is valid from 3/24/16 9:18 AM to 8/10/43 9:18 AM]
+      [CertPath not validated: Path does not chain with any of the trust anchors]
+
+```
+
+Signed with release certificate:
+
+```
+$ jarsigner -verify -verbose -certs example-release.apk 
+
+sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
+
+      X.509, CN=Awesome Corporation, OU=Awesome, O=Awesome Mobile, L=Palo Alto, ST=CA, C=US
+      [certificate is valid from 9/1/09 4:52 AM to 9/26/50 4:52 AM]
+      [CertPath not validated: Path does not chain with any of the trust anchors]
+
+```
+
+#### 動的解析
+
+Static analysis should be used to verify the APK signature. If you don't have the APK available locally, pull it from the device first:
+
+```bash
+$ adb shell pm list packages
+(...)
+package:com.awesomeproject
+(...)
+$ adb shell pm path com.awesomeproject
+package:/data/app/com.awesomeproject-1/base.apk
+$ adb pull /data/app/com.awesomeproject-1/base.apk
+```
 
 #### 改善方法
 
--- TODO [Add content for remediation of "Verifying That the App is Properly Signed"] --
+Developers need to make sure that release builds are signed with the appropriate certificate from the release keystore. In Android Studio, this can be done manually or by configuring creating a signing configuration and assigning it to the release build type [2].
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2014
 
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+N/A
 
 ##### OWASP MASVS
 
@@ -44,29 +82,26 @@ The test fails, if the application:
 
 ##### CWE
 
--- TODO [Add relevant CWE for "Verifying That the App is Properly Signed"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
+N/A
 
 ##### その他
 
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
+- [1] Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
+- [2] Sign your App - https://developer.android.com/studio/publish/app-signing.html
 
 ##### ツール
 
--- TODO [Add relevant tools for "Verifying That the App is Properly Signed"] --
-* Enjarify - https://github.com/google/enjarify
-
+- jarsigner - http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html
 
 ### アプリがデバッグ可能であるかのテスト
 
 #### 概要
 
--- TODO [Give an overview about the functionality and it's potential weaknesses] --
+The <code>android:debuggable</code> attiribute in the <code>Application</code> tag in the Manifest determines whether or not the app can be debugged when running on a user mode build of Android. In a release build, this attribute should always be set to "false" (the default value).
 
-#### ホワイトボックステスト
+#### 静的解析
 
-Check the AndroidManifest.xml for the value of "android:debuggable" attribute within the application element:
+Check in <code>AndroidManifest.xml</code> whether the <code>android:debuggable</code> attribute is set:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
@@ -80,36 +115,9 @@ Check the AndroidManifest.xml for the value of "android:debuggable" attribute wi
 </manifest>
 ```
 
-This setting specifies whether or not the application can be debugged, even when running on a device in user mode. A value of "true" defines that debugging is activated and "false" means debugging is deactivated. The default value is "false".
+#### 動的解析
 
-Although the `android:debuggable=""` flag can be bypassed by repacking the application, before shipping it, it is important to set the option `android:debuggable="false"` in the _AndroidManifest.xml_.
-
-A comprehensive guide to debug an Android application can be found within the official documentation by Android (see references).
-
-#### ブラックボックステスト
-
-When targeting a compiled Android application, the most reliable method is to first decompile it in order to obtain the AndroidManifest.xml file (see Decompiling Android App Guide - #TODO-Create a general guide that can bee referenced anywhere in the MSTG) and check the value of "android:debuggable" attribute.
-
-Otherwise, use the Android Asset Packaging Tool (aapt) to check the debuggable flag :
-
-```
-$ aapt l -a /path/to/apk/file.apk | grep debuggable
-```
-
-Will return the following if android:debuggable parameter is set to true :
-
-```
-      A: android:debuggable(0x0101000f)=(type 0x12)0xffffffff
-```
-
-
-Attempt to attach a debugger to the running process. This  should either fail, or the app should terminate or misbehave when the debugger has been detected. For example, if ptrace(PT_DENY_ATTACH) has been called, gdb will crash with a segmentation fault:
-
--- TODO [Add an example of black-box testing of "Testing If the App is Debuggable"] --
-
--- TODO [Add elements on Java Debug Wire Protocol (JDWP)] --
-
-Note that some anti-debugging implementations respond in a stealthy way so that changes in behaviour are not immediately apparent. For example, a soft token app might not visibly respond when a debugger is detected, but instead secretly alter the state of an internal variable so that an incorrect OTP is generated at a later point. Make sure to run through the complete workflow to determine if attaching the debugger causes a crash or malfunction.
+Set the <code>android:debuggable</code> to false, or simply leave omit it from the <code>Application</code> tag.
 
 #### 改善方法
 
@@ -134,13 +142,7 @@ For production releases, the attribute android:debuggable must be set to false w
 
 ##### その他
 
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
-
-##### ツール
-
--- TODO [Add relevant tools for "Testing If the App is Debuggable"] --
-* Enjarify - https://github.com/google/enjarify
+* [1] Application element - https://developer.android.com/guide/topics/manifest/application-element.html
 
 
 ### デバッグシンボルに関するテスト
@@ -491,5 +493,4 @@ android {
 
 -- TODO [Add relevant tools for Verifying that Java Bytecode Has Been Minified] --
 * Enjarify - https://github.com/google/enjarify
-
 
