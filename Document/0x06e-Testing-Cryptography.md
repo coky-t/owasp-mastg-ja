@@ -110,16 +110,16 @@
 
 #### 概要
 
-Apple provides libraries with implementations of most commonly used cryptographic algorithms. A good point of reference is Apple's  Cryptographic Services Guide <sup>[1]</sup>. It contains broad documentation on how to use standard libraries to initialize and use cryptographic primitives, which is also useful when performing source code analysis. 
-For black-box testing, more useful is native C API, for instance CommonCryptor, that is most frequently used when performing cryptographic operations. Source code is partially available at the Apple open source repository <sup>[2]</sup>.
+Apple は最も一般的に使用される暗号アルゴリズムの実装でのライブラリを提供しています。Apple の Cryptographic Services Guide <sup>[1]</sup> が参考になります。標準ライブラリを使用して暗号プリミティブを初期化および使用する方法に関する広範囲なドキュメントが含まれています。これはソースコード解析を実行する場合にも便利です。
+ブラックボックステストでは、暗号操作を実行する際に最も頻繁に使用される CommonCryptor などのネイティブ C API がより便利です。ソースコードは Apple Open Source リポジトリ <sup>[2]</sup> で部分的に利用可能です。
 
 #### 静的解析
 
-The main goal of static analysis is to ensure the following:
+静的解析の主な目的は以下を確認することです。
 
-* cryptographic algorithms are up to date and in-line with industry standards. This includes, but is not limited to outdated block ciphers (e.g. DES), stream ciphers (e.g. RC4), as well as hash functions (e.g. MD5), crooked random number generators like Dual_EC_DRBG (even if they are NIST certified). All of these should be marked as insecure and removed from the application or server.
-* key lengths are in-line with industry standards and provide protection for sufficient amount of time. An online comparison of different key lenghts and protection they provide taking into account Moore's law is available on the web <sup>[3]</sup>.
-* cryptographic parameters are well defined within reasonable range. This includes, but is not limited to: cryptographic salt, which should be at least the same length as hash function output, reasonable choice of password derivation function and iteration count (e.g. PBKDF2, scrypt or bcrypt), IVs being random and unique, fit-for-purpose block encryption modes (e.g. ECB should not be used, except specific cases), key management being done properly (e.g. 3DES should have three independent keys) and so on.
+* 暗号アルゴリズムは最新のものであり業界標準に準拠している。これには古いブロック暗号(DESなど)、ストリーム暗号(RC4など)、ハッシュ関数(MD5など)、Dual_EC_DRBG などの曲線乱数生成器などが(NIST認定されているものも)あります。これらはすべて安全でないとマークされ、アプリケーションやサーバーから削除される必要があります。
+* 鍵長は業界標準に準拠しており、十分な時間の保護を提供している。ムーアの法則を考慮した、さまざまな鍵長や保護機能のオンライン比較はウェブ <sup>[3]</sup> を参照ください。
+* 暗号パラメータは合理的な範囲で明確に定義されている。これには次を含みますが、これに限定されません。暗号ソルト(ハッシュ関数出力と少なくとも同じ長さである必要がある)、パスワード導出関数および反復カウントの合理的な選択(PBKDF2, scrypt, bcrypt など)、IV がランダムかつユニークである、目的に沿ったブロック暗号化モード(特定の場合を除いて ECB を使用すべきではないなど)、鍵管理が適切に行われている(3DES は3つの独立した鍵を持つなど)、など。
 
 ##### ソースコードあり
 
