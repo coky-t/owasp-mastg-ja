@@ -4,26 +4,26 @@
 
 #### 概要
 
-The use of a hard-coded or world-readable cryptographic key significantly increases the possibility that encrypted data may be recovered.
+ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。
 
 -- TODO [Develop overview on Verifying Key Management]
 
 #### ホワイトボックステスト
 
-Consider the following scenario: an application is reading and writing to the encrypted database but the decryption is done based on hardcoded key:
+次のシナリオを考えます。アプリケーションは暗号化されたデータベースを読み書きしていますが、復号化はハードコードされた鍵に基づいて行われています。
 ```
 this.db = localUserSecretStore.getWritableDatabase("SuperPassword123");
 ```
-Since the key is the same for all the users and it is trivial to obtain it, the advantages of having sensitive data encrypted are gone, and there is effectively no point in such encryption at all. Similarly, look for hardcoded API keys / private keys and other valuable pieces. Encoded/encrypted keys is just another attempt to make it harder but not impossible to get the crown jewels.
+鍵はすべてのユーザーに対して同じであり取得は容易であるため、機密データを暗号化する利点はなくなり、そのような暗号化にはまったく意味がありません。同様に、ハードコードされた API 鍵 / 秘密鍵やその他の重要なものを探します。暗号化鍵/復号化鍵は、王冠の宝石を手に入れることは困難であるが不可能ではないという単なる試みです。
 
-Let's consider this piece of code:
+次のコードを考えてみます。
 ```
 //A more complicated effort to store the XOR'ed halves of a key (instead of the key itself)
 private static final String[] myCompositeKey = new String[]{
   "oNQavjbaNNSgEqoCkT9Em4imeQQ=","3o8eFOX4ri/F8fgHgiy/BS47"
 };
 ```
-Algorithm to decode the original key in this case might look like this<sup>[1]</sup>:
+この場合に元の鍵を解読するアルゴリズムは次のようになります <sup>[1]</sup> 。
 ```
 public void useXorStringHiding(String myHiddenMessage) {
   byte[] xorParts0 = Base64.decode(myCompositeKey[0],0);
@@ -39,10 +39,10 @@ public void useXorStringHiding(String myHiddenMessage) {
 
 #### ブラックボックステスト
 
-Verify common places where secrets are usually hidden:
-* resources (typically at res/values/strings.xml)
+秘密が隠される一般的な場所を確認します。
+* リソース (res/values/strings.xml が一般的)
 
-Example:
+例：
 ```
 <resources>
     <string name="app_name">SuperApp</string>
@@ -52,9 +52,9 @@ Example:
   </resources>
 ```
 
-* build configs, such as in local.properties or gradle.properties
+* ビルド設定、local.properties や gradle.properties など
 
-Example:
+例：
 ```
 buildTypes {
   debug {
@@ -64,12 +64,12 @@ buildTypes {
 }
 ```
 
-* shared preferences, typically at /data/data/package_name/shared_prefs
+* 共有プリファレンス、/data/data/package_name/shared_prefs が一般的
 
 
 #### 改善方法
 
-If you need to store a key for repeated use, use a mechanism, such as KeyStore<sup>[2]</sup>, that provides a mechanism for long term storage and retrieval of cryptographic keys.
+繰り返し使用するために鍵を格納する必要がある場合は、暗号鍵の長期保存や取り出しの仕組みを提供する KeyStore <sup>[2]</sup> などの機構を使用します。
 
 #### 参考情報
 * [1]: https://github.com/pillfill/hiding-passwords-android/
