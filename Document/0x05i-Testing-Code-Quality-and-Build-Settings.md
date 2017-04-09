@@ -151,27 +151,45 @@ For production releases, the attribute android:debuggable must be set to false w
 
 -- TODO [Give an overview about the functionality and it's potential weaknesses] --
 
-#### ホワイトボックステスト
+For native binaries, use a standard tool like nm or objdump to inspect the symbol table. A release build should generally not contain any debugging symbols. If the goal is to obfuscate the library, removing unneeded dynamic symbols is also recommended.
 
--- TODO [Add content on white-box testing of "Testing for Debugging Symbols"] --
+#### 静的解析
 
-#### ブラックボックステスト
+Symbols  are usually stripped during the build process, so you need the compiled bytecode and libraries to verify whether the any unnecessary metadata has been discarded. 
 
-Symbols  are usually stripped during the build process, so you need the compiled bytecode and libraries to verify whether the any unnecessary metadata has been discarded. For native binaries, use a standard tool like nm or objdump to inspect the symbol table. For example:
+To display debug symbols:
 
-~~~~
-berndt@osboxes:~/ $ objdump -t my_library.so
-my_library.so:     file format elf32-little
+```bash
+export $NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm
+```
 
-SYMBOL TABLE:
-no symbols
-~~~~
+```bash
+$ $NM -a libfoo.so 
+/tmp/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm: libfoo.so: no symbols
+```
+To display dynamic symbols:
 
-Alternatively, open the file in your favorite disassembler and look for debugging symbols. For native libraries, it should be checked that the names of exports don’t give away the location of sensitive functions.
+```bash
+$ $NM -D libfoo.so 
+```
+
+Alternatively, open the file in your favorite disassembler and check the symbol tables manually. 
+
+#### 動的解析
 
 #### 改善方法
 
--- TODO [Describe the best practices that developers should follow to prevent this issue "Testing for Debugging Symbols"] --
+Dynamic symbols can be stripped using the <code>visibility</code> compiler flag. Adding this flag causes gcc to discard the function names while still preserving the names of functions declared as <code>JNIEXPORT</code>.
+
+Add the following to build.gradle:
+
+```
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fvisibility=hidden"
+            }
+        }
+```
 
 #### 参考情報
 
