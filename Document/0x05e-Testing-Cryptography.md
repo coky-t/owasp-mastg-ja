@@ -186,37 +186,37 @@ buildTypes {
 
 #### 概要
 
-Many cryptographic algorithms and protocols should not be used because they have been shown to have significant weaknesses or are otherwise insufficient for modern security requirements.
+多くの暗号アルゴリズムおよびプロトコルは重大な弱点があることが示されているか、現代のセキュリティ要件には不十分であるため、使用してはいけません。
 
 #### ホワイトボックステスト
 
-Inspect the code to identify the instances of crypto algorithms throughout the application, and look for known weak ones, such as DES, RC2, CRC32, MD4, MD5, SHA1 and others. See "Remediation" section for a basic list of recommended algorithms.
+アプリケーション全体で暗号アルゴリズムのインスタンスを調査して、DES, RC2, CRC32, MD4, MD5, SHA1 などの既知の脆弱なものを探します。推奨されるアルゴリズムの基本的なリストについては「改善方法」セクションを参照ください。
 
-Example of initialization of DES algorithm:
+DES アルゴリズムの初期化の例：
 ```
 Cipher cipher = Cipher.getInstance("DES");
 ```
 
 #### ブラックボックステスト
 
-Decompile the APK and inspect the code to see if known weak crypto algorithms are in place (see "White-box Testing")
+APK を逆コンパイルしてコードを調査し、既知の脆弱な暗号アルゴリズムがあるかどうかを確認します(「ホワイトボックステスト」を参照ください)。
 
 -- TODO [Give examples of black-box testing for "Testing for Insecure and/or Deprecated Cryptographic Algorithms"] --
 
 #### 改善方法
 
-Periodically ensure that the cryptography has not become obsolete. Some older algorithms, once thought to require a billion years of computing time, can now be broken in days or hours. This includes MD4, MD5, SHA1, DES, and other algorithms that were once regarded as strong. Examples of currently recommended algorithms<sup>[1][2]</sup>:
+暗号化手法が廃止されていないことを定期的に確認します。以前、10億年の計算時間を要すると考えられていた一部の古いアルゴリズムは数日もしくは数時間で破られる可能性があります。これには MD4, MD5, SHA1, DES, および以前は強力とみなされていた他のアルゴリズムが含まれます。現在推奨されているアルゴリズムの例です。<sup>[1][2]</sup>
 
-* Confidentiality: AES-256
-* Integrity: SHA-256, SHA-384, SHA-512
-* Digital signature: RSA (3072 bits and higher), ECDSA with NIST P-384
-* Key establishment: RSA (3072 bits and higher), DH (3072 bits or higher), ECDH with NIST P-384
+* 機密性: AES-256
+* 完全性: SHA-256, SHA-384, SHA-512
+* デジタル署名: RSA (3072 ビット以上), ECDSA with NIST P-384
+* 鍵確立: RSA (3072 ビット以上), DH (3072 ビット以上), ECDH with NIST P-384
 
 
 #### 参考情報
 
 * [1]: [Commercial National Security Algorithm Suite and Quantum Computing FAQ](https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf)
-* [2]: [NIST Special Publication 800-57](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf)
+* [2]: [NIST Special Publication 800-57](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) [(日本語)](https://www.ipa.go.jp/files/000055490.pdf)
 
 ##### OWASP MASVS
 - V3.3: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated"
