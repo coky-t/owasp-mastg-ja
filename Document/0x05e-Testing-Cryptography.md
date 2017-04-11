@@ -102,20 +102,20 @@ buildTypes {
 
 #### 概要
 
-The use of a non-standard algorithm is dangerous because a determined attacker may be able to break the algorithm and compromise whatever data has been protected. Well-known techniques may exist to break the algorithm.
+非標準アルゴリズムの使用は危険です。果敢な攻撃者がアルゴリズムを破り、データが保護されていても漏洩してしまうためです。アルゴリズムを破る既知の技法が存在する可能性があります。
 
 #### ホワイトボックステスト
 
-Carefully inspect all the crypto methods, especially those which are directly applied to the sensitive data. Pay close attention to seemingly standard but modified algorithms. Remember that encoding is not encryption! Any appearance of direct XORing might be a good sign to start digging deeper.
+すべての暗号手法、特に機密データに直接適用されている手法を注意深く調べます。一見標準のようにみえるが改変されたアルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。直接的な XOR が現れたら深く掘り下げてみる良い兆候かもしれません。
 
 #### ブラックボックステスト
 
-Although fuzzing of the custom algorithm might work in case of very weak crypto, the recommended approach would be to decompile the APK and inspect the algorithm to see if custom encryption schemes is really the case (see "White-box Testing")
+非常に弱い暗号の場合はカスタムアルゴリズムのファジングが機能するかもしれませんが、カスタム暗号化方式が本当に適切かどうか確認するために、APK を逆コンパイルしてアルゴリズムを調べることをお勧めします(「ホワイトボックステスト」を参照ください)。
 
 #### 改善方法
 
-When there is a need to store or transmit sensitive data, use strong, up-to-date cryptographic algorithms to encrypt that data. Select a well-vetted algorithm that is currently considered to be strong by experts in the field, and use well-tested implementations. As with all cryptographic mechanisms, the source code should be available for analysis.
-Do not develop custom or private cryptographic algorithms. They will likely be exposed to attacks that are well-understood by cryptographers. Reverse engineering techniques are mature. If the algorithm can be compromised if attackers find out how it works, then it is especially weak.
+機密データを格納もしくは転送する必要がある場合は、強力な最新の暗号アルゴリズムを使用してそのデータを暗号化します。この分野の専門家により現在強力であるとみなされている十分に検証されたアルゴリズムを選択し、十分にテストされた実装を使用します。すべての暗号化機能と同様に、解析にはソースコードが利用可能であるべきです。
+カスタムもしくはプライベートの暗号アルゴリズムを開発してはいけません。それらは暗号技術者によってよく知られている攻撃にさらされる可能性があります。リバースエンジニアリング技法は成熟しています。アルゴリズムが漏洩し、攻撃者がどのように動作するか分かったとき、特に脆弱となります。
 
 ##### OWASP MASVS
 - V3.2: "アプリは実績のある暗号プリミティブの実装を使用している。"
