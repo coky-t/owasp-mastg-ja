@@ -242,12 +242,12 @@ APK を逆コンパイルしてコードを調査し、既知の脆弱な暗号�
 
 #### 概要
 
-When software generates predictable values in a context requiring unpredictability, it may be possible for an attacker to guess the next value that will be generated, and use this guess to impersonate another user or access sensitive information.
+ソフトウェアが予測不可能であることを要求されるコンテキストで予測可能な値を生成する場合、攻撃者は生成される次の値を推測し、この推測を使用して別のユーザーを偽装したり機密情報にアクセスしたりする可能性があります。
 
 #### ホワイトボックステスト
 
-Identify all the instances of random number generators and look for either custom or known insecure java.util.Random class. This class produces an identical sequence of numbers for each given seed value; consequently, the sequence of numbers is predictable.
-Sample weak random generation code:
+乱数生成器のインスタンスをすべて特定して、カスタムまたは既知の安全でない java.util.Random クラスを探します。このクラスは与えられた各シード値に対して同じ一連の番号を生成します。その結果、一連の数は予測可能となります。
+脆弱な乱数生成コードの例です。
 
 ```
 import java.util.Random;
@@ -264,15 +264,15 @@ for (int i = 0; i < 20; i++) {
 
 #### ブラックボックステスト
 
-Knowing what type of weak PRNG is used, it can be trivial to write proof-of-concept to generate next random value based on previously observed ones, as it was done for Java Random<sup>[1]</sup>. In case of very weak custom random generators it may be possible to observe the pattern statistically, although the recommended approach would anyway be to decompile the APK and inspect the algorithm (see "White-box Testing")
+どのようなタイプの脆弱な PRNG が使用されているかを知ることで、Java Random <sup>[1]</sup> で行われたように、以前に観測された値に基づいて次の乱数値を生成する概念実証を書くことは簡単です。非常に脆弱なカスタム乱数生成器の場合にはパターンを統計的に観測することが可能かもしれませんが、推奨される方法はとにかく APK を逆コンパイルしてアルゴリズムを検査することです(「ホワイトボックステスト」を参照ください)。
 
 #### 改善方法
 
-Use a well-vetted algorithm that is currently considered to be strong by experts in the field, and select well-tested implementations with adequate length seeds. Prefer the no-argument constructor of SecureRandom that uses the system-specified seed value to generate a 128-byte-long random number<sup>[2]</sup>.
-In general, if a pseudo-random number generator is not advertised as being cryptographically secure (e.g. java.util.Random), then it is probably a statistical PRNG and should not be used in security-sensitive contexts.
-Pseudo-random number generators can produce predictable numbers if the generator is known and the seed can be guessed<sup>[3]</sup>. A 128-bit seed is a good starting point for producing a "random enough" number.
+この分野の専門家により強力であると現在考えられている十分に検証されたアルゴリズムを使用して、適切な長さのシードを持つ十分にテストされた実装を選択します。システム固有のシード値を使用して128バイト乱数を生成する SecureRandom の引数なしコンストラクタを推奨します <sup>[2]</sup> 。
+一般に、疑似乱数生成器が暗号的にセキュアであると宣言されていない場合(java.util.Random など)、それはおそらく統計的 PRNG であり、セキュリティ機密のコンテキストでは使用すべきではありません。
+疑似乱数生成器は生成器が既知でありシードが推測できる場合には予測可能な数値を生成します <sup>[3]</sup> 。128ビットシードは「十分にランダムな」数を生成するための良い出発点です。
 
-Sample secure random generation:
+セキュアな乱数生成の例です。
 
 ```
 import java.security.SecureRandom;
