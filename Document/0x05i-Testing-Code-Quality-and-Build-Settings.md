@@ -4,15 +4,15 @@
 
 #### 概要
 
-Android requires that all APKs be digitally signed with a certificate before they can be installed. The digital signature is required by the Android system before installing/running an application, and it's also used to verify the identity of the owner for future updates of the application. This process can prevents an app from being tampered with, or modified to include malicious code.
+Android ではすべての APK はインストールする前に証明書でデジタル署名する必要があります。デジタル署名はアプリケーションをインストール/実行する前に Android システムで必要とされ、アプリケーションの将来の更新で所有者の身元を確認するためにも使用されます。このプロセスにより不正なコードを含むような改竄や改変を防ぐことができます。
 
-When an APK is signed, a public-key certificate is attached to the APK. This certificate uniquely associates the APK to the developer and their corresponding private key. When building an app in debug mode, the Android SDK signs the app with a debug key specifically created for debugging purposes. An app signed with a debug key is not be meant for distribution and won't be accepted in most app stores, including the Google Play Store. To prepare the app for final release, the app must be signed with a release key belonging to the developer.
+APK に署名すると、公開鍵証明書が APK に添付されます。この証明書は APK を開発者および対応する秘密鍵に一意に関連付けます。デバッグモードでアプリをビルドすると、Android SDK はデバッグ用に特別に作成されたデバッグ鍵でアプリに署名します。デバッグ鍵で署名されたアプリは配布用ではなく、Google Play ストアを含むほとんどのアプリストアで受け入れられません。最終リリースのアプリを準備するには、開発者が所有するリリース鍵で署名する必要があります。
 
-When testing the final release build of an app, you should verify that the APK has been signed with a valid certificate. Note that Android expects any updates to the app to be signed with the same certificate, so a validity period of 25 years or more is recommended. Apps published on Google Play must be signed with a certificate that is valid at least until October 22th, 2033.
+アプリの最終リリースビルドをテストするには、APK が有効な証明書で署名されていることを確認する必要があります。注意。Android ではアプリの更新に同じ証明書で署名することを期待しますので、25年以上の有効期間が推奨されます。Google Play に公開されるアプリは少なくとも2033年10月22日まで有効な証明書で署名する必要があります。
 
 #### 静的解析
 
-Unsigned APK:
+署名なし APK:
 
 ```
 jarsigner -verify -verbose -certs Unsigned.apk
@@ -26,7 +26,7 @@ no manifest.
 jar is unsigned. (signatures missing or not parsable)
 ```
 
-Signed with debug certificate:
+デバッグ証明書での署名あり:
 
 ```
 $ jarsigner -verify -verbose -certs example-debug.apk 
@@ -39,7 +39,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
 ```
 
-Signed with release certificate:
+リリース証明書での署名あり:
 
 ```
 $ jarsigner -verify -verbose -certs example-release.apk 
@@ -54,7 +54,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
 #### 動的解析
 
-Static analysis should be used to verify the APK signature. If you don't have the APK available locally, pull it from the device first:
+静的解析を使用して APK 署名を検証する必要があります。APK をローカルで使用できない場合は、まずデバイスから APK を取り出します。
 
 ```bash
 $ adb shell pm list packages
@@ -68,7 +68,7 @@ $ adb pull /data/app/com.awesomeproject-1/base.apk
 
 #### 改善方法
 
-Developers need to make sure that release builds are signed with the appropriate certificate from the release keystore. In Android Studio, this can be done manually or by configuring creating a signing configuration and assigning it to the release build type [2].
+開発者はリリースビルドがリリースキーストアの適切な証明書で署名されていることを確認する必要があります。Android Studio では、手動もしくは署名設定を設定してリリースビルドタイプに割り当てることで設定できます [2] 。
 
 #### 参考情報
 
