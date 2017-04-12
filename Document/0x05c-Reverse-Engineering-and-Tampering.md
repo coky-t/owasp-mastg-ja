@@ -59,8 +59,9 @@ $ wget https://github.com/OWASP/owasp-mstg/raw/master/OMTG-Files/02_Crackmes/01_
 $ adb install UnCrackable-Level1.apk
 ```
 
-![Crackme Main Screen](Images/Chapters/0x05c/crackme-1.jpg)
-![Wrong code](Images/Chapters/0x05c/crackme-2.jpg)
+<!-- <img src="Images/Chapters/0x05c/crackme-1.jpg" align="left" width="45%"/> -->
+<img src="Images/Chapters/0x05c/crackme-2.jpg" width="350px"/>
+
 
 Seems like we're expected to find some kind of secret code!
 
@@ -92,8 +93,8 @@ For this example, let's pick CFR as our decompiler of choice. CFR is under activ
 For convenience, we have packaged the dex2jar and CFR libraries along with a Python script that can be downloaded from the OWASP MSTG GitHub repo [14]. Download apkx.py and apkx-libs.jar from the repository and you are ready to go. Run apkx.py to extract and decompile that Java classes from the APK:
 
 ```
-$ wget https://raw.githubusercontent.com/OWASP/owasp-mstg/master/OMTG-Files/Download/apkx.tgz
-$ tar xzf apkx.tgz 
+$ wget https://raw.githubusercontent.com/OWASP/owasp-mstg/master/OMTG-Files/Download/apkx-0.9.tgz
+$ tar xzf apkx-0.9.tgz 
 $ chmod +x apkx.py
 $ ./apkx.py UnCrackable-Level1.apk 
 Extracting UnCrackable-Level1.apk to UnCrackable-Level1
@@ -116,11 +117,11 @@ In the next dialog, pick any APK - we don't want to actually compile the project
 
 Once the project is created, expand the "1: Project" view on the left and navigate to the app/src/main/java folder. Right-click and delete the default package "sg.vantagepoint.uncrackable1" created by IntelliJ.
 
-![Delete the default Java package](Images/Chapters/0x05c/delete_package.jpg)
+<img src="Images/Chapters/0x05c/delete_package.jpg" width="400px"/>
 
 Now, open the "Uncrackable-Level1/src" directory in a file browser and drag the "sg" directory into the now empty "Java" folder in the IntelliJ project view (hold the "alt" key to copy the folder instead of moving it).
 
-![Final project structure](Images/Chapters/0x05c/final_structure.jpg)
+<img src="Images/Chapters/0x05c/final_structure.jpg" width="400px"/>
 
 As soon as IntelliJ is done indexing the code, you can browse it just like any normal Java project. Note that many of the decompiled packages, classes and methods have weird one-letter names... this is because the bytecode has been "minified" with ProGuard at build time. This is a a basic type of obfuscation that makes the bytecode a bit more difficult to read, but with a fairly simple app like this one it won't cause you much of a headache - however, when analyzing a more complex app, it can get quite annoying. 
 
@@ -180,7 +181,7 @@ Disassemblers with support for ELF/ARM binaries (i.e. all disassemblers in exist
 
 Download HelloWorld-JNI.apk from the OWASP MSTG repository and, optionally, install and run it on your emulator or Android device. The app is not excatly spectacular: All it does is show a label with the text "Hello from C++". In fact, this is the default app Android generates when you create a new project with C/C++ support - enough however to show the basic principles of how JNI calls work.
 
-![Delete the default Java package](Images/Chapters/0x05c/helloworld.jpg)
+<img src="Images/Chapters/0x05c/helloworld.jpg" width="350px" />
 
 Decompile the APK with apkx.py. This should extract the source into the <code>HelloWorld/src</code> directory. 
 
@@ -219,7 +220,7 @@ JNIEXPORT jstring JNICALL Java_sg_vantagepoint_helloworld_MainActivity_stringFro
 
 So where is the native implementation of this function? If you look into the <code>lib</code> directory of the APK archive, you'll see a total of eight subdirectories named after different processor architectures. Each of this directories contains a version of the native library <code>libnative-lib.so</code>, compiled for the processor architecture in question. When <code>System.loadLibrary</code> is called, the loader selects the correct version based on what device the app is running on.
 
-![Supported architectures](Images/Chapters/0x05c/archs.jpg)
+<img src="Images/Chapters/0x05c/archs.jpg" width="300px" />
 
 The functionality is of course exactly the same in each version, so if you're just looking to do pure static analysis, you can pick the architecture you're most familiar with. However, if you're planning to debug the same binary on a live device, it's usually wise to pick an arm build. We'll be using the <code>armeabi-v7a</code> version in the following examples, located in <code>lib/armeabi-v7a/libnative-lib.so</code>.
 
@@ -697,6 +698,217 @@ Java.perform(function () {
 
 Besides loading scripts via `frida CLI`, Frida also provides Python, C, NodeJS, Swift and various other bindings.
 
+##### Solving the OWASP Uncrackable Crackme Level1 with Frida
+
+Frida gives you the possibility to solve the OWASP UnCrackable Crackme Level 1 easily. We have already seen that we can hook method calls with Frida above.
+
+When you start the App on an emulator or a rooted device, you find that the app presents a dialog box and exits as soon as you press "Ok" because it detected root: 
+
+![Crackme Root Detected Dialog](Images/Chapters/0x05c/crackme-frida-1.png)
+
+Let us see how we can prevent this.
+The decompiled main method (using CFR decompiler) looks like this:
+
+```
+package sg.vantagepoint.uncrackable1;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.EditText;
+import sg.vantagepoint.uncrackable1.a;
+import sg.vantagepoint.uncrackable1.b;
+import sg.vantagepoint.uncrackable1.c;
+
+public class MainActivity
+extends Activity {
+    private void a(String string) {
+        AlertDialog alertDialog = new AlertDialog.Builder((Context)this).create();
+        alertDialog.setTitle((CharSequence)string);
+        alertDialog.setMessage((CharSequence)"This in unacceptable. The app is now going to exit.");
+        alertDialog.setButton(-3, (CharSequence)"OK", (DialogInterface.OnClickListener)new b(this));
+        alertDialog.show();
+    }
+
+    protected void onCreate(Bundle bundle) {
+        if (sg.vantagepoint.a.c.a() || sg.vantagepoint.a.c.b() || sg.vantagepoint.a.c.c()) {
+            this.a("Root detected!"); //This is the message we are looking for
+        }
+        if (sg.vantagepoint.a.b.a((Context)this.getApplicationContext())) {
+            this.a("App is debuggable!");
+        }
+        super.onCreate(bundle);
+        this.setContentView(2130903040);
+    }
+
+    public void verify(View object) {
+        object = ((EditText)this.findViewById(2131230720)).getText().toString();
+        AlertDialog alertDialog = new AlertDialog.Builder((Context)this).create();
+        if (a.a((String)object)) {
+            alertDialog.setTitle((CharSequence)"Success!");
+            alertDialog.setMessage((CharSequence)"This is the correct secret.");
+        } else {
+            alertDialog.setTitle((CharSequence)"Nope...");
+            alertDialog.setMessage((CharSequence)"That's not it. Try again.");
+        }
+        alertDialog.setButton(-3, (CharSequence)"OK", (DialogInterface.OnClickListener)new c(this));
+        alertDialog.show();
+    }
+}
+```
+
+Notice the `Root detected` message in the `onCreate` method and the various methods called in the the `if`-statement before which perform the actual root checks. Also note the `This is unacceptable...` message from the first method of the class, `private void a`. Obviously, this is where the dialog box gets displayed. There is a `alertDialog.onClickListener` callback set in the `setButton` method call which is responsible for closing the application via `System.exit(0)` after successful root detection. Using Frida, we can prevent the app from exiting by hooking the callback.
+
+The onClickListener implementation for the dialog button doesn't to much:
+
+```
+package sg.vantagepoint.uncrackable1;
+
+class b implements android.content.DialogInterface$OnClickListener {
+    final sg.vantagepoint.uncrackable1.MainActivity a;
+    
+    b(sg.vantagepoint.uncrackable1.MainActivity a0)
+    {
+        this.a = a0;
+        super();
+    }
+    
+    public void onClick(android.content.DialogInterface a0, int i)
+    {
+        System.exit(0);
+    }
+}
+```
+
+It just exits the app. Now we intercept it using Frida to prevent the app from exiting after root detection:
+
+```
+setImmediate(function() { //prevent timeout
+    console.log("[*] Starting script");
+
+    Java.perform(function() {
+
+      bClass = Java.use("sg.vantagepoint.uncrackable1.b");
+      bClass.onClick.implementation = function(v) {
+         console.log("[*] onClick called");
+      }
+      console.log("[*] onClick handler modified")
+
+    })
+})
+```
+
+We wrap our code in a setImmediate function to prevent timeouts (you may or may not need this), then call Java.perform to make use of Frida’s methods for dealing with Java. Afterwards we retreive a wrapper for the class that implements the `OnClickListener` interface and overwrite its `onClick` method. Unlike the original, our new version of `onClick` just writes some console output and *does not exit the app*. If we inject our version of this method via Frida, the app should not exit anymore when we click the `OK` button of the dialog.
+
+Save the above script as `uncrackable1.js` and load it:
+
+```
+frida -U -l uncrackable1.js sg.vantagepoint.uncrackable1
+```
+
+After you see the `onClickHandler modified` message, you can safely press the OK button in the app. The app does not exit anymore. 
+
+We can now try to input a "secret string". But where do we get it?
+
+Looking at the class `sg.vantagepoint.uncrackable1.a` you can see the encrypted string to which our input gets compared:
+
+```
+package sg.vantagepoint.uncrackable1;
+
+import android.util.Base64;
+import android.util.Log;
+
+public class a {
+    public static boolean a(String string) {
+        byte[] arrby = Base64.decode((String)"5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc=", (int)0);
+        byte[] arrby2 = new byte[]{};
+        try {
+            arrby2 = arrby = sg.vantagepoint.a.a.a((byte[])a.b((String)"8d127684cbc37c17616d806cf50473cc"), (byte[])arrby);
+        }
+        catch (Exception var2_2) {
+            Log.d((String)"CodeCheck", (String)("AES error:" + var2_2.getMessage()));
+        }
+        if (!string.equals(new String(arrby2))) return false;
+        return true;
+    }
+
+    public static byte[] b(String string) {
+        int n = string.length();
+        byte[] arrby = new byte[n / 2];
+        int n2 = 0;
+        while (n2 < n) {
+            arrby[n2 / 2] = (byte)((Character.digit(string.charAt(n2), 16) << 4) + Character.digit(string.charAt(n2 + 1), 16));
+            n2 += 2;
+        }
+        return arrby;
+    }
+}
+```
+
+Notice the string.equals comparison at the end of the a method and the creation of the string `arrby2` in the `try` block above. `arrby2` is the return value of the function `sg.vantagepoint.a.a.a`. The `string.equals` comparison compares our input to `arrby2`. So what we are after is the return value of `sg.vantagepoint.a.a.a.`
+
+Instead of reversing the decryption routines to reconstruct the secret key, we can simply ignore all the decryption logic in the app and hook the `sg.vantagepoint.a.a.a` function to catch its return value.
+Here is the complete script that prevents the exiting on root and intercepts the decryption of the secret string:
+
+```
+setImmediate(function() {
+    console.log("[*] Starting script");
+
+    Java.perform(function() {
+        
+        bClass = Java.use("sg.vantagepoint.uncrackable1.b");
+        bClass.onClick.implementation = function(v) {
+         console.log("[*] onClick called.");
+        }
+        console.log("[*] onClick handler modified")
+
+
+        aaClass = Java.use("sg.vantagepoint.a.a");
+        aaClass.a.implementation = function(arg1, arg2) {
+            retval = this.a(arg1, arg2);
+            password = ''
+            for(i = 0; i < retval.length; i++) {
+               password += String.fromCharCode(retval[i]);
+            }
+
+            console.log("[*] Decrypted: " + password);
+            return retval;
+        }
+        console.log("[*] sg.vantagepoint.a.a.a modified");
+
+
+    });
+
+});
+```
+
+After running the script in Frida and seeing the `[*] sg.vantagepoint.a.a.a modified` message in the console, enter a random value for "secret string" and press verify. You should get an output similar to this:
+
+```
+michael@sixtyseven:~/Development/frida$ frida -U -l uncrackable1.js sg.vantagepoint.uncrackable1
+     ____
+    / _  |   Frida 9.1.16 - A world-class dynamic instrumentation framework
+   | (_| |
+    > _  |   Commands:
+   /_/ |_|       help      -> Displays the help system
+   . . . .       object?   -> Display information about 'object'
+   . . . .       exit/quit -> Exit
+   . . . .
+   . . . .   More info at http://www.frida.re/docs/home/
+                                                                                
+[*] Starting script
+[USB::Android Emulator 5554::sg.vantagepoint.uncrackable1]-> [*] onClick handler modified
+[*] sg.vantagepoint.a.a.a modified
+[*] onClick called.
+[*] Decrypted: I want to believe
+```
+The hooked function outputted our decrypted string. Without having to dive too deep into the application code and its decryption routines, we were able to extract the secret string successfully.
+
+
 ### バイナリ解析フレームワーク
 
 Binary analysis frameworks provide you powerful ways of automating tasks that would be almost impossible to complete manually. In the section, we'll have a look at the Angr framework, a python framework for analyzing binaries that is useful for both static and dynamic symbolic ("concolic") analysis. Angr operates on the VEX intermediate language, and comes with a loader for ELF/ARM binaries, so it is perfect for dealing with native Android binaries.
@@ -1093,7 +1305,7 @@ $ fastboot boot zImage-dtb initrd.img --base 0 --kernel-offset 0x8000 --ramdisk-
 
 The system should now boot normally. To quickly verify that the correct kernel is running, navigate to Settings->About phone and check the “kernel version” field.
 
-![Disassembly of function main.](Images/Chapters/0x05c/custom_kernel.jpg)
+<img src="Images/Chapters/0x05c/custom_kernel.jpg" width="350px" />
 
 #### カーネルモジュールを使用したシステムコールフック
 
@@ -1304,13 +1516,14 @@ File hiding is of course only the tip of the iceberg: You can accomplish a whole
 
 + Android SDK -
 + OWASP Mobile Crackmes - https://github.com/OWASP/owasp-mstg/blob/master/OMTG-Files/02_Crackmes/List_of_Crackmes.md
-+ APKTool -
++ APKTool - https://ibotpeaches.github.io/Apktool/
 + JD - http://jd.benow.ca/
-+ Eclipse
++ Eclipse - https://eclipse.org/ide/
 + IntelliJ IDEA - https://www.jetbrains.com/idea/
-+ Smalidea -
-+ Radare2 -
-+ Angr -
++ Smalidea - https://github.com/JesusFreke/smali/wiki/smalidea
++ Radare2 - https://www.radare.org
++ Frida - https://www.frida.re
++ Angr - http://angr.io/
 + JEB -
 + IDA Pro -
 + DroidScope -
