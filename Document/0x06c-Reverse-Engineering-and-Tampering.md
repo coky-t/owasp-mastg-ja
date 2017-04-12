@@ -121,7 +121,7 @@ static int $_my_ptrace(int request, pid_t pid, caddr_t addr, int data) {
 
 #### Cycript と Cynject
 
-Cydia Substrate (旧称 MobileSubstrate) は iOS 上でランタイムパッチ(「Cydia Substrate extensions」)を開発するためのデファクトのフレームワークです。これには C のコードインジェクションをサポートするツールである Cynject が付属します。iOS で実行中のプロセスに JavaScriptCore VM を注入することにより、ユーザーは C コードとインタフェースすることができます。プリミティブ型、ポインタ、構造体、C 文字列、および Objective-C オブジェクトやデータ構造をサポートします。また、実行中のプロセス内の Objective-C クラスにアクセスしてインスタンス化することもできます。Cycript の使用例は iOS の章に記載されています。
+Cydia Substrate (旧称 MobileSubstrate) は iOS 上でランタイムパッチ(「Cydia Substrate extensions」)を開発するためのデファクトスタンダードのフレームワークです。これには C のコードインジェクションをサポートするツールである Cynject が付属します。iOS で実行中のプロセスに JavaScriptCore VM を注入することにより、ユーザーは C コードとインタフェースすることができます。プリミティブ型、ポインタ、構造体、C 文字列、および Objective-C オブジェクトやデータ構造をサポートします。また、実行中のプロセス内の Objective-C クラスにアクセスしてインスタンス化することもできます。Cycript の使用例は iOS の章に記載されています。
 
 Cycript は実行中のプロセスに JavaScriptCore VM を注入します。ユーザーは拡張構文を持つ JavaScript を使用して Cycript Console 経由でプロセスを操作することができます
 
