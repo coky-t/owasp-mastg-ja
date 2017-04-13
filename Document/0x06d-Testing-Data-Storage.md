@@ -30,9 +30,9 @@
 
 #### 静的解析
 
-Ideally sensitive information should not be stored on the device at all. If there is a requirement to store sensitive information on the device itself, several functions/API calls are available to protect the data on IOS devices by using for example the Keychain. 
+理想的には機密情報はデバイスに格納すべきではありません。機密情報をデバイス自体に格納する必要がある場合、キーチェーンなどを使用して iOS デバイスのデバイスを保護するために利用できる関数/API呼び出しがあります。
 
-During the static analysis it should be checked if sensitive data is stored permanently on the device. The following frameworks and functions should be checked when handling sensitive data. 
+静的解析の中で機密データがデバイスに永続的に格納されるかどうかを確認する必要があります。機密データを扱う際には以下のフレームワークや関数をチェックする必要があります。
 
 
 ##### CoreData/SQLite データベース
@@ -78,8 +78,8 @@ During the static analysis it should be checked if sensitive data is stored perm
 - V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
 
 ##### OWASP Mobile Top 10
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### CWE
 * CWE-311 - Missing Encryption of Sensitive Data
@@ -149,8 +149,8 @@ tail -f /var/log/syslog
 - V2.2: "機密データがアプリケーションログに書き込まれていない。"
 
 ##### OWASP Mobile Top 10
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### CWE
 * CWE-117: Improper Output Neutralization for Logs
@@ -195,8 +195,8 @@ All data that is sent to 3rd Party services should be anonymized, so no PII data
 - V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
 
 ##### OWASP Mobile Top 10
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### CWE
 - CWE-359 "Exposure of Private Information ('Privacy Violation')": [Link to CWE issue]
@@ -254,8 +254,8 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 - V2.4: "機密データを処理するテキスト入力では、キーボードキャッシュが無効にされている。"
 
 ##### OWASP Mobile Top 10
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### CWE
 - CWE-524: Information Exposure Through Caching
@@ -457,7 +457,7 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 ##### OWASP Mobile Top 10
 
-* M1 - Improper Platform Usage
+* M1 - 不適切なプラットフォームの利用
 
 ##### CWE
 
@@ -504,7 +504,7 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 ##### OWASP Mobile Top 10
 
-* M1 - Improper Platform Usage
+* M1 - 不適切なプラットフォームの利用
 
 ##### CWE
 - CWE: -- TODO [Add link to CWE issue for "Verifying User Education Controls"] --
