@@ -8,25 +8,13 @@ Android ではすべての APK はインストールする前に証明書でデ�
 
 APK に署名すると、公開鍵証明書が APK に添付されます。この証明書は APK を開発者および対応する秘密鍵に一意に関連付けます。デバッグモードでアプリをビルドすると、Android SDK はデバッグ用に特別に作成されたデバッグ鍵でアプリに署名します。デバッグ鍵で署名されたアプリは配布用ではなく、Google Play ストアを含むほとんどのアプリストアで受け入れられません。最終リリースのアプリを準備するには、開発者が所有するリリース鍵で署名する必要があります。
 
-アプリの最終リリースビルドをテストするには、APK が有効な証明書で署名されていることを確認する必要があります。注意。Android ではアプリの更新に同じ証明書で署名することを期待しますので、25年以上の有効期間が推奨されます。Google Play に公開されるアプリは少なくとも2033年10月22日まで有効な証明書で署名する必要があります。
+アプリの最終リリースビルドは有効なリリース鍵で署名されている必要があります。注意。Android ではアプリの更新に同じ証明書で署名することを期待しますので、25年以上の有効期間が推奨されます。Google Play に公開されるアプリは少なくとも2033年10月22日まで有効な証明書で署名する必要があります。
 
 #### 静的解析
 
-署名なし APK:
+APK signatures can be verified using the <code>jarsigner</code> tool. For a properly signed APK, <code>jarsigner</code> should print the attributes of the signing certificate used. Note the in the debug certificate, the Common Name(CN) attribute is set to "Android Debug".
 
-```
-jarsigner -verify -verbose -certs Unsigned.apk
-
-  s = signature was verified 
-  m = entry is listed in manifest
-  k = at least one certificate was found in keystore
-  i = at least one certificate was found in identity scope
-
-no manifest.
-jar is unsigned. (signatures missing or not parsable)
-```
-
-デバッグ証明書での署名あり:
+The output for an APK signed with a Debug certificate looks as follows:
 
 ```
 $ jarsigner -verify -verbose -certs example-debug.apk 
@@ -39,7 +27,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
 ```
 
-リリース証明書での署名あり:
+The output for an APK signed with a Release certificate looks as follows:
 
 ```
 $ jarsigner -verify -verbose -certs example-release.apk 
@@ -72,9 +60,9 @@ $ adb pull /data/app/com.awesomeproject-1/base.apk
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
-N/A
+M7 - Client Code Quality
 
 ##### OWASP MASVS
 
