@@ -1,19 +1,20 @@
 ## データストレージのテスト
 
-### ローカルデータストレージのテスト -- TODO [Merge with OWASP-DATAST-001-2] --
+### ローカルデータストレージのテスト
 
 #### 概要
 
--- TODO [Create content for "Testing Local Data Storage" on iOS] --
-
-#### ブラックボックステスト
-
-資格情報や鍵などの機密情報が安全でない状態で格納されていて iOS のネイティブ関数を利用していないかどうかを特定する方法はアプリのデータディレクトリを解析することです。アプリは特定の機能がユーザーによってトリガーされたときにのみシステム資格情報を格納する可能性があるため、データを解析する前に可能な限り多くのアプリ機能を実行することが重要です。一般的なキーワードとアプリ固有のデータに基づいて、データダンプに対して静的解析を実行します。アプリケーションが iOS デバイスのローカルにデータを格納する方法を特定します。アプリケーションがデータをローカルに格納するための選択肢には以下の可能性があります。
+多くのモバイルアプリケーションではデータを格納することが不可欠です。例えば、ユーザー設定やユーザーが入力したデータを追跡してローカルやオフラインで格納する必要があります。データはさまざまなオペレーティングシステムでさまざまな方法でモバイルアプリケーションにより永続的に格納されます。以下は iOS プラットフォームで使用できるメカニズムを示しています。通常、機密データを格納することは考慮されません。
 
 * CoreData/SQLite データベース
 * NSUserDefaults
 * プロパティリスト (Plist) ファイル
 * プレーンファイル
+
+
+#### 動的解析
+
+資格情報や鍵などの機密情報が安全でない状態で格納されていて iOS のネイティブ関数を利用していないかどうかを特定する方法はアプリのデータディレクトリを解析することです。アプリは特定の機能がユーザーによってトリガーされたときにのみシステム資格情報を格納する可能性があるため、データを解析する前に可能な限り多くのアプリ機能を実行することが重要です。一般的なキーワードとアプリ固有のデータに基づいて、データダンプに対して静的解析を実行します。アプリケーションが iOS デバイスのローカルにデータを格納する方法を特定します。
 
 手順 :
 
@@ -24,45 +25,15 @@
 
 また、デバッグなどの手動による動的解析を利用して、特定のシステム資格情報がデバイス上でどのように格納および処理されるかを検証することもできます。このアプローチは時間がかかり手動で実行される可能性が高いため、特定のユースケースでのみ実行します。
 
-#### ホワイトボックステスト
-
-ソースコードを調べる際には、iOS によって提供されるネイティブ機能が識別された機密情報に適用されているかどうかを分析する必要があります。理想的には機密情報は一切デバイスに格納してはいけません。機密情報をデバイス自体に格納する必要がある場合には、キーチェーンなどを使用して iOS デバイス上のデータを保護するための関数/APIコールが利用できます。
-
-#### 改善方法
-
-機密情報(資格情報、鍵、PIIなど)がデバイス上でローカルに必要な場合、車輪を再発明したりデバイス上で暗号化せずに残す代わりに、iOS によって安全にデータを格納するために使用すべきいくつかのベストプラクティスが提供されています。
-
-以下は証明書や鍵や機密情報の安全な保管に一般的に使用されるベストプラクティスのリストです。
-* 証明書や鍵などの少量の機密データについては [Keychain Services](https://developer.apple.com/reference/security/1658642-keychain_services?language=objc) を使用して、デバイス上のローカルに安全に保管します。キーチェーンデータはファイルデータ保護で使用されるものと同様のクラス構造を使用して保護されています。これらのクラスはファイルデータ保護クラスと同等の振る舞いをしますが、別のキーを使用する異なる名前のAPIの一部です。デフォルトのビヘイビアは `kSecAttrAccessibleWhenUnlocked` です。詳細は使用可能なモード [Keychain Item Accessibility](https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons) を参照ください。
-* ローカルファイルを暗号化または復号化するために独自実装した暗号化機能は避けるべきです。
-* OMTG-DATAST-001-2 の章で示すように資格情報や鍵などの機密情報に対する安全でないストレージ機能を避けます。
+-- TODO [Add content on Dynamic Testing of "Testing Local Data Storage "] --
 
 
-#### 参考情報
+#### 静的解析
 
-* [Keychain Services Programming Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html)
-* [IOS Security Guide](https://www.apple.com/business/docs/iOS_Security_Guide.pdf)
+Ideally sensitive information should not be stored on the device at all. If there is a requirement to store sensitive information on the device itself, several functions/API calls are available to protect the data on IOS devices by using for example the Keychain. 
 
-### 機密データ漏洩に関するテスト(ローカルストレージ)
+During the static analysis it should be checked if sensitive data is stored permanently on the device. The following frameworks and functions should be checked when handling sensitive data. 
 
-#### 概要
-
-多くのモバイルアプリケーションではデータを格納することが不可欠です。例えば、ユーザー設定やユーザーが入力したデータを追跡してローカルやオフラインで格納する必要があります。データはさまざまなオペレーティングシステムでさまざまな方法でモバイルアプリケーションにより永続的に格納されます。以下は iOS プラットフォームで使用できるそれらのメカニズムを示しています。
-
-* CoreData/SQLite データベース
-* NSUserDefaults
-* プロパティリスト (Plist) ファイル
-* プレーンファイル
-
-
-#### ブラックボックステスト
-
-意図したとおりにアプリをインストールし使用します。アプリは特定の機能がユーザーによってトリガーされたときにのみシステム資格情報を格納する可能性があるため、データを解析する前に可能な限り多くのアプリ機能を実行することが重要です。その後、以下の項目を確認します。
-
--- TODO [Further develop section on black-box testing of "Testing for Sensitive Data Disclosure in Local Storage"] --
-
-
-#### ホワイトボックステスト
 
 ##### CoreData/SQLite データベース
 
@@ -85,14 +56,36 @@
 
 #### 改善方法
 
--- TODO [Add content on remediation on "Testing for Sensitive Data Disclosure in Local Storage"]
+機密情報(資格情報、鍵、PIIなど)がデバイス上でローカルに必要な場合、車輪を再発明したりデバイス上で暗号化せずに残す代わりに、iOS によって安全にデータを格納するために使用すべきいくつかのベストプラクティスが提供されています。
+
+以下は証明書や鍵や機密情報の安全な保管に一般的に使用されるベストプラクティスのリストです。
+* 証明書や鍵などの少量の機密データについては [Keychain Services](https://developer.apple.com/reference/security/1658642-keychain_services?language=objc) を使用して、デバイス上のローカルに安全に保管します。キーチェーンデータはファイルデータ保護で使用されるものと同様のクラス構造を使用して保護されています。これらのクラスはファイルデータ保護クラスと同等の振る舞いをしますが、別のキーを使用する異なる名前のAPIの一部です。デフォルトのビヘイビアは `kSecAttrAccessibleWhenUnlocked` です。詳細は使用可能なモード [Keychain Item Accessibility](https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons) を参照ください。
+* ローカルファイルを暗号化または復号化するために独自実装した暗号化機能は避けるべきです。
+* OMTG-DATAST-001-2 の章で示すように資格情報や鍵などの機密情報に対する安全でないストレージ機能を避けます。
+
 
 #### 参考情報
 
+* [Keychain Services Programming Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html)
+* [IOS Security Guide](https://www.apple.com/business/docs/iOS_Security_Guide.pdf)
 * [File System Basics](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)
 * [Foundation Functions](https://developer.apple.com/reference/foundation/1613024-foundation_functions)
 * [NSFileManager](https://developer.apple.com/reference/foundation/nsfilemanager)
 * [NSUserDefaults](https://developer.apple.com/reference/foundation/userdefaults)
+
+##### OWASP MASVS
+
+- V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
+
+##### OWASP Mobile Top 10
+* M1 - Improper Platform Usage
+* M2 - Insecure Data Storage
+
+##### CWE
+* CWE-311 - Missing Encryption of Sensitive Data
+* CWE-312 - Cleartext Storage of Sensitive Information
+* CWE-522 - Insufficiently Protected Credentials
+* CWE-922 - Insecure Storage of Sensitive Information
 
 ### 機密データに関するテスト(ログ)
 
@@ -108,7 +101,7 @@
 
 機密情報の分類は業種、国、法律、規制によって異なります。したがって適用される法律や規制を知っておく必要があり、実際にアプリのコンテキスト内でどのような機密情報があるかを認識する必要があります。
 
-#### ブラックボックステスト
+#### 動的解析
 
 ユーザーが機密情報を入力するための入力フィールドがある iOS アプリケーションのページに進みます。ログファイル内の機密データをチェックするには以下の2つの方法があります。
 
@@ -122,7 +115,7 @@ tail -f /var/log/syslog
 入力フィールドのプロンプトを完了した後、上記のコマンドの出力に機密データが表示されている場合、このテストは失敗となります。
 
 
-#### ホワイトボックステスト
+#### 静的解析
 
 以下のキーワードを使用して定義済み/カスタムのロギングステートメントの使用についてソースコードを確認します。
 * 定義済みおよびビルトイン関数の場合：
@@ -151,27 +144,63 @@ tail -f /var/log/syslog
 
 -- TODO [Add references for section "Testing for Sensitive Data in Logs"] --
 
+##### OWASP MASVS
+
+- V2.2: "機密データがアプリケーションログに書き込まれていない。"
+
+##### OWASP Mobile Top 10
+* M1 - Improper Platform Usage
+* M2 - Insecure Data Storage
+
+##### CWE
+* CWE-117: Improper Output Neutralization for Logs
+* CWE-532: Information Exposure Through Log Files
+* CWE-534: Information Exposure Through Debug Log Files
+
+
 ### 機密データがサードパーティに送信されているかのテスト
 
 #### 概要
 
--- TODO [Add content to overview of "Testing Whether Sensitive Data Is Sent to Third Parties" ] --
+Different 3rd party services are available that can be embedded into the App to implement different features. These features can vary from tracker services to monitor the user behaviour within the App, selling banner advertisements or to create a better user experience. Interacting with these services abstracts the complexity and neediness to implement the functionality on its own and to reinvent the wheel.
 
-#### ブラックボックステスト
+The downside is that a developer doesn’t know in detail what code is executed via 3rd party libraries and therefore giving up visibility. Consequently it should be ensured that not more information as needed is sent to the service and that no sensitive information is disclosed.
+
+3rd party services are mostly implemented in two ways:
+* By using a standalone library.
+* By using a full SDK.
+
+#### 静的解析
 
 -- TODO [Add content on black-box testing of "Testing Whether Sensitive Data Is Sent to Third Parties"] --
 
-#### ホワイトボックステスト
+#### 動的解析
 
--- TODO [Add content on white-box testing of "Testing Whether Sensitive Data Is Sent to Third Parties"] --
+All requests made to external services should be analyzed if any sensitive information is embedded into them.
+* Dynamic analysis can be performed by launching a Man-in-the-middle (MITM) attack using _Burp Proxy_ or OWASP ZAP, to intercept the traffic exchanged between client and server. A complete guide can be found [here][05773baa]. Once we are able to route the traffic to the interception proxy, we can try to sniff the traffic from the App. When using the App all requests that are not going directly to the server where the main function is hosted should be checked, if any sensitive information is sent to a 3rd party. This could be for example PII (Personal Identifiable Information) in a tracker or ad service.
+* When decompiling the App, API calls and/or functions provided through the 3rd party library should be reviewed on a source code level to identify if they are used accordingly to best practices.
 
 #### 改善方法
 
--- TODO [Add content on remediation of "Testing Whether Sensitive Data Is Sent to Third Parties"] --
+All data that is sent to 3rd Party services should be anonymized, so no PII data is available. Also all other data, like IDs in an application that can be mapped to a user account or session should not be sent to a third party.  
 
 #### 参考情報
 
--- TODO [Add references for "Testing Whether Sensitive Data Is Sent to Third Parties"] --
+[05773baa]: http://FIXME
+
+-- TODO [Add content on References of "Testing Whether Sensitive Data Is Sent to Third Parties"] --
+
+##### OWASP MASVS
+
+- V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
+
+##### OWASP Mobile Top 10
+* M1 - Improper Platform Usage
+* M2 - Insecure Data Storage
+
+##### CWE
+- CWE-359 "Exposure of Private Information ('Privacy Violation')": [Link to CWE issue]
+
 
 ### 機密データに関するテスト(キーボードキャッシュ)
 
@@ -184,7 +213,7 @@ tail -f /var/log/syslog
 * `var autocorrectionType: UITextAutocorrectionType` はタイピング中にオートコレクトが有効か無効かを決定します。オートコレクトを有効にすると、テキストオブジェクトは未知語を追跡してより適切な置換候補をユーザーに提案します。ユーザーが明示的にアクションをオーバーライドしない限り、自動的に入力したテキストを置換します。このプロパティのデフォルト値は `UIText​Autocorrection​Type​Default` です。ほとんどの入力メソッドはオートコレクトが有効になります。
 * `var secureTextEntry: BOOL` はテキストコピーやテキストキャッシュを無効にするべきかどうかを識別し、UITextField の場合は入力されるテキストを隠します。このプロパティはデフォルトで `NO` に設定されています。
 
-#### ブラックボックステスト
+#### 動的解析
 
 1. iOS デバイスのキーボードキャッシュをリセットします。設定 > 一般 > リセット > キーボードの変換学習をリセット
 
@@ -195,7 +224,7 @@ tail -f /var/log/syslog
 
 4. ユーザー名、パスワード、電子メールアドレス、クレジットカード番号などの機密データを探します。機密データがキーボードキャッシュファイルから取得できる場合、このテストは失敗となります。
 
-#### ホワイトボックステスト
+#### 静的解析
 
 キーボードキャッシュを無効にする実装があるかどうかは開発者に直接確認します。
 
@@ -220,6 +249,16 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 
 * [UIText​Input​Traits protocol](https://developer.apple.com/reference/uikit/uitextinputtraits)
 
+##### OWASP MASVS
+
+- V2.4: "機密データを処理するテキスト入力では、キーボードキャッシュが無効にされている。"
+
+##### OWASP Mobile Top 10
+* M1 - Improper Platform Usage
+* M2 - Insecure Data Storage
+
+##### CWE
+- CWE-524: Information Exposure Through Caching
 
 ### 機密データに関するテスト(クリップボード)
 
