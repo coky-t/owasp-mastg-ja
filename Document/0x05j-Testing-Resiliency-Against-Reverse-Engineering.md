@@ -40,24 +40,26 @@ The attestation result looks as follows.
 
 ###### Programmatic Detection
 
-**File checks**
+**File existence checks**
 
-Perhaps the most widely used method is checking for files typically found on rooted devices, such as app packages of common rooting tools and associated files:
+Perhaps the most widely used method is checking for files typically found on rooted devices, such as package files of common rooting apps and associated files and directories, such as:
 
 ~~~
 /system/app/Superuser.apk
-/system/xbin/daemonsu
 /system/etc/init.d/99SuperSUDaemon
 /dev/com.koushikdutta.superuser.daemon/
-~~~
-
-Binaries that are usually installed once a device is rooted. Examples include checking for the *su* binary at different locations:
+/system/xbin/daemonsu
 
 ~~~
+
+Detection code also often looks for binaries that are usually installed once a device is rooted. Examples include checking for the presence of busybox or attempting to open the *su* binary at different locations:
+
+~~~
+/system/xbin/busybox
+
 /sbin/su
 /system/bin/su
 /system/xbin/su
-/system/xbin/busybox
 /data/local/su
 /data/local/xbin/su
 ~~~ 
@@ -75,17 +77,59 @@ Alternatively, checking whether *su* is in PATH also works:
     }
 ~~~
 
+File checks can be easily implemented in both Java and native code. The following JNI example uses the <code>stat</code> system call to retrieve information about a file (example code adapted from rootinspector <sup>[9]</sup>), and returns <code>1</code> if the file exists.
+
+```c
+jboolean Java_com_example_statfile(JNIEnv * env, jobject this, jstring filepath) {
+  jboolean fileExists = 0;
+  jboolean isCopy;
+  const char * path = (*env)->GetStringUTFChars(env, filepath, &isCopy);
+  struct stat fileattrib;
+  if (stat(path, &fileattrib) < 0) {
+    __android_log_print(ANDROID_LOG_DEBUG, DEBUG_TAG, "NATIVE: stat error: [%s]", strerror(errno));
+  } else
+  {
+    __android_log_print(ANDROID_LOG_DEBUG, DEBUG_TAG, "NATIVE: stat success, access perms: [%d]", fileattrib.st_mode);
+    return 1;
+  }
+
+  return 0;
+}
+```
+
 **Executing su and other commands**
 
-Another way of determining whether su exists is attempting to execute it through <code>Runtime.getRuntime.exec()</code>. This will throw an IOException if su is not in PATH. The same method can be used to check for other programs often found on rooted devices, such as busybox or the symbolic links that typically point to it.
+Another way of determining whether <code>su</code> exists is attempting to execute it through <code>Runtime.getRuntime.exec()</code>. This will throw an IOException if <code>su</code> is not in PATH. The same method can be used to check for other programs often found on rooted devices, such as busybox or the symbolic links that typically point to it.
 
 **Checking running processes**
 
-Su on Android depends on a background process called *daemonsu*, so the presence of process is another sign of a rooted device. Running processes can be enumerated through ActivityManager.getRunningAppProcesses() API, the *ps* command, or walking through the */proc* directory.
+Supersu - by far the most popular rooting tool - runs an authentication daemon named <code>daemonsu</code>, so the presence of this process is another sign of a rooted device. Running processes can be enumerated through <code>ActivityManager.getRunningAppProcesses()</code> and <code>manager.getRunningServices()</code> APIs, the <code>ps</code> command, or walking through the <code>/proc</code> directory. As an example, this is implemented the following way in rootinspector <sup>[9]</sup>:
+
+```java
+    public boolean checkRunningProcesses() {
+
+      boolean returnValue = false;
+
+      // Get currently running application processes
+      List<RunningServiceInfo> list = manager.getRunningServices(300);
+
+      if(list != null){
+        String tempName;
+        for(int i=0;i<list.size();++i){
+          tempName = list.get(i).process;
+
+          if(tempName.contains("supersu") || tempName.contains("superuser")){
+            returnValue = true;
+          }
+        }
+      }
+      return returnValue;
+    }
+```
 
 **Checking installed app packages**
 
-The Android package manager can be used to obtain a list of installed packages.
+The Android package manager can be used to obtain a list of installed packages. The following package names belong to popular rooting tools:
 
 ~~~
 com.thirdparty.superuser
@@ -116,7 +160,9 @@ for (int i = 1; ; i = 0)
 
 Missing Google Over-The-Air (OTA) certificates are another sign of a custom ROM, as on stock Android builds, OTA updates use Google's public certificates <sup>[4]</sup>.
 
-##### Bypassing Root-Detection
+##### Bypassing Root Detection
+
+Run execution traces using JDB, DDMS, strace and/or Kernel modules to find out what the app is doing - you'll usually see all kinds of suspect interactions with the operating system, such as opening *su* for reading or obtaining a list of processes. These interactions are surefire signs of root detection. Identify and deactivate the root detection mechanisms one-by-one. If you're performing a black-box resiliency assessment, disabling the root detection mechanisms is your first step.
 
 You can use a number of techniques to bypass these checks, most of which were introduced in the "Reverse Engineering and Tampering" chapter:
 
@@ -126,24 +172,27 @@ You can use a number of techniques to bypass these checks, most of which were in
 3. Hooking low-level APIs using Kernel modules.
 4. Patching the app to remove the checks.
 
-#### 静的解析
+#### Effectiveness Assessment
 
-Check the original or decompiled source code for the presence of root detection mechanisms, and compare them against the following criteria:
+Check for the presence of root detection mechanisms and apply the following criteria:
 
 - Multiple detection methods are scattered throughout the app (as opposed to putting everything into a single method);
-- The root detection mechanisms operate on multiple API layers (Java API, native library functions, Assembler / system calls);
-- The mechanisms show some level of originality (no copy/paste from StackOverflow or other sources);
-- The mechanisms are well-integrated with other defenses (e.g. root detection functions are obfuscated and protected from tampering).
+- The root detection mechanisms operate on multiple API layers (Java APIs, native library functions, Assembler / system calls);
+- The mechanisms show some level of originality (vs. copy/paste from StackOverflow or other sources);
 
-#### 動的解析
+Develop bypass methods for the root detection mechanisms and answer the following questions:
 
-Identify and bypass the root detection mechanisms implemented. You'll most likely find that a combination of the methods above, or variations of those methods, are used. If you're performing a black-box resiliency assessment, disabling the root detection mechanisms is your first step.
+- Is it possible to easily bypass the mechanisms using standard tools such as RootCloak?
+- Is some amount of static/dynamic analysis necessary to handle the root detection? 
+- Did you need to write custom code?
+- How long did it take you to successfully bypass it?
+- What is your subjective assessment of difficulty? 
 
-Run execution traces using JDB, DDMS, strace and/or Kernel modules to find out what the app is doing - you'll usually see all kinds of suspect interactions with the operating system, such as opening *su* for reading or obtaining a list of processes. These interactions are surefire signs of root detection. Identify and deactivate the root detection mechanisms one-by-one.
+Also note how well the root detection mechanisms are integrated within the overall protection scheme. For example, the detection functions should obfuscated and protected from tampering.
 
 #### 改善方法
 
-If the root detection mechanisms are found to be insufficient, propose additional checks so the protection scheme fulfills the criteria listed above.
+If root detection is missing or too easily bypassed, make suggestions in line with the effectiveness criteria listed above. This may include adding more detection mechansims, or better integrating existing mechanisms with other defenses. 
 
 #### 参考情報
 
@@ -170,7 +219,9 @@ N/A
 
 ##### ツール
 
-- rootbeer - https://github.com/scottyab/rootbeer
+- [7] rootbeer - https://github.com/scottyab/rootbeer
+- [8] RootCloak - http://repo.xposed.info/module/com.devadvance.rootcloak2
+- [9] rootinspector - https://github.com/devadvance/rootinspector/
 
 ### アンチデバッグのテスト
 
@@ -520,10 +571,6 @@ Exiting
 
 To bypass this, it's necessary to modify the behavior of the app slightly (the easiest is to patch the call to _exit with NOPs, or hooking the function _exit in libc.so). At this point, we have entered the proverbial "arms race": It is always possible to implement more inticate forms of this defense, and there's always some ways to bypass it.
 
-**Breakpoint detection**
-
--- TODO [breakpoint detection] --
-
 ##### Bypassing Debugger Detection
 
 As usual, there is no generic way of bypassing anti-debugging: It depends on the particular mechanism(s) used to prevent or detect debugging, as well as other defenses in the overall protection scheme. For example, if there are no integrity checks, or you have already deactivated them, patching the app might be the easiest way. In other cases, using a hooking framework or kernel modules might be preferable.
@@ -561,8 +608,11 @@ public class CodeCheck {
     }
 ```
 
-```python
 
+-- TODO [Add a generic bypass script using Frida (?)] --
+
+
+```python
 #v0.1
  
 import frida
@@ -586,17 +636,29 @@ script.load()
 sys.stdin.read()
 ```
 
-#### 静的解析
+#### Effectiveness Assessment
 
--- TODO [Describe how to assess this with access to the source code and build configuration] --
+Check for the presence of anti-debugging mechanisms and apply the following criteria:
 
-#### 動的解析
+- Attaching JDB and ptrace based debuggers either fails, or causes the app to terminate or malfunction
+- Multiple detection methods are scattered throughout the app (as opposed to putting everything into a single method or function);
+- The anti-debugging defenses operate on multiple API layers (Java, native library functions, Assembler / system calls);
+- The mechanisms show some level of originality (vs. copy/paste from StackOverflow or other sources);
 
--- TODO [Dynamic Analysis of anti-debugging] --
+Work on bypassing the anti-debugging defenses and answer the following questions:
 
-Attempt to attach a debugger to the running process. This  should either fail, or the app should terminate or misbehave when the debugger has been detected. For example, if ptrace(PT_DENY_ATTACH) has been called, gdb will crash with a segmentation fault:
+- Can the mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
+- How difficult is it to identify the anti-debugging code using static and dynamic analysis?
+- Did you need to write custom code to disable the defenses? How much time did you need to invest?
+- What is your subjective assessment of difficulty? 
+
+Consider how the anti-debugging mechansims fit into the overall protection scheme. For example, anti-debugging defenses should obfuscated and protected from tampering.
 
 Note that some anti-debugging implementations respond in a stealthy way so that changes in behaviour are not immediately apparent. For example, a soft token app might not visibly respond when a debugger is detected, but instead secretly alter the state of an internal variable so that an incorrect OTP is generated at a later point. Make sure to run through the complete workflow to determine if attaching the debugger causes a crash or malfunction.
+
+#### 改善方法
+
+If anti-debugging is missing or too easily bypassed, make suggestions in line with the effectiveness criteria listed above. This may include adding more detection mechansims, or better integrating existing mechanisms with other defenses. 
 
 #### 参考情報
 
@@ -610,7 +672,7 @@ Note that some anti-debugging implementations respond in a stealthy way so that 
 
 #### 概要
 
-In the "Tampering and Reverse Engineering" chapter, we discussed Android's APK signature check and showed how to re-package and re-sign apps for reverse engineering purposes. Adding additional integrity checks to the app itself makes this process a bit more involved. A comprehensive protection scheme should include CRC checks on the app bytecode and native libraries as well as important data files. These checks can be impelemented both on the Java and native layer.
+In the "Tampering and Reverse Engineering" chapter, we discussed Android's APK signature check and showed how to re-package and re-sign apps for reverse engineering purposes. Adding additional integrity checks to the app itself makes this process a bit more involved. A protection scheme can be augmented with  CRC checks on the app bytecode and native libraries as well as important data files. These checks can be implemented both on the Java and native layer.
 
 ##### Sample Implementation
 
@@ -652,13 +714,9 @@ private void crcTest() throws IOException {
 
 Refer to the "Tampering and Reverse Engineering section" for examples of patching, code injection and kernel modules.
 
-#### 静的解析
+#### Effectiveness Assessment
 
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
-
-#### 動的解析
-
-Run the app on the device in an unmodified state and make sure that everything works. Then, apply simple patches to classes.dex and any .so libraries contained in the app package. Re-package and re-sign the app as described in the chapter "Basic Security Testing".
+Run the app on the device in an unmodified state and make sure that everything works. Then, apply simple patches to the classes.dex and any .so libraries contained in the app package. Re-package and re-sign the app as described in the chapter "Basic Security Testing" and run it. The app should detect the modification an cease to function.
 
 #### 改善方法
 
