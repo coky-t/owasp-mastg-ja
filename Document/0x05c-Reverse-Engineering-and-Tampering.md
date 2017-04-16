@@ -231,8 +231,11 @@ $ greadelf -W -s libnative-lib.so | grep Java
      3: 00004e49   112 FUNC    GLOBAL DEFAULT   11 Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI
 ```
 
-So this native function is actually executed 
+Following to the naming convention, this is the native function that gets actually executed when the <code>stringFromJNI</code> native method is called.
 
+-- TODO [Complete native static analysis section] --
+
+<img src="Images/Chapters/0x05c/helloworld_stringfromjni.jpg" />
 
 #### デバッグとトレース
 
@@ -254,7 +257,35 @@ Using a JDWP debugger allows you to step through Java code, set breakpoints on J
 
 The *adb* command line tool, which ships with the Android SDK, bridges the gap between your local development environment and a connected Android device. Commonly you'll debug on a device connected via USB, but remote debugging over the network is also possible.
 
--- TODO [Command line JDB intro] --
+-- TODO [Command line JDB intro - work in progress] --
+
+```bash
+$ apktool d --no-src UnCrackable-Level1.apk
+```
+
+```
+<application android:allowBackup="true" android:debuggable="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
+```
+
+```bash
+$ cd UnCrackable-Level1
+$ apktool b
+$ zipalign -v 4 dist/UnCrackable-Level1.apk ../UnCrackable-Repackaged.apk
+$ cd ..
+$ apksigner sign --ks  ~/.android/debug.keystore --ks-key-alias signkey UnCrackable-Repackaged.apk
+$ adb install UnCrackable-Repackaged.apk
+```
+
+```bash
+$ adb shell ps | grep uncrackable
+u0_a157   7328  201   1564936 50656 ffffffff 00000000 S sg.vantagepoint.uncrackable1
+$ adb forward tcp:7777 jdwp:7328
+$ jdb attach localhost:7777
+Initializing jdb ...
+> 
+```
+
+<img src="Images/Chapters/0x05c/developer-options.jpg" width="350px" />
 
 ###### 逆コンパイルされたソースを使用したデバッグ
 
@@ -291,6 +322,9 @@ $ $NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/darwin-x86_64/bin/arm-linux
 Remote debugging using :1235
 0xb6e0f124 in ?? ()
 ```
+
+
+
 
 -- TODO [Write introduction to debugging native code (HelloWorld-JNI)] --
 
@@ -418,7 +452,17 @@ In most cases, both issues can be fixed by making minor changes and re-packaging
 
 ##### 事例 1: デバッグ用にアプリの再パッケージ化
 
-In our first example, we'll modify the android:debuggable flag to enable debugging of a release app. You can reproduce this with any app downloaded from the Play Store.
+In our first example, we'll modify the android:debuggable flag to enable debugging of a release app. You can reproduce this with any app downloaded from the Play Store. 
+
+Before you proceed, you need a code signing certificate for re-signing. If you have built a project in Android Studio before, the IDE has already created a debug keystore and certificate in <code>$HOME/.android/debug.keystore</code>. The default password for this keystore is "android" and the key is named "androiddebugkey".
+
+The Java standard distibution includes <code>keytool</code> for managing keystores and certificates. You can create your own signing certificate and key and add it to the debug keystore as follows:
+
+```
+$ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
+```
+
+With a certificate available, you can now repackage the app using the following steps. Note that the Android Studio build tools directory must be in path for this to work - it is located at <code>[SDK-Path]/build-tools/[version]</code>. The <code>zipaling</code> and <code>apksigner</code> tools are found in this directory.
 
 1. Use apktool to restore AndroidManifest.xml:
 
@@ -432,15 +476,11 @@ $ apktool d --no-src target_app.apk
 <application android:allowBackup="true" android:debuggable="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.xxx.xxx.xxx" android:theme="@style/AppTheme">
 ```
 
-3. Repackage and sign the APK:
+3. Repackage and sign the APK. 
 
 ```bash
 $ apktool b
-
 $ zipalign -v 4 target_app.recompiled.apk  target_app.recompiled.aligned.apk
-
-$ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
-
 $ jarsigner -verbose -keystore ~/.android/debug.keystore  target_app.recompiled.aligned.apk signkey
 ```
 
