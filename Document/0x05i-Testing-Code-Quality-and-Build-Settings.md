@@ -10,13 +10,13 @@ APK に署名すると、公開鍵証明書が APK に添付されます。こ�
 
 アプリの最終リリースビルドは有効なリリース鍵で署名されている必要があります。注意。Android ではアプリの更新に同じ証明書で署名することを期待しますので、25年以上の有効期間が推奨されます。Google Play に公開されるアプリは少なくとも2033年10月22日まで有効な証明書で署名する必要があります。
 
-Two APK signing schemes are available: JAR signing (v1 scheme) APK Signature Scheme v2 (v2 scheme). The v2 signature, which is supported by Android 7.0 and higher, offers improved security and performance. Release builds should always be signed using *both* schemes.
+JAR 署名 (v1 方式) と APK 署名方式 v2 (v2 方式) の2つの APK 署名方式が利用できます。Android 7.0 以上でサポートされる v2 署名はセキュリティとパフォーマンスが向上しています。リリースビルドは常に *両方の* 方式を使用して署名する必要があります。
 
 #### 静的解析
 
-Verify that the release build is signed with both v1 and v2 scheme, and that the code signing certificate contained in the APK is belongs to the developer.
+リリースビルドは v1 および v2 の両方の方式で署名され、APK に含まれるコード署名証明書が開発者に属していることを確認します。
 
-APK signatures can be verified using the <code>apksigner</code> tool. 
+APK 署名は <code>apksigner</code> ツールを使用して確認できます。
 
 ```bash
 $ apksigner verify --verbose Desktop/example.apk 
@@ -26,9 +26,9 @@ Verified using v2 scheme (APK Signature Scheme v2): true
 Number of signers: 1
 ```
 
-The contents of the signing certificate can be examined using <code>jarsigner</code>. Note the in the debug certificate, the Common Name(CN) attribute is set to "Android Debug".
+署名証明書の内容は <code>jarsigner</code> を使用して調べることができます。デバッグ証明書では、Common Name (CN) 属性が "Android Debug" に設定されていることに注意します。
 
-The output for an APK signed with a Debug certificate looks as follows:
+デバッグ証明書で署名された APK の出力は以下のようになります。
 
 ```
 $ jarsigner -verify -verbose -certs example.apk 
@@ -41,7 +41,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 (...)
 ```
 
-The output for an APK signed with a Release certificate looks as follows:
+リリース証明書で署名された APK の出力は以下のようになります。
 
 ```
 $ jarsigner -verify -verbose -certs example.apk 
@@ -54,7 +54,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 (...)
 ```
 
-Ignore the "CertPath not validated" error -  this error appears with Java SDK 7 and greater. Instead, you can rely on the <code>apksigner</code> to verify the certificate chain.
+「CertPathが検証されていません」エラーを無視します。このエラーは Java SDK 7 以上で発生します。代わりに、<code>apksigner</code> を使用して証明書チェーンを検証することができます。
 
 #### 動的解析
 
@@ -73,7 +73,7 @@ $ adb pull /data/app/com.awesomeproject-1/base.apk
 #### 改善方法
 
 開発者はリリースビルドがリリースキーストアの適切な証明書で署名されていることを確認する必要があります。Android Studio では、手動もしくは署名設定を設定してリリースビルドタイプに割り当てることで設定できます <sup>[2]</sup> 。
-The signing configuration can be managed through the Android Studio GUI or the <code>signingConfigs {}</code> block in <code>build.gradle</code>. The following values need to be set to activate both v1 and v2 scheme:
+署名の設定は Android Studio の GUI もしくは <code>build.gradle</code> の <code>signingConfigs {}</code> ブロックで管理できます。v1 および v2 の両方の方式を有効にするには、以下の値を設定する必要があります。
 
 ```
 v1SigningEnabled true
