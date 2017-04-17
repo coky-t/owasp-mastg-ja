@@ -162,13 +162,13 @@ tail -f /var/log/syslog
 
 #### 概要
 
-Different 3rd party services are available that can be embedded into the App to implement different features. These features can vary from tracker services to monitor the user behaviour within the App, selling banner advertisements or to create a better user experience. Interacting with these services abstracts the complexity and neediness to implement the functionality on its own and to reinvent the wheel.
+さまざまな機能を実装するためにアプリに埋め込むことのできるさまざまなサードパーティサービスが利用できます。これらの機能は追跡サービスによりアプリ内のユーザーの行動を監視したり、バナー広告を販売したり、より良いユーザーエクスペリエンスを作成したりすることができます。これらのサービスとのやりとりは機能を独自に実装して車輪を再発明する複雑性や必要性を抽象化します。
 
-The downside is that a developer doesn’t know in detail what code is executed via 3rd party libraries and therefore giving up visibility. Consequently it should be ensured that not more information as needed is sent to the service and that no sensitive information is disclosed.
+不都合な点としては、開発者がサードパーティライブラリを介してどのようなコードが実行されているかを詳細に把握しておらず、したがって可視性を放棄していることです。したがって、必要以上の情報が送信されないようにし、機密情報が開示されないようにする必要があります。
 
-3rd party services are mostly implemented in two ways:
-* By using a standalone library.
-* By using a full SDK.
+サードパーティサービスは主に以下の2つの方法で実装されます。
+* スタンドアローンのライブラリを使用する。
+* 完全な SDK を使用する。
 
 #### 静的解析
 
@@ -176,13 +176,13 @@ The downside is that a developer doesn’t know in detail what code is executed 
 
 #### 動的解析
 
-All requests made to external services should be analyzed if any sensitive information is embedded into them.
-* Dynamic analysis can be performed by launching a Man-in-the-middle (MITM) attack using _Burp Proxy_ or OWASP ZAP, to intercept the traffic exchanged between client and server. A complete guide can be found [here][05773baa]. Once we are able to route the traffic to the interception proxy, we can try to sniff the traffic from the App. When using the App all requests that are not going directly to the server where the main function is hosted should be checked, if any sensitive information is sent to a 3rd party. This could be for example PII (Personal Identifiable Information) in a tracker or ad service.
-* When decompiling the App, API calls and/or functions provided through the 3rd party library should be reviewed on a source code level to identify if they are used accordingly to best practices.
+機密情報が埋め込まれている場合には、外部サービスに対するすべてのリクエストを解析する必要があります。
+* 動的解析は _Burp Proxy_ や OWASP ZAP を使用して中間者 (MITM) 攻撃を行い、クライアントとサーバー間で交換されるトラフィックを傍受することによって実行します。完全なガイドは [ここ][05773baa] にあります。トラフィックを傍受プロキシにルーティングできるようになると、アプリからのトラフィックを盗聴することが可能になります。アプリを使用する場合、主機能がホストされているサーバーに直接接続していないすべてのリクエストに対し、機密情報がサードパーティに送信されていないかをチェックする必要があります。これには追跡サービスや広告サービスでの PII (個人識別情報) などがあります。
+* アプリを逆コンパイルする場合、サードパーティライブラリから提供される API 呼び出しや関数をソースコードレベルでレビューして、ベストプラクティスに沿って使用されているかを判断する必要があります。
 
 #### 改善方法
 
-All data that is sent to 3rd Party services should be anonymized, so no PII data is available. Also all other data, like IDs in an application that can be mapped to a user account or session should not be sent to a third party.  
+サードパーティサービスに送信されるすべてのデータは匿名化する必要があります。そのため PII データは使用できません。また、ユーザーアカウントやセッションにマップできるアプリケーション内の ID などの他のすべてのデータもサードパーティに送信してはいけません。
 
 #### 参考情報
 
