@@ -434,7 +434,8 @@ android:inputType="textNoSuggestions"
 
 #### 概要
 
--- TODO [Overview on Testing for Sensitive Data in the Clipboard] --
+When keying in data into input fields, the clipboard<sup>[1]</sup> can be used to copy data in. The clipboard is accessible systemwide and therefore shared between the apps. This feature can be misused by malicious apps in order to get sensitive data.
+
 
 #### 静的解析
 
@@ -446,8 +447,6 @@ Start the app and click into the input fields that ask for sensitive data. When 
 
 #### 改善方法
 
-Many major versions of the Android operating system are still actively used. On top of that several mobile phone manufacturers are implementing their own user interface extensions and functions to their Android fork. Because of this it might be difficult to deactivate the clipboard completely on every single Android device.
-
 A general best practice is overwriting different functions in the input field to disable the clipboard specifically for it.
 
 ```Java
@@ -457,7 +456,7 @@ etxt.setCustomSelectionActionModeCallback(new Callback() {
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                 return false;
             }
-
+0
             public void onDestroyActionMode(ActionMode mode) {                  
             }
 
@@ -471,7 +470,7 @@ etxt.setCustomSelectionActionModeCallback(new Callback() {
         });
 ```
 
-Also `longclickable` should be deactivated for this input field.
+Also `longclickable` should be deactivated for the input field.
 
 ```xml
 android:longClickable="false"
@@ -479,43 +478,43 @@ android:longClickable="false"
 
 #### 参考情報
 
-- https://developer.android.com/guide/topics/text/copy-paste.html
-
-##### OWASP MASVS
-
-- V2.5: "機密データを含む可能性があるテキストフィールドでは、クリップボードが無効化されている。"
-
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
 * M2 - Insecure Data Storage
 
-##### CWE
+##### OWASP MASVS
+- V2.5: "機密データを含む可能性があるテキストフィールドでは、クリップボードが無効化されている。"
 
--- TODO [Add link to relevant CWE for "Testing for Sensitive Data in the Clipboard"] --
+##### CWE
+* CWE-200 - Information Exposure
+
+##### その他
+[1] Copy and Paste in Android - https://developer.android.com/guide/topics/text/copy-paste.html
+
 
 
 ### 機密データがIPCメカニズムを介して漏洩しているかのテスト
 
 #### 概要
 
-During development of a mobile application, traditional techniques for IPC might be applied like usage of shared files or network sockets. As mobile application platforms implement their own system functionality for IPC these mechanisms should be applied as they are much more mature than traditional techniques. Using IPC mechanisms with no security in mind may cause the application to leak or expose sensitive data.
+During development of a mobile application, traditional techniques for IPC might be applied like usage of shared files or network sockets. As mobile application platforms implement their own system functionality for IPC, these mechanisms should be applied as they are much more mature than traditional techniques. Using IPC mechanisms with no security in mind may cause the application to leak or expose sensitive data.
 
 The following is a list of Android IPC Mechanisms that may expose sensitive data:
-* [Binders][0c656fa2]
-* [Services][d97f5ea9]
-  * [Bound Services][5a7bc786]
-  * [AIDL][8c349a63]
-* [Intents][a28d43d1]
-* [ContentProviders][6a30e426]
+* Binders<sup>[1]</sup>
+* Services<sup>[2]</sup>
+  * Bound Services<sup>[9]</sup>
+  * AIDL<sup>[10]</sup>
+* Intents<sup>[3]</sup>
+* Content Providers<sup>[4]</sup>
 
 #### 静的解析
 
 The first step is to look into the `AndroidManifest.xml` in order to detect and identify IPC mechanisms exposed by the app. You will want to identify elements such as:
 
-* `<intent-filter>`: more [here][aa2cf4d9]
-* `<service>`: more [here][56866a0a]
-* `<provider>`: more [here][466ff32c]
-* `<receiver>`: more [here][988bd8a2]
+* `<intent-filter>`<sup>[5]</sup>
+* `<service>`<sup>[6]</sup>
+* `<provider>`<sup>[7]</sup>
+* `<receiver>`<sup>[8]</sup>
 
 Except for the `<intent-filter>` element, check if the previous elements contain the following attributes:
 * `android:exported`
@@ -523,11 +522,10 @@ Except for the `<intent-filter>` element, check if the previous elements contain
 
 Once you identify a list of IPC mechanisms, review the source code in order to detect if they leak any sensitive data when used. For example, _ContentProviders_ can be used to access database information, while services can be probed to see if they return data. Also BroadcastReceiver and Broadcast intents can leak sensitive information if probed or sniffed.
 
-* Vulnerable ContentProvider
+**Vulnerable ContentProvider**
 
-An example of vulnerable _ContentProvider_ (and SQL injection ** -- TODO [Refer to any input validation test in the project] --
-
-* `AndroidManifest.xml`
+An example of a vulnerable _ContentProvider_:
+(and SQL injection **-- TODO [Refer to any input validation test in the project] --**
 
 ```xml
 <provider android:name=".CredentialProvider"
@@ -536,7 +534,7 @@ An example of vulnerable _ContentProvider_ (and SQL injection ** -- TODO [Refer 
 </provider>
 ```
 
-The application exposes the content provider. In the `CredentialProvider.java` file we have to inspect the `query` function to detect if any sensitive information will be leaked:
+As can be seen in the `AndroidManifest.xml` above, the application exports the content provider. In the `CredentialProvider.java` file the `query` function need to be inspected to detect if any sensitive information is leaked:
 
 ```java
 public Cursor query(Uri uri, String[] projection, String selection,
@@ -564,6 +562,10 @@ public Cursor query(Uri uri, String[] projection, String selection,
 	      return cursor;
 	}
 ```
+
+The query statement would return all credentials when accessing `content://com.owaspomtg.vulnapp.provider.CredentialProvider/CREDENTIALS`.
+
+
 * Vulnerable Broadcast
 Search in the source code for strings like `sendBroadcast`, `sendOrderedBroadcast`, `sendStickyBroadcast` and verify that the application doesn't send any sensitive data.
 
@@ -604,7 +606,7 @@ Row: 1 id=2, username=test, password=test
 ```
 * Vulnerable Broadcast
 
-To sniff intents install and run the application on a device (actual device or emulated device) and use tools like [drozer][f3b542e2] or [Intent Sniffer][033fefeb] to capture intents and broadcast messages.
+To sniff intents install and run the application on a device (actual device or emulated device) and use tools like Drozer or Intent Sniffer to capture intents and broadcast messages.
 
 
 #### 改善方法
@@ -614,65 +616,56 @@ For an _activity_, _broadcast_ and _service_ the permission of the caller can be
 If not strictly required, be sure that your IPC does not have the `android:exported="true"` value in the `AndroidManifest.xml` file, as otherwise this allows all other apps on Android to communicate and invoke it.
 
 If the _intent_ is only broadcast/received in the same application, `LocalBroadcastManager` can be used so that, by design, other apps cannot receive the broadcast message. This reduces the risk of leaking sensitive information. `LocalBroadcastManager.sendBroadcast().
-BroadcastReceivers` should make use of the `android:permission` attribute, as otherwise any other application can invoke them. `Context.sendBroadcast(intent, receiverPermission);` can be used to specify permissions a receiver needs to be able to read the broadcast. See also [sendBroadcast][2e0ef82d].
+BroadcastReceivers` should make use of the `android:permission` attribute, as otherwise any other application can invoke them. `Context.sendBroadcast(intent, receiverPermission);` can be used to specify permissions a receiver needs to be able to read the broadcast<sup>[11]</sup>.
 You can also set an explicit application package name that limits the components this Intent will resolve to. If left to the default value of null, all components in all applications will considered. If non-null, the Intent can only match the components in the given application package.
 
 If your IPC is intended to be accessible to other applications, you can apply a security policy by using the `<permission>` element and set a proper `android:protectionLevel`. When using `android:permission` in a service declaration, other applications will need to declare a corresponding `<uses-permission>` element in their own manifest to be able to start, stop, or bind to the service.
 
 #### 参考情報
 
-* [Binders][0c656fa2]
-* [Services][d97f5ea9]
-* [Bound Services][5a7bc786]
-* [AIDL][8c349a63]
-* [Intents][a28d43d1]
-* [ContentProviders][6a30e426]
-* [Intent-filter][aa2cf4d9]
-* [Service][56866a0a]
-* [Provider][466ff32c]
-* [Receiver][988bd8a2]
-* [SendBroadcast][2e0ef82d]
-
-[0c656fa2]: https://developer.android.com/reference/android/os/Binder.html "IPCBinder"
-[d97f5ea9]: https://developer.android.com/guide/components/services.html "IPCServices"
-[a28d43d1]: https://developer.android.com/reference/android/content/Intent.html "IPCIntent"
-[6a30e426]: https://developer.android.com/reference/android/content/ContentProvider.html "IPCContentProviders"
-[aa2cf4d9]: https://developer.android.com/guide/topics/manifest/intent-filter-element.html "IntentFilterElement"
-[56866a0a]: https://developer.android.com/guide/topics/manifest/service-element.html "ServiceElement"
-[466ff32c]: https://developer.android.com/guide/topics/manifest/provider-element.html "ProviderElement"
-[988bd8a2]: https://developer.android.com/guide/topics/manifest/receiver-element.html "ReceiverElement"
-[5a7bc786]: https://developer.android.com/guide/components/bound-services.html "BoundServices"
-[8c349a63]: https://developer.android.com/guide/components/aidl.html "AIDL"
-[2e0ef82d]: https://developer.android.com/reference/android/content/Context.html#sendBroadcast(android.content.Intent) "SendBroadcast"
-[033fefeb]: https://www.nccgroup.trust/us/about-us/resources/intent-sniffer/ "IntentSniffer"
-[f3b542e2]: https://labs.mwrinfosecurity.com/tools/drozer/ "Drozer"
-
-
-##### OWASP MASVS
-
-- V2.6: "No sensitive data is exposed via IPC mechanisms."
-
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
 * M2 - Insecure Data Storage
 
+##### OWASP MASVS
+- V2.6: "機密データがIPCメカニズムを介して公開されていない。"
+
 ##### CWE
-- [CWE-634: Weaknesses that Affect System Processes](https://cwe.mitre.org/data/definitions/634.html)
+- CWE-634 - Weaknesses that Affect System Processes
+
+##### Info
+[1] IPCBinder - https://developer.android.com/reference/android/os/Binder.html
+[2] IPCServices - https://developer.android.com/guide/components/services.html
+[3] IPCIntent - https://developer.android.com/reference/android/content/Intent.html
+[4] IPCContentProviders - https://developer.android.com/reference/android/content/ContentProvider.html
+[5] IntentFilterElement - https://developer.android.com/guide/topics/manifest/intent-filter-element.html
+[6] ServiceElement - https://developer.android.com/guide/topics/manifest/service-element.html
+[7] ProviderElement - https://developer.android.com/guide/topics/manifest/provider-element.html
+[8] ReceiverElement - https://developer.android.com/guide/topics/manifest/receiver-element.html
+[9] BoundServices - https://developer.android.com/guide/components/bound-services.html
+[10] AIDL - https://developer.android.com/guide/components/aidl.html
+[11] SendBroadcast - https://developer.android.com/reference/android/content/Context.html#sendBroadcast(android.content.Intent)
+
+##### Tools
+* Drozer - https://labs.mwrinfosecurity.com/tools/drozer/
+* IntentSniffer - https://www.nccgroup.trust/us/about-us/resources/intent-sniffer/
 
 
 ### ユーザーインタフェースを介しての機密データ漏洩に関するテスト
 
 #### 概要
 
-In many apps users need to key in different kind of data to for example register or execute payment and data is also shown to the user. Sensitive data could be exposed if the app is not masking it properly.
+In many apps users need to key in different kind of data to for example register an account or execute payment. Sensitive data could be exposed if the app is not masking it properly and showing data in clear text.
 
 Masking of sensitive data within an activity of an app should be enforced to prevent disclosure and mitigate for example shoulder surfing.
 
 #### 静的解析
 
-To verify if the application is masking sensitive information, check for the following:
+To verify if the application is masking sensitive information that is keyed in by the user, check for the following attribute in the definition of EditText:
 
--- TODO [Masking of sensitive data in input fields, how can it be implemented in Android]
+```
+android:inputType="textPassword"
+```
 
 #### 動的解析
 
@@ -684,19 +677,16 @@ If the information is masked, e.g. by replacing characters in the text field thr
 
 In order to prevent leaking of data, sensitive information should be masked in the user interface. Either if they are shown to the user or if the user needs to enter them.
 
--- TODO [Masking of sensitive data in input fields, how can it be implemented in Android]
-
 #### 参考情報
-
-##### OWASP MASVS
-
-- V2.7: "パスワードやクレジットカード番号などの機密データは、ユーザーインタフェースを介して公開されていない。"
 
 ##### OWASP Mobile Top 10 2016
 * M4 - Unintended Data Leakage
 
+##### OWASP MASVS
+- V2.7: "パスワードやピンなどの機密データは、ユーザーインタフェースを介して公開されていない。"
+
 ##### CWE
-- [CWE-200: Information Exposure](https://cwe.mitre.org/data/definitions/200.html)
+- CWE-200 - Information Exposure
 
 
 
@@ -714,7 +704,7 @@ Besides a local backup, Android provides two ways for apps to backup their data 
 
 ##### ローカル
 
-In order to backup all your application data Android provides an attribute called `allowBackup`. This attribute is set within the `AndroidManifest.xml` file. If the value of this attribute is set to **true**, then the device allows users to backup the application using Android Debug Bridge (ADB) - `$ adb backup`.
+In order to backup all your application data Android provides an attribute called `allowBackup`<sup>[1]</sup>. This attribute is set within the `AndroidManifest.xml` file. If the value of this attribute is set to **true**, then the device allows users to backup the application using Android Debug Bridge (ADB) - `$ adb backup`.
 
 > Note: If the device was encrypted, then the backup files will be encrypted as well.
 
@@ -724,16 +714,16 @@ Check the `AndroidManifest.xml` file for the following flag:
 android:allowBackup="true"
 ```
 
-If the value is set to **true**, investigate whether the app saves any kind of sensitive data, either by reading the source code, or inspecting the files in the app data directory after using it extensively.
+If the value is set to **true**, investigate whether the app saves any kind of sensitive data, check the test case "Testing for Sensitive Data in Local Storage".
 
-
+##### Cloud
 Regardless of using either key/value or auto backup, it needs to be identified:
 * what files are sent to the cloud (e.g. SharedPreferences),
 * if the files contain sensitive information,
 * if sensitive information is protected through encryption before sending it to the cloud.
 
-##### 自動バックアップ
-When setting the attribute `android:allowBackup` to true in the manifest file, auto backup is enabled. The attribute `android:fullBackupOnly` can also be used to activate auto backup when implementing a backup agent, but this is only  available from Android 6.0 onwards. Other Android versions will be using key/value backup instead.
+**自動バックアップ**
+When setting the attribute `android:allowBackup` to true in the manifest file, auto backup is enabled. The attribute `android:fullBackupOnly` can also be used to activate auto backup when implementing a backup agent, but this is only available from Android 6.0 onwards. Other Android versions will be using key/value backup instead.
 
 ```xml
 android:fullBackupOnly
@@ -741,7 +731,7 @@ android:fullBackupOnly
 
 Auto backup includes almost all of the app files and stores them in the Google Drive account of the user, limited to 25MB per app. Only the most recent backup is stored, the previous backup is deleted.
 
-##### キー/バリュー バックアップ
+**キー/バリュー バックアップ**
 To enable key/value backup the backup agent needs to be defined in the manifest file. Look in `AndroidManifest.xml` for the following attribute:
 
 ```xml
@@ -757,20 +747,20 @@ Look for these classes within the source code to check for implementations of Ke
 
 #### 動的解析
 
-Attempt to make a backup using `adb` and, if successful, inspect the backup archive for sensitive data. Open a terminal and run the following command:
+After executing all available functions when using the app, attempt to make a backup using `adb`. If successful, inspect the backup archive for sensitive data. Open a terminal and run the following command:
 
 ```bash
 $ adb backup -apk -nosystem packageNameOfTheDesiredAPK
 ```
 
-Approve the backup from your device by selecting the "_Back up my data_" option. After the backup process is finished, you will have a _.ab_ file in your current working directory.
+Approve the backup from your device by selecting the _Back up my data_ option. After the backup process is finished, you will have a _.ab_ file in your current working directory.
 Run the following command to convert the .ab file into a .tar file.
 
 ```bash
 $ dd if=mybackup.ab bs=24 skip=1|openssl zlib -d > mybackup.tar
 ```
 
-Alternatively, use the [Android Backup Extractor](https://sourceforge.net/projects/adbextractor/) for this task. To install, download the [binary distribution](https://sourceforge.net/projects/adbextractor/files/latest/download). For the tool to work, you also have to download the [Oracle JCE Unlimited Strength Jurisdiction Policy Files for JRE7](http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html) or [JRE8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html), and place them in the JRE lib/security folder. Run the following command to convert the tar file:
+Alternatively, use the _Android Backup Extractor_ for this task. For the tool to work, you also have to download the Oracle JCE Unlimited Strength Jurisdiction Policy Files for JRE7<sup>[6]</sup> or JRE8<sup>[7]</sup>, and place them in the JRE lib/security folder. Run the following command to convert the tar file:
 
 ```bash
 java -jar android-backup-extractor-20160710-bin/abe.jar unpack backup.ab
@@ -784,61 +774,57 @@ $ tar xvf mybackup.tar
 
 #### 改善方法
 
-To prevent backing up the app data, set the `android:allowBackup` attribute to **false** in `AndroidManifest.xml`. If this attribute is not available the allowBackup setting is enabled by default. Therefore it need to be explicitly disabled in order to deactivate it.
+To prevent backing up the app data, set the `android:allowBackup` attribute to **false** in `AndroidManifest.xml`. If this attribute is not available the allowBackup setting is enabled by default. Therefore it need to be explicitly set in order to deactivate it.
 
 Sensitive information should not be sent in clear text to the cloud. It should either be:
-
 * avoided to store the information in the first place or
 * encrypt the information at rest, before sending it to the cloud.
 
-Files can also be excluded from Auto Backup, in case they should not be shared with Google Cloud, see [including files][e894a591].
+Files can also be excluded from Auto Backup<sup>[2]</sup>, in case they should not be shared with Google Cloud.
 
 
 #### 参考情報
 
-- Documentation for the application tag: https://developer.android.com/guide/topics/manifest/application-element.html#allowbackup
-* [Backing up app Data to the Cloud][fd7bd757]
-* [Key/Value Backup][1aee61a9]
-* [BackupAgentHelper][48d8d464]
-* [BackupAgent][03c7b547]
-* [Auto Backup][bf8bd4ca]
-
-[e894a591]: https://developer.android.com/guide/topics/data/autobackup.html#IncludingFiles "IncludingFiles"
-[fd7bd757]: https://developer.android.com/guide/topics/data/backup.html "BackingUpAppDataToCloud"
-[1aee61a9]: https://developer.android.com/guide/topics/data/keyvaluebackup.html "KeyValueBackup"
-[48d8d464]: https://developer.android.com/reference/android/app/backup/BackupAgentHelper.html "BackupAgentHelper"
-[03c7b547]: https://developer.android.com/reference/android/app/backup/BackupAgent.html "BackupAgent"
-[bf8bd4ca]: https://developer.android.com/guide/topics/data/autobackup.html "AutoBackup"
-
-
-
-
-##### OWASP MASVS
-
-- V2.8: "機密データがモバイルオペレーティングシステムにより生成されるバックアップに含まれていない。"
-
-##### OWASP Mobile Top 10
+##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
 * M2 - Insecure Data Storage
 
+##### OWASP MASVS
+- V2.8: "機密データがモバイルオペレーティングシステムにより生成されるバックアップに含まれていない。"
+
 ##### CWE
-* [CWE-530](https://cwe.mitre.org/data/definitions/530.html)
+* CWE-530 - Exposure of Backup File to an Unauthorized Control Sphere
+
+##### Info
+[1] Documentation for the application tag - https://developer.android.com/guide/topics/manifest/application-element.html#allowbackup
+[2] IncludingFiles - https://developer.android.com/guide/topics/data/autobackup.html#IncludingFiles
+[3] Backing up App Data to the cloud - https://developer.android.com/guide/topics/data/backup.html
+[4] KeyValueBackup - https://developer.android.com/guide/topics/data/keyvaluebackup.html
+[5] BackupAgentHelper - https://developer.android.com/reference/android/app/backup/BackupAgentHelper.html
+[6] BackupAgent - https://developer.android.com/reference/android/app/backup/BackupAgent.html
+[7] Oracle JCE Unlimited Strength Jurisdiction Policy Files JRE7 - http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html
+[8] Oracle JCE Unlimited Strength Jurisdiction Policy Files JRE8 - http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+[9] AutoBackup - https://developer.android.com/guide/topics/data/autobackup.html
+
+
+##### Tools
+* Android Backup Extractor - https://sourceforge.net/projects/adbextractor/
+
 
 
 ### 自動生成されるスクリーンショットの機密情報に関するテスト
 
 #### 概要
 
-Manufacturers want to provide device users an aesthetically pleasing effect when an application is entered or exited, hence they introduced the concept of saving a screenshot when the application goes into the background. This feature could potentially pose a security risk for an application. Sensitive data could be exposed if a user deliberately takes a screenshot of the application while sensitive data is displayed, or in the case of a malicious application running on the device, that is able to continuously capture the screen. This information is written to local storage, from which it may be recovered either by a rogue application on a jailbroken device, or by someone who steals the device.
+Manufacturers want to provide device users an aesthetically pleasing effect when an application is entered or exited, hence they introduced the concept of saving a screenshot when the application goes into the background. This feature could potentially pose a security risk for an application. Sensitive data could be exposed if a user deliberately takes a screenshot of the application while sensitive data is displayed, or in the case of a malicious application running on the device, that is able to continuously capture the screen. This information is written to local storage, from which it may be recovered either by a rogue application on a rooted device, or by someone who steals the device.
 
 For example, capturing a screenshot of a banking application running on the device may reveal information about the user account, his credit, transactions and so on.
-
 
 #### 静的解析
 
 In Android, when the app goes into background a screenshot of the current activity is taken and is used to give a pleasing effect when the app is next entered. However, this would leak sensitive information that is present within the app.
 
-To verify if the application may expose sensitive information via task switcher, detect if the `[FLAG_SECURE][ee87d351]` options is set. You should be able to find something similar to the following line.
+To verify if the application may expose sensitive information via task switcher, detect if the `FLAG_SECURE`<sup>[1]</sup> option is set. You should be able to find something similar to the following code snippet.
 
 ```Java
 LayoutParams.FLAG_SECURE
@@ -848,16 +834,16 @@ If not, the application is vulnerable to screen capturing.
 
 #### 動的解析
 
-During black-box testing, open any screen within the app that contains sensitive information and click on Home button so that the app goes into background. Now press the task-switcher button, to see the snapshot. As showed below, if `SECURE_FLAG` is set (image on the left), the snapshot is entirely black, while if the `SECURE_FLAG` is not set (image on the right), information within the activity are shown:
+During black-box testing, open any screen within the app that contains sensitive information and click on the home button so that the app goes into background. Now press the task-switcher button, to see the snapshot. As showed below, if `FLAG_SECURE` is set (image on the left), the snapshot is entirely black, while if the `FLAG_SECURE` is not set (image on the right), information within the activity are shown:
 
-| `SECURE_FLAG` not set  | `SECURE_FLAG` set  |
+| `FLAG_SECURE` not set  | `FLAG_SECURE` set  |
 |---|---|
 | ![OMTG_DATAST_010_1_FLAG_SECURE](Images/Chapters/0x05d/1.png)   |  ![OMTG_DATAST_010_2_FLAG_SECURE](Images/Chapters/0x05d/2.png) |
 
 
 #### 改善方法
 
-To prevent users or malicious applications from accessing information from backgrounded applications use the `SECURE_FLAG` as shown below:
+To prevent users or malicious applications from accessing information from backgrounded applications use the `FLAG_SECURE` as shown below:
 
 ```Java
 getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
@@ -872,21 +858,18 @@ Moreover, the following suggestions can also be implemented to enhance your appl
 
 #### 参考情報
 
-- [link to relevant how-tos, papers, etc.]
-
-[ee87d351]: https://developer.android.com/reference/android/view/Display.html#FLAG_SECURE "FLAG_SECURE"
-
-
-##### OWASP MASVS
-
-- V2.9: "バックグラウンド時にアプリはビューから機密データを削除している。"
-
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
 * M2 - Insecure Data Storage
 
+##### OWASP MASVS
+- V2.9: "バックグラウンド時にアプリはビューから機密データを削除している。"
+
 ##### CWE
-* [CWE-530](https://cwe.mitre.org/data/definitions/530.html)
+* CWE-200 - Information Exposure
+
+##### Info
+[1] FLAG_SECURE - https://developer.android.com/reference/android/view/Display.html#FLAG_SECURE
 
 
 ### 機密データに関するテスト(メモリ)
@@ -895,8 +878,8 @@ Moreover, the following suggestions can also be implemented to enhance your appl
 
 Analyzing the memory can help to identify the root cause of different problems, like for example why an application is crashing, but can also be used to identify sensitive data. This section describes how to check for sensitive data and disclosure of data in general within the process memory.
 
-To be able to investigate the memory of an application a memory dump needs to be created first or the memory needs to be viewed with real-time updates. This is also already the problem, as the application only stores certain information in memory if certain functions are triggered within the application. Memory investigation can of course be executed randomly in every stage of the application, but it is much more beneficial to understand first what the mobile application is doing and what kind of functionalities it offers and also make a deep dive into the decompiled code before making any memory analysis.
-Once sensitive functions are identified (like decryption of data) the investigation of a memory dump might be beneficial in order to identify sensitive data like a key or the decrypted information itself.
+To be able to investigate the memory of an application a memory dump needs to be created first or the memory needs to be viewed with real-time updates. This is also already the problem, as the application only stores certain information in memory if certain functions are triggered within the application. Memory investigation can of course be executed randomly in every stage of the application, but it is much more beneficial to understand first what the mobile application is doing and what kind of functionalities it offers and also make a deep dive into the (decompiled) source code before making any memory analysis.
+Once sensitive functions are identified, like decryption of data, the investigation of a memory dump might be beneficial in order to identify sensitive data like a key or the decrypted information itself.
 
 #### 静的解析
 
@@ -907,7 +890,7 @@ It needs to be identified within the code when sensitive information is stored w
 To analyse the memory of an app, the app must be **debuggable**.
 See the instructions in XXX (-- TODO [Link to repackage and sign] --) on how to repackage and sign an Android app to enable debugging for an app, if not already done. Also adb integration need to be activated in Android Studio in “_Tools/Android/Enable ADB Integration_” in order to take a memory dump.
 
-For rudimentary analysis Android Studio built-in tools can be used. Android studio includes tools in the “_Android Monitor_” tab to investigate the memory. Select the device and app you want to analyse in the "_Android Monitor_" tab and click on "_Dump Java Heap_" and a _.hprof_ file will be created.
+For rudimentary analysis Android Studio built-in tools can be used. Android Studio includes tools in the “_Android Monitor_” tab to investigate the memory. Select the device and app you want to analyse in the "_Android Monitor_" tab and click on "_Dump Java Heap_" and a _.hprof_ file will be created.
 
 ![Create Heap Dump](Images/Chapters/0x05d/Dump_Java_Heap.png)
 
@@ -936,40 +919,27 @@ To quickly discover potential sensitive data in the _.hprof_ file, it is also us
 
 If sensitive information is used within the application memory it should be nulled immediately after usage to reduce the attack surface.
 
-#### 参考情報
-
-* [Securely stores sensitive data in RAM][6227fc2d]
-
-Tools:
-* [Android Studio’s Memory Monitor][c96db86c]
-* [Eclipse’s MAT (Memory Analyzer Tool) standalone][681372d4]
-* [Memory Analyzer which is part of Eclipse][6ff3fc11]
-* [Fridump][ebd40e26]
-* [Fridump Repo][faab1495]
-* [LiME][6204d45e] (formerly DMD)
-
-[c96db86c]: http://developer.android.com/tools/debugging/debugging-memory.html#ViewHeap "MemoryMonitor"
-[681372d4]: https://eclipse.org/mat/downloads.php "EclipseMATStandalone"
-[6ff3fc11]: https://www.eclipse.org/downloads/ "MemoryAnalyzerWhichIsPartOfEclipse"
-[ebd40e26]: http://pentestcorner.com/introduction-to-fridump "Fridump"
-[faab1495]: https://github.com/Nightbringer21/fridump "FridumpRepo"
-[6204d45e]: https://github.com/504ensicsLabs/LiME "LiME"
-[6227fc2d]: https://www.nowsecure.com/resources/secure-mobile-development/coding-practices/securely-store-sensitive-data-in-ram/ "SecurelyStoreDataInRAM"
-
-
-
 ##### 参考情報
-
-* OWASP MASVS
-
-- V2.10: "アプリは必要以上に長くメモリ内に機密データを保持せず、使用後は明示的にメモリがクリアされている。"
 
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
 * M2 - Insecure Data Storage
 
+##### OWASP MASVS
+* V2.10: "アプリは必要以上に長くメモリ内に機密データを保持せず、使用後は明示的にメモリがクリアされている。"
+
 ##### CWE
 * CWE-316 - Cleartext Storage of Sensitive Information in Memory
+
+##### Info
+* Securely stores sensitive data in RAM - https://www.nowsecure.com/resources/secure-mobile-development/coding-practices/securely-store-sensitive-data-in-ram/
+
+##### Tools
+* Memory Monitor - http://developer.android.com/tools/debugging/debugging-memory.html#ViewHeap
+* Eclipse’s MAT (Memory Analyzer Tool) standalone - https://eclipse.org/mat/downloads.php
+* Memory Analyzer which is part of Eclipse - https://www.eclipse.org/downloads/
+* Fridump - https://github.com/Nightbringer21/fridump
+* LiME - https://github.com/504ensicsLabs/LiME
 
 
 ### デバイスアクセスセキュリティポリシーのテスト
@@ -982,8 +952,7 @@ Apps that are processing or querying sensitive information should ensure that th
 * Usage of a minimum Android OS version
 * Detection of activated USB Debugging
 * Detection of encrypted device
-* Detection of rooted device (see also OMTG-ENV-006)
-
+* Detection of rooted device (see also "Testing Root Detection")
 
 #### 静的解析
 
@@ -997,25 +966,24 @@ The dynamic analysis depends on the checks that are enforced by app and their ex
 
 #### 改善方法
 
-Different checks on the Android device can be implemented by querying different system preferences from Settings.Secure <sup>[1]</sup>. The Device Administration API <sup>[2]</sup> offers different mechanisms to create security aware applications, that are able to enforce password policies or encryption of the device.
+Different checks on the Android device can be implemented by querying different system preferences from _Settings.Secure_<sup>[1]</sup>. The _Device Administration API_<sup>[2]</sup> offers different mechanisms to create security aware applications, that are able to enforce password policies or encryption of the device.
 
 
 #### 参考情報
-
-- [1] Settings.Secure - https://developer.android.com/reference/android/provider/Settings.Secure.html
-- [2] Device Administration API - https://developer.android.com/guide/topics/admin/device-admin.html
-
-#### 参考情報
-
-##### OWASP MASVS
-
-- V2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
 
+##### OWASP MASVS
+* V2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
+
 ##### CWE
-- CWE: -- TODO [Link to CWE issue] --
+* CWE -- TODO [Link to CWE issue] --
+
+##### Info
+* [1] Settings.Secure - https://developer.android.com/reference/android/provider/Settings.Secure.html
+* [2] Device Administration API - https://developer.android.com/guide/topics/admin/device-admin.html
+
 
 
 ### ユーザー通知コントロールの検証
@@ -1025,15 +993,14 @@ Different checks on the Android device can be implemented by querying different 
 Educating users is a crucial part in the usage of mobile apps. Even though many security controls are already in place, they might be circumvented or misused through the users.
 
 The following list shows potential warnings or advises for a user when opening the app the first time and using it:
-* app shows a list of data stored locally and remotely. This can also be a link to an external ressource as the information might be quite extensive.
-* If a new user account is created within the app it should show the user if the password provided is considered as secure and applies to best practice password policies.
-* If the user is installing the app on a rooted device a warning should be shown that this is dangerous and deactivates security controls at OS level and is more likely to be prone to Malware. See also OMTG-DATAST-011 for more details.
-* If a user installed the app on an outdated Android version a warning should be shown. See also OMTG-DATAST-010 for more details.
-
--- TODO [What else can be a warning on Android?] --
+* Showing a list of what kind of data is stored locally and remotely. This can also be a link to an external resource as the information might be quite extensive.
+* If a new user account is created within the app it should show the user if the password provided is considered secure and applies to the  password policy.
+* If the user is installing the app on a rooted device a warning should be shown that this is dangerous and deactivates security controls at OS level and is more likely to be prone to malware. See also "Testing Root Detection" for more details.
+* If a user installed the app on an outdated Android version a warning should be shown. See also "Testing the Device-Access-Security Policy" for more details.
 
 #### 静的解析
 
+A list of implemented education controls should be provided. The controls should be verified in the code if they are implemented properly and according to best practices.  
 -- TODO [Create content on Static Analysis for Verifying User Education Controls] --
 
 #### 動的解析
@@ -1048,14 +1015,11 @@ Warnings should be implemented that address the key points listed in the overvie
 
 #### 参考情報
 
--- TODO [Add references on Verifying User Education Controls] --
-
-##### OWASP MASVS
-
-- V2.12: "アプリは処理される個人識別情報の種類、およびユーザーがアプリを使用する際に従うべきセキュリティのベストプラクティスについて通知している。"
-
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage
+
+##### OWASP MASVS
+- V2.12: "アプリは処理される個人識別情報の種類、およびユーザーがアプリを使用する際に従うべきセキュリティのベストプラクティスについて通知している。"
 
 ##### CWE
 - CWE: -- TODO [Link to CWE issue] --
