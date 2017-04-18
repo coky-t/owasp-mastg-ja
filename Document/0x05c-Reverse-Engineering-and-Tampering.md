@@ -222,7 +222,7 @@ So where is the native implementation of this function? If you look into the <co
 
 <img src="Images/Chapters/0x05c/archs.jpg" width="300px" />
 
-The functionality is of course exactly the same in each version, so if you're just looking to do pure static analysis, you can pick the architecture you're most familiar with. However, if you're planning to debug the same binary on a live device, it's usually wise to pick an arm build. We'll be using the <code>armeabi-v7a</code> version in the following examples, located in <code>lib/armeabi-v7a/libnative-lib.so</code>.
+
 
 According to the naming convention, we can expect an the library to export a symbol named <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code>. On Linux systems, you can list the symbols from the library using <code>readelf</code> (included in GNU binutils) or <code>nm</code>. On Mac OS, the same can be achieved with the <code>greadelf</code> tool, which you can get by installing binutils using Macports or Homebrew.
 
@@ -233,7 +233,17 @@ $ greadelf -W -s libnative-lib.so | grep Java
 
 Following to the naming convention, this is the native function that gets actually executed when the <code>stringFromJNI</code> native method is called.
 
--- TODO [Complete native static analysis section] --
+To read the assembly code, you can load <code>libnative-lib.so</code> on any disassembler that understands ELF binaries (i.e. every disassembler in existence). If the app ships with binaries for different architectures, you can pick the architecture you're most familiar with, as long as the disassembler knows how to deal with it. Each version is compiled from the same source and has exactly the same functionality. However, if you're planning to debug the library on a live device later, it's usually wise to pick an arm build. 
+
+To support both older and newer ARM processors, Android apps may ship with libraries compiled for different Application Binary Interface (ABI) versions. The ABI defines how the application's machine code is supposed to interact with the system at runtime. The following ABIs are supported: 
+
+- armeabi: ABI is for ARM-based CPUs that support at least the ARMv5TE instruction set. 
+- armeabi-v7a: This ABI extends armeabi to include several CPU instruction set extensions.
+- arm64-v8a: ABI for ARMv8-based CPUs that support AArch64, the new 64-bit ARM architecture.
+
+Most disassemblers will be able to deal with any of those architectures. We'll be using the <code>armeabi-v7a</code> version in the following examples, located in <code>lib/armeabi-v7a/libnative-lib.so</code>.
+
+-- TODO [Complete native static analysis] --
 
 <img src="Images/Chapters/0x05c/helloworld_stringfromjni.jpg" width="700px" />
 
@@ -330,7 +340,6 @@ other = "I want to believe"
 main[1] cont     
 ```
 
-
 ##### The 'Wait For Debugger' Feature
 
 The Developer options also contain the useful "Wait for Debugger" setting that allows you to suspend an app during startup. We'll revisit this option in a bit.
@@ -343,24 +352,28 @@ Note: Even with <code>ro.debuggable</code> set to 1 in <code>default.prop</code>
 
 A pretty neat trick is setting up a project in an IDE with the decompiled sources, which allows you to set method breakpoints directly in the source code. In most cases, you should be able single-step through the app, and inspect the state of variables through the GUI. The experience won't be perfect - its not the original source code after all, so you can't set line breakpoints and sometimes things will simply not work correctly. Then again, reversing code is never easy, and being able to efficiently navigate and debug plain old Java code is a pretty convenient way of doing it, so it's usually worth giving it a shot. A similar method was described in the NetSPI blog []
 
--- TODO [Debugging with IntelliJ] --
 
+-- TODO [Debugging with IntelliJ] --
 
 
 File -> New -> Project...
 
-
 Choose "Android"
-
-
 
 Name the project
 
+
+<img src="Images/Chapters/0x05c/intellij_new_project.jpg" width="550px" />
 
 
 Choose "Add no Activity"
 
 
+<img src="Images/Chapters/0x05c/drag_code.jpg" width="650px" />
+
+<img src="Images/Chapters/0x05c/final_structure.jpg" width="350px" />
+
+<img src="Images/Chapters/0x05c/method_breakpoint.jpg" width="650px" />
 
 
 ##### ネイティブコードのデバッグ
