@@ -107,11 +107,11 @@ N/A
 
 #### 概要
 
-The <code>android:debuggable</code> attiribute in the <code>Application</code> tag in the Manifest determines whether or not the app can be debugged when running on a user mode build of Android. In a release build, this attribute should always be set to "false" (the default value).
+Manifest の <code>Application</code> タグの <code>android:debuggable</code> 属性は Android のユーザーモードビルドで実行しているときにアプリがデバッグできるかどうかを決定します。リリースビルドでは、この属性は常に "false" (デフォルト値) に設定する必要があります。
 
 #### 静的解析
 
-Check in <code>AndroidManifest.xml</code> whether the <code>android:debuggable</code> attribute is set:
+<code>android:debuggable</code> 属性がせっていされているかどうかを <code>AndroidManifest.xml</code> で確認します。
 
 ```xml
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
@@ -127,11 +127,11 @@ Check in <code>AndroidManifest.xml</code> whether the <code>android:debuggable</
 
 #### 動的解析
 
-Set the <code>android:debuggable</code> to false, or simply leave omit it from the <code>Application</code> tag.
+<code>android:debuggable</code> を false に設定するか、<code>Application</code> タグからそれを省略するだけです。
 
 #### 改善方法
 
-For production releases, the attribute android:debuggable must be set to false within the application element. This ensures that a debugger cannot attach to the process of the application.
+製品リリースでは、application 要素内の android:debuggable 属性を false に設定する必要があります。これによりデバッガはアプリケーションのプロセスにアタッチできなくなります。
 
 #### 参考情報
 
@@ -521,4 +521,3 @@ android {
 
 -- TODO [Add relevant tools for Verifying that Java Bytecode Has Been Minified] --
 * Enjarify - https://github.com/google/enjarify
-
