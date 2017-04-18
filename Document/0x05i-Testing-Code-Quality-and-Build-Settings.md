@@ -161,13 +161,13 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 
 -- TODO [Give an overview about the functionality and it's potential weaknesses] --
 
-For native binaries, use a standard tool like nm or objdump to inspect the symbol table. A release build should generally not contain any debugging symbols. If the goal is to obfuscate the library, removing unneeded dynamic symbols is also recommended.
+ネイティブバイナリでは、nm や objdump などの標準ツールを使用してシンボルテーブルを検査します。リリースビルドには一般的にデバッグシンボルを含む必要はありません。目標がライブラリの難読化である場合は、不要な動的シンボルを削除することもお勧めします。
 
 #### 静的解析
 
-Symbols  are usually stripped during the build process, so you need the compiled bytecode and libraries to verify whether the any unnecessary metadata has been discarded. 
+シンボルは通常、ビルドプロセス中に削除されるため、不要なメタデータが削除されたかどうかを確認するためにはコンパイル済みのバイトコードとライブラリが必要です。
 
-To display debug symbols:
+デバッグシンボルを表示するには：
 
 ```bash
 export $NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm
@@ -177,21 +177,21 @@ export $NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darw
 $ $NM -a libfoo.so 
 /tmp/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm: libfoo.so: no symbols
 ```
-To display dynamic symbols:
+動的シンボルを表示するには：
 
 ```bash
 $ $NM -D libfoo.so 
 ```
 
-Alternatively, open the file in your favorite disassembler and check the symbol tables manually. 
+あるいは、お気に入りの逆アセンブラでファイルを開いて手動でシンボルテーブルをチェックします。
 
 #### 動的解析
 
 #### 改善方法
 
-Dynamic symbols can be stripped using the <code>visibility</code> compiler flag. Adding this flag causes gcc to discard the function names while still preserving the names of functions declared as <code>JNIEXPORT</code>.
+動的シンボルは <code>visibility</code> コンパイラフラグを使用して削除できます。このフラグを追加すると gcc は <code>JNIEXPORT</code> として宣言された関数の名前を保持したまま関数名を破棄します。
 
-Add the following to build.gradle:
+build.gradle に以下を追加します。
 
 ```
         externalNativeBuild {
