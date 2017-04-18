@@ -25,7 +25,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [Testing Authentication and Session Management] <!-- (Document/0x05f-Testing-Authentication.md) -->
 - [Testing Network Communication] <!-- (Document/0x05g-Testing-Network-Communication.md) -->
 - [Testing Platform Interaction] <!-- (Document/0x05h-Testing-Platform-Interaction.md) -->
-- [Testing Code Quality and Build Settings] <!-- (Document/0x05i-Testing-Code-Quality-and-Build-Settings.md) -->
+- [Testing Code Quality and Build Settings](Document/0x05i-Testing-Code-Quality-and-Build-Settings.md)
 - [Testing Resiliency Against Reverse Engineering] <!-- (Document/0x05j-Testing-Resiliency-Against-Reverse-Engineering.md) -->
 
 ### iOS Testing Guide
