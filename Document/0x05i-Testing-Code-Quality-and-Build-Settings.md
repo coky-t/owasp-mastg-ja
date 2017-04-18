@@ -283,10 +283,10 @@ build.gradle に以下を追加します。
 
 #### ホワイトボックステスト
 
-Review the source code to understand/identify who the application handle various types of errors (IPC communications, remote services invokation, etc). Here are some examples of the checks to be performed at this stage :
+ソースコードをレビューして、アプリケーションがさまざまな種類のエラー(IPC 通信、リモートサービス呼び出しなど)を処理するものを理解/特定します。この段階で実行されるチェックの例を以下に示します。
 
-* Verify that the application use a [well-designed] (https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047) (an unified) scheme to handle exceptions.
-* Verify that the application doesn't expose sensitive information while handeling exceptions, but are still verbose enough to explain the issue to the user.
+* アプリケーションが [正しく設計された] (https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047) (統一された) 方式を使用して例外を処理することを確認します。
+* 例外を処理するときにアプリケーションが機密情報を公開しないことを確認します。この問題をユーザーに説明するのは依然として冗長です。
 * C3
 
 #### ブラックボックステスト
@@ -329,7 +329,7 @@ Review the source code to understand/identify who the application handle various
 
 #### 概要
 
-Since most Android applications are Java based, they are [immunue](https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java) to buffer overflow vulnerabilities.
+ほとんどの Android アプリケーションは Java ベースであるため、バッファオーバーフロー脆弱性に [免疫](https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java) があります。
 
 #### ホワイトボックステスト
 
@@ -420,11 +420,11 @@ Since most Android applications are Java based, they are [immunue](https://www.o
 
 #### 概要
 
-Because Java classes are trivial to decompile, applying some basic obfuscation to the release bytecode is recommended. For Java apps on Android, ProGuard offers an easy way to shrink and obfuscate code. It replaces identifiers such as  class names, method names and variable names with meaningless character combinations. This is a form of layout obfuscation, which is “free” in that it doesn't impact the performance of the program.
+Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。Android 上の Java アプリの場合、ProGuard がコードを縮小および難読化する簡単な方法を提供します。これはクラス名、メソッド名、変数名などの識別子を無意味な文字の組み合わせに置き換えます。これはレイアウト難読化の一形態であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
 
 #### ホワイトボックステスト
 
-If source code is provided, build.gradle file can be check to see if obfuscation settings are set. From the example below, we can see that minifyEnabled and proguardFiles are set. It is common to see application exempts some class from obfuscation with "-keepclassmembers" and "-keep class", so it is important to audit proguard configuration file to see what class are exempted. The getDefaultProguardFile('proguard-android.txt') method gets the default ProGuard settings from the Android SDK tools/proguard/ folder and proguard-rules.pro is where you defined custom proguard rules. From our sample proguard-rules.pro file, we can see that many classes that extend common android classes are exempted, which should be done more granular on exempting specific classes or library.
+ソースコードが提供されている場合、build.gradle ファイルを確認するとて難読化設定が設定されているか分かります。以下の例では、minifyEnabled と proguardFiles が設定されていることが分かります。アプリケーションは "-keepclassmembers" と "-keep class" で一部のクラスの難読化を免除するのが一般的ですので、proguard 構成ファイルを監査して免除されているクラスを確認することが重要です。getDefaultProguardFile('proguard-android.txt') メソッドはデフォルトの ProGuard 設定を Android SDK tools/proguard/ フォルダから取得し、proguard-rules.pro はカスタム proguard ルールを定義します。サンプルの proguard-rules.pro ファイルからは、一般的な android クラスを拡張する多くのクラスが免除されていることが分かります。特定のクラスやライブラリを除外するにはより細かく行う必要があります。
 
 build.gradle
 ```
@@ -449,9 +449,9 @@ proguard-rules.pro
 
 #### ブラックボックステスト
 
-If source code is not provided, apk can be decompile to verify if codebase have been obfuscated. dex2jar can be used to convert dex code to jar file. Tools like JD-GUI can be used to check if class, method and variable name is human readable.
+ソースコードが提供されていない場合、コードベースが難読化されているかどうかを検証するために apk を逆コンパイルします。dex2jar を使用して dex コードを jar ファイルに変換できます。JD-GUI のようなツールを使用して、クラス、メソッド、変数名が人間に読めるかどうかを調べることができます。
 
-Sample obfuscated code block
+難読化されたコードブロックの例
 ```
 package com.a.a.a;
 
@@ -480,7 +480,7 @@ class a$b
 
 #### 改善方法
 
-ProGuard should be used to strip unneeded debugging information from the Java bytecode. By default, ProGuard removes attributes that are useful for debugging, including line numbers, source file names and variable names. ProGuard is a free Java class file shrinker, optimizer, obfuscator, and preverifier. It is shipped with Android’s SDK tools. To activate shrinking for the release build, add the following to build.gradle:
+ProGuard を使用して、Java バイトコードから不要なデバッグ情報を削除する必要があります。デフォルトでは、ProGuard は行番号、ソースファイル名、変数名などのデバッグに役立つ属性を削除します。ProGuard はフリーの Java クラスファイル縮小化、最適化、難読化、事前検証のツールです。Android の SDK ツールに同梱されています。リリースビルドの縮小を有効にするには、build.gradle に以下を追加します。
 
 ~~~~
 android {
