@@ -177,11 +177,9 @@ An alternative (and faster) way of getting the decrypted string is by adding a b
 
 Dalvik and ART both support the Java Native Interface (JNI), which defines defines a way for Java code to interact with native code written in C/C++. Just like on other Linux-based operating systes, native code is packaged into ELF dynamic libraries ("*.so"), which are then loaded by the Android app during runtime using the <code>System.load</code> method.
 
-Disassemblers with support for ELF/ARM binaries (i.e. all disassemblers in existence) can deal with Android native libraries without issues. We'll use IDA Pro in this example - you can try it out yourself with IDA's evaluation version.
-
 Download HelloWorld-JNI.apk from the OWASP MSTG repository and, optionally, install and run it on your emulator or Android device. The app is not excatly spectacular: All it does is show a label with the text "Hello from C++". In fact, this is the default app Android generates when you create a new project with C/C++ support - enough however to show the basic principles of how JNI calls work.
 
-<img src="Images/Chapters/0x05c/helloworld.jpg" width="350px" />
+<img src="Images/Chapters/0x05c/helloworld.jpg" width="300px" />
 
 Decompile the APK with apkx.py. This should extract the source into the <code>HelloWorld/src</code> directory. 
 
@@ -222,30 +220,70 @@ So where is the native implementation of this function? If you look into the <co
 
 <img src="Images/Chapters/0x05c/archs.jpg" width="300px" />
 
-
-
-According to the naming convention, we can expect an the library to export a symbol named <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code>. On Linux systems, you can list the symbols from the library using <code>readelf</code> (included in GNU binutils) or <code>nm</code>. On Mac OS, the same can be achieved with the <code>greadelf</code> tool, which you can get by installing binutils using Macports or Homebrew.
+Following the naming convention mentioned above, we can expect an the library to export a symbol named <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code>. On Linux systems, you can retrieve the list of symbols using <code>readelf</code> (included in GNU binutils) or <code>nm</code>. On Mac OS, the same can be achieved with the <code>greadelf</code> tool, which you can install via Macports or Homebrew. The following example uses <code>greadelf</code>:
 
 ```
 $ greadelf -W -s libnative-lib.so | grep Java
      3: 00004e49   112 FUNC    GLOBAL DEFAULT   11 Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI
 ```
 
-Following to the naming convention, this is the native function that gets actually executed when the <code>stringFromJNI</code> native method is called.
+This is the native function that gets eventually executed when the <code>stringFromJNI</code> native method is called.
 
-To read the assembly code, you can load <code>libnative-lib.so</code> on any disassembler that understands ELF binaries (i.e. every disassembler in existence). If the app ships with binaries for different architectures, you can pick the architecture you're most familiar with, as long as the disassembler knows how to deal with it. Each version is compiled from the same source and has exactly the same functionality. However, if you're planning to debug the library on a live device later, it's usually wise to pick an arm build. 
+To disassemble the code, you can load <code>libnative-lib.so</code> into any disassembler that understands ELF binaries (i.e. every disassembler in existence). If the app ships with binaries for different architectures, you can theoretically pick the architecture you're most familiar with, as long as the disassembler knows how to deal with it. Each version is compiled from the same source and implements exactly the same functionality. However, if you're planning to debug the library on a live device later, it's usually wise to pick an ARM build. 
 
-To support both older and newer ARM processors, Android apps may ship with libraries compiled for different Application Binary Interface (ABI) versions. The ABI defines how the application's machine code is supposed to interact with the system at runtime. The following ABIs are supported: 
+To support both older and newer ARM processors, Android apps ship with multple ARM builds compiled for different Application Binary Interface (ABI) versions. The ABI defines how the application's machine code is supposed to interact with the system at runtime. The following ABIs are supported: 
 
 - armeabi: ABI is for ARM-based CPUs that support at least the ARMv5TE instruction set. 
 - armeabi-v7a: This ABI extends armeabi to include several CPU instruction set extensions.
 - arm64-v8a: ABI for ARMv8-based CPUs that support AArch64, the new 64-bit ARM architecture.
 
-Most disassemblers will be able to deal with any of those architectures. We'll be using the <code>armeabi-v7a</code> version in the following examples, located in <code>lib/armeabi-v7a/libnative-lib.so</code>.
+Most disassemblers will be able to deal with any of those architectures. Below, we'll be viewing the <code>armeabi-v7a</code> version IDA Pro. It is located in <code>lib/armeabi-v7a/libnative-lib.so</code>. If you don't own an IDA Pro license, you can do the same thing with demo or evaluation version available on the Hex-Rays website <sup>[x]</sup>.
 
--- TODO [Complete native static analysis] --
+
+Open the file in IDA Pro. In the "Load new file" dialog, choose "ELF for ARM (Shared Object)" as the file type (IDA should detect this automatically), and "ARM Little-Endian" as the processor type.
+
+<img src="Images/Chapters/0x05c/IDA_open_file.jpg" width="700px" />
+
+Once the file is open, click into the "Functions" window on the left and press <code>Alt+t</code> to open the search dialog. Enter "java" and hit enter. This should highlight the <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code> function. Double-click it to jump to its address in the disassembly Window. "Ida View-A" should now show the disassembly of the function.
 
 <img src="Images/Chapters/0x05c/helloworld_stringfromjni.jpg" width="700px" />
+
+Not a lot of code there, but let's analyze it. The first thing we need to know is that the first argument passed to every JNI is a JNI interface pointer. An interface pointer is a pointer to a pointer. This pointer points to a function table - an array of even more pointers, each of which points to a JNI interface function (is your head spinning yet?). The function table is initalized by the Java VM, and allows the native function to interact with the Java environment.
+
+<img src="Images/Chapters/0x05c/JNI_interface.png" width="700px" />
+
+With that in mind, let's have a look at each line of assembly code.
+
+```
+LDR  R2, [R0]
+```
+
+Remember - the first argument (located in R0) is a pointer to the JNI function table pointer. The <code>LDR</code> instruction loads this function table pointer into R2.
+
+```
+LDR  R1, =aHelloFromC    
+```
+
+This instruction loads the address of the static string "Hello from C++" into R1.
+
+```
+LDR.W  R2, [R2, #0x29C]
+```
+
+This instruction loads the function pointer from offset 0x29C into the JNI function pointer table into R2. This happens to be the <code>NewStringUTF</code> function. You can look this up its definition in jni.h, which is included in the Android NDK. In our case a function pointer is 4 byte long, so offset 0x29C should point to the 167th entry in <code>struct JNINativeInterface</code>. The function prototype looks as follows:
+
+```
+jstring     (*NewStringUTF)(JNIEnv*, const char*);
+```
+
+
+```
+ADD  R1, PC
+BX   R2
+```
+
+When this function returns, R0 contains a pointer to the newly constructed UTF string. This is already the final return value, so R0 is simply left unchanged and the function ends.
+
 
 #### デバッグとトレース
 
@@ -282,12 +320,9 @@ $ apksigner sign --ks  ~/.android/debug.keystore --ks-key-alias signkey UnCracka
 $ adb install UnCrackable-Repackaged.apk
 ```
 
-
 The <code>adb</code> command line tool, which ships with the Android SDK, bridges the gap between your local development environment and a connected Android device. Commonly you'll debug on a device connected via USB, but remote debugging over the network is also possible.
 
 An important restriction is that line breakpoints usually won't work, as the release bytecode doesn't contain line information. Method breakpoints do work however.
-
-
 
 ```bash
 $ adb shell ps | grep uncrackable
@@ -348,7 +383,7 @@ The Developer options also contain the useful "Wait for Debugger" setting that a
 
 Note: Even with <code>ro.debuggable</code> set to 1 in <code>default.prop</code>, the app won't show up in the "debug app" list unless the <code>android:debuggable</code> flag is set to <code>true</code> in the Manifest.
 
-###### 逆コンパイルされたソースを使用したデバッグ
+###### IDEを使用したデバッグ
 
 A pretty neat trick is setting up a project in an IDE with the decompiled sources, which allows you to set method breakpoints directly in the source code. In most cases, you should be able single-step through the app, and inspect the state of variables through the GUI. The experience won't be perfect - its not the original source code after all, so you can't set line breakpoints and sometimes things will simply not work correctly. Then again, reversing code is never easy, and being able to efficiently navigate and debug plain old Java code is a pretty convenient way of doing it, so it's usually worth giving it a shot. A similar method was described in the NetSPI blog []
 
@@ -363,17 +398,17 @@ Choose "Android"
 Name the project
 
 
-<img src="Images/Chapters/0x05c/intellij_new_project.jpg" width="550px" />
+<img src="Images/Chapters/0x05c/intellij_new_project.jpg" width="65px" />
 
 
 Choose "Add no Activity"
 
 
-<img src="Images/Chapters/0x05c/drag_code.jpg" width="650px" />
+<img src="Images/Chapters/0x05c/drag_code.jpg" width="700px" />
 
 <img src="Images/Chapters/0x05c/final_structure.jpg" width="350px" />
 
-<img src="Images/Chapters/0x05c/method_breakpoint.jpg" width="650px" />
+<img src="Images/Chapters/0x05c/method_breakpoint.jpg" width="700px" />
 
 
 ##### ネイティブコードのデバッグ
@@ -394,15 +429,25 @@ $ adb push $NDK/prebuilt/android-arm/gdbserver/gdbserver /data/local/tmp
 
 ```bash
 $ adb shell
+$ ps | grep helloworld
+u0_a164   12690 201   1533400 51692 ffffffff 00000000 S sg.vantagepoint.helloworldjni
 $ su
-# ps | grep HelloWorld
-# ./gdbserver --attach localhost:1234 26806
+# /data/local/tmp/gdbserver --attach localhost:1234 12690
+Attached; pid = 12690
+Listening on port 1234
 ```
 
+
+
 ```bash
-$ $NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-gdb
-(gdb) target remote :1235
-Remote debugging using :1235
+$ adb forward tcp:1234 tcp:1234
+$ export TOOLCHAIN=[YOUR-NDK-PATH]/toolchains/arm-linux-androideabi-4.8/prebuilt/darwin-x86_64/bin/
+$ $TOOLCHAIN/arm-linux-androideabi-gdb libnative-lib.so
+GNU gdb (GDB) 7.7
+(...)
+Reading symbols from libnative-lib.so...(no debugging symbols found)...done.
+(gdb) target remote :1234
+Remote debugging using :1234
 0xb6e0f124 in ?? ()
 ```
 
@@ -1434,7 +1479,7 @@ The system should now boot normally. To quickly verify that the correct kernel i
 
 System call hooking allows us to attack any anti-reversing defenses that depend on functionality provided by the kernel. With our custom kernel in place, we can now use a LKM to load additional code into the kernel. We also have access to the /dev/kmem interface, which we can use to patch kernel memory on-the-fly. This is a classical Linux rootkit technique and has been described for Android by Dong-Hoon You [1].
 
-![Disassembly of function main.](Images/Chapters/0x05c/syscall_hooking.jpg)
+<img src="Images/Chapters/0x05c/syscall_hooking.jpg" width="700px"/>
 
 The first piece of information we need is the address of sys_call_table. Fortunately, it is exported as a symbol in the Android kernel (iOS reversers are not so lucky). We can look up the address in the /proc/kallsyms file:
 
@@ -1648,7 +1693,7 @@ File hiding is of course only the tip of the iceberg: You can accomplish a whole
 + Frida - https://www.frida.re
 + Angr - http://angr.io/
 + JEB -
-+ IDA Pro -
++ IDA Pro - https://www.hex-rays.com/products/ida/
 + DroidScope -
 + DECAF - https://github.com/sycurelab/DECAF
 + PANDA - https://github.com/moyix/panda/blob/master/docs/
