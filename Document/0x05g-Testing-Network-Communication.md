@@ -74,35 +74,35 @@ M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/M
 
 #### 概要
 
-Using encryption is essential when you are sending confidential data. However, encryption can defend your privacy, only if it uses enough strong cryptography. To reach this goal SSL-based services should not offer the possibility to choose weak cipher suite. A cipher suite is specified by an encryption protocol (e.g. DES, RC4, AES), the encryption key length (e.g. 40, 56, or 128 bits), and a hash algorithm (e.g. SHA, MD5) used for integrity checking. To ensure, that your encryption cannot be easily defeated, you should verify your TLS configuration that it does not use any weak cipher/protocol/key [1].
+機密データを送信する場合、暗号化を使用することが不可欠です。ただし、十分に強力な暗号を使用する場合に限り、暗号化によってプライバシーが保護されます。この目標を達成するには、SSL ベースのサービスで脆弱な暗号スイートを選択してはいけません。暗号スイートは暗号化プロトコル(DES, RC4, AES など)、暗号鍵長(40, 56, 128 ビットなど)、完全性検査に使用されるハッシュアルゴリズム(SHA, MD5 など)によって明示されます。あなたの暗号化を容易に破られないようにするには、脆弱な暗号/プロトコル/鍵を使用していないことを TLS 設定で確認する必要があります [1]。
 
 
 
 #### 静的解析
 
-Static analysis is not applicable for this point.
+静的解析はここでは適用されません。
 
 #### 動的解析
 
-After identifying all servers communicating with your application (e.g. using Tcpdump, or Burp Suite) you should verify if a server/-s allow for using weak cipher/protocol/key. It can be done, using different tools:
+アプリケーションと通信しているすべてのサーバーを(Tcpdump や Burp Suite などを使用して)特定した後、サーバーが脆弱な暗号/プロトコル/鍵の使用を許可しているかどうかを確認する必要があります。さまざまなツールを使用して実行します。
 
-* testssl.sh: via following command:
+* testssl.sh: コマンドは以下のとおりです。
 
 ```
 testssl.sh www.example.com:443
 ```
 
-* sslyze: via following command:
+* sslyze: コマンドは以下のとおりです。
 
 ```
 sslyze --regular www.example.com:443
 ```
-* O-Saft (OWASP SSL Advanced Forensic Tool): can be run in GUI mode via command:
+* O-Saft (OWASP SSL Advanced Forensic Tool): コマンドから GUI モードで実行します。
 
 ```
 o-saft.tcl
 ```
-or via command. There are multiple options, which can be specified here [2], but the most general one, verifying certificate, ciphers and SSL connection is the following:
+またはコマンドで実行します。複数のオプションが指定できます [2]。証明書、暗号、SSL 接続を検証する最も一般的なものは以下のとおりです。
 
 ```
 perl o-saft.pl +check www.example.com:443
@@ -110,7 +110,7 @@ perl o-saft.pl +check www.example.com:443
 
 #### 改善方法
 
-To properly configure transport layer protection for network communication, please follow the OWASP Transport Layer Protection cheat sheet [3].
+ネットワーク通信のためにトランスポート層保護を適切に構成するには、OWASP Transport Layer Protection cheat sheet に準じます [3]。
 
 #### 参考情報
 
