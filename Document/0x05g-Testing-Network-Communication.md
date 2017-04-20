@@ -142,11 +142,11 @@ M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/M
 
 #### 概要
 
-Using TLS for transporting sensitive information over the network is essential from security point of view. However, implementing a mechanism of encrypted communication between mobile application and backend API is not a trivial task. Developers often decides for easier, but less secure (e.g. accepting any certificate) solutions to ease a development process what often is not fixed after going on production [1], exposing at the same time an application to man-in-the-middle attacks [2].
+ネットワーク上で機密情報を転送するために TLS を使用することは、セキュリティの観点から不可欠です。しかし、モバイルアプリケーションとバックエンド API との間の暗号化通信の仕組みを実装することは簡単な作業ではありません。開発者はしばしば、開発プロセスを楽にするために、より簡単ではあるものの安全ではない(任意の証明書を受け入れるなどの)ソリューションを選びます。往々にして製造後に修正されず [1]、同時にアプリケーションを中間者攻撃に晒します [2]。
 
 #### ホワイトボックステスト
 
-There are 2 main issues related with validating TLS connection: the first one is verification if a certificate comes from trusted source and the second one is a check whether the endpoint server presents the right certificate [3].
+TLS 接続の妥当性確認には主に2つの問題があります。一つ目は証明書が信頼できるソースから取得されたかどうかの検証であり、二つ目はエンドポイントサーバーが正しい証明書を提示しているかどうかを確認することです [3]。
 
 ##### サーバー証明書の検証
 
