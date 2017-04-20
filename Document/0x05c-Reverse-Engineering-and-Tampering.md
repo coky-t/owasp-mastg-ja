@@ -177,6 +177,8 @@ An alternative (and faster) way of getting the decrypted string is by adding a b
 
 Dalvik and ART both support the Java Native Interface (JNI), which defines defines a way for Java code to interact with native code written in C/C++. Just like on other Linux-based operating systes, native code is packaged into ELF dynamic libraries ("*.so"), which are then loaded by the Android app during runtime using the <code>System.load</code> method.
 
+Android JNI functions consist of native code compiled into Linux ELF libraries. It's pretty much standard Linux fare. However, instead of relying on widely used C libraries such as glibc, Android binaries are built against a custom libc named Bionic [x]. Bionic adds support for important Android-specific services such as system properties and logging, and is not fully POSIX-compatible.
+
 Download HelloWorld-JNI.apk from the OWASP MSTG repository and, optionally, install and run it on your emulator or Android device. The app is not excatly spectacular: All it does is show a label with the text "Hello from C++". In fact, this is the default app Android generates when you create a new project with C/C++ support - enough however to show the basic principles of how JNI calls work.
 
 <img src="Images/Chapters/0x05c/helloworld.jpg" width="300px" />
@@ -239,7 +241,6 @@ To support both older and newer ARM processors, Android apps ship with multple A
 
 Most disassemblers will be able to deal with any of those architectures. Below, we'll be viewing the <code>armeabi-v7a</code> version IDA Pro. It is located in <code>lib/armeabi-v7a/libnative-lib.so</code>. If you don't own an IDA Pro license, you can do the same thing with demo or evaluation version available on the Hex-Rays website <sup>[x]</sup>.
 
-
 Open the file in IDA Pro. In the "Load new file" dialog, choose "ELF for ARM (Shared Object)" as the file type (IDA should detect this automatically), and "ARM Little-Endian" as the processor type.
 
 <img src="Images/Chapters/0x05c/IDA_open_file.jpg" width="700px" />
@@ -261,29 +262,36 @@ LDR  R2, [R0]
 Remember - the first argument (located in R0) is a pointer to the JNI function table pointer. The <code>LDR</code> instruction loads this function table pointer into R2.
 
 ```
-LDR  R1, =aHelloFromC    
+LDR  R1, =aHelloFromC 
 ```
 
-This instruction loads the address of the static string "Hello from C++" into R1.
+This instruction loads the pc-relative offset of the string "Hello from C++" into R1. Note that this string is located directly after the end of the function block at offset 0xe84. The addressing relative to the program counter allows the code to run independent of its position in memory.
 
 ```
 LDR.W  R2, [R2, #0x29C]
 ```
 
-This instruction loads the function pointer from offset 0x29C into the JNI function pointer table into R2. This happens to be the <code>NewStringUTF</code> function. You can look this up its definition in jni.h, which is included in the Android NDK. In our case a function pointer is 4 byte long, so offset 0x29C should point to the 167th entry in <code>struct JNINativeInterface</code>. The function prototype looks as follows:
+This instruction loads the function pointer from offset 0x29C into the JNI function pointer table into R2. This happens to be the <code>NewStringUTF</code> function. You can look the list of function pointers in jni.h, which is included in the Android NDK. The function prototype looks as follows:
 
 ```
 jstring     (*NewStringUTF)(JNIEnv*, const char*);
 ```
 
+The function expects two arguments: The JNIEnv pointer (already in R0) and a String pointer. Next, the current value of PC is added to R1, resulting in the absolute address of the static string "Hello from C++" (PC + offset).
 
 ```
 ADD  R1, PC
+```
+
+Finally, the program executes a branch instruction to the NewStringUTF function pointer loaded into R2:
+
+```
 BX   R2
 ```
 
-When this function returns, R0 contains a pointer to the newly constructed UTF string. This is already the final return value, so R0 is simply left unchanged and the function ends.
+When this function returns, R0 contains a pointer to the newly constructed UTF string. This is the final return value, so R0 is left unchanged and the function ends.
 
+We've now covered the basics of static analysis on Android. Of course, the only way to *really* learn it is hands-on experience: Start by building your own projects in Android Studio and observing how your code gets translated to bytecode and native code, and have a shot at our cracking challenges. In the real world - especially when reversing more complex apps or malware - you'll find that pure static analysis is very difficult. Observing and manipulating an app during runtime makes it much, much easier to decipher its behaviour. Next, we'll have a look at dynamic analysis methods that help you do just that.
 
 #### デバッグとトレース
 
@@ -433,10 +441,9 @@ $ ps | grep helloworld
 u0_a164   12690 201   1533400 51692 ffffffff 00000000 S sg.vantagepoint.helloworldjni
 $ su
 # /data/local/tmp/gdbserver --attach localhost:1234 12690
-Attached; pid = 12690
+Attached; pid = 14342
 Listening on port 1234
 ```
-
 
 
 ```bash
@@ -451,10 +458,110 @@ Remote debugging using :1234
 0xb6e0f124 in ?? ()
 ```
 
+The problem: At this point it's already too late! The function has already run...
 
 
 
--- TODO [Write introduction to debugging native code (HelloWorld-JNI)] --
+```bash
+$ adb shell
+android $ su
+android # /data/local/tmp/gdbserver --attach localhost:1234 14342 
+
+
+Go to "Developer Options" -> "Select debug app" and pick HelloWorldJNI.  Activate the "Wait for debugger" switch.
+
+
+Launch the app
+
+```bash
+$ adb jdwp
+14342
+$ adb forward tcp:7777 jdwp:14342
+$ { echo "suspend"; cat; } | jdb -attach localhost:7777
+> stop in java.lang.System.loadLibrary
+> resume
+All threads resumed.
+Breakpoint hit: "thread=main", java.lang.System.loadLibrary(), line=988 bci=0
+> step up
+main[1] step up
+> 
+Step completed: "thread=main", sg.vantagepoint.helloworldjni.MainActivity.<clinit>(), line=12 bci=5
+
+main[1] 
+```
+
+At this point, the library has been loaded.
+
+
+```bash
+$ adb shell
+android $ su
+android # /data/local/tmp/gdbserver --attach localhost:1234 14342 
+```
+
+
+```bash
+$ adb forward tcp:1234 tcp:1234
+$ $TOOLCHAIN/arm-linux-androideabi-gdb libnative-lib.so
+GNU gdb (GDB) 7.7
+Copyright (C) 2014 Free Software Foundation, Inc.
+(...)
+(gdb) target remote :1234
+Remote debugging using :1234
+0xb6de83b8 in ?? ()
+(gdb) info sharedlibrary
+(...)
+0xa3522e3c  0xa3523c90  Yes (*)     libnative-lib.so
+(gdb) info functions
+All defined functions:
+
+Non-debugging symbols:
+0x00000e78  Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI
+(...)
+0xa3522e78  Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI
+(...)
+```
+
+
+Set a breakpoint:
+
+```
+(gdb) b *0xa3522e78
+Breakpoint 1 at 0xa3522e78
+(gdb) cont
+
+```
+
+In jdb:
+
+```
+main[1] resume
+All threads resumed.
+```
+
+In gdb:
+
+```
+Breakpoint 1, 0xa3522e78 in Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI () from libnative-lib.so
+(gdb) disass $pc
+Dump of assembler code for function Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI:
+=> 0xa3522e78 <+0>: ldr r2, [r0, #0]
+   0xa3522e7a <+2>: ldr r1, [pc, #8]  ; (0xa3522e84 <Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI+12>)
+   0xa3522e7c <+4>: ldr.w r2, [r2, #668]  ; 0x29c
+   0xa3522e80 <+8>: add r1, pc
+   0xa3522e82 <+10>:  bx  r2
+   0xa3522e84 <+12>:  lsrs  r4, r7, #28
+   0xa3522e86 <+14>:  movs  r0, r0
+End of assembler dump.
+```
+
+
+```
+
+
+```
+
+
 
 ##### 実行トレース
 
@@ -1693,6 +1800,7 @@ File hiding is of course only the tip of the iceberg: You can accomplish a whole
 + Frida - https://www.frida.re
 + Angr - http://angr.io/
 + JEB -
++ Bionic - https://github.com/android/platform_bionic
 + IDA Pro - https://www.hex-rays.com/products/ida/
 + DroidScope -
 + DECAF - https://github.com/sycurelab/DECAF
