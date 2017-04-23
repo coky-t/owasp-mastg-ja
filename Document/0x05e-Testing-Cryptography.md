@@ -5,7 +5,7 @@
 #### 概要
 
 -- REVIEW --
-ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。 Once it is obtained by attacker, the task to decrypt the sensitive data becomes trivial, and the initial idea to protect confidentiality fails.
+ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。攻撃者がそれを取得すると、機密データを復号する作業は簡単になり、機密性を保護するという当初の考えは失敗します。
 
 #### ホワイトボックステスト
 
