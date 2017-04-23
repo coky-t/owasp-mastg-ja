@@ -4,9 +4,8 @@
 
 #### 概要
 
-ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。
-
--- TODO [Develop overview on Verifying Key Management]
+-- REVIEW --
+ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。 Once it is obtained by attacker, the task to decrypt the sensitive data becomes trivial, and the initial idea to protect confidentiality fails.
 
 #### ホワイトボックステスト
 
@@ -78,7 +77,6 @@ buildTypes {
 ##### OWASP MASVS
 - V3.1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
 - V3.5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
-- V3.7: "All cryptographic keys are changeable, and are generated or replaced at installation time"
 
 ##### OWASP Mobile Top 10
 * M6 - Broken Cryptography
@@ -130,7 +128,8 @@ buildTypes {
 
 #### 概要
 
--- TODO [Provide a general description of the issue "Verifying the Configuration of Cryptographic Standard Algorithms"] --
+-- REVIEW --
+Choosing good cryptographic algorithm alone is not enough. Often security of otherwise sound algorithms can be affected if misconfigured. Many previously strong algorithms and their configurations are now considered vulnerable or non-compliant with best practices. It is therefore important to periodically check current best practices and adjust configurations accordingly.  
 
 #### 静的解析
 
@@ -152,29 +151,32 @@ buildTypes {
 
 #### 改善方法
 
--- TODO [Describe the best practices that developers should follow to prevent this issue "Verifying the Configuration of Cryptographic Standard Algorithms".] --
+-- REVIEW --
+Use cryptographic algorithm configurations that are currently considered strong, such those from NIST<sup>1</sup> and BSI<sup>2</sup> recommendations.
+
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10
 
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+* M6 - Broken Cryptography
 
 ##### OWASP MASVS
 
--- TODO [Update reference below "VX.Y" to OWASP MASVS] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+-- REVIEW --
+- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
 
 ##### CWE
 
--- TODO [Add relevant CWE for "Verifying the Configuration of Cryptographic Standard Algorithms"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
+-- REVIEW --
+* CWE-326: Inadequate Encryption Strength
 
-##### その他
 
-- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
-- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
+##### Info
+
+-- REVIEW --
+- [1] NIST recommendations (2016) - https://www.keylength.com/en/4/
+- [2] BSI recommendations (2017) - https://www.keylength.com/en/8/
 
 ##### ツール
 
@@ -219,8 +221,8 @@ APK を逆コンパイルしてコードを調査し、既知の脆弱な暗号�
 * [2]: [NIST Special Publication 800-57](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) [(日本語)](https://www.ipa.go.jp/files/000055490.pdf)
 
 ##### OWASP MASVS
-- V3.3: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated"
-- V3.4: "Cryptographic modules use parameters that adhere to current industry best practices. This includes key length and modes of operation"
+- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
+- V3.4: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated for security purposes"
 
 ##### OWASP Mobile Top 10
 * M6 - Broken Cryptography
