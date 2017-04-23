@@ -2,57 +2,51 @@
 
 Its openness makes Android a favorable environment for reverse engineers. However, dealing with both Java and native code can make things more complicated at times. In the following chapter, we'll look at some peculiarities of Android reversing and OS-specific tools as processes.
 
-In comparison to iOS, Android offers some big advantages to reverse engineers. First of all transparency: You can study the source code of the Android Open Source Project (AOSP), build your ROMs, and so on. The OS is also much more friendly to developers and tinkerers in other way: From the developer options available by default, to the way debugging is set up and the tools shipping with the SDK, there's lot of niceties to make your life easier compared to "some other vendors".
+In comparison to "the other" mobile OS, Android offers some big advantages to reverse engineers. Because Android is open source, you can study the source code of the Android Open Source Project (AOSP), modify the OS and its standard tools in any way you want. Even on standard retail devices, it is easily possible to do things like activating developer mode and sideloading apps without jumping through many hoops. From the powerful tools shipping with the SDK, to the wide range of available reverse engineering tools, there's a lot of niceties to make your life easier.
 
-However, there's also a few challenges you'll encounter. For example, if you're used to analyzing native code, you'll need to SMALI to your repertoire. As it is easy for developers to call into native code via the Java Native Interface (JNI), you'll often need to work with Java and native code at the same time. JNI is sometimes used on purpose to confuse reverse engineers (to be fair, there might also be legitimate reasons for using JNI, such as improving performance or supporting legacy code). Developers seeking to impede reverse engineering deliberately split functionality between Java bytecode and native code, structuring their apps such that execution frequently jumps between the two layers.
+However, there's also a few Android-specific challenges. For example, you'll need to deal with both Java bytecode and native code. Java Native Interface (JNI) is sometimes used on purpose to confuse reverse engineers. Developers sometimes use the native layer to "hide" data and functionality, or may structure their apps such that execution frequently jumps between the two layers. This can complicate things for reverse engineers (to be fair, there might also be legitimate reasons for using JNI, such as improving performance or supporting legacy code).
 
-You'll need a working knowledge about both the Java-based Android environment and the Linux OS and Kernel that forms the basis of Android (better yet, they’d know all these components inside out). Plus, they need the right toolset to deal with both native code and bytecode running inside the Java virtual machine.
+You'll need a working knowledge about both the Java-based Android environment and the Linux OS and Kernel that forms the basis of Android - or better yet, know all these components inside out. Plus, they need the right toolset to deal with both native code and bytecode running inside the Java virtual machine.
 
-Note that in the following sections we'll use the OWASP Mobile Testing Guide Crackmes [2] as examples for demonstrating various reverse engineering techniques, so expect partial spoilers. We encourage you to have a crack at the challenges first before reading on!
+Note that in the following sections we'll use the OWASP Mobile Testing Guide Crackmes <sup>[1]</sup> as examples for demonstrating various reverse engineering techniques, so expect partial and full spoilers. We encourage you to have a crack at the challenges yourself before reading on!
 
 ### 必要なもの
 
-At the very minimum, you'll need the Android SDK [1]. The SDK contains basic utilities for dealing with Android Apps and ELF binaries, the Android Debugging Bridge (ADB) client, and tools to help with tracing and debugging. To get the SDK, simply download Google’s Android Studio. It comes with a SDK Manager app that lets you install the Android SDK tools and manage SDKs for various API levels, as well as the emulator and an AVD Manager application to create emulator images. Android Studio can be downloaded from the Android download page: 
+At the very least, you'll need Android Studio <sup>[2]</sup>, which comes with the Android SDK, platform tools and emulator, as well as a manager app for managing the various SDK versions and framework components. With Android Studio, you also get an SDK Manager app that lets you install the Android SDK tools and manage SDKs for various API levels, as well as the emulator and an AVD Manager application to create emulator images. Make sure that the following is installed on your system:
 
-https://developer.android.com/develop/index.html
+- The newest SDK Tools and SDK Platform-Tools packages. These packages include the Android Debugging Bridge (ADB) client as well as other tools that interface with the Android platform. In general, these tools are backward-compatible, so you need only one version of those installed.
 
-You’ll also need the Android NDK for compiling anything that creates native code. The NDK contains prebuilt toolchains for cross-compiling native code for different architectures. The NDK can be installed via SDK Manager, and is also available as a standalone download:
+- The Android NDK. This is the Native Development Kit that contains prebuilt toolchains for cross-compiling native code for different architectures.
 
-https://developer.android.com/ndk/downloads/index.html
-
-After you downloaded the SDK, create a standalone toolchain for Android Lollipop (API 21):
-
-```bash
-$ $YOUR_NDK_PATH/build/tools/make-standalone-toolchain.sh --arch=arm --platform=android-21 --install-dir=/tmp/my-android-toolchain
-```
-
-In addition to the SDK and NDK, you'll also something to make Java bytecode more human-friendly. APKTool [3] is a popular free tool that can extract and disassemble resources directly from the APK archive and disassemble Java bytecode to SMALI. It also allows you to reassemble the package, which is useful for patching and applying changes to the Manifest.
+In addition to the SDK and NDK, you'll also something to make Java bytecode more human-friendly. APKTool <sup>[3]</sup> is a popular free tool that can extract and disassemble resources directly from the APK archive and disassemble Java bytecode to Smali format (Smali/Baksmali is an assembler/disassembler for the Dex format. It's also icelandic for "Assembler/Disassembler"). APKTool allows you to reassemble the package, which is useful for patching and applying changes to the Manifest.
 
 Other than that, it's really a matter of preference and budget. A ton of free and commercial disassemblers, decompilers, and frameworks with different strengths and weaknesses exist - we'll cover some of them below.
 
 ### フリーのリバースエンジニアリング環境の構築
 
-With a little effort you can build a reasonable GUI-based reverse engineering environment for free. JD [4] is a free Java de-compiler that integrates with Eclipse [4] and IntelliJ IDEA [5]. Generally, IntelliJ is the more light-weight solution and works great for browsing the source code and also allows for basic on-device debugging of the decompiled apps. However, if you prefer something that's clunky, slow and complicated to use, Eclipse is the right IDE for you (note: Author's opinion).
+With a little effort you can build a reasonable reverse engineering environment for free. Many free Java decompilers are available that generally deal well with Android bytecode. Popular decompilers include JD <sup>[4]</sup>, Jad <sup>[10]</sup>, Proycon <sup>[11]</sup> and CFR <sup>[12]</sup>. For convenience, we have packed some of these decompilers into our <code>apkx</code> wrapper script <sup>[15]</sup>. This script completely automates the process of extracting Java code from release APK files and makes it easy to experiment with different backends (we'll also use it in some of the examples below).
 
-If you don’t mind looking at SMALI instead of Java code, you can use the smalidea plugin for IntelliJ for debugging on the device [5]. Smalidea supports single-stepping through the bytecode, identifier renaming and watches for non-named registers, which makes it much more powerful than a JD + IntelliJ setup.
+For navigating the decompiled sources we recommend using IntelliJ, a relatively light-weight IDE that works great for browsing code and allows for basic on-device debugging of the decompiled apps. However, if you prefer something that's clunky, slow and complicated to use, Eclipse is the right IDE for you (note: This piece of advice is based on the author's opinion and personal bias).
 
-More elaborate tasks such as program analysis and automated de-obfuscation can be achieved with open source reverse engineering frameworks such as Radare2 [7] and Angr[8]. You'll find examples usages for many of these free tools and frameworks throughout the guide.
+If you don’t mind looking at Smali instead of Java code, you can use the smalidea plugin for IntelliJ for debugging on the device <sup>[7]</sup>. Smalidea supports single-stepping through the bytecode, identifier renaming and watches for non-named registers, which makes it much more powerful than a JD + IntelliJ setup.
+
+More elaborate tasks such as program analysis and automated de-obfuscation can be achieved with open source reverse engineering frameworks such as Radare2 <sup>[8]</sup> and Angr <sup>[9]</sup>. You'll find usage examples for many of these free tools and frameworks throughout the guide.
 
 #### 商用ツール
 
 ##### JEB
 
-JEB [6], a commercial decompiler, packs all the functionality needed for static and dynamic analysis of Android apps into a convenient all-in-one package, is reasonably reliable and you get quick support. It has a built-in debugger, which allows for an efficient workflow – setting breakpoints directly in the decompiled (and annotated sources) is invaluable, especially when dealing with ProGuard-obfuscated bytecode. Of course convenience like this doesn’t come cheap - at $90 / month for the standard license, JEB isn’t exactly a steal.
+JEB <sup>[10]</sup>, a commercial decompiler, packs all the functionality needed for static and dynamic analysis of Android apps into a convenient all-in-one package, is reasonably reliable and you get quick support. It has a built-in debugger, which allows for an efficient workflow – setting breakpoints directly in the decompiled (and annotated sources) is invaluable, especially when dealing with ProGuard-obfuscated bytecode. Of course convenience like this doesn’t come cheap - and since version 2.0 JEB has changed to a subscription model, so you'll need to pay a hefty monthly fee to use it.
 
 ##### IDA Pro
 
-IDA Pro [7] understands ARM, MIPS and of course Intel ELF binaries, plus it can deal with Java bytecode. It also comes with remote debuggers for both Java applications and native processes. With its capable disassembler and powerful scripting and extension capabilities, IDA Pro works great for static analysis of native programs and libraries. However, the static analysis facilities it offers for Java code are somewhat basic – you get the SMALI disassembly but not much more. There’s no navigating the package and class structure, and some things (such as renaming classes) can’t be done which can make working with more complex Java apps a bit tedious.
+IDA Pro <sup>[11]</sup> understands ARM, MIPS and of course Intel ELF binaries, plus it can deal with Java bytecode. It also comes with remote debuggers for both Java applications and native processes. With its capable disassembler and powerful scripting and extension capabilities, IDA Pro works great for static analysis of native programs and libraries. However, the static analysis facilities it offers for Java code are somewhat basic – you get the Smali disassembly but not much more. There’s no navigating the package and class structure, and some things (such as renaming classes) can’t be done which can make working with more complex Java apps a bit tedious.
 
 ### リバースエンジニアリング
 
 #### Java コードの静的解析
 
-Unless some mean anti-decompilation tricks have been applied, Java bytecode can be converted back into source code without issues using free tools. We'll be using UnCrackable Level 1 [8] in the following examples, so download it if you haven't already. First, let's install the app on a device or emulator and run it to see what the crackme is about.
+Unless some mean anti-decompilation tricks have been applied, Java bytecode can be converted back into source code without issues using free tools. We'll be using UnCrackable Level 1 in the following examples, so download it if you haven't already. First, let's install the app on a device or emulator and run it to see what the crackme is about.
 
 ```
 $ wget https://github.com/OWASP/owasp-mstg/raw/master/OMTG-Files/02_Crackmes/01_Android/Level_01/UnCrackable-Level1.apk
@@ -86,27 +80,26 @@ Archive:  UnCrackable-Level1.apk
 
 ```
 
-In the standard case, all the Java bytecode and data related to the app is contained in a file named *classes.dex* in the app root directory. This file adheres to the Dalvik Executable Format (DEX), an Android-specific way of packaging Java programs. Most Java decompilers expect plain class files or JARs as input, so you need to convert the classes.dex file into a JAR first. Once you have a JAR file, you can use any number of free decompilers to produce Java code - some popular decompilers are JD [3], Jad [10], Proycon [11] and CFR [12].
+In the standard case, all the Java bytecode and data related to the app is contained in a file named *classes.dex* in the app root directory. This file adheres to the Dalvik Executable Format (DEX), an Android-specific way of packaging Java programs. Most Java decompilers expect plain class files or JARs as input, so you need to convert the classes.dex file into a JAR first. This can be done using  <code>dex2jar</code> or <code>enjarify</code>.
 
-For this example, let's pick CFR as our decompiler of choice. CFR is under active development, and brand-new releases are made available regularly on the author's website [13]. Conveniently, CFR has been released under a MIT license, which means that it can be used freely for any purposes, even though its source code is not currently available.
+Once you have a JAR file, you can use any number of free decompilers to produce Java code. In this example, we'll CFR as our decompiler of choice. CFR is under active development, and brand-new releases are made available regularly on the author's website <sup>[13]</sup>. Conveniently, CFR has been released under a MIT license, which means that it can be used freely for any purposes, even though its source code is not currently available.
 
-For convenience, we have packaged the dex2jar and CFR libraries along with a Python script that can be downloaded from the OWASP MSTG GitHub repo [14]. Download apkx.py and apkx-libs.jar from the repository and you are ready to go. Run apkx.py to extract and decompile that Java classes from the APK:
+The easiest way to run CFR is through <code>apkx</code>, which also packages <code>dex2jar</code> and automates the extracting, conversion and decompliation steps. Install it as follows:
 
 ```
-$ wget https://raw.githubusercontent.com/OWASP/owasp-mstg/master/OMTG-Files/Download/apkx-0.9.tgz
-$ tar xzf apkx-0.9.tgz 
-$ chmod +x apkx.py
-$ ./apkx.py UnCrackable-Level1.apk 
+$ git clone https://github.com/b-mueller/apkx
+$ cd apkx
+$ sudo ./install.sh
+```
+
+This should copy <code>apkx</code> to <code>/usr/local/bin</code>. Run it on <code>UnCrackable-Level1.apk</code>:
+
+```bash
+$ apkx UnCrackable-Level1.apk 
 Extracting UnCrackable-Level1.apk to UnCrackable-Level1
+Converting: classes.dex -> classes.jar (dex2jar)
 dex2jar UnCrackable-Level1/classes.dex -> UnCrackable-Level1/classes.jar
-Processing UnCrackable-Level1/classes.jar (use silent to silence)
-Processing sg.vantagepoint.a.a
-Processing sg.vantagepoint.a.b
-Processing sg.vantagepoint.a.c
-Processing sg.vantagepoint.uncrackable1.MainActivity
-Processing sg.vantagepoint.uncrackable1.a
-Processing sg.vantagepoint.uncrackable1.b
-Processing sg.vantagepoint.uncrackable1.c
+Decompiling to UnCrackable-Level1/src (cfr)
 ```
 
 You should now find the decompiled sources in the "Uncrackable-Level1/src" directory. To view the sources, a simple text editor (preferably with syntax highlighting) is fine, but loading the code into a Java IDE makes navigation easier. Let's import the code into IntelliJ, which also gets us on-device debugging functionality as a bonus.
@@ -183,14 +176,17 @@ Download HelloWorld-JNI.apk from the OWASP MSTG repository and, optionally, inst
 
 <img src="Images/Chapters/0x05c/helloworld.jpg" width="300px" />
 
-Decompile the APK with apkx.py. This should extract the source into the <code>HelloWorld/src</code> directory. 
+Decompile the APK with <code>apkx</code>. This extract the source code into the <code>HelloWorld/src</code> directory. 
 
 ```bash
 $ wget https://raw.githubusercontent.com/OWASP/owasp-mstg/master/OMTG-Files/03_Examples/01_Android/01_HelloWorld-JNI/HelloWorld-JNI.apk
-$ ./apkx.py HelloWorld-JNI.apk
+$ apkx HelloWord-JNI.apk 
+Extracting HelloWord-JNI.apk to HelloWord-JNI
+Converting: classes.dex -> classes.jar (dex2jar)
+dex2jar HelloWord-JNI/classes.dex -> HelloWord-JNI/classes.jar
 ```
 
-The MainActivity is found in the file <code>MainActivity.java</code>. The "Hello World" text view is populated in the <code>onCreate()</code> method.
+The MainActivity is found in the file <code>MainActivity.java</code>. The "Hello World" text view is populated in the <code>onCreate()</code> method:
 
 ```java
 public class MainActivity
@@ -313,10 +309,53 @@ Using a JDWP debugger allows you to step through Java code, set breakpoints on J
 
 When reverse engineering apps, you'll often only have access to the release build of the target app. Release builds are not meant to be debugged however - after all, that's what *debug builds* are for. By default, Android disallows both JDWP and native debugging of release builds, and although this is easy to bypass, you'll still likely encounter some limitations and bugs, such as a lack of line breakpoints, method breakpoints being set at the wrong locations, and others. Nevertheless, even an imperfect debugger is still an invaluable tool - being able to inspect the runtime state of a program makes it *a lot* easier to understand what's going on.
 
+###### Repackaging
+
+To "convert" a release build release into a debuggable build, you need to modify a flag in the app's Manifest file. This modification breaks the code signature, so you'll also have to re-sign the the altered APK archive.
+
+To do this, you first need a code signing certificate . If you have built a project in Android Studio before, the IDE has already created a debug keystore and certificate in <code>$HOME/.android/debug.keystore</code>. The default password for this keystore is "android" and the key is named "androiddebugkey".
+
+The Java standard distibution includes <code>keytool</code> for managing keystores and certificates. You can create your own signing certificate and key and add it to the debug keystore as follows:
+
+```
+$ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
+```
+
+With a certificate available, you can now repackage the app using the following steps. Note that the Android Studio build tools directory must be in path for this to work - it is located at <code>[SDK-Path]/build-tools/[version]</code>. The <code>zipaling</code> and <code>apksigner</code> tools are found in this directory.
+
+UnCrackable App Level 1 is the perfect subject for practicing our new debugging powers, so let's start by repackaging UnCrackable-Level1.apk.
+
+1. Use apktool to restore AndroidManifest.xml:
+
+```bash
+$ apktool d --no-src target_app.apk
+```
+
+2. Add android:debuggable = “true” to the manifest:
+
+```xml
+<application android:allowBackup="true" android:debuggable="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.xxx.xxx.xxx" android:theme="@style/AppTheme">
+```
+
+3. Repackage and sign the APK. 
+
+```bash
+$ apktool b
+$ zipalign -v 4 target_app.recompiled.apk  target_app.recompiled.aligned.apk
+$ jarsigner -verbose -keystore ~/.android/debug.keystore  target_app.recompiled.aligned.apk signkey
+```
+
+4. Reinstall the app:
+
+```bash
+$ adb install target_app.recompiled.aligned.apk
+```
+
 
 ```bash
 $ apktool d --no-src UnCrackable-Level1.apk
 ```
+
 Set android:allowBackup="true" as described above.
 
 ```bash
@@ -328,7 +367,9 @@ $ apksigner sign --ks  ~/.android/debug.keystore --ks-key-alias signkey UnCracka
 $ adb install UnCrackable-Repackaged.apk
 ```
 
-The <code>adb</code> command line tool, which ships with the Android SDK, bridges the gap between your local development environment and a connected Android device. Commonly you'll debug on a device connected via USB, but remote debugging over the network is also possible.
+The <code>adb</code> command line tool, which ships with the Android SDK, bridges the gap between your local development environment and a connected Android device. Commonly you'll debug apps on the emulator or on a device connected via USB.
+
+The <code>abd jdwp</code> command lists 
 
 An important restriction is that line breakpoints usually won't work, as the release bytecode doesn't contain line information. Method breakpoints do work however.
 
@@ -689,41 +730,7 @@ In most cases, both issues can be fixed by making minor changes and re-packaging
 
 In our first example, we'll modify the android:debuggable flag to enable debugging of a release app. You can reproduce this with any app downloaded from the Play Store. 
 
-Before you proceed, you need a code signing certificate for re-signing. If you have built a project in Android Studio before, the IDE has already created a debug keystore and certificate in <code>$HOME/.android/debug.keystore</code>. The default password for this keystore is "android" and the key is named "androiddebugkey".
 
-The Java standard distibution includes <code>keytool</code> for managing keystores and certificates. You can create your own signing certificate and key and add it to the debug keystore as follows:
-
-```
-$ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
-```
-
-With a certificate available, you can now repackage the app using the following steps. Note that the Android Studio build tools directory must be in path for this to work - it is located at <code>[SDK-Path]/build-tools/[version]</code>. The <code>zipaling</code> and <code>apksigner</code> tools are found in this directory.
-
-1. Use apktool to restore AndroidManifest.xml:
-
-```bash
-$ apktool d --no-src target_app.apk
-```
-
-2. Add android:debuggable = “true” to the manifest:
-
-```xml
-<application android:allowBackup="true" android:debuggable="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.xxx.xxx.xxx" android:theme="@style/AppTheme">
-```
-
-3. Repackage and sign the APK. 
-
-```bash
-$ apktool b
-$ zipalign -v 4 target_app.recompiled.apk  target_app.recompiled.aligned.apk
-$ jarsigner -verbose -keystore ~/.android/debug.keystore  target_app.recompiled.aligned.apk signkey
-```
-
-4. Reinstall the app:
-
-```bash
-$ adb install target_app.recompiled.aligned.apk
-```
 
 ##### 事例 2: SSL ピンニングの無効化
 
@@ -1403,6 +1410,12 @@ Working on real device has advantages especially for interactive, debugger-suppo
 
 -- TODO [Downloading SDK etc. (duplicate?)] --
 
+For convenience, you can create a standalone toolchain  create a standalone toolchain for Android Nougat (API 24):
+
+```bash
+$ $YOUR_NDK_PATH/build/tools/make-standalone-toolchain.sh --arch=arm --platform=android-24 --install-dir=/tmp/my-android-toolchain
+```
+
 #### RAMDisk のカスタマイズ
 
 The initramfs is a small CPIO archive stored inside the boot image. It contains a few files that are required at boot time before the actual root file system is mounted. On Android, the initramfs stays mounted indefinitely, and it contains an important configuration file named default.prop that defines some basic system properties. By making some changes to this file, we can make the Android environment a bit more reverse-engineering-friendly.
@@ -1789,29 +1802,30 @@ File hiding is of course only the tip of the iceberg: You can accomplish a whole
 
 -- TODO [Sync with text] --
 
-+ Android SDK -
-+ OWASP Mobile Crackmes - https://github.com/OWASP/owasp-mstg/blob/master/OMTG-Files/02_Crackmes/List_of_Crackmes.md
-+ APKTool - https://ibotpeaches.github.io/Apktool/
-+ JD - http://jd.benow.ca/
-+ Eclipse - https://eclipse.org/ide/
-+ IntelliJ IDEA - https://www.jetbrains.com/idea/
-+ Smalidea - https://github.com/JesusFreke/smali/wiki/smalidea
-+ Radare2 - https://www.radare.org
+- [1] OWASP Mobile Crackmes - https://github.com/OWASP/owasp-mstg/blob/master/OMTG-Files/02_Crackmes/List_of_Crackmes.md
+- [2] Android Studio - https://developer.android.com/studio/index.html
+- [3] APKTool - https://ibotpeaches.github.io/Apktool/
+- [4] JD - http://jd.benow.ca/
+- [5] Eclipse - https://eclipse.org/ide/
+- [6] IntelliJ IDEA - https://www.jetbrains.com/idea/
+- [7] Smalidea - https://github.com/JesusFreke/smali/wiki/smalidea
+- [8] Radare2 - https://www.radare.org
+- [9] Angr - http://angr.io/
+- [10] JEB - 
+- [11] IDA Pro - https://www.hex-rays.com/products/ida/
+- [12] JAD - http://www.javadecompilers.com/jad
+- [13] Proycon - http://proycon.com/en/
+- [14] CFR - http://www.benf.org/other/cfr/
+- [15] APKX - https://github.com/b-mueller/apkx
 + Frida - https://www.frida.re
-+ Angr - http://angr.io/
-+ JEB -
 + Bionic - https://github.com/android/platform_bionic
-+ IDA Pro - https://www.hex-rays.com/products/ida/
 + DroidScope -
 + DECAF - https://github.com/sycurelab/DECAF
 + PANDA - https://github.com/moyix/panda/blob/master/docs/
 + VxStripper -
 + Dynamic Malware Recompliation - http://ieeexplore.ieee.org/document/6759227/
 + UnCrackable Android App Level 1 - https://github.com/OWASP/owasp-mstg/tree/master/OMTG-Files/02_Crackmes/01_Android/Level_01
-+ JAD - http://www.javadecompilers.com/jad
-+ Proycon - http://proycon.com/en/
-+ CFR - http://www.benf.org/other/cfr/
-+ APKX - https://github.com/OWASP/owasp-mstg/tree/master/OMTG-Files/01_Tools/01_Android/01_apkx
+
 + NetSPI Blog - Attacking Android Applications with Debuggers - https://blog.netspi.com/attacking-android-applications-with-debuggers/
 + http://repo.xposed.info/module/de.robv.android.xposed.installer
 + https://github.com/rovo89/XposedBridge/wiki/Development-tutorial
