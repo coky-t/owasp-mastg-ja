@@ -129,7 +129,7 @@ buildTypes {
 #### 概要
 
 -- REVIEW --
-Choosing good cryptographic algorithm alone is not enough. Often security of otherwise sound algorithms can be affected if misconfigured. Many previously strong algorithms and their configurations are now considered vulnerable or non-compliant with best practices. It is therefore important to periodically check current best practices and adjust configurations accordingly.  
+適切な暗号化アルゴリズムを選択するだけでは十分ではありません。間違った構成はそれ以外の妥当なアルゴリズムのセキュリティに影響を及ぼすことがあります。過去に強力であるとされた多くのアルゴリズムや構成は、脆弱もしくはベストプラクティスに準拠していないとみなされています。したがって、最新のベストプラクティスを定期的に確認し、それに応じて構成を調整することが重要です。
 
 #### 静的解析
 
@@ -152,7 +152,7 @@ Choosing good cryptographic algorithm alone is not enough. Often security of oth
 #### 改善方法
 
 -- REVIEW --
-Use cryptographic algorithm configurations that are currently considered strong, such those from NIST<sup>1</sup> and BSI<sup>2</sup> recommendations.
+NIST <sup>1</sup> や BSI <sup>2</sup> 推奨のような現在強力であると考えられている暗号アルゴリズム構成を使用します。
 
 
 #### 参考情報
@@ -164,7 +164,7 @@ Use cryptographic algorithm configurations that are currently considered strong,
 ##### OWASP MASVS
 
 -- REVIEW --
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 
 ##### CWE
 
@@ -221,8 +221,8 @@ APK を逆コンパイルしてコードを調査し、既知の脆弱な暗号�
 * [2]: [NIST Special Publication 800-57](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) [(日本語)](https://www.ipa.go.jp/files/000055490.pdf)
 
 ##### OWASP MASVS
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
-- V3.4: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated for security purposes"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
+- V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
 
 ##### OWASP Mobile Top 10
 * M6 - Broken Cryptography
