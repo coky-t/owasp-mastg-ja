@@ -15,48 +15,48 @@
 モバイルデバイスは他の(おそらく悪意のある)クライアントと共有されている公衆 WiFi ネットワークを含め、さまざまなネットワークに定期的に接続しているという点が、多くの固定された装置との重要な違いです。これは単純なパケット傍受から不正なアクセスポイントの作成や SSL 中間者攻撃まで (もしくはルーティングプロトコルインジェクションなどの古いものであっても、悪意のあるものはどんなものでも使用します) ネットワークベースの攻撃に大きなチャンスをもたらします。
 
 ## OWASP Mobile Top 10 2016
-The OWASP Mobile Top 10 is the equivalent counterpart of the OWASP Top Ten Project, but is specifically designed to focus on the mobile application security. Most of the time, folks in the information security industry discuss about the "OWASP Top Ten" project but in fact, they are only referring to the web application security. 
+OWASP Mobile Top 10 は OWASP Top Ten プロジェクトと同等のものですが、モバイルアプリケーションセキュリティに重点を置いて設計されています。ほとんどの場合、情報セキュリティ業界の人々が "OWASP Top Ten" プロジェクトについて話し合っていますが、実際には Web アプリケーションセキュリティだけを指しています。
 
-In this guide, we bring to your attention about its equivalent counterpart, the OWASP Mobile Top 10 2016, which is essentially an awareness document for mobile application security. 
+このガイドは OWASP Mobile Top 10 2016 と同等の機能を持つモバイルアプリケーションセキュリティに関する重要な文書です。
 
-The OWASP Mobile Top 10 represents a broad consensus about what are the most critical mobile application security flaws identified in the actual mobile applications, derived as per the raw data obtained from various different vendors and consultants in the information security industry. 
+OWASP Mobile Top 10 は情報セキュリティ業界のさまざまなベンダーやコンサルタントから得られた生のデータに基づいて導出されており、実際のモバイルアプリケーションで最も重要なモバイルアプリケーションセキュリティの欠陥が何であるかについて広く合意しています。
 
-The following are the OWASP Mobile Top 10:
+以下が OWASP Mobile Top 10 です。
 
-* M1 - Improper Platform Usage<sup>[1]</sup>
-  * Misuse of a mobile platform feature or failure to use platform security controls adequately 
-  * Scope of coverage includes Android intents, platform permissions, misuse of TouchID, the Keychain, or some other security control that is part of the mobile operating system
-  * Some examples includes the violation of published guidelines, violation of convention or common practice, and any unintentional misuse
-* M2 - Insecure Data Storage<sup>[2]</sup>
-  * Insufficient protection mechanisms towards user or app data stored locally in the mobile devices 
-  * Scope of coverage includes an adversary that has attained a lost or stolen mobile device, malware or a repackaged app acting on the adversary's behalf that executes on the mobile device
-  * Data insecurely stored includes files such as SQLite databases, log files, XML files and cookies
-* M3 - Insecure Communication<sup>[3]</sup>
-  * Insufficient protection mechanisms towards user or app data transmitted over the mobile device's carrier network or the internet
-  * Scope of coverage includes an adversary that shares the same Local Area Network (LAN), network devices or malware; and whether defensive mechanisms such as Certificate Pinning has been implemented in the mobile app   
-* M4 - Insecure Authentication<sup>[4]</sup>
-  * Lack of proper authentication methods and controls
-  * Scope of coverage includes the exploitation of authentication vulnerabilities like weak password policy
-* M5 - Insufficient Cryptography<sup>[5]</sup>
-  * Usage of inadequately strong cryptographic standards, or poor crytography implementation and usages 
-  * Scope of coverage includes the cracking of improperly encrypted data through physical access or mobile malware acting on an adversary's behalf	
-* M6 - Insecure Authorisation<sup>[6]</sup>
-  * Lack of proper roles and permissions validation and access rights controls
-  * Scope of coverage includes the exploitation of the authorization vulnerabilities like insecure direct object references
-* M7 - Poor Code Quality<sup>[7]</sup>
-  * Insufficient consistency in coding patterns and lack of proper user data input validations and method calls
-  * Scope of coverage includes any plausible endpoints that can pass untrusted inputs to method calls made within the mobile app's code, resulting in potential exploitation via malware or phishing scams
-* M8 - Code Tampering<sup>[8]</sup>
-  * Lack of runtime checks function that perform app code integrity checks  
-  * Scope of coverage includes exploitation through code modification via malicious forms of the apps hosted in third-party app stores. Malicious attacker may also trick the user into installing the app via phishing attacks
-* M9 - Reverse Engineering<sup>[9]</sup>
-  * Missing obfuscation methods 
-  * Scope of coverage includes downloading the mobile app from an app store and analyze it within their own local environment using a suite of different tools to identify potential attack vectors	
-* M10 - Extraneous Functionality<sup>[10]</sup>
-  * Lack of logs and endpoints verification prior to publishing the production builds 
-  * Scope of coverage includes the identification of hidden or extraneous functionality in the backend system or the mobile app itself, and then exploit it directly from their own systems without any involvement by end-users	
+* M1 - 不適切なプラットフォームの利用 <sup>[1]</sup>
+  * モバイルプラットフォーム機能の誤用、またはプラットフォームセキュリティコントロールの不適切な使用
+  * カバレッジの範囲には、Android インテント、プラットフォームパーミッション、TouchID の誤用、キーチェーン、またはモバイルオペレーティングシステムの一部であるその他のセキュリティコントロールが含まれます。
+  * 一例として、公表されたガイドラインの違反、慣例や一般的な慣行の違反、意図しない誤用があります。
+* M2 - 安全でないデータストレージ <sup>[2]</sup>
+  * モバイルデバイスにローカルに格納されているユーザーデータやアプリデータに対する不十分な保護メカニズム
+  * カバレッジの範囲には、紛失や盗難されたモバイルデバイスを獲得した攻撃者、モバイルデバイス上で実行される攻撃者に代わって動作するマルウェアや再パッケージ化されたアプリが含まれます。
+  * 安全性に欠けているデータには、SQLite データベース、ログファイル、XML ファイル、クッキーなどのファイルが含まれます。
+* M3 - 安全でない通信 <sup>[3]</sup>
+  * モバイルデバイスのキャリアネットワークやインターネット上で転送されるユーザーデータやアプリデータに対する不十分な保護メカニズム
+  * カバレッジの範囲には、同一ローカルエリアネットワーク (LAN) を共有する攻撃者、ネットワークデバイス、マルウェア、および証明書ピンニングなどの防御メカニズムがモバイルアプリに実装されているかどうかが含まれます。
+* M4 - 安全でない認証 <sup>[4]</sup>
+  * 適切な認証方法とコントロールの欠如
+  * カバレッジの範囲には脆弱なパスワードポリシーなどの認証脆弱性の悪用が含まれます。
+* M5 - 不十分な暗号化 <sup>[5]</sup>
+  * 不十分な強度の暗号標準の使用、または脆弱な暗号実装や使用方法
+  * カバレッジの範囲には、物理的なアクセスによる不適切に暗号化されたデータのクラッキングや攻撃者に代わって動作するモバイルマルウェアが含まれます。
+* M6 - 安全でない認可 <sup>[6]</sup>
+  * 適切なロール、パーミッションの検証、アクセス権のコントロールの欠如
+  * カバレッジの範囲には安全でない直接オブジェクト参照などの認証脆弱性の悪用が含まれます。
+* M7 - 脆弱なコード品質 <sup>[7]</sup>
+  * コーディングパターンの不十分な一貫性や適切なユーザーデータ入力検証やメソッド呼び出しの欠如
+  * カバレッジの範囲にはモバイルアプリのコード内で行われたメソッドコールに信頼されない入力を渡す可能性のある任意のエンドポイントが含まれます。マルウェアやフィッシング詐欺による悪用の可能性があります。
+* M8 - コード改竄 <sup>[8]</sup>
+  * アプリコードの完全性チェックを実行する実行時チェック機能の欠如
+  * カバレッジの範囲にはサードパーティアプリストアにホストとされている悪意のあるアプリを介するコード改変による悪用が含まれます。悪意のある攻撃者はユーザーを騙してフィッシング攻撃によりアプリをインストールする可能性もあります。
+* M9 - リバースエンジニアリング <sup>[9]</sup>
+  * 難読化メソッドの欠落
+  * カバレッジの範囲には、アプリストアからモバイルアプリをダウンロードし、ローカル環境でさまざまなツールを使用して解析し、潜在的な攻撃経路を特定することが含まれます。
+* M10 - 余計な機能 <sup>[10]</sup>
+  * 製品ビルドを公開する前のログやエンドポイント検証の欠如
+  * カバレッジの範囲には、バックエンドシステムやモバイルアプリ自体の隠し機能や余計な機能の特定、およびエンドユーザーの関与なしに自身のシステムから直接その機能を悪用することが含まれます。
   
-To read more about the category of vulnerabilities and procedures to prevent them from compromising your mobile application, please refer to the OWASP Mobile Top 2016 Project Page<sup>11</sup>.
+脆弱性のカテゴリおよびモバイルアプリケーションへの侵害を防ぐための手順についての詳細は、OWASP Mobile Top 10 2016 プロジェクトページ <sup>11</sup> を参照ください。
 
 ## OWASP モバイルアプリセキュリティ検証標準、チェックリスト、テストガイド
 
@@ -74,7 +74,7 @@ To read more about the category of vulnerabilities and procedures to prevent the
 
 -- TODO [Describe the organization of the current guide] --
 
-## References
+## 参考情報
 
 * [1] M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
