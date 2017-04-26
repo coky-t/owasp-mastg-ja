@@ -207,7 +207,7 @@ The following is a list of best practice used for secure storage of certificates
 
 ##### OWASP MASVS
 
-- V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
+* V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
 
 ##### CWE
 * CWE-311 - Missing Encryption of Sensitive Data
@@ -834,7 +834,7 @@ If not, the application is vulnerable to screen capturing.
 
 #### 動的解析
 
-During black-box testing, open any screen within the app that contains sensitive information and click on the home button so that the app goes into background. Now press the task-switcher button, to see the snapshot. As showed below, if `FLAG_SECURE` is set (image on the left), the snapshot is entirely black, while if the `FLAG_SECURE` is not set (image on the right), information within the activity are shown:
+During black-box testing, open any screen within the app that contains sensitive information and click on the home button so that the app goes into background. Now press the task-switcher button, to see the snapshot. As shown below, if `FLAG_SECURE` is set (image on the right), the snapshot is empty, while if the `FLAG_SECURE` is not set (image on the left), information within the activity are shown:
 
 | `FLAG_SECURE` not set  | `FLAG_SECURE` set  |
 |---|---|
