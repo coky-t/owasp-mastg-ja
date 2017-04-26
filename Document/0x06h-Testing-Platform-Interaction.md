@@ -483,15 +483,15 @@ iOS はそれぞれのアプリが自身のサンドボックスに限定され�
 
 ##### ソースコードあり
 
-Look for a function with a name like isJailBroken in the code. If none of these are available, look for code checking for the following:
-1. Existence of files (such as anything with cydia or substrate in the name (such as `/private/var/lib/cydia or /Library/MobileSubstrate/MobileSubstrate.dylib`), `/var/lib/apt, /bin/bash, /usr/sbin/sshd, sftp`, etc). In swift this is done with the `FileManager.default.fileExists(atPath: filePath)` function and objective-c uses `[NSFileManager defaultManager] fileExistsAtPath:filePath`, so grepping for fileExists should show you a good list.
-2. Changes of directory permissions (ie being able to write to a file outside the the apps own directory - common examples are `/, /private, /lib, /etc, /System, /bin, /sbin, /cores, /etc`). /private and / seem to be the most commonly used for testing.
+コード内で isJailBroken などの名前の関数を探します。利用されていない場合、以下のコードチェックを探します。
+1. ファイルの有無(名前に cydia や substrate があるものなど(`/private/var/lib/cydia や /Library/MobileSubstrate/MobileSubstrate.dylib` など)、`/var/lib/apt, /bin/bash, /usr/sbin/sshd, sftp` など)。swift では `FileManager.default.fileExists(atPath: filePath)` 関数で行われ、objective-c は `[NSFileManager defaultManager] fileExistsAtPath:filePath` を使用しているので、fileExists の grep により適切なリストが表示されます。
+2. ディレクトリパーミッションの変更(アプリが所有するディレクトリ外のファイルに書き込みできるようにするなど - 一般的な例として `/, /private, /lib, /etc, /System, /bin, /sbin, /cores, /etc` があります)。/private や / がテストのために最も一般的に使用されるようです。
 
-	2.1 Check actual permissions themselves: Swift uses `NSFilePosixPermissions` and objective-c uses `directoryAttributes`, so grep for these. 
+	2.1 現在のパーミッションを確認する：Swift は `NSFilePosixPermissions` を使い、objective-c は `directoryAttributes` を使うので、これらを grep します。
 	
-	2.2 Check if you can write a file: Swift and objective-c both use the key words `write` and `create` for file and directory writing and creation. So grep for this and pipe to a grep for `/private` (or others) to get a reference.
-3. Checking size of `/etc/fstab` - a lot of tools modify this file, but this method is uncommon as an update from apple may break this check.
-4. Creation of symlinks due to the jailbreak taking up space on the system partition. Look for references to `/Library/Ringtones,/Library/Wallpaper,/usr/arm-apple-darwin9,/usr/include,/usr/libexec,/usr/share,/Applications` in the code.
+	2.2 ファイルを書くことができるか確認する：Swift と objective-c のいずれもファイルとディレクトリの書き込みと作成にキーワード `write` と `create` を使います。そのため、これを grep し、`/private` などの grep に pipe して参照を取得します。
+3. `/etc/fstab` のサイズを確認する - 多くのツールがこのファイルを改変しますが、apple のアップデートがこのチェックを破る可能性があるので、この方法は一般的ではありません。
+4. 脱獄のためのシンボリックリンクの作成はシステムパーティション上のスペースを占有します。コード内で `/Library/Ringtones,/Library/Wallpaper,/usr/arm-apple-darwin9,/usr/include,/usr/libexec,/usr/share,/Applications` への参照を探します。
 
 ##### ソースコードなし
 
