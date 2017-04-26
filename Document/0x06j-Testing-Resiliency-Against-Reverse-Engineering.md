@@ -339,7 +339,7 @@ sys.stdin.read()
 -- TODO [Typical debugging defenses] --
 
 
-Detecting Mach Exception Ports <sup>[1]</sup>:
+Mach Exception Ports の検出 <sup>[1]</sup>:
 
 ~~~c
 #include <mach/task.h>
@@ -371,7 +371,7 @@ static bool amIAnInferior(void)
 ~~~
 
 
-Disabling <code>ptrace()</code>.
+<code>ptrace()</code> の無効化。
 
 ~~~c
 typedef int (*ptrace_ptr_t)(int _request, pid_t _pid, caddr_t _addr, int _data);
