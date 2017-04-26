@@ -26,8 +26,6 @@ iOS の世界では、脱獄とは Apple のコード署名メカニズムを無
 
 -- TODO [Jailbreaking howto] --
 
-#### 脱獄検出
-
 一部のアプリはインストールされている iOS デバイスが脱獄済みであるかどうかを検出しようとします。この脱獄により iOS のデフォルトセキュリティメカニズムの一部を無効にするため、環境の信頼性低下につながります。
 
 このアプローチの中核となるジレンマは、定義上、脱獄がアプリの環境を信頼できないものにすることです。デバイスが脱獄されているかどうかをテストするために使用される API を操作することができ、コード署名を無効にすると、脱獄検出コードを簡単に修正することができます。したがって、リバースエンジニアリングを妨げる非常に効果的な方法ではありません。それでも、脱獄検出はより大きなソフトウェア保護スキームの文脈において有用となります。また、MASVS L2 では脱獄検出されたときにユーザーに警告を表示したりアプリを終了させたりする必要があります。ここでのアイデアはデバイスを脱獄することを選択することでの潜在的なセキュリティへの影響(および積極的なリバースエンジニアを妨げるものではないこと)についてユーザーに通知することです。
@@ -43,6 +41,16 @@ iOS の世界では、脱獄とは Apple のコード署名メカニズムを無
 -- TODO [Basic static analysis ] --
 
 #### デバッグ
+
+-- TODO [iOS Debugging Overview] --
+
+Debugging on iOS is generally implemented via Mach IPC. To "attach" to a target process, the debugger process calls the <code>task_for_pid()</code> function with the process id of the target process to and receives a Mach port. The debugger then registers as a receiver of exception messages and starts handling any exceptions that occur in the debuggee. Mach IPC calls are used to perform actions such as suspending the target process and reading/writing register states and virtual memory.
+
+Even though the XNU kernel implements the <code>ptrace()</code> system call as well, some of its functionality has been removed, including the capability to read and write register states and memory contents. Even so, <code>ptrace()</code> is used in limited ways by standard debuggers such as <code>lldb</code> and <code>gdb</code>. Some debuggers, including Radare2's iOS debugger, don't invoke <code>ptrace</code> at all.
+
+##### Using lldb
+
+-- TODO [Complete lldb tutorial] --
 
 iOS にはコンソールアプリケーション debugserver が付属しており、gdb または lldb を使用したリモートでバッグが可能です。但し、デフォルトでは debugserver を任意のプロセスにアタッチすることはできません(通常は XCode でデプロイされた自己開発アプリのデバッグにのみ使用されます)。サードパーティアプリのデバッグを有効にするには、task_for_pid entitlement を debugserver 実行可能ファイルに追加する必要があります。これを行う簡単な方法は XCode に同梱されている debugserver バイナリに entitlement を追加することです [5]。
 
@@ -93,31 +101,13 @@ debugserver-@(#)PROGRAM:debugserver  PROJECT:debugserver-320.2.89
 Attaching to process 2670...
 ~~~
 
+##### Using Radare2
+
+-- TODO [Write Radare2 tutorial] --
+
 ### 改竄と計装
 
 #### MobileSubstrate でのフック
-
-##### 例：デバッグ防止の無効化
-
-~~~
-#import <substrate.h>
-
-#define PT_DENY_ATTACH 31
-
-static int (*_my_ptrace)(int request, pid_t pid, caddr_t addr, int data);
-
-
-static int $_my_ptrace(int request, pid_t pid, caddr_t addr, int data) {
-	if (request == PT_DENY_ATTACH) {
-		request = -1;
-	}
-	return _ptraceHook(request,pid,addr,data);
-}
-
-%ctor {
-	MSHookFunction((void *)MSFindSymbol(NULL,"_ptrace"), (void *)$ptraceHook, (void **)&_ptraceHook);
-}
-~~~
 
 #### Cycript と Cynject
 
@@ -142,7 +132,6 @@ http://iphonedevwiki.net/index.php/Cycript_Tricks
 
 -- TODO [Develop section on Frida] --
 
-
 ### 参考情報
 
 - [1] Class-dump - http://stevenygard.com/projects/class-dump/
@@ -151,3 +140,4 @@ http://iphonedevwiki.net/index.php/Cycript_Tricks
 - [3] Jailbreak Exploits on the iPhone Dev Wiki - https://www.theiphonewiki.com/wiki/Jailbreak_Exploits#Pangu9_.289.0_.2F_9.0.1_.2F_9.0.2.29)
 - [4] Stack Overflow - http://stackoverflow.com/questions/413242/how-do-i-detect-that-an-ios-app-is-running-on-a-jailbroken-phone
 - [5] Debug Server on the iPhone Dev Wiki - http://iphonedevwiki.net/index.php/Debugserver
+- [6] Uninformed - Replacing ptrace() - http://uninformed.org/index.cgi?v=4&a=3&p=14
