@@ -44,9 +44,9 @@ iOS の世界では、脱獄とは Apple のコード署名メカニズムを無
 
 -- TODO [iOS Debugging Overview] --
 
-Debugging on iOS is generally implemented via Mach IPC. To "attach" to a target process, the debugger process calls the <code>task_for_pid()</code> function with the process id of the target process to and receives a Mach port. The debugger then registers as a receiver of exception messages and starts handling any exceptions that occur in the debuggee. Mach IPC calls are used to perform actions such as suspending the target process and reading/writing register states and virtual memory.
+iOS でのデバッグは一般的に Mach IPC を介して実装されます。ターゲットプロセスにアタッチするには、デバッガプロセスはターゲットプロセスのプロセス ID で <code>task_for_pid()</code> 関数を呼び出し、Mach ポートを受け取ります。その後、デバッガは例外メッセージのレシーバとして登録し、デバッグ対象で発生した例外の処理を開始します。Mach IPC はターゲットプロセスのサスペンド、レジスタステートや仮想メモリの読み書きなどのアクションを実行するために使用されます。
 
-Even though the XNU kernel implements the <code>ptrace()</code> system call as well, some of its functionality has been removed, including the capability to read and write register states and memory contents. Even so, <code>ptrace()</code> is used in limited ways by standard debuggers such as <code>lldb</code> and <code>gdb</code>. Some debuggers, including Radare2's iOS debugger, don't invoke <code>ptrace</code> at all.
+XNU カーネルは <code>ptrace()</code> システムコールも実装していますが、レジスタステートやメモリ内容を読み書きする機能などの一部の機能が削除されています。それでも、<code>lldb</code> や <code>gdb</code> などの標準的なデバッガでは <code>ptrace()</code> が限定的に使用されます。Radare2 の iOS デバッガなどの一部のデバッガは <code>ptrace</code> をまったく使用しません。
 
 ##### Using lldb
 
