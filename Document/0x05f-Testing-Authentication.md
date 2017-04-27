@@ -12,13 +12,8 @@
 
 -- TODO [Confirm remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Develop content on Verifying that Users Are Properly Authenticated with source code] --
 
-##### ソースコードなし
-
--- TODO [Develop content on Verifying that Users Are Properly Authenticated without source code] --
 
 #### 動的解析
 
@@ -30,15 +25,12 @@
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
+##### OWASP Mobile Top 10 2016
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update below reference "VX.Y" for "Verifying that Users Are Properly Authenticated"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+- 4.1: "アプリがリモートサービスへのアクセスを提供する場合、ユーザー名/パスワード認証など許容される形態の認証がリモートエンドポイントで実行されている。"
 
 ##### CWE
 
@@ -55,6 +47,7 @@
 -- TODO [Add relevant tools for "Verifying that Users Are Properly Authenticated"] --
 * Enjarify - https://github.com/google/enjarify
 
+
 ### セッション管理のテスト
 
 #### 概要
@@ -67,13 +60,7 @@
 
 -- TODO [Confirm remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Develop content on "Testing Session Management" with source code] --
-
-##### ソースコードなし
-
--- TODO [Develop content on "Testing Session Management" without source code] --
 
 #### 動的解析
 
@@ -85,85 +72,25 @@
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
+##### OWASP Mobile Top 10 2016
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing Session Management"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.2: "リモートエンドポイントはランダムに生成されたアクセストークンを使用し、ユーザーの資格情報を送信せずにクライアント要求を認証している。"
 
 ##### CWE
-
 -- TODO [Add relevant CWE for "Testing Session Management"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
-
 - [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
 - [2] Another Informational Article - http://www.securityfans.com/informational_article.html
 
 ##### ツール
-
 -- TODO [Add relevant tools for "Testing Session Management"] --
 * Enjarify - https://github.com/google/enjarify
 
-### パスワードポリシーのテスト
-
-#### 概要
-
--- TODO [Provide a general description of the issue "Testing the Password Policy".] --
-
-#### 静的解析
-
--- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
-
--- TODO [Confirm remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>." ] --
-
-##### ソースコードあり
-
--- TODO [Develop content on Testing the Password Policy with source code] --
-
-##### ソースコードなし
-
--- TODO [Develop content on Testing the Password Policy without source code] --
-
-#### 動的解析
-
--- TODO [Describe how to test for this issue "Testing the Password Policy" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
-
-#### 改善方法
-
--- TODO [Describe the best practices that developers should follow to prevent this issue "Testing the Password Policy".] --
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
-
-##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing the Password Policy"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
-
-##### CWE
-
--- TODO [Add relevant CWE for "Testing the Password Policy"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-
-- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
-- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
-
-##### ツール
-
--- TODO [Add relevant tools for "Testing the Password Policy"] --
-* Enjarify - https://github.com/google/enjarify
 
 ### ログアウト機能のテスト
 
@@ -210,15 +137,14 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
 -- TODO [Update reference "VX.Y" below for "Testing the Logout Functionality"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+- 4.3: "ユーザーがログアウトする場合に、リモートエンドポイントは既存のセッションを終了している。"
 
 ##### CWE
 
@@ -230,10 +156,54 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 - [1] https://www.owasp.org/index.php/Testing_for_logout_functionality_(OTG-SESS-006)
 - [2] https://www.owasp.org/index.php/Session_Management_Cheat_Sheet
 
-##### ツール
 
--- TODO [Add relevant tools for "Testing the Logout Functionality"] --
+### パスワードポリシーのテスト
+
+#### 概要
+
+-- TODO [Provide a general description of the issue "Testing the Password Policy".] --
+
+#### 静的解析
+
+-- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
+
+-- TODO [Confirm remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>." ] --
+
+-- TODO [Develop content on Testing the Password Policy with source code] --
+
+#### 動的解析
+
+-- TODO [Describe how to test for this issue "Testing the Password Policy" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+
+#### 改善方法
+
+-- TODO [Describe the best practices that developers should follow to prevent this issue "Testing the Password Policy".] --
+
+#### 参考情報
+
+##### OWASP Mobile Top 10 2016
+* MX - Title - Link
+* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+
+##### OWASP MASVS
+* 4.4: "パスワードポリシーが存在し、リモートエンドポイントで実施されている。"
+
+##### CWE
+
+-- TODO [Add relevant CWE for "Testing the Password Policy"] --
+- CWE-312 - Cleartext Storage of Sensitive Information
+
+##### Info
+
+- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
+- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
+
+##### Tools
+
+-- TODO [Add relevant tools for "Testing the Password Policy"] --
 * Enjarify - https://github.com/google/enjarify
+
+
 
 
 
@@ -267,15 +237,13 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing Excessive Login Attempts"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.5: "不正な認証資格情報が過度に送信される場合、リモートエンドポイントはExponential Backoffを実装しているか一時的にユーザーアカウントをロックしている。"
 
 ##### CWE
 
@@ -292,6 +260,7 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 -- TODO [Add relevant tools for "Testing Excessive Login Attempts"] --
 * Enjarify - https://github.com/google/enjarify
 
+
 ### 生体認証のテスト
 
 #### 概要
@@ -304,13 +273,7 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 
 -- TODO [Confirm remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Develop content on "Testing Biometric Authentication" with source code] --
-
-##### ソースコードなし
-
--- TODO [Develop content on "Testing Biometric Authentication" without source code] --
 
 #### 動的解析
 
@@ -322,15 +285,13 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing Biometric Authentication"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.6: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
 
 ##### CWE
 
@@ -346,6 +307,9 @@ Many Apps do not automatically logout a user, because of customer convenience. T
 
 -- TODO [Add relevant tools for "Testing Biometric Authentication"] --
 * Enjarify - https://github.com/google/enjarify
+
+
+
 
 ### セッションタイムアウトのテスト
 
@@ -410,15 +374,14 @@ End<br>
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
 
--- TODO [Update reference "VX.Y" below for "Testing the Session Timeout"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.7: "非アクティブな状態で所定の期間経過後、リモートエンドポイントでセッションを終了している。"
 
 ##### CWE
 
@@ -449,13 +412,8 @@ End<br>
 
 -- TODO [Confirm remark on "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Develop content on Testing 2-Factor Authentication with source code] --
 
-##### ソースコードなし
-
--- TODO [Develop content on Testing 2-Factor Authentication without source code] --
 
 #### 動的解析
 
@@ -467,15 +425,13 @@ End<br>
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing 2-Factor Authentication"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.8: "リモートエンドポイントに二要素認証が存在し、リモートエンドポイントで二要素認証要件が一貫して適用されている。"
 
 ##### CWE
 
@@ -492,6 +448,8 @@ End<br>
 -- TODO [Add relevant tools for "Testing 2-Factor Authentication"] --
 * Enjarify - https://github.com/google/enjarify
 
+
+
 ### ステップアップ認証のテスト
 
 #### 概要
@@ -504,13 +462,7 @@ End<br>
 
 -- TODO [Confirm remark on "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>." ] --
 
-##### ソースコードあり
-
 -- TODO [Develop content on Testing Step-up Authentication with source code] --
-
-##### ソースコードなし
-
--- TODO [Develop content on Testing Step-up Authentication without source code] --
 
 #### 動的解析
 
@@ -522,15 +474,13 @@ End<br>
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing Step-up Authentication"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.9: "機密データやトランザクションを処理するアクションを有効にするには、ステップアップ認証が必要とされている。"
 
 ##### CWE
 
@@ -547,6 +497,7 @@ End<br>
 -- TODO [Add relevant tools for "Testing Step-up Authentication"] --
 * Enjarify - https://github.com/google/enjarify
 
+
 ### ユーザーデバイス管理のテスト
 
 #### 概要
@@ -559,13 +510,8 @@ End<br>
 
 -- TODO [Confirm remark on "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 --TODO [Develop content on Testing User Device Management with source code] --
 
-##### ソースコードなし
-
---TODO [Develop content on Testing User Device Management without source code] --
 
 #### 動的解析
 
@@ -577,15 +523,13 @@ End<br>
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
+##### OWASP Mobile Top 10 2016
 
 * MX - Title - Link
 * M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing User Device Management"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* 4.8: "アプリはユーザーのアカウントでのすべてのログインアクティビティをユーザーに通知している。ユーザーはアカウントへのアクセスに使用されるデバイスの一覧を表示し、特定のデバイスをブロックすることができる。"
 
 ##### CWE
 
@@ -601,4 +545,3 @@ End<br>
 
 -- TODO [Add relevant tools for "Testing User Device Management"] --
 * Enjarify - https://github.com/google/enjarify
-
