@@ -6,11 +6,11 @@
 
 ほとんどのモバイルアプリケーションの機能はインターネット上のサービスから情報を送信または受信することを要求します。これは途中のデータを対象とした攻撃の別の領域を明らかにします。攻撃者がネットワークインフラストラクチャ(WiFi アクセスポイントなど)の一部を制御する場合、暗号化されていない情報を盗聴または改変(MiTM 攻撃)する可能性があります [1]。このため、開発者は機密データを平文で送ることはできないという一般的なルールを立てるべきです [2]。
 
-#### ホワイトボックステスト
+#### 静的解析
 
 テスト対象のアプリケーションと通信するすべての外部エンドポイント(バックエンド API、サードパーティ Web サービス)を特定して、すべての通信チャネルが暗号化されていることを確認します。
 
-#### ブラックボックステスト
+#### 動的解析
 
 推奨される方法はテスト対象のアプリケーションに出入りするすべてのネットワークトラフィックを傍受して、暗号化されているかどうかを確認することです。ネットワークトラフィックは以下のいずれかの方法を使用して傍受できます。
 
@@ -39,36 +39,35 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 一部のアプリケーションでは 機密 IPC を処理するために localhost アドレスや INADDR_ANY にバインドすることがあります。このインタフェースはデバイスにインストールされている他のアプリケーションからアクセス可能であるため、セキュリティの観点からはよくありません。そのような目的のために開発者はセキュアな Android IPC メカニズム [8] の使用を検討すべきです。
 
-#### OWASP MASVS
-
-V5.1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
-
-#### CWE
-
-- CWE-319 - Cleartext Transmission of Sensitive Information - https://cwe.mitre.org/data/definitions/319.html
-
-#### OWASP Mobile Top 10 2014
-
-M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
-
 #### 参考情報
 
-- [1] https://cwe.mitre.org/data/definitions/319.html
-- [2] https://developer.android.com/training/articles/security-tips.html#Networking
-- [3] https://security.secure.force.com/security/tools/webapp/zapandroidsetup
-- [4] https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
-- [5] https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html
-- [6] https://developer.android.com/reference/javax/net/ssl/SSLSocket.html
-- [7] https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket
-- [8] https://developer.android.com/reference/android/app/Service.html
+##### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
+
+#### OWASP MASVS
+* V5.1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
+
+#### CWE
+* CWE-319 - Cleartext Transmission of Sensitive Information
+
+#### その他
+* [1] https://cwe.mitre.org/data/definitions/319.html
+* [2] https://developer.android.com/training/articles/security-tips.html#Networking
+* [3] https://security.secure.force.com/security/tools/webapp/zapandroidsetup
+* [4] https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
+* [5] https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html
+* [6] https://developer.android.com/reference/javax/net/ssl/SSLSocket.html
+* [7] https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket
+* [8] https://developer.android.com/reference/android/app/Service.html
 
 #### ツール
-
 * Tcpdump - http://www.androidtcpdump.com/
 * Wireshark - https://www.wireshark.org/
 * OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 * Burp Suite - https://portswigger.net/burp/
 * Vproxy - https://github.com/B4rD4k/Vproxy
+
+
 
 ### TLS設定の検証
 
@@ -77,10 +76,9 @@ M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/M
 機密データを送信する場合、暗号化を使用することが不可欠です。ただし、十分に強力な暗号を使用する場合に限り、暗号化によってプライバシーが保護されます。この目標を達成するには、SSL ベースのサービスで脆弱な暗号スイートを選択してはいけません。暗号スイートは暗号化プロトコル(DES, RC4, AES など)、暗号鍵長(40, 56, 128 ビットなど)、完全性検査に使用されるハッシュアルゴリズム(SHA, MD5 など)によって明示されます。あなたの暗号化を容易に破られないようにするには、脆弱な暗号/プロトコル/鍵を使用していないことを TLS 設定で確認する必要があります [1]。
 
 
-
 #### 静的解析
 
-静的解析はここでは適用されません。
+静的解析はこのテストケースでは適用されません。
 
 #### 動的解析
 
@@ -114,29 +112,26 @@ perl o-saft.pl +check www.example.com:443
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-
-- V5.2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨された標準をサポートしていない場合には可能な限り近い状態である。"
+* V5.2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨された標準をサポートしていない場合には可能な限り近い状態である。"
 
 ##### CWE
+* CWE-327 - Use of a Broken or Risky Cryptographic Algorithm - https://cwe.mitre.org/data/definitions/327.html
 
-- CWE-327 - Use of a Broken or Risky Cryptographic Algorithm - https://cwe.mitre.org/data/definitions/327.html
-
-##### Info
-
-- [1] Testing for Weak SSL/TLS Ciphers - https://www.owasp.org/index.php/Testing_for_Weak_SSL/TLS_Ciphers,_Insufficient_Transport_Layer_Protection_(OTG-CRYPST-001)
-- [2] O-Saft various tests - https://www.owasp.org/index.php/O-Saft/Documentation#COMMANDS
-- [3] Transport Layer Protection Cheat Sheet - https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet
+##### その他
+* [1] Testing for Weak SSL/TLS Ciphers - https://www.owasp.org/index.php/Testing_for_Weak_SSL/TLS_Ciphers,_Insufficient_Transport_Layer_Protection_(OTG-CRYPST-001)
+* [2] O-Saft various tests - https://www.owasp.org/index.php/O-Saft/Documentation#COMMANDS
+* [3] Transport Layer Protection Cheat Sheet - https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet
 
 ##### ツール
-
 * testssl.sh- https://testssl.sh
 * sslyze - https://github.com/nabla-c0d3/sslyze
 * O-Saft - https://www.owasp.org/index.php/O-Saft
+
+
 
 ### エンドポイント同一性検証のテスト
 
@@ -144,7 +139,7 @@ M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/M
 
 ネットワーク上で機密情報を転送するために TLS を使用することは、セキュリティの観点から不可欠です。しかし、モバイルアプリケーションとバックエンド API との間の暗号化通信の仕組みを実装することは簡単な作業ではありません。開発者はしばしば、開発プロセスを楽にするために、より簡単ではあるものの安全ではない(任意の証明書を受け入れるなどの)ソリューションを選びます。往々にして製造後に修正されず [1]、同時にアプリケーションを中間者攻撃に晒します [2]。
 
-#### ホワイトボックステスト
+#### 静的解析
 
 TLS 接続の妥当性確認には主に2つの問題があります。一つ目は証明書が信頼できるソースから取得されたかどうかの検証であり、二つ目はエンドポイントサーバーが正しい証明書を提示しているかどうかを確認することです [3]。
 
@@ -208,14 +203,14 @@ HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
 Ensure that your application verifies a hostname before setting trusted connection.
 
 
-#### ブラックボックステスト
+#### 動的解析
 
 Improper certificate verification may be found using static or dynamic analysis.
 
 * Static analysis approach is to decompile an application and simply look in a code for TrustManager and HostnameVerifier usage. You can find insecure usage examples in a "White-box Testing" section above. Such checks of improper certificate verification, may be done automatically, using a tool called MalloDroid [4]. It simply decompiles an application and warns you if it finds something suspicious. To run it, simply type this command:
 
-```
-./mallodroid.py -f ExampleApp.apk -d ./outputDir
+```bash
+$ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
 ```
 
 Now, you should be warned if any suspicious code was found by MalloDroid and in `./outputDir` you will find decompiled application for further manual analysis.
@@ -240,30 +235,31 @@ Now, you should be warned if any suspicious code was found by MalloDroid and in 
 
 Ensure, that the hostname and certificate is verified correctly. You can find a help how to overcome common TLS certificate issues here [2].
 
-#### OWASP MASVS
-
-V5.3: "The app verifies the X.509 certificate of the remote endpoint when the secure channel is established. Only certificates signed by a valid CA are accepted."
-
-#### CWE
-
-- CWE-296 - Improper Following of a Certificate's Chain of Trust - https://cwe.mitre.org/data/definitions/296.html
-- CWE-297 - Improper Validation of Certificate with Host Mismatch - https://cwe.mitre.org/data/definitions/297.html
-- CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
-
-#### OWASP Mobile Top 10 2014
-
-M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
 
 #### 参考情報
 
-- [1] https://www.owasp.org/images/7/77/Hunting_Down_Broken_SSL_in_Android_Apps_-_Sascha_Fahl%2BMarian_Harbach%2BMathew_Smith.pdf
-- [2] https://cwe.mitre.org/data/definitions/295.html
-- [3] https://developer.android.com/training/articles/security-ssl.html
-- [4] https://github.com/sfahl/mallodroid
-- [5] https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
-- [6] https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html
-- [7] http://www.cert.org/download/mitm/CERT_Tapioca.ova
-- [8] https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html
+#### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
+
+#### OWASP MASVS
+* V5.3: "The app verifies the X.509 certificate of the remote endpoint when the secure channel is established. Only certificates signed by a valid CA are accepted."
+
+#### CWE
+* CWE-296 - Improper Following of a Certificate's Chain of Trust - https://cwe.mitre.org/data/definitions/296.html
+* CWE-297 - Improper Validation of Certificate with Host Mismatch - https://cwe.mitre.org/data/definitions/297.html
+* CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
+
+#### その他
+* [1] https://www.owasp.org/images/7/77/Hunting_Down_Broken_SSL_in_Android_Apps_-_Sascha_Fahl%2BMarian_Harbach%2BMathew_Smith.pdf
+* [2] https://cwe.mitre.org/data/definitions/295.html
+* [3] https://developer.android.com/training/articles/security-ssl.html
+* [4] https://github.com/sfahl/mallodroid
+* [5] https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
+* [6] https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html
+* [7] http://www.cert.org/download/mitm/CERT_Tapioca.ova
+* [8] https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html
+
+
 
 ### カスタム証明書ストアおよび SSL ピンニングのテスト
 
@@ -310,9 +306,8 @@ The SSL pinning process should be implemented as described on the static analysi
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
 
@@ -324,8 +319,8 @@ M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/M
 
 ##### その他
 
-- [1] - Setting Burp Suite as a proxy for Android Devices: https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp)
-- [2] - OWASP Certificate Pinning for Android:  https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android
+* [1] Setting Burp Suite as a proxy for Android Devices -  https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp)
+* [2] OWASP Certificate Pinning for Android - https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android
 
 
 ### 重要な操作が安全な通信チャネルを使用することの検証
@@ -333,7 +328,6 @@ M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/M
 #### 概要
 
 For sensitive applications, like banking apps, OWASP MASVS introduces "Defense in Depth" verification level [1]. Critical operations (e.g. user enrollment, or account recovery) of such sensitive applications are the most attractive targets from attacker's perspective. This creates a need of implementing advanced security controls for such operations, like adding additional channels (e.g. SMS and e-mail) to confirm user's action. Additional channels may reduce a risk of many attacking scenarios (mainly phishing), but only when they are out of any security faults.
-
 
 #### 静的解析
 
@@ -343,7 +337,7 @@ Review the code and identify those parts of a code which refers to critical oper
 * push notification (e.g. Google Prompt)
 * SMS
 * email
-* data from another website you had to visit/scan 
+* data from another website you had to visit/scan
 * data from a physical letter or physical entry point (e.g.: data you receive only after signing a document at the office of a bank)
 
 #### 動的解析
@@ -356,21 +350,17 @@ Ensure that critical operations require at least one additional channel to confi
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
 
-- V5.5 "The app doesn't rely on a single insecure communication channel (email or SMS) for critical operations, such as enrollments and account recovery."
+* V5.5 "The app doesn't rely on a single insecure communication channel (email or SMS) for critical operations, such as enrollments and account recovery."
 
 ##### CWE
-
-- CWE-956 - Software Fault Patterns (SFPs) within the Channel Attack cluster - https://cwe.mitre.org/data/definitions/956.html
+* CWE-956 - Software Fault Patterns (SFPs) within the Channel Attack cluster
 
 ##### その他
-
-- [1] The Mobile Application Security Verification Standard - https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md
-- [2] Infobip 2FA library - https://2-fa.github.io/libraries/android-library.html
-- [3] Google Authenticator for Android - https://github.com/google/google-authenticator-android
-
+* [1] The Mobile Application Security Verification Standard - https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md
+* [2] Infobip 2FA library - https://2-fa.github.io/libraries/android-library.html
+* [3] Google Authenticator for Android - https://github.com/google/google-authenticator-android
