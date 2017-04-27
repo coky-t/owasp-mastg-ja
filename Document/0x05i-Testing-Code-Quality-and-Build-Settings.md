@@ -16,10 +16,22 @@ JAR 署名 (v1 方式) と APK 署名方式 v2 (v2 方式) の2つの APK 署名
 
 リリースビルドは v1 および v2 の両方の方式で署名され、APK に含まれるコード署名証明書が開発者に属していることを確認します。
 
+APK がローカルで使用できない場合は、まずデバイスから APK を取り出します。
+
+```bash
+$ adb shell pm list packages
+(...)
+package:com.awesomeproject
+(...)
+$ adb shell pm path com.awesomeproject
+package:/data/app/com.awesomeproject-1/base.apk
+$ adb pull /data/app/com.awesomeproject-1/base.apk
+```
+
 APK 署名は <code>apksigner</code> ツールを使用して確認できます。
 
 ```bash
-$ apksigner verify --verbose Desktop/example.apk 
+$ apksigner verify --verbose Desktop/example.apk
 Verifies
 Verified using v1 scheme (JAR signing): true
 Verified using v2 scheme (APK Signature Scheme v2): true
@@ -31,7 +43,7 @@ Number of signers: 1
 デバッグ証明書で署名された APK の出力は以下のようになります。
 
 ```
-$ jarsigner -verify -verbose -certs example.apk 
+$ jarsigner -verify -verbose -certs example.apk
 
 sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
@@ -44,7 +56,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 リリース証明書で署名された APK の出力は以下のようになります。
 
 ```
-$ jarsigner -verify -verbose -certs example.apk 
+$ jarsigner -verify -verbose -certs example.apk
 
 sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
@@ -58,17 +70,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
 #### 動的解析
 
-静的解析を使用して APK 署名を検証する必要があります。APK をローカルで使用できない場合は、まずデバイスから APK を取り出します。
-
-```bash
-$ adb shell pm list packages
-(...)
-package:com.awesomeproject
-(...)
-$ adb shell pm path com.awesomeproject
-package:/data/app/com.awesomeproject-1/base.apk
-$ adb pull /data/app/com.awesomeproject-1/base.apk
-```
+静的解析を使用して APK 署名を検証する必要があります。
 
 #### 改善方法
 
@@ -83,25 +85,22 @@ v2SigningEnabled true
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-
-M7 - Client Code Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
 - V7.1: "アプリは有効な証明書で署名およびプロビジョニングされている。"
 
 ##### CWE
-
 N/A
 
 ##### その他
-
 - [1] Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
 - [2] Sign your App - https://developer.android.com/studio/publish/app-signing.html
 
 ##### ツール
-
 - jarsigner - http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html
+
+
 
 ### アプリがデバッグ可能であるかのテスト
 
@@ -127,23 +126,19 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 
 #### 動的解析
 
-<code>android:debuggable</code> を false に設定するか、<code>Application</code> タグからそれを省略するだけです。
+実行中のプロセス jdb にアタッチを試みます。デバッグが許可されていない場合、これはエラーで失敗します。
 
 #### 改善方法
 
-製品リリースでは、application 要素内の android:debuggable 属性を false に設定する必要があります。これによりデバッガはアプリケーションのプロセスにアタッチできなくなります。
+<code>android:debuggable</code> を false に設定するか、<code>Application</code> タグからそれを省略するだけです。
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing If the App is Debuggable"] --
-- VX.Y: ""
+* V7.2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である。（非デバッグなど）"
 
 ##### CWE
 
@@ -151,8 +146,8 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
-
 * [1] Application element - https://developer.android.com/guide/topics/manifest/application-element.html
+
 
 
 ### デバッグシンボルに関するテスト
@@ -174,18 +169,20 @@ export $NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darw
 ```
 
 ```bash
-$ $NM -a libfoo.so 
+$ $NM -a libfoo.so
 /tmp/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm: libfoo.so: no symbols
 ```
 動的シンボルを表示するには：
 
 ```bash
-$ $NM -D libfoo.so 
+$ $NM -D libfoo.so
 ```
 
 あるいは、お気に入りの逆アセンブラでファイルを開いて手動でシンボルテーブルをチェックします。
 
 #### 動的解析
+
+デバッグシンボルを検証するには静的解析を使用する必要があります。
 
 #### 改善方法
 
@@ -203,15 +200,12 @@ build.gradle に以下を追加します。
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
 
--- TODO [Update reference "VX.Y" below for "Testing for Debugging Symbols"] --
-- VX.Y: ""
+* V7.3: "デバッグシンボルはネイティブバイナリから削除されている。"
 
 ##### CWE
 
@@ -220,13 +214,14 @@ build.gradle に以下を追加します。
 
 ##### その他
 
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
+[1] Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
+[2] Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
 
 ##### ツール
 
 -- TODO [Add relevant tools for "Testing for Debugging Symbols"] --
 * Enjarify - https://github.com/google/enjarify
+
 
 
 ### デバッグコードや詳細エラーログに関するテスト
@@ -235,11 +230,11 @@ build.gradle に以下を追加します。
 
 -- TODO [Give an overview about the functionality and it's potential weaknesses] --
 
-#### ホワイトボックステスト
+#### 静的解析
 
 -- TODO [Add content on white-box testing for "Testing for Debugging Code and Verbose Error Logging"] --
 
-#### ブラックボックステスト
+#### 動的解析
 
 -- TODO [Add content on black-box testing for "Testing for Debugging Code and Verbose Error Logging"] --
 
@@ -249,15 +244,11 @@ build.gradle に以下を追加します。
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing for Debugging Code and Verbose Error Logging"] --
-- VX.Y: ""
+* V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
 
 ##### CWE
 
@@ -265,14 +256,12 @@ build.gradle に以下を追加します。
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
-
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
+-- TODO
 
 ##### ツール
-
 -- TODO [Add relevant tools for "Testing for Debugging Code and Verbose Error Logging"] --
 * Enjarify - https://github.com/google/enjarify
+
 
 
 ### 例外処理のテスト
@@ -281,15 +270,15 @@ build.gradle に以下を追加します。
 
 -- TODO [Give an overview about the functionality and it's potential weaknesses] --
 
-#### ホワイトボックステスト
+#### 静的解析
 
-ソースコードをレビューして、アプリケーションがさまざまな種類のエラー(IPC 通信、リモートサービス呼び出しなど)を処理するものを理解/特定します。この段階で実行されるチェックの例を以下に示します。
+ソースコードをレビューして、アプリケーションがさまざまな種類のエラー(IPC 通信、リモートサービス呼び出しなど)を処理する方法を理解および特定します。この段階で実行されるチェックの例を以下に示します。
 
-* アプリケーションが [正しく設計された] (https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047) (統一された) 方式を使用して例外を処理することを確認します。
+* アプリケーションが正しく設計され統一された方式を使用して例外を処理することを確認します <sup>[1]</sup>。
 * 例外を処理するときにアプリケーションが機密情報を公開しないことを確認します。この問題をユーザーに説明するのは依然として冗長です。
 * C3
 
-#### ブラックボックステスト
+#### 動的解析
 
 -- TODO [Describe how to test for this issue using static and dynamic analysis techniques. This can include everything from simply monitoring aspects of the app’s behavior to code injection, debugging, instrumentation, etc. ] --
 
@@ -299,25 +288,19 @@ build.gradle に以下を追加します。
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing Exception Handling"] --
-- VX.Y: ""
+* V7.5: "アプリは可能性のある例外をキャッチし処理している。"
 
 ##### CWE
-
 -- TODO [Add relevant CWE for "Testing Exception Handling"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
 
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
+[1] Exceptional Behavior (ERR) - https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047
 
 ##### ツール
 
@@ -325,17 +308,18 @@ build.gradle に以下を追加します。
 * Enjarify - https://github.com/google/enjarify
 
 
+
 ### コンパイラ設定の検証
 
 #### 概要
 
-ほとんどの Android アプリケーションは Java ベースであるため、バッファオーバーフロー脆弱性に [免疫](https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java) があります。
+ほとんどの Android アプリケーションは Java ベースであるため、バッファオーバーフロー脆弱性に免疫 <sup>[1]</sup> があります。
 
-#### ホワイトボックステスト
+#### 静的解析
 
 -- TODO [Describe how to assess this with access to the source code and build configuration] --
 
-#### ブラックボックステスト
+#### 動的解析
 
 -- TODO [Describe how to test for this issue using static and dynamic analysis techniques. This can include everything from simply monitoring aspects of the app’s behavior to code injection, debugging, instrumentation, etc. ] --
 
@@ -345,43 +329,36 @@ build.gradle に以下を追加します。
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Verifying Compiler Settings"] --
-- VX.Y: ""
+* V7.6: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
 
 ##### CWE
-
 -- TODO [Add relevant CWE for "Verifying Compiler Settings"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
-##### Info
+##### その他
+[1] Java Buffer Overflows - https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java
 
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
-
-##### Tools
+##### ツール
 
 -- TODO [Add relevant tools for "Verifying Compiler Settings"] --
 * Enjarify - https://github.com/google/enjarify
 
 
-### Testing for Memory Management Bugs
+### メモリ管理バグのテスト
 
 #### 概要
 
 -- TODO [Give an overview about the functionality and it's potential weaknesses] --
 
-#### ホワイトボックステスト
+#### 静的解析
 
 -- TODO [Add content for white-box testing "Testing for Memory Management Bugs"] --
 
-#### ブラックボックステスト
+#### 動的解析
 
 -- TODO [Add content for black-box testing "Testing for Memory Management Bugs"] --
 
@@ -391,14 +368,11 @@ build.gradle に以下を追加します。
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
-- V7.7: "アンマネージドコードでは、メモリは安全に割り当て、解放、使用されている。"
+* V7.7: "アンマネージドコードでは、メモリは安全に割り当て、解放、使用されている。"
 
 ##### CWE
 
@@ -422,7 +396,7 @@ build.gradle に以下を追加します。
 
 Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。Android 上の Java アプリの場合、ProGuard がコードを縮小および難読化する簡単な方法を提供します。これはクラス名、メソッド名、変数名などの識別子を無意味な文字の組み合わせに置き換えます。これはレイアウト難読化の一形態であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
 
-#### ホワイトボックステスト
+#### 静的解析
 
 ソースコードが提供されている場合、build.gradle ファイルを確認するとて難読化設定が設定されているか分かります。以下の例では、minifyEnabled と proguardFiles が設定されていることが分かります。アプリケーションは "-keepclassmembers" と "-keep class" で一部のクラスの難読化を免除するのが一般的ですので、proguard 構成ファイルを監査して免除されているクラスを確認することが重要です。getDefaultProguardFile('proguard-android.txt') メソッドはデフォルトの ProGuard 設定を Android SDK tools/proguard/ フォルダから取得し、proguard-rules.pro はカスタム proguard ルールを定義します。サンプルの proguard-rules.pro ファイルからは、一般的な android クラスを拡張する多くのクラスが免除されていることが分かります。特定のクラスやライブラリを除外するにはより細かく行う必要があります。
 
@@ -447,9 +421,9 @@ proguard-rules.pro
 -keep public class * extends android.app.Service
 ```
 
-#### ブラックボックステスト
+#### 動的解析
 
-ソースコードが提供されていない場合、コードベースが難読化されているかどうかを検証するために apk を逆コンパイルします。dex2jar を使用して dex コードを jar ファイルに変換できます。JD-GUI のようなツールを使用して、クラス、メソッド、変数名が人間に読めるかどうかを調べることができます。
+ソースコードが提供されていない場合、コードベースが難読化されているかどうかを検証するために APK を逆コンパイルします。dex2jar を使用して dex コードを jar ファイルに変換できます。JD-GUI のようなツールを使用して、クラス、メソッド、変数名が人間に読めるかどうかを調べることができます。
 
 難読化されたコードブロックの例
 ```
@@ -482,7 +456,7 @@ class a$b
 
 ProGuard を使用して、Java バイトコードから不要なデバッグ情報を削除する必要があります。デフォルトでは、ProGuard は行番号、ソースファイル名、変数名などのデバッグに役立つ属性を削除します。ProGuard はフリーの Java クラスファイル縮小化、最適化、難読化、事前検証のツールです。Android の SDK ツールに同梱されています。リリースビルドの縮小を有効にするには、build.gradle に以下を追加します。
 
-~~~~
+```
 android {
     buildTypes {
         release {
@@ -493,19 +467,15 @@ android {
     }
     ...
 }
-~~~~
+```
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* MX - Title - Link
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
--- TODO [Update reference below "VX.Y" for "Verifying that Java Bytecode Has Been Minified"] --
-- VX.Y: ""
+* V7.8: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
 ##### CWE
 
