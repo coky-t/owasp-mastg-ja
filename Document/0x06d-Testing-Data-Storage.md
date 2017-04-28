@@ -11,6 +11,31 @@
 * プロパティリスト (Plist) ファイル
 * プレーンファイル
 
+#### 静的解析
+
+理想的には機密情報はデバイスに格納すべきではありません。機密情報をデバイス自体に格納する必要がある場合、キーチェーンなどを使用して iOS デバイスのデバイスを保護するために利用できる関数/API呼び出しがあります。
+
+静的解析の中で機密データがデバイスに永続的に格納されるかどうかを確認する必要があります。機密データを扱う際には以下のフレームワークや関数をチェックする必要があります。
+
+##### CoreData/SQLite データベース
+
+* `Core Data` はアプリケーションのモデルレイヤーオブジェクトを管理するために使用するフレームワークです。オブジェクトライフサイクルおよびオブジェクトグラフ管理(persistenceを含む)に関連する一般的なタスクに一般化および自動化されたソリューションを提供します。Core Data はより低いレベルの sqlite データベースで動作します。
+
+* `sqlite3`: フレームワークセクションの `libsqlite3.dylib` ライブラリはアプリケーションに追加する必要があります。SQLite コマンドに API を提供する C++ ラッパーです。
+
+
+##### NSUserDefaults
+
+`NSUserDefaults` クラスは default システムと対話するためのプログラム的なインタフェースを提供します。default システムではアプリケーションはユーザーの好みに合わせて動作をカスタマイズできます。NSUserDefaults によって保存されたデータはアプリケーションバンドルから閲覧できます。また plist ファイルにデータを保存しますが、データ量が少なくて済みます。
+
+##### プレーンファイル / Plist ファイル
+
+* `NSData`: NSData は静的データオブジェクトを作成し、NSMutableData は動的データオブジェクトを作成します。NSData と NSMutableData は通常データストレージとして使用されますが、データオブジェクトに含まれるデータをアプリケーション間でコピーや移動ができる、分散オブジェクトアプリケーションでも役に立ちます。
+  * NSData オブジェクトの書き込むために使用されるメソッドのオプション: `NSDataWritingWithoutOverwriting, NSDataWritingFileProtectionNone, NSDataWritingFileProtectionComplete, NSDataWritingFileProtectionCompleteUnlessOpen, NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication`
+  * NSData クラスの一部としてデータを格納する: `writeToFile`
+* ファイルパスを管理する: `NSSearchPathForDirectoriesInDomains, NSTemporaryDirectory`
+* `NSFileManager` オブジェクトはファイルシステムの内容を調べて変更することができます。`createFileAtPath` でファイルを作成して書き込みます。
+
 
 #### 動的解析
 
@@ -27,65 +52,41 @@
 
 -- TODO [Add content on Dynamic Testing of "Testing Local Data Storage "] --
 
-
-#### 静的解析
-
-理想的には機密情報はデバイスに格納すべきではありません。機密情報をデバイス自体に格納する必要がある場合、キーチェーンなどを使用して iOS デバイスのデバイスを保護するために利用できる関数/API呼び出しがあります。
-
-静的解析の中で機密データがデバイスに永続的に格納されるかどうかを確認する必要があります。機密データを扱う際には以下のフレームワークや関数をチェックする必要があります。
-
-
-##### CoreData/SQLite データベース
-
-- `Core Data` はアプリケーションのモデルレイヤーオブジェクトを管理するために使用するフレームワークです。オブジェクトライフサイクルおよびオブジェクトグラフ管理(persistenceを含む)に関連する一般的なタスクに一般化および自動化されたソリューションを提供します。Core Data はより低いレベルの sqlite データベースで動作します。
-
-- `sqlite3`: フレームワークセクションの‘libsqlite3.dylib’ライブラリはアプリケーションに追加する必要があります。SQLite コマンドに API を提供する C++ ラッパーです。
-
-
-##### NSUserDefaults
-
-`NSUserDefaults` クラスは defaults システムと対話するためのプログラム的なインタフェースを提供します。defaults システムではアプリケーションはユーザーの好みに合わせて動作をカスタマイズできます。NSUserDefaults によって保存されたデータはアプリケーションバンドルから閲覧できます。また plist ファイルにデータを保存しますが、データ量が少なくて済みます。
-
-##### プレーンファイル / Plist ファイル
-
-* `NSData`: NSData は静的データオブジェクトを作成し、NSMutableData は動的データオブジェクトを作成します。NSData と NSMutableData は通常データストレージとして使用されますが、データオブジェクトに含まれるデータをアプリケーション間でコピーや移動ができる、分散オブジェクトアプリケーションでも役に立ちます。
-  * NSData オブジェクトの書き込むために使用されるメソッドのオプション: `NSDataWritingWithoutOverwriting, NSDataWritingFileProtectionNone, NSDataWritingFileProtectionComplete, NSDataWritingFileProtectionCompleteUnlessOpen, NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication`
-  * NSData クラスの一部としてデータを格納する: `writeToFile`
-* ファイルパスを管理する:  `NSSearchPathForDirectoriesInDomains, NSTemporaryDirectory`
-* `NSFileManager` オブジェクトはファイルシステムの内容を調べて変更することができます。`createFileAtPath` でファイルを作成して書き込みます。
-
 #### 改善方法
 
 機密情報(資格情報、鍵、PIIなど)がデバイス上でローカルに必要な場合、車輪を再発明したりデバイス上で暗号化せずに残す代わりに、iOS によって安全にデータを格納するために使用すべきいくつかのベストプラクティスが提供されています。
 
 以下は証明書や鍵や機密情報の安全な保管に一般的に使用されるベストプラクティスのリストです。
-* 証明書や鍵などの少量の機密データについては [Keychain Services](https://developer.apple.com/reference/security/1658642-keychain_services?language=objc) を使用して、デバイス上のローカルに安全に保管します。キーチェーンデータはファイルデータ保護で使用されるものと同様のクラス構造を使用して保護されています。これらのクラスはファイルデータ保護クラスと同等の振る舞いをしますが、別のキーを使用する異なる名前のAPIの一部です。デフォルトのビヘイビアは `kSecAttrAccessibleWhenUnlocked` です。詳細は使用可能なモード [Keychain Item Accessibility](https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons) を参照ください。
+* 証明書や鍵などの少量の機密データについては Keychain Services <sup>[1]</sup> を参照ください。キーチェーンデータはファイルデータ保護で使用されているものと同様のクラス構造を使用して保護されます。これらのクラスはファイルデータ保護クラスと同等の振る舞いをしますが、異なる鍵を使用し、異なる名前の API の一部です。デフォルトの振る舞いは `kSecAttrAccessibleWhenUnlocked` です。詳細については、Keychain Item Accessibility <sup>[8]</sup> を参照ください。
 * ローカルファイルを暗号化または復号化するために独自実装した暗号化機能は避けるべきです。
-* OMTG-DATAST-001-2 の章で示すように資格情報や鍵などの機密情報に対する安全でないストレージ機能を避けます。
 
 
 #### 参考情報
 
-* [Keychain Services Programming Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html)
-* [IOS Security Guide](https://www.apple.com/business/docs/iOS_Security_Guide.pdf)
-* [File System Basics](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)
-* [Foundation Functions](https://developer.apple.com/reference/foundation/1613024-foundation_functions)
-* [NSFileManager](https://developer.apple.com/reference/foundation/nsfilemanager)
-* [NSUserDefaults](https://developer.apple.com/reference/foundation/userdefaults)
-
-##### OWASP MASVS
-
-- V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
-
 ##### OWASP Mobile Top 10
 * M1 - 不適切なプラットフォームの利用
 * M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
 
 ##### CWE
 * CWE-311 - Missing Encryption of Sensitive Data
 * CWE-312 - Cleartext Storage of Sensitive Information
 * CWE-522 - Insufficiently Protected Credentials
 * CWE-922 - Insecure Storage of Sensitive Information
+
+##### その他
+
+[1] KeyChain Services - https://developer.apple.com/reference/security/1658642-keychain_services?language=objc
+[2] Keychain Services Programming Guide - https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html
+[3] iOS Security Guide - https://www.apple.com/business/docs/iOS_Security_Guide.pdf
+[4] File System Basics - https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html
+[5] Foundation Functions - https://developer.apple.com/reference/foundation/1613024-foundation_functions
+[6] NSFileManager - https://developer.apple.com/reference/foundation/nsfilemanager
+[7] NSUserDefaults - https://developer.apple.com/reference/foundation/userdefaults
+[8] Keychain Item Accessibility -  https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons
+
 
 ### 機密データに関するテスト(ログ)
 
