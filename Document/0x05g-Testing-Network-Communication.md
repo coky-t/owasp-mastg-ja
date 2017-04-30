@@ -25,7 +25,7 @@ Wireshark を使用して、人間が判読可能な方法でキャプチャし�
 nc localhost 1234 | sudo wireshark -k -S -i –
 ```
 
-* OWASP ZAP [3] や Burp Suite [4] などの傍受プロキシを使用してすべてのネットワークをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS を使用しているかどうかを確認します。
+* OWASP ZAP <sup>[3]</sup> や Burp Suite <sup>[4]</sup> などの傍受プロキシを使用してすべてのネットワークをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS を使用しているかどうかを確認します。
 
 > 一部のアプリケーションでは Burp や ZAP などのプロキシでは(カスタマイズされた HTTP/HTTPS 実装や証明書ピンニングのため)動作しないことがあるので注意します。このような場合には VPN サーバーを使用してすべてのトラフィックを Burp/ZAP プロキシに転送することができます。Vproxy を使用して簡単にこれを行うことができます。
 
@@ -75,7 +75,6 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 機密データを送信する場合、暗号化を使用することが不可欠です。ただし、十分に強力な暗号を使用する場合に限り、暗号化によってプライバシーが保護されます。この目標を達成するには、SSL ベースのサービスで脆弱な暗号スイートを選択してはいけません。暗号スイートは暗号化プロトコル(DES, RC4, AES など)、暗号鍵長(40, 56, 128 ビットなど)、完全性検査に使用されるハッシュアルゴリズム(SHA, MD5 など)によって明示されます。あなたの暗号化を容易に破られないようにするには、脆弱な暗号/プロトコル/鍵を使用していないことを TLS 設定で確認する必要があります [1]。
 
-
 #### 静的解析
 
 静的解析はこのテストケースでは適用されません。
@@ -86,9 +85,21 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 * testssl.sh: コマンドは以下のとおりです。
 
+The Github repo of testssl.sh offers also a compiled openssl version for download that supports **all ciphersuites and protocols including SSLv2**.
+
 ```
 testssl.sh www.example.com:443
 ```
+
+The tool will also help identifying potential misconfiguration or vulnerabilities by highlighting them in red.
+
+If you want to store the report preserving color and format use `aha`:
+
+```
+$ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com | aha > output.html
+```
+
+This will give you a HTML document that will match CLI output.
 
 * sslyze: コマンドは以下のとおりです。
 
@@ -108,7 +119,7 @@ perl o-saft.pl +check www.example.com:443
 
 #### 改善方法
 
-ネットワーク通信のためにトランスポート層保護を適切に構成するには、OWASP Transport Layer Protection cheat sheet に準じます [3]。
+Any vulnerability or misconfiguration should be solved either by patching or reconfiguring the server. ネットワーク通信のためにトランスポート層保護を適切に構成するには、OWASP Transport Layer Protection cheat sheet <sup>[3]</sup> および Qualys TLS best practices <sup>[4]</sup> に準じます。
 
 #### 参考情報
 
@@ -125,6 +136,7 @@ perl o-saft.pl +check www.example.com:443
 * [1] Testing for Weak SSL/TLS Ciphers - https://www.owasp.org/index.php/Testing_for_Weak_SSL/TLS_Ciphers,_Insufficient_Transport_Layer_Protection_(OTG-CRYPST-001)
 * [2] O-Saft various tests - https://www.owasp.org/index.php/O-Saft/Documentation#COMMANDS
 * [3] Transport Layer Protection Cheat Sheet - https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet
+* [4] Qualys SSL/TLS Deployment Best Practices - https://dev.ssllabs.com/projects/best-practices/
 
 ##### ツール
 * testssl.sh- https://testssl.sh
@@ -265,7 +277,7 @@ Ensure, that the hostname and certificate is verified correctly. You can find a 
 
 #### 概要
 
-Certificate pinning allows to hard-code in the client the certificate that is known to be used by the server. This technique is used to reduce the threat of a rogue CA and CA compromise. Pinning the server’s certificate take the CA out of games. Mobile applications that implements certificate pinning only have to connect to a limited numbers of server, so a small list of trusted CA can be hard-coded in the application.
+Certificate pinning allows to hard-code in the client the certificate that is known to be used by the server. This technique is used to reduce the threat of a rogue CA and CA compromise. Pinning the server’s certificate take the CA out of games. Mobile applications that implement certificate pinning only can connect to a limited numbers of servers, as a small list of trusted CAs or server certificates are hard-coded in the application.
 
 #### 静的解析
 
@@ -298,7 +310,7 @@ sslContext.init(null, tmf.getTrustManagers(), null);
 
 #### 動的解析
 
-Black-box Testing can be performed by launching a MITM attack using your prefered Web Proxy to intercept [1] the traffic exchanged between client (mobile application) and the backend server. If the Proxy is unable to intercept the HTTP requests/responses, the SSL pinning is correctly implemented.
+Dynamic analysis can be performed by launching a MITM attack using your preferred interception proxy<sup>[1]</sup>. This will allow to monitor the traffic exchanged between client (mobile application) and the backend server. If the Proxy is unable to intercept the HTTP requests and responses, the SSL pinning is correctly implemented.
 
 #### 改善方法
 
@@ -310,12 +322,10 @@ The SSL pinning process should be implemented as described on the static analysi
 * M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-
-- V5.4 "The app either uses its own certificate store, or pins the endpoint certificate or public key, and subsequently does not establish connections with endpoints that offer a different certificate or key, even if signed by a trusted CA."
+* V5.4 "The app either uses its own certificate store, or pins the endpoint certificate or public key, and subsequently does not establish connections with endpoints that offer a different certificate or key, even if signed by a trusted CA."
 
 ##### CWE
-
-- CWE-295 - Improper Certificate Validation - https://cwe.mitre.org/data/definitions/295.html
+* CWE-295 - Improper Certificate Validation
 
 ##### その他
 
@@ -354,7 +364,6 @@ Ensure that critical operations require at least one additional channel to confi
 * M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-
 * V5.5 "The app doesn't rely on a single insecure communication channel (email or SMS) for critical operations, such as enrollments and account recovery."
 
 ##### CWE
