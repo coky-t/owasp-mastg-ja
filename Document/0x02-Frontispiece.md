@@ -2,9 +2,9 @@
 
 ## OWASP モバイルセキュリティテストガイドについて
 
-OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。OWASP モバイルアプリケーション検証標準 (MASVS) にリストされるコントロールを検証するための技術的なプロセスについて説明します。MSTG は静的および動的セキュリティテストのテストケースのベースラインセットを提供し、テストの完全性と一貫性を確保することを目的としています。
+OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。OWASP モバイルアプリケーションセキュリティ検証標準 (MASVS) にリストされるコントロールを検証するための技術的なプロセスについて説明します。MSTG は静的および動的セキュリティテストのテストケースのベースラインセットを提供し、テストの完全性と一貫性を確保することを目的としています。
 
-OWASP は多くの著者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/) に参加して MASVS や MSTG の議論に参加してください。ここでサインアップできます。
+OWASP は多くの著者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、OWASP Mobile Security Project Slack Channel https://owasp.slack.com/messages/project-mobile_omtg/details/ に参加して MASVS や MSTG の議論に参加してください。ここでサインアップできます。
 
 http://owasp.herokuapp.com/
 
@@ -15,7 +15,7 @@ Copyright © 2017 The OWASP Foundation. 本ドキュメントはクリエイテ�
 
 ## 謝辞
 
-注意：この表は [contribution log](https://github.com/OWASP/owasp-mstg/graphs/contributors) を基に生成しています。詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mstg/blob/master/README.md) を参照ください。これは(まだ)リアルタイムでは更新されないことに注意してください。数週間ごとに手動で行うので、あなたが即時にリストに載っていなくても慌てないでください。
+注意：この表は https://github.com/OWASP/owasp-mstg/graphs/contributors にある contribution log を基に生成しています。詳細については、https://github.com/OWASP/owasp-mstg/blob/master/README.md の GitHub Repository README を参照ください。これは(まだ)リアルタイムでは更新されないことに注意してください。数週間ごとに手動で行うので、あなたが即時にリストに載っていなくても慌てないでください。
 
 | プロジェクトリーダーおよび著者 | 共著者 | 主執筆者 | 共同執筆者 | レビュー担当者 |
 | --- | --- | --- | --- | --- |
