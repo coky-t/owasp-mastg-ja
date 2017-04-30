@@ -1,122 +1,16 @@
 ## ネットワーク通信のテスト
 
-### 総括
-
-iOS 9 以降のアプリケーションでは Forward Secrecy を有効にした HTTPS と TLS 1.2 のみを使用する必要があります。HTTP を使用するには、開発者は `Info.plist` ファイルに安全でない通信を使用するドメインを指定する例外を定義する必要があります。
-
 ### ネットワーク上の暗号化されていない機密データに関するテスト
 
-#### 概要
+It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Verifying the TLS Settings" in Android for a detailed explanation of this test case.
 
--- TODO [Add content on "Testing for Unencrypted Sensitive Data on the Network"] --
+Nevertheless, there is one implementation detail that should be noted for iOS. Starting from iOS 9 applications must use exclusively HTTPS and TLS 1.2 with Forward Secrecy enabled. Using HTTP requires a developer to define an exception in `Info.plist` file, which specifies the domains that will be using insecure communications. Therefore check `Info.plist` file in the application bundle to verify if there are any endpoints allowed to communicate over HTTP.
 
-#### 静的解析
-
--- TODO [Develop content on static analysis of "Testing for Unencrypted Sensitive Data on the Network"] --
-アプリケーションバンドルの `Info.plist` ファイルをチェックして、HTTP 経由で通信できるエンドポイントがあるかどうかを確認します。
-
-#### 動的解析
-
--- TODO [Add content on static analysis of "Testing for Unencrypted Sensitive Data on the Network"] --
-
-#### 改善方法
-
--- TODO [Add remediations for "Testing for Unencrypted Sensitive Data on the Network"] --
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2014
-
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
-
-##### OWASP MASVS
-
--- TODO [Update reference to "VX.Y" below for "Testing for Unencrypted Sensitive Data on the Network"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
-
-##### CWE
-
--- TODO [Add relevant CWE for "Testing for Unencrypted Sensitive Data on the Network"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-
-- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
-- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
-
-##### ツール
-
--- TODO [Add tools for "Testing for Unencrypted Sensitive Data on the Network"] --
-* Enjarify - https://github.com/google/enjarify
 
 ### TLS設定の検証
 
-#### 概要
+It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Verifying the TLS Settings" in Android for a detailed explanation of this test case.
 
--- TODO [Provide a general description of the issue "Verifying the TLS Settings".]
-
-#### 静的解析
-
--- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
-
--- TODO [Confirm purpose of remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
-
-##### ソースコードあり
-
--- TODO [Add content for "Verifying the TLS Settings" with source code] --
-
-##### ソースコードなし
-
--- TODO [Add content for "Verifying the TLS Settings" without source code] --
-
-#### 動的解析
-
-[testssl](https://testssl.sh/) などのスクリプトを使用することがサーバー側のセキュリティをチェックする良い方法です。
-**SSLv2 を含むすべての暗号スイートとプロトコル** をサポートするコンパイル済みの openssl バージョンもダウンロードします。
-スクリプト自体と適切な openssl バージョンをダウンロードしたら、以下のように使用します。
-
-```
-$ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com
-```
-
-ツールは潜在的な誤設定や脆弱性を赤で強調表示させて特定することもできます。
-色や書式を保持するレポートを保存したい場合、`aha` を使用します。
-
-```
-$ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com | aha > output.html
-```
-
-これにより CLI 出力と一致する HTML ドキュメントが得られます。
-
-#### 改善方法
-
-脆弱性や誤設定はサーバーのパッチ適用または再構成のいずれかによって解決します。iOS ユーザーベースは Android に比べて一貫性がありますが、古いシステムではサポートされている SSL/TLS バージョンに注意します。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2014
-
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
-
-##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Verifying the TLS Settings"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
-
-##### CWE
-
--- TODO [Add relevant CWE for "Verifying the TLS Settings"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-
-- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
-- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
-
-##### ツール
-
--- TODO [Add tools on "Verifying the TLS Settings"] --
-* Enjarify - https://github.com/google/enjarify
 
 ### エンドポイント同一性検証のテスト
 
@@ -130,13 +24,7 @@ $ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com | aha > outp
 
 -- TODO [Confirm purpose of remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Add content on "Testing Endpoint Identity Verification" with source code] --
-
-##### ソースコードなし
-
--- TODO [Add content on "Testing Endpoint Identity Verification" without source code] --
 
 #### 動的解析
 
@@ -148,19 +36,16 @@ $ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com | aha > outp
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+#### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for "Testing Endpoint Identity Verification"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* V5.3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を確認している。有効なCAにより署名された証明書のみが受け入れられている。"
 
 ##### CWE
-
--- TODO [Add relevant CWE for "Testing Endpoint Identity Verification"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
+* CWE-296 - Improper Following of a Certificate's Chain of Trust - https://cwe.mitre.org/data/definitions/296.html
+* CWE-297 - Improper Validation of Certificate with Host Mismatch - https://cwe.mitre.org/data/definitions/297.html
+* CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
 
 ##### その他
 
@@ -172,13 +57,16 @@ $ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com | aha > outp
 -- TODO [Add relevant tools for "Testing Endpoint Identity Verification"] --
 * Enjarify - https://github.com/google/enjarify
 
+
+
+
 ### カスタム証明書ストアおよび SSL ピンニングのテスト
 
 #### 概要
 
-証明書ピンニングはサーバーで使用されていることが分かっている証明書をクライアントにハードコードします。この技法は不正な CA や CA の侵害の脅威を軽減するために使用されます。サーバーの証明書をピンニングするとそれらの CA はゲーム終了となります。証明書ピンニングを実装するモバイルアプリケーションでは限られた数のサーバーにのみ接続します。そのため、信頼できる CA の小さなリストをアプリケーションにハードコードします。
+証明書ピンニングはサーバーで使用されていることが分かっている証明書をクライアントにハードコードします。この技法は不正な CA や CA の侵害の脅威を軽減するために使用されます。サーバーの証明書をピンニングするとそれらの CA はゲーム終了となります。証明書ピンニングを実装するモバイルアプリケーションでは限られた数のサーバーにのみ接続します。そのため、信頼できる CA やサーバー証明書の小さなリストをアプリケーションにハードコードします。
 
-#### ホワイトボックステスト
+#### 静的解析
 
 以下に示すコードはサーバーによって提供された証明書がアプリケーションにハードコードされた証明書を反映しているかどうかを確認する方法を示しています。以下のメソッドは接続認証を実装して、接続が認証チャレンジの要求を送信することをデリゲートに通知します。
 
@@ -202,7 +90,7 @@ else {
 }
 ```
 
-#### ブラックボックステスト
+#### 動的解析
 
 ##### サーバー証明書の検証
 
@@ -239,30 +127,22 @@ else {
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-
--- TODO [Update reference "VX.Y" below for Testing Custom Certificate Stores and SSL Pinning] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* V5.4 "アプリは独自の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵を固定化しており、信頼できるCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
 
 ##### CWE
-
--- TODO [Add relevant CWE for Testing Custom Certificate Stores and SSL Pinning] --
-- CWE-312 - Cleartext Storage of Sensitive Information
+* CWE-295 - Improper Certificate Validation
 
 ##### その他
 
-- Setting Burp Suite as a proxy for iOS Devices : https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp
-References
-- OWASP - Certificate Pinning for iOS : https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#iOS
+* [1] Setting Burp Suite as a proxy for iOS Devices : https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp
+* [2] OWASP - Certificate Pinning for iOS : https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#iOS
 
-##### ツール
 
--- TODO [Add relevant tools for Testing Custom Certificate Stores and SSL Pinning] --
-* Enjarify - https://github.com/google/enjarify
+
 
 ### 重要な操作が安全な通信チャネルを使用することの検証
 
@@ -276,13 +156,8 @@ References
 
 -- TODO [Confirm purpose of remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Add content on "Verifying that Critical Operations Use Secure Communication Channels" with source code] --
 
-##### ソースコードなし
-
--- TODO [Add content on "Verifying that Critical Operations Use Secure Communication Channels" without source code] --
 
 #### 動的解析
 
@@ -294,14 +169,11 @@ References
 
 #### 参考情報
 
-##### OWASP Mobile Top 10 2014
-
-* M3 - Insufficient Transport Layer Protection - https://www.owasp.org/index.php/Mobile_Top_10_2014-M3
+##### OWASP Mobile Top 10 2016
+* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-
--- TODO [Update reference below "VX.Y" for "Verifying that Critical Operations Use Secure Communication Channels"] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
+* V5.5 "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）一つの安全でない通信チャネルに依存していない。"
 
 ##### CWE
 
