@@ -204,7 +204,6 @@ build.gradle に以下を追加します。
 * M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-
 * V7.3: "デバッグシンボルはネイティブバイナリから削除されている。"
 
 ##### CWE
@@ -251,7 +250,6 @@ build.gradle に以下を追加します。
 * V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
 
 ##### CWE
-
 -- TODO [Add relevant CWE for "Testing for Debugging Code and Verbose Error Logging"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
@@ -276,7 +274,6 @@ build.gradle に以下を追加します。
 
 * アプリケーションが正しく設計され統一された方式を使用して例外を処理することを確認します <sup>[1]</sup>。
 * 例外を処理するときにアプリケーションが機密情報を公開しないことを確認します。この問題をユーザーに説明するのは依然として冗長です。
-* C3
 
 #### 動的解析
 
@@ -293,6 +290,7 @@ build.gradle に以下を追加します。
 
 ##### OWASP MASVS
 * V7.5: "アプリは可能性のある例外をキャッチし処理している。"
+* V7.6: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
 
 ##### CWE
 -- TODO [Add relevant CWE for "Testing Exception Handling"] --
@@ -308,44 +306,6 @@ build.gradle に以下を追加します。
 * Enjarify - https://github.com/google/enjarify
 
 
-
-### コンパイラ設定の検証
-
-#### 概要
-
-ほとんどの Android アプリケーションは Java ベースであるため、バッファオーバーフロー脆弱性に免疫 <sup>[1]</sup> があります。
-
-#### 静的解析
-
--- TODO [Describe how to assess this with access to the source code and build configuration] --
-
-#### 動的解析
-
--- TODO [Describe how to test for this issue using static and dynamic analysis techniques. This can include everything from simply monitoring aspects of the app’s behavior to code injection, debugging, instrumentation, etc. ] --
-
-#### 改善方法
-
--- TODO [Describe the best practices that developers should follow to prevent this issue "Verifying Compiler Settings"] --
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
-
-##### OWASP MASVS
-* V7.6: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
-
-##### CWE
--- TODO [Add relevant CWE for "Verifying Compiler Settings"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-[1] Java Buffer Overflows - https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java
-
-##### ツール
-
--- TODO [Add relevant tools for "Verifying Compiler Settings"] --
-* Enjarify - https://github.com/google/enjarify
 
 
 ### メモリ管理バグのテスト
@@ -375,30 +335,31 @@ build.gradle に以下を追加します。
 * V7.7: "アンマネージドコードでは、メモリは安全に割り当て、解放、使用されている。"
 
 ##### CWE
-
 -- TODO [Add relevant CWE for "Testing for Memory Management Bugs"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
-
 * Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
 * Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
 
 ##### ツール
-
 -- TODO [Add relevant tools for "Testing for Memory Management Bugs"] --
 * Enjarify - https://github.com/google/enjarify
 
 
-### JavaバイトコードがMinifyされていることの検証
+
+### フリーのセキュリティ機能が有効であることの検証
 
 #### 概要
 
 Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。Android 上の Java アプリの場合、ProGuard がコードを縮小および難読化する簡単な方法を提供します。これはクラス名、メソッド名、変数名などの識別子を無意味な文字の組み合わせに置き換えます。これはレイアウト難読化の一形態であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
 
+ほとんどの Android アプリケーションは Java ベースであるため、バッファオーバーフローの脆弱性に対しては免疫 <sup>[1]</sup> があります。
+
+
 #### 静的解析
 
-ソースコードが提供されている場合、build.gradle ファイルを確認するとて難読化設定が設定されているか分かります。以下の例では、minifyEnabled と proguardFiles が設定されていることが分かります。アプリケーションは "-keepclassmembers" と "-keep class" で一部のクラスの難読化を免除するのが一般的ですので、proguard 構成ファイルを監査して免除されているクラスを確認することが重要です。getDefaultProguardFile('proguard-android.txt') メソッドはデフォルトの ProGuard 設定を Android SDK tools/proguard/ フォルダから取得し、proguard-rules.pro はカスタム proguard ルールを定義します。サンプルの proguard-rules.pro ファイルからは、一般的な android クラスを拡張する多くのクラスが免除されていることが分かります。特定のクラスやライブラリを除外するにはより細かく行う必要があります。
+ソースコードが提供されている場合、build.gradle ファイルを確認することで難読化設定が適用されているか分かります。以下の例では、`minifyEnabled` と `proguardFiles` が設定されていることが分かります。"-keepclassmembers" と "-keep class" で一部のクラスの難読化を例外にするのが一般的ですが、ProGuard 構成ファイルを監査して免除されているクラスを確認することが重要です。`getDefaultProguardFile('proguard-android.txt')` メソッドはデフォルトの ProGuard 設定を `<Android SDK>/tools/proguard/` フォルダから取得し、`proguard-rules.pro` はカスタム ProGuard ルールを定義します。サンプルの `proguard-rules.pro` ファイルからは、一般的な android クラスを拡張する多くのクラスが免除されていることが分かります。特定のクラスやライブラリを除外するにはより細かく行う必要があります。
 
 build.gradle
 ```
@@ -478,16 +439,14 @@ android {
 * V7.8: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
 ##### CWE
-
 -- TODO [Add relevant CWE for Verifying that Java Bytecode Has Been Minified] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
-
-* Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
-* Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
+[1] Java Buffer Overflows - https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java
+[2] Configuring your application for release - http://developer.android.com/tools/publishing/preparing.html#publishing-configure
+[3] Debugging with Android Studio - http://developer.android.com/tools/debugging/debugging-studio.html
 
 ##### ツール
-
 -- TODO [Add relevant tools for Verifying that Java Bytecode Has Been Minified] --
 * Enjarify - https://github.com/google/enjarify
