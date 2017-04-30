@@ -1,5 +1,7 @@
 ## データストレージのテスト
 
+For all test cases it need to be known what sensitive information is, in context of the app. Please have a look at "Classification of data" for further details.
+
 ### ローカルデータストレージのテスト
 
 #### 概要
@@ -93,14 +95,25 @@
 #### 概要
 
 モバイルデバイス上にログファイルを作成する理由は正当な理由はたくさんあります。例えば、クラッシュやエラーを追跡するため、オフラインであるときローカルに格納し、再びオンラインになってアプリケーション開発者/企業に送信します。使用統計情報にも使用されます。但し、クレジットカード番号やセッション ID などの機密データを記録すると攻撃者や悪意のあるアプリケーションにデータが公開される可能性があります。
-ログファイルはさまざまなオペレーティングシステムでさまざまな方法で作成されます。以下のリストは iOS で利用できるメカニズムを示しています。
+ログファイルはさまざまな方法で作成されます。以下のリストは iOS で利用できるメカニズムを示しています。
 
 * NSLog メソッド
 * printf系の関数
 * NSAssert系の関数
 * マクロ
 
-機密情報の分類は業種、国、法律、規制によって異なります。したがって適用される法律や規制を知っておく必要があり、実際にアプリのコンテキスト内でどのような機密情報があるかを認識する必要があります。
+#### 静的解析
+
+以下のキーワードを使用して定義済み/カスタムのロギングステートメントの使用についてソースコードを確認します。
+* 定義済みおよびビルトイン関数の場合：
+  * NSLog
+  * NSAssert
+  * NSCAssert
+  * fprintf
+* カスタム関数の場合：
+  * Logging
+  * Logfile
+
 
 #### 動的解析
 
@@ -114,19 +127,6 @@ tail -f /var/log/syslog
 * iOS デバイスを USB 経由で接続して Xcode を起動します。Windows > Devices に移動し、デバイスとそれぞれのアプリケーションを選択します。
 
 入力フィールドのプロンプトを完了した後、上記のコマンドの出力に機密データが表示されている場合、このテストは失敗となります。
-
-
-#### 静的解析
-
-以下のキーワードを使用して定義済み/カスタムのロギングステートメントの使用についてソースコードを確認します。
-* 定義済みおよびビルトイン関数の場合：
-  * NSLog
-  * NSAssert
-  * NSCAssert
-  * fprintf
-* カスタム関数の場合：
-  * Logging
-  * Logfile
 
 
 #### 改善方法
@@ -143,20 +143,18 @@ tail -f /var/log/syslog
 
 #### 参考情報
 
--- TODO [Add references for section "Testing for Sensitive Data in Logs"] --
-
-##### OWASP MASVS
-
-- V2.2: "機密データがアプリケーションログに書き込まれていない。"
-
-##### OWASP Mobile Top 10
+##### OWASP Mobile Top 10 2016
 * M1 - 不適切なプラットフォームの利用
 * M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.2: "機密データがアプリケーションログに書き込まれていない。"
 
 ##### CWE
 * CWE-117: Improper Output Neutralization for Logs
 * CWE-532: Information Exposure Through Log Files
 * CWE-534: Information Exposure Through Debug Log Files
+
 
 
 ### 機密データがサードパーティに送信されているかのテスト
@@ -173,13 +171,11 @@ tail -f /var/log/syslog
 
 #### 静的解析
 
--- TODO [Add content on black-box testing of "Testing Whether Sensitive Data Is Sent to Third Parties"] --
+API calls and/or functions provided through the 3rd party library should be reviewed on a source code level to identify if they are used accordingly to best practices.
 
 #### 動的解析
 
-機密情報が埋め込まれている場合には、外部サービスに対するすべてのリクエストを解析する必要があります。
-* 動的解析は _Burp Proxy_ や OWASP ZAP を使用して中間者 (MITM) 攻撃を行い、クライアントとサーバー間で交換されるトラフィックを傍受することによって実行します。完全なガイドは [ここ][05773baa] にあります。トラフィックを傍受プロキシにルーティングできるようになると、アプリからのトラフィックを盗聴することが可能になります。アプリを使用する場合、主機能がホストされているサーバーに直接接続していないすべてのリクエストに対し、機密情報がサードパーティに送信されていないかをチェックする必要があります。これには追跡サービスや広告サービスでの PII (個人識別情報) などがあります。
-* アプリを逆コンパイルする場合、サードパーティライブラリから提供される API 呼び出しや関数をソースコードレベルでレビューして、ベストプラクティスに沿って使用されているかを判断する必要があります。
+機密情報が埋め込まれている場合には、外部サービスに対するすべてのリクエストを解析する必要があります。動的解析は _Burp Proxy_ や _OWASP ZAP_ を使用して中間者 (MITM) 攻撃を行い、クライアントとサーバー間で交換されるトラフィックを傍受することによって実行します。トラフィックを傍受プロキシにルーティングできるようになると、アプリからのトラフィックを盗聴することが可能になります。アプリを使用する場合、主機能がホストされているサーバーに直接接続していないすべてのリクエストに対し、機密情報がサードパーティに送信されていないかをチェックする必要があります。これには追跡サービスや広告サービスでの PII (個人識別情報) などがあります。
 
 #### 改善方法
 
@@ -187,20 +183,19 @@ tail -f /var/log/syslog
 
 #### 参考情報
 
-[05773baa]: http://FIXME
-
--- TODO [Add content on References of "Testing Whether Sensitive Data Is Sent to Third Parties"] --
-
-##### OWASP MASVS
-
-- V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
-
-##### OWASP Mobile Top 10
+##### OWASP Mobile Top 10 2016
 * M1 - 不適切なプラットフォームの利用
 * M2 - 安全でないデータストレージ
 
+##### OWASP MASVS
+- V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
+
 ##### CWE
 - CWE-359 "Exposure of Private Information ('Privacy Violation')": [Link to CWE issue]
+
+##### ツール
+* OWASP ZAP
+* Burp Suite Professional
 
 
 ### 機密データに関するテスト(キーボードキャッシュ)
@@ -209,10 +204,23 @@ tail -f /var/log/syslog
 
 キーボード入力を簡素化するため、オートコレクト、予測入力、スペルチェックなどを提供します。キーボード入力のほとんどはデフォルトで /private/var/mobile/Library/Keyboard/dynamic-text.dat にキャッシュされます。
 
-この動作は、UITextField, UITextView, UISearchBar で採用されている UITextInputTraits プロトコルによって実現されます。キーボードキャッシュは以下のプロパティの影響を受けます。
+この動作は、UITextField, UITextView, UISearchBar で採用されている UITextInputTraits <sup>[1]</sup> プロトコルによって実現されます。キーボードキャッシュは以下のプロパティの影響を受けます。
 
 * `var autocorrectionType: UITextAutocorrectionType` はタイピング中にオートコレクトが有効か無効かを決定します。オートコレクトを有効にすると、テキストオブジェクトは未知語を追跡してより適切な置換候補をユーザーに提案します。ユーザーが明示的にアクションをオーバーライドしない限り、自動的に入力したテキストを置換します。このプロパティのデフォルト値は `UIText​Autocorrection​Type​Default` です。ほとんどの入力メソッドはオートコレクトが有効になります。
 * `var secureTextEntry: BOOL` はテキストコピーやテキストキャッシュを無効にするべきかどうかを識別し、UITextField の場合は入力されるテキストを隠します。このプロパティはデフォルトで `NO` に設定されています。
+
+#### 静的解析
+
+
+* 提供されたソースコードを検索して、以下と同様の実装を探します。
+
+  ```
+  textObject.autocorrectionType = UITextAutocorrectionTypeNo;
+  textObject.secureTextEntry = YES;
+  ```
+
+* Interface Builder で xib と storyboard ファイルを開き、適切なオブジェクトの Attributes Inspector の Secure Text Entry and Correction の状態を確認します。
+
 
 #### 動的解析
 
@@ -225,18 +233,6 @@ tail -f /var/log/syslog
 
 4. ユーザー名、パスワード、電子メールアドレス、クレジットカード番号などの機密データを探します。機密データがキーボードキャッシュファイルから取得できる場合、このテストは失敗となります。
 
-#### 静的解析
-
-キーボードキャッシュを無効にする実装があるかどうかは開発者に直接確認します。
-
-* 提供されたソースコードを検索して、以下と同様の実装を探します。
-
-  ```
-  textObject.autocorrectionType = UITextAutocorrectionTypeNo;
-  textObject.secureTextEntry = YES;
-  ```
-* Interface Builder で xib と storyboard ふぁいるを開き、適切なオブジェクトの Attributes Inspector の Secure Text Entry and Correction の状態を確認します。
-
 #### 改善方法
 
 アプリケーションはテキストフィールドに入力された機密情報を含むデータをキャッシュしないことを保証する必要があります。これは目的の UITextFields, UITextViews, UISearchBars で `textObject.autocorrectionType = UITextAutocorrectionTypeNo` ディレクティブを使用して、プログラムで機能を無効にすることで実現できます。PIN やパスワードなどのマスクする必要のあるデータについては、`textObject.secureTextEntry` に `YES` を設定します。
@@ -248,38 +244,28 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 
 #### 参考情報
 
-* [UIText​Input​Traits protocol](https://developer.apple.com/reference/uikit/uitextinputtraits)
-
-##### OWASP MASVS
-
-- V2.4: "機密データを処理するテキスト入力では、キーボードキャッシュが無効にされている。"
-
-##### OWASP Mobile Top 10
+##### OWASP Mobile Top 10 2016
 * M1 - 不適切なプラットフォームの利用
 * M2 - 安全でないデータストレージ
 
+##### OWASP MASVS
+- V2.4: "機密データを処理するテキスト入力では、キーボードキャッシュが無効にされている。"
+
 ##### CWE
 - CWE-524: Information Exposure Through Caching
+
+#### その他
+[1] UIText​Input​Traits protocol - https://developer.apple.com/reference/uikit/uitextinputtraits
+
+
 
 ### 機密データに関するテスト(クリップボード)
 
 #### 概要
 
--- TODO [Add content on overview of "Testing for Sensitive Data in the Clipboard"] --
+When keying in data into input fields, the clipboard can be used to copy data in. The clipboard is accessible systemwide and therefore shared between the apps. This feature can be misused by malicious apps in order to get sensitive data.
 
-#### ブラックボックステスト
-
-ユーザーにユーザー名、パスワード、クレジットカード番号などの機密情報を指示する入力フィールドがあるアプリケーションのビューに進みます。
-
-何かしらの値を入力して入力フィールドをダブルタップします。
-
-「選択」「全選択」「ペースト」オプションが表示されている場合、「選択」または「全選択」オプションをタップすると、「カット」「コピー」「ペースト」が使えます。
-
-ペーストにより値を取得することができるため、機密入力フィールドでは「カット」および「コピー」オプションは無効にする必要があります。
-
-機密入力フィールドで内容を「カット」または「コピー」することができる場合、このテストは失敗となります。
-
-#### ホワイトボックステスト
+#### 静的解析
 
 提供されたソースコードを検索して、`UITextField` のサブクラス実装を探します。
 
@@ -289,9 +275,14 @@ action == @select(cut:)
 action == @select(copy:)
 ```
 
+#### 動的解析
+
+ユーザーにユーザー名、パスワード、クレジットカード番号などの機密情報を指示する入力フィールドがあるアプリケーションのビューに進みます。何かしらの値を入力して入力フィールドをダブルタップします。「選択」「全選択」「ペースト」オプションが表示されている場合、「選択」または「全選択」オプションをタップすると、「カット」「コピー」「ペースト」が使えます。ペーストにより値を取得することができるため、機密入力フィールドでは「カット」および「コピー」オプションは無効にする必要があります。機密入力フィールドで内容を「カット」または「コピー」することができる場合、このテストは失敗となります。
+
+
 #### 改善方法
 
-以下の改善方法が考えられます。
+以下の改善方法が考えられます <sup>[1]</sup>。
 
 ```#ObjC
 @interface NoSelectTextField : UITextField
@@ -321,11 +312,23 @@ action == @select(copy:)
 @end
 ```
 
-http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-all-in-uitextview
 
 #### 参考情報
 
--- TODO [Add references for "Testing for Sensitive Data in the Clipboard"] --
+##### OWASP Mobile Top 10 2016
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.5: "機密データを含む可能性があるテキストフィールドでは、クリップボードが無効化されている。"
+
+##### CWE
+- CWE
+
+#### Info
+[1] Disable clipboard on iOS - http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-all-in-uitextview
+
+
 
 ### 機密データがIPCメカニズムを介して漏洩しているかのテスト
 
@@ -333,13 +336,13 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 -- TODO [Add content on overview of "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
 
-#### ブラックボックステスト
-
--- TODO [Add content on black-box testing of "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
-
-#### ホワイトボックステスト
+#### 静的解析
 
 -- TODO [Add content on white-box testing of "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
+
+#### 動的解析
+
+-- TODO [Add content on black-box testing of "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
 
 #### 改善方法
 
@@ -347,7 +350,21 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 #### 参考情報
 
--- TODO [Add references for "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
+##### OWASP Mobile Top 10 2016
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.6: "機密データがIPCメカニズムを介して公開されていない。"
+
+##### CWE
+- CWE
+
+#### その他
+-- TODO --
+
+
+
 
 ### ユーザーインタフェースを介しての機密データ漏洩に関するテスト
 
@@ -355,13 +372,14 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 -- TODO [Add content on overview for "Testing for Sensitive Data Disclosure Through the User Interface"] --
 
-#### ブラックボックステスト
+#### 静的解析
+
+-- TODO [Add content on white-box testing of "Testing for Sensitive Data Disclosure Through the User Interface"] --
+
+#### 動的解析
 
 -- TODO [Add content on black-box testing of "Testing for Sensitive Data Disclosure Through the User Interface"] --
 
-#### ホワイトボックステスト
-
--- TODO [Add content on white-box testing of "Testing for Sensitive Data Disclosure Through the User Interface"] --
 
 #### 改善方法
 
@@ -369,7 +387,20 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 #### 参考情報
 
--- TODO [Add references for "Testing for Sensitive Data Disclosure Through the User Interface"] --
+##### OWASP Mobile Top 10 2016
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.7: "パスワードやピンなどの機密データは、ユーザーインタフェースを介して公開されていない。"
+
+##### CWE
+- CWE
+
+#### その他
+-- TODO --
+
+
 
 ### 機密データに関するテスト(バックアップ)
 
@@ -377,13 +408,13 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 -- TODO [Add content on overview of "Testing for Sensitive Data in Backups"] --
 
-#### ブラックボックステスト
-
--- TODO [Add content on black-box testing of "Testing for Sensitive Data in Backups"] --
-
-#### ホワイトボックステスト
+#### 静的解析
 
 -- TODO [Add content on white-box testing of "Testing for Sensitive Data in Backups"] --
+
+#### 動的解析
+
+-- TODO [Add content on black-box testing of "Testing for Sensitive Data in Backups"] --
 
 #### 改善方法
 
@@ -391,7 +422,20 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 #### 参考情報
 
+##### OWASP Mobile Top 10 2016
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.8: "機密データがモバイルオペレーティングシステムにより生成されるバックアップに含まれていない。"
+
+##### CWE
+- CWE
+
+#### Info
 -- TODO [Add references for "Testing for Sensitive Data in Backups"] --
+
+
 
 ### 自動生成されるスクリーンショットの機密情報に関するテスト
 
@@ -399,7 +443,11 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 製造業者はアプリケーションへの出入りの際に美的で魅力的な効果をデバイスユーザーに提供したいため、アプリケーションがバックグラウンドになるとスクリーンショットを保存するというコンセプトが導入されました。この機能は機密情報を含むスクリーンショット(電子メールや企業文書のスクリーンショットなど)がローカルストレージに書き込まれるため、アプリケーションにセキュリティリスクを引き起こす可能性があります。脱獄されたデバイス上の不正なアプリケーションやデバイスを盗む何者かによって取得される可能性があります。
 
-#### ブラックボックステスト
+#### 静的解析
+
+ソースコードを解析する中で、機密データが含まれるフィールドや画面を探します。アプリケーションがバックグラウンドされる前に画面をサニタイズするかどうかを特定します。
+
+#### 動的解析
 
 アプリケーション上でユーザー名、電子メールアドレス、アカウント詳細などの機密情報を表示するページに進みます。iOS デバイスのホームボタンを押して、アプリケーションをバックグラウンドにします。iOS デバイスに接続して以下のディレクトリに進みます(8.0 未満の iOS では異なる場合があります)。
 
@@ -409,15 +457,12 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 アプリケーションがバックグラウンドに入るたびにキャッシュされるデフォルトのスクリーンショットを持つことを強く推奨します。
 
-#### ホワイトボックステスト
-
-ソースコードを解析する中で、機密データが含まれるフィールドや画面を探します。アプリケーションがバックグラウンドされる前に画面をサニタイズするかどうかを特定します。
 
 #### 改善方法
 
 デフォルトのスクリーンショットを設定する改善方法が考えられます。
 
-```ObjC
+```
 @property (UIImageView *)backgroundImage;
  
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -426,11 +471,61 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
     [self.window addSubview:myBanner];
 }
 ```
+
 これによりアプリケーションがバックグラウンドされるときはいつでもバックグラウンドイメージに "overlayImage.png" が設定されます。"overlayImage.png" は常に現在の view を上書きするため、機密データの漏洩を防ぎます。
 
 #### 参考情報
 
+##### OWASP Mobile Top 10 2016
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
+
+##### OWASP MASVS
+- V2.9: "バックグラウンド時にアプリはビューから機密データを削除している。"
+
+##### CWE
+- CWE
+
+#### Info
 -- TODO [Add references for "Testing For Sensitive Information in Auto-Generated Screenshots" ] --
+
+
+
+### メモリ内の機密データのテスト
+
+-- TODO [Add content for "Testing for Sensitive Data in Memory"] --
+
+#### 概要
+
+-- TODO
+
+#### 静的解析
+
+-- TODO
+
+#### 動的解析
+
+-- TODO
+
+#### 改善方法
+
+-- TODO
+
+#### 参考情報
+
+##### OWASP MASVS
+- V2.10: "アプリは必要以上に長くメモリ内に機密データを保持せず、使用後は明示的にメモリがクリアされている。"
+
+##### OWASP Mobile Top 10 2016
+* M1 - 不適切なプラットフォームの利用
+
+##### CWE
+- CWE: -- TODO [Add link to CWE issue] --
+
+#### その他
+-- TODO
+
+
 
 ### デバイスアクセスセキュリティポリシーのテスト
 
@@ -453,16 +548,16 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 #### 参考情報
 
 ##### OWASP MASVS
-
 - V2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
-##### OWASP Mobile Top 10
-
+##### OWASP Mobile Top 10 2016
 * M1 - 不適切なプラットフォームの利用
 
 ##### CWE
-
 - CWE: -- TODO [Add link to CWE issue] --
+
+#### その他
+-- TODO
 
 
 ### ユーザー通知コントロールの検証
@@ -477,7 +572,7 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 * ユーザーがルート化デバイスにアプリをインストールする場合、危険であり、OS レベルのセキュリティコントロールを無効にし、マルウェアに感染されやすくなるという警告を表示します。詳細は OMTG-DATAST-011 も参照ください。
 * ユーザーが古いバージョンの Android にアプリをインストールする場合、警告を表示します。詳細は OMTG-DATAST-010 も参照ください。
 
--- TODO [What else can be a warning on Android?] --
+-- TODO [What else can be a warning on iOS?] --
 
 #### 静的解析
 
@@ -503,9 +598,12 @@ http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-al
 
 - V2.12: "アプリは処理される個人識別情報の種類、およびユーザーがアプリを使用する際に従うべきセキュリティのベストプラクティスについて通知している。"
 
-##### OWASP Mobile Top 10
+##### OWASP Mobile Top 10 2016
 
 * M1 - 不適切なプラットフォームの利用
 
 ##### CWE
 - CWE: -- TODO [Add link to CWE issue for "Verifying User Education Controls"] --
+
+#### その他
+-- TODO
