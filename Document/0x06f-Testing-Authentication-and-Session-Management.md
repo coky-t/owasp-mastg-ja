@@ -2,25 +2,25 @@
 
 ### ユーザーが正しく認証されていることの検証
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Verify that Users Are Properly Authenticated" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「ユーザーが正しく認証されていることの検証」をご覧ください。
 
 ### セッション管理のテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing Session Management" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「セッション管理のテスト」をご覧ください。
 
 
 ### ログアウト機能のテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing the Logout Functionality" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「ログアウト機能のテスト」をご覧ください。
 
 ### パスワードポリシーのテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing the Password Policy" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「パスワードポリシーのテスト」をご覧ください。
 
 
 ### 過度なログイン試行のテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing Excessive Login Attempts" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「過度なログイン試行のテスト」をご覧ください。
 
 
 ### 生体認証のテスト
@@ -79,17 +79,17 @@ It is important to clarify that this control is at the server side, so the testi
 
 ### セッションタイムアウトのテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing the Session Timeout" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「セッションタイムアウトのテスト」をご覧ください。
 
 
 ### 二要素認証のテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing 2-factor Authentation" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「二要素認証のテスト」をご覧ください。
 
 
 ### ステップアップ認証のテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Testing Step-up Authentication" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については、Android の「ステップアップ認証」をご覧ください。
 
 
 ### ユーザーデバイス管理のテスト
