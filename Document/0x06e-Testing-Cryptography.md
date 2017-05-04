@@ -80,9 +80,9 @@
 
 #### 改善方法
 
-Do not develop custom cryptographic algorithms, as it is likely they are prone to attacks that are already well-understood by cryptographers.
+カスタム暗号アルゴリズムを開発してはいけません。これは暗号技術者によく知られている攻撃を受ける可能性が高いためです。
 
-When there is a need to store sensitive data, use strong, up-to-date cryptographic algorithms. Select a well-vetted algorithm that is currently considered to be strong by experts in the field, and use well-tested implementations. The Keychain is suitable for storing sensitive information locally<sup>[1]</sup>.
+機密データを格納する必要がある場合は、強力な最新の暗号アルゴリズムを使用します。この分野の専門家により現時点で強力であると見なされていて十分に検証されたアルゴリズムを選択し、十分にテストされた実装を使用します。キーチェーンは機密情報をローカルに格納するのに適しています <sup>[1]</sup>。
 
 #### 参考情報
 
