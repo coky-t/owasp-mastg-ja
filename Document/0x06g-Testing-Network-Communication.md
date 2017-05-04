@@ -2,14 +2,14 @@
 
 ### ネットワーク上の暗号化されていない機密データに関するテスト
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Verifying the TLS Settings" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのためテストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については Android の「TLS 設定の確認」をご覧ください。
 
-Nevertheless, there is one implementation detail that should be noted for iOS. Starting from iOS 9 applications must use exclusively HTTPS and TLS 1.2 with Forward Secrecy enabled. Using HTTP requires a developer to define an exception in `Info.plist` file, which specifies the domains that will be using insecure communications. Therefore check `Info.plist` file in the application bundle to verify if there are any endpoints allowed to communicate over HTTP.
+但し、iOS で注意すべき実装の詳細が一つあります。iOS 9 以降のアプリケーションでは Forward Secrecy を有効にした HTTPS と TLS 1.2 のみを使用する必要があります。HTTP を使用するには開発者は `Info.plist` ファイルに例外を定義して、安全でない通信を使用するドメインを指定する必要があります。したがってアプリケーションバンドルの `Info.plist` ファイルをチェックして、HTTP 経由で通信できるエンドポイントがあるかどうかを確認します。
 
 
-### TLS設定の検証
+### TLS設定の確認
 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications. Please look at "Verifying the TLS Settings" in Android for a detailed explanation of this test case.
+このコントロールはサーバー側にあることを明確にすることが重要です。そのためテストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については Android の「TLS 設定の確認」をご覧ください。
 
 
 ### エンドポイント同一性検証のテスト
@@ -161,7 +161,7 @@ else {
 
 #### 動的解析
 
--- TODO [Describe how to test for this issue "Verifying that Critical Operations Use Secure Communication Channels" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app窶冱 behavior to code injection, debugging, instrumentation, etc.] --
+-- TODO [Describe how to test for this issue "Verifying that Critical Operations Use Secure Communication Channels" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app's behavior to code injection, debugging, instrumentation, etc.] --
 
 #### 改善方法
 
