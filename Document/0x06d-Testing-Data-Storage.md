@@ -1,6 +1,6 @@
 ## データストレージのテスト
 
-For all test cases it need to be known what sensitive information is, in context of the app. Please have a look at "Classification of data" for further details.
+すべてのテストケースについてアプリのコンテキストでどのような機密情報があるかを知る必要があります。詳細については「データの分類」をご覧ください。
 
 ### ローカルデータストレージのテスト
 
@@ -171,7 +171,7 @@ tail -f /var/log/syslog
 
 #### 静的解析
 
-API calls and/or functions provided through the 3rd party library should be reviewed on a source code level to identify if they are used accordingly to best practices.
+サードパーティを通じて提供される API コールや関数は、ベストプラクティスに応じて使用されているかどうかを特定するために、ソースコードレベルでレビューする必要があります。
 
 #### 動的解析
 
@@ -263,7 +263,7 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 
 #### 概要
 
-When keying in data into input fields, the clipboard can be used to copy data in. The clipboard is accessible systemwide and therefore shared between the apps. This feature can be misused by malicious apps in order to get sensitive data.
+入力フィールドにデータを入力する際に、クリップボードを使用してデータをコピーできます。クリップボードはシステム全体でアクセス可能であり、そのためアプリ間で共有されます。この機能は機密データを取得するために悪意のあるアプリによって悪用されます。
 
 #### 静的解析
 
