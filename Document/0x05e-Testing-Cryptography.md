@@ -7,7 +7,7 @@
 -- REVIEW --
 ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。攻撃者がそれを取得すると、機密データを復号する作業は簡単になり、機密性を保護するという当初の考えは失敗します。
 
-When using symmetric cryptography the key need to be stored within the device and it is just a matter of time and effort from the attacker to identify it.
+対称暗号を使用する場合、鍵はデバイス内に格納する必要があり、攻撃者がそれを識別するのは時間と労力の問題となります。
 
 #### 静的解析
 
@@ -106,7 +106,7 @@ buildTypes {
 
 #### 概要
 
-The use of a non-standard and custom build algorithm for cryptographic functionalities is dangerous because a determined attacker may be able to break the algorithm and compromise data that has been protected. Implementing cryptographic functions is time consuming, difficult and likely to fail. Instead well-known algorithms that were already proven to be secure should be used. All mature frameworks and libraries offer cryptographic functions that should also be used when implementing mobile apps.
+暗号機能に非標準のカスタムビルドアルゴリズムを使用することは危険です。特定の攻撃者がアルゴリズムを破り、保護されているデータを侵害する可能性があります。暗号化機能の実装には時間がかかり、困難であり、失敗する可能性があります。代わりに既にセキュアであることが証明されている既知のアルゴリズムを使用すべきです。すべての成熟したフレームワークやライブラリはモバイルアプリを実装する際にも使用すべき暗号化機能を提供します。
 
 #### 静的解析
 
@@ -118,9 +118,9 @@ The use of a non-standard and custom build algorithm for cryptographic functiona
 
 #### 改善方法
 
-Do not develop custom cryptographic algorithms, as it is likely they are prone to attacks that are already well-understood by cryptographers.
+カスタム暗号アルゴリズムを開発してはいけません。これは暗号技術者によりよく知られている攻撃を受ける可能性が高いためです。
 
-When there is a need to store sensitive data, use strong, up-to-date cryptographic algorithms. Select a well-vetted algorithm that is currently considered to be strong by experts in the field, and use well-tested implementations. The KeyStore is suitable for storing sensitive information locally and a list of strong ciphers offered by it can be found in the Android documentation<sup>[1]</sup>.
+機密データを格納する必要がある場合は強力な最新の暗号アルゴリズムを使用します。この分野の専門家により現時点で強力であると見なされている十分に検証されたアルゴリズムを選択し、十分にテストされた実装を使用します。KeyStore は機密情報を格納するのに適しており、Android のドキュメントには提供される強力な暗号のリストがあります <sup>[1]</sup>。
 
 
 #### 参考情報
