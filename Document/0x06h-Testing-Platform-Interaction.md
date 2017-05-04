@@ -16,7 +16,7 @@
 
 #### 動的解析
 
--- TODO [Describe how to test for this issue "Testing App permissions" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app窶冱 behavior to code injection, debugging, instrumentation, etc.] --
+-- TODO [Describe how to test for this issue "Testing App permissions" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app's behavior to code injection, debugging, instrumentation, etc.] --
 
 #### 改善方法
 
@@ -57,7 +57,7 @@
 
 #### 動的解析
 
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app窶冱 behavior to code injection, debugging, instrumentation, etc.] --
+-- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app's behavior to code injection, debugging, instrumentation, etc.] --
 
 #### 改善方法
 
@@ -291,7 +291,7 @@
 
 ### WevView経由でJavaオブジェクトが開示されるかのテスト
 
-It is important to clarify that this control is only applicable on the Android Platform. Please look at "Testing Whether Java Objects Are Exposed Through WebViews" in Android for a detailed explanation of this test case.
+このコントロールは Android プラットフォームでのみ適用可能であることを明確にすることが重要です。Android の「WebView 経由で Java オブジェクトが開示されるかのテスト」をご覧ください。
 
 
 
@@ -359,32 +359,32 @@ iOS はそれぞれのアプリが自身のサンドボックスに限定され�
 
 #### 動的解析
 
-First try running on a jailbroken device and see what happens. If a jailbreak detection is implemented use Cycript<sup>[3]</sup> to examine the methods for any obvious anti-Jailbreak type name (e.g. `isJailBroken`). Note this requires a jailbroken iOS device with Cycript installed and shell access (via ssh). Also, at time of writing, Cycript cannot manipulate native Swift code (but can still look at any Objective-C libraries that are called). To tell if the app is written in Swift use the nm<sub>[4]</sub> tool:
+まず脱獄済みデバイスで実行を試みて、何が起こるかをみます。脱獄検出が実装されている場合は Cycript <sup>[3]</sup> を使用して任意の明白な脱獄タイプ名(`isJailBroken` など)のメソッドを調べます。これには Cycript がインストールされ(ssh 経由で)シェルアクセスされる脱獄済み iOS デバイスが必要です。また、執筆時点では、Cycrpt はネイティブの Swift コードを操作することはできません(但し、コールされる Objective-C ライブラリを探すことはできます)。アプリが Swift で書かれているかどうかを知るには nm <sub>[4]</sub> ツールを使用します。
 
 ```
 nm <appname> | grep swift
 ```
-For an Objective-C only app there will be no output. However, it is still possible the app is mixed Swift and Objective-C.
+Objective-C のみのアプリの場合には出力はありません。しかし、アプリは Swift と Objective-C が混在している可能性があります。
 
 ```
 cycript -p <AppName>
 cy#[ObjectiveC.classes allKeys]
 ```
 
-It is recommended you pipe this to a file, then search for something that sounds like a promising classname like jailbreak, startup, system, initial, load, etc. Once you have a candidate list the methods:
+これをファイルにパイプし、jailbreak, startup, system, initial, load などのクラス名としてありそうなものを検索することをお勧めします。メソッドの候補リストを取得したら
 
 ```
 cy#printMethods(<classname>)
 ```
 
-Again, you may want to pipe to a file and go through it for a promising sounding method (e.g. has jail or root in the title).
+再び、ファイルにパイプして、(タイトルに jail や root があるなどの)ありそうなメソッドを探します。
 
 #### 改善方法
 
-For iOS jailbreaking, it is worth noting that a determined hacker (or tester!) could use Cycript's method swizzling to modify this function to always return true. Of course there are more complex implementations, but nearly all can be subverted - the idea is just to make it harder. As such the following is recommended:
-1. Use more than 1 of the above methods to check if a device is jailbroken.
-2. Call the class and method something that is not immediately obvious (but it well commented).
-3. Use Swift instead of Objective-C.
+iOS の脱獄では、特定のハッカー(やテスター)が Cycript の method swizzling を使用して、この関数を常に true を戻すように改変することができます。もちろんより複雑な実装もありますが、ほぼすべてが破壊される可能性があります。アイデアとしてはもっと困難にすることです。したがって以下が推奨されます。
+1. 上記の方法のうち2つ以上を使用してデバイスが脱獄されているかどうかを確認します。
+2. すぐには分からない(がよくコメントされている)クラスやメソッドをコールします。
+3. Objective-C の代わりに Swift を使用します。
 
 #### 参考情報
 
@@ -396,7 +396,7 @@ For iOS jailbreaking, it is worth noting that a determined hacker (or tester!) c
 * V6.10: "アプリはルート化デバイスや脱獄デバイスで実行されているかどうかを検出している。ビジネス要件に応じて、デバイスがルート化もしくは脱獄されている場合に、ユーザーに警告している、もしくはアプリが終了している。"
 
 ##### CWE
-Not covered.
+適用されません。
 
 ##### その他
 [4] - nm tool (part of XCode) - https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/nm.1.html
