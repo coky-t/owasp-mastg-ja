@@ -306,24 +306,24 @@
 
 #### 概要
 
-Compared to web applications most mobile applications don’t have a session timeout mechanism that terminates the session after some period of inactivity and force the user to login again. For most mobile applications users need to enter the credentials once. After authenticating on server side an access token is stored on the device which is used to authenticate. If the token is about to expire the token will be renewed without entering the credentials again. Applications that handle sensitive data like patient data or critical functions like financial transactions should implement a session timeout as a security-in-depth measure that forces users to re-login after a defined period.
- 
-We will explain here how to check that this control is implemented correctly, both in the client and server side.
+Web アプリケーションと比較すると、ほとんどのモバイルアプリケーションには一定時間の非アクティブの後セッションを終了してユーザーに再度ログインを強制するセッションタイムアウトメカニズムがありません。ほとんどのモバイルアプリケーションではユーザーは一度だけ資格情報を入力する必要があります。サーバー側で認証された後、アクセストークンはデバイスに格納され、認証に使用されます。トークンが期限切れになると資格情報を再度入力することなしにトークンは更新されます。診療データのような機密情報や金融取引のような重要な機能を扱うアプリケーションではセッションタイムアウトを実装する必要があります。セキュリティ多層対策として定義された時間後にユーザーに再ログインを強制します。
 
-To test this, dynamic analysis is an efficient option, as it is easy to validate if this feature is working or not at runtime using an interception proxy. This is similar to test case "Testing the Logout Functionality", but we need to leave the application in idle for the period of time required to trigger the timeout function. Once this condition has been launched, we need to validate that the session is effectively terminated on client and server side.
+ここではこのコントロールがクライアント側とサーバー側の両方で正しく実装されていることを確認する方法を説明します。
+
+これをテストするには動的解析が効率的な選択肢です。傍受プロキシを使用して実行時にこの機能が動作しているかどうかを簡単に検証できるためです。これはテストケース「ログアウト機能のテスト」に似ていますが、タイムアウト機能を引き起こすのに必要な時間に対してアプリケーションをアイドル状態のままにする必要があります。この条件を満たしたとき、クライアント側とサーバー側で実際にセッションが終了することを検証する必要があります。
 
 #### 静的解析
 
-If server side code is available, it should be reviewed that the session timeout functionality is correctly configured and a timeout is triggered after a defined period of time.  
-The check needed here will be different depending on the technology used. Here are different examples on how a session timeout can be configured:
+サーバー側コードが使用可能な場合、セッションタイムアウト機能が正しく構成され、定義された時間が経過するとタイムアウトが発生することをレビューすべきです。
+ここで必要なチェックは使用する技術により異なります。セッションタイムアウトを構成する方法の例を以下に示します。
 - Spring (Java) - http://docs.spring.io/spring-session/docs/current/reference/html5/
 - Ruby on Rails -  https://github.com/rails/rails/blob/318a20c140de57a7d5f820753c82258a3696c465/railties/lib/rails/application/configuration.rb#L130
 - PHP - http://php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
 - ASP.Net - https://msdn.microsoft.com/en-GB/library/system.web.sessionstate.httpsessionstate.timeout(v=vs.110).aspx
 - Amazon AWS - http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/config-idle-timeout.html
- 
-Some applications also have an autologoff functionality in the client side. This is not a mandatory feature, but helps to improve to enforce a session timeout.  To implement this, the client side needs to control the timestamp when the screen has been displayed, and check continuously if the time elapsed is lower than the defined timeout. Once that time matches or excesses the timeout, the logoff method will be invoked, sending a signal to the server side to terminate the session and redirecting the customer to an informative screen.
-For Android the following code might be used to implement it<sup>[3]</sup>:
+
+一部のアプリケーションではクライアント側にも自動ログオフ機能があります。これは必須の機能ではありませんが、セッションタイムアウトを強化するのに役立ちます。これを実装するには、クライアント側は画面が表示されているときにタイムスタンプをコントロールし、経過した時間が定義されたタイムアウトよりも小さいかどうかを継続的にチェックする必要があります。その時間がタイムアウトに一致または超過すると、ログオフメソッドが呼び出され、サーバー側にセッションを終了するためのシグナルを送信し、顧客を情報を与える画面にリダイレクトします。
+Android では以下のコードを使用して実装できます <sup>[3]</sup>。
 
 ```
 public class TestActivity extends TimeoutActivity {
@@ -337,19 +337,19 @@ return 15 * 60; // 15 minutes
 
 #### 動的解析
 
-For a dynamic analysis of the application an interception proxy should be used. The following steps can be applied to check if the session timeout is implemented properly.  
--   Log into the application.
--   Do a couple of operations that require authentication inside the application.
--   Leave the application in idle until the session expires (for testing purposes, a reasonable timeout can be configured, and amended later in the final version)
- 
-Resend one of the operations executed in step 2 using an interception proxy. For example, with Burp Repeater. The purpose of this is to send to the server a request with the session ID that has been invalidated when the session has expired.
-If session timeout has been correctly configured on the server side, either an error message or redirect to the login page will be sent back to the client. On the other hand, if you have the same response you had in step 2, then, this session is still valid, which means that the session timeout is not configured correctly.
-More information can also be found in the OWASP Web Testing Guide (OTG-SESS-007)<sup>[1]</sup>.
+アプリケーションを動的に解析するには傍受プロキシを使用する必要があります。セッションタイムアウトが適切に実装されているかどうかを確認するには以下の手順を実行します。
+-   アプリケーションにログインします。
+-   アプリケーション内で認証に必要な操作を行います。
+-   セッションが期限切れになるまでアプリケーションをアイドル状態のままにします(テスト目的では、合理的なタイムアウトを設定し、後の最終バージョンで修正します)
+
+傍受プロキシを使用して手順2で実行した操作の一つを再送信します。例えば、Burp Repeater を使用します。この目的はセッションが期限切れになったときに無効にされたセッション ID でサーバーにリクエストを送信することです。
+セッションタイムアウトがサーバー側で正しく構成されている場合には、エラーメッセージまたはログインページへのリダイレクトがクライアントに戻されます。そうではなく、手順2で同じレスポンスがあった場合、このセッションはまだ有効であり、セッションタイムアウトが正しく構成されていないことを意味します。
+詳細については OWASP Web Testing Guide (OTG-SESS-007) <sup>[1]</sup> にもあります。
 
 #### 改善方法
 
-Most of the frameworks have a parameter to configure the session timeout. This parameter should be set accordingly to the best practices specified of the documentation of the framework. The best practice timeout setting may vary between 10 minutes to two hours, depending on the sensitivity of your application and the use case of it.
-Regarding autologoff, the pseudocode of the implementation should be as follow:
+ほとんどのフレームワークにはセッションタイムアウトを構成するパラメータがあります。このパラメータはフレームワークのドキュメントで指定されているベストプラクティスに応じて設定する必要があります。ストプラクティスのタイムアウトは10分から2時間までさまざまで、アプリケーションの機密性やそのユースケースによって変化します。
+自動ログオフに関して、実装の疑似コードは以下のようになります。
 
 Function autologoff<br>
     Get timestamp_start<br>
