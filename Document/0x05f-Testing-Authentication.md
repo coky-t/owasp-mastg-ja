@@ -203,32 +203,32 @@
 
 #### 概要
 
-We all have heard about brute force attacks. That is one of the simplest attack types, as already many tools are available that work out of the box. It also doesn’t require a deep technical understanding of the target, as only a list of username and password combinations is sufficient to execute the attack. Once a valid combination of credentials is identified access to the application is possible and the account can be compromised.
- 
-To be protected against these kind of attacks, applications need to implement a control to block the access after a defined number of incorrect login attempts.
- 
-Depending on the application that you want to protect, the number of incorrect attempts allowed may vary. For example, in a banking application it should be around three to five attempts, but, in a public forum, it could be a higher number. Once this threshold is reached it also needs to be decided if the account gets locked permanently or temporarily. Locking the account temporarily is also called login throttling.
- 
-It is important to clarify that this control is at the server side, so the testing will be the same for iOS and Android applications.
-Moreover, the test consists by entering the password incorrectly for the defined number of attempts to trigger the account lockout. At that point, the anti-brute force control should be activated and your logon should be rejected when the correct credentials are entered.
+私たちは皆ブルートフォース攻撃について聞いたことがあります。これは最もシンプルな攻撃タイプの一つです。すでに多くのツールが用意されており、すぐに使用できます。また、ターゲットの深い技術的な理解は必要ありません。ユーザー名とパスワードの組み合わせのリストだけで十分に攻撃を実行できます。有効な資格情報の組み合わせが特定されるとアプリケーションへのアクセスが可能となり、アカウントが侵害される可能性があります。
+
+この種の攻撃から保護するために、アプリケーションは定義された数の不正なログイン試行後にアクセスをブロックするコントロールを実装する必要があります。
+
+保護したいアプリケーションによって、許可される不正な試行回数が異なります。例えば、銀行業務アプリケーションでは3回から5回程度の試行ですが、一般公開のフォーラムではもっと多くの回数となります。この閾値に達するとき、アカウントがロックされるのは永続的か一時的かを決定する必要もあります。アカウントを一時的にロックすることをログイン抑制とも呼びます。
+
+このコントロールはサーバー側にあることを明確にすることが重要です。そのため、テストは iOS と Android アプリケーションで同じになります。
+さらに、テストはアカウントロックアウトを引き起こす定義された試行回数だけパスワードを誤って入力することにより行われます。その時点で、アンチブルートフォースコントロールが有効になり、正しい資格情報が入力されてもログインは拒否される必要があります。
 
 #### 静的解析
 
-It need to be checked that a validation method exists during logon that checks if the number of attempts for a username equals to the maximum number of attempts set. In that case, no logon should be granted once this threshold is meet.
-After a correct attempt, there should also be a mechanism in place to set the error counter to zero.
+ユーザー名に対する試行回数が設定された試行の最大数に等しいかどうかを確認する検証メソッドがログイン時に存在することを確認する必要があります。この場合、一度この閾値を満たしたら、ログインを許可してはいけません。
+正しい試行の後、エラーカウンタをゼロに設置する仕組みも必要です。
 
 
 #### 動的解析
 
-For a dynamic analysis of the application an interception proxy should be used. The following steps can be applied to check if the lockout mechanism is implemented properly.  
-1.  Log in incorrectly for a number of times to trigger the lockout control (generally 3 to 15 incorrect attempts)
-2.  Once you have locked out the account, enter the correct logon details to verify if login is not possible anymore.
-If this is correctly implemented logon should be denied when the right password is entered, as the credential has already been blocked.
+アプリケーションを動的に解析するには傍受プロキシを使用する必要があります。ロックアウトメカニズムが適切に実装されているかどうかを確認するには以下の手順を実行します。
+1.  ロックアウトコントロールを引き起こす回数分の間違ったログインをします(一般に3回から15回の間違った試行です)
+2.  アカウントをロックアウトしたら、正しいログイン詳細を入力してログインが可能ではないかどうかを確認します。
+正しく実装されている場合、正しいパスワードが入力されても資格情報はすでにブロックされているため、ログオンを拒否する必要があります。
 
 #### 改善方法
 
-Lockout controls have to be implemented on server side to prevent brute force attacks. Further mitigation techniques are described by the OWASP in Blocking Brute Force Attacks<sup>[3]</sup>.
-It is interesting to clarify that incorrect logon attempts should be cumulative and not linked to a session. If you implement a control to block the credential in your 3rd attempt in the same session, it can be easily bypassed by entering the details wrong two times and get a new session. This will then give another two free attempts.
+ブルートフォース攻撃を防ぐためにロックアウトコントロールをサーバー側で実装する必要があります。さらなる軽減技術について OWASP により Blocking Brute Force Attacks <sup>[3]</sup> に記されています。
+不正なログオン試行が累積され、セッションにリンクされないことを明確にすることは重要です。同じセッションでの3回目の試行で資格情報をブロックするコントロールを実装すると、間違った情報を2回入力してから新しいセッションを取得することで簡単にバイパスできます。これによりさらに2回のフリーな試行が可能です。
 
 #### 参考情報
 
