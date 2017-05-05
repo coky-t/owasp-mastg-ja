@@ -95,14 +95,14 @@
 
 #### 概要
 
-Session termination is an important part of the session lifecycle. Reducing the lifetime of the session tokens to a minimum decreases the likelihood of a successful session hijacking attack.
+セッションの終了はセッションのライフサイクルの重要な部分です。セッショントークンの寿命を最小限にすることはセッションハイジャック攻撃の成功の可能性を低下させます。
 
-The scope for this test case is to validate that the application has a logout functionality and it effectively terminates the session on client and server side.
+このテストケースのスコープはアプリケーションにログアウト機能があることおよびクライアント側とサーバー側でセッションを実際に終了させることを検証することです。
 
 ##### 静的解析
 
-If server side code is available, it should be reviewed to validate that the session is being terminated as part of the logout functionality.
-The check needed here will be different depending on the technology used. Here are different examples on how a session can be terminated in order to implement a proper logout on server side:
+サーバー側コードが利用可能な場合、ログアウト機能の一部としてセッションが終了していることを検証するために、サーバー側コードをレビューします。
+ここで必要なチェックは使用される技術により異なります。サーバー側で適切なログアウトを実装するためにセッションを終了する方法の例を以下の示します。
 - Spring (Java) - http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/logout/SecurityContextLogoutHandler.html
 - Ruby on Rails -  http://guides.rubyonrails.org/security.html
 - PHP - http://php.net/manual/en/function.session-destroy.php
@@ -112,24 +112,24 @@ The check needed here will be different depending on the technology used. Here a
 
 #### 動的解析
 
-For a dynamic analysis of the application an interception proxy should be used. The following steps can be applied to check if the logout is implemented properly.  
-1.  Log into the application.
-2.  Do a couple of operations that require authentication inside the application.
-3.  Perform a logout operation.
-4.  Resend one of the operations detailed in step 2 using an interception proxy. For example, with Burp Repeater. The purpose of this is to send to the server a request with the token that has been invalidated in step 3.
- 
-If the session is correctly terminated on the server side, either an error message or redirect to the login page will be sent back to the client. On the other hand, if you have the same response you had in step 2, then, this session is still valid and has not been correctly terminated on the server side.
-A detailed explanation with more test cases, can also be found in the OWASP Web Testing Guide (OTG-SESS-006)<sup>[1]</sup>.
+アプリケーションを動的に解析するには、傍受プロキシを使用する必要があります。ログアウトが適切に実装されているかどうかを確認するには、以下の手順を実行します。
+1.  アプリケーションにログインします。
+2.  アプリケーション内で認証に必要な操作を行います。
+3.  ログアウト操作を行います。
+4.  傍受プロキシを使用して手順2で説明した操作の一つを再送信します。例えば、Burp Repeater を使用します。この目的は手順3で無効にされたトークンを使用してサーバーにリクエストを送信することです。
+
+セッションがサーバー側で正しく終了している場合は、エラーメッセージまたはログインページへのリダイレクトがクライアントに戻されます。そうではなく、手順2で同じレスポンスがある場合、このセッションはまだ有効でありサーバー側で正しく終了していません。
+より多くのテストケースを含む詳細な説明は、OWASP Web Testing Guide (OTG-SESS-006) <sup>[1]</sup> にあります。
 
 #### 改善方法
 
-One of the most common errors done when implementing a logout functionality is simply not destroying the session object on server side. This leads to a state where the session is still alive even though the user logs out of the application. The session remains alive, and if an attacker get’s in possession of a valid session he can still use it and a user cannot even protect himself by logging out or if there are no session timeout controls in place.
- 
-To mitigate it, the logout function on the server side must invalidate this session identifier immediately after logging out to prevent it to be reused by an attacker that could have intercepted it.
- 
-Related to this, it must be checked that after calling an operation with an expired token, the application does not generate another valid token. This could lead to another authentication bypass.
- 
-Many Apps do not automatically logout a user, because of customer convenience. The user logs in once, afterwards a token is generated on server side and stored within the applications internal storage and used for authentication when the application starts instead of asking again for user credentials. If the token expires a refresh token might be used (OAuth2) to transparently reinitiate the session for the user. There should still be a logout function available within the application and this should work according to best practices by also destroying the session on server side.
+ログアウト機能を実装する際に最もよくあるエラーの一つはサーバー側でセッションオブジェクトを破棄しないことです。これによりユーザーがアプリケーションからログアウトしても、セッションがまだ生きている状態になります。セッションが生き残っていて、攻撃者が有効なセッションを所有していれば、それを引き続き使用することができます。セッションタイムアウトコントロールがなければ、ユーザーはログアウトにより自分自身を保護することさえできません。
+
+これを軽減するには、ログアウトした直後にサーバー側のログアウト機能でこのセッション識別子を無効にして、傍受した可能性のある攻撃者が再利用できないようにする必要があります。
+
+これに関連して、有効期限が切れたトークンで操作を呼び出した後、アプリケーションが別の有効なトークンを生成しないことを確認する必要があります。これにより別の認証バイパスが発生する可能性があります。
+
+多くのアプリはお客様の利便性のために自動的にはユーザーをログアウトしません。ユーザーは一度ログインすると、サーバー側でトークンが生成され、アプリケーションの内部ストレージに格納されます。アプリケーションの起動時にユーザー資格情報を再度要求することなく、認証に使用されます。トークンが期限切れになるとリフレッシュトークンを使用して (OAuth2)、ユーザーのセッションを透過的に再開することができます。アプリケーション内にログアウト機能が必要であり、ベストプラクティスに従ってサーバー側のセッションを破棄することで機能します。
 
 #### 参考情報
 
