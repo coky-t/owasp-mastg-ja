@@ -22,7 +22,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [Testing Data Storage] <!-- (Document/0x05d-Testing-Data-Storage.md) -->
 - [Testing Cryptography](Document/0x05e-Testing-Cryptography.md)
 - [Testing Authentication and Session Management](Document/0x05f-Testing-Authentication.md)
-- [Testing Network Communication] <!-- (Document/0x05g-Testing-Network-Communication.md) -->
+- [Testing Network Communication](Document/0x05g-Testing-Network-Communication.md)
 - [Testing Platform Interaction] <!-- (Document/0x05h-Testing-Platform-Interaction.md) -->
 - [Testing Code Quality and Build Settings](Document/0x05i-Testing-Code-Quality-and-Build-Settings.md)
 - [Tampering and Reverse Engineering on Android] <!-- (Document/0x05c-Reverse-Engineering-and-Tampering.md) -->
