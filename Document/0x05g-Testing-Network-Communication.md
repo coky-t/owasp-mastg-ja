@@ -157,13 +157,13 @@ TLS 接続の妥当性確認には主に2つの問題があります。一つ目
 
 ##### サーバー証明書の検証
 
-A mechanism responsible for verifying conditions to establish a trusted connection in Android is called `TrustedManager`. Conditions to be checked at this point, are the following:
+Android で信頼できる接続を確立するための条件を検証するためのメカニズムは `TrustedManager` と呼ばれます。ここで確認される条件は、以下の通りです。
 
-* is the certificate signed by a "trusted" CA?
-* is the certificate expired?
-* Is the certificate self-sgined?
+* 「信頼できる」CA が署名した証明書であるか
+* 証明書は期限切れではないか
+* 証明書は自己署名されていないか
 
-You should look in a code if there are control checks of aforementioned conditions. For example, the following code will accept any certificate:
+前述の条件のコントロールチェックがあるかどうかコードを参照します。例えば、以下のコードは任意の証明書を受け入れます。
 
 ```
 TrustManager[] trustAllCerts = new TrustManager[] {
@@ -193,7 +193,7 @@ context.init(null, trustAllCerts, new SecureRandom());
 
 ##### ホスト名検証
 
-Another security fault in TLS implementation is lack of hostname verification. A development environment usually uses some internal addresses instead of valid domain names, so developers often disable hostname verification (or force an application to allow any hostname) and simply forget to change it when their application goes to production. The following code is responsible for disabling hostname verification:
+TLS 実装のもう一つのセキュリティ違反はホスト名検証の欠如です。開発環境では通常、有効なドメイン名の代わりに内部アドレスを使用するため、開発者はホスト名の検証を無効にする(もしくはアプリケーションに任意のホスト名を許可する)ことがあり、アプリケーションが実稼働に移行する際に変更することを忘れてしまいます。以下のコードはホスト名の検証を無効にする役割を果たします。
 
 ```
 final static HostnameVerifier NO_VERIFY = new HostnameVerifier()
@@ -205,47 +205,49 @@ final static HostnameVerifier NO_VERIFY = new HostnameVerifier()
 };
 ```
 
-It's also possible to accept any hostname using a built-in `HostnameVerifier`:
+ビルトインの `HostnameVerifier` を使用して任意のホスト名を受け入れることも可能です。
 
 ```
 HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
                              .ALLOW_ALL_HOSTNAME_VERIFIER;
 ```
 
-Ensure that your application verifies a hostname before setting trusted connection.
+信頼できる接続を設定する前にアプリケーションがホスト名を検証することを確認します。
 
 
 #### 動的解析
 
-Improper certificate verification may be found using static or dynamic analysis.
+不適切な証明書の検証は静的解析または動的解析を使用して発見できます。
 
-* Static analysis approach is to decompile an application and simply look in a code for TrustManager and HostnameVerifier usage. You can find insecure usage examples in a "White-box Testing" section above. Such checks of improper certificate verification, may be done automatically, using a tool called MalloDroid [4]. It simply decompiles an application and warns you if it finds something suspicious. To run it, simply type this command:
+* 静的解析のアプローチはアプリケーションを逆コンパイルして単に TrustManager や HostnameVerifier を使用するコードを調べることです。上記の「静的解析」のセクションに安全でない使用例があります。このような不適切な証明書の検証の確認には、MalloDroid [4] というツールを使用して自動的に行うことができます。単にアプリケーションを逆コンパイルして何か不審なものがある場合には警告します。実行するには、以下のコマンドを入力します。
 
 ```bash
 $ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
 ```
 
-Now, you should be warned if any suspicious code was found by MalloDroid and in `./outputDir` you will find decompiled application for further manual analysis.
+ここで MalloDroid により `./outputDir` 内に不審なコードが見つかったか場合には、更に手動解析を行うために逆コンパイルされたアプリケーションを探します。
 
-* Dynamic analysis approach will require usage of intercept proxy, e.g. Burp Suite. To test improper certificate verification, you should go through following control checks:
+* 動的解析のアプローチは Burp Suite などの傍受プロキシの使用を必要とします。不適切な証明書の検証をテストするには、以下のコントロールチェックを実行する必要があります。
 
- 1) Self-signed certificate.
+ 1) 自己署名証明書
 
-  In Burp go to Proxy -> Options tab, go to Proxy Listeners section, highlight you listener and click Edit button. Then go to Certificate tab and check 'Use a self-signed certificate' and click Ok. Now, run your application. If you are able to see HTTPS traffic, then it means your application is accepting self-signed certificates.
+  Burp で Proxy -> Options タブに移動し、Proxy Listeners セクションに移動し、リスナを強調表示にしてから Edit ボタンをクリックします。それから Certificate タブに移動し 'Use a self-signed certificate' をチェックして Ok をクリックします。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが自己署名証明書を受け入れていることを意味します。
 
- 2) Accepting invalid certificate.
+ 2) 無効な証明書の受け入れ
 
-  In Burp go to Proxy -> Options tab, go to Proxy Listeners section, highlight you listener and click Edit button. Then go to Certificate tab, check 'Generate a CA-signed certificate with a specific hostname' and type hostname of a backend server. Now, run your application. If you are able to see HTTPS traffic, then it means your application is accepting any certificate.
+  Burp で Proxy -> Options タブに移動し、Proxy Listeners セクションに移動し、リスナを強調表示にしてから Edit ボタンをクリックします。それから Certificate タブに移動し 'Generate a CA-signed certificate with a specific hostname' をチェックしてバックエンドサーバーのホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意の証明書を受け入れていることを意味します。
 
- 3) Accepting wrong hostname.
+ 3) 間違ったホスト名の受け入れ
 
-  In Burp go to Proxy -> Options tab, go to Proxy Listeners section, highlight you listener and click Edit button. Then go to Certificate tab, check 'Generate a CA-signed certificate with a specific hostname' and type invalid hostname, e.g. 'example.org'. Now, run your application. If you are able to see HTTPS traffic, then it means your application is accepting any hostname.
+  Burp で Proxy -> Options タブに移動し、Proxy Listeners セクションに移動し、リスナを強調表示にしてから Edit ボタンをクリックします。それから Certificate タブに移動し 'Generate a CA-signed certificate with a specific hostname' をチェックして 'example.org' などの無効なホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意のホスト名を受け入れていることを意味します。
 
-> **Note**, if you are interested in further MITM analysis or you face any problems with configuration of your intercept proxy, you may consider using Tapioca [6]. It's a CERT preconfigured VM appliance [7] for performing MITM analysis of software. All you have to do is deploy a tested application on emulator and start capturing traffic [8].
+> **注意** さらに MITM 分析を行う場合や傍受プロキシの設定に問題がある場合には、Tapioca [6] の使用を検討します。
+これはソフトウェアの MITM 分析を実行するために CERT が事前設定した VM アプライアンス [7] です。
+行うべきことはテストされるアプリケーションをエミュレータにデプロイしてトラフィックのキャプチャを開始するだけです [8]。
 
 #### 改善方法
 
-Ensure, that the hostname and certificate is verified correctly. You can find a help how to overcome common TLS certificate issues here [2].
+ホスト名と証明書が正しく検証されていることを確認します。一般的な TLS 証明書の問題を克服する方法についてはこちらを参照ください [2]。
 
 
 #### 参考情報
@@ -254,7 +256,7 @@ Ensure, that the hostname and certificate is verified correctly. You can find a 
 * M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 #### OWASP MASVS
-* V5.3: "The app verifies the X.509 certificate of the remote endpoint when the secure channel is established. Only certificates signed by a valid CA are accepted."
+* V5.3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を確認している。有効なCAにより署名された証明書のみが受け入れられている。"
 
 #### CWE
 * CWE-296 - Improper Following of a Certificate's Chain of Trust - https://cwe.mitre.org/data/definitions/296.html
