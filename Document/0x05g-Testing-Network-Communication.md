@@ -339,26 +339,26 @@ SSL ピンニングプロセスは静的解析セクションで説明したよ�
 
 #### 概要
 
-For sensitive applications, like banking apps, OWASP MASVS introduces "Defense in Depth" verification level [1]. Critical operations (e.g. user enrollment, or account recovery) of such sensitive applications are the most attractive targets from attacker's perspective. This creates a need of implementing advanced security controls for such operations, like adding additional channels (e.g. SMS and e-mail) to confirm user's action. Additional channels may reduce a risk of many attacking scenarios (mainly phishing), but only when they are out of any security faults.
+銀行業務アプリなどの機密性の高いアプリケーションでは、OWASP MASVS は「多層防御」検証レベル [1] を導入しています。そのような機密性の高いアプリケーションの(ユーザー登録やアカウント回復などの)重要な操作は攻撃者の視点から最も魅力的なターゲットです。ユーザーの行動を確認するために(SMSや電子メールなどの)追加のチャネルを加えるなどの、このような操作のために高度なセキュリティコントロールを実装する必要が生じます。追加のチャネルは多くの攻撃シナリオ(主にフィッシング)のリスクを軽減することができますが、セキュリティ上の障害が発生していない場合に限ります。
 
 #### 静的解析
 
-Review the code and identify those parts of a code which refers to critical operations. Verify if it uses additional channels to perform such operation. Examples of additional verification channels are following:
+コードをレビューして重要な操作を参照するコードの部分を特定します。そのような操作を実行するために追加のチャネルを使用するかどうかを確認します。追加の検証チャネルの例として以下があります。
 
-* token (e.g. RSA token, yubikey)
-* push notification (e.g. Google Prompt)
+* トークン (RSAトークン, yubikey など)
+* プッシュ通知 (Google Prompt など)
 * SMS
-* email
-* data from another website you had to visit/scan
-* data from a physical letter or physical entry point (e.g.: data you receive only after signing a document at the office of a bank)
+* 電子メール
+* 訪問/スキャンした他のウェブサイトからのデータ
+* 物理的な文字や物理的なエントリポイントからのデータ (銀行のオフィスで書類に署名した後にのみ受け取るデータなど)
 
 #### 動的解析
 
-Identify all critical operations implemented in tested application (e.g. user enrollment, or account recovery, money transfer etc.). Ensure that each of critical operations, requires at least one additional channel (e.g. SMS, e-mail, token etc.). Verify if usage of such channel can be bypassed (e.g. turning off SMS confirmation without using any other channel).
+テストされるアプリケーションで実装されているすべての重要な操作(ユーザー登録、アカウント回復、送金など)を特定します。重要な操作のそれぞれに少なくとも一つの追加のチャネル(SMS、電子メール、トークンなど)が必要であることを確認します。そのようなチャネルの使用を回避できるかどうか検証します(他のチャネルを使用せずに SMS 確認をオフにするなど)。
 
 #### 改善方法
 
-Ensure that critical operations require at least one additional channel to confirm user's action. Each channel must not be bypassed to execute a critical operation. If you are going to implement additional factor to verify user's identity, you may consider usage of Infobip 2FA library [2], one-time passcodes via Google Authenticator [3].
+重要な操作ではユーザーの操作を確認するために少なくとも一つの追加のチャネルが必要であることを確認します。重要な操作を実行するためにそれぞれのチャネルがバイパスできてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、Infobip 2FA ライブラリ [2] や Google Authenticator [3] を介したワンタイムパスワードの使用を検討します。
 
 #### 参考情報
 
@@ -366,7 +366,7 @@ Ensure that critical operations require at least one additional channel to confi
 * M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-* V5.5 "The app doesn't rely on a single insecure communication channel (email or SMS) for critical operations, such as enrollments and account recovery."
+* V5.5 "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）一つの安全でない通信チャネルに依存していない。"
 
 ##### CWE
 * CWE-956 - Software Fault Patterns (SFPs) within the Channel Attack cluster
