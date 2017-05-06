@@ -279,19 +279,19 @@ $ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
 
 #### 概要
 
-Certificate pinning allows to hard-code in the client the certificate that is known to be used by the server. This technique is used to reduce the threat of a rogue CA and CA compromise. Pinning the server’s certificate take the CA out of games. Mobile applications that implement certificate pinning only can connect to a limited numbers of servers, as a small list of trusted CAs or server certificates are hard-coded in the application.
+証明書ピンニングはサーバーで使用されることが既知である証明書をクライアントにハードコードするものです。この技法は不正な CA や CA の危殆化の脅威を軽減するために使用されます。サーバー証明書のピンニングは CA のゲームを終わらせます。証明書ピンニングを実装するモバイルアプリケーションは限られた数のサーバーにのみ接続できます。信頼できる CA やサーバー証明書の小さなリストをアプリケーションにハードコードされるためです。
 
 #### 静的解析
 
-The process to implement the SSL pinning involves three main steps outlined below:
+SSL ピンニングを実装するプロセスには以下で示す3つの主要な手順があります。
 
-1. Obtain a certificate for the desired host
-1. Make sure certificate is in .bks format
-1. Pin the certificate to an instance of the default Apache Httpclient.
+1. 目的のホストの証明書を取得します
+1. 証明書が .bks 形式であることを確認します
+1. 証明書をデフォルトの Apache Httpclient のインスタンスにピン留めします
 
-To analyze the correct implementations of the SSL pinning the HTTP client should:
+SSL ピンニングの正しい実装を分析するには、HTTP クライアントを以下のようにします。
 
-1. Load the keystore:
+1. キーストアをロードする
 
 ```java
 InputStream in = resources.openRawResource(certificateRawResource);
@@ -299,7 +299,7 @@ keyStore = KeyStore.getInstance("BKS");
 keyStore.load(resourceStream, password);
 ```
 
-Once the keystore is loaded we can use the TrustManager that trusts the CAs in our KeyStore :
+キーストアがロードされると KeyStore の CA を信頼する TrustManager を使用できます。
 
 ```java
 String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
@@ -312,11 +312,11 @@ sslContext.init(null, tmf.getTrustManagers(), null);
 
 #### 動的解析
 
-Dynamic analysis can be performed by launching a MITM attack using your preferred interception proxy<sup>[1]</sup>. This will allow to monitor the traffic exchanged between client (mobile application) and the backend server. If the Proxy is unable to intercept the HTTP requests and responses, the SSL pinning is correctly implemented.
+動的解析は好みの傍受プロキシ <sup>[1]</sup> を使用して MITM 攻撃を開始することで実行できます。これによりクライアント(モバイルアプリケーション)とバックエンドサーバーとの間で交換されるトラフィックを監視することができます。プロキシが HTTP リクエストやレスポンスを傍受できない場合、SSL ピンニングは正しく実装されています。
 
 #### 改善方法
 
-The SSL pinning process should be implemented as described on the static analysis section. For further information please check the OWASP certificate pinning guide [2].
+SSL ピンニングプロセスは静的解析セクションで説明したように実装する必要があります。詳細については OWASP certificate pinning guide [2] を参照ください。
 
 #### 参考情報
 
@@ -324,7 +324,7 @@ The SSL pinning process should be implemented as described on the static analysi
 * M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 ##### OWASP MASVS
-* V5.4 "The app either uses its own certificate store, or pins the endpoint certificate or public key, and subsequently does not establish connections with endpoints that offer a different certificate or key, even if signed by a trusted CA."
+* V5.4 "アプリは独自の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵を固定化しており、信頼できるCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
 
 ##### CWE
 * CWE-295 - Improper Certificate Validation
