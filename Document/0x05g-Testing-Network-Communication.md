@@ -85,21 +85,21 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 * testssl.sh: コマンドは以下のとおりです。
 
-The Github repo of testssl.sh offers also a compiled openssl version for download that supports **all ciphersuites and protocols including SSLv2**.
+testssl.sh の Github リポジトリには **SSLv2 を含むすべての暗号スイートとプロトコル** をサポートするダウンロード用コンパイル済み openssl バージョンもあります。
 
 ```
 testssl.sh www.example.com:443
 ```
 
-The tool will also help identifying potential misconfiguration or vulnerabilities by highlighting them in red.
+このツールは潜在的な誤設定や脆弱性を赤で強調表示して特定するのにも役立ちます。
 
-If you want to store the report preserving color and format use `aha`:
+レポートの色や書式を保存するには `aha` を使用します。
 
 ```
 $ OPENSSL=./bin/openssl.Linux.x86_64 bash ./testssl.sh yoursite.com | aha > output.html
 ```
 
-This will give you a HTML document that will match CLI output.
+これにより CLI 出力と一致する HTML ドキュメントが得られます。
 
 * sslyze: コマンドは以下のとおりです。
 
@@ -119,7 +119,7 @@ perl o-saft.pl +check www.example.com:443
 
 #### 改善方法
 
-Any vulnerability or misconfiguration should be solved either by patching or reconfiguring the server. ネットワーク通信のためにトランスポート層保護を適切に構成するには、OWASP Transport Layer Protection cheat sheet <sup>[3]</sup> および Qualys TLS best practices <sup>[4]</sup> に準じます。
+サーバーのパッチ適用や再構成により脆弱性や誤構成を解決する必要があります。ネットワーク通信のためにトランスポート層保護を適切に構成するには、OWASP Transport Layer Protection cheat sheet <sup>[3]</sup> および Qualys TLS best practices <sup>[4]</sup> に準じます。
 
 #### 参考情報
 
