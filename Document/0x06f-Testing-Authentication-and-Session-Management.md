@@ -35,13 +35,7 @@
 
 -- TODO [Confirm purpose of remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-##### ソースコードあり
-
 -- TODO [Add content for "Testing Biometric Authentication" with source code] --
-
-##### ソースコードなし
-
--- TODO [Add content for "Testing Biometric Authentication" without source code] --
 
 #### 動的解析
 
@@ -56,7 +50,6 @@
 ##### OWASP Mobile Top 10 2016
 * M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
-##### OWASP MASVS
 ##### OWASP MASVS
 * 4.6: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
 
