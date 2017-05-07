@@ -55,7 +55,7 @@ OWASP Mobile Top 10 は情報セキュリティ業界のさまざまなベンダ
 * M10 - 余計な機能 <sup>[10]</sup>
   * 製品ビルドを公開する前のログやエンドポイント検証の欠如
   * カバレッジの範囲には、バックエンドシステムやモバイルアプリ自体の隠し機能や余計な機能の特定、およびエンドユーザーの関与なしに自身のシステムから直接その機能を悪用することが含まれます。
-  
+
 脆弱性のカテゴリおよびモバイルアプリケーションへの侵害を防ぐための手順についての詳細は、OWASP Mobile Top 10 2016 プロジェクトページ <sup>11</sup> を参照ください。
 
 ## OWASP モバイルアプリセキュリティ検証標準、チェックリスト、テストガイド
@@ -70,30 +70,44 @@ OWASP Mobile Top 10 は情報セキュリティ業界のさまざまなベンダ
 
 例えば、MASVS 要件は計画およびアーキテクチャ設計の段階で使用され、チェックリストやテストガイドは手動セキュリティテストのベースラインとして、もしくは開発後の自動セキュリティテストのテンプレートとして使用できます。次の章では、モバイルアプリケーションのペネトレーションテストの中でチェックリストやガイドを実際にどのように適用できるかについて説明します。
 
-## テストガイドの構成
+## モバイルセキュリティテストガイドの構成
+
+All requirements specified in the MASVS are described in technical detail in the testing guide. The main sections of the MSTG are explained briefly in this chapter.
+
+### Testing Process and Techniques
+
+This section explains the checklist and how to use it during a project. The different analysis techniques used for the test cases are explained like static and dynamic analysis on source code, but also on binaries. An introduction into tampering and reverse engineering is also part of this section.
+
+### Android Testing Guide
+
+-- TODO
+The Android chapter of the testing guide contains all technical procedures to verify the requirements of the MASVS on the Android platform.
+
+### iOS Testing Guide
+
+-- TODO
+The iOS chapter of the testing guide contains all technical procedures to verify the requirements of the MASVS on the iOS platform.
+
+### Reverse Engineering and Tampering
+
+-- TODO
+
+### Testing Tools
+
+There are various tool that can be used to conduct an effective mobile security test and like any tool of choice it all depends on the matter of preference and budget. An extensive list of tools can be found in "Testing Tools" chapter at the end of this document.
 
 -- TODO [Describe the organization of the current guide] --
 
 ## 参考情報
 
 * [1] M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-
 * [2] M2 - Insecure Data Storage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
-
 * [3] M3 - Insecure Communication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
-
 * [4] M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
-
 * [5] M5 - Insufficient Cryptography - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
-
-* [6] M6 - Insecure Authorisation - https://www.owasp.org/index.php/Mobile_Top_10_2016-M6-Insecure_Authorization
-
+* [6] M6 - Insecure Authorization - https://www.owasp.org/index.php/Mobile_Top_10_2016-M6-Insecure_Authorization
 * [7] M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
-
 * [8] M8 - Code Tampering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M8-Code_Tampering
-
 * [9] M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
 * [10] M10 - Extraneous Functionality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M10-Extraneous_Functionality
-
 * [11] OWASP Mobile Top 2016 Project Page - https://www.owasp.org/index.php/Mobile_Top_10_2016-Top_10
