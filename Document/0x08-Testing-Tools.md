@@ -10,6 +10,11 @@
 * Santoku - https://santoku-linux.com/ - Santoku は OS であり、スタンドアロンのオペレーティングシステムとして VM の外部で実行できます。
 * Vezir Project - https://github.com/oguzhantopgul/Vezir-Project - モバイルアプリケーションペネトレーションテストおよびマルウェア解析の環境です。
 
+### 静的ソースコード解析
+* Checkmarx - https://www.checkmarx.com/technology/static-code-analysis-sca/ - Android および iOS のソースコードもスキャンする静的ソースコードスキャナです。
+* Fortify - https://saas.hpe.com/en-us/software/fortify-on-demand/mobile-security - Android および iOS のソースコードもスキャンする静的ソースコードスキャナです。
+
+
 ### オールインワンモバイルセキュリティフレームワーク
 * Mobile Security Framework - MobSF - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF - Mobile Security Framework は静的解析および動的解析を実行できるインテリジェントでオールインワンのオープンソースモバイルアプリケーション (Android/iOS) 自動ペネトレーションテストフレームワークです。
 * Needle - https://github.com/mwrlabs/needle - Needle はバイナリ解析、静的コード解析、Cycript や Frida フッキングを使用した実行時操作などの iOS アプリのセキュリティ評価実施のプロセスを効率化するオープンソースのモジュラーフレームワークです。
@@ -31,6 +36,7 @@
 * Simplify - https://github.com/CalebFenton/simplify - android パッケージを Classes.dex に逆難読化するツールです。Dex2jar や JD-GUI を使用して、dex ファイルの内容を抽出できます。
 * ClassNameDeobfuscator - https://github.com/HamiltonianCycle/ClassNameDeobfuscator - apktool によって生成される .smali ファイルを解析して .source アノテーション行を抽出するシンプルなスクリプトです。
 * Android backup extractor - https://github.com/nelenkov/android-backup-extractor - adb backup (ICS 以降)で作成された Android バックアップを抽出および再パックするユーティリティです。主に AOSP の BackupManagerService.java をベースとしています。
+* VisualCodeGrepper - https://sourceforge.net/projects/visualcodegrepp/ - Java などのプログラミング言語向けの静的コード解析ツールです。
 
 #### 動的解析および実行時解析
 * Cydia Substrate - http://www.cydiasubstrate.com/ - Android 向けの Cydia Substrate を使用すると、開発者はターゲットプロセスのメモリにインジェクトされる Substrate extension で既存のソフトウェアを改造することができます。
@@ -68,6 +74,7 @@
 * HopperApp - http://hopperapp.com/ - Hopper は OS X および Linux 用のリバースエンジニアリングツールで、32/64 ビット Intel Mac, Linux, Windows, iOS 実行可能ファイルを逆アセンブル、逆コンパイル、デバッグすることができます。
 * Radare2 - http://www.radare.org/ - Radare2 は Unix ライクなリバースエンジニアリングフレームワークおよびコマンドラインツールです。
 * iRET - https://www.veracode.com/iret-ios-reverse-engineering-toolkit - iOS Reverse Engineering Toolkit は iOS ペネトレーションテストに関連する多くの一般的なタスクを自動化するためのツールキットです。
+* Agnitio - https://sourceforge.net/projects/agnitiotool/ - Objective-C, C#, Java ソースコードの静的スキャン用ツールです。
 
 #### 動的解析および実行時解析
 * cycript - http://www.cycript.org - Cycript を使用すると、開発者は構文強調表示とタブ補完機能を備えた対話型コンソールを通じて Objective-C++ および JavaScript 構文をハイブリッドに使用して iOS もしくは Mac OS X 上で実行中のアプリケーションを探索および変更できます。
@@ -78,22 +85,26 @@
 * gdb - http://cydia.radare.org/ - iOS アプリケーションの実行時解析を行うためのツールです。
 * keychaindumper - http://cydia.radare.org/ - iOS デバイスが脱獄された場合に攻撃者が利用可能となるキーチェーンアイテムを確認するためのツールです。
 * BinaryCookieReader - http://securitylearn.net/wp-content/uploads/tools/iOS/BinaryCookieReader.py - バイナリ Cookies.binarycookies ファイルからすべてのクッキーをダンプするツールです。
+* Burp Suite Mobile Assistant - https://portswigger.net/burp/help/mobile_testing_using_mobile_assistant.html - 証明書ピンニングをバイパスし、アプリにインジェクトできるツールです。
 
 #### ルート検出のバイパスおよび SSL ピンニング
 * SSL Kill Switch 2 - https://github.com/nabla-c0d3/ssl-kill-switch2 - iOS および OS X アプリ内の SSL 証明書検証 (証明書ピンニングを含む) を無効にするブラックボックスツールです。
 * iOS TrustMe - https://github.com/intrepidusgroup/trustme - iOS デバイスの証明書の信頼チェックを無効にします。
 * Xcon - http://apt.modmyi.com - 脱獄検出をバイパスするためのツールです。
-* tsProtector] (http://cydia.saurik.com/package/kr.typostudio.tsprotector8/ - 脱獄検出をバイパスするためのもうひとつのツールです。
+* tsProtector - http://cydia.saurik.com/package/kr.typostudio.tsprotector8/ - 脱獄検出をバイパスするためのもうひとつのツールです。
 
-### ツール (ネットワーク傍受)
+### ツール (ネットワーク傍受と監視)
 * Tcpdump - http://www.androidtcpdump.com - コマンドラインパケットキャプチャユーティリティです。
 * Wireshark - https://www.wireshark.org/download.html - オープンソースのパケットアナライザです。
 * Canape - http://www.contextis.com/services/research/canape/ - 任意のプロトコル用のネットワークテストツールです。
 * Mallory - https://intrepidusgroup.com/insight/mallory/ - モバイルデバイスやアプリケーションのトラフィックを監視および操作するために使用する中間者攻撃 (MiTM) ツールです。
+
+### 傍受プロキシ
 * Burp Suite - https://portswigger.net/burp/download.html - Burp Suite はアプリケーションのセキュリティテストを実行するための統合プラットフォームです。
-* Charles Proxy - http://www.charlesproxy.com - 開発者がマシンとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。
 * OWASP ZAP - https://github.com/zaproxy/zaproxy - OWASP Zed Attack Proxy (ZAP) はウェブアプリケーションやウェブサービスのセキュリティ脆弱性を自動的に発見するのに役立つフリーのセキュリティツールです。
 * Fiddler - http://www.telerik.com/fiddler - Fiddler は HTTP および HTTPS トラフィックをキャプチャしてユーザーが確認するためにログに記録できる HTTP デバッグプロキシサーバーアプリケーションです。また、Fiddler は送受信時のトラブルシューティングを行うために HTTP トラフィックの変更にも使用できます。
+* Charles Proxy - http://www.charlesproxy.com - 開発者がマシンとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。
+
 
 ### IDE
 * IntelliJ - https://www.jetbrains.com/idea/download/ - IntelliJ IDEA はコンピュータソフトウェアを開発するための Java 統合開発環境 (IDE) です。
