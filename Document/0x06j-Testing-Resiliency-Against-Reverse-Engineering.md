@@ -1,4 +1,4 @@
-## リバースエンジニアリングに対する耐性のテスト
+## アンチリバース防御のテスト
 
 ### 脱獄検出のテスト
 
@@ -828,4 +828,3 @@ int xyz(char *dst) {
 
 -- TODO [Add relevant tools for "Testing Obfuscation"] --
 * Enjarify - https://github.com/google/enjarify
-
