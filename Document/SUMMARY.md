@@ -18,7 +18,7 @@
 - [プラットフォームインタラクションのテスト](0x05h-Testing-Platform-Interaction.md)
 - [コード品質とビルド設定のテスト](0x05i-Testing-Code-Quality-and-Build-Settings.md)
 - [改竄とリバースエンジニアリング (Android)](0x05c-Reverse-Engineering-and-Tampering.md)
-- [リバースエンジニアリングに対する耐性のテスト](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md)
+- [アンチリバース防御のテスト](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md)
 
 ### iOS テストガイド
 
@@ -31,7 +31,7 @@
 - [プラットフォームインタラクションのテスト](0x06h-Testing-Platform-Interaction.md)
 - [コード品質とビルド設定のテスト](0x06i-Testing-Code-Quality-and-Build-Settings.md)
 - [改竄とリバースエンジニアリング (iOS)](0x06c-Reverse-Engineering-and-Tampering.md)
-- [リバースエンジニアリングに対する耐性のテスト](0x06j-Testing-Resiliency-Against-Reverse-Engineering.md)
+- [アンチリバース防御のテスト](0x06j-Testing-Resiliency-Against-Reverse-Engineering.md)
 
 ### 付録
 
