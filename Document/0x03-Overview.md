@@ -72,29 +72,29 @@ OWASP Mobile Top 10 は情報セキュリティ業界のさまざまなベンダ
 
 ## モバイルセキュリティテストガイドの構成
 
-All requirements specified in the MASVS are described in technical detail in the testing guide. The main sections of the MSTG are explained briefly in this chapter.
+MASVS で指定されているすべての要件はテストガイドに技術的な詳細を記述されています。この章では MSTG のメインセクションについて簡単に説明します。
 
-### Testing Process and Techniques
+### テストプロセスと技法
 
-This section explains the checklist and how to use it during a project. The different analysis techniques used for the test cases are explained like static and dynamic analysis on source code, but also on binaries. An introduction into tampering and reverse engineering is also part of this section.
+このセクションではチェックリストとプロジェクトでそれを使用する方法について説明します。テストケースで使用されるそれぞれの解析技法はソースコードやバイナリの静的解析および動的解析として説明されています。改竄やリバースエンジニアリングの紹介もこのセクションの一部です。
 
-### Android Testing Guide
-
--- TODO
-The Android chapter of the testing guide contains all technical procedures to verify the requirements of the MASVS on the Android platform.
-
-### iOS Testing Guide
+### Android テストガイド
 
 -- TODO
-The iOS chapter of the testing guide contains all technical procedures to verify the requirements of the MASVS on the iOS platform.
+テストガイドの Android の章には Android プラットフォーム上で MASVS の要件を検証するための技術的な手順がすべて記載されています。
 
-### Reverse Engineering and Tampering
+### iOS テストガイド
+
+-- TODO
+テストガイドの iOS の章には iOS プラットフォーム上で MASVS の要件を検証するための技術的な手順がすべて記載されています。
+
+### リバースエンジニアリングと改竄
 
 -- TODO
 
-### Testing Tools
+### テストツール
 
-There are various tool that can be used to conduct an effective mobile security test and like any tool of choice it all depends on the matter of preference and budget. An extensive list of tools can be found in "Testing Tools" chapter at the end of this document.
+効果的にモバイルセキュリティテストを実行するために使用できるさまざまなツールがあり、ツールの選択は好みや予算に依存します。このドキュメントの末尾にある「テストツール」の章に豊富なツールのリストがあります。
 
 -- TODO [Describe the organization of the current guide] --
 
