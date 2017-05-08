@@ -25,6 +25,7 @@
 * Android Debug Bridge - adb - https://developer.android.com/studio/command-line/adb.html - Android Debug Bridge (adb) はエミュレータインスタンスや接続された Android デバイスと通信するための多彩なコマンドラインツールです。
 * APKInspector - https://github.com/honeynet/apkinspector/ - APKinspector はアナリストが Android アプリケーションを解析するための強力な GUI ツールです。
 * APKTool - http://ibotpeaches.github.io/Apktool/ - サードパーティ製でクローズなバイナリ Android アプリをリバースエンジニアリングするためのツールです。リソースをほぼ元の形にデコードし、変更後に再構築することができます。
+* android-classyshark - https://github.com/google/android-classyshark - ClassyShark は Android 開発者用のスタンドアロンバイナリインスペクションツールです。
 * Sign - https://github.com/appium/sign - Sign.jar は自動的に Android テスト証明書で apk に署名します。
 * Jadx - https://github.com/skylot/jadx - Dex から Java への逆コンパイラです。Android Dex および Apk ファイルから Java ソースコードを生成するコマンドラインおよび GUI ツールです。
 * Oat2dex - https://github.com/testwhat/SmaliEx - .oat ファイルから .dex ファイルに変換するためのツールです。
