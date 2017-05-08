@@ -181,6 +181,9 @@
 ##### OWASP MASVS
 * 4.4: "パスワードポリシーが存在し、リモートエンドポイントで実施されている。"
 
+##### OWASP Testing Guide v4
+* 4.5 - Authentication Testing - https://www.owasp.org/index.php/Testing_for_Weak_password_policy_(OTG-AUTHN-007)
+
 ##### CWE
 
 -- TODO [Add relevant CWE for "Testing the Password Policy"] --
@@ -391,6 +394,7 @@ End<br>
 
 #### 概要
 
+https://authy.com/blog/security-of-sms-for-2fa-what-are-your-options/
 -- TODO [Provide a general description of the issue "Testing 2-Factor Authentication".] --
 
 #### 静的解析
