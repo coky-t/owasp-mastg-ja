@@ -227,6 +227,7 @@ build.gradle に以下を追加します。
 
 #### 概要
 
+`StrictMode` - https://developer.android.com/reference/android/os/StrictMode.html
 -- TODO [Give an overview about the functionality and it's potential weaknesses] --
 
 #### 静的解析
