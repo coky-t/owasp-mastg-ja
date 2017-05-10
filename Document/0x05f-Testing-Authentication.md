@@ -51,15 +51,15 @@
 
 #### 概要
 
-All significant, if not privileged, actions must be done after a user is properly authenticated; the application will remember the user inside a "session". When improperly managed, sessions are subject to a variety of attacks where the session of a legitimate user may be abused, allowing the attacker to impersonate the user. As a consequence, data may be lost, confidentiality compromised or illegitimate actions performed.
+すべての重要な(権限を持たないかもしれない)アクションはユーザーが適切に認証された後に実行する必要があります。アプリケーションは「セッション」内でユーザーを覚えています。不適切に管理されると、セッションはさまざまな攻撃の対象となります。正当なユーザーのセッションが悪用され、攻撃者がユーザーを偽装する可能性があります。その結果、データは失われたり、機密性が損なわれたり、不正行為が行われたりする可能性があります。
 
-Sessions must have a beginning and an end; it must be impossible for an attacker to forge a session token: instead, it must be ensured that a session can only be started by the system on the server side. Also, the duration of a session should be as short as possible, and the session must be properly terminated after a given amount of time or after the user has explicitely logged out. It must be impossible to reuse session tokens. 
+セッションには開始と終了が必要です。攻撃者がセッショントークンを偽造できないようにする必要があります。代わりに、セッションがサーバー側のシステムによってのみ開始できることを保証する必要があります。また、セッションの継続期間はできる限り短くする必要があり、セッションは一定時間経過後またはユーザーが明示的にログアウトした後に適切に終了する必要があります。セッショントークンを再利用できないようにする必要があります。
 
-As such, the scope of this test is to validate that sessions are securely managed and cannot be compromised by an attacker.
+したがって、このテストのスコープはセッションがセキュアに管理され、攻撃者により侵害されないことを検証することです。
 
 #### 静的解析
 
-When source code is available, the tester should look for the place where sessions are initiated, stored, exchanged, verified and canceled. This must be done whenever any access to privileged information or action takes place. For those matters, automated tools or custom scripts (in any language like Python or Perl) can be used to look for relevant keywords in the target language. Also, team members knowledgeable on the application structure may be involved to cover all necessary entry points or fasten the process.
+ソースコードが入手可能である場合、テスト担当者はセッションが開始、保存、交換、検証、取消される場所を探します。これは特権情報や特権アクションへのアクセスが発生するたびに実行する必要があります。これらの事項について、自動ツールや(Python や Perl などの任意の言語での)カスタムスクリプトを使用して、対象言語に関連するキーワードを探すことができます。また、アプリケーション構造に精通したチームメンバーが関与して、必要なすべてのエントリポイントをカバーしたり、プロセスを特定したりする可能性があります。
 
 #### 動的解析
 
