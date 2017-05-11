@@ -63,29 +63,29 @@
 
 #### 動的解析
 
-A best practice is first to crawl the application, either manually or with an automated tool, the goal being to check if all parts of the application leading to privileged information of actions are protected and a valid session token is required or not. 
+ベストプラクティスはまず手動もしくは自動ツールを使用してアプリケーションをクロールすることです。アクションの特権情報につながるすべての部分が保護され、有効なセッショントークンを必須としているかどうかを確認します。
 
-Then, the tester can use any intercepting proxy to capture network traffic between a client and the server and try to manipulate session tokens :
-- create one from scratch;
-- modify a valid one for an illegitimate one (for instance, add 1 to the valid token);
-- delete a valid token to test if the targeted part of the application can be accessed;
-- if network exchanges have not done over a secure connection, try to intercept one and reuse it;
-- try to log out and re-log in and check if the token has changed or not;
-- when changing privilege level, try to use the former one (hence with a lower authorization level) to access the privileged part of the application;
-- try to use a token after logging out.
+次に、テスト担当者は任意の傍受プロキシを使用して、クライアントとサーバー間のネットワークトラフィックをキャプチャし、セッショントークンの操作を試みます。
+- スクラッチで作成する
+- 有効なものを不正なものに変更する (有効なトークンに 1 を加えるなど)
+- 有効なトークンを削除して、アプリケーションの対象部分にアクセスできるかどうかをテストする
+- ネットワーク交換がセキュアな接続で行われていない場合、ひとつを傍受して再利用を試みる
+- ログアウトと再ログインを行い、トークンが変更されているか否かを確認する
+- 特権レベルを変更する場合、前のものを使用して(つまり低い認可レベルで)アプリケーションの特権部分にアクセスを試みる
+- ログアウト後にトークンの使用を試みる
 
 #### 改善方法
 
-In order to offer proper protection against the attacked mentioned earlier, session tokens must:
-- always be created on the server side;
-- not be predictable (use proper length and entropy);
-- always be exchanged between the client and the server over secure connections (ex : https);
-- be stored securely on the client side;
-- be verified when a user is trying to access privileged parts of an application: a token must be valid, correspond to the proper level of authorization;
-- be renewed when a user is asked to log in again to perform an operation requiring higher privileges;
-- be terminated when a user logs out or after a given amount of time.
+前述の攻撃に対して適切な保護を提供するには、セッショントークンを以下のようにする必要があります。
+- 常にサーバー側で作成する
+- 予測できないようにする (適切な長さとエントロピーを使用する)
+- 常にセキュアな接続(https など)を介してクライアントとサーバー間で交換する
+- クライアント側でセキュアに格納する
+- ユーザーがアプリケーションの特権部分にアクセスしようとする際には、トークンが有効であり、適切な認可レベルに応じていることを検証する
+- ユーザーがより高い特権を必要とする操作を実行するために再度ログインするよう求められた際には、更新する
+- ユーザーがログアウトしたとき、もしくは一定時間が経過した後には、終了する
 
-It is strongly advised to use built-in session token generators as they are usually more secure than custom tokens; such generators exist for most platforms and languages.
+組み込みのセッショントークンジェネレータを使用することを強くお勧めします。通常、カスタムトークンよりもセキュアであり、そのようなジェネレータはほとんどのプラットフォームや言語に存在します。
 
 #### 参考情報
 
@@ -107,7 +107,7 @@ It is strongly advised to use built-in session token generators as they are usua
 
 ##### ツール
 
-* Proxy tools like Zed Attack Proxy, Burp Suite, Fiddler.
+* Zed Attack Proxy, Burp Suite, Fiddler などのプロキシツール
 
 
 
