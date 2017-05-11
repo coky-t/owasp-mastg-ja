@@ -19,19 +19,19 @@ Copyright © 2017 The OWASP Foundation. 本ドキュメントはクリエイテ�
 
 | プロジェクトリーダーおよび著者 | 共著者 | 主執筆者 | 共同執筆者 | レビュー担当者 |
 | --- | --- | --- | --- | --- |
-| Bernhard Mueller, Sven Schleier | Romuald Szkudlarek, Francesco Stillavato, Pawel Rzepa, Abdessamad Temmar, Slawomir Kosowski | Jin Kung Ong,  Alexander Antukh, Gerhard Wagner, Ryan Teoh, Daniel Ramirez Martin, Claudio André, Prathan Phongthiproek, Luander Ribeiro| Michael Helwig, Pishu Mahtani, Stefan Streichsbier, Ben Actis, Anatoly Rosencrantz, Ali Yazdani, Sebastian Banescu, Prabhant Singh, *Romantic668*, Stephen Corbiaux, *Demonbensa*, Jeroen Willemsen | Anant Shrivastava, Stephanie Vanroelen |
+| Bernhard Mueller, Sven Schleier | Romuald Szkudlarek, Francesco Stillavato, Pawel Rzepa, Abdessamad Temmar, Slawomir Kosowski | Jin Kung Ong,  Alexander Antukh, Gerhard Wagner, Ryan Teoh, Daniel Ramirez Martin, Claudio André, Prathan Phongthiproek, Luander Ribeiro| Michael Helwig, Oguzhan Topgul, Pishu Mahtani, *D00gs*, Stefan Streichsbier, Ben Actis, Anatoly Rosencrantz, Ali Yazdani, Sebastian Banescu, Prabhant Singh, *Romantic668*, Stephen Corbiaux, *Demonbensa*, Jeroen Willemsen, Anuruddha (L3Osi13nT), Ben Gardiner | Anant Shrivastava, Stephanie Vanroelen |
 
 ### 旧版
 
 モバイルセキュリティテストガイドは2015年に Milan Singh Thakur によって開始されました。元のドキュメントは Google ドライブでホストされていました。ガイド開発は2016年10月に GitHub に移されました。
 
-**OWASP MSTG Beta 2 (Google Doc)**
+**OWASP MSTG "Beta 2" (Google Doc)**
 
 | 著者 | レビュー担当者 | 主執筆者 |
 | --- | --- | --- |
 | Milan Singh Thakur, Abhinav Sejpal, Blessen Thomas, Dennis Titze, Davide Cioccia, Pragati Singh, Mohammad Hamed Dadpour, David Fern, Mirza Ali, Rahil Parikh, Anant Shrivastava, Stephen Corbiaux, Ryan Dewhurst, Anto Joseph, Bao Lee, Shiv Patel, Nutan Kumar Panda, Julian Schütte, Stephanie Vanroelen, Bernard Wagner, Gerhard Wagner, Javier Dominguez | Andrew Muller, Jonathan Carter, Stephanie Vanroelen, Milan Singh Thakur  | Jim Manico, Paco Hope, Pragati Singh, Yair Amit, Amin Lalji, OWASP Mobile Team|
 
-**OWASP MSTG Beta 1 (Google Doc)**
+**OWASP MSTG "Beta 1" (Google Doc)**
 
 | 著者 | レビュー担当者 | 主執筆者 |
 | --- | --- | --- |
