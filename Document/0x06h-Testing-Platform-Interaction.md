@@ -169,13 +169,13 @@
 
 #### 概要
 
-The WebView object is used to embed a web browser in your iOS application. It is a convinient way to display a web page in your application without any interaction with your native mobile browser. WebView even allows you to interact with JavaScript code in pages it has loaded. This great opportunity however may expose your application for a big risk if no security controls are applied. One of such big risk is a possibility to execute a malicious JavaScript code in your application via WebView object.
+WebViewオブジェクトは iOS アプリケーションに Web ブラウザを埋め込むために使用されます。ネイティブモバイルブラウザとのやりとりなしにアプリケーションに Web ページを表示するための便利な方法です。WebView ではロードしたページの JavaScript コードと対話することもできます。しかしながらこの素晴らしい状況はセキュリティコントロールが適用されていなければ、アプリケーションに大きなリスクをもたらす可能性があります。そのような大きなリスクの一つとして WebView オブジェクトを介してアプリケーションに悪質な JavaScript コードを実行する可能性があります。
 
 #### 静的解析
 
-Depending on your iOS version a WebView object can be implemented using UIWebView (for iOS versions 7.1.2 and older)<sup>[1]</sup> or WKWebView (for iOS in version 8.0 and later)<sup>[2]</sup>. WKWebView is recommended to be used. 
+iOS バージョンに応じて、WebView オブジェクトは UIWebView (iOS バージョン 7.1.2 および以前) <sup>[1]</sup> もしくは WKWebView (iOS バージョン 8.0 および以降) <sup>[2]</sup> を使用して実装できます。WKWebView の使用をお勧めします。
 
-The WKWebView object allows for JavaScript execution by default. That may raise a serious risk of running arbitrary code on user's device via WebView object. If your WebView does not require executing JavaScript as it's just display a static web page, you should definitely disable it. You can do it using preferences of an object WKPreferences<sup>[3]</sup>, like in the following example:
+WKWebView オブジェクトはデフォルトで JavaScript の実行を許可します。WebView オブジェクトを介してユーザーのデバイス上で任意のコードを実行する深刻なリスクを引き起こす可能性があります。静的な Web ページを表示するだけであり WebView が JavaScript を実行する必要がなければ、明示的に無効にすべきです。オブジェクト WKPreferences <sup>[3]</sup> の設定を使用します。以下に例を示します。
 
 ```
 #import "ViewController.h"
@@ -206,25 +206,25 @@ The WKWebView object allows for JavaScript execution by default. That may raise 
 
 ```
 
-If there is no explicitly disabled JavaScript execution via WKPreferences object, then it means it is enabled.
+WKPreferences オブジェクトを介して JavaScript の実行を明示的に無効にしていない場合、それが有効であることを意味します。
 
 
 #### 動的解析
 
-A Dynamic Analysis depends on different surrounding conditions, as there are different possibilities to inject JavaScript into a WebView of an application:
+アプリケーションの WebView に JavaScript を挿入するさまざまな可能性があるため、動的解析はさまざまな周囲の条件に依存します。
 
-* Stored Cross-Site Scripting (XSS) vulnerability in an endpoint, where the exploit will be sent to the WebView of the Mobile App when navigating to the vulnerable function.
-* Man-in-the-middle (MITM) position by an attacker where he is able to tamper the response by injecting JavaScript.
+* エンドポイントでの蓄積型クロスサイトスクリプティング (XSS) 脆弱性。脆弱な機能に遷移する際、モバイルアプリの WebView にエクスプロイトが送られる。
+* 中間者 (MITM) ポジション。 攻撃者は JavaScript を注入してレスポンスを改竄する可能性がある。
 
 #### 改善方法
 
-The UIWebView should be avoided and WKWebView used instead. JavaScript is enabled by default in a WKWebView and should be disabled if not needed. This reduces the attack surface and potential threats to the application. 
+UIWebView を避け、代わりに WKWebView を使用します。JavaScript は WKWebView ではデフォルトで有効になっており、必要がなければ無効にすべきです。これによりアプリケーションに対する攻撃の可能性と潜在的な脅威が軽減されます。
 
-In order to address these attack vectors, the outcome of the following checks should be verified:
+これらの攻撃ベクトルに対処するには、以下のチェックの結果を検証する必要があります。
 
-* that all functions offered by the endpoint need to be free of XSS vulnerabilities<sup>[4]</sup>.
- 
-* that the HTTPS communication need to be implemented according to the best practices to avoid MITM attacks (see "Testing Network Communication").
+* エンドポイントにより提供されるすべての機能に XSS 脆弱性 <sup>[4]</sup> がないこと。
+
+* MITM 攻撃を回避するためにベストプラクティスに従って HTTPS 通信を実装していること (「ネットワーク通信のテスト」を参照ください) 。
 
 
 #### 参考情報
