@@ -2,6 +2,8 @@
 
 This chapter is going to introduce Android on the architecture point of view and will provide the reader with detailed information on it's security mechanisms. Then, it will describe the structure of an Android application and will emphasize on the Inter Process Communication (IPC) mechanisms. Last, the way Android applications are published is explained to the reader.
 
+The reader is invited to have a look at the official Android developer documentation<sup>[13]</sup> for more details on the Android platform. Even if numerous examples are given in this section, in no way this guide should be considered as the only reference on the topic.
+
 ### Android アーキテクチャとセキュリティ機構
 
 Android is an open source platform that can be found nowadays on many devices:
@@ -23,7 +25,7 @@ In the next image you can see the differences between the normal process of comp
 
 With Android 4.4 (KitKat) the successor of Dalvik VM was introduced, called Android Runtime (ART). However, it has really been set for general use only in Android 5.0 (Lollipop) in November 2014, where it replaced Dalvik. In KitKat, ART was only available in the 'Developer' menu to those who wanted to try it explicitly. When no user action was done to modify the normal behaviour of the mobile, Dalvik was used.
 
-In Android, apps are executed into their own environment in a Virtual Machine (VM), that was called Dalvik, located in the RunTime environment. Each VM emulates the whole mobile and gives access to relevant resources from the Linux kernel while controlling this access. Apps do not have direct access to hardware resources, and their execution environments are therefore separate from each other. This allows fine-grained control over resources and apps: for instance, when an app crashes, it does not prevent other apps from working and only their environment and the app itself have to be restarted. Also, the fact apps are not run directly on the mobile hardware allow the use of the same app (same bytecode) on different architectures (e.g. ARM, x86) as the VM emulates a common hardware for the app. At the same time, the VM controls the maximum amount of resources provided to an app, preventing one app from using all resources while leaving only few resources to others.
+In Android, apps are executed into their own environment in a Virtual Machine (VM), that was called Dalvik, located in the runtime environment. Each VM emulates the whole mobile and gives access to relevant resources from the Linux kernel while controlling this access. Apps do not have direct access to hardware resources, and their execution environments are therefore separate from each other. This allows fine-grained control over resources and apps: for instance, when an app crashes, it does not prevent other apps from working and only their environment and the app itself have to be restarted. Also, the fact apps are not run directly on the mobile hardware allow the use of the same app (same bytecode) on different architectures (e.g. ARM, x86) as the VM emulates a common hardware for the app. At the same time, the VM controls the maximum amount of resources provided to an app, preventing one app from using all resources while leaving only few resources to others.
 In Android, apps are installed as bytecode (.dex files, see "Android Application Overview" section). In Dalvik, this bytecode was compiled at execution time into machine language suiting the current processor: such a mechanism is known as Just In Time (JIT). However, this means that such compiling is done every time an app is executed on a given mobile. As a consequence, Dalvik has been improved to compile an app only once, at installation time (the principle is called AOT, a.k.a. Ahead  Of Time): ART was born, and compilation was required only once, saving precious time at execution time (the execution time of an app may be divided by 2). Another benefit was that ART was consuming less power than Dalvik, allowing the user to use the mobile device and its battery longer.
 
 #### Android ユーザーとグループ
@@ -32,7 +34,7 @@ Android is a system based on Linux, however it does not deal with users the same
 The file [system/core/include/private/android_filesystem_config.h](http://androidxref.com/7.1.1_r6/xref/system/core/include/private/android_filesystem_config.h) shows the complete list of the predefined users and groups mapped to numbers.
 File below depicts some of the users defined for Android Nougat:
 
-~~~
+```
     #define AID_ROOT             0  /* traditional unix root user */
 
     #define AID_SYSTEM        1000  /* system server */
@@ -41,14 +43,16 @@ File below depicts some of the users defined for Android Nougat:
 	...
     #define AID_APP          10000  /* first app user */
 	...
-~~~
+```
 
 ### Android アプリの理解
 
 #### オペレーティングシステムとの通信
 
+The Android Framework is creating an abstraction layer for all the layers below, so developers can implement Android apps and can utilize the capabilities of Android without deeper knowledge of them. It also offers a robust implementation that offers common security functions like secure IPC or cryptography.
+
 In Android, apps are developed in Java, and the Operating System offers an API to interact with system resources, like
-* communication media (Wifi, Bluetooth, NFC, ...),
+* connectivity (Wifi, Bluetooth, NFC, ...),
 * files,
 * cameras,
 * geolocation (GPS),
@@ -176,13 +180,13 @@ drwxr-xr-x  131 sven  staff   4.3K Dec  5 16:29 res
 drwxr-xr-x    9 sven  staff   306B Dec  5 16:29 smali
 ```
 
-* **AndroidManifest.xml**: This file is not compressed anymore and can be openend in a text editor.
+* **AndroidManifest.xml**: This file is not compressed anymore and can be opened in a text editor.
 * **apktool.yml** : This file contains information about the output of apktool.
 * **assets**: A directory containing app assets (files used within the Android App like XML, Java Script or pictures) which can be retrieved by the AssetManager.
-* **lib**: A directory containting libraries that are part of the APK, for example 3rd party libraries that are not part of the Android SDK.
+* **lib**: A directory containing libraries that are part of the APK, for example 3rd party libraries that are not part of the Android SDK.
 * **original**: This folder contains the MANIFEST.MF file which stores meta data about the contents of the JAR and signature of the APK. The folder is also named as META-INF.
 * **res**: A directory containing resources not compiled into resources.arsc.
-* **smali**: A directory containing the disassembled Dalvik Bytecode in Smali. Smali is a human readable representation of the Dalvik executable.
+* **smali**: A directory containing the disassembled Dalvik bytecode in Smali. Smali is a human readable representation of the Dalvik executable.
 
 #### 通常のアプリケーションの Linux UID/GID
 
@@ -211,34 +215,39 @@ The relationship between group IDs and permissions are defined in the file [fram
 </permission>
 ```
 
-An important element to understand Android security is that all apps have the same level of privileges: both native and third-party apps are built on the same APIs and are run in similar environments. Also, all apps are executed not as 'root', but with the user level of privileges. That means that, basically, apps cannot perform some actions or access some parts of the file system. In order to be able to execute an app with 'root' privileges (inject packets in a network, run interpreters like for Python, ...), mobiles need to be rooted.
+An important element to understand Android security is that all apps have the same level of privileges: both native and third-party apps are built on the same APIs and are run in similar environments. Also, all apps are executed not as 'root', but with the user level of privileges. That means that, basically, apps cannot perform some actions or access some parts of the file system. In order to be able to execute an app with 'root' privileges (inject packets in a network, run interpreters like Python etc.) mobiles need to be rooted.
+
+##### Zygote
+
+When booting Android, a process called `Zygote` starts up at init<sup>[10]</sup>. This is a system service and is used to launch apps. Zygote opens up a socket in /dev/socket/zygote and listens on it for requests to start new applications. `Zygote` is an already initialized process and contains all the core libraries that are needed by any app. When the socket receives a request a new app starts on Android by forking the Zygote process and the app specific code is loaded and executed.
 
 #### アプリサンドボックス
 
-Apps are executed in the Android Application Sandbox that enforces isolation of an app data and code execution from other apps on the device, that adds an additional layer of security.
+Apps are executed in the Android Application Sandbox that enforces isolation of app data and code execution from other apps on the device, that adds an additional layer of security.
 
-When installing new apps (From Google Play or External Sources), a new folder is created in the filesystem in the path /data/data/\<package name>. This folder is going to be the private data folder for that particular app.
+When installing a new app (From Google Play Store or External Sources), a new folder is created in the filesystem in the path `/data/data/<package name>`. This folder is going to be the private data folder for that particular app.
 
 Since every app has its own unique Id, Android separates app data folders configuring the mode to _read_ and _write_ only to the owner of the app.
 
 ![Sandbox](Images/Chapters/0x05a/Selection_003.png)
 
-In this example, the Chrome and Calendar app are completly segmented with different UID and different folder permissions.
+In this example, the Chrome and Calendar app are completely segmented with different UID and different folder permissions.
 
-We can confirm this my looking at the filesystem permissions created for each folder:
+We can confirm this by looking at the filesystem permissions created for each folder:
+
 ```
 drwx------  4 u0_a97              u0_a97              4096 2017-01-18 14:27 com.android.calendar
 drwx------  6 u0_a120             u0_a120             4096 2017-01-19 12:54 com.android.chrome
 ```
-However, if two apps are signed with the same certificate and explicitly share the same user ID (by including the _sharedUserId_ in their _AndroidManifest.xml_) they can access each other data directory.
-An example how this is achieved in Nfc app:
+
+However, if two apps are signed with the same certificate and explicitly share the same user ID (by including the _sharedUserId_ in their _AndroidManifest.xml_) they can access each others data directory. See the following example on how this is achieved in the Nfc app:
+
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.android.nfc"
 	android:sharedUserId="android.uid.nfc">
 ```
 
-The Android Framework is creating an abstraction layer for all the layers below, so developers can implement Android Apps and can utilize the capabilities of Android without deeper knowledge of the layers below. It also offers a robust implementation that offers common security functions like secure IPC or cryptography.
 
 #### アプリコンポーネント
 
@@ -248,13 +257,13 @@ Android apps are made of several high-level components that make up their archit
 
 Android apps have their own lifecycles, that is under the control of the operating system. Therefore, apps need to listen to state changes and must be able to react accordingly. For instance, when the system needs resources, apps may be killed. The system selects the ones that will be killed according to the app priority: active apps have the highest priority (actually the same as Broadcast Receivers), followed by visible ones, running services, background services, and last useless processes (for instance apps that are still open but not in use since a significant time).
 
-Apps implement several event managers to handle events: for example, the onCreate handler implements what is to be done on app creation and will be called on that event. Other managers include onLowMemory, onTrimMemory and onConfigurationChanged.
+Apps implement several event managers to handle events: for example, the onCreate handler implements what has to be done on app creation and will be called on that event. Other managers include onLowMemory, onTrimMemory and onConfigurationChanged.
 
 ##### マニフェスト
 
-Every app must have a manifest file, which embeds content in the XML format. The name of this file is standardized as AndroidManifest.xml and is the same for every app. It is located in the root tree of the .apk file in which the app is published.
+Every app must have a manifest file, which embeds content in XML format. The name of this file is standardized as AndroidManifest.xml and is the same for every app. It is located in the root tree of the .apk file in which the app is published.
 
-A Manifest file describes the app structure as well as its exposed components (activities, services, content providers and intent receivers) and the rights required by the app (required permissions are listed, and filters can be implemented to refine the way the app will interact with the outside world). It also contains general metadata about the app, like its icon, its version number and the theme is uses for User Experience (UX). It may also list other information like the APIs it is compatible with (minimal, targeted and maximal SDK version) and the kind of memory is can be installed in (external or internal).
+A manifest file describes the app structure as well as its exposed components (activities, services, content providers and intent receivers) and lists down the permissions it's requesting for. Permission filters for IPC can be implemented to refine the way the app will interact with the outside world. It also contains general metadata about the app, like its icon, its version number and the theme it uses for User Experience (UX). It may also list other information like the APIs it is compatible with (minimal, targeted and maximal SDK version) and the kind of storage it can be installed in (external or internal)<sup>[14]</sup>.
 
 Here is an example of a manifest file, including the package name (the convention is to use a url in reverse order, but any string can be used), the app version, relevant SDKs, required permissions, exposed content providers, used broadcast receivers with intent filters, and the description of the app itself with its activities:
 ```
@@ -292,9 +301,7 @@ Here is an example of a manifest file, including the package name (the conventio
 </manifest>
 ```
 
-Manifests are text files and can be edited with any text editor. However, Android Studio, Google prefered IDE for Android development, embeds a graphical editor.
-
-A lot more useful options can be added to manifest files. The reader is invited to refer to Android official documentation available at https://developer.android.com/index.html for more details: even if numerous examples are given in this section, in no way this guide should be considered as a reference on the topic.
+A manifest is a text file and can be edited within Android Studio, the preferred IDE for Android development. A lot more useful options can be added to manifest files, which are listed down in the official Android documentation<sup>[12]</sup>.
 
 ##### アクティビティ
 
@@ -309,7 +316,7 @@ Activities implement manifest files. Each activity needs to be declared in the a
 
 When activities are not declared in manifests, they cannot be displayed and would raise an exception.
 
-In the same way as apps do, activities also have their own lifecycles and need to listen to system changes to be able to handle them accordingly. Activities can have the following states: active, paused, stopped and inactive. These states are managed by Android operating systems. Accordingly, activities can implement the following event managers:
+In the same way as apps do, activities also have their own lifecycle and need to listen to system changes to be able to handle them accordingly. Activities can have the following states: active, paused, stopped and inactive. These states are managed by Android operating system. Accordingly, activities can implement the following event managers:
 - onCreate
 - onSaveInstanceState
 - onStart
@@ -320,17 +327,18 @@ In the same way as apps do, activities also have their own lifecycles and need t
 - onRestart
 - onDestroy
 
-An app may not explicitly implement all event managers; in that situation, default actions are taken. However, usually at least the onCreate manager is overridden by app developers, as this is the place where most user interface components are declared and initialised. onDestroy may be overridden as well in case some resources need to be explicitly released (like network connections or connections to databases) or specific actions need to take place at the end of the app.
+An app may not explicitly implement all event managers; in that situation, default actions are taken. However, usually at least the onCreate manager is overridden by app developers, as this is the place where most user interface components are declared and initialised. onDestroy may be overridden as well in case some resources need to be explicitly released (like network connections or connections to databases) or if specific actions need to take place at the end of the app.
 
 ##### フラグメント
 
 Basically, a fragment represents a behavior or a portion of user interface in an Activity. Fragments have been introduced in Android with version Honeycomb 3.0 (API level 11).
 
-User interfaces are made of  several elements: views, groups of views, fragments and activities. As for them, fragments are meant to encapsulate parts of the interface to make reusability easier and better adapt to different size of screens. Fragments are autonomous entities in that they embed all they need to work in themselves (they have their own layout, own buttons, ...); however, they must be integrated in activities to become useful: fragments cannot exist on their own. They have their own lifecycle, which is tied to the one of the activity that implements them.
-As they have their own lifecycle, the Fragment class contains event managers, that can be redefined or extended. Such event managers can be onAttach, onCreate, onStart, onDestroy and onDetach. Several others exist; the reader should refer to Android specification for more details.
+User interfaces are made of several elements: views, groups of views, fragments and activities. As for them, fragments are meant to encapsulate parts of the interface to make reusability easier and better adapt to different size of screens. Fragments are autonomous entities in that they embed all they need to work in themselves (they have their own layout, own buttons etc.).  However, they must be integrated in activities to become useful: fragments cannot exist on their own. They have their own lifecycle, which is tied to the one of the activity that implements them.
+As they have their own lifecycle, the Fragment class contains event managers, that can be redefined or extended. Such event managers can be onAttach, onCreate, onStart, onDestroy and onDetach. Several others exist; the reader should refer to Android specification for more details<sup>[15]</sup>.
 
 Fragments can be implemented easily by extending the Fragment class provided by Android:
-```
+
+```Java
 public class myFragment extends Fragment {
 	...
 }
@@ -338,25 +346,29 @@ public class myFragment extends Fragment {
 
 Fragments don't need to be declared in manifest files as they depend on activities.
 
-In order to manage its fragments, an Activity can use a Fragment Manager (FragmentManager class). This class makes it easy to find, add, remove and replace associated fragmens.
+In order to manage its fragments, an Activity can use a Fragment Manager (FragmentManager class). This class makes it easy to find, add, remove and replace associated fragments.
 Fragment Managers can be created simply with the following:
-```
+
+```Java
 FragmentManager fm = getFragmentManager();
 ```
 
-Fragments do not necessarily have a user interface: they can be a convenient and efficient way to manage background operations dealing with user interface in an app, for instance when a fragment is declared as persistent while its parent activity may be destroyed and created again.
+Fragments do not necessarily have a user interface: they can be a convenient and efficient way to manage background operations dealing with user interface in an app. For instance when a fragment is declared as persistent while its parent activity may be destroyed and created again.
 
 ##### インテント
 
 Intents are messaging components used between apps and components. They can be used by an app to send information to its own components (for instance, start inside the app a new activity) or to other apps, and may be received from other apps or from the operating system. Intents can be used to start activities or services, run an action on a given set of data, or broadcast a message to the whole system. They are a convenient way to decouple components.
 
-There are two kinds of intents : explicit and implicit.
-- explicit intents exactly name the activity class to be used. For instance:
-```
+There are two kinds of intents: explicit and implicit.
+* Explicit intents launch a specific app component, like an activity in your app. For instance:
+
+```Java
 	Intent intent = new Intent(this, myActivity.myClass);
 ```
-- implicit intents are sent to the system with a given action to perform on a given set of data ("http://www.example.com" in our example below). It is up to the system to decide which app or class will perform the corresponding service. For instance:
-```
+
+* Implicit intents are sent to the system with a given action to perform on a given set of data ("http://www.example.com" in our example below). It is up to the system to decide which app or class will perform the corresponding service. For instance:
+
+```Java
 	Intent intent = new Intent(Intent.MY_ACTION, Uri.parse("http://www.example.com"));
 ```
 
@@ -578,14 +590,18 @@ Messages sent by the remote process via the messenger are delivered to the local
 
 ### 参考情報
 
--- TODO [Numbering and cleanup of references] -
-
-+ [Android Security](https://source.android.com/security/)
-+ [Android Developer: App Components](https://developer.android.com/guide/components/index.html)
-+ [HAL](https://source.android.com/devices/)
-+ "Android Security: Attacks and Defenses" By Anmol Misra, Abhishek Dubey
-+ [AProgrammer Blog](https://pierrchen.blogspot.com.br)
-+ [keesj Android internals](https://github.com/keesj/gomo)
-+ [Android Versions] (https://en.wikipedia.org/wiki/Android_version_history)
-+ "Professional Android 4 Application Development" by Reto MEIER
-- [9] APK Signing - https://source.android.com/security/apksigning/
+* [1] Android Security - https://source.android.com/security/
+* [2] Android Developer: App Components - https://developer.android.com/guide/components/index.html
+* [3] HAL - https://source.android.com/devices/
+* [4] "Android Security: Attacks and Defenses" By Anmol Misra, Abhishek Dubey
+* [5] A Programmer Blog - https://pierrchen.blogspot.com.br
+* [6] keesj Android internals - https://github.com/keesj/gomo
+* [7] Android Versions - https://en.wikipedia.org/wiki/Android_version_history
+* [8] "Professional Android 4 Application Development" by Reto Meier
+* [9] APK Signing - https://source.android.com/security/apksigning/
+* [10] How Android Apps are run - https://github.com/dogriffiths/HeadFirstAndroid/wiki/How-Android-Apps-are-Built-and-Run
+* [11] Zygote - https://serializethoughts.com/2016/04/15/android-zygote/
+* [12] Android Developer Guide for Manifest -  https://developer.android.com/guide/topics/manifest/manifest-intro.html
+* [13] Android Developer Guide - https://developer.android.com/index.html
+* [14] Define app install location - https://developer.android.com/guide/topics/data/install-location.html
+* [15] Fragment Class - https://developer.android.com/reference/android/app/Fragment.html
