@@ -21,7 +21,7 @@
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
 - V7.1: "アプリは有効な証明書で署名およびプロビジョニングされている。"
@@ -43,9 +43,9 @@
 
 #### 静的解析
 
-* Xcode エディタにソースコードをインポートします。
-* プロジェクトのビルド設定の 'DEBUG' パラメータを確認します。"Apple LVM – Preprocessing" -> "Preprocessor Macros" の下にあります。
-* ソースコードの NSAsserts メソッドや類似のものを確認します。
+- Xcode エディタにソースコードをインポートします。
+- プロジェクトのビルド設定の 'DEBUG' パラメータを確認します。"Apple LVM – Preprocessing" -> "Preprocessor Macros" の下にあります。
+- ソースコードの NSAsserts メソッドや類似のものを確認します。
 
 #### 動的解析
 
@@ -59,10 +59,10 @@ App Store 経由もしくは Ad Hoc や エンタープライズビルドのい�
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V7.2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である。（非デバッグなど）"
+- V7.2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である。（非デバッグなど）"
 
 ##### CWE
 -- TODO [Add relevant CWE for "Testing Whether the App is Debuggable"] --
@@ -109,53 +109,96 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V7.3: "デバッグシンボルはネイティブバイナリから削除されている。"
+- V7.3: "デバッグシンボルはネイティブバイナリから削除されている。"
 
 ##### CWE
 -- TODO [Add relevant CWE for "Verifying that Debugging Symbols Have Been Removed"] --
 
 ##### その他
-* [1] Binutils - https://www.gnu.org/s/binutils/
+- [1] Binutils - https://www.gnu.org/s/binutils/
 
 
 
 ### デバッグコードや詳細エラーログに関するテスト
 
 #### 概要
-
--- TODO [Give an overview about the functionality "Testing for Debugging Code and Verbose Error Logging" and it's potential weaknesses] --
+Developers often include debugging code, such as verbose logging statements (using `NSLog`, `println`, `print`, `dump`, `debugPrint`) about responses from their APIs, about the progress and/or state of their application in order to speed up verification and get a better understand on errors.
+Furthermore, there can be debugging code in terms of a "management-functionality" which is used by the developer to set state of the application, mock responses from an API, et cetera.
+This information can easily be used by the reverse-engineer to track back what is happening with the application. Therefore, the debugging code should be removed from the release version of the application.
 
 #### 静的解析
+For static analysis, you can take the following approach regarding the logging statements:
+1. Import the code of the application into Xcode.
+2. Do a search over the code on the following printing functions:`NSLog`, `println`, `print`, `dump`, `debugPrint`.
+3.  When one of them is found, please check whether the developers used a wrapping function around the logging function for better markup of the to be logged statements, start adding that function to your search.
+4. For every ocurence found in step 2 and 3, verify whether Macro's or debug-state related guards have been set to turn the logging off in the release build. Please note the change in how objective-C can make use of pre-processor macro's:
+```objc
+#ifdef DEBUG
+    // Debug-only code
+#endif
+```
+Whereas in Swift this has changed: there you need to set either environment-variables in your scheme or as custom flags in the Build settings of a target to make this work. Please note that the following functions, which allow to check on whether the app is build in release-configuration in Swift 2.1, should be recommended against (As Xcode 8 & Swift3 do not support them): `_isDebugAssertConfiguration()`, `_isReleaseAssertConfiguration()`, `_isFastAssertConfiguration()`.
 
--- TODO [Add content for white-box testing of "Testing for Debugging Code and Verbose Error Logging"] --
+Please note that there are more logging functions, depending on the setup of the application, for instance, when  CocoaLumberjack is used (https://github.com/CocoaLumberjack/CocoaLumberjack), then the static analysis is a bit different.
+
+On the "debug-management" code which is built in: inspect the storyboards to see if there are any flows and/or view-controllers that provide different functionality than the ones that should be supported by the application.
+--TODO: reviewer: should we go in depth on different patterns one can find on this subject? --
 
 #### 動的解析
+The dynamic analysis should be executed on both a simulator as well as a device, as we sometimes see that developers use target-based functions (instead of release/debug-mode based functions) to execute the debugging code or not.
+1. Run the application on a simulator, check if you can find any output during the execution of the app in the console.
+2. Attach a device to your Mac, run the application on the device via Xcode and verify whether you can find any output during the execution of the app in the console.
 
--- TODO [Add content for black-box testing of "Testing for Debugging Code and Verbose Error Logging"] --
+For the other "manager-based" debug code: click through the application on both a simulator and device and see if you can find any functionality which allows for pre-setting profiles for an app, for selecting the actual server, for selecting possible responses from the API, et cetera.
 
 #### 改善方法
+As a developer, it should not be a problem to incorporate debug statements in your debug version of the application as long as you realize that the statements made for debugging should never:
+- have impact on the actual computational results in such a way that the code should be present in the release version of the application;
+- end up in the release-configuration of the application.
 
--- TODO [Describe the best practices that developers should follow to prevent this issue "Testing for Debugging Code and Verbose Error Logging"] --
+In Objective-C, developers can use pre-processor macro's to filter out debug code:
+```objc
+#ifdef DEBUG
+    // Debug-only code
+#endif
+```
+In Swift 2, using xCode 7, one has to set custom compiler flags for every target, where the compiler flag has to start with -D. So, when the debug flag -DMSTG-DEBUG is set, you can use the following annotations:
+
+```swift
+#if MSTG-DEBUG
+    // Debug-only code
+#endif
+```
+
+In swift 3, using xCode 8, one can set Active Compilation Conditions setting in Build settings / Swift compiler - Custom flags. Swift3 does not use a pre-processor, but instead makes use of conditional compilation blocks based on the conditions defined:
+
+```swift3
+#if DEBUG_LOGGING
+    // Debug-only code
+#endif
+```
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
+- V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
 
 ##### CWE
 -- TODO [Add relevant CWE for "Testing for Debugging Code and Verbose Error Logging"] --
 
 ##### その他
-* [1]
+- [1] CocoaLumberjack - [https://github.com/CocoaLumberjack/CocoaLumberjack]
+- [2] Swift conditional compilation blocks - [https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34]
 
 ##### ツール
--- TODO [Add tools for "Testing for Debugging Code and Verbose Error Logging"] --
+- XCode & simulator
+- A standard iPhone/iPad
 
 
 
@@ -169,8 +212,8 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 
 ソースコードをレビューして、アプリケーションがさまざまなタイプのエラー(IPC通信、リモートサービス呼び出しなど)を処理する人を理解/識別します。この段階で実行されるチェックの例を以下に示します。
 
-* アプリケーションが[適切に設計された](https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047) (統一された) スキームを使用して例外を処理することを確認する。
-* アプリケーションが例外を処理するときに機密情報を公開していないが、ユーザーには十分詳細に問題を説明していることを確認する。
+- アプリケーションが[適切に設計された](https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047) (および統一された) スキームを使用して例外を処理することを確認する。
+- アプリケーションが例外を処理するときに機密情報を公開していないが、ユーザーには十分詳細に問題を説明していることを確認する。
 
 #### 動的解析
 
@@ -183,11 +226,11 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V7.5: "アプリは可能性のある例外をキャッチし処理している。"
-* V7.6: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
+- V7.5: "アプリは可能性のある例外をキャッチし処理している。"
+- V7.6: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
 
 ##### CWE
 -- TODO [Add relevant CWE for "Testing Exception Handling"] --
@@ -221,10 +264,10 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V7.7: "アンマネージドコードでは、メモリは安全に割り当て、解放、使用されている。"
+- V7.7: "アンマネージドコードでは、メモリは安全に割り当て、解放、使用されている。"
 
 ##### CWE
 -- TODO [Add relevant CWE for "Testing for Memory Management Bugs"] --
@@ -242,10 +285,10 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 
 XCode ではデフォルトですべてのバイナリセキュリティが設定されていますが、古いアプリケーションやコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用されます。
 
-* **ARC** - Automatic Reference Counting - メモリ管理機能
+- **ARC** - Automatic Reference Counting - メモリ管理機能
   * 必要に応じてメッセージを保持および解放します
-* **Stack Canary** - バッファオーバーフロー攻撃の防止に役立ちます
-* **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
+- **Stack Canary** - バッファオーバーフロー攻撃の防止に役立ちます
+- **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
 
 #### 静的解析
 
@@ -257,7 +300,7 @@ XCode ではデフォルトですべてのバイナリセキュリティが設�
 
 以下はこれらの機能をチェックする方法の例です。これらの例ではすべてが有効になっています。
 
-* PIE:
+- PIE:
 ```
 $ unzip DamnVulnerableiOSApp.ipa
 $ cd Payload/DamnVulnerableIOSApp.app
@@ -274,7 +317,7 @@ MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
 WEAK_DEFINES BINDS_TO_WEAK PIE
 ```
 
-* Stack Canary:
+- Stack Canary:
 ```
 $ otool -Iv DamnVulnerableIOSApp | grep stack
 0x0046040c 83177 ___stack_chk_fail
@@ -289,7 +332,7 @@ $ otool -Iv DamnVulnerableIOSApp | grep stack
 0x0000000100593dc8 83414 _sigaltstack
 ```
 
-* Automatic Reference Counting:
+- Automatic Reference Counting:
 ```
 $ otool -Iv DamnVulnerableIOSApp | grep release
 0x0045b7dc 83156 ___cxa_guard_release
@@ -309,14 +352,14 @@ IDB <sup>[2]</sup> は Stack Canary と PIE サポートの両方をチェック
 
 #### 改善方法
 
-* スタックスマッシュ保護
+- スタックスマッシュ保護
 
 iOS アプリケーション内でスタックスマッシュ保護を有効にする手順：
 
 1. Xcodeで、"Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックして設定を表示します。
 1. "Other C Flags" セクションで "–fstack-protector-all" オプションが選択されていることを確認します。
 
-* PIE サポート
+- PIE サポート
 
 iOS アプリケーションを PIE としてビルドする手順：
 
@@ -325,7 +368,7 @@ iOS アプリケーションを PIE としてビルドする手順：
 1. "Generate Position-Dependent Code" がデフォルト値の NO に設定されていることを確認します。
 1. "Create Position Independent Executables" がデフォルト値の NO に設定されていないことを確認します。
 
-* ARC 保護
+- ARC 保護
 
 iOS アプリケーションで ACR 保護を有効にする手順：
 
@@ -335,10 +378,10 @@ iOS アプリケーションで ACR 保護を有効にする手順：
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V7.8: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
+- V7.8: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
 ##### CWE
 
@@ -346,8 +389,8 @@ iOS アプリケーションで ACR 保護を有効にする手順：
 
 ##### その他
 
-* [1] Technical Q&A QA1788 Building a Position Independent Executable - https://developer.apple.com/library/mac/qa/qa1788/_index.html
-* [2] idb - https://github.com/dmayer/idb
+- [1] Technical Q&A QA1788 Building a Position Independent Executable - https://developer.apple.com/library/mac/qa/qa1788/_index.html
+- [2] idb - https://github.com/dmayer/idb
 
 ##### ツール
 -- TODO [Add tools for "Testing Compiler Settings"] --
