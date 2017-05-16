@@ -71,7 +71,7 @@ To set up a standalone toolchain, download the latest stable version of the NDK.
 $ ./build/tools/make_standalone_toolchain.py --arch arm --api 24 --install-dir /tmp/android-7-toolchain
 ```
 
-This creates a standalone toolchain for Android 7.0 in the directory <code>/tmp/android-7-toolchain</code>. For convenience, you can export an environment variable that points to your toolchain directory - we'll be using this in the examples later.
+This creates a standalone toolchain for Android 7.0 in the directory <code>/tmp/android-7-toolchain</code>. For convenience, you can export an environment variable that points to your toolchain directory - we'll be using this in the examples later. Run the following command, or add it to your <code>.bash_profile</code> or other startup script.
 
 ```bash
 $  export TOOLCHAIN=/tmp/android-7-toolchain
@@ -649,21 +649,21 @@ $ ps | grep helloworld
 u0_a164   12690 201   1533400 51692 ffffffff 00000000 S sg.vantagepoint.helloworldjni
 $ su
 # /data/local/tmp/gdbserver --attach localhost:1234 12690
-Attached; pid = 14342
+Attached; pid = 12690
 Listening on port 1234
 ```
 
 The process is now suspended, and <code>gdbserver</code> listening for debugging clients on port <code>1234</code>. With the device connected via USB, you can forward this port to a local port on the host using the <code>abd forward</code> command:
 
-
 ```bash
 $ adb forward tcp:1234 tcp:1234
 ```
 
+We'll now use the prebuilt version of <code>gdb</code> contained in the NDK toolchain (if you haven't already, follow the instructions above to install it). 
 
 ```
-$ $TOOLCHAIN/arm-linux-androideabi-gdb libnative-lib.so
-GNU gdb (GDB) 7.7
+$ $TOOLCHAIN/bin/gdb libnative-lib.so
+GNU gdb (GDB) 7.11
 (...)
 Reading symbols from libnative-lib.so...(no debugging symbols found)...done.
 (gdb) target remote :1234
@@ -671,25 +671,21 @@ Remote debugging using :1234
 0xb6e0f124 in ?? ()
 ```
 
-The problem: At this point it's already too late! The function has already run...
+We have successfully attached to the process! The only problem is that at this point, we're already too late to debug the JNI function <code>StringFromJNI()</code> as it only runs once at startup. We can again solve this problem by activating the "Wait for Debugger" option. Go to "Developer Options" -> "Select debug app" and pick HelloWorldJNI, then activate the "Wait for debugger" switch. Then, terminate and re-launch the app. It should be suspended automatically.
 
+Our objective is to set a  breakpoint at the start of the native function <code>Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()<code> before resuming the app. Unfortunately, this isn't possible at this early point in execution because <code>libnative-lib.so</code> isn't yet mapped into process memory - it is loaded dynamically during runtime. To get this working, we'll first use JDB to gently control the process into the state we need.
 
-```bash
-$ adb shell
-android $ su
-android # /data/local/tmp/gdbserver --attach localhost:1234 14342
-
-
-Go to "Developer Options" -> "Select debug app" and pick HelloWorldJNI.  Activate the "Wait for debugger" switch.
-
-
-Launch the app
+First, we resume execution of the Java VM by attaching JDB. We don't want the process to resume immediately though, so we pipe the <code>suspend</code> command into JDB as follows:
 
 ```bash
 $ adb jdwp
 14342
 $ adb forward tcp:7777 jdwp:14342
 $ { echo "suspend"; cat; } | jdb -attach localhost:7777
+```
+
+Next, we want to suspend the process at the point the Java runtime loads <code>libnative-lib.so</code>. In JDB, set a breakpoint on the <code>java.lang.System.loadLibrary()</code> method and resume the process. After the breakpoint has been hit, execute the <code>step up</code> command, which will resume the process until <code>loadLibrary()</code>returns. At this point, <code>libnative-lib.so</code> has been loaded.
+
 > stop in java.lang.System.loadLibrary
 > resume
 All threads resumed.
@@ -702,14 +698,7 @@ Step completed: "thread=main", sg.vantagepoint.helloworldjni.MainActivity.<clini
 main[1]
 ```
 
-At this point, the library has been loaded.
-
-
-```bash
-$ adb shell
-android $ su
-android # /data/local/tmp/gdbserver --attach localhost:1234 14342
-```
+Execute <code>gdbserver</code> to attach to the suspended app. This will have the effect that the app is "double-suspended" by both the Java VM and the Linux kernel.
 
 
 ```bash
@@ -721,6 +710,11 @@ Copyright (C) 2014 Free Software Foundation, Inc.
 (gdb) target remote :1234
 Remote debugging using :1234
 0xb6de83b8 in ?? ()
+```
+
+Execute the <code>resume</code> command in JDB to resume execution of the Java runtime (we're done using JDB, so you can also detach it at this point). You can start exploring the process with GDB. The <code>info sharedlibrary</code> command displays the loaded libraries, which should include <code>libnative-lib.so</code>. The <code>info functions</code> command retrieves a list of all known functions. The JNI function <code>java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()</code> should be listed as a non-debugging symbol. Set a breakpoint at the address of that function and resume the process.
+
+```bash
 (gdb) info sharedlibrary
 (...)
 0xa3522e3c  0xa3523c90  Yes (*)     libnative-lib.so
@@ -732,29 +726,15 @@ Non-debugging symbols:
 (...)
 0xa3522e78  Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI
 (...)
-```
-
-
-Set a breakpoint:
-
-```
 (gdb) b *0xa3522e78
 Breakpoint 1 at 0xa3522e78
 (gdb) cont
-
 ```
 
-In jdb:
+Your breakpoint should be hit when the first instruction of the JNI function is executed. You can now display a disassembly of the function using the <code>disassemble</code> command.
 
 ```
-main[1] resume
-All threads resumed.
-```
-
-In gdb:
-
-```
-Breakpoint 1, 0xa3522e78 in Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI () from libnative-lib.so
+Breakpoint 1, 0xa3522e78 in Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI() from libnative-lib.so
 (gdb) disass $pc
 Dump of assembler code for function Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI:
 => 0xa3522e78 <+0>: ldr r2, [r0, #0]
@@ -767,11 +747,11 @@ Dump of assembler code for function Java_sg_vantagepoint_helloworldjni_MainActiv
 End of assembler dump.
 ```
 
-
+From here on, you can single-step through the program, print the contents of registers and memory, or tamper with them, to explore the inner workings of the JNI function (which, in this case, simply returns a string). Use the <code>help</code> command to get more information on debugging, running and examining data.
 
 ##### 実行トレース
 
-Besides being useful for debugging, the JDB command line tool also offers basic execution tracing functionality. To trace an app right from the start we can pause the app using the Android "Wait for Debugger" feature or a kill –STOP command and attach JDB to set a deferred method breakpoint on an initialization method of our choice. Once the breakpoint hits, we activate method tracing with the trace go methods command and resume execution. JDB will dump all method entries and exits from that point on.
+Besides being useful for debugging, the JDB command line tool also offers basic execution tracing functionality. To trace an app right from the start we can pause the app using the Android "Wait for Debugger" feature or a <code>kill –STOP</code> command and attach JDB to set a deferred method breakpoint on an initialization method of our choice. Once the breakpoint hits, we activate method tracing with the <code>trace go methods</code> command and resume execution. JDB will dump all method entries and exits from that point on.
 
 ```bash
 $ adb forward tcp:7777 jdwp:7288
