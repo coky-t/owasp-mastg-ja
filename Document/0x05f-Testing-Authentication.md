@@ -4,26 +4,26 @@
 
 #### 概要
 
-Applications often have different sections with, on the one hand public and non-privileged information / actions, and on the other hand sensitive and privileged information / actions. Users can legitimately access the first ones without any restriction; however, in order to make sure sensitive and privileged information / actions are protected and accessible only to legitimate users, proper authentication has to take place.  
+アプリケーションは、一方では公的で非特権的な情報やアクション、他方で機密性が高く特権的な情報やアクションといったさまざまなセクションを有することがよくあります。ユーザーは前者に制限なしで合法的にアクセスできます。しかし、機密性が高く特権的な情報やアクションは正当なユーザーだけに保護されアクセスできるようにするために、適切な認証が行われる必要があります。
 
 #### 静的解析
 
-When source code is available, first locate all sections with sensitive and privileged information / actions: they are the ones that need to be protected. Prior to accessing any item, the application must make sure the user is really who he pretends to and that he is allowed to access the section. Look for keywords in the targeted programming language that are used to authenticate a user or to retrieve and check an existing session token (for instance: KeyStore, SharedPreferences, ...).
+ソースコードが入手可能である場合は、まず機密性が高く特権的な情報やアクションを持つすべてのセクションを突き止めます。それらは保護する必要があるものです。アイテムにアクセスする前に、アプリケーションはユーザーが実際に誰でありセクションにアクセスすることを許可されていることを確認する必要があります。ユーザーを認証したり既存のセッショントークンを取得およびチェックするために使用されるターゲットとするプログラミング言語のキーワードを探します (KeyStore, SharedPreferences, など) 。
 
 
 #### 動的解析
 
-The easiest way to check authentication on an App is to try to browse the app and access privileged sections. When this cannot be done manually, an automated crawler can be used (for instance, try to start an Activity that contains sensitive information with Drozer without providing authentication elements; for further information, please refer to the official Drozer guide available at https://labs.mwrinfosecurity.com/tools/drozer/). 
+アプリの認証を確認する最も簡単な方法はアプリをブラウズして特権的なセクションにアクセスしてみることです。これを手動で行うことができない場合は、自動クローラを使用します (Drozer で機密情報を含むアクティビティを認証要素を提供せずに開始しようとするなど。詳細については、https://labs.mwrinfosecurity.com/tools/drozer/ にある公式の Drozer ガイドを参照ください) 。
 
-In case the app is exchanging information with a backend server, an intercepting proxy can be used to capture network traffic while being authenticated. Then, log out and try to replay requests while removing authentication information or not.
-Further attacks methods can be found in the OWASP Testing Guide V4 concerning web-based applications (cf link in the Info section).
+アプリがバックエンドサーバーと情報を交換する場合、傍受プロキシを使用して認証中のネットワークトラフィックをキャプチャできます。その後、ログアウトして、認証情報を削除してリクエストの再生を試みます。
+さらなる攻撃方法については Web ベースアプリケーションに関する OWASP テストガイド V4 にあります (その他セクションのリンクを参照ください) 。
 
 #### 改善方法
 
-For every section that needs to be protected, implement a mechanism that checks the session token of the user :
-- if there is no session token, the user may not have authenticated before;
-- if a token exists, make sure this token is valid and that it grants the user with sufficient privileges to allow the user to access the section.
-If any of these two conditions raise an issue, reject the request and do not allow the user to start the Activity.
+保護が必要なセクションごとに、ユーザーのセッショントークンをチェックするメカニズムを実装します。
+- セッショントークンがない場合、ユーザーは以前に認証されていない可能性があります。
+- トークンが存在する場合、このトークンが有効であり、ユーザーがそのセクションにアクセスするのに十分な特権を付与されることを確認します。
+これらの2つの条件のいずれかが問題を引き起こす場合、リクエストを拒否して、ユーザーがアクティビティを開始できないようにします。
 
 #### 参考情報
 
