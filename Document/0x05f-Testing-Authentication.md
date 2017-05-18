@@ -458,8 +458,6 @@ https://authy.com/blog/security-of-sms-for-2fa-what-are-your-options/
 -- TODO [Add relevant tools for "Testing 2-Factor Authentication"] --
 * Enjarify - https://github.com/google/enjarify
 
-
-
 ### ステップアップ認証のテスト
 
 #### 概要
@@ -504,8 +502,6 @@ https://authy.com/blog/security-of-sms-for-2fa-what-are-your-options/
 
 -- TODO [Add relevant tools for "Testing Step-up Authentication"] --
 * Enjarify - https://github.com/google/enjarify
-
-
 
 ### ユーザーデバイス管理のテスト
 
