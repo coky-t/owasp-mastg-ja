@@ -126,11 +126,50 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 
 #### 動的解析
 
-実行中のプロセス jdb にアタッチを試みます。デバッグが許可されていない場合、これはエラーで失敗します。
+Drozer can be used to identify if an application is debuggable. The module `app.package.attacksurface` displays information about IPC components exported by the application, in addition to whether the app is debuggable.
+
+```
+dz> run app.package.attacksurface com.mwr.dz
+Attack Surface:
+  1 activities exported
+  1 broadcast receivers exported
+  0 content providers exported
+  0 services exported
+    is debuggable
+```
+
+To scan for all debuggable applications on a device, the `app.package.debuggable` module should be used: 
+
+```
+dz> run app.package.debuggable 
+Package: com.mwr.dz
+  UID: 10083
+  Permissions:
+   - android.permission.INTERNET
+Package: com.vulnerable.app
+  UID: 10084
+  Permissions:
+   - android.permission.INTERNET
+``` 
+
+If an application is debuggable, it is trivial to get command execution in the context of the application. In `adb` shell, execute the `run-as` binary, followed by the package name and command:
+
+```
+$ run-as com.vulnerable.app id
+uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats) context=u:r:untrusted_app:s0:c512,c768
+```
+
+An alternative method to determine if an application is debuggable, is to attach jdb to the running process. If debugging is disabled, this should fail with an error.
 
 #### 改善方法
 
-<code>android:debuggable</code> を false に設定するか、<code>Application</code> タグからそれを省略するだけです。
+In the `AndroidManifest.xml` file, set the `android:debuggable` flag to false, as shown below:
+
+```xml
+<application android:debuggable="false">
+...
+</application>
+```
 
 #### 参考情報
 
@@ -142,13 +181,16 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 
 ##### CWE
 
+
 -- TODO [Add relevant CWE for "Testing If the App is Debuggable"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
 ##### その他
 * [1] Application element - https://developer.android.com/guide/topics/manifest/application-element.html
 
+##### Tools
 
+* Drozer - https://github.com/mwrlabs/drozer
 
 ### デバッグシンボルに関するテスト
 
