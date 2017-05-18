@@ -110,7 +110,7 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 
 #### 静的解析
 
-<code>android:debuggable</code> 属性がせっていされているかどうかを <code>AndroidManifest.xml</code> で確認します。
+<code>android:debuggable</code> 属性が設定されているかどうかを <code>AndroidManifest.xml</code> で確認します。
 
 ```xml
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
@@ -126,7 +126,7 @@ Manifest の <code>Application</code> タグの <code>android:debuggable</code> 
 
 #### 動的解析
 
-Drozer can be used to identify if an application is debuggable. The module `app.package.attacksurface` displays information about IPC components exported by the application, in addition to whether the app is debuggable.
+Drozer はアプリケーションがデバッグ可能かどうかを特定するために使用できます。モジュール `app.package.attacksurface` は、アプリがデバッグ可能かどうかに加えて、アプリケーションによりエクスポートされる IPC コンポーネントに関する情報を表示します。
 
 ```
 dz> run app.package.attacksurface com.mwr.dz
@@ -138,7 +138,7 @@ Attack Surface:
     is debuggable
 ```
 
-To scan for all debuggable applications on a device, the `app.package.debuggable` module should be used: 
+デバイス上のすべてのデバッグ可能なアプリケーションをスキャンするには、`app.package.debuggable` モジュールを使用する必要があります。
 
 ```
 dz> run app.package.debuggable 
@@ -152,18 +152,18 @@ Package: com.vulnerable.app
    - android.permission.INTERNET
 ``` 
 
-If an application is debuggable, it is trivial to get command execution in the context of the application. In `adb` shell, execute the `run-as` binary, followed by the package name and command:
+アプリケーションがデバッグ可能である場合は、アプリケーションのコンテキストでコマンドを実行することは簡単です。`adb` シェルで、`run-as` バイナリにパッケージ名とコマンドを付けて実行します。
 
 ```
 $ run-as com.vulnerable.app id
 uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats) context=u:r:untrusted_app:s0:c512,c768
 ```
 
-An alternative method to determine if an application is debuggable, is to attach jdb to the running process. If debugging is disabled, this should fail with an error.
+アプリケーションがデバッグ可能かどうかを判断する別の方法には、実行中のプロセスを jdb にアタッチすることがあります。デバッグが無効である場合、これはエラーで失敗するはずです。
 
 #### 改善方法
 
-In the `AndroidManifest.xml` file, set the `android:debuggable` flag to false, as shown below:
+`AndroidManifest.xml` ファイルに、以下で示すように `android:debuggable` フラグに false を設定します。
 
 ```xml
 <application android:debuggable="false">
