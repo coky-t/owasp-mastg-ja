@@ -125,9 +125,9 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 ### デバッグコードや詳細エラーログに関するテスト
 
 #### 概要
-Developers often include debugging code, such as verbose logging statements (using `NSLog`, `println`, `print`, `dump`, `debugPrint`) about responses from their APIs, about the progress and/or state of their application in order to speed up verification and get a better understand on errors.
-Furthermore, there can be debugging code in terms of a "management-functionality" which is used by the developer to set state of the application, mock responses from an API, et cetera.
-This information can easily be used by the reverse-engineer to track back what is happening with the application. Therefore, the debugging code should be removed from the release version of the application.
+開発者は検証をスピードアップしエラーの理解を深めるために API からのレスポンスやアプリケーションの状況や状態について (`NSLog`, `println`, `print`, `dump`, `debugPrint` を使用して) 詳細なログ出力文などのデバッグコードをしばしば埋め込みます。
+さらに、API からの疑似応答などアプリケーションの状態を設定するために開発者が使用する「管理機能」と呼ばれるデバッグコードが存在する可能性があります。
+この情報はリバースエンジニアがアプリケーションで起こっていることを追跡するために簡単に使用できます。したがって、デバッグコードはリリースバージョンのアプリケーションから削除する必要があります。
 
 #### 静的解析
 For static analysis, you can take the following approach regarding the logging statements:
