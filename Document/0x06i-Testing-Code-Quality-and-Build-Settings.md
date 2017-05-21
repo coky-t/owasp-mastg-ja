@@ -148,11 +148,11 @@ Swift ではこれとは異なります。スキームに環境変数を設定�
 --TODO: reviewer: should we go in depth on different patterns one can find on this subject? --
 
 #### 動的解析
-The dynamic analysis should be executed on both a simulator as well as a device, as we sometimes see that developers use target-based functions (instead of release/debug-mode based functions) to execute the debugging code or not.
-1. Run the application on a simulator, check if you can find any output during the execution of the app in the console.
-2. Attach a device to your Mac, run the application on the device via Xcode and verify whether you can find any output during the execution of the app in the console.
+動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードの実行有無のために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あります。
+1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールに出力を見つけることができるか確認する。
+2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールに出力を見つけることができるか確認する。
 
-For the other "manager-based" debug code: click through the application on both a simulator and device and see if you can find any functionality which allows for pre-setting profiles for an app, for selecting the actual server, for selecting possible responses from the API, et cetera.
+他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、いくつかの機能を見つけることができるか確認します。アプリの事前設定プロファイルを許可する機能、実サーバーを選択する機能、API からの可能なレスポンスを選択する機能など。
 
 #### 改善方法
 As a developer, it should not be a problem to incorporate debug statements in your debug version of the application as long as you realize that the statements made for debugging should never:
