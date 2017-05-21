@@ -155,17 +155,17 @@ Swift ではこれとは異なります。スキームに環境変数を設定�
 他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、いくつかの機能を見つけることができるか確認します。アプリの事前設定プロファイルを許可する機能、実サーバーを選択する機能、API からの可能なレスポンスを選択する機能など。
 
 #### 改善方法
-As a developer, it should not be a problem to incorporate debug statements in your debug version of the application as long as you realize that the statements made for debugging should never:
-- have impact on the actual computational results in such a way that the code should be present in the release version of the application;
-- end up in the release-configuration of the application.
+デバッグ用に作成した文が以下でないことが分かっている限りにおいては、開発者がデバッグバージョンのアプリケーションにデバッグ文を組み込むことは問題ではありません。
+- コードがリリースバージョンのアプリケーションに存在して実際の計算結果に影響を与える。
+- 最終的にアプリケーションのリリース構成にもある。
 
-In Objective-C, developers can use pre-processor macro's to filter out debug code:
+Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
 ```objc
 #ifdef DEBUG
     // Debug-only code
 #endif
 ```
-In Swift 2, using xCode 7, one has to set custom compiler flags for every target, where the compiler flag has to start with -D. So, when the debug flag -DMSTG-DEBUG is set, you can use the following annotations:
+Swift 2 では、Xcode 7 を使用して、すべてのターゲットにカスタムコンパイラフラグを設定する必要があります。コンパイラフラグは -D で始まる必要があります。したがって、デバッグフラグ -DMSTG-DEBUG を設定されている場合、以下のアノテーションが使用できます。
 
 ```swift
 #if MSTG-DEBUG
@@ -173,7 +173,7 @@ In Swift 2, using xCode 7, one has to set custom compiler flags for every target
 #endif
 ```
 
-In swift 3, using xCode 8, one can set Active Compilation Conditions setting in Build settings / Swift compiler - Custom flags. Swift3 does not use a pre-processor, but instead makes use of conditional compilation blocks based on the conditions defined:
+Swift 3 では、Xcode 8 を使用して、Build settings / Swift compiler - Custom flags の Active Compilation Conditions setting を設定できます。Swift3 はプリプロセッサを使用せず、代わりに定義された条件に基づく条件付きコンパイルブロックを使用します。
 
 ```swift3
 #if DEBUG_LOGGING
@@ -197,8 +197,8 @@ In swift 3, using xCode 8, one can set Active Compilation Conditions setting in 
 - [2] Swift conditional compilation blocks - [https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34]
 
 ##### ツール
-- XCode & simulator
-- A standard iPhone/iPad
+- XCode およびシミュレータ
+- 標準的な iPhone/iPad
 
 
 
