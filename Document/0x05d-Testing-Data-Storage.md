@@ -454,6 +454,13 @@ Input fields that are asking for sensitive information need to be identified and
 
 Start the app and click into the input fields that ask for sensitive data. When it is possible to get the menu to copy/paste data the functionality is not disabled for this input field.
 
+To extract the data stored in the clipboard, the Drozer module `post.capture.clipboard` can be used:
+
+```
+dz> run post.capture.clipboard
+[*] Clipboard value: ClipData.Item { T:Secretmessage }
+```
+
 #### 改善方法
 
 A general best practice is overwriting different functions in the input field to disable the clipboard specifically for it.
@@ -500,7 +507,8 @@ android:longClickable="false"
 ##### その他
 [1] Copy and Paste in Android - https://developer.android.com/guide/topics/text/copy-paste.html
 
-
+##### ツール
+* Drozer - https://labs.mwrinfosecurity.com/tools/drozer/
 
 ### 機密データがIPCメカニズムを介して漏洩しているかのテスト
 
