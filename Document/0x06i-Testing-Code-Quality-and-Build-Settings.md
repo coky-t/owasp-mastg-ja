@@ -130,21 +130,21 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 この情報はリバースエンジニアがアプリケーションで起こっていることを追跡するために簡単に使用できます。したがって、デバッグコードはリリースバージョンのアプリケーションから削除する必要があります。
 
 #### 静的解析
-For static analysis, you can take the following approach regarding the logging statements:
-1. Import the code of the application into Xcode.
-2. Do a search over the code on the following printing functions:`NSLog`, `println`, `print`, `dump`, `debugPrint`.
-3.  When one of them is found, please check whether the developers used a wrapping function around the logging function for better markup of the to be logged statements, start adding that function to your search.
-4. For every ocurence found in step 2 and 3, verify whether Macro's or debug-state related guards have been set to turn the logging off in the release build. Please note the change in how objective-C can make use of pre-processor macro's:
+静的解析では、ログ出力文に関して以下のアプローチをとることができます。
+1. Xcode にアプリケーションのコードをインポートする。
+2. 次の出力関数でコードを検索する:`NSLog`, `println`, `print`, `dump`, `debugPrint`.
+3. いずれか一つを見つけたら、ログ出力のマークアップとしてログ出力関数の周りにラップ関数を使用しているか確認し、その関数を検索に追加する。
+4. 手順2と3で見つけたすべてのものについて、マクロやデバッグ状態に関連するガードがログ出力なしに設定されているかどうかを確認する。Objective-C がプリプロセッサマクロをどのように使用して変更するかに注意する。
 ```objc
 #ifdef DEBUG
     // Debug-only code
 #endif
 ```
-Whereas in Swift this has changed: there you need to set either environment-variables in your scheme or as custom flags in the Build settings of a target to make this work. Please note that the following functions, which allow to check on whether the app is build in release-configuration in Swift 2.1, should be recommended against (As Xcode 8 & Swift3 do not support them): `_isDebugAssertConfiguration()`, `_isReleaseAssertConfiguration()`, `_isFastAssertConfiguration()`.
+Swift ではこれとは異なります。スキームに環境変数を設定するか、ターゲットのビルド設定にカスタムフラグを設定する必要があります。アプリが Swift 2.1 のリリース構成でビルドされているかどうかを確認できる次の関数が推奨されていることに注意します (Xcode 8 および Swift3 ではサポートされません): `_isDebugAssertConfiguration()`, `_isReleaseAssertConfiguration()`, `_isFastAssertConfiguration()`.
 
-Please note that there are more logging functions, depending on the setup of the application, for instance, when  CocoaLumberjack is used (https://github.com/CocoaLumberjack/CocoaLumberjack), then the static analysis is a bit different.
+アプリケーションの設定により、より多くのログ出力関数があることに注意します。例えば、CocoaLumberjack (https://github.com/CocoaLumberjack/CocoaLumberjack) が使用された場合などでは、静的解析は多少異なったものになります。
 
-On the "debug-management" code which is built in: inspect the storyboards to see if there are any flows and/or view-controllers that provide different functionality than the ones that should be supported by the application.
+組み込みの「デバッグ管理」コードにて、ストーリーボードを調査して、アプリケーションによりサポートされるものとは異なる機能を提供するフローやビューコントローラがあるかどうかを調べます。
 --TODO: reviewer: should we go in depth on different patterns one can find on this subject? --
 
 #### 動的解析
