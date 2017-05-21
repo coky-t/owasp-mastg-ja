@@ -319,7 +319,7 @@ metall0id.tools.setup.nmap
 mwrlabs.tools.setup.sqlite3
 ```
 
-For more information about a module, pass the `窶電` option to view the module's description:
+For more information about a module, pass the `–d` option to view the module's description:
 
 ```
 dz> module  search url -d
