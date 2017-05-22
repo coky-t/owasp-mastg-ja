@@ -49,6 +49,7 @@
 * AndBug - https://github.com/swdunlop/AndBug - AndBug は Android プラットフォーム Dalvik 仮想マシンを対象とするリバースエンジニアおよび開発者向けのデバッガです。
 * Cydia Substrate: Introspy-Android - https://github.com/iSECPartners/Introspy-Android - Android アプリケーションが実行時に何をしているかを理解し、潜在的なセキュリティ問題の特定を支援するブラックボックスツールです。
 * Drozer - https://www.mwrinfosecurity.com/products/drozer/ - Drozer はアプリの役割を想定し、Dalvik VM と他のアプリの IPC エンドポイントや基礎をなす OS とのやり取りを行うことで、アプリやデバイスのセキュリティ脆弱性を検索することができます。
+* VirtualHook - https://github.com/rk700/VirtualHook - VirtualHook は Android ART(>=5.0) のアプリケーション用のフッキングツールです。VirtualApp をベースにしており、フックを挿入するためにルート権限は必要ありません。
 
 #### ルート検出のバイパスおよび SSL ピンニング
 * Xposed Module: Just Trust Me - https://github.com/Fuzion24/JustTrustMe - SSL 証明書ピンニングをバイパスする Xposed モジュールです。
