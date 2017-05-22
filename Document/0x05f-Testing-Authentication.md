@@ -289,23 +289,23 @@ Android KeyGenerator と一緒に指紋 API を使用することで、アプリ
 
 #### 静的解析
 
-Search for calls of <code>FingerprintManager.authenticate()</code>. The first parameter passed to this method should be a <code>CryptoObject</code> instance. <code>CryptoObject</code> is a wrapper class for the crypto objects supported by FingerprintManager <sup>[2]</sup>. If this parameter is set to <code>null</code>, the fingerprint auth is purely event-bound, which likely causes a security issue.
+<code>FingerprintManager.authenticate()</code> のコールを検索します。このメソッドに渡される最初のパラメータは <code>CryptoObject</code> インスタンスが必要です。<code>CryptoObject</code> は FingerprintManager <sup>[2]</sup> によりサポートされている暗号オブジェクトのラッパークラスです。このパラメータに <code>null</code> を設定している場合、指紋認証は純粋にイベントバウンドであるため、セキュリティ上の問題が発生する可能性があります。
 
-Trace back the creation of the key used to initialize the cipher wrapped in the CryptoObject. Verify that the key was created using the <code>KeyGenerator</code> class, and that <code>setUserAuthenticationRequired(true)</code> was called when creating the <code>KeyGenParameterSpec</code> object (see also the code samples below).
+CryptoObject でラップされた暗号を初期化するために使用される鍵の生成を追跡します。鍵が <code>KeyGenerator</code> クラスを使用して作成され、<code>KeyGenParameterSpec</code> オブジェクトを作成するときに <code>setUserAuthenticationRequired(true)</code> をコールすることを確認します (以下のコードサンプルも参照ください) 。
 
-Verify the authentication logic. For the authentication to be successful, the remote endpoint **must** require the client to present the secret retrieved from the Keystore, or some value derived from the secret.
+認証ロジックを確認します。認証が成功するには、リモートエンドポイントはキーストアから取得した秘密や秘密から派生した値を提示することをクライアントに要求する **必要があります** 。
 
 #### 動的解析
 
-Patch the app or us runtime instrumentation to bypass fingerprint authentication on the client. For example, you could use Frida call the <code>onAuthenticationSucceeded</code> callback directly. Refer to the chapter "Tampering and Reverse Engineering on Android" for more information.
+アプリのパッチ適用やランタイム計装によりクライアントの指紋認証をバイパスします。例えば、Frida を使用して <code>onAuthenticationSucceeded</code> コールバックを直接コールします。詳細については「改竄とリバースエンジニアリング (Android)」の章を参照ください。
 
 #### 改善方法
 
-Fingerprint authentication should be implemented allong the following lines:
+指紋認証は以下の行のように実装する必要があります。
 
-Check whether fingerprint authentication is possible. The device must run Android 6.0 or higher (SDK 23+) and feature a fingerprint sensor. The user must have protected their logscreen and registered at least one fingerprint on the device. If any of those checks failed, the option for fingerprint authentication should not be offered.
+指紋認証が可能であるかどうかを確認します。デバイスは Android 6.0 またはそれ以降 (SDK 23+) で動作し、指紋センサーを搭載している必要があります。ユーザーはログスクリーンを保護し、デバイスに少なくともひとつの指紋を登録する必要があります。これらのチェックのいずれかが失敗した場合、指紋認証のオプションは提供すべきではありません。
 
-When setting up fingerprint authentication, create a new AES key using the <code>KeyGenerator</code> class. Add <code>setUserAuthenticationRequired(true)</code> in <code>KeyGenParameterSpec.Builder</code>. 
+指紋認証を設定する際には、<code>KeyGenerator</code> クラスを使用して新しい AES 鍵を作成します。<code>KeyGenParameterSpec.Builder</code> に <code>setUserAuthenticationRequired(true)</code> を追加します。
 
 ```java
 	generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE);
@@ -321,7 +321,7 @@ When setting up fingerprint authentication, create a new AES key using the <code
 	generator.generateKey();
 ```
 
-To perform encryption or decryption, create a <code>Cipher</code> object and initialize it with the AES key. 
+暗号化や復号化を実行するには、<code>Cipher</code> オブジェクトを作成し、それを AES 鍵で初期化します。
 
 ```java
 	SecretKey keyspec = (SecretKey)keyStore.getKey(KEY_ALIAS, null);
@@ -330,7 +330,7 @@ To perform encryption or decryption, create a <code>Cipher</code> object and ini
         cipher.init(mode, keyspec);
 ```
 
-Note that the key cannot be used right away - it has to be authenticated through <code>FingerprintManager</code> first. This involves wrapping <code>Cipher</code> into a <code>FingerprintManager.CryptoObject</code> which is passed to <code>FingerprintManager.authenticate()</code>.
+鍵はすぐには使用できないことに注意します。まず <code>FingerprintManager</code> を通じて認証する必要があります。これは <code>FingerprintManager.authenticate()</code> に渡される <code>FingerprintManager.CryptoObject</code> に <code>Cipher</code> をラップすることを含みます。
 
 ```java
 	cryptoObject = new FingerprintManager.CryptoObject(cipher);
@@ -338,7 +338,7 @@ Note that the key cannot be used right away - it has to be authenticated through
 	helper.startAuth(fingerprintManager, cryptoObject);
 ```
 
-If authentication succeeds, the callback method <code>onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)</code> is called, and the authenticated CryptoObject can be retrieved from the authentication result. 
+認証が成功すると、コールバックメソッド <code>onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)</code> がコールされ、認証された CryptoObject を認証結果から取得できます。
 
 ```java
 public void authenticationSucceeded(FingerprintManager.AuthenticationResult result) {
@@ -348,7 +348,7 @@ public void authenticationSucceeded(FingerprintManager.AuthenticationResult resu
 }
 ```
 
-For a full example, see the blog article by Deivi Taka <sup>[4]</sup>.
+完全な例については、Deivi Taka <sup>[4]</sup> のブログ記事を参照ください。
 
 #### 参考情報
 
