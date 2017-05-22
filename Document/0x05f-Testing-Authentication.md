@@ -210,12 +210,12 @@
 -- TODO [Add relevant CWE for "Testing the Password Policy"] --
 - CWE-312 - Cleartext Storage of Sensitive Information
 
-##### Info
+##### その他
 
 - [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
 - [2] Another Informational Article - http://www.securityfans.com/informational_article.html
 
-##### Tools
+##### ツール
 
 -- TODO [Add relevant tools for "Testing the Password Policy"] --
 * Enjarify - https://github.com/google/enjarify
@@ -281,11 +281,11 @@
 
 #### 概要
 
-Android 6.0 introduced public APIs for authenticating users via fingerprint. Access to the fingerprint hardware is provided through the  <code>FingerprintManager</code> class <sup>[1]</sup>. An app can request fingerprint authentication instantiating a <code>FingerprintManager</code> object and calling its <code>authenticate()</code> method. The caller registers callback methods to handle possible outcomes of the authentication process (success, failure or error).
+Android 6.0 では指紋でユーザーを認証するパブリック API が導入されました。指紋ハードウェアへのアクセスは <code>FingerprintManager</code> クラス <sup>[1]</sup> を通じて提供されます。アプリは <code>FingerprintManager</code> オブジェクトをインスタンス化し、<code>authenticate()</code> メソッドをコールすることで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能性がある結果 (成功、失敗、エラー) を処理します。
 
-By using the fingerprint API in conjunction with the Android KeyGenerator class, apps can create a cryptographic key that must be "unlocked" with the user's fingerprint. This can be used to implement more convenient forms of user login. For example, to allow users access to a remote service, a symmetric key can be created and used to encrypt the user PIN or authentication token. By calling <code>setUserAuthenticationRequired(true)</code> when creating the key, it is ensured that the user must re-authenticate using their fingerprint to retrieve it. The encrypted authentication data itself can then be saved using regular storage (e.g. SharedPreferences).
+Android KeyGenerator と一緒に指紋 API を使用することで、アプリはユーザーの指紋で「ロックされていない」暗号鍵を作成できます。これはより便利な形でユーザーログインを実装するために使用できます。例えば、ユーザーがリモートサービスにアクセスできるようにするために、対称鍵を作成し、ユーザー PIN や認証トークンを暗号化することができます。鍵を作成する際に <code>setUserAuthenticationRequired(true)</code> をコールすることで、ユーザーが鍵を取得するために指紋を使用して再認証することを保証します。暗号化された認証データ自体は通常のストレージ (SharedPreferences など) を使用して保存できます。
 
-Apart from this relatively reasonable method, fingerprint authentication can also be implemented in unsafe ways. For instance, developers might opt to assume successful authentication based solely on whether the <code>onAuthenticationSucceeded</code> callback <sup>3</sup> is called. This event however isn't proof that the user has performed biometric authentication - such a check can be easily patched or bypassed using instrumentation. Leveraging the Keystore is the only way to be reasonably sure that the user has actually entered their fingerprint (unless of course, the Keystore is compromised).
+この比較的合理的な方法のほかに、安全でない方法で指紋認証を実装することもできます。例えば、開発者は <code>onAuthenticationSucceeded</code> コールバック <sup>3</sup> がコールされたかどうかだけに基づいて認証成功とすることを選択できます。しかし、このイベントはユーザーが生体認証を行ったことを証明するものではありません。このようなチェックは計装を使用して簡単にパッチ適用やバイパスが可能です。キーストアを利用することはユーザーが実際に指紋を入力したことを合理的に確認する唯一の方法です (もちろん、キーストアが侵害されている場合を除きます) 。
 
 #### 静的解析
 
