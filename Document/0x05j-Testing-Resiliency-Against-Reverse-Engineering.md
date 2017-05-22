@@ -1067,7 +1067,15 @@ N/A
 
 #### 概要
 
--- TODO [Provide a general description of the issue "Testing Memory Integrity Checks".] --
+Controls in this category verify the integrity of the app's own memory space. The goal is to protect against modifications applied both to the app's files, as well against as memory patches applied during runtime. This includes unwanted changes to binary code or bytecode, functions pointer tables, and important data structures. 
+
+In principle, this is done by comparing the contents of memory, or a checksum over the contents, with known "good" values. There are many ways of implementing such checks.
+
+**Detecting GOT hooks**
+
+In the world of ELF binaries, the Global Offset Table (GOT) is used as a layer of indirection for calling library functions. During runtime, the dynamic linker patches this table with the absolute addresses of global symbols. The Android linker resolves all external function and writes the respective GOT entries immediately when a library is loaded (immediate binding). In contrast, GNU <code>ld</code> resolves symbol addresses only once they are needed for the first time (lazy binding).
+
+-- TODO --
 
 #### 静的解析
 
