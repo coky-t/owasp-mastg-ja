@@ -16,7 +16,7 @@ iOS セキュリティアーキテクチャの主な機能：
 - 暗号化とデータ保護
 - 一般的な緩和策
 
-iOS セキュリティアーキテクチャに関する非常に詳細な分析は [Johnatan Levin in MacOS and iOS Internals Vol. 3](http://www.newosxbook.com/2ndUpdate.html) により行われました [4]
+iOS セキュリティアーキテクチャに関する非常に詳細な分析は Johnatan Levin in MacOS and iOS Internals Vol. 3 - http://www.newosxbook.com/2ndUpdate.html <sup>[4]</sup> を参照ください。
 
 #### セキュアブート
 
@@ -30,7 +30,7 @@ Secure Enclave コプロセッサを搭載したすべての新しいデバイ�
 サンドボックスは iOS 向けに提供されたアクセス制御技術であり、カーネルレベルで実施されています。これはアプリが侵害されたときに発生する可能性のあるシステムやユーザーデータへの影響や損害を制限することを目的としています。
 
 iOS サンドボックスはカーネル拡張 'Seatbelt' により実装されている TrustedBSD MAC フレームワークから派生しました。
-[iPhone Dev Wiki](http://iphonedevwiki.net/index.php/Seatbelt) ではサンドボックスに関する(少し古くなった)情報を提供しています。
+iPhone Dev Wiki (http://iphonedevwiki.net/index.php/Seatbelt) ではサンドボックスに関する(少し古くなった)情報を提供しています。
 原則として、すべてのユーザーアプリケーションは同じユーザー `mobile` の下で実行されますが、ほんの一部のシステムアプリケーションやサービルは `root` として実行されます。ファイル、ネットワークソケット、IPC、共有メモリなどのすべてのリソースへのアクセスはサンドボックスによってコントロールされます。
 
 #### コード署名
@@ -43,7 +43,7 @@ App Store を使用せずにアプリケーションをインストールでき�
 2. サイトローディングを経由する。つまり、開発者の証明書でアプリに署名して開発者のデバイスにインストールします。同じ証明書で使用できるデバイス数には上限があります。
 
 開発者プロファイルと Apple 署名付き証明書はアプリケーションを配布および実行するために必要です。
-開発者は、開発や配布に必要なもの一式を得るには、Apple に登録して Apple Developer Program に参加し、サブスクリプション料金 [https://developer.apple.com/support/compare-memberships/] を支払う必要があります。無料アカウントではサイドロードを介してアプリケーションをコンパイルおよび配布できます。
+開発者は、開発や配布に必要なもの一式を得るには、Apple に登録して Apple Developer Program に参加し、サブスクリプション料金 (https://developer.apple.com/support/compare-memberships/) を支払う必要があります。無料アカウントではサイドロードを介してアプリケーションをコンパイルおよび配布できます。
 
 #### 暗号化とデータ保護
 
@@ -98,7 +98,7 @@ ZIP 圧縮された IPA コンテナにあるさまざまなファイルを見�
 
 ![iOS App Folder Structure](http://bb-conservation.de/sven/iOS_project_folder.png)
 
-脱獄済みデバイスでは、IPA インストーラを使用して、インストールされた iOS アプリの IPA を復元できます([テストプロセスと技法](Document/0x05b-Testing-Process-and-Techniques-iOS.md)も参照ください)。注意。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがあります。あなたに実際のファイルを送ったり、[HockeyApp] や [Testflight] などの開発用配布プラットフォームへのアクセスを提供することがあります。
+脱獄済みデバイスでは、IPA インストーラを使用して、インストールされた iOS アプリの IPA を復元できます([テストプロセスと技法](Document/0x05b-Testing-Process-and-Techniques-iOS.md)も参照ください)。注意。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがあります。あなたに実際のファイルを送ったり、HockeyApp <sup>[12]</sup> や Testflight <sup>[13]</sup> などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
 #### iOS ファイルシステム上のアプリ構造
 
@@ -117,11 +117,11 @@ iOS 8 以降、アプリケーションがデバイスに格納される方法�
 
 IPA パッケージをデバイスにインストールするにはさまざまな方法があります。最も簡単な方法は Apple のデフォルトのメディアプレーヤーである iTunes を使用することです。iTunes パッケージは OS X および Windows 用が存在します。iTunes を使用すると App Store からアプリをダウンロードしてから iOS デバイスと同期させることができます。App Store は Apple の公式のアプリケーション配布プラットフォームです。また、iTunes を使用してデバイスに ipa をロードすることもできます。Apps セクションに「ドラッグ」して追加すると、デバイスに追加することができます。
 
-Linux では libimobiledevice、クロスプラットフォームのソフトウェアプロトコルライブラリ、iOS デバイスとネイティブに通信するためのツールセットを使用できます。ideviceinstaller を使用すると USB 接続経由でパッケージをインストールできます。接続は USB 多重化デーモン [usbmuxd] を使用して実装され、USB 経由での TCP トンネルを提供します。通常の操作では、iTunes はこの usbmux を使用して iPhone と通信し、ひとつの USB パイプで複数の「接続」を多重化します。ホストマシン上のプロセスはモバイルデバイス上の特定の番号つきポートへの接続をオープンします。[usbmux]
+Linux では libimobiledevice、クロスプラットフォームのソフトウェアプロトコルライブラリ、iOS デバイスとネイティブに通信するためのツールセットを使用できます。ideviceinstaller を使用すると USB 接続経由でパッケージをインストールできます。接続は USB 多重化デーモン usbmuxd <sup>[8]</sup> を使用して実装され、USB 経由での TCP トンネルを提供します。通常の操作では、iTunes はこの usbmux を使用して iPhone と通信し、ひとつの USB パイプで複数の「接続」を多重化します。ホストマシン上のプロセスはモバイルデバイス上の特定の番号つきポートへの接続をオープンします。<sup>[9]</sup>
 
-iOS デバイスでは、実際のインストールプロセスが installd デーモンによって処理され、アンパックおよびインストールされます。アプリがアプリサービスを統合する(デバイスにインストールされる、もしくは App Store に提出する)前に、Apple が発行した証明書で署名する必要があります。つまりコード署名が有効な場合にのみインストールできます。脱獄済みの電話では Cydia ストアで利用可能なパッケージ [AppSync] を使用して回避することができます。この代替アプリストアには脱獄によって提供されたルート権限を活用する多くの有用なアプリケーションが含まれており、高度な機能を実行します。AppSync は偽の署名付き IPA パッケージのインストールを可能にするために installd にパッチをあてたものです。
+iOS デバイスでは、実際のインストールプロセスが installd デーモンによって処理され、アンパックおよびインストールされます。アプリがアプリサービスを統合する(デバイスにインストールされる、もしくは App Store に提出する)前に、Apple が発行した証明書で署名する必要があります。つまりコード署名が有効な場合にのみインストールできます。脱獄済みの電話では Cydia ストアで利用可能なパッケージ AppSync <sup>[10]</sup> を使用して回避することができます。この代替アプリストアには脱獄によって提供されたルート権限を活用する多くの有用なアプリケーションが含まれており、高度な機能を実行します。AppSync は偽の署名付き IPA パッケージのインストールを可能にするために installd にパッチをあてたものです。
 
-IPA は [ipainstaller] を使用してコマンドラインから直接インストールすることもできます。scp (secure copy) を使うなどして、IPA をデバイスにコピーした後、ipainstaller を IPA のファイル名と共に実行することができます。
+IPA は ipainstaller <sup>[11]</sup> を使用してコマンドラインから直接インストールすることもできます。scp (secure copy) を使うなどして、IPA をデバイスにコピーした後、ipainstaller を IPA のファイル名と共に実行することができます。
 
 ```bash
 $ ipainstaller App_in_scope.ipa
@@ -129,7 +129,7 @@ $ ipainstaller App_in_scope.ipa
 
 #### コード署名と暗号化
 
-Apple は複雑な DRM システムを実装しており、有効で承認されたコードだけが Apple デバイス上で動作するようにしています。つまり、脱獄されていないデバイスでは、Apple が明示的に許可しない限りコードを実行することはできません。Apple 開発者プログラムに登録してプロビジョニングプロファイルと署名証明書を取得しない限り、自分のデバイスでコードを実行することもできません。このような理由から、iOS は crystal prison [1] に例えられます。
+Apple は複雑な DRM システムを実装しており、有効で承認されたコードだけが Apple デバイス上で動作するようにしています。つまり、脱獄されていないデバイスでは、Apple が明示的に許可しない限りコードを実行することはできません。Apple 開発者プログラムに登録してプロビジョニングプロファイルと署名証明書を取得しない限り、自分のデバイスでコードを実行することもできません。このような理由から、iOS は crystal prison <sup>[1]</sup> に例えられます。
 
 -- TODO [Develop section on iOS Code Signing and Encryption] --
 
@@ -137,7 +137,7 @@ Apple は複雑な DRM システムを実装しており、有効で承認され
 
 #### アプリサンドボックス
 
-"crystal prison" のテーマに則して、サンドボックスは iOS の最初のリリース以来の中心的なセキュリティ機能です。iOS の通常アプリはアプリ独自のファイルへのアクセスやシステム API のアクセスを制限する「コンテナ」に限定されています。制限事項は [3] を参照ください。
+"crystal prison" のテーマに則して、サンドボックスは iOS の最初のリリース以来の中心的なセキュリティ機能です。iOS の通常アプリはアプリ独自のファイルへのアクセスやシステム API のアクセスを制限する「コンテナ」に限定されています。制限事項は <sup>[3]</sup> を参照ください。
 
 - アプリプロセスは chroot 風の仕組みを使用して、自身のディレクトリ(/var/mobile/Containers/Bundle/Application/ 以下)に制限されています。
 - mmap と mmprotect() システムコールはアプリが書き込み可能なメモリページを実行可能にしないように変更され、プロセスが動的に生成したコードを実行することを防ぎます。コード署名や FairPlay と組み合わせることで、特定の状況下で実行されるコードが厳しく制限されています(例えば、App Store 経由で配布されるアプリ内のすべてのコードは Apple によって承認されています)。
@@ -150,12 +150,12 @@ Apple は複雑な DRM システムを実装しており、有効で承認され
 - [2] Decrypting iOS binaries - https://mandalorian.com/2013/05/03/decrypting-ios-binaries/
 - [3] Jonathan Levin, Mac OS X and iOS Internals, Wiley, 2013
 - [4] Johnatan Levin, MacOS and iOS Internals, Volume III: Security & Insecurity
-+ [iOS Technology Overview](https://developer.apple.com/library/content/documentation/Miscellaneous/Conceptual/iPhoneOSTechOverview/Introduction/Introduction.html#//apple_ref/doc/uid/TP40007898-CH1-SW1)
-+ [iOS Security Guide](https://www.apple.com/business/docs/iOS_Security_Guide.pdf)
-+ [How iOS Security Really Works](https://developer.apple.com/videos/play/wwdc2016/705/)
-- [usbmuxd](http://www.libimobiledevice.org/)
-- [usbmux](http://wikee.iphwn.org/usb:usbmux)
-- [AppSync](https://cydia.angelxwind.net/?page/net.angelxwind.appsyncunified)
-- [ipainstaller](https://github.com/autopear/ipainstaller)
-- [Hockey Flight](https://hockeyapp.net/)
-- [Testflight](https://developer.apple.com/testflight/)
+- [5] iOS Technology Overview - https://developer.apple.com/library/content/documentation/Miscellaneous/Conceptual/iPhoneOSTechOverview/Introduction/Introduction.html#//apple_ref/doc/uid/TP40007898-CH1-SW1
+- [6] iOS Security Guide - https://www.apple.com/business/docs/iOS_Security_Guide.pdf
+- [7] How iOS Security Really Works - https://developer.apple.com/videos/play/wwdc2016/705/
+- [8] libimobiledevice - http://www.libimobiledevice.org/
+- [9] USB Layered Communications - http://wikee.iphwn.org/usb:usbmux
+- [10] AppSync - https://cydia.angelxwind.net/?page/net.angelxwind.appsyncunified
+- [11] ipainstaller - https://github.com/autopear/ipainstaller
+- [12] Hockey Flight - https://hockeyapp.net/
+- [13] Testflight - https://developer.apple.com/testflight/
