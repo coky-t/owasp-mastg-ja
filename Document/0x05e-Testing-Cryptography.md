@@ -1,6 +1,6 @@
-## 暗号化のテスト
+## 暗号化のテスト (Android アプリ)
 
-### 鍵管理の検証
+### ハードコードされた暗号鍵のテスト
 
 #### 概要
 
@@ -72,7 +72,6 @@ buildTypes {
 
 * 共有プリファレンス、/data/data/package_name/shared_prefs が一般的
 
-
 #### 改善方法
 
 繰り返し使用するために鍵を格納する必要がある場合は、暗号鍵の長期保存や取り出しの仕組みを提供する KeyStore <sup>[2]</sup> などの機構を使用します。
@@ -100,44 +99,6 @@ buildTypes {
 ##### ツール
 * [QARK](https://github.com/linkedin/qark)
 * [Mobile Security Framework](https://github.com/ajinabraham/Mobile-Security-Framework-MobSF)
-
-
-### 暗号のカスタム実装に関するテスト
-
-#### 概要
-
-暗号機能に非標準のカスタムビルドアルゴリズムを使用することは危険です。特定の攻撃者がアルゴリズムを破り、保護されているデータを侵害する可能性があります。暗号化機能の実装には時間がかかり、困難であり、失敗する可能性があります。代わりに既にセキュアであることが証明されている既知のアルゴリズムを使用すべきです。すべての成熟したフレームワークやライブラリはモバイルアプリを実装する際にも使用すべき暗号化機能を提供します。
-
-#### 静的解析
-
-ソースコードに含まれるすべての暗号手法、特に機密データに直接適用されている手法を注意深く調べます。一見標準のようにみえるが改変されたアルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。排他的 OR オペレーションなどのビットシフトオペレータが現れたら深く掘り下げてみる良い兆候かもしれません。
-
-#### 動的解析
-
-非常に弱い暗号の場合はカスタムアルゴリズムのファジングが機能するかもしれませんが、カスタム暗号化方式が本当に適切かどうか確認するために、APK を逆コンパイルしてアルゴリズムを調べることをお勧めします(「静的解析」を参照ください)。
-
-#### 改善方法
-
-カスタム暗号アルゴリズムを開発してはいけません。これは暗号技術者によりよく知られている攻撃を受ける可能性が高いためです。
-
-機密データを格納する必要がある場合は強力な最新の暗号アルゴリズムを使用します。この分野の専門家により現時点で強力であると見なされている十分に検証されたアルゴリズムを選択し、十分にテストされた実装を使用します。KeyStore は機密情報を格納するのに適しており、Android のドキュメントには提供される強力な暗号のリストがあります <sup>[1]</sup>。
-
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-* M6 - Broken Cryptography
-
-##### OWASP MASVS
-- V3.2: "アプリは実績のある暗号プリミティブの実装を使用している。"
-
-##### CWE
-* CWE-327: Use of a Broken or Risky Cryptographic Algorithm
-
-##### その他
-[1] Supported Ciphers in KeyStore - https://developer.android.com/training/articles/keystore.html#SupportedCiphers
-
-
 
 ### 暗号化標準アルゴリズムの構成の検証
 
@@ -191,69 +152,6 @@ NIST <sup>1</sup> や BSI <sup>2</sup> 推奨のような現在強力である�
 
 -- TODO [Add relevant tools for "Verifying the Configuration of Cryptographic Standard Algorithms"] --
 * Enjarify - https://github.com/google/enjarify
-
-
-
-### 安全でないもしくは廃止された暗号化アルゴリズムに関するテスト
-
-#### 概要
-
-多くの暗号アルゴリズムおよびプロトコルは重大な弱点があることが示されているか、現代のセキュリティ要件には不十分であるため、使用してはいけません。
-
-#### 静的解析
-
-アプリケーション全体で暗号アルゴリズムのインスタンスを特定するためにソースコードを調査します。
-* DES
-* RC2
-* RC4
-* BLOWFISH
-* CRC32
-* MD4
-* MD5
-* SHA1 and others.
-
-推奨されるアルゴリズムの基本的なリストについては「改善方法」セクションを参照ください。
-
-脆弱とみなされる DES アルゴリズムの初期化の例：
-```Java
-Cipher cipher = Cipher.getInstance("DES");
-```
-
-#### 動的解析
-
--- TODO [Give examples of Dynamic Testing for "Testing for Insecure and/or Deprecated Cryptographic Algorithms"] --
-
-#### 改善方法
-
-暗号化手法が廃止されていないことを定期的に確認します。以前、10億年の計算時間を要すると考えられていた一部の古いアルゴリズムは数日もしくは数時間で破られる可能性があります。これには MD4, MD5, SHA1, DES, および以前は強力であると考えられて他のアルゴリズムが含まれます。現在推奨されているアルゴリズムの例です。<sup>[1][2]</sup>
-
-* 機密性: AES-256
-* 完全性: SHA-256, SHA-384, SHA-512
-* デジタル署名: RSA (3072 ビット以上), ECDSA with NIST P-384
-* 鍵確立: RSA (3072 ビット以上), DH (3072 ビット以上), ECDH with NIST P-384
-
-#### 参考情報
-
-##### OWASP Mobile Top 10
-* M6 - Broken Cryptography
-
-##### OWASP MASVS
-- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
-- V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
-
-##### CWE
-* CWE-326: Inadequate Encryption Strength
-* CWE-327: Use of a Broken or Risky Cryptographic Algorithm
-
-##### その他
-[1] Commercial National Security Algorithm Suite and Quantum Computing FAQ - https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf
-[2] NIST Special Publication 800-57 - http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf
-[3] Security "Crypto" provider deprecated in Android N -  https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html
-
-##### ツール
-* QARK - https://github.com/linkedin/qark
-* Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
-
 
 ### 乱数生成器のテスト
 
