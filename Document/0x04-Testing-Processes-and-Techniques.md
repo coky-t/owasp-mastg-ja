@@ -17,34 +17,34 @@ The following section is a brief introduction to the 3 different types of mobile
 
 #### Mobile App
 
-In the past, people uses Personal Computers (PCs) to perform daily tasks at work and at leisure, such as creating a PowerPoint presentation slide or writing a report. Then, when computation power increases and web technologies become more popular, some of these capabilities that used to be only able to perform on PCs, they can be performed on the Web Browser. Today, a smart phone in one's pocket has more processor and RAM than a full-fledge PC back in those days! These mobile devices are capable to perform daily tasks and they has special processor designed for high performance and capabilities to support multitasking and high productivity daily tasks. As such, it has formed its own ecosystem where there are high demand for various types of mobile apps, be it designed for enhancing one's productivity, lifestyle or social connectivity. 
+In the past, people uses Personal Computers (PCs) to perform daily tasks at work and at leisure, such as creating a PowerPoint presentation slide or writing a report. Then, when computation power increases and web technologies become more popular, some of these capabilities that used to be only able to perform on PCs, they can be performed on the Web Browser. Today, a smart phone in one's pocket has more processor and RAM than a full-fledge PC back in those days! These mobile devices are capable to perform daily tasks and they has special processor designed for high performance and capabilities to support multitasking and high productivity daily tasks. As such, it has formed its own ecosystem where there are high demand for various types of mobile apps, be it designed for enhancing one's productivity, lifestyle or social connectivity.
 
 In short, mobile applications (hereby referred to as simply 'Mobile App'), are essentially self-contained programs that were designed to enhance the existing functionality of a smart phone. On Android, there is Play Store and on iOS, there is App Store -- they both have their own ecosystem which fulfills their own users' demand and supply. It plays a huge part in people's everyday life and allows them to be highly connected with the world and their friends. According to a survey conducted by BGR Media in late 2016, the mobile internet usage has surpassed desktop usage for the first time in history, and this can never happen without the countless Mobile Apps that make a mobile platform ecosystem attractive and full of enhanced functionalities <sup>[10]</sup>.
 
-#### Native App 
+#### Native App
 
-Native App are basically mobile apps that were developed for use on a particular specific platform. A native mobile app is a smart phone application that is being coded in a particular programming language, for instance, Objective C or Swift for iOS and Java for Android operating systems. There are also other candidates of native mobile app, such as C# and XAML or JavaScript for Universal Windows Platform app (UWP) <sup>[11]</sup>. 
+Native App are basically mobile apps that were developed for use on a particular specific platform. A native mobile app is a smart phone application that is being coded in a particular programming language, for instance, Objective C or Swift for iOS and Java for Android operating systems. There are also other candidates of native mobile app, such as C# and XAML or JavaScript for Universal Windows Platform app (UWP) <sup>[11]</sup>.
 
 However, the MSTG will focus on Android and iOS platforms at the moment as based on a survey conducted in November 2016, these two mobile operating system takes up 86.8% and 12.5% of market share worldwide, respectively, which takes up over 99% of the entire market share of the mobile operating systems <sup>[12]</sup>.  
 
-Native mobile apps provide fast performance and a high degree of reliability. They have better look and feel as well because most of time, they uses native buttons and user interface which are familiar to the user and looks good on the respective platform. In addition, they usually adhere to the design principles (e.g. Android Design Principles <sup>[13]</sup>), which are usually entirely neglected by the developers who design Hybrid Apps and Web Apps. 
+Native mobile apps provide fast performance and a high degree of reliability. They have better look and feel as well because most of time, they uses native buttons and user interface which are familiar to the user and looks good on the respective platform. In addition, they usually adhere to the design principles (e.g. Android Design Principles <sup>[13]</sup>), which are usually entirely neglected by the developers who design Hybrid Apps and Web Apps.
 
-Another feature of an Native mobile apps is their ability of having access to the components of a smart phone, such as its accelerometer, GPS, and camera. Moreover, users are able to use certain apps without having Internet connectivity. However, a Native App is expensive to develop because it require a developer with specific skillset and the resulted app can only run on one platform, forcing the company that creates the app to make duplicated versions of the same app that work on other platforms. More often than not, Android mobile app developers are not proficient in developing iOS apps and vice versa for iOS mobile app developers. 
+Another feature of an Native mobile apps is their ability of having access to the components of a smart phone, such as its accelerometer, GPS, and camera. Moreover, users are able to use certain apps without having Internet connectivity. However, a Native App is expensive to develop because it require a developer with specific skillset and the resulted app can only run on one platform, forcing the company that creates the app to make duplicated versions of the same app that work on other platforms. More often than not, Android mobile app developers are not proficient in developing iOS apps and vice versa for iOS mobile app developers.
 
-Usually, when discussing about Mobile App, the assumption is always that it is a Native App. It is also worth noting that a Native App can only be "Native" to one type of mobile operating system: iOS, Android, UWP, etc. For companies that want to publish their Native Apps to multiple mobile operating system will need to develop and maintain a separate piece of software, with entirely different design and implementation, which could easily become complicated to manage, tedious to implement and expensive to maintain. This conveniently brings us to the next two types of Mobile Apps. 
+Usually, when discussing about Mobile App, the assumption is always that it is a Native App. It is also worth noting that a Native App can only be "Native" to one type of mobile operating system: iOS, Android, UWP, etc. For companies that want to publish their Native Apps to multiple mobile operating system will need to develop and maintain a separate piece of software, with entirely different design and implementation, which could easily become complicated to manage, tedious to implement and expensive to maintain. This conveniently brings us to the next two types of Mobile Apps.
 
 #### Hybrid App
 
 Hybrid Apps are similar to Native Apps, runs on a smart phone or tablet devices, and are written with web technologies, which consists of HTML5, CSS and JavaScript. Hybrid Apps run within a native container, and leverages on the device's browser engine (but not the browser, only the browser engine) to render the HTML content and process the JavaScript locally. A web-to-native abstraction layer enables access to device capabilities that are not accessible in Mobile Web applications, such as the accelerometer, camera and local storage.
 
-Companies usually build hybrid apps as wrappers for an existing web page, as an attempt to gain presence within the app store of the respective mobile operating systems, without spending significant effort for developing a different app. Hybrid apps are also popular because they allow cross platform development and thus significantly reduce development costs. The way it is able to support cross platform development is through the usage of the same HTML code components which is then being reused on different mobile operating systems. 
+Companies usually build hybrid apps as wrappers for an existing web page, as an attempt to gain presence within the app store of the respective mobile operating systems, without spending significant effort for developing a different app. Hybrid apps are also popular because they allow cross platform development and thus significantly reduce development costs. The way it is able to support cross platform development is through the usage of the same HTML code components which is then being reused on different mobile operating systems.
 
 For example, the HTML, CSS and JavaScript code that is rendered by the browser engine on an Android mobile device could also be rendered in the same way on an iOS mobile device. They will look the same but they may not look native. It is not difficult to visually differentiate between the User Interface (UI) of a Native App and a Hybrid App.   
 
 The following is a non-exhaustive list of the more popular frameworks for developing Hybrid Apps:
 
 * Apache Cordova - https://cordova.apache.org/
-* Framework 7 - http://framework7.io/ 
+* Framework 7 - http://framework7.io/
 * Ionic - https://ionicframework.com/
 * jQuery Mobile - https://jquerymobile.com/
 * Native Script - https://www.nativescript.org/
@@ -54,11 +54,11 @@ The following is a non-exhaustive list of the more popular frameworks for develo
 
 #### Web App
 
-Web App, more commonly known as the Mobile Web App, are simply websites that were designed to look and feel like a native mobile app, but not implemented as such. Web App are run on a browser (unlike Hybrid App which run on browser engine, Web App run on browser) and are usually developed in HTML5. 
+Web App, more commonly known as the Mobile Web App, are simply websites that were designed to look and feel like a native mobile app, but not implemented as such. Web App are run on a browser (unlike Hybrid App which run on browser engine, Web App run on browser) and are usually developed in HTML5.
 
-Firstly, users will access the Web App on browser via a specific URL, where the look and feel is almost, quite identical to a native mobile app. To perform the installation of the app, a simple bookmark shortcut will be created on the Home screen of the device. 
+Firstly, users will access the Web App on browser via a specific URL, where the look and feel is almost, quite identical to a native mobile app. To perform the installation of the app, a simple bookmark shortcut will be created on the Home screen of the device.
 
-Web App was very popular when HTML5 was first released and people noticed its capability to achieve a look and feel which is very similar to a native app. Today, as the usage of native apps has increased significantly, it become obvious in differentiating between a Web App and a Native App, even for non-tech savvy personnel. 
+Web App was very popular when HTML5 was first released and people noticed its capability to achieve a look and feel which is very similar to a native app. Today, as the usage of native apps has increased significantly, it become obvious in differentiating between a Web App and a Native App, even for non-tech savvy personnel.
 
 ### テストプロセス
 
@@ -237,6 +237,156 @@ If no data classification policy is available, the following should be considere
 
 Defining sensitive information before the test is important for almost all data storage test cases in Android and iOS, as otherwise the tester has no clear basis on what he might need to look for.
 
+
+
+## ソフトウェア開発ライフサイクル内でのセキュリティテスト
+
+ソフトウェア開発の歴史はそれほど古いわけではなく、チームがフレームワークなしでプログラムを開発するのをやめたことは容易に分かります。コードの行数が増えるにつれて、仕事をコントロール下におき、期限、品質、予算を満たすために最低限のルールが必要であるという事実を経験しています。
+
+過去に最も広く採用された方法論は「ウォータフォール」系のものでした。開発は出発点から最終点に向かい、いくつかのステップを経て、あらかじめ定義された順序でそれぞれが行われました。特定のフェーズで何か間違いがあり、前のフェーズで何かを変更しなければならない場合、1つだけ後ろに戻ることができました。これはウォータフォールの方法論の重大な欠点でした。強力な利点 (構造を作り、労力をかける場所を明確にし、理解しやすくするなど) がありますが、欠点 (閉じられた部門で、遅く、専門チームでの開発など) もあります。
+
+時が流れ、ソフトウェア開発は成熟し、競争も激化しており、市場の変化に迅速に対応して少ない予算でソフトウェア製品を生み出す必要が生じました。マーケットから生産まで組織全体の部門を解放し、小規模のチームが協力することでより少ない体制とするという考え方が人気を博しています。「アジャイル」のコンセプトが作成され(アジャイルの実装例としてスクラム、XP、RADがよく知られています)、より自律的なチームがより迅速に連携できるようになりました。
+
+もともと、セキュリティはソフトウェア開発の一部ではありませんでした。それは追加として考えられ、ネットワークレベルの運用チームによって実行されました。これらのチームはソフトウェアプログラムのセキュリティが脆弱であることを補う方法を見つける必要がありました。しかし、これはソフトウェアプログラムが境界内に配置されている場合に可能でしたが、ウェブやモバイルテクノロジで生まれたソフトウェアを使用する新しい方法として、このコンセプトは時代遅れになりました。今日、多くの場合この新しいパラダイムで既存の脆弱性を補うことは非常に困難であるため、セキュリティはソフトウェア **内** で焼き尽くす必要があります。
+
+ソフトウェア開発時にセキュリティを組み込む方法はセキュア SDLC (ソフトウェア開発ライフサイクル) を導入することです。セキュア SDLC はどの方法論や言語にも依存せず、ウォータフォールやアジャイルに組み込むことができます。使用しないという言い訳にはできません。
+この章では特に DevOps の世界についてアジャイルとセキュア SDLC に焦点を当てます。自律性と自動化を促進し、速いペースと協調的な方法でセキュアなソフトウェアを開発および提供する最先端の方法について以下で詳細を説明します。
+
+### アジャイルと DevOps
+
+#### DevOps
+
+DevOps はソフトウェアの提供に関係するすべてのステークホルダ間の密接なコラボレーションに焦点を当てたプラクティスを指します。DevOps はソフトウェアを可能な限り迅速にユーザーにリリースできるという点で Agile の論理的進化です。コラボレーションの側面に加えて、ソフトウェアやインフラストラクチャの変更のビルド、テスト、リリースプロセスの大幅な自動化が促進されます。この自動化はデプロイメントパイプラインに組み込まれています。
+
+##### -- Todo [Add deployment pipeline overview and description specific for mobile apps.] --
+
+DevOps という言葉は開発チームと運用チームの間のコラボレーションのみを表現すると誤解されるかもしれませんが、DevOps の実践的先駆者である Gene Kim 氏は次のように述べています。「一見したところ、開発と運用の間に問題があるように見える。」「しかしテストがそこにあり、情報セキュリティの目的とシステムやデータを保護する必要がある。」これは管理者のトップレベルの関心事であり、DevOps 像の一部となっています。
+
+言い換えると、今日あなたが「DevOps」という言葉を聞いたとき、DevOpsQATestInfoSec を考えているはずです。 (情報源: https://techbeacon.com/evolution-devops-new-thinking-gene-kim)
+
+セキュリティはビジネスの成功にとってアプリケーションの全体的な品質、パフォーマンス、ユーザビリティと同じくらい重要です。開発サイクルが短縮されデプロイメントの頻度が増加するとしても、品質やセキュリティが当初から構築されていることを保証することは基本的なことです。
+
+人間の視点から見ると、これはビジネス成果を達成するために協力する部門横断型チームを作ることによって達成されます。このセクションでは要件の開始から価値ある変更がユーザーに利用可能となるまでの開発ライフサイクル全体でのセキュリティの相互作用と統合に焦点を当てます。
+
+### 一般的な考慮事項
+
+* アップルストアのリリース時期
+* なぜブラックリストされるのか、そしてどのようにそれを避けるのか。
+* 一般的な問題：アプリは常に完全に削除されてから再インストールされることを確認する。そうでなければ再現が難しい問題があるかもしれない。
+*
+
+### SDLC 概要
+
+#### SDLC の一般的な説明
+
+使用されている開発手法が何であれ、SDLC は常に同じプロセスに従います。
+* アプリケーションとそのコンポーネントのリスクアセスメントを実行して、リスクプロファイルを特定します。このリスクプロファイルは通常、組織のリスク対応やアプリケーションのスコープでの規制要件に依存します。リスクアセスメントは、アプリケーションがインターネットからアクセス可能であるか、どのような種類のデータが格納されるかなどの他の要因によっても影響されます。データ分類ポリシーはどのデータが機密とみなされるかを決定し、このデータをどのようにセキュアにする必要があるかを規定します。
+* プロジェクトもしくは開発サイクルの開始時に、機能要件が収集されると同時に、**セキュリティ要件** をリスト化して明確にします。ユースケースを構築する際、**悪用ケース** を追加します。また、**セキュリティリスク** が分析され、プロジェクトの他のリスク(財務、マーケティング、製造など)と同様に処理されます。チーム(開発チームを含む)は必要に応じてセキュリティに関するトレーニングを行います(セキュアコーディングなど)。
+* モバイルアプリケーションの場合、OWASP MASVS [todo: link to the other guide] を利用して、この最初のステップで実行されたリスクアセスメントに基づいてセキュリティ要件を決定することができます。特にアジャイルプロジェクトの場合、新しく追加された機能やアプリケーションで処理される新しいクラスのデータに基づいて一連の要件を反復してレビューすることが一般的です。
+* アーキテクチャと設計の進行中には、基本的なアーティファクトである **脅威モデリング** を実行する必要があります。脅威モデルに基づいて、**セキュリティアーキテクチャ** が定義されます(ソフトウェアとハードウェアの両面で)。**セキュアコーディングルール** が確立され、使用される **セキュリティツール** のリストが作成されます。また、**セキュリティテスト** の戦略を明確にします。
+* すべてのセキュリティ要件および設計上の考慮事項はアプリケーションライフサイクル管理システム (ALM) に保存する必要があります。一般的には課題追跡システムと呼ばれていて、開発/運用チームがセキュリティ要件が開発ワークフローに緊密に統合されていることを確認するために使用します。セキュリティ要件には、開発者がすばやく参照できるように、使用されているプログラミング言語でのソースコードスニペットも含まれていることが理想的です。セキュアコーディングガイドラインのもうひとつの戦略は、これらのコードスニペットのみを含むバージョン管理の専用のリポジトリを作成することです。word 文書や PDF にこれらのガイドラインを保存する従来のアプローチよりも多くの利点があります。
+* 次のステップではソフトウェアを開発するための **コードレビュー** (一般的にはピアで)、自動化されたツールでの **静的解析**、セキュリティに特化した **単体テスト** を行います。
+* それからリリース候補のテストを実施する待望の瞬間がきます。**ペネトレーションテスト** ("Pentest") では手動および自動化技術の両方を使用します。
+* 最後に、ソフトウェアがすべてのステークホルダから **認定** された後、運用チームに移行して安全に生産に投入することができます。
+
+下の図はすべてのフェーズとさまざまなアーティファクトを示しています。
+-- TODO [Add a picture of a SDLC diagram that clarifies the description above] --
+
+プロジェクトのリスクに基づいて、一部のアーティファクトを単純化する(またはスキップする)こともあれば追加することもあります(正式な中間承認、特定ポイントの文書化など)。**常に SDLC はソフトウェア開発にリスク削減をもたらすことを意図しており、これらのリスクを許容レベルまで減らすコントロールを導入するのに役立つフレームワークです。**これは SDLC の一般的な説明であり、このフレームワークをプロジェクトのニーズに合わせて調整します。
+
+#### フェーズとアーティファクトへの潜入
+
+ここで、上に挙げた5つのフェーズを詳しく見て、主な目的、起こること、実行する人を明確にします。
+* **開始** フェーズ：これはプロジェクトの最初のフェーズであり、フィールドから要件を収集してプロジェクトに対して定義します。機能(エンドユーザー向けに作成される機能など)とセキュリティ(エンドユーザーがソフトウェア製品を信頼できるように実装する必要があるセキュリティ機能など)の両方の要件が含まれている必要があります。このフェーズでは、技術的作業を開始する前に行う必要があるすべてのアクティビティとその他予想できるすべてのアクティビティが実行されます。これは概念実証を行うことやプロジェクトの実行可能性を確認する時期でもあります。通常、マーケティング(マーケティング担当者、プロダクトオーナー、など)、経営、財務などのビジネス機能に近いチームが関与します。
+* **アーキテクチャおよび設計** フェーズ：プロジェクトが承認された後、技術チームはコーディングチームが生産性を高めるための初期の技術アクティビティに取り掛かります。この事項では、リスクを分析して、関連する対策を特定および明確にします。アーキテクチャ、コーディングアプローチ、テスト戦略、適切なツールが確認され、さまざまな環境(DEV, QA, SIT, UAT, PROD など)を作成および配置します。このフェーズは要求の技術的ではない定義から、技術チームがソフトウェア製品を構成するコードを生み出す準備が整う段階に移行することを主な目的としており、きわめて重要です。通常、アーキテクト、設計担当者、QAチーム、テスト担当者、アプリセキュリティ専門家が関与します。
+* **コーディング** フェーズ：これはコードが作成されて成果が目に見える時期です。これは最も重要なフェーズとみなされます。しかし、現フェーズの前後で起きるすべてのアクティビティは、コード作成をサポートして、期限と予算を満たしながら品質とセキュリティが適切な基準に達することを確実にすることを念頭におく必要があります。このフェーズでは、開発チームは定義された環境で作業し、事前に定義されたガイドラインに従って要件を実装します。関与する主な人は開発者です。
+* **テスト** フェーズ：これは作成されたソフトウェアをテストするフェーズです。テストにはさまざまな形があります(下記の SDLC でのセキュリティテストのセクションの説明を参照ください)ので、テストアクティビティはコーディング中に実施される可能性があります(明らかな目標はできるだけ早く問題を発見することです)。組織、プロジェクトリスクプロファイル、使用される技法によって、テストチームはコーディングチームから独立している場合があります。このフェーズで関与する主な人はテスト担当者です。確立されたセキュリティ要件に厳密にマップされ、理想的にはコード化およびその後の自動検証が可能な方法で提示されるテストケースが存在する必要があります。
+* **リリース** フェーズ：この時点で、コードは作成およびテスト済みです。そのセキュリティレベルは評価済みです。多くの場合、コードが期待されるセキュリティレベルを満たすという証拠を裏付けるためにメトリクスが作成されます。しかし、現在、それは顧客に移行する必要があります。例えば、ステークホルダ(経営、マーケティング、など)は市場における価値を創造して顧客に経済的利益をもたらすことができるように受け入れなければなりません。それに続いて、それは市場で利用可能になります。セキュアなソフトウェアを作るだけでは不十分です。現在、(短期的にも長期的にも)セキュアであり続けながら、安全に生産環境に移行する必要があります。運用チームのドキュメントが作成されることがあります。このフェーズでは、ステークホルダ(経営、マーケティング、など)が最初に関与して、技術チーム(テスト、運用、品質保証、など)が同様に関与します。
+
+前述の説明は「ウォータフォール系」であるように見えるかもしれませんが、アジャイル手法にも適用されます。同じロジックが使用されますが、より反復的な方法になります。一部のアクティビティ(プロジェクトの開始など)は一度だけ行われる可能性がありますが、(新しい要件を明示してユーザーストーリーを明確にするなど)プロジェクト全体で同様のアクティビティの一部が定期的に行われます。同じように、テストはプロジェクトの最後に一度だけではなく、各イテレーションでは、テストはそのイテレーションで作成されたコードに焦点を当てます。このインサイクルテストは、開発者がフィードバックを受け取るのに時間がかかり、コンテキストスイッチを作成するのにかかる時間が長くなるため、アウトオブサイクルアプローチよりも優先されます。
+
+### SDLC でのセキュリティテスト
+
+#### 概要
+
+ソフトウェア開発(および他の多くの分野でも同じく)でよく知られていることとして、テストを早期に行うほど欠陥を修正することがより簡単でコスト効率に優れているということがあります。サイバーセキュリティに関する欠陥にも同じことが当てはまります。開発ライフサイクルの早い段階で脆弱性を特定(および修正)することで、セキュアなソフトウェアを生み出す際により良い結果が得られます。いくつかの点で、品質テストとセキュリティテストは両方とも顧客満足度を高めることを意味する共通の側面を共有する場合があります。
+
+テストはライフサイクルの中で多くの形で実行されます。静的解析などの自動ツールを使用し、コードを作成した際にユニットテストを書き、ソフトウェアが開発された後にペネトレーションテストを(手動でもしくはスキャニングツールの助けを借りて)実行します。しかし、セキュア SDLC では早期にこれらの取り組みを計画および準備することを常に重視する必要があります。プロジェクトの開始時にテスト計画を開始および開発する必要があります。実行されるテストの種類、その範囲、実行方法と時期、予算をリストアップして明確にします。また、開発全般でテストチームにガイダンスを提供するために、悪用ケースは早期に(理想的にはユースケースが作成されると同時に)プロジェクトで記述する必要があります。最後に、常に考慮すべきアーティファクトは脅威モデリングであり、チームは適切なテストと適切なカバレッジを備えたアーキテクチャの適切なコンポーネントに焦点を当て、セキュリティコントロールが正しく実装されていることを確認します。
+
+以下の図は SDLC でテストを実行する方法の概要を示しています。
+
+-- TODO [Add diagram to summarize the above paragraph and clarify the way test should be performed (planned, executed and reviewed)] --
+
+#### 詳細な説明
+
+前述のように、SDLC に沿っていくつかの種類のテストを行います。対象となるソフトウェアのリスクプロファイルによって、いくつかの種類のテストを実行します。
+* **静的解析**: 本質的に、静的解析は実行せずにソースコードを解析するものです。このアーティファクトの目的は2つあります。コードの作成時にチームが合意したセキュアコーディングルールで正しく実装されていることを確認すること、および脆弱性を見つけることです。通常、数百ないし数千行のコードを解析する必要があるため、専用のソフトウェアツールを使用してこのタスクを自動化します。但し、ツールは探し求めたものしか発見することができないという欠点があり、今日、人間ほど成功してはいません。これが静的解析が(ツール以外にも)人間によって実行されることがある理由です。人間はより時間を要するかもしれませんが、脆弱性を発見するための創造的な方法を持っています。静的解析のツールの例は別のセクションで記載されています。
+* **単体テスト**: 単体テストはソースコードに最も近い(単一のユニットにフォーカスしているなど)一連のテストを構成し、コードと共に実行されます。使用している方法論によれば、コードを開発する前(テスト駆動開発(TDD)として知られています)もしくは直後に作成されます。どのような場合でも、最終目標は作成されたコードが期待通りに動作することを検証することだけでなく、悪用ケースを防御(入力フィルタリング/検証、ホワイトリスト、など)して、かつ回避できないように適切にコントロールが配置されていることも検証します。単体テストは開発ライフサイクルの早期に問題を検出することで、可能な限り迅速で効果的に修正することができます。これらのテストは統合/検証/妥当性確認テストなどの他のテストとは異なり、同じ種類の問題を検出するためには使用できません。通常、単体テストはツールで支援されます。そのうちのいくつかは別のセクションに記載されています。
+* **ペネトレーションテスト**: これはセキュリティテストの「王様」であり、最も有名でよく実行されるものです。但し、開発ライフサイクルの後半に行われ、すべての欠陥を見つけられるわけではないことに注意する必要があります。それらは利用可能なリソース(時間、金銭、専門知識、など)によって制約を受けることが多いため、他の種類のテストで補完する必要があります。現在のガイドはペネトレーションテストについてのものであり、読者は多くの価値のあるテストを行いより多くの脆弱性を発見するために役に立つ情報を見つけるでしょう。ペネトレーションテスト技法には脆弱性スキャンとファジングがあります。しかし、ペネトレーションテストはこれら2つの例以外にも多面的です。役に立つツールは別のセクションに記載されています。
+
+品質テストとセキュリティテストの間には明確な違いがあります。品質テストは明示的に計画された機能が適切な方法で実装されていることを確認しますが、セキュリティテストは以下について確認します。
+- 既存の機能が悪意のある方法で使用できないこと
+- システムやユーザーを危険にさらす可能性のある新機能が無意識のうちに導入されてはいないこと
+
+結果として、ひとつのタイプのテストを実行するだけでは、作り出されるソフトウェアが利便性とセキュアの両方を兼ね備えることの両方のタイプをカバーするには十分ではありません。両方のタイプのテストは同様に重要であるため同じように注意を払う必要があります。最終的なユーザーは今日では品質(彼らが期待する方法で実行される実際の機能など)とセキュリティ(彼らの金銭が盗まれないことや私生活がプライベートのまま固持されることについてソフトウェアベンダーを信じられること)の両方を重視します。
+
+#### テスト戦略の定義
+
+テスト戦略の目的は SDLC 全体でどのテストがどのくらいの頻度で実行されるかを定義することです。目的は2つあります。顧客 / 法務 / マーケティング / コーポレートチームにより一般的に表現される、セキュリティ目標が最終的なソフトウェア製品によって達成されることを確認すること、および費用対効果をもたらすことです。テスト戦略は一般にプロジェクトの開始時に作成されます。リスクが明確にされた後(開始フェーズ)ですが、コード作成(コーディングフェーズ)を開始する前になります。一般的にはアーキテクチャおよび設計フェーズで行われます。リスク管理、脅威モデリング、セキュリティエンジニアリングなどのアクティビティから入力を受け取ります。
+
+-- TODO [Add diagram (in the form of a workflow) showing inputs of a Test Strategy, and outputs (test cases, ...)] --
+
+テスト戦略は必ずしも正式に書かれている必要はありません。(アジャイルプロジェクトでは)ストーリーを使用して記述されるかもしれませんし、チェックリストの形で手早く記述したり、テストケースが特定のツールで書かれることもあります。しかし、それは確実に共有される必要があります。アーキテクチャチームによって定義されるかもしれませんが、開発、テスト、品質保証などの他のチームによって実装される必要があります。さらに、すべての技術チームが承認する必要があります。いずれかのチームに容認できない負担をかけてはいけません。
+
+理想的には、テスト戦略は以下のようなトピックに対処します。
+- 達成すべき目標、およびコントロール下に置かれるリスクの記述。
+- どのようにしてこれらの目標を達成してリスクを許容レベルにまで下げられるか、どのテストが必要か、誰がそれを実行するか、どのように、いつ、どのような頻度で行うか。
+- 現在のプロジェクトの受け入れ基準。
+
+その有効性と進捗状況に従うためには、メトリクスを定義して、プロジェクト全体で更新し、定期的にコミュニケーションする必要があります。基準全体が選択した関連するメトリクスで記述されます。最適なものはリスクプロファイル、プロジェクト、組織に依存していると言えます。しかし、以下のようなメトリクスの例があります。
+- 実装されるセキュリティコントロールに関連するストーリーの数
+- セキュリティコントロールと機密機能に関する単体テストのコードカバレッジ
+- 各ビルド時に静的解析ツールによって検出されるセキュリティバグの数
+- セキュリティバグのバックログの傾向(重要性によってソースされる可能性がある)
+これらは単なる提案であり、あなたの場合には他のメトリクスがさらに重要となるかもしれません。メトリックはプロジェクトをコントロール下に置くための本当に強力なツールです。何が行っているかおよび目標に達成するために改善が必要なものは何かといったタイムリーな情報をプロジェクトマネージャが明確に把握できます。
+
+
+--
+
+### テスト手法
+#### ホワイトボックス
+#### グレーボックス
+#### ブラックボックス
+### チーム管理
+
+-- TODO [Develop content on Team Management in SDLC] --
+
+- explain the importance of Separation of Duties (developers VS testers, ...)
+- internal VS sub-contracted pentests
+
+### DevOps 環境でのセキュリティテスト
+
+#### 概要
+
+プロダクションへのデプロイメントの頻度が増え、DevOps ハイパフォーマーは1日に何度もプロダクションへデプロイするため、可能な限りセキュリティ検証タスクの多くを自動化することが基本です。これを容易にするベストアプローチはデプロイメントパイプラインにセキュリティを統合することです。デプロイメントパイプラインは継続的な統合と継続的なデリバリープラクティスの組み合わせであり、ラピッド開発を容易にしてすべてのコミット時にほぼ同時にフィードバックを受け取るために作成されます。デプロイメントパイプラインの詳細については以下のセクションで説明します。
+
+#### デプロイメントパイプライン
+
+組織または開発チームの成熟度によって、デプロイメントパイプラインは非常に洗練されたものになります。最も簡単な形式では、デプロイメントパイプラインはコミットフェーズで構成されます。コミットフェーズでは一般的に単純なコンパイラチェック、単体テストスイートが実行されるだけでなく、リリース候補と呼ばれるアプリケーションの展開可能なアーティファクトが作成されます。リリース候補はバージョン管理システムのトランクにチェックインされた最新バージョンの変更であり、デプロイメントパイプラインにより評価され、本番環境に展開される可能性のある確立された標準とインラインであるかどうかを検証します。
+
+コミットフェーズは開発者に即時のフィードバックを提供するように設計されており、トランクのコミットごとに実行されます。そのため、一定の時間制約が存在します。通常、コミットフェーズは5分以内に実行する必要がありますが、いずれの場合も、完了までに10分以上かかることはありません。この時間制約は、現状の既存ツールの多くがそのような短時間で実行できないため、セキュリティコンテキストでは非常に困難です。
+
+Todo: Automating security tools in Jenkins,...
+
+
+
+### 参考情報
+
+- Official (ISC)2 Guide to the CSSLP (ISC2 Press), Mano Paul - https://www.amazon.com/Official-Guide-CSSLP-Second-Press/dp/1466571276/
+- Software Security: Building Security In (Addison-Wesley Professional), Gary McGraw - https://www.amazon.com/Software-Security-Building-Gary-McGraw/dp/0321356705/
+
+
+
 ## 改竄とリバースエンジニアリング
 
 In the context of mobile apps, *reverse engineering* is the process of analyzing the compiled app to extract knowledge about its inner workings. It is akin to reconstructing the original source code from the bytecode or binary code, even though this doesn't need to happen literally. The main goal in reverse engineering is *comprehending* the code.
@@ -289,9 +439,9 @@ One thing to keep in mind is that modern mobile OSes strictly enforce code signi
 
 Code injection is a very powerful technique that allows you to explore and modify processes during runtime. The injection process can be implemented in various ways, but you'll get by without knowing all the details thanks to freely available, well-documented tools that automate it. These tools give you direct access to process memory and important structures such as live objects instantiated by the app, and come with many useful utility functions for resolving loaded libraries, hooking methods and native functions, and more. Tampering with process memory is more difficult to detect than patching files, making in the preferred method in the majority of cases.
 
-Substrate, Frida and XPosed are the most widely used hooking and code injection frameworks in the mobile world. The three frameworks differ in design philosophy and implementation details: Substrate and Xposed focus on code injection and/or hooking, while Frida aims to be a full-blown "dynamic instrumentation framework" that incorporates both code injection and language bindings, as well as an injectable JavaScript VM and console. 
+Substrate, Frida and XPosed are the most widely used hooking and code injection frameworks in the mobile world. The three frameworks differ in design philosophy and implementation details: Substrate and Xposed focus on code injection and/or hooking, while Frida aims to be a full-blown "dynamic instrumentation framework" that incorporates both code injection and language bindings, as well as an injectable JavaScript VM and console.
 
-However, you can also instrument apps with Substrate by using it to inject Cycript, the programming environment (a.k.a. "Cycript-to-JavaScript" compiler) authored by Saurik of Cydia fame. To complicate things even more, Frida's authors also created a fork of Cycript named "frida-cycript" (https://github.com/nowsecure/frida-cycript) that replaces Cycript's runtime with a Frida-based runtime called Mjølner. This enables Cycript to run on all the platforms and architectures maintained by frida-core (if you are confused now don't worry, it's perfectly OK to be). 
+However, you can also instrument apps with Substrate by using it to inject Cycript, the programming environment (a.k.a. "Cycript-to-JavaScript" compiler) authored by Saurik of Cydia fame. To complicate things even more, Frida's authors also created a fork of Cycript named "frida-cycript" (https://github.com/nowsecure/frida-cycript) that replaces Cycript's runtime with a Frida-based runtime called Mjølner. This enables Cycript to run on all the platforms and architectures maintained by frida-core (if you are confused now don't worry, it's perfectly OK to be).
 
 The release was accompanied by a blog post by Frida's developer Ole titled "Cycript on Steroids", which did not go that down that well with Saurik - https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/.
 
@@ -321,7 +471,7 @@ Like always in hacking, the anything-goes-rule applies: Simply use whatever brin
 
 #### 動的バイナリ計装
 
-Another useful method for dealing with native binaries is dynamic binary instrumentations (DBI). Instrumentation frameworks such as Valgrind and PIN support fine-grained instruction-level tracing of single processes. This is achieved by inserting dynamically generated code at runtime. Valgrind compiles fine on Android, and pre-built binaries are available for download. 
+Another useful method for dealing with native binaries is dynamic binary instrumentations (DBI). Instrumentation frameworks such as Valgrind and PIN support fine-grained instruction-level tracing of single processes. This is achieved by inserting dynamically generated code at runtime. Valgrind compiles fine on Android, and pre-built binaries are available for download.
 
 The Valgrind README contains specific compilation instructions for Android - http://valgrind.org/docs/manual/dist.readme-android.html
 
@@ -356,7 +506,7 @@ In the Android section, you'll find a walkthrough for cracking a simple license 
 * [7] HP DevInspect - https://saas.hpe.com/en-us/software/agile-secure-code-development
 * [8] Codiscope SecureAssist - https://codiscope.com/products/secureassist/
 * [9] Crawling Code - https://www.owasp.org/index.php/Crawling_Code
-* [10] Mobile internet usage surpasses desktop usage for the first time in history - http://bgr.com/2016/11/02/internet-usage-desktop-vs-mobile 
+* [10] Mobile internet usage surpasses desktop usage for the first time in history - http://bgr.com/2016/11/02/internet-usage-desktop-vs-mobile
 * [11] Universal Windows Platform (UWP) app - https://docs.microsoft.com/en-us/windows/uwp/get-started/whats-a-uwp
-* [12] Worldwide Smartphone OS Market Share - http://www.idc.com/promo/smartphone-market-share/os 
+* [12] Worldwide Smartphone OS Market Share - http://www.idc.com/promo/smartphone-market-share/os
 * [13] Android Design Principles - https://developer.android.com/design/get-started/principles.html
