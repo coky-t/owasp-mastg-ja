@@ -1,16 +1,4 @@
-## ネットワーク通信のテスト
-
-### ネットワーク上の暗号化されていない機密データに関するテスト
-
-このコントロールはサーバー側にあることを明確にすることが重要です。そのためテストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については Android の「TLS 設定の確認」をご覧ください。
-
-但し、iOS で注意すべき実装の詳細が一つあります。iOS 9 以降のアプリケーションでは Forward Secrecy を有効にした HTTPS と TLS 1.2 のみを使用する必要があります。HTTP を使用するには開発者は `Info.plist` ファイルに例外を定義して、安全でない通信を使用するドメインを指定する必要があります。したがってアプリケーションバンドルの `Info.plist` ファイルをチェックして、HTTP 経由で通信できるエンドポイントがあるかどうかを確認します。
-
-
-### TLS設定の確認
-
-このコントロールはサーバー側にあることを明確にすることが重要です。そのためテストは iOS と Android アプリケーションで同じになります。このテストケースの詳細な説明については Android の「TLS 設定の確認」をご覧ください。
-
+## ネットワーク通信のテスト (iOS アプリ)
 
 ### エンドポイント同一性検証のテスト
 
@@ -56,8 +44,6 @@
 
 -- TODO [Add relevant tools for "Testing Endpoint Identity Verification"] --
 * Enjarify - https://github.com/google/enjarify
-
-
 
 
 ### カスタム証明書ストアおよび SSL ピンニングのテスト
@@ -140,52 +126,3 @@ else {
 
 * [1] Setting Burp Suite as a proxy for iOS Devices : https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp
 * [2] OWASP - Certificate Pinning for iOS : https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#iOS
-
-
-
-
-### 重要な操作が安全な通信チャネルを使用することの検証
-
-#### 概要
-
--- TODO [Provide a general description of the issue "Verifying that Critical Operations Use Secure Communication Channels".] --
-
-#### 静的解析
-
--- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
-
--- TODO [Confirm purpose of remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
-
--- TODO [Add content on "Verifying that Critical Operations Use Secure Communication Channels" with source code] --
-
-
-#### 動的解析
-
--- TODO [Describe how to test for this issue "Verifying that Critical Operations Use Secure Communication Channels" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app's behavior to code injection, debugging, instrumentation, etc.] --
-
-#### 改善方法
-
--- TODO [Describe the best practices that developers should follow to prevent this issue "Verifying that Critical Operations Use Secure Communication Channels".] --
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-* M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
-
-##### OWASP MASVS
-* V5.5 "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）一つの安全でない通信チャネルに依存していない。"
-
-##### CWE
-
--- TODO [Add relevant CWE for "Verifying that Critical Operations Use Secure Communication Channels"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-
-- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
-- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
-
-##### ツール
-
--- TODO [Add relevant tools for "Verifying that Critical Operations Use Secure Communication Channels"] --
-* Enjarify - https://github.com/google/enjarify
