@@ -13,35 +13,37 @@ The context of mobile security testing is a conjunction of multiple different ti
 
 ### Different Types of Mobile Apps
 
-The following section is a brief introduction to the 3 different types of mobile applications, namely the (1) Native App, (2) Hybrid App and (3) Web App. Before we dive into them, it is essential to first understand what is Mobile App.
+The following section is a brief introduction to the 3 different types of mobile applications, namely the (1) Native App, (2) Hybrid App and (3) Web App. Before we dive into them, it is essential to first understand what a mobile app is.
 
 #### Mobile App
 
-In the past, people uses Personal Computers (PCs) to perform daily tasks at work and at leisure, such as creating a PowerPoint presentation slide or writing a report. Then, when computation power increases and web technologies become more popular, some of these capabilities that used to be only able to perform on PCs, they can be performed on the Web Browser. Today, a smart phone in one's pocket has more processor and RAM than a full-fledge PC back in those days! These mobile devices are capable to perform daily tasks and they has special processor designed for high performance and capabilities to support multitasking and high productivity daily tasks. As such, it has formed its own ecosystem where there are high demand for various types of mobile apps, be it designed for enhancing one's productivity, lifestyle or social connectivity.
+The term `mobile app` refers to applications (self-contained computer programs), designed to execute and enhance the functionality of a mobile device. In this guide we will focus on the mobile apps designed to run on Android and iOS operating systems, as cumulatively they take more than 99% of the market share<sup>[12]</sup>. Due to the expansion of these operating systems to other device types, like smart watches, TVs, cars, etc. a more general term `app` is more appropriate. Nevertheless, for historic reasons, both terms are used interchangeably to refer to an application that can run on some of these systems, regardless of the exact device type.
 
-In short, mobile applications (hereby referred to as simply 'Mobile App'), are essentially self-contained programs that were designed to enhance the existing functionality of a smart phone. On Android, there is Play Store and on iOS, there is App Store -- they both have their own ecosystem which fulfills their own users' demand and supply. It plays a huge part in people's everyday life and allows them to be highly connected with the world and their friends. According to a survey conducted by BGR Media in late 2016, the mobile internet usage has surpassed desktop usage for the first time in history, and this can never happen without the countless Mobile Apps that make a mobile platform ecosystem attractive and full of enhanced functionalities <sup>[10]</sup>.
+Today, mobile internet usage has surpassed desktop usage for the first time in history and mobile apps are the most widespread kind of applications<sup>[10]</sup>.
 
 #### Native App
 
-Native App are basically mobile apps that were developed for use on a particular specific platform. A native mobile app is a smart phone application that is being coded in a particular programming language, for instance, Objective C or Swift for iOS and Java for Android operating systems. There are also other candidates of native mobile app, such as C# and XAML or JavaScript for Universal Windows Platform app (UWP) <sup>[11]</sup>.
+Most operating systems, including Android and iOS, come with set of high-level APIs that can be used to develop applications specifically for that system. Such applications are called `native` for the system for which they have been developed. Usually, when discussing about `mobile app`, the assumption is that it is a `native app`, that is implemented in a particular programming language for either iOS (Objective-C or Swift) or Android (Java).
 
-However, the MSTG will focus on Android and iOS platforms at the moment as based on a survey conducted in November 2016, these two mobile operating system takes up 86.8% and 12.5% of market share worldwide, respectively, which takes up over 99% of the entire market share of the mobile operating systems <sup>[12]</sup>.  
+Native mobile apps provide fast performance and a high degree of reliability. They usually adhere to the design principles (e.g. Android Design Principles<sup>[13]</sup>), providing a more consistent UI, compared to `hybrid` and `web` apps. Due to their close integration with the operating system, native apps have access to almost every component of the device (camera, sensors, hardware backed key stores, etc.)
 
-Native mobile apps provide fast performance and a high degree of reliability. They have better look and feel as well because most of time, they uses native buttons and user interface which are familiar to the user and looks good on the respective platform. In addition, they usually adhere to the design principles (e.g. Android Design Principles <sup>[13]</sup>), which are usually entirely neglected by the developers who design Hybrid Apps and Web Apps.
+Please note that there is a little ambiguity when discussion `native` apps for Android. Namely, Android provides two sets of APIs to develop against, Android SDK and Android NDK. The SDK (or Software Development Kit) is a Java API and is the default API against which applications are built. The NDK (or Native Development Kit) is a C/C++ based API used for developing only parts of the application that require specific optimization, or can otherwise benefit from lower level API. Normally, you can only distribute apps build with the SDK, which potentially can have parts implemented against NDK. Therefore we say that Android `native **apps**` (build against SDK) can have `native **code**` (build against NDK).
 
-Another feature of an Native mobile apps is their ability of having access to the components of a smart phone, such as its accelerometer, GPS, and camera. Moreover, users are able to use certain apps without having Internet connectivity. However, a Native App is expensive to develop because it require a developer with specific skillset and the resulted app can only run on one platform, forcing the company that creates the app to make duplicated versions of the same app that work on other platforms. More often than not, Android mobile app developers are not proficient in developing iOS apps and vice versa for iOS mobile app developers.
+Biggest downside of native apps is that they target only one specific platform. To build the same app for both Android and iOS, one needs to maintain two independent code bases.
 
-Usually, when discussing about Mobile App, the assumption is always that it is a Native App. It is also worth noting that a Native App can only be "Native" to one type of mobile operating system: iOS, Android, UWP, etc. For companies that want to publish their Native Apps to multiple mobile operating system will need to develop and maintain a separate piece of software, with entirely different design and implementation, which could easily become complicated to manage, tedious to implement and expensive to maintain. This conveniently brings us to the next two types of Mobile Apps.
+#### Web App
+
+Mobile Web apps, or simply Web apps, are websites designed to look and feel like a native app. They run in a browser and are usually developed in HTML5. Normally, both Android and iOS allow for launcher icons to be created out of bookmarked Web apps, which simply run the default web browser and load the bookmarked app.
+
+Web apps have limited integration with the components of the device and usually have a noticeable difference in performance. Since they typically target multiple platforms, their UI does not follow some of the design principles users are used to. Their biggest advantage is the price for supporting multiple platforms (only slight adaptation in the UI can server well most desktop and mobile operating systems), as well as their flexibility for delivering new content (as they are not delivered over an official application store, which sometimes take weeks to distribute through).
 
 #### Hybrid App
 
-Hybrid Apps are similar to Native Apps, runs on a smart phone or tablet devices, and are written with web technologies, which consists of HTML5, CSS and JavaScript. Hybrid Apps run within a native container, and leverages on the device's browser engine (but not the browser, only the browser engine) to render the HTML content and process the JavaScript locally. A web-to-native abstraction layer enables access to device capabilities that are not accessible in Mobile Web applications, such as the accelerometer, camera and local storage.
+Hybrid apps attempt to fill the gap between native and web apps. Namely, hybrid apps are (distributed and executed as) native apps, that have majority of their content implemented on top of web technologies, running in an embedded web browser (web view). As such, hybrid apps inherit some of the pros and cons of both native and web apps.
 
-Companies usually build hybrid apps as wrappers for an existing web page, as an attempt to gain presence within the app store of the respective mobile operating systems, without spending significant effort for developing a different app. Hybrid apps are also popular because they allow cross platform development and thus significantly reduce development costs. The way it is able to support cross platform development is through the usage of the same HTML code components which is then being reused on different mobile operating systems.
+A web-to-native abstraction layer enables access to device capabilities for hybrid apps that are not accessible to mobile web applications. Depending on the framework used for developing, one code base can result in multiple applications, targeting separate platforms, with a UI closely resembling that of the targeted platform. Nevertheless, usually significant effort is required to exactly match the look and feel of a native app.
 
-For example, the HTML, CSS and JavaScript code that is rendered by the browser engine on an Android mobile device could also be rendered in the same way on an iOS mobile device. They will look the same but they may not look native. It is not difficult to visually differentiate between the User Interface (UI) of a Native App and a Hybrid App.   
-
-The following is a non-exhaustive list of the more popular frameworks for developing Hybrid Apps:
+Following is a non-exhaustive list of more popular frameworks for developing Hybrid Apps:
 
 * Apache Cordova - https://cordova.apache.org/
 * Framework 7 - http://framework7.io/
@@ -51,14 +53,6 @@ The following is a non-exhaustive list of the more popular frameworks for develo
 * Onsen UI - https://onsen.io/
 * React Native - http://www.reactnative.com/
 * Sencha Touch - https://www.sencha.com/products/touch/
-
-#### Web App
-
-Web App, more commonly known as the Mobile Web App, are simply websites that were designed to look and feel like a native mobile app, but not implemented as such. Web App are run on a browser (unlike Hybrid App which run on browser engine, Web App run on browser) and are usually developed in HTML5.
-
-Firstly, users will access the Web App on browser via a specific URL, where the look and feel is almost, quite identical to a native mobile app. To perform the installation of the app, a simple bookmark shortcut will be created on the Home screen of the device.
-
-Web App was very popular when HTML5 was first released and people noticed its capability to achieve a look and feel which is very similar to a native app. Today, as the usage of native apps has increased significantly, it become obvious in differentiating between a Web App and a Native App, even for non-tech savvy personnel.
 
 ### テストプロセス
 
@@ -92,11 +86,11 @@ The status column can have one of the following three different values, that nee
 
 #### Reverse Engineering Resiliency Testing
 
-*Resiliency testing* is a new concept introduced in the OWASP MASVS and MSTG. This kind of testing can be used if the app implements defenses against specific client-side threats.. As we know, such protection is never 100% effective. The goal in resiliency testing is to identify glaring holes in the protection scheme and verify that the expectations as to its effectiveness are met. The assessment methodology is described in detail in the appendix "Assessing Anti-Reversing Schemes".
+*Resiliency testing* is a new concept introduced in the OWASP MASVS and MSTG. This kind of testing can be used if the app implements defenses against specific client-side threats.. As we know, such protection is never 100% effective. The goal in resiliency testing is to identify glaring holes in the protection scheme and verify that the expectations as to its effectiveness are met. The assessment methodology is described in detail in the appendix "[Assessing Anti-Reversing Schemes](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md)".
 
 #### Reporting
 
-The checklist itself can be used as a report as it list's down in detail what test cases have been included and verified in the tests and ideally also shows evidence in case a test fails. Also the first page should then be filled out, to include all the meta information needed for a report.
+The checklist itself can be used as a report as it lists down in detail what test cases have been included and verified in the tests and ideally also shows evidence in case a test fails. Also the first page should then be filled out, to include all the meta information needed for a report.
 
 #### The Management Summary
 
@@ -115,7 +109,7 @@ A more detailed overview can also be found in the "Management Summary" tab. This
 
 ### 静的解析
 
-When executing a static analysis, the source code of the mobile App(s) will be analyzed to ensure sufficient and correct implementation of security controls, specifically on crucial components such as cryptographic and data storage mechanisms. Due to the amount of code a tester will be confronted with the ideal approach for static analysis should be a mixture of using tools that scan the code automatically and manual code review.
+When executing a static analysis, the source code of the mobile App(s) will be analyzed to ensure sufficient and correct implementation of security controls, specifically on crucial components such as cryptographic and data storage mechanisms. Due to the amount of code a tester will be confronted with, the ideal approach for static analysis should be a mixture of using tools that scan the code automatically and manual code review.
 
 Through this approach you can get the best out of both worlds. You can get the so called "low hanging fruits" through the automatic scan, as the scanning engine and the (predefined) rules can easily pick up vulnerable patterns in the code. The manual code review can proficiently make a deep dive into the various code paths to check for logical errors and flaws in the mobile application's design and architecture where automated analysis tools are not able to identify it properly as they mostly do not understand the big picture.
 
@@ -149,8 +143,6 @@ In a Dynamic Analysis approach, the focus is on testing and evaluation of an app
 
 Usually, dynamic analysis is performed to check whether there are sufficient security mechanisms being put in place to prevent disclosure of data in transit, authentication and authorization issues, data validation vulnerabilities (e.g. cross-site scripting, SQL injection, etc.) and server configuration errors.
 
--- ToDo
-
 #### Pros of Dynamic Analysis
 
 * Does not require to have access to the source code
@@ -179,10 +171,10 @@ In case another (proprietary) protocol is used in a mobile app that is not HTTP,
 
 #### 入力ファジング
 
--- TODO [Write a better description, or remove this] --
+The process of fuzzing is to repeatedly feeding an application with various combinations of input value, with the goal of finding security vulnerabilities in the input-parsing code. There were instances when the application simply crashes, but also were also occations when it did not crash but behave in a manner which the developers did not expect them to be, which may potentially lead to exploitation by attackers.  
 
-Fuzz testing, is a method for testing software input validation by feeding it intentionally malformed input.
-Steps in fuzzing
+Fuzz testing, is a method for testing software input validation by feeding it intentionally malformed input. Below are the steps in performing the fuzzing:
+
 * Identifying a target
 * Generating malicious inputs
 * Test case delivery
@@ -198,7 +190,7 @@ Note: Fuzzing only detects software bugs. Classifying this issue as a security f
 
 ##### Cross-Site Scripting (XSS)
 
-A typical reflected XSS attack is executed by sending a URL to the victim(s), which for example can contain a payload to connect to some exploitation framework like BeeF [2]. When clicking on it a reverse tunnel is established with the Beef server in order to attack the victim(s). As a WebView is only a slim browser, it is not possible for a user to insert a URL into a WebView of an app as no address bar is available. Also, clicking on a link will not open the URL in a WebView of an app, instead it will open directly within the default browser of the respective mobile device. Therefore, a typical reflected Cross-Site Scripting attack that targets a WebView in an app is not applicable and will not work.
+A typical reflected XSS attack is executed by sending a URL to the victim(s), which for example can contain a payload to connect to some exploitation framework like BeeF<sup>[2]</sup>. When clicking on it a reverse tunnel is established with the Beef server in order to attack the victim(s). As a WebView is only a slim browser, it is not possible for a user to insert a URL into a WebView of an app as no address bar is available. Also, clicking on a link will not open the URL in a WebView of an app, instead it will open directly within the default browser of the respective mobile device. Therefore, a typical reflected Cross-Site Scripting attack that targets a WebView in an app is not applicable and will not work.
 
 If an attacker finds a stored Cross-Site Scripting vulnerability in an endpoint, or manages to get a Man-in-the-middle (MITM) position and injects JavaScript into the response, then the exploit will be sent back within the response. The attack will then be executed directly within the WebView. This can become dangerous in case:
 
@@ -222,13 +214,14 @@ Classification of sensitive information can vary between different industries an
 
 Ideally the customer can share a data classification policy that is already considering all different requirements and clearly defines sensitive information. This will become then the baseline during testing. The data classification should be applicable to:
 
-* data at rest,
-* data in use and
-* data in transit
+* Data at rest,
+* Data in use and
+* Data in transit
 
 For example, regulations in Singapore for financial institutions has imposed a requirement to encrypt passwords and PINs explicitly, even though they are already transmitted via HTTPS. Even though this might not be a vulnerability from the point of view of a tester, it is mandatory to raise this finding as a compliance issue.
 
 If no data classification policy is available, the following should be considered as sensitive information:
+
 * User authentication information (credentials, PINs etc.),
 * Personal Identifiable Information (PII) that can be abused for identity theft: Social security numbers, credit card numbers, bank account numbers, health information,
 * Highly sensitive data that would lead to reputational harm and/or financial costs if compromised,
@@ -236,8 +229,6 @@ If no data classification policy is available, the following should be considere
 * Finally any technical data, generated by the application or it's related systems, that is used to protect other data or the system, should also be considered as sensitive information (e.g. encryption keys).
 
 Defining sensitive information before the test is important for almost all data storage test cases in Android and iOS, as otherwise the tester has no clear basis on what he might need to look for.
-
-
 
 ## ソフトウェア開発ライフサイクル内でのセキュリティテスト
 
@@ -249,8 +240,7 @@ Defining sensitive information before the test is important for almost all data 
 
 もともと、セキュリティはソフトウェア開発の一部ではありませんでした。それは追加として考えられ、ネットワークレベルの運用チームによって実行されました。これらのチームはソフトウェアプログラムのセキュリティが脆弱であることを補う方法を見つける必要がありました。しかし、これはソフトウェアプログラムが境界内に配置されている場合に可能でしたが、ウェブやモバイルテクノロジで生まれたソフトウェアを使用する新しい方法として、このコンセプトは時代遅れになりました。今日、多くの場合この新しいパラダイムで既存の脆弱性を補うことは非常に困難であるため、セキュリティはソフトウェア **内** で焼き尽くす必要があります。
 
-ソフトウェア開発時にセキュリティを組み込む方法はセキュア SDLC (ソフトウェア開発ライフサイクル) を導入することです。セキュア SDLC はどの方法論や言語にも依存せず、ウォータフォールやアジャイルに組み込むことができます。使用しないという言い訳にはできません。
-この章では特に DevOps の世界についてアジャイルとセキュア SDLC に焦点を当てます。自律性と自動化を促進し、速いペースと協調的な方法でセキュアなソフトウェアを開発および提供する最先端の方法について以下で詳細を説明します。
+ソフトウェア開発時にセキュリティを組み込む方法はセキュア SDLC (ソフトウェア開発ライフサイクル) を導入することです。セキュア SDLC はどの方法論や言語にも依存せず、ウォータフォールやアジャイルに組み込むことができます。使用しないという言い訳にはできません。この章では特に DevOps の世界についてアジャイルとセキュア SDLC に焦点を当てます。自律性と自動化を促進し、速いペースと協調的な方法でセキュアなソフトウェアを開発および提供する最先端の方法について以下で詳細を説明します。
 
 ### アジャイルと DevOps
 
@@ -262,7 +252,7 @@ DevOps はソフトウェアの提供に関係するすべてのステークホ�
 
 DevOps という言葉は開発チームと運用チームの間のコラボレーションのみを表現すると誤解されるかもしれませんが、DevOps の実践的先駆者である Gene Kim 氏は次のように述べています。「一見したところ、開発と運用の間に問題があるように見える。」「しかしテストがそこにあり、情報セキュリティの目的とシステムやデータを保護する必要がある。」これは管理者のトップレベルの関心事であり、DevOps 像の一部となっています。
 
-言い換えると、今日あなたが「DevOps」という言葉を聞いたとき、DevOpsQATestInfoSec を考えているはずです。 (情報源: https://techbeacon.com/evolution-devops-new-thinking-gene-kim)
+言い換えると、今日あなたが「DevOps」という言葉を聞いたとき、DevOpsQATestInfoSec を考えているはずです。<sup>[16]</sup>
 
 セキュリティはビジネスの成功にとってアプリケーションの全体的な品質、パフォーマンス、ユーザビリティと同じくらい重要です。開発サイクルが短縮されデプロイメントの頻度が増加するとしても、品質やセキュリティが当初から構築されていることを保証することは基本的なことです。
 
@@ -271,7 +261,7 @@ DevOps という言葉は開発チームと運用チームの間のコラボレ�
 ### 一般的な考慮事項
 
 * アップルストアのリリース時期
-* なぜブラックリストされるのか、そしてどのようにそれを避けるのか。
+* 何がブラックリストされるのか、そしてどのようにそれを避けるのか。
 * 一般的な問題：アプリは常に完全に削除されてから再インストールされることを確認する。そうでなければ再現が難しい問題があるかもしれない。
 *
 
@@ -297,6 +287,7 @@ DevOps という言葉は開発チームと運用チームの間のコラボレ�
 #### フェーズとアーティファクトへの潜入
 
 ここで、上に挙げた5つのフェーズを詳しく見て、主な目的、起こること、実行する人を明確にします。
+
 * **開始** フェーズ：これはプロジェクトの最初のフェーズであり、フィールドから要件を収集してプロジェクトに対して定義します。機能(エンドユーザー向けに作成される機能など)とセキュリティ(エンドユーザーがソフトウェア製品を信頼できるように実装する必要があるセキュリティ機能など)の両方の要件が含まれている必要があります。このフェーズでは、技術的作業を開始する前に行う必要があるすべてのアクティビティとその他予想できるすべてのアクティビティが実行されます。これは概念実証を行うことやプロジェクトの実行可能性を確認する時期でもあります。通常、マーケティング(マーケティング担当者、プロダクトオーナー、など)、経営、財務などのビジネス機能に近いチームが関与します。
 * **アーキテクチャおよび設計** フェーズ：プロジェクトが承認された後、技術チームはコーディングチームが生産性を高めるための初期の技術アクティビティに取り掛かります。この事項では、リスクを分析して、関連する対策を特定および明確にします。アーキテクチャ、コーディングアプローチ、テスト戦略、適切なツールが確認され、さまざまな環境(DEV, QA, SIT, UAT, PROD など)を作成および配置します。このフェーズは要求の技術的ではない定義から、技術チームがソフトウェア製品を構成するコードを生み出す準備が整う段階に移行することを主な目的としており、きわめて重要です。通常、アーキテクト、設計担当者、QAチーム、テスト担当者、アプリセキュリティ専門家が関与します。
 * **コーディング** フェーズ：これはコードが作成されて成果が目に見える時期です。これは最も重要なフェーズとみなされます。しかし、現フェーズの前後で起きるすべてのアクティビティは、コード作成をサポートして、期限と予算を満たしながら品質とセキュリティが適切な基準に達することを確実にすることを念頭におく必要があります。このフェーズでは、開発チームは定義された環境で作業し、事前に定義されたガイドラインに従って要件を実装します。関与する主な人は開発者です。
@@ -320,13 +311,15 @@ DevOps という言葉は開発チームと運用チームの間のコラボレ�
 #### 詳細な説明
 
 前述のように、SDLC に沿っていくつかの種類のテストを行います。対象となるソフトウェアのリスクプロファイルによって、いくつかの種類のテストを実行します。
-* **静的解析**: 本質的に、静的解析は実行せずにソースコードを解析するものです。このアーティファクトの目的は2つあります。コードの作成時にチームが合意したセキュアコーディングルールで正しく実装されていることを確認すること、および脆弱性を見つけることです。通常、数百ないし数千行のコードを解析する必要があるため、専用のソフトウェアツールを使用してこのタスクを自動化します。但し、ツールは探し求めたものしか発見することができないという欠点があり、今日、人間ほど成功してはいません。これが静的解析が(ツール以外にも)人間によって実行されることがある理由です。人間はより時間を要するかもしれませんが、脆弱性を発見するための創造的な方法を持っています。静的解析のツールの例は別のセクションで記載されています。
+
+* **解析**: 本質的に、静的解析は実行せずにソースコードを解析するものです。このアーティファクトの目的は2つあります。コードの作成時にチームが合意したセキュアコーディングルールで正しく実装されていることを確認すること、および脆弱性を見つけることです。通常、数百ないし数千行のコードを解析する必要があるため、専用のソフトウェアツールを使用してこのタスクを自動化します。但し、ツールは探し求めたものしか発見することができないという欠点があり、今日、人間ほど成功してはいません。これが静的解析が(ツール以外にも)人間によって実行されることがある理由です。人間はより時間を要するかもしれませんが、脆弱性を発見するための創造的な方法を持っています。静的解析のツールの例は別のセクションで記載されています。
 * **単体テスト**: 単体テストはソースコードに最も近い(単一のユニットにフォーカスしているなど)一連のテストを構成し、コードと共に実行されます。使用している方法論によれば、コードを開発する前(テスト駆動開発(TDD)として知られています)もしくは直後に作成されます。どのような場合でも、最終目標は作成されたコードが期待通りに動作することを検証することだけでなく、悪用ケースを防御(入力フィルタリング/検証、ホワイトリスト、など)して、かつ回避できないように適切にコントロールが配置されていることも検証します。単体テストは開発ライフサイクルの早期に問題を検出することで、可能な限り迅速で効果的に修正することができます。これらのテストは統合/検証/妥当性確認テストなどの他のテストとは異なり、同じ種類の問題を検出するためには使用できません。通常、単体テストはツールで支援されます。そのうちのいくつかは別のセクションに記載されています。
 * **ペネトレーションテスト**: これはセキュリティテストの「王様」であり、最も有名でよく実行されるものです。但し、開発ライフサイクルの後半に行われ、すべての欠陥を見つけられるわけではないことに注意する必要があります。それらは利用可能なリソース(時間、金銭、専門知識、など)によって制約を受けることが多いため、他の種類のテストで補完する必要があります。現在のガイドはペネトレーションテストについてのものであり、読者は多くの価値のあるテストを行いより多くの脆弱性を発見するために役に立つ情報を見つけるでしょう。ペネトレーションテスト技法には脆弱性スキャンとファジングがあります。しかし、ペネトレーションテストはこれら2つの例以外にも多面的です。役に立つツールは別のセクションに記載されています。
 
 品質テストとセキュリティテストの間には明確な違いがあります。品質テストは明示的に計画された機能が適切な方法で実装されていることを確認しますが、セキュリティテストは以下について確認します。
-- 既存の機能が悪意のある方法で使用できないこと
-- システムやユーザーを危険にさらす可能性のある新機能が無意識のうちに導入されてはいないこと
+
+* 既存の機能が悪意のある方法で使用できないこと
+* システムやユーザーを危険にさらす可能性のある新機能が無意識のうちに導入されてはいないこと
 
 結果として、ひとつのタイプのテストを実行するだけでは、作り出されるソフトウェアが利便性とセキュアの両方を兼ね備えることの両方のタイプをカバーするには十分ではありません。両方のタイプのテストは同様に重要であるため同じように注意を払う必要があります。最終的なユーザーは今日では品質(彼らが期待する方法で実行される実際の機能など)とセキュリティ(彼らの金銭が盗まれないことや私生活がプライベートのまま固持されることについてソフトウェアベンダーを信じられること)の両方を重視します。
 
@@ -339,30 +332,34 @@ DevOps という言葉は開発チームと運用チームの間のコラボレ�
 テスト戦略は必ずしも正式に書かれている必要はありません。(アジャイルプロジェクトでは)ストーリーを使用して記述されるかもしれませんし、チェックリストの形で手早く記述したり、テストケースが特定のツールで書かれることもあります。しかし、それは確実に共有される必要があります。アーキテクチャチームによって定義されるかもしれませんが、開発、テスト、品質保証などの他のチームによって実装される必要があります。さらに、すべての技術チームが承認する必要があります。いずれかのチームに容認できない負担をかけてはいけません。
 
 理想的には、テスト戦略は以下のようなトピックに対処します。
-- 達成すべき目標、およびコントロール下に置かれるリスクの記述。
-- どのようにしてこれらの目標を達成してリスクを許容レベルにまで下げられるか、どのテストが必要か、誰がそれを実行するか、どのように、いつ、どのような頻度で行うか。
-- 現在のプロジェクトの受け入れ基準。
+
+* 達成すべき目標、およびコントロール下に置かれるリスクの記述。
+* どのようにしてこれらの目標を達成してリスクを許容レベルにまで下げられるか、どのテストが必要か、誰がそれを実行するか、どのように、いつ、どのような頻度で行うか。
+* 現在のプロジェクトの受け入れ基準。
 
 その有効性と進捗状況に従うためには、メトリクスを定義して、プロジェクト全体で更新し、定期的にコミュニケーションする必要があります。基準全体が選択した関連するメトリクスで記述されます。最適なものはリスクプロファイル、プロジェクト、組織に依存していると言えます。しかし、以下のようなメトリクスの例があります。
-- 実装されるセキュリティコントロールに関連するストーリーの数
-- セキュリティコントロールと機密機能に関する単体テストのコードカバレッジ
-- 各ビルド時に静的解析ツールによって検出されるセキュリティバグの数
-- セキュリティバグのバックログの傾向(重要性によってソースされる可能性がある)
+
+* 実装されるセキュリティコントロールに関連するストーリーの数
+* セキュリティコントロールと機密機能に関する単体テストのコードカバレッジ
+* 各ビルド時に静的解析ツールによって検出されるセキュリティバグの数
+* セキュリティバグのバックログの傾向(重要性によってソースされる可能性がある)
+
 これらは単なる提案であり、あなたの場合には他のメトリクスがさらに重要となるかもしれません。メトリックはプロジェクトをコントロール下に置くための本当に強力なツールです。何が行っているかおよび目標に達成するために改善が必要なものは何かといったタイムリーな情報をプロジェクトマネージャが明確に把握できます。
 
-
---
-
 ### テスト手法
-#### ホワイトボックス
-#### グレーボックス
+
 #### ブラックボックス
+
+#### ホワイトボックス
+
+#### グレーボックス
+
 ### チーム管理
 
 -- TODO [Develop content on Team Management in SDLC] --
 
-- explain the importance of Separation of Duties (developers VS testers, ...)
-- internal VS sub-contracted pentests
+* explain the importance of Separation of Duties (developers VS testers, ...)
+* internal VS sub-contracted pentests
 
 ### DevOps 環境でのセキュリティテスト
 
@@ -374,18 +371,9 @@ DevOps という言葉は開発チームと運用チームの間のコラボレ�
 
 組織または開発チームの成熟度によって、デプロイメントパイプラインは非常に洗練されたものになります。最も簡単な形式では、デプロイメントパイプラインはコミットフェーズで構成されます。コミットフェーズでは一般的に単純なコンパイラチェック、単体テストスイートが実行されるだけでなく、リリース候補と呼ばれるアプリケーションの展開可能なアーティファクトが作成されます。リリース候補はバージョン管理システムのトランクにチェックインされた最新バージョンの変更であり、デプロイメントパイプラインにより評価され、本番環境に展開される可能性のある確立された標準とインラインであるかどうかを検証します。
 
-コミットフェーズは開発者に即時のフィードバックを提供するように設計されており、トランクのコミットごとに実行されます。そのため、一定の時間制約が存在します。通常、コミットフェーズは5分以内に実行する必要がありますが、いずれの場合も、完了までに10分以上かかることはありません。この時間制約は、現状の既存ツールの多くがそのような短時間で実行できないため、セキュリティコンテキストでは非常に困難です。
+コミットフェーズは開発者に即時のフィードバックを提供するように設計されており、トランクのコミットごとに実行されます。そのため、一定の時間制約が存在します。通常、コミットフェーズは5分以内に実行する必要がありますが、いずれの場合も、完了までに10分以上かかることはありません。この時間制約は、現状の既存ツールの多くがそのような短時間で実行できないため、セキュリティコンテキストでは非常に困難です <sup>[14][15]</sup> 。
 
 Todo: Automating security tools in Jenkins,...
-
-
-
-### 参考情報
-
-- Official (ISC)2 Guide to the CSSLP (ISC2 Press), Mano Paul - https://www.amazon.com/Official-Guide-CSSLP-Second-Press/dp/1466571276/
-- Software Security: Building Security In (Addison-Wesley Professional), Gary McGraw - https://www.amazon.com/Software-Security-Building-Gary-McGraw/dp/0321356705/
-
-
 
 ## 改竄とリバースエンジニアリング
 
@@ -441,9 +429,9 @@ Code injection is a very powerful technique that allows you to explore and modif
 
 Substrate, Frida and XPosed are the most widely used hooking and code injection frameworks in the mobile world. The three frameworks differ in design philosophy and implementation details: Substrate and Xposed focus on code injection and/or hooking, while Frida aims to be a full-blown "dynamic instrumentation framework" that incorporates both code injection and language bindings, as well as an injectable JavaScript VM and console.
 
-However, you can also instrument apps with Substrate by using it to inject Cycript, the programming environment (a.k.a. "Cycript-to-JavaScript" compiler) authored by Saurik of Cydia fame. To complicate things even more, Frida's authors also created a fork of Cycript named "frida-cycript" (https://github.com/nowsecure/frida-cycript) that replaces Cycript's runtime with a Frida-based runtime called Mjølner. This enables Cycript to run on all the platforms and architectures maintained by frida-core (if you are confused now don't worry, it's perfectly OK to be).
+However, you can also instrument apps with Substrate by using it to inject Cycript, the programming environment (a.k.a. "Cycript-to-JavaScript" compiler) authored by Saurik of Cydia fame. To complicate things even more, Frida's authors also created a fork of Cycript named "frida-cycript" that replaces Cycript's runtime with a Frida-based runtime called Mjølner<sup>[17]</sup>. This enables Cycript to run on all the platforms and architectures maintained by frida-core (if you are confused now don't worry, it's perfectly OK to be).
 
-The release was accompanied by a blog post by Frida's developer Ole titled "Cycript on Steroids", which did not go that down that well with Saurik - https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/.
+The release was accompanied by a blog post by Frida's developer Ole titled "Cycript on Steroids", which did not go that down that well with Saurik<sup>[18]</sup>.
 
 We'll include some examples for all three frameworks. As your first pick, we recommend starting with Frida, as it is the most versatile of the three (for this reason we'll also include more Frida details and examples). Notably, Frida can inject a Javascript VM into a process on both Android and iOS, while Cycript injection with Substrate only works on iOS. Ultimately however, you can of course achieve many of the same end goals with either framework.
 
@@ -481,13 +469,13 @@ Running an app in the emulator gives you powerful ways to monitor and manipulate
 
 #### Custom Tooling using Reverse Engineering Frameworks
 
-Even though most professional GUI-based disassemblers feature scripting facilities and extensibility, they sometimes simply not well-suited to solving a particular problem. Reverse engineering frameworks allow you perform and automate any kind of reversing task without the dependence for heavy-weight GUI, while also allowing for increased flexibility. Notably, most reversing frameworks are open source and/or available for free. Popular frameworks with support for mobile architectures include Radare2 <sup>[4]</sup> and Angr <sup>[5]</sup>.
+Even though most professional GUI-based disassemblers feature scripting facilities and extensibility, they sometimes simply not well-suited to solving a particular problem. Reverse engineering frameworks allow you perform and automate any kind of reversing task without the dependence for heavy-weight GUI, while also allowing for increased flexibility. Notably, most reversing frameworks are open source and/or available for free. Popular frameworks with support for mobile architectures include Radare2<sup>[4]</sup> and Angr <sup>[5]</sup>.
 
 #### 事例：シンボリック/コンコリック実行を使用したプログラム解析
 
 In the late 2000s, symbolic-execution based testing has gained popularity as a means of identifying security vulnerabilities. Symbolic "execution" actually refers to the process of representing possible paths through a program as formulas in first-order logic, whereby variables are represented by symbolic values, which are actually entire ranges of values. Satisfiability Modulo Theories (SMT) solvers are used to check satisfiability of those formulas and provide a solution, including concrete values for the variables needed to reach a certain point of execution on the path corresponding to the solved formula.
 
-Typically, this approach is used in combination with other techniques such as dynamic execution (hence the name concolic stems from *conc*rete and symb*olic*), in order to tone down the path explosion problem specific to classical symbolic execution. This together with improved SMT solvers and current hardware speeds, allow concolic execution to explore paths in medium size software modules (i.e. in the order of 10s KLOC). However, it also comes in handy for supporting de-obfuscation tasks, such as simplifying control flow graphs. For example, Jonathan Salwan and Romain Thomas have shown how to reverse engineer VM-based software protections using Dynamic Symbolic Execution (i.e., using a mix of actual execution traces, simulation and symbolic execution) <sup>[6]</sup>.
+Typically, this approach is used in combination with other techniques such as dynamic execution (hence the name concolic stems from *conc*rete and symb*olic*), in order to tone down the path explosion problem specific to classical symbolic execution. This together with improved SMT solvers and current hardware speeds, allow concolic execution to explore paths in medium size software modules (i.e. in the order of 10s KLOC). However, it also comes in handy for supporting de-obfuscation tasks, such as simplifying control flow graphs. For example, Jonathan Salwan and Romain Thomas have shown how to reverse engineer VM-based software protections using Dynamic Symbolic Execution (i.e., using a mix of actual execution traces, simulation and symbolic execution)<sup>[6]</sup>.
 
 In the Android section, you'll find a walkthrough for cracking a simple license check in an Android application using symbolic execution.
 
@@ -507,6 +495,10 @@ In the Android section, you'll find a walkthrough for cracking a simple license 
 * [8] Codiscope SecureAssist - https://codiscope.com/products/secureassist/
 * [9] Crawling Code - https://www.owasp.org/index.php/Crawling_Code
 * [10] Mobile internet usage surpasses desktop usage for the first time in history - http://bgr.com/2016/11/02/internet-usage-desktop-vs-mobile
-* [11] Universal Windows Platform (UWP) app - https://docs.microsoft.com/en-us/windows/uwp/get-started/whats-a-uwp
 * [12] Worldwide Smartphone OS Market Share - http://www.idc.com/promo/smartphone-market-share/os
 * [13] Android Design Principles - https://developer.android.com/design/get-started/principles.html
+* [14] Official (ISC)2 Guide to the CSSLP (ISC2 Press), Mano Paul - https://www.amazon.com/Official-Guide-CSSLP-Second-Press/dp/1466571276/
+* [15] Software Security: Building Security In (Addison-Wesley Professional), Gary McGraw - https://www.amazon.com/Software-Security-Building-Gary-McGraw/dp/0321356705/
+* [16] The evolution of DevOps: Gene Kim on getting to continuous delivery - https://techbeacon.com/evolution-devops-new-thinking-gene-kim
+* [17] Cycript fork powered by Frida - https://github.com/nowsecure/frida-cycript
+* [18] Cycript on steroids: Pumping up portability and performance with Frida - https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/
