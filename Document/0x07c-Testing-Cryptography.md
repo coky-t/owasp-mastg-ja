@@ -38,12 +38,12 @@
 Cipher cipher = Cipher.getInstance("DES");
 ```
 
-##### Block cipher encryption modes
-ECB (Electronic Codebook) encryption mode should not be used, as it is basically a raw cipher. A message is divided into blocks of fixed size and each block is encrypted separately<sup>[6]</sup>.
+##### ブロック暗号モード
+ECB (Electronic Codebook) 暗号モードは基本的に未加工の暗号であるため使用すべきではありません。メッセージは固定サイズのブロックに分割され、各ブロックは個別に暗号化されます <sup>[6]</sup> 。
 
 ![Electronic Codebook (ECB mode encryption)](Images/Chapters/0x07c/ECB.png)
 
-The problem with this encryption method is that any resident properties of the plaintext might well show up in the cipher text, just possibly not as clearly. That's what blocks and key schedules are supposed to protect against, but analyzing the patterns you may be able to deduce properties that you otherwise thought were hidden.
+この暗号化方式の問題点は平文の常駐プロパティが暗号テキストによく現れる可能性があることです。ブロックと鍵スケジュールは防御すべきものですが、パターンを分析することで隠されていると思っているプロパティを推測することができます。
 
 ![Difference of encryption modes](Images/Chapters/0x07c/EncryptionMode.png)
 
