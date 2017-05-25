@@ -8,13 +8,15 @@
 
 #### 概要
 
-良い暗号アルゴリズムを選択するだけでは十分ではありません。誤って構成されるとそのようなアルゴリズムのセキュリティに影響を及ぼすことがよくあります。これまでの多くの強力なアルゴリズムや構成が現在では脆弱であるもしくはベストプラクティスに準拠していないとみなされています。したがって、最新のベストプラクティスを定期的に確認し、それに応じて構成を調整することが重要です。
+強力な暗号アルゴリズムを選択するだけでは十分ではありません。誤って構成されるとそのようなアルゴリズムのセキュリティに影響を及ぼすことがよくあります。これまでの多くの強力なアルゴリズムや構成が現在では脆弱であるもしくはベストプラクティスに準拠していないとみなされています。したがって、最新のベストプラクティスを定期的に確認し、それに応じて構成を調整することが重要です。
 
 多くの暗号アルゴリズムおよびプロトコルは重大な弱点があることが示されているか、現代のセキュリティ要件には不十分であるため、使用してはいけません。
 
 #### 静的解析
 
-* 暗号アルゴリズムは最新のもので業界標準に準拠している。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、(NIST 認定であっても) Dual_EC_DRBG などの不十分な乱数生成器などがあります。これらはすべて非セキュアであるとマークされ、使用すべきではなく、アプリケーションやサーバーから削除すべきです。
+以下のリストはソースコードの暗号アルゴリズムの使用を検証するためのさまざまなチェックを示しています。
+
+* 暗号アルゴリズムは最新のもので業界標準に準拠している。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、(NIST 認定であっても) Dual_EC_DRBG などの不十分な乱数生成器などがあります。これらはすべて非セキュアであるとマークされ、使用すべきではなく、アプリやサーバーのコードベースから削除すべきです。
 * 鍵長は業界標準に準拠しており、十分な時間を保護する。ムーアの法則を考慮した鍵長と保護の比較はオンラインで利用可能です <sup>[3]</sup> 。
 * 暗号パラメータは妥当な範囲内で十分に定義されている。これには、ハッシュ関数出力と少なくとも同じ長さであるべき暗号ソルト、パスワード導出関数と反復回数の妥当な選択肢 (PBKDF2, scrypt, bcrypt など)、ランダムでユニークな IV、適切なブロック暗号モード (ECV は特定のケースを除いて使用すべきではないなど)、適切な鍵管理 (3DES は3つの独立した鍵を持つべきであるなど) など。
 
@@ -36,13 +38,22 @@
 Cipher cipher = Cipher.getInstance("DES");
 ```
 
+##### Block cipher encryption modes
+ECB (Electronic Codebook) encryption mode should not be used, as it is basically a raw cipher. A message is divided into blocks of fixed size and each block is encrypted separately<sup>[6]</sup>.
+
+![Electronic Codebook (ECB mode encryption)](Images/Chapters/0x07c/ECB.png)
+
+The problem with this encryption method is that any resident properties of the plaintext might well show up in the cipher text, just possibly not as clearly. That's what blocks and key schedules are supposed to protect against, but analyzing the patterns you may be able to deduce properties that you otherwise thought were hidden.
+
+![Difference of encryption modes](Images/Chapters/0x07c/EncryptionMode.png)
+
 #### 動的解析
 
 -- TODO [Give examples of Dynamic Testing for "Testing for Insecure and/or Deprecated Cryptographic Algorithms"] --
 
 #### 改善方法
 
-暗号化手法が廃止されていないことを定期的に確認します。以前、10億年の計算時間を要すると考えられていた一部の古いアルゴリズムは数日もしくは数時間で破られる可能性があります。これには MD4, MD5, SHA1, DES, および以前は強力であると考えられて他のアルゴリズムが含まれます。現在推奨されているアルゴリズムの例です。<sup>[1][2]</sup>
+暗号化手法が廃止されていないことを定期的に確認します。以前、年単位の計算時間を要すると考えられていた一部の古いアルゴリズムは数日もしくは数時間で破られる可能性があります。これには MD4, MD5, SHA1, DES, および以前は強力であると考えられて他のアルゴリズムが含まれます。現在推奨されているアルゴリズムの例です。<sup>[1] [2]</sup>
 
 * 機密性: AES-256
 * 完全性: SHA-256, SHA-384, SHA-512
@@ -68,10 +79,13 @@ Cipher cipher = Cipher.getInstance("DES");
 - [3] Security "Crypto" provider deprecated in Android N -  https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html
 - [4] NIST recommendations (2016) - https://www.keylength.com/en/4/
 - [5] BSI recommendations (2017) - https://www.keylength.com/en/8/
+- [6] Electronic Codebook (ECB) - https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_.28ECB.29
 
 ##### ツール
 * QARK - https://github.com/linkedin/qark
 * Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
+
+
 
 ### 暗号のカスタム実装に関するテスト
 
