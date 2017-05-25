@@ -87,31 +87,31 @@ Cipher cipher = Cipher.getInstance("DES");
 
 -- [TODO - The below content was merged from the old iOS 'Verifying Cryptographic Key Management' section. This section needs some review and editing] --
 
-During static analysis, it is important understand how cryptographic algorithms used by the particular target app. Let us divide applications into three main categories:
+静的解析の中では、特定のターゲットアプリが暗号アルゴリズムをどのように使用しているかを理解することが重要です。アプリケーションを3つの主要なカテゴリに分けてみます。
 
-1. An application is a pure online application, where authentication, authorization is done online with application server and no information is stored locally.
-2. An application is mainly an offline application, where authentication and authorization is done purely locally. Application information is stored also locally.
-3. An application is a mixture of the first two, i.e. it supports both: online and offline authentication, some information may be stored locally and some or all actions that are performed online may be performed offline.
-   * A good example of such an app, may be point of sale (POS), where seller may sell products. The app requires connection to the internet, so that it can communicate with backend and update information on products that were sold, cash amount, etc. However, there might be a business requirement that this app must also work in offline mode and would synchronize all information once it connects back to the internet. This will be a mixed app type, i.e. online and offline.
+1. アプリケーションは純粋なオンラインアプリケーションです。認証、認可はアプリケーションサーバーとオンラインで行われます。情報はローカルに格納されません。
+2. アプリケーションは主にオフラインアプリケーションです。認証、認可は純粋にローカルで行われます。アプリケーション情報はローカルにも格納されます。
+3. アプリケーションは最初の2つが混在しています。すなわち、オンライン認証とオフライン認証の両方をサポートし、一部の情報はローカルに格納される可能性があり、オンラインで実行されるアクションの一部またはすべてがオフラインで実行される可能性があります。
+   * このようなアプリケーションの良い例として売り手が商品を販売する店頭 POS があります。このアプリはバックエンドと通信して販売された商品、現金額などの情報を更新できるようインターネットに接続する必要があります。但し、このアプリはオフラインモードでも動作する必要があり、インターネットに接続するとすべての情報を同期するというビジネス要件があるかもしれません。これはオンラインとオフラインが混在するアプリタイプです。
 
-The following checks would be performed in the last two app categories:
+下2つのアプリカテゴリで以下のチェックを実行します。
 
-* Ensure that no keys/passwords are hardcoded and stored within the source code. Pay special attention to any 'administrative' or backdoor accounts enabled in the source code. Storing fixed salt within application or password hashes may cause problems too.
-* Ensure that no obfuscated keys or passwords are in the source code. Obfuscation is easily bypassed by dynamic instrumentation and in principle does not differ from hardcoded keys.
-* If the application is using two-way SSL (i.e. there is both server and client certificate validated) check if:
-   * the password to the client certificate is not stored locally, it should be in the Keychain
-   * the client certificate is not shared among all installations (e.g. hardcoded in the app)
+* ソースコード内に鍵/パスワードがハードコードや格納されていないことを確認します。ソースコードで有効になっている「管理者」アカウントやバックドアアカウントには特に注意します。アプリケーションやパスワードハッシュ内に固定ソルトを格納すると問題が発生する可能性があります。
+* ソースコード内に難読化された鍵やパスワードがないことを確認します。難読化は動的計装によって簡単にバイパスされますので、原理的にハードコードされた鍵と変わりません。
+* アプリケーションが双方向 SSL を使用している(すなわち、サーバー証明書とクライアント証明書の両方が検証されている)場合、以下のことを確認します。
+   * クライアント証明書のパスワードがローカルに格納されていないこと。キーチェーンに格納する必要があります。
+   * クライアント証明書がすべてのインストールで共有されていないこと(アプリ内でハードコードされているなど)
 
-A proper way would be to generate the client certificate upon user registration/first login and then store it in the Keychain.
+適切な方法は、ユーザー登録/初回ログイン時にクライアント証明書を生成してそれをキーチェーンに格納することです。
 
-* Ensure that the keys/passwords/logins are not stored in application data. This can be included in the iTunes backup and increase attack surface. Keychain is the only appropriate place to store credentials of any type (password, certificate, etc.).
-* Ensure that keychain entries have appropriate protection class. The most rigorous being `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` which translates to: entry unlocked only if passcode on the device is set and device is unlocked; the entry is not exportable in backups or by any other means.
+* 鍵/パスワード/ログインがアプリケーションデータに格納されていないことを確認します。これには iTunes バックアップを含めることができ、攻撃領域を拡大することができます。キーチェーンはあらゆる種類の資格情報(パスワード、証明書など)を格納する唯一の場所です。
+* キーチェーンエントリに適切な保護クラスがあることを確認します。最も厳密なのは `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` で次のように解釈されます。デバイスのパスコードが設定され、デバイスがロックされていない場合にのみエントリが解除されます。そのエントリはバックアップやその他の手段でエクスポートできません。
 
-The following checks would be performed in the offline application:
+オフラインアプリケーションでは以下のチェックを実行します。
 
-* if the app relies on an additional encrypted container stored in app data, ensure how the encryption key is used;
-   * if key wrapping scheme is used, ensure that the master secret is initialized for each user, or container is re-encrypted with new key;
-   * check how password change is handled and specifically, if you can use master secret or previous password to decrypt the container.
+* アプリがアプリデータに格納されている追加の暗号化コンテナに依存している場合は、暗号鍵の使用方法を確認します。
+   * 鍵ラッピングスキームが使用されている場合は、マスターシークレットがユーザーごとに初期化されているか、コンテナが新しい鍵で再暗号化されていることを確認します。
+   * マスターシークレットや以前のパスワードを使用してコンテナを復号化できる場合は、パスワード変更がどのように処理されるかを確認します。
 
 #### 動的解析
 
