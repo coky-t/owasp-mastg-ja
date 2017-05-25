@@ -8,19 +8,29 @@
 
 アプリケーションは、一方では公的で非特権的な情報や機能、他方で機密性が高く特権的な情報や機能といったさまざまなエリアを有することがよくあります。ユーザーは前者に制限なしで合法的にアクセスできます。しかし、機密性が高く特権的な情報や機能は正当なユーザーだけに保護されアクセスできるようにするために、適切な認証が行われる必要があります。
 
+There are different mechanisms available to implement server side authentication, either:
+* Cookie-Based Authentication or
+* Token-Based Authentication.
+
+Cookie-Based Authentication is the traditional authentication mechanism used in web applications. In order to adopt to the different requirements of mobile apps Token-Based Authentication was specified and is more and more used nowadays in mobile apps. A prominent example for this is JSON Web Token or JWT<sup>[1]</sup> which can be part of an OAuth2 authentication and authorization framework.
+
 #### 静的解析
 
-ソースコードが入手可能である場合は、まず機密性が高く特権的な情報や機能を持つすべてのセクションを突き止めます。それらは保護する必要があるものです。アイテムにアクセスする前に、アプリケーションはユーザーが実際に誰でありセクションにアクセスすることを許可されていることを確認する必要があります。ユーザーを認証したり既存のセッショントークンを取得およびチェックするために使用されるターゲットとするプログラミング言語のキーワードを探します (KeyStore, SharedPreferences, など) 。
+サーバーソースコードが入手可能である場合は、まずサーバー側で使用および実施されている認証メカニズム(トークンまたはクッキーベース)を特定します。それから機密性が高く特権的な情報や機能を持つすべてのセクションを突き止めます。それらは保護する必要があるものです。アイテムにアクセスする前に、アプリケーションはユーザーが実際に誰でありセクションにアクセスすることを許可されていることを確認する必要があります。ユーザーを認証したり既存のセッショントークンを取得およびチェックするために使用されるサーバーソースコードのキーワードを探します。
 
--- ToDo: Create more specific content about authentication frameworks, the framework need to be identified and if the best practices offered by the framework are used for authentication. This should not be implemented by the developers themselves.
+Authentication mechanisms shouldn't be implemented from scratch, instead they should be build on top of frameworks that offer this functionality. The framework used on the server side should be identified and the usage of the available APIs should be verified if they are used accordingly to best practices. Sample frameworks on server side are:
 
+- Spring (Java) - https://projects.spring.io/spring-security/
+- PHP - http://php.net/manual/en/features.http-auth.php
+- Ruby on Rails -  http://guides.rubyonrails.org/security.html
+
+JWT is also available for all major programming languages, like PHP<sup>[3]</sup> or Java Spring<sup>[4]</sup>. Please also follow the test cases in the OWASP JWT Cheat Sheet<sup>[1]</sup> if JWT is used. Also the OWASP Testing Guide<sup>[2]</sup> should be consulted for more authentication test cases.
 
 #### 動的解析
 
-認証を確認する最も簡単な方法はアプリをブラウズして特権的なセクションにアクセスしてみることです。これを手動で行うことができない場合は、自動クローラを使用します (Drozer で機密情報を含むアクティビティを認証要素を提供せずに開始しようとするなど。詳細については、https://labs.mwrinfosecurity.com/tools/drozer/ にある公式の Drozer ガイドを参照ください) 。
+To verify authentication, first all privileged sections a user can access within an app should be explored. For all requests sent to an endpoint, an interception proxy can be used to capture network traffic while being authenticated. Then, try to replay requests while removing authentication information. If the endpoint is still sending back the requested data, that should only be available for authenticated users, authentication checks are not implemented properly on the endpoint.
 
-アプリがバックエンドサーバーと情報を交換する場合、傍受プロキシを使用して認証中のネットワークトラフィックをキャプチャできます。その後、ログアウトして、認証情報を削除してリクエストの再生を試みます。
-さらなる攻撃方法については Web ベースアプリケーションに関する OWASP テストガイド V4 (OTG-AUTHN-004) <sup>[1]</sup> にあります。
+さらなる攻撃方法については Web ベースアプリケーションに関する OWASP テストガイド V4 (OTG-AUTHN-004) <sup>[5]</sup> にあります。
 
 #### 改善方法
 
@@ -46,17 +56,18 @@
 
 ##### その他
 
-[1] OWASP Testing Guide V4 (OTG-AUTHN-004) - https://www.owasp.org/index.php/Testing_for_Bypassing_Authentication_Schema
+[1] OWASP JWT Cheat Sheet for Java: `https://www.owasp.org/index.php/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java`
+[2] OWASP Testing Guide V4 (Testing for Session Management) - https://www.owasp.org/index.php/Testing_for_Session_Management
+[3] PHP JWT - https://github.com/firebase/php-jwt
+[4] Java Spring with JWT - http://projects.spring.io/spring-security-oauth/docs/oauth2.html
+[5] OWASP Testing Guide V4 (OTG-AUTHN-004) - https://www.owasp.org/index.php/Testing_for_Bypassing_Authentication_Schema
 
-##### ツール
-
-* Drozer - https://labs.mwrinfosecurity.com/tools/drozer/
 
 ### セッション管理のテスト
 
 #### 概要
 
-すべての重要な(権限を持たないかもしれない)アクションはユーザーが適切に認証された後に実行する必要があります。アプリケーションは「セッション」内でユーザーを覚えています。不適切に管理されると、セッションはさまざまな攻撃の対象となります。正当なユーザーのセッションが悪用され、攻撃者がユーザーを偽装する可能性があります。その結果、データは失われたり、機密性が損なわれたり、不正行為が行われたりする可能性があります。
+すべての重要な(権限を持たないかもしれない)アクションはユーザーが適切に認証された後に実行する必要があります。アプリケーションはセッション内でユーザーを覚えています。不適切に管理されると、セッションはさまざまな攻撃の対象となります。正当なユーザーのセッションが悪用され、攻撃者がユーザーを偽装する可能性があります。その結果、データは失われたり、機密性が損なわれたり、不正行為が行われたりする可能性があります。
 
 セッションには開始と終了が必要です。攻撃者がセッショントークンを偽造できないようにする必要があります。代わりに、セッションがサーバー側のシステムによってのみ開始できることを保証する必要があります。また、セッションの継続期間はできる限り短くする必要があり、セッションは一定時間経過後またはユーザーが明示的にログアウトした後に適切に終了する必要があります。セッショントークンを再利用できないようにする必要があります。
 
@@ -64,21 +75,24 @@
 
 #### 静的解析
 
-ソースコードが入手可能である場合、テスト担当者はセッションが開始、保存、交換、検証、取消される場所を探します。これは特権情報や特権アクションへのアクセスが発生するたびに実行する必要があります。これらの事項について、自動ツールや(Python や Perl などの任意の言語での)カスタムスクリプトを使用して、対象言語に関連するキーワードを探すことができます。また、アプリケーション構造に精通したチームメンバーが関与して、必要なすべてのエントリポイントをカバーしたり、プロセスを特定したりする可能性があります。
+サーバーソースコードが入手可能である場合、テスト担当者はセッションが開始、保存、交換、検証、終了される場所を探します。これは特権情報や特権アクションへのアクセスが発生するたびに実行する必要があります。これらの事項について、自動ツールや手動検索を使用して、対象プログラミング言語に関連するキーワードを探すことができます。サーバー側のフレームワークの例を以下に示します。
 
--- ToDo: Create more specific content about session management in frameworks, the framework need to be identified and if the best practices offered by the framework are used for session management. This should not be implemented by the developers themselves.
-
+- Spring (Java) - http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#ns-session-mgmt
+- PHP - http://php.net/manual/en/book.session.php
+- Ruby on Rails -  http://guides.rubyonrails.org/security.html
 
 #### 動的解析
 
-ベストプラクティスはまず手動もしくは自動ツールを使用してアプリケーションをクロールすることです。アクションの特権情報につながるすべての部分が保護され、有効なセッショントークンを必須としているかどうかを確認します。
+ベストプラクティスはまず手動もしくは自動ツールを使用してアプリケーションをクロールすることです。目的は、特権情報や特権アクションにつながるアプリケーションのすべての部分が保護され、有効なセッショントークンを必須としているかどうかを確認することです。
 
-次に、テスト担当者は任意の傍受プロキシを使用して、クライアントとサーバー間のネットワークトラフィックをキャプチャし、セッショントークンの操作を試みます。
-- 有効なトークンを不正なものに変更する (有効なトークンに 1 を加える、トークンの一部を削除するなど)
-- リクエストの有効なトークンを削除して、アプリケーションの対象部分にまだアクセスできるかどうかをテストする
-- ログアウトと再ログインを行い、トークンが変更されているか否かを確認する
-- 特権レベルを変更(ステップアップ認証)する場合、前のものを使用して(つまり低い認可レベルで)アプリケーションの特権部分にアクセスを試みる
-- ログアウト後にトークンの再使用を試みる
+次に、任意の傍受プロキシ内でクロールしたリクエストを使用して、セッショントークンの操作を試みます。
+- 不正なものに変更する(有効なセッショントークンに 1 を加える、その一部を削除するなど)。
+- リクエストの有効なものを削除して、アプリケーションの情報や機能にまだアクセスできるかどうかをテストする。
+- ログアウトと再ログインを行い、セッショントークンが変更されているか否かを確認する。
+- 特権レベルを変更(ステップアップ認証)する場合。前のものを使用して(つまり低い認可レベルで)アプリケーションの特権部分にアクセスを試みる。
+- ログアウト後にセッショントークンの再使用を試みる。
+
+セッション管理テストケースについては OWASP Testing Guide <sup>[1]</sup> も参照ください。
 
 #### 改善方法
 
@@ -86,12 +100,12 @@
 - 常にサーバー側で作成する
 - 予測できないようにする (適切な長さとエントロピーを使用する)
 - 常にセキュアな接続(HTTPS など)を介してクライアントとサーバー間で交換する
-- クライアント側でセキュアに格納する
-- ユーザーがアプリケーションの特権部分にアクセスしようとする際には、トークンが有効であり、適切な認可レベルに応じていることを検証する
+- モバイルアプリ内でセキュアに格納する
+- ユーザーがアプリケーションの特権部分にアクセスしようとする際には、(セッショントークンが有効であり、適切な認可レベルに応じていることを)検証する
 - ユーザーがより高い特権を必要とする操作を実行するために再度ログインするよう求められた際には、更新する
-- ユーザーがログアウトしたとき、もしくは一定時間が経過した後には、終了する
+- ユーザーがログアウトしたとき、もしくは一定時間が経過した後には、サーバー側で終了して、モバイルアプリ内で削除する
 
-組み込みのセッショントークンジェネレータを使用することを強くお勧めします。通常、カスタムトークンよりもセキュアであり、そのようなジェネレータはほとんどのプラットフォームや言語に存在します。
+使用するフレームワークに組み込まれているセッショントークンジェネレータを使用することを強くお勧めします。それらはカスタムなものを構築するよりもセキュアです。そのようなジェネレータはほとんどのプラットフォームや言語に存在します。
 
 #### 参考情報
 
@@ -109,32 +123,29 @@
 
 ##### その他
 
-[1] OWASP Session Management Cheat Sheet: https://www.owasp.org/index.php/Session_Management_Cheat_Sheet
-[2] OWASP Testing Guide V4 (Testing for Session Management) - https://www.owasp.org/index.php/Testing_for_Session_Management
+[1] OWASP Testing Guide V4 (Testing for Session Management) - https://www.owasp.org/index.php/Testing_for_Session_Management
 
 ##### ツール
 
 * Zed Attack Proxy
 * Burp Suite
 
+
+
 ### ログアウト機能のテスト
 
 #### 概要
 
-セッションの終了はセッションのライフサイクルの重要な部分です。セッショントークンの寿命を最小限にすることはセッションハイジャック攻撃の成功の可能性を低下させます。
-
-このテストケースのスコープはアプリケーションにログアウト機能があることおよびクライアント側とサーバー側でセッションを実際に終了させることを検証することです。
+セッションの終了はセッションのライフサイクルの重要な部分です。セッショントークンの寿命を最小限にすることはセッションハイジャック攻撃の成功の可能性を低下させます。このテストケースのスコープはアプリケーションにログアウト機能があることおよびクライアント側とサーバー側でセッションを実際に終了させることを検証することです。
 
 ##### 静的解析
 
-サーバー側コードが利用可能な場合、ログアウト機能の一部としてセッションが終了していることをレビューします。
-ここで必要なチェックは使用される技術により異なります。サーバー側で適切なログアウトを実装するためにセッションを終了する方法の例を以下の示します。
+サーバー側コードが利用可能な場合、ログアウト機能の一部としてセッションが終了していることをレビューします。ここで必要なチェックは使用される技術により異なります。サーバー側で適切なログアウトを実装するためにセッションを終了する方法の例を以下の示します。
 - Spring (Java) -  http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/logout/SecurityContextLogoutHandler.html
 - Ruby on Rails -  http://guides.rubyonrails.org/security.html
 - PHP - http://php.net/manual/en/function.session-destroy.php
 - JSF - http://jsfcentral.com/listings/A20158?link
 - ASP.Net - https://msdn.microsoft.com/en-us/library/ms524798(v=vs.90).aspx
-- Amazon AWS - http://docs.aws.amazon.com/appstream/latest/developerguide/rest-api-session-terminate.html
 
 #### 動的解析
 
@@ -175,6 +186,8 @@
 
 * [1] OTG-SESS-006 - https://www.owasp.org/index.php/Testing_for_logout_functionality
 * [2] Session Management Cheat Sheet - https://www.owasp.org/index.php/Session_Management_Cheat_Sheet
+
+
 
 ### パスワードポリシーのテスト
 
