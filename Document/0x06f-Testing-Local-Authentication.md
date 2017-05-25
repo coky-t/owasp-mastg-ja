@@ -1,8 +1,8 @@
 ## ローカル認証のテスト (iOS アプリ)
 
-Most of the authentication and session management requirements of the MASVS are generic ones, that do not rely on a specific implementation on iOS or Android.
+MASVS の認証とセッション管理要件のほとんどは汎用的なものであるため、iOS や Android の特定の実装に依存しません。
 
-As a result only requirement "4.6	Biometric authentication, if any, is not event-bound (i.e. using an API that simply returns "true" or "false"). Instead, it is based on unlocking the keychain/keystore." is described in this chapter. All other test need to verify server side implementations and can be found in the Appendix "Testing Authentication".
+結果として、要件「4.6 生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。」だけが本章に記載されています。他のすべてのテストではサーバー側実装を検証する必要があります。付録「認証とセッション管理のテスト」にあります。
 
 
 ### 生体認証のテスト
