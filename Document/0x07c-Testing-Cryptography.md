@@ -1,22 +1,22 @@
 ## 暗号化のテスト
 
-The following chapter outlines cryptography requirements of the MASVS into technical test cases. Test cases listed in this chapter are focused on server side and therefore are not relying on a specific implementation on iOS or Android.
+以下の章ではテクニカルテストケースでの MASVS の暗号化要件について説明します。この章に記載されるテストケースはサーバー側に焦点を当てているため、iOS や Android の特定の実装に依存しません。
 
-Proper cryptographic key management is a common pitfall when designing mobile applications.
+適切な暗号鍵管理はモバイルアプリケーションを設計する際の共通の落とし穴です。
 
 ### 安全でないもしくは廃止された暗号化アルゴリズムに関するテスト
 
 #### 概要
 
-Choosing good cryptographic algorithm alone is not enough. Often security of otherwise sound algorithms can be affected if misconfigured. Many previously strong algorithms and their configurations are now considered vulnerable or non-compliant with best practices. It is therefore important to periodically check current best practices and adjust configurations accordingly.  
+良い暗号アルゴリズムを選択するだけでは十分ではありません。誤って構成されるとそのようなアルゴリズムのセキュリティに影響を及ぼすことがよくあります。これまでの多くの強力なアルゴリズムや構成が現在では脆弱であるもしくはベストプラクティスに準拠していないとみなされています。したがって、最新のベストプラクティスを定期的に確認し、それに応じて構成を調整することが重要です。
 
 多くの暗号アルゴリズムおよびプロトコルは重大な弱点があることが示されているか、現代のセキュリティ要件には不十分であるため、使用してはいけません。
 
 #### 静的解析
 
-* Cryptographic algorithms are up to date and in-line with industry standards. This includes, but is not limited to outdated block ciphers (e.g. DES), stream ciphers (e.g. RC4), as well as hash functions (e.g. MD5) and broken random number generators like Dual_EC_DRBG (even if they are NIST certified). All of these should be marked as insecure and should not be used and removed from the application and server.
-* Key lengths are in-line with industry standards and provide protection for sufficient amount of time. An online comparison of different key lengths and protection they provide taking into account Moore's law is available online<sup>[3]</sup>.
-* Cryptographic parameters are well defined within reasonable range. This includes, but is not limited to: cryptographic salt, which should be at least the same length as hash function output, reasonable choice of password derivation function and iteration count (e.g. PBKDF2, scrypt or bcrypt), IVs being random and unique, fit-for-purpose block encryption modes (e.g. ECB should not be used, except specific cases), key management being done properly (e.g. 3DES should have three independent keys) and so on.
+* 暗号アルゴリズムは最新のもので業界標準に準拠している。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、(NIST 認定であっても) Dual_EC_DRBG などの不十分な乱数生成器などがあります。これらはすべて非セキュアであるとマークされ、使用すべきではなく、アプリケーションやサーバーから削除すべきです。
+* 鍵長は業界標準に準拠しており、十分な時間を保護する。ムーアの法則を考慮した鍵長と保護の比較はオンラインで利用可能です <sup>[3]</sup> 。
+* 暗号パラメータは妥当な範囲内で十分に定義されている。これには、ハッシュ関数出力と少なくとも同じ長さであるべき暗号ソルト、パスワード導出関数と反復回数の妥当な選択肢 (PBKDF2, scrypt, bcrypt など)、ランダムでユニークな IV、適切なブロック暗号モード (ECV は特定のケースを除いて使用すべきではないなど)、適切な鍵管理 (3DES は3つの独立した鍵を持つべきであるなど) など。
 
 アプリケーション全体で暗号アルゴリズムのインスタンスを特定するためにソースコードを調査して、以下のような既知の脆弱なものを探します。
 
