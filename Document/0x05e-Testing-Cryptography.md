@@ -100,6 +100,8 @@ buildTypes {
 * [QARK](https://github.com/linkedin/qark)
 * [Mobile Security Framework](https://github.com/ajinabraham/Mobile-Security-Framework-MobSF)
 
+
+
 ### 暗号化標準アルゴリズムの構成の検証
 
 #### 概要
@@ -152,6 +154,8 @@ NIST <sup>1</sup> や BSI <sup>2</sup> 推奨のような現在強力である�
 
 -- TODO [Add relevant tools for "Verifying the Configuration of Cryptographic Standard Algorithms"] --
 * Enjarify - https://github.com/google/enjarify
+
+
 
 ### 乱数生成器のテスト
 
