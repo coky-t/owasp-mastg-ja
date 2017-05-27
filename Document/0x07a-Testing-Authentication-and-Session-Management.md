@@ -8,27 +8,27 @@
 
 アプリケーションは、一方では公的で非特権的な情報や機能、他方で機密性が高く特権的な情報や機能といったさまざまなエリアを有することがよくあります。ユーザーは前者に制限なしで合法的にアクセスできます。しかし、機密性が高く特権的な情報や機能は正当なユーザーだけに保護されアクセスできるようにするために、適切な認証が行われる必要があります。
 
-There are different mechanisms available to implement server side authentication, either:
-* Cookie-Based Authentication or
-* Token-Based Authentication.
+サーバー側認証を実装するには以下のいずれかの方法があります。
+* クッキーベースの認証
+* トークンベースの認証
 
-Cookie-Based Authentication is the traditional authentication mechanism used in web applications. In order to adopt to the different requirements of mobile apps Token-Based Authentication was specified and is more and more used nowadays in mobile apps. A prominent example for this is JSON Web Token or JWT<sup>[1]</sup> which can be part of an OAuth2 authentication and authorization framework.
+クッキーベースの認証は Web アプリケーションで使用される旧来の認証メカニズムです。モバイルアプリのさまざまな要件に対応するためにトークンベースの認証が設計され、今日ではモバイルアプリでますます使用されています。この顕著な例は OAuth2 認証および認可フレームワークの一部である JSON Web トークンもしくは JWT <sup>[1]</sup> です。
 
 #### 静的解析
 
 サーバーソースコードが入手可能である場合は、まずサーバー側で使用および実施されている認証メカニズム(トークンまたはクッキーベース)を特定します。それから機密性が高く特権的な情報や機能を持つすべてのセクションを突き止めます。それらは保護する必要があるものです。アイテムにアクセスする前に、アプリケーションはユーザーが実際に誰でありセクションにアクセスすることを許可されていることを確認する必要があります。ユーザーを認証したり既存のセッショントークンを取得およびチェックするために使用されるサーバーソースコードのキーワードを探します。
 
-Authentication mechanisms shouldn't be implemented from scratch, instead they should be build on top of frameworks that offer this functionality. The framework used on the server side should be identified and the usage of the available APIs should be verified if they are used accordingly to best practices. Sample frameworks on server side are:
+認証メカニズムはゼロから実装するのではなく、この機能を提供するフレームワーク上に構築すべきです。サーバー側で使用されるフレームワークを特定し、利用可能な API を使用してベストプラクティスに応じて使用されるかどうか検証すべきです。サーバー側のサンプルフレームワークは以下のとおりです。
 
 - Spring (Java) - https://projects.spring.io/spring-security/
 - PHP - http://php.net/manual/en/features.http-auth.php
 - Ruby on Rails -  http://guides.rubyonrails.org/security.html
 
-JWT is also available for all major programming languages, like PHP<sup>[3]</sup> or Java Spring<sup>[4]</sup>. Please also follow the test cases in the OWASP JWT Cheat Sheet<sup>[1]</sup> if JWT is used. Also the OWASP Testing Guide<sup>[2]</sup> should be consulted for more authentication test cases.
+JWT は PHP <sup>[3]</sup> や Java Spring <sup>[4]</sup> などの主要なプログラミング言語でも利用できます。JWT を使用する場合は、OWASP JWT Cheat Sheet <sup>[1]</sup> のテストケースにも従います。また認証のテストケースについては OWASP Testing Guide <sup>[2]</sup> も参照ください。
 
 #### 動的解析
 
-To verify authentication, first all privileged sections a user can access within an app should be explored. For all requests sent to an endpoint, an interception proxy can be used to capture network traffic while being authenticated. Then, try to replay requests while removing authentication information. If the endpoint is still sending back the requested data, that should only be available for authenticated users, authentication checks are not implemented properly on the endpoint.
+認証を検証するには、まずユーザーがアプリ内でアクセスできるすべての特権セクションを調べるべきです。エンドポイントに送信されるすべてのリクエストに対して、傍受プロキシを使用して認証されている間のネットワークトラフィックを取得します。次に、認証情報を削除してリクエストの再生を試みます。エンドポイントが依然としてリクエストされたデータを送り返している場合、認証されたユーザーにのみ利用可能にすべきであり、認証チェックがエンドポイントで正しく実装されていません。
 
 さらなる攻撃方法については Web ベースアプリケーションに関する OWASP テストガイド V4 (OTG-AUTHN-004) <sup>[5]</sup> にあります。
 
