@@ -193,45 +193,45 @@ JWT は PHP <sup>[3]</sup> や Java Spring <sup>[4]</sup> などの主要なプ�
 
 #### 概要
 
-Password strength is a key concern when using passwords for authentication. Password policy defines requirements that end users should adhere to. Password length, password complexity and password topologies should properly be included in the Password Policy. A "strong" password policy makes it difficult or even infeasible for one to guess the password through either manual or automated means. 
+パスワードの強度は認証にパスワードを使用する場合の重要な問題です。パスワードポリシーはエンドユーザーが遵守すべき要件を定義します。パスワードの長さ、パスワードの複雑さ、パスワードの形態はパスワードぽりいしーに正しく含まれているべきです。「強力な」パスワードポリシーは手動または自動のいずれかの方法でパスワードを推測することを困難もしくは不可能にさえします。
 
 
 #### 静的解析
 
-Regular Expressions are often used to validate passwords. The password verification check against a defined password policy need to be reviewed if it rejects passwords that violate the password policy.
+正規表現はパスワードの検証によく使用されます。定義されたパスワードポリシーに対するパスワード検証チェックではパスワードポリシーに違反するパスワードを拒否するかどうかをレビューする必要があります。
 
-Passwords can be set when registering accounts, changing the password or when resetting the password in a forgot password process. All of the available mechanisms in the application need to use the same password verification check that is aligned with the password policy.
+アカウントの登録、パスワードの変更、パスワードを忘れた場合のパスワードのリセット時にパスワードを設定できます。アプリケーション内で利用可能なすべてのメカニズムはパスワードポリシーに沿って同じパスワード検証チェックを使用する必要があります。
 
-If a frameworks is used that offers the possibility to create and enforce a password policy for all users of the application, the configuration should be checked.
+フレームワークを使用してアプリケーションのすべてのユーザーにパスワードポリシーを作成および強制している場合、公正を確認すべきです。
 
 
 #### 動的解析
 
-All available functions that allow a user to set a password need to verified if passwords can be used that violate the password policy specifications. This can be:
+ユーザーがパスワードを設定できるようにするすべての機能は、パスワードポリシー仕様に違反するパスワードを使用できるかどうかを検証する必要があります。これは以下のようになります。
 
-- Self-registration function for new users that allows to specify a password
-- Forgot Password function that allows a user to set a new password
-- Change Password function that allows a logged in user to set a new password
+- パスワードを指定できる新規ユーザーの自己登録機能
+- ユーザーが新しいパスワードを設定できるパスワード忘れ機能
+- ログインユーザーが新しいパスワードを設定できるパスワード変更機能
 
-An interception proxy should be used, to bypass local passwords checks within the app and to be able verify the password policy implemented on server side.
+傍受プロキシを使用して、アプリ内でのローカルパスワードチェックをバイパスし、サーバー側で実装されたパスワードポリシーを検証できるようにします。
 
 
 #### 改善方法
 
-A good password policy should define the following requirements in order to avoid password guessing attacks or even brute-forcing.
+適切なパスワードポリシーには以下の要件を定義して、パスワード推測攻撃やブルートフォース攻撃を避けるべきでる。
 
-#####  Password Length
-* Minimum length of the passwords should be enforced, at least 10 characters.
-* Maximum password length should not be set too low, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.
+##### パスワードの長さ
+* パスワードの最小の長さは少なくとも10文字以上とすべきです。
+* パスワードの最大の長さは低すぎてはいけません。ユーザーがパスフレーズを作成する妨げになります。典型的な最大長は128文字です。
 
-##### Password Complexity
-* Password must meet at least 3 out of the following 4 complexity rules
-1. at least 1 uppercase character (A-Z)
-2. at least 1 lowercase character (a-z)
-3. at least 1 digit (0-9)
-4. at least 1 special character (punctuation)
+##### パスワードの複雑さ
+* パスワードは以下の複雑さのルールのうち少なくとも3つを満たす必要があります。
+1. 少なくとも1つの英大文字 (A-Z)
+2. 少なくとも1つの英小文字 (a-z)
+3. 少なくとも1つの数字 (0-9)
+4. 少なくとも1つの特殊文字 (記号)
 
-For further details check the OWASP Authentication Cheat Sheet<sup>[1]</sup>.
+詳細は OWASP Authentication Cheat Sheet <sup>[1]</sup> を参照ください。
 
 #### 参考情報
 
