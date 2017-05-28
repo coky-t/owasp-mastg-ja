@@ -162,7 +162,7 @@ Missing Google Over-The-Air (OTA) certificates are another sign of a custom ROM,
 
 ##### Bypassing Root Detection
 
-Run execution traces using JDB, DDMS, strace and/or Kernel modules to find out what the app is doing - you'll usually see all kinds of suspect interactions with the operating system, such as opening *su* for reading or obtaining a list of processes. These interactions are surefire signs of root detection. Identify and deactivate the root detection mechanisms one-by-one. If you're performing a black-box resiliency assessment, disabling the root detection mechanisms is your first step.
+Run execution traces using JDB, DDMS, strace and/or Kernel modules to find out what the app is doing - you'll usually see all kinds of suspect interactions with the operating system, such as opening *su* for reading or obtaining a list of processes. These interactions are surefire signs of root detection. Identify and deactivate the root detection mechanisms one-by-one. If you're performing a black-box resilience assessment, disabling the root detection mechanisms is your first step.
 
 You can use a number of techniques to bypass these checks, most of which were introduced in the "Reverse Engineering and Tampering" chapter:
 
@@ -1063,41 +1063,72 @@ N/A
 -- TODO [Add links to tools for "Testing Emulator Detection"] --
 * Enjarify - https://github.com/google/enjarify
 
-### メモリ整合性監視のテスト
+### ランタイム整合性監視のテスト
 
 #### 概要
 
-Controls in this category verify the integrity of the app's own memory space. The goal is to protect against modifications applied both to the app's files, as well against as memory patches applied during runtime. This includes unwanted changes to binary code or bytecode, functions pointer tables, and important data structures. 
+Controls in this category verify the integrity of the app's own memory space, with the goal of protecting against memory patches applied during runtime. This includes unwanted changes to binary code or bytecode, functions pointer tables, and important data structures, as well as rogue code loaded into process memory. Intergrity can be verified either by:
 
-In principle, this is done by comparing the contents of memory, or a checksum over the contents, with known "good" values. There are many ways of implementing such checks.
+1. Comparing the contents of memory, or a checksum over the contents, with known good values;
+2. Searching memory for signatures of unwanted modifications.
 
-**Detecting GOT hooks**
+There is some overlap with the category "detecting reverse engineering tools and frameworks", and in fact we already demonstrated the signature-based approach in that chapter, when we showed how to search for frida-related strings in process memory. Below are a few more examples for different kinds of integrity monitoring.
 
-In the world of ELF binaries, the Global Offset Table (GOT) is used as a layer of indirection for calling library functions. During runtime, the dynamic linker patches this table with the absolute addresses of global symbols. Because the GOT is located in writeable memory, it is possible to overwrite the stored function addresses and redirect legitimate function calls to adversary-controlled code.
+##### Examples
 
-This type of hooks can be detected by verifying that each GOT entry points into a legitimately loaded library.
+**Checking the Java stack trace for suspicous method calls**
 
-In contrast to GNU <code>ld</code>, which resolves symbol addresses only once they are needed for the first time (lazy binding), the Android linker resolves all external function and writes the respective GOT entries immediately when a library is loaded (immediate binding).
+Detection code from the dead && end blog <sup>[3]</sup>.
 
-**Detecting Inline Hooks***
+```java
+try {
+  throw new Exception();
+}
+catch(Exception e) {
+  int zygoteInitCallCount = 0;
+  for(StackTraceElement stackTraceElement : e.getStackTrace()) {
+    if(stackTraceElement.getClassName().equals("com.android.internal.os.ZygoteInit")) {
+      zygoteInitCallCount++;
+      if(zygoteInitCallCount == 2) {
+        Log.wtf("HookDetection", "Substrate is active on the device.");
+      }
+    }
+    if(stackTraceElement.getClassName().equals("com.saurik.substrate.MS$2") && 
+        stackTraceElement.getMethodName().equals("invoked")) {
+      Log.wtf("HookDetection", "A method on the stack trace has been hooked using Substrate.");
+    }
+    if(stackTraceElement.getClassName().equals("de.robv.android.xposed.XposedBridge") && 
+        stackTraceElement.getMethodName().equals("main")) {
+      Log.wtf("HookDetection", "Xposed is active on the device.");
+    }
+    if(stackTraceElement.getClassName().equals("de.robv.android.xposed.XposedBridge") && 
+        stackTraceElement.getMethodName().equals("handleHookedMethod")) {
+      Log.wtf("HookDetection", "A method on the stack trace has been hooked using Xposed.");
+    }
 
-An inline hook overwrites the first few bytes of a function to redirects control flow to adversary-controlled code.
+  }
+}
+```
+
+**Verifying the Global Offset Table**
+
+In the world of ELF binaries, the Global Offset Table (GOT) is used as a layer of indirection for calling library functions. During runtime, the dynamic linker patches this table with the absolute addresses of global symbols. Because the GOT is located in writeable memory, it is possible to overwrite the stored function addresses and redirect legitimate function calls to adversary-controlled code. This type of hooks can be detected by verifying that each GOT entry points into a legitimately loaded library.
+
+In contrast to GNU <code>ld</code>, which resolves symbol addresses only once they are needed for the first time (lazy binding), the Android linker resolves all external function and writes the respective GOT entries immediately when a library is loaded (immediate binding). During runtime, we can therefore expect all GOT entries to point to valid memory locations within the code sections of their respective libraries.
+
+**Detecting Inline Hooks**
 
 -- TODO [Needs more research and code samples] --
 
-#### 静的解析
+#### Bypassing Runtime Integrity Checks
 
 -- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
 
 -- TODO [Confirm purpose of sentence "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
 
-#### 動的解析
+#### Effectiveness Assessment
 
 -- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
-
-#### 改善方法
-
--- TODO [Describe the best practices that developers should follow to prevent this issue "-- TODO [Add content on "Testing Memory Integrity Checks" with source code] --".] --
 
 #### 参考情報
 
@@ -1117,6 +1148,8 @@ An inline hook overwrites the first few bytes of a function to redirects control
 ##### その他
 
 - [1] Michael Hale Ligh, Andrew Case, Jamie Levy, Aaron Walters (2014) *The Art of Memory Forensics.* Wiley. "Detecting GOT Overwrites", p. 743.
+- [2] Netitude Blog - "Who owns your runtime?" - https://labs.nettitude.com/blog/ios-and-android-runtime-and-anti-debugging-protections/
+- [3] dead && end blog - Android Anti-Hooking Techniques in Java - http://d3adend.org/blog/?p=589
 
 ##### ツール
 
@@ -1128,72 +1161,8 @@ An inline hook overwrites the first few bytes of a function to redirects control
 #### 概要
 
 The goal of device binding is to impede an attacker when he tries to copy an app and its state from device A to device B and continue the execution of the app on device B. When device A has been deemend trusted, it might have more privileges than device B, which should not change when an app is copied from device A to device B.
+
 In the past, Android developers often relied on the Secure ANDROID_ID (SSAID) and MAC addresses. However, the behavior of the SSAID has changed since Android O and the behavior of MAC addresses have changed in Android N <sup>[1]</sup>. Google has set a new set of recommendations in their SDK documentation regarding identifiers as well <sup>[2]</sup>.
-
-#### 静的解析
-
-When the source-code is available, then there are a few codes you can look for, such as:
-- The presence of unique identifiers that no longer work in the future
-  - `Build.SERIAL` without the presence of `Build.getSerial()`
-  - `htc.camera.sensor.front_SN` for HTC devices
-  - `persist.service.bdroid.bdadd`
-  - `Settings.Secure.bluetooth_address`, unless the system permission LOCAL_MAC_ADDRESS is enabled in the manifest.
-
-- The presence of using the ANDROID_ID only as an identifier. This will influence the possible binding quality over time given older devices.
-- The absence of both InstanceID, the `Build.SERIAL` and the IMEI.
-
-```java
-  TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-  String IMEI = tm.getDeviceId();
-```
-
-
-Furthermore, to reassure that the identifiers can be used, the AndroidManifest.xml needs to be checked in case of using the IMEI and the Build.Serial. It should contain the following permission: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`.
-
-#### 動的解析
-
-There are a few ways to test the application binding:
-
-##### Dynamic Analysis using an Emulator
-
-1. Run the application on an Emulator
-2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3. Retrieve the data from the Emulator This has a few steps:
-- ssh to your simulator using ADB shell
-- run-as <your app-id (which is the package as described in the AndroidManifest.xml)>
-- chmod 777 the contents of cache and shared-preferences
-- exit the current user
-- copy the contents of /dat/data/<your appid>/cache & shared-preferences to the sdcard
-- use ADB or the DDMS to pull the contents
-4. Install the application on another Emulator
-5. Overwrite the data from step 3 in the data folder of the application.
-- copy the contents of step 3 to the sdcard of the second emulator.
-- ssh to your simulator using ADB shell
-- run-as <your app-id (which is the pacakge as described in the AndroidManifest.xml)>
-- chmod 777 the folders cache and shared-preferences
-- copy the older contents of the sdcard to /dat/data/<your appid>/cache & shared-preferences
-6. Can you continue in an authenticated state? If so, then binding might not be working properly.
-
-##### Dynamic Analysis using two different rooted devices.
-
-1. Run the application on your rooted device
-2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3. Retrieve the data from the first rooted device
-4. Install the application on the second rooted device
-5. Overwrite the data from step 3 in the data folder of the application.
-6. Can you continue in an authenticated state? If so, then binding might not be working properly.
-
-#### 改善方法
-
-Like mentioned earlier in the guide: Android developers often relied on the Secure ANDROID_ID (SSAID) and MAC addresses. However, the behavior of the SSAID has changed since Android O and the behavior of MAC addresses have changed in Android N <code>[1]</code>. Google has set a new set of recommendations in their SDK documentation regarding identifiers as well <code>[2]</code>. Because of this new behavior, we recommend developers to no relie on the SSAID alone, as the identifier has become less stable. For instance: The SSAID might change upon a factory reset or when the app is reinstalled after the upgrade to Android O. Please note that there are amounts of devices which have the same ANDROID_ID and/or have an ANDROID_ID that can be overriden.
-Next, the Build.Serial was often used. Now, apps targetting Android O will get "UNKNOWN" when they request the Build.Serial.
-Before we describe the usable identifiers, let's quickly discuss how they can be used for binding. There are 3 methods which allow for device binding:
-
-- augment the credentials used for authentication with device identifiers. This can only make sense if the application needs to re-authenticate itself and/or the user frequently.
-- obfuscate the data stored on the device using device-identifiers as keys for encryption methods. This can help in binding to a device when a lot of offline work is done by the app or when access to APIs depends on access-tokens stored by the application.
-- Use a token based device authentication (InstanceID) to reassure that the same instance of the app is used.
-
-The following 3 identifiers can be possibly used.
 
 ##### Google InstanceID
 
@@ -1309,6 +1278,67 @@ Please note that Google recommends against using these identifiers unless there 
 ```java
   String SSAID = Settings.Secure.ANDROID_ID;
 ```
+#### Effectiveness Assessment
+
+When the source-code is available, then there are a few codes you can look for, such as:
+- The presence of unique identifiers that no longer work in the future
+  - `Build.SERIAL` without the presence of `Build.getSerial()`
+  - `htc.camera.sensor.front_SN` for HTC devices
+  - `persist.service.bdroid.bdadd`
+  - `Settings.Secure.bluetooth_address`, unless the system permission LOCAL_MAC_ADDRESS is enabled in the manifest.
+
+- The presence of using the ANDROID_ID only as an identifier. This will influence the possible binding quality over time given older devices.
+- The absence of both InstanceID, the `Build.SERIAL` and the IMEI.
+
+```java
+  TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+  String IMEI = tm.getDeviceId();
+```
+
+Furthermore, to reassure that the identifiers can be used, the AndroidManifest.xml needs to be checked in case of using the IMEI and the Build.Serial. It should contain the following permission: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`.
+
+There are a few ways to test the application binding:
+
+##### Dynamic Analysis using an Emulator
+
+1. Run the application on an Emulator
+2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
+3. Retrieve the data from the Emulator This has a few steps:
+- ssh to your simulator using ADB shell
+- run-as <your app-id (which is the package as described in the AndroidManifest.xml)>
+- chmod 777 the contents of cache and shared-preferences
+- exit the current user
+- copy the contents of /dat/data/<your appid>/cache & shared-preferences to the sdcard
+- use ADB or the DDMS to pull the contents
+4. Install the application on another Emulator
+5. Overwrite the data from step 3 in the data folder of the application.
+- copy the contents of step 3 to the sdcard of the second emulator.
+- ssh to your simulator using ADB shell
+- run-as <your app-id (which is the pacakge as described in the AndroidManifest.xml)>
+- chmod 777 the folders cache and shared-preferences
+- copy the older contents of the sdcard to /dat/data/<your appid>/cache & shared-preferences
+6. Can you continue in an authenticated state? If so, then binding might not be working properly.
+
+##### Dynamic Analysis using two different rooted devices.
+
+1. Run the application on your rooted device
+2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
+3. Retrieve the data from the first rooted device
+4. Install the application on the second rooted device
+5. Overwrite the data from step 3 in the data folder of the application.
+6. Can you continue in an authenticated state? If so, then binding might not be working properly.
+
+#### Remediation
+
+The behavior of the SSAID has changed since Android O and the behavior of MAC addresses have changed in Android N <code>[1]</code>. Google has set a new set of recommendations in their SDK documentation regarding identifiers as well <code>[2]</code>. Because of this new behavior, we recommend developers to no relie on the SSAID alone, as the identifier has become less stable. For instance: The SSAID might change upon a factory reset or when the app is reinstalled after the upgrade to Android O. Please note that there are amounts of devices which have the same ANDROID_ID and/or have an ANDROID_ID that can be overriden.
+Next, the Build.Serial was often used. Now, apps targetting Android O will get "UNKNOWN" when they request the Build.Serial.
+Before we describe the usable identifiers, let's quickly discuss how they can be used for binding. There are 3 methods which allow for device binding:
+
+- augment the credentials used for authentication with device identifiers. This can only make sense if the application needs to re-authenticate itself and/or the user frequently.
+- obfuscate the data stored on the device using device-identifiers as keys for encryption methods. This can help in binding to a device when a lot of offline work is done by the app or when access to APIs depends on access-tokens stored by the application.
+- Use a token based device authentication (InstanceID) to reassure that the same instance of the app is used.
+
+The following 3 identifiers can be possibly used.
 
 #### 参考情報
 
@@ -1352,17 +1382,13 @@ N/A
 ![Identifier Renaming with ProGuard](Images/Chapters/0x05j/proguard.jpg)
 *Identifier renaming with ProGuard.*
 
-#### 静的解析
+#### Effectiveness Assessment
 
 -- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
 
 -- TODO [Confirm purpose of sentence "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>." ] --
 
 -- TODO [Add content on "Testing Obfuscation" without source code] --
-
-#### 動的解析
-
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
 -- TODO [Dumping process memory] --
 
@@ -1388,10 +1414,6 @@ out_file.write(chunk)
 mem_file.close()
 out_file.close()
 ```
-
-#### 改善方法
-
--- TODO [Describe the best practices that developers should follow to prevent this issue "Testing Obfuscation".] --
 
 #### 参考情報
 
