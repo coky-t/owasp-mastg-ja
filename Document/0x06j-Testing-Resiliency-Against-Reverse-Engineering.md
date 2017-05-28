@@ -667,27 +667,34 @@ int xyz(char *dst) {
 -- TODO [Add relevant tools for "Testing Detection of Reverse Engineering Tools"] --
 * Enjarify - https://github.com/google/enjarify
 
-### メモリ整合性監視のテスト
+### ランタイム整合性監視のテスト
 
 #### 概要
 
 -- TODO [Provide a general description of the issue "Testing Memory Integrity Checks".] --
 
-#### 静的解析
+#### 例
 
--- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
+**Substrate インラインフックの検出***
 
--- [Confirm purpose of remark "Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>."] --
+インラインフックは関数の最初の数バイトをコントロールフローを攻撃者がコントロールするコードにリダイレクトするトランポリンで上書きすることにより実装されます。各関数の関数プロローグを異常なインストラクションや顕著なインストラクションでスキャンすることにより検出できます。例えば、substrate は以下のようになります。
 
-##### ソースコードあり
 
--- TODO [Add content for static analysis of "Testing Memory Integrity Checks" with source code] --
+inline int checkSubstrateTrampoline() attribute((always_inline));
+int checkSubstrateTrampoline(void * funcptr) {
+ 
+    unsigned int *funcaddr = (unsigned int *)funcptr;
+ 
+    if(funcptr)
+        // assuming the first word is the trampoline 
+        if (funcaddr[0] == 0xe51ff004) // 0xe51ff004 = ldr pc, [pc-4]
+            return 1; // bad
+ 
+    return 0; // good
+}
+Netitude blog <code>[2]</code> のコード例です。
 
-##### ソースコードなし
-
--- TODO [Add content for static analysis of "Testing Memory Integrity Checks" without source code] --
-
-#### 動的解析
+#### 有効性評価
 
 -- TODO [Describe how to test for this issue "Testing Memory Integrity Checks" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
