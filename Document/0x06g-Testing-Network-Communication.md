@@ -46,19 +46,19 @@
 * Enjarify - https://github.com/google/enjarify
 
 
-### Testing App Transport Security
+### App Transport Security のテスト
 
-#### Overview
-App Transport Security (ATS)<sup>[1]</sup> is a set of security checks that the operating system enforces when making connections with NSURLConnection <sup>[2]</sup>, NSURLSession and CFURL<sup>[3]</sup> to public hostnames. ATS is enabled by default for applications build on iOS SDK 9 and above.
+#### 概要
+App Transport Security (ATS) <sup>[1]</sup> は NSURLConnection <sup>[2]</sup>, NSURLSession <sup>[3]</sup>, CFURL <sup>[4]</sup> でパブリックホスト名に接続する際にオペレーティングシステムが強制する一連のセキュリティチェックです。iOS SDK 9 および以降のアプリケーションビルドでは ATS がデフォルトで有効になっています。
 
-ATS is enforced only when making connections to public hostnames. Therefore any connection made to an IP address, unqualified domain names or TLD of .local is  not protected with ATS.
+ATS はパブリックホスト名に接続する際にのみ強制されます。したがって、IP アドレス、不完全なドメイン名、.local の TLD への接続は ATS で保護されません。
 
-The following is a summarised list of App Transport Security Requirements<sup>[1]</sup>:
-- No HTTP connections are allowed
-- Transport Layer Security (TLS) version must be 1.2 or above and it must,
-    - support Perfect Forward Secrecy (PFS) through Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) key exchange and,
-    - AES-128 or AES-256 symmetric ciphers
-    - The cipher suit must be one of the following:
+以下は App Transport Security Requirements <sup>[1]</sup> の要約リストです。
+- HTTP 接続は許可されない
+- Transport Layer Security (TLS) バージョンは 1.2 もしくは以降が必要であり、以下も必要である。
+    - Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) 鍵交換による Perfect Forward Secrecy (PFS) をサポートする
+    - AES-128 もしくは AES-256 対称暗号
+    - 暗号スイートは以下のいずれかが必要である。
         * TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 
         * TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 
         * TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 
@@ -71,34 +71,34 @@ The following is a summarised list of App Transport Security Requirements<sup>[1
         * TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 
         * TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
 
-- The Certificate has a SHA256 fingerprint and must be signed with at least 2048-bit RSA key or a 256-bit Elliptic-Curve Cryptography (ECC) key.
+- 証明書は SHA256 fingerprint を有し、少なくとも 2048 ビットの RSA 鍵か 256 ビットの楕円曲線暗号 (ECC) 鍵で署名する必要がある。
 
-ATS restrictions can be disabled by configuring exceptions in the file Info.plist under the NSAppTransportSecurity key. These exceptions can be allied to:
-- Allow insecure connections (HTTP),
-- Lower the minimum TLS version,
-- Disable PFS and
-- Allow connections to local domains.
+ATS の制限は Info.plist ファイルの NSAppTransportSecurity キーに例外を設定することで無効にできます。これらの例外には以下があります。
+- 安全でない接続の許可 (HTTP)
+- 最小 TLS バージョンの引き下げ
+- PFS の無効化
+- ローカルドメインへの接続の許可
 
-Starting from January 1 2017, Apple App Store reviews require justification if ATS exceptions are defined.
+2017年1月1日以降、ATS の例外が定義される場合、Apple App Store のレビューで正当な理由が必要となります。
 
 -- TODO: Describe ATS exceptions --
 
 
-#### Static Analysis
+#### 静的解析
 
 — TODO —
 
-#### Dynamic Analysis
+#### 動的解析
 
 
 — TODO —
 
 
-#### Remediation
+#### 改善方法
 
 — TODO —
 
-#### References
+#### 参考情報
 
 — TODO —
 
@@ -108,21 +108,21 @@ Starting from January 1 2017, Apple App Store reviews require justification if A
 
 ##### OWASP MASVS
 
-* V5.1: "Data is encrypted on the network using TLS. The secure channel is used consistently throughout the app."
-* V5.2: "The TLS settings are in line with current best practices, or as close as possible if the mobile operating system does not support the recommended standards."
+* V5.1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
+* V5.2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨された標準をサポートしていない場合には可能な限り近い状態である。"
 
 ##### CWE
 
 — TODO —
 
-##### Info
+##### その他
 * [1] Information Property List Key Reference: Cocoa Keys - https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html
 * [2] API Reference NSURLConnection - https://developer.apple.com/reference/foundation/nsurlconnection
 * [3] API Reference NSURLSession - https://developer.apple.com/reference/foundation/urlsession
 * [4] API Reference CFURL - https://developer.apple.com/reference/corefoundation/cfurl-rd7
 * [5] Supporting App Transport Security - https://developer.apple.com/news/?id=12212016b
 
-##### Tools
+##### ツール
 
 — TODO —
 
