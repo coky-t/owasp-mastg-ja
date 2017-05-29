@@ -43,7 +43,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### Appendix
 
-* [Testing Authentication and Session Management on Endpoints] <!-- (Document/0x07a-Testing-Authentication-and-Session-Management.md) -->
+* [Testing Authentication and Session Management on Endpoints](Document/0x07a-Testing-Authentication-and-Session-Management.md)
 * [Testing Network Communication](Document/0x07b-Testing-Network-Communication.md)
 * [Testing Cryptography](Document/0x07c-Testing-Cryptography.md)
 * [Assessing Software Protection Schemes] <!-- (Document/0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md) -->
