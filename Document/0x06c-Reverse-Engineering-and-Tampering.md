@@ -6,25 +6,52 @@
 
 #### XCode と iOS SDK
 
--- TODO [Where to get XCode] --
+Xcode is an Integrated Development Environment (IDE) for macOS containing a suite of software development tools developed by Apple for developing software for macOS, iOS, watchOS and tvOS. The latest release as of the writing of this book is Xcode 8 and it can be downloaded from the official Apple website<sup>[7]</sup>.
+
+The iOS SDK (Software Development Kit), formerly known as iPhone SDK, is a software development kit developed by Apple for developing native applications for iOS. The latest release as of the writing of this book is iOS 10 SDK and it can be downloaded from the Official Apple website as well<sup>[8]</sup>.
 
 #### ユーティリティ
 
-Steve Nygard [1] による Class-dump は Mach-O ファイルに格納された Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。クラス、カテゴリ、プロトコルの宣言を生成します。
+Steve Nygard <sup>[1]</sup> による Class-dump は Mach-O ファイルに格納された Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。クラス、カテゴリ、プロトコルの宣言を生成します。
 
-Elias Limneos [2] による Class-dump-dyld は共有キャッシュから直にシンボルをダンプおよび取得できるため、ファイルを最初に抽出する必要がありません。アプリバイナリ、ライブラリ、フレームワーク、バンドル、または dyld_shared_cache 全体からヘッダファイルを生成します。dyld_shared_cache 全体やディレクトリを再帰的に Mass-dump することもできます。
+Class-dump-z<sup>[9]</sup> is written from scratch using C++ avoiding using dynamic calls, unlike class-dump and class-dump-x which are written in Objective-C. Removing these unnecessary calls makes class-dump-z near 10 times faster than the precedences.
 
-MachoOView [3] は有用なビジュアル Mach-O ファイルブラウザで、ARM バイナリのインファイル編集も可能です。
+Elias Limneos <sup>[2]</sup> による Class-dump-dyld は共有キャッシュから直にシンボルをダンプおよび取得できるため、ファイルを最初に抽出する必要がありません。アプリバイナリ、ライブラリ、フレームワーク、バンドル、または dyld_shared_cache 全体からヘッダファイルを生成します。dyld_shared_cache 全体やディレクトリを再帰的に Mass-dump することもできます。
+
+MachoOView <sup>[3]</sup> は有用なビジュアル Mach-O ファイルブラウザで、ARM バイナリのインファイル編集も可能です。
 
 ### iOSの脱獄
 
 iOS の世界では、脱獄とは Apple のコード署名メカニズムを無効にすることを意味しており、Apple が署名していないアプリを実行できます。iOS デバイスでどのような形式の動的セキュリティテストを行う場合でも、最も有用なテストツールはアプリストア以外でのみ利用可能であるため、脱獄済みデバイスでは作業がはるかに簡単になります。
 
-任意のバージョンの iOS 向けに脱獄を開発することは簡単な努力ではありません。セキュリティテスト担当者としては、一般に公開されている脱獄ツールを使用したいと考えています(心配することはありません。私たちは皆、何かしらの領域ではスクリプトキディーなのです)。それでも、過去のさまざまなバージョンの iOS を脱獄するために使われる技法を学習することをお勧めします。非常に面白いエクスプロイトが多数あり、OS の内部について多くのことが学べます。例えば、 iOS 9.x 用の Pangu9 は、カーネルの use-after-free バグ(CVE-2015-6794)や写真アプリの任意のファイルシステムアクセスの脆弱性(CVE-2015-7037)など、少なくとも5つの脆弱性を悪用していました [3]。
+任意のバージョンの iOS 向けに脱獄を開発することは簡単な努力ではありません。セキュリティテスト担当者としては、一般に公開されている脱獄ツールを使用したいと考えています(心配することはありません。私たちは皆、何かしらの領域ではスクリプトキディーなのです)。それでも、過去のさまざまなバージョンの iOS を脱獄するために使われる技法を学習することをお勧めします。非常に面白いエクスプロイトが多数あり、OS の内部について多くのことが学べます。例えば、 iOS 9.x 用の Pangu9 は、カーネルの use-after-free バグ(CVE-2015-6794)や写真アプリの任意のファイルシステムアクセスの脆弱性(CVE-2015-7037)など、少なくとも5つの脆弱性を悪用していました <sup>[4]</sup>。
 
 脱獄用語での、紐付きおよび紐なし脱獄手法について説明します。「紐付き」シナリオでは、脱獄は再起動後には維持されませんので、再起動するたびにデバイスをコンピュータに接続(紐付き)して再適用する必要があります。「紐なし」脱獄は一度だけ適用すればよく、エンドユーザーにとって最も一般的な選択となっています。
 
+#### Why Jailbreak iOS?
+
+Some of the benefits of jailbreaking an iOS Device includes the following:
+
+* Removing the security (and other) limitations on the OS imposed by Apple
+* Providing root access to the operating system
+* Allowing important testing software tools to be installed
+* Providing access to the Objective-C Runtime
+
+iOS applications store data in the application sandbox which is not accessible to the public (but is available to root and the application itself). Without root access, it is not possible to assess the application sandbox, analyse the data that were stored in the device and how they were stored. 
+
+#### How to Jailbreak iOS?
+
+Before we get into how to perform jailbreak on iOS, it is important to note that this section is merely served as a general guideline and is only up to date as of the writing of this guide. OWASP and the MSTG will not be responsible if you happen to brick your iOS device while performing the steps to jailbreak your iOS device. 
+
 -- TODO [Jailbreaking howto] --
+
+Some reliable resources to read about content regarding jailbreak iOS
+
+* The iPhone Wiki - https://www.theiphonewiki.com/wiki/Jailbreak
+* Redmond Pie - http://www.redmondpie.com/
+* Reddit Jailbreak - https://www.reddit.com/r/jailbreak/
+
+#### The Dilemma of Jailbreak iOS
 
 一部のアプリはインストールされている iOS デバイスが脱獄済みであるかどうかを検出しようとします。この脱獄により iOS のデフォルトセキュリティメカニズムの一部を無効にするため、環境の信頼性低下につながります。
 
@@ -52,7 +79,7 @@ XNU カーネルは <code>ptrace()</code> システムコールも実装して�
 
 -- TODO [Complete lldb tutorial] --
 
-iOS にはコンソールアプリケーション debugserver が付属しており、gdb または lldb を使用したリモートでバッグが可能です。但し、デフォルトでは debugserver を任意のプロセスにアタッチすることはできません(通常は XCode でデプロイされた自己開発アプリのデバッグにのみ使用されます)。サードパーティアプリのデバッグを有効にするには、task_for_pid entitlement を debugserver 実行可能ファイルに追加する必要があります。これを行う簡単な方法は XCode に同梱されている debugserver バイナリに entitlement を追加することです [5]。
+iOS にはコンソールアプリケーション debugserver が付属しており、gdb または lldb を使用したリモートでバッグが可能です。但し、デフォルトでは debugserver を任意のプロセスにアタッチすることはできません(通常は XCode でデプロイされた自己開発アプリのデバッグにのみ使用されます)。サードパーティアプリのデバッグを有効にするには、task_for_pid entitlement を debugserver 実行可能ファイルに追加する必要があります。これを行う簡単な方法は XCode に同梱されている debugserver バイナリに entitlement を追加することです <sup>[5]</sup>。
 
 実行可能ファイルを取得するには以下の DMG イメージをマウントします。
 
@@ -134,10 +161,13 @@ http://iphonedevwiki.net/index.php/Cycript_Tricks
 
 ### 参考情報
 
-- [1] Class-dump - http://stevenygard.com/projects/class-dump/
-- [2] Class-dump-dyld - https://github.com/limneos/classdump-dyld/
-- [3] MachOView - https://sourceforge.net/projects/machoview/
-- [3] Jailbreak Exploits on the iPhone Dev Wiki - https://www.theiphonewiki.com/wiki/Jailbreak_Exploits#Pangu9_.289.0_.2F_9.0.1_.2F_9.0.2.29)
-- [4] Stack Overflow - http://stackoverflow.com/questions/413242/how-do-i-detect-that-an-ios-app-is-running-on-a-jailbroken-phone
-- [5] Debug Server on the iPhone Dev Wiki - http://iphonedevwiki.net/index.php/Debugserver
-- [6] Uninformed - Replacing ptrace() - http://uninformed.org/index.cgi?v=4&a=3&p=14
+* [1] Class-dump - http://stevenygard.com/projects/class-dump/
+* [2] Class-dump-dyld - https://github.com/limneos/classdump-dyld/
+* [3] MachOView - https://sourceforge.net/projects/machoview/
+* [3] Jailbreak Exploits on the iPhone Dev Wiki - https://www.theiphonewiki.com/wiki/Jailbreak_Exploits#Pangu9_.289.0_.2F_9.0.1_.2F_9.0.2.29)
+* [4] Stack Overflow - http://stackoverflow.com/questions/413242/how-do-i-detect-that-an-ios-app-is-running-on-a-jailbroken-phone
+* [5] Debug Server on the iPhone Dev Wiki - http://iphonedevwiki.net/index.php/Debugserver
+* [6] Uninformed - Replacing ptrace() - http://uninformed.org/index.cgi?v=4&a=3&p=14
+* [7] Apple Xcode IDE - https://developer.apple.com/xcode/ide/
+* [8] Apple iOS 10 SDK - https://developer.apple.com/ios/
+* [9] Class-dump-z - https://code.google.com/archive/p/networkpx/wikis/class_dump_z.wiki
