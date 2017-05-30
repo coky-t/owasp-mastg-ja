@@ -73,13 +73,21 @@ ATS はパブリックホスト名に接続する際にのみ強制されます�
 
 - 証明書は SHA256 fingerprint を有し、少なくとも 2048 ビットの RSA 鍵か 256 ビットの楕円曲線暗号 (ECC) 鍵で署名する必要がある。
 
-ATS の制限は Info.plist ファイルの NSAppTransportSecurity キーに例外を設定することで無効にできます。これらの例外には以下があります。
-- 安全でない接続の許可 (HTTP)
-- 最小 TLS バージョンの引き下げ
-- PFS の無効化
-- ローカルドメインへの接続の許可
 
-2017年1月1日以降、ATS の例外が定義される場合、Apple App Store のレビューで正当な理由が必要となります。
+##### ATS 例外
+
+ATS の制限は Info.plist ファイルの NSAppTransportSecurity キーに例外を設定することで無効にできます。これらの例外には以下があります。
+* 安全でない接続の許可 (HTTP)
+* 最小 TLS バージョンの引き下げ
+* PFS の無効化
+* ローカルドメインへの接続の許可
+
+
+Starting from January 1 2017, Apple App Store review and requires justification if one of the following ATS exceptions are defined. However this decline is extended later by Apple stating “To give you additional time to prepare, this deadline has been extended and we will provide another update when a new deadline is confirmed”<sup>[5]</sup>
+
+* NSAllowsArbitraryLoads - disables ATS globally for all the domains
+* NSExceptionAllowsInsecureHTTPLoads - disables ATS for a single domain
+* NSExceptionMinimumTLSVersion - enable support for TLS versions less than 1.2
 
 -- TODO: Describe ATS exceptions --
 
