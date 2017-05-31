@@ -1,9 +1,6 @@
 ## ローカル認証のテスト (Android アプリ)
 
-MASVS の認証とセッション管理要件のほとんどは汎用的なものであるため、iOS や Android の特定の実装に依存しません。
-
-結果として、要件「4.6 生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。」だけが本章に記載されています。他のすべてのテストではサーバー側実装を検証する必要があります。付録「認証とセッション管理のテスト」にあります。
-
+MASVS の認証とセッション管理要件のほとんどは iOS や Android の特定の実装とは独立して検証できるアーキテクチャおよびサーバー側の問題を指しています。したがって MSTG ではこれらのテストケースをプラットフォームに依存しない方法で説明します (付録「認証とセッション管理 (エンドポイント)」を参照ください) 。しかしローカル認証メカニズムが使用される場合もあります。例えば、アプリをローカルで「アンロック」したり、ユーザーが既存のセッションを再開するための簡単な方法を提供します。ここではこれらのケースについて説明します。
 
 ### 生体認証のテスト
 
@@ -25,13 +22,13 @@ CryptoObject でラップされた暗号を初期化するために使用され�
 
 #### 動的解析
 
-アプリのパッチ適用やランタイム計装によりクライアントの指紋認証をバイパスします。例えば、Frida を使用して <code>onAuthenticationSucceeded</code> コールバックを直接コールします。詳細については「改竄とリバースエンジニアリング (Android)」の章を参照ください。
+アプリのパッチ適用やランタイム計装の使用によりクライアントの指紋認証をバイパスします。例えば、Frida を使用して <code>onAuthenticationSucceeded</code> コールバックを直接コールします。詳細については「改竄とリバースエンジニアリング (Android)」の章を参照ください。
 
 #### 改善方法
 
 指紋認証は以下の行のように実装する必要があります。
 
-指紋認証が可能であるかどうかを確認します。デバイスは Android 6.0 またはそれ以降 (SDK 23+) で動作し、指紋センサーを搭載している必要があります。ユーザーはログスクリーンを保護し、デバイスに少なくともひとつの指紋を登録する必要があります。これらのチェックのいずれかが失敗した場合、指紋認証のオプションは提供すべきではありません。
+指紋認証が可能であるかどうかを確認します。デバイスは Android 6.0 またはそれ以降 (SDK 23+) で動作し、指紋センサーを搭載している必要があります。ユーザーはロックスクリーンを保護し、デバイスに少なくともひとつの指紋を登録する必要があります。これらのチェックのいずれかが失敗した場合、指紋認証のオプションは提供すべきではありません。
 
 指紋認証を設定する際には、<code>KeyGenerator</code> クラスを使用して新しい AES 鍵を作成します。<code>KeyGenParameterSpec.Builder</code> に <code>setUserAuthenticationRequired(true)</code> を追加します。
 
@@ -62,8 +59,7 @@ CryptoObject でラップされた暗号を初期化するために使用され�
 
 ```java
 	cryptoObject = new FingerprintManager.CryptoObject(cipher);
-	FingerprintHandler helper = new FingerprintHandler(this);
-	helper.startAuth(fingerprintManager, cryptoObject);
+	fingerprintManager.authenticate(cryptoObject, new CancellationSignal(), 0, this, null);
 ```
 
 認証が成功すると、コールバックメソッド <code>onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)</code> がコールされ、認証された CryptoObject を認証結果から取得できます。
