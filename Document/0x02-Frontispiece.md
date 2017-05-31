@@ -17,9 +17,11 @@ Copyright © 2017 The OWASP Foundation. 本ドキュメントはクリエイテ�
 
 注意：この表は https://github.com/OWASP/owasp-mstg/graphs/contributors にある contribution log を基に生成しています。詳細については、https://github.com/OWASP/owasp-mstg/blob/master/README.md の GitHub Repository README を参照ください。これは(まだ)リアルタイムでは更新されないことに注意してください。数週間ごとに手動で行うので、あなたが即時にリストに載っていなくても慌てないでください。
 
-| プロジェクトリーダーおよび著者 | 共著者 | 主執筆者 | 共同執筆者 | レビュー担当者 |
+| プロジェクトリーダーおよび著者 | 共著者 | 主執筆者 | 共同執筆者 | 部分執筆者 |
 | --- | --- | --- | --- | --- |
-| Bernhard Mueller, Sven Schleier | Romuald Szkudlarek, Francesco Stillavato, Pawel Rzepa, Abdessamad Temmar, Slawomir Kosowski | Jin Kung Ong,  Alexander Antukh,  Jeroen Willemsen, Henry Hoggard, Gerhard Wagner, Ryan Teoh, Daniel Ramirez Martin, Claudio André, Prathan Phongthiproek, Luander Ribeiro| Michael Helwig, Oguzhan Topgul, Pishu Mahtani, *D00gs*, Stefan Streichsbier, Ben Actis, Anatoly Rosencrantz, Ali Yazdani, Sebastian Banescu, Prabhant Singh, *Romantic668*, Stephen Corbiaux, *Demonbensa*, Anuruddha (L3Osi13nT), Ben Gardiner | Anant Shrivastava, Stephanie Vanroelen |
+| Bernhard Mueller, Sven Schleier | Romuald Szkudlarek | Francesco Stillavato, Pawel Rzepa, Henry Hoggard, Abdessamad Temmar, Slawomir Kosowski | Andreas Happe, Wen Bin Kong, Jin Kung Ong, Gerhard Wagner, Michael Helwig, Jeroen Willemsen, Alexander Antukh,  Ryan Teoh, Daniel Ramirez Martin, Claudio André, Prathan Phongthiproek, Luander Ribeiro, Dharshin De Silva, Oguzhan Topgul, Pishu Mahtani, Anuruddha (L3Osi13nT) | *D00gs*, Ali Yazdani, Anatoly Rosencrantz, Stefan Streichsbier, Ben Actis, Sebastian Banescu, Prabhant Singh, Ehsan Mahsadi, *decidedlygray*, *Romantic668*, Stephen Corbiaux, *bwhaley*, *demonbensa*, Daniel Grunwell, Ruikai Liu, *MelvinKool, Keyvan Arj, Ben Gardiner |
+
+レビュー担当者: Anant Shrivastava
 
 ### 旧版
 
