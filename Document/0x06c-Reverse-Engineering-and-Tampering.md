@@ -4,17 +4,17 @@
 
 -- TODO [Environment Overview] --
 
-#### XCode と iOS SDK
+#### Xcode と iOS SDK
 
-Xcode is an Integrated Development Environment (IDE) for macOS containing a suite of software development tools developed by Apple for developing software for macOS, iOS, watchOS and tvOS. The latest release as of the writing of this book is Xcode 8 and it can be downloaded from the official Apple website<sup>[7]</sup>.
+Xcode は macOS, iOS, watchOS, tvOS 用のソフトウェアを開発するために Apple が開発した一連のソフトウェア開発ツールを含む macOS 用の統合開発環境 (IDE) です。本書の執筆時点での最新リリースは Xcode 8 で、Apple の公式 Web サイト <sup>[7]</sup> からダウンロードできます。
 
-The iOS SDK (Software Development Kit), formerly known as iPhone SDK, is a software development kit developed by Apple for developing native applications for iOS. The latest release as of the writing of this book is iOS 10 SDK and it can be downloaded from the Official Apple website as well<sup>[8]</sup>.
+以前 iPhone SDK として知られていた iOS SDK (ソフトウェア開発キット) は iOS 用のネイティブアプリケーションを開発するために Apple が開発したソフトウェア開発キットです。本書の執筆時点での最新リリースは iOS 10 SDK で、Apple の公式 Web サイト <sup>[8]</sup> からダウンロードできます。
 
 #### ユーティリティ
 
 Steve Nygard <sup>[1]</sup> による Class-dump は Mach-O ファイルに格納された Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。クラス、カテゴリ、プロトコルの宣言を生成します。
 
-Class-dump-z<sup>[9]</sup> is written from scratch using C++ avoiding using dynamic calls, unlike class-dump and class-dump-x which are written in Objective-C. Removing these unnecessary calls makes class-dump-z near 10 times faster than the precedences.
+Class-dump-z <sup>[9]</sup> は Objective-C で書かれた class-dump や class-dump-x とは異なり、動的コールの使用を避けるため C++ を使用してゼロから書かれています。これらの不要なコールを削除することで class-dump-z はそれらより10倍近く高速になります。
 
 Elias Limneos <sup>[2]</sup> による Class-dump-dyld は共有キャッシュから直にシンボルをダンプおよび取得できるため、ファイルを最初に抽出する必要がありません。アプリバイナリ、ライブラリ、フレームワーク、バンドル、または dyld_shared_cache 全体からヘッダファイルを生成します。dyld_shared_cache 全体やディレクトリを再帰的に Mass-dump することもできます。
 
@@ -28,30 +28,30 @@ iOS の世界では、脱獄とは Apple のコード署名メカニズムを無
 
 脱獄用語での、紐付きおよび紐なし脱獄手法について説明します。「紐付き」シナリオでは、脱獄は再起動後には維持されませんので、再起動するたびにデバイスをコンピュータに接続(紐付き)して再適用する必要があります。「紐なし」脱獄は一度だけ適用すればよく、エンドユーザーにとって最も一般的な選択となっています。
 
-#### Why Jailbreak iOS?
+#### iOSの脱獄の理由
 
-Some of the benefits of jailbreaking an iOS Device includes the following:
+iOS デバイスの脱獄の利点には以下のものなどがあります。
 
-* Removing the security (and other) limitations on the OS imposed by Apple
-* Providing root access to the operating system
-* Allowing important testing software tools to be installed
-* Providing access to the Objective-C Runtime
+* Apple が課した OS のセキュリティ (およびその他) 制限を削除すること
+* オペレーティングシステムへのルートアクセスを提供すること
+* 重要なテストソフトウェアツールのインストールを許可すること
+* Objective-C ランタイムへのアクセスを提供すること
 
-iOS applications store data in the application sandbox which is not accessible to the public (but is available to root and the application itself). Without root access, it is not possible to assess the application sandbox, analyse the data that were stored in the device and how they were stored. 
+iOS アプリケーションはアプリケーションサンドボックスにデータを格納します。それはパブリックにアクセス可能ではありません (しかしルートとアプリケーション自体は可能です) 。ルートアクセスでなければ、デバイスに格納されているデータやその格納方法を分析して、アプリケーションサンドボックスを評価することはできません。
 
-#### How to Jailbreak iOS?
+#### iOSの脱獄の方法
 
-Before we get into how to perform jailbreak on iOS, it is important to note that this section is merely served as a general guideline and is only up to date as of the writing of this guide. OWASP and the MSTG will not be responsible if you happen to brick your iOS device while performing the steps to jailbreak your iOS device. 
+iOS で脱獄を行う方法を説明する前に、このセクションは一般的なガイドラインを提供するだけであり、このガイドの執筆時点での最新情報であることに注意することが重要です。iOS デバイスを脱獄するための手順を実行している際に iOS デバイスが操作不能に陥ったとしても OWASP および MSTG は責任を負いません。
 
 -- TODO [Jailbreaking howto] --
 
-Some reliable resources to read about content regarding jailbreak iOS
+iOS の脱獄に関するコンテンツについて読める信頼できるリソースです。
 
 * The iPhone Wiki - https://www.theiphonewiki.com/wiki/Jailbreak
 * Redmond Pie - http://www.redmondpie.com/
 * Reddit Jailbreak - https://www.reddit.com/r/jailbreak/
 
-#### The Dilemma of Jailbreak iOS
+#### iOSの脱獄のジレンマ
 
 一部のアプリはインストールされている iOS デバイスが脱獄済みであるかどうかを検出しようとします。この脱獄により iOS のデフォルトセキュリティメカニズムの一部を無効にするため、環境の信頼性低下につながります。
 
