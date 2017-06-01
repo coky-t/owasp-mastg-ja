@@ -4,20 +4,20 @@
 
 適切な暗号鍵管理はモバイルアプリケーションを設計する際の共通の落とし穴です。
 
-Cryptographic systems are comprised of different building blocks. It is important to use the building blocks in their intended manner (in addition to using the current secure building blocks as well as secure configuration).
+暗号システムはさまざまなビルディングブロックで構成されています。重要なのはビルディングブロックを意図した方法で使用することです (加えて、最新のセキュアなビルディングブロックとセキュアな構成を使用します) 。
 
-Typically encountered building blocks are:
+一般的に遭遇するビルディングブロックは以下のとおりです。
 
-* Hashes are used to quickly calculate a fixed-length checksum based upon the original data. The same input data will produce the same output hash. Cryptographic hashes guarantee, that the generated hash will limit reasoning about the original data, that small changes within the original date will produce a completely different hash and that it is hard that, given a hash, to provide for original data that leads to a pre-determined hash. As no secret keys are used, an attacker can recalculate a new hash after data was modified.
-* Encryption converts the original plain-text data into encrypted text and subsequently allows to reconstruct the original data form the encrypted text (also known as cipher text). Thus it provides data confidenciality. Please note that, encryption does not provide data integrity, i.e., if an attacker modifies the cipher text and a user decrypts the modified cipher text, the resulting plain-text will be garbage (but the decryption operation itself will perform successfully).
-* Symmetric Encryption utilizes a secret key. The data confidenciality of the encrypted data is solely dependent upon the confidenciality of the secret key.
-* Asymmetric Encryption uses two keys: a pbulic key that can be used to encrypt plain-text and a secret private key that can be used to reconstruct the original data from the plain-text.
+* ハッシュは元のデータに基づく固定長のチェックサムを迅速に計算するために使用されます。同じ入力データは同じ出力ハッシュを生成します。暗号学的ハッシュは、生成されたハッシュが元のデータについて推論することを制限すること、元のデータ内の小さな変更が完全に異なるハッシュを生成すること、ハッシュを取得してあらかじめ決定されたハッシュとなる元のデータを取得することが困難であること、を保証します。秘密鍵は使用されないため、攻撃者はデータが変更された後に新しいハッシュを再計算できます。
+* 暗号化はプレーンテキストデータを暗号化されたテキストに変換して、その後暗号化されたテキスト (暗号テキストしても知られています) から元のデータを再構築することを可能にします。したがってデータの機密性を提供します。暗号化はデータの完全性を提供しないことに注意します。つまり、攻撃者が暗号テキストを改変して、ユーザーが改変された暗号テキストを復号した場合、得られたプレーンテキストはがらくたです (ただし復号化操作自体は正常に実行されます) 。
+* 対称暗号化は秘密鍵を使用します。暗号化されたデータの機密性は機密鍵の機密性にのみ依存します。
+* 非対称暗号化は2つの鍵を使用します。プレーンテキストを暗号化するために使用できる公開鍵とプレーンテキストから元のデータを再構築するために使用できる秘密鍵です。
 
 ### 安全でないもしくは廃止された暗号化アルゴリズムに関するテスト
 
 #### 概要
 
-多くの暗号アルゴリズムおよびプロトコルは重大な弱点があることが示されているか、現代のセキュリティ要件には不十分であるため、使用してはいけません。Previously thought secure algorithms may become insecure over time. It is therefore important to periodically check current best practices and adjust configurations accordingly.  
+多くの暗号アルゴリズムおよびプロトコルは重大な弱点があることが示されているか、現代のセキュリティ要件には不十分であるため、使用してはいけません。以前はセキュアであると考えられていたアルゴリズム時間の経過とともにセキュアではなくなる可能性があります。したがって最新のベストプラクティスを定期的に確認し、それに応じて構成を調整することが重要です。
 
 #### 静的解析
 
