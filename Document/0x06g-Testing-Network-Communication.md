@@ -16,7 +16,7 @@
 
 #### 動的解析
 
--- TODO [Describe how to test for this issue "Testing Endpoint Identity Verification" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app窶冱 behavior to code injection, debugging, instrumentation, etc.] --
+-- TODO [Describe how to test for this issue "Testing Endpoint Identity Verification" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
 #### 改善方法
 
@@ -83,11 +83,11 @@ ATS の制限は Info.plist ファイルの NSAppTransportSecurity キーに例�
 * ローカルドメインへの接続の許可
 
 
-Starting from January 1 2017, Apple App Store review and requires justification if one of the following ATS exceptions are defined. However this decline is extended later by Apple stating “To give you additional time to prepare, this deadline has been extended and we will provide another update when a new deadline is confirmed”<sup>[5]</sup>
+2017年1月1日から、Apple App Store はレビューを行い、以下の ATS 例外のいずれかが定義されている場合には正当な理由を要求します。しかしながらこの減退は後に Apple により拡大しています。「準備期間を長くするために、この期限を延長しており、新しい期限が確定した際には別のアップデートを提供する予定です」<sup>[5]</sup>
 
-* NSAllowsArbitraryLoads - disables ATS globally for all the domains
-* NSExceptionAllowsInsecureHTTPLoads - disables ATS for a single domain
-* NSExceptionMinimumTLSVersion - enable support for TLS versions less than 1.2
+* NSAllowsArbitraryLoads - すべてのドメインに対してグローバルに ATS を無効化する
+* NSExceptionAllowsInsecureHTTPLoads - 単一ドメインに対して ATS を無効化する
+* NSExceptionMinimumTLSVersion - 1.2 未満の TLS バージョンのサポートを有効にする
 
 -- TODO: Describe ATS exceptions --
 
