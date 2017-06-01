@@ -108,29 +108,29 @@ CCCryptorStatus CCCryptorCreate(
 
 #### 概要
 
-It is fundamentally impossible to produce truly random numbers on any deterministic device. Pseudo-random number generators (RNG) compensate for this by producing a stream of pseudo-random numbers - a stream of numbers that *appear* as if they were randomly generated. The quality of the generated numbers varies with the type of algorihm used. *Cryptographically secure* RNGs generate random numbers that that pass statistical randomness tests, and are resilient against prediction attacks.
+決定的デバイスで真の乱数を生成することは基本的に不可能です。擬似乱数生成器 (RNG) は擬似乱数ストリームを生成することでこれを補います。擬似乱数ストリームはランダムに生成されたように *見えます* 。生成される数の品質は使用されるアルゴリズムのタイプにより異なります。*暗号論的にセキュアな* RNG は統計的ランダム性テストに合格し、予測攻撃に対して耐性があります。
 
-Mobile SDKs offer standard implementations of RNG algorithms that produce numbers with sufficient artificial randomness.
+モバイル SDK は十分な人工的ランダム性を持つ数を生成する RNG アルゴリズムの標準実装を提供します。
 
 #### 静的解析
 
-Apple provides developers with the Randomisation Services application programming interface (API) that generates cryptographically secure random numbers<sup>[1]</sup>.
+Apple は暗号論的にセキュアな乱数を生成する Randomization Services アプリケーションプログラミングインタフェース (API) を開発者に提供します <sup>[1]</sup> 。
 
-The Randomisation Services API uses the `SecRandomCopyBytes` function to perform the numbers generation. This is a wrapper function for the <code>/dev/random</code> device file, which provides cryptographically secure pseudorandom value from 0 to 255 and performs concatenation<sup>[2]</sup>. 
+Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値生成を実行します。これは <code>/dev/random</code> デバイスファイルのラッパー関数で、0 から 255 までの暗号論的にセキュアな乱数値および乱数列を提供します <sup>[2]</sup> 。
 
-In Swift, the `SecRandomCopyBytes` API is defined as follows:<sup>[3]</sup>:
+Swift では、`SecRandomCopyBytes` API は以下のように定義されています <sup>[3]</sup> 。
 ```
 func SecRandomCopyBytes(_ rnd: SecRandomRef?, 
                       _ count: Int, 
                       _ bytes: UnsafeMutablePointer<UInt8>) -> Int32
 ```
 
-The Objective-C is version looks as follows <sup>[4]</sup>:
+Objective-C では以下のようになります <sup>[4]</sup> 。
 ```
 int SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
 ```
 
-The following is an example of its usage:
+以下はその使用例です。
 ```
 int result = SecRandomCopyBytes(kSecRandomDefault, 16, randomBytes);
 ```
@@ -143,8 +143,8 @@ int result = SecRandomCopyBytes(kSecRandomDefault, 16, randomBytes);
 
 #### 改善方法
 
-The recommended remediation to fix this issue is to always use the Randomisation Services API for any random number generation purposes. 
-Avoid implementing custom cryptography algorithms and standards. Also, only supply cryptographically strong random numbers to cryptographic functions. 
+この問題を解決するために推奨される改善方法は、乱数生成の目的には常に Randomization Services API を使用することです。
+カスタムの暗号アルゴリズムや標準を実装することは避けます。また、暗号機能には暗号論的に強力な乱数のみを供給します。
 
 #### 参考情報
 
