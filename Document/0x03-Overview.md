@@ -1,4 +1,15 @@
-# モバイルセキュリティテストガイドの序文
+# OWASP モバイルセキュリティテストガイドの序文
+
+The OWASP Mobile Security Testing Guide (MSTG) is an extension of the OWASP Testing Project specifically focusing on the security testing of Android and iOS devices.
+
+The goal of this project is to help people understand the what, why, when, where, and how of testing applications on Android
+and iOS devices. The project delivers a complete suite of test cases designed to address the OWASP Mobile Top 10, the Mobile App Security Checklist and the Mobile Application Security Verification Standard (MASVS). 
+
+The guide is organized as follows: This introduction describes the layout of the Mobile Security Testing Guide, and explains what makes mobile security testing unique. The Testing Processes and Techniques Section presents the mobile app security testing methodology, vulnerability analysis techniques, security testing in the SDLC, and vulnerability analysis techniques. The Android Testing
+Guide covers the android platform, security basics, security test cases, and reverse engineering and tampering techniques and preventions. The iOS Testing Guide Testing Guide covers everything the Android Testing Guide covers but on iOS devices. Finally,
+the appendix presents some technical test cases such as authentication and session management endpoint, network communications, and cryptography that are not Android or iOS specific followed by a set of testing tools. 
+
+# What Makes Mobile Security Testing Unique?
 
 技術革新は迅速に起こります。一昔前、スマートフォンは小さいキーボードを持つ魅力のない端末、技術に精通したビジネスユーザーのための高価な玩具でした。今日、スマートフォンは私たちの生活に不可欠なものです。私たちは情報、ナビゲーション、コミュニケーションのためにそれらに頼っています。ビジネスや社会生活の中の至るところにあります。
 
@@ -16,7 +27,43 @@
 
 最後に、モバイルデバイスは他の(おそらく悪意のある)クライアントと共有されている公衆 WiFi ネットワークを含め、さまざまなネットワークに定期的に接続しています。これは単純なパケット傍受から不正なアクセスポイントの作成や SSL 中間者攻撃まで (もしくはルーティングプロトコルインジェクションなどの古いものであっても、悪意のあるものはどんなものでも使用します) ネットワークベースの攻撃に大きなチャンスをもたらします。
 
+## OWASP モバイルアプリセキュリティ検証標準、チェックリスト、テストガイド
+
+このガイドは3つの密接に関連するモバイルアプリケーションセキュリティドキュメントのセットに属しています。3つのドキュメントはすべて同じセキュリティ要件の基本セットにマップします。状況に応じて、さまざまな目的を達成するために、単体で使用することも組み合わせて使用することもできます。
+
+* **モバイルアプリケーションセキュリティ検証標準 (MASVS):** モバイルアプリのセキュリティモデルを定義し、モバイルアプリの一般的なセキュリティ要件を示す標準。これはアーキテクト、開発者、テスト担当者、セキュリティ専門家、消費者がセキュアなモバイルアプリケーションとは何であるかを定義するために使用できます。
+* **モバイルセキュリティテストガイド (MSTG):** モバイルアプリのセキュリティをテストするためのマニュアル。オペレーティングシステム特有のベストプラクティス(現時点では Android および iOS 向け)とともに MASVS で定義されている要件の検証手順を提供します。MSTG はモバイルアプリのセキュリティテストの完全性と一貫性を保証します。また、モバイルアプリケーションセキュリティテスト担当者の単体の学習リソースやリファレンスガイドとしても役立ちます。
+* **モバイルアプリセキュリティチェックリスト:** 実際の評価の中で MASVS に対するコンプライアンスを追跡するためのチェックリスト。このリストは各要件の MSTG テストケースに都合よくリンクしており、モバイルペネトレーションアプリテストを簡単に行うことができます。
+
+![Document Overview](Images/Chapters/0x03/owasp-mobile-overview.jpg)
+
+例えば、MASVS 要件は計画およびアーキテクチャ設計の段階で使用され、チェックリストやテストガイドは手動セキュリティテストのベースラインとして、もしくは開発後の自動セキュリティテストのテンプレートとして使用できます。次の章では、モバイルアプリケーションのペネトレーションテストの中でチェックリストやガイドを実際にどのように適用できるかについて説明します。
+
+## OWASP モバイルアプリケーションセキュリティ検証標準 (MASVS)
+
+OWASP モバイルアプリケーションセキュリティ検証標準 (MASVS) ... 
+
+MASVS の8つの要件カテゴリは以下のとおりです。
+
+* V1: アーキテクチャ、設計、脅威モデリング要件
+* V2: データストレージとプライバシー要件
+* V3: 暗号化要件
+* V4: 認証とセッション管理要件
+* V5: ネットワーク通信要件
+* V6: プラットフォーム相互作用要件
+* V7: コード品質とビルド設定要件
+* V8: リバースエンジニアリングの耐性要件
+
+## OWASP モバイルアプリケーションセキュリティチェックリスト
+
+OWASP モバイルアプリケーションセキュリティチェックリスト ...
+
+## OWASP モバイルセキュリティテストガイド (MSTG)
+
+OWASP モバイルセキュリティテストガイド (MSTG) ... 
+
 ## OWASP Mobile Top 10 2016
+
 OWASP Mobile Top 10 は OWASP Top Ten プロジェクトと同等のものですが、モバイルアプリケーションセキュリティに重点を置いて設計されています。ほとんどの場合、情報セキュリティ業界の人々が "OWASP Top Ten" プロジェクトについて話し合っていますが、実際には Web アプリケーションセキュリティだけを指しています。
 
 このガイドは OWASP Mobile Top 10 2016 と同等の機能を持つモバイルアプリケーションセキュリティに関する重要な文書です。
@@ -60,17 +107,7 @@ OWASP Mobile Top 10 は情報セキュリティ業界のさまざまなベンダ
 
 脆弱性のカテゴリおよびモバイルアプリケーションへの侵害を防ぐための手順についての詳細は、OWASP Mobile Top 10 2016 プロジェクトページ <sup>11</sup> を参照ください。
 
-## OWASP モバイルアプリセキュリティ検証標準、チェックリスト、テストガイド
-
-このガイドは3つの密接に関連するモバイルアプリケーションセキュリティドキュメントのセットに属しています。3つのドキュメントはすべて同じセキュリティ要件の基本セットにマップします。状況に応じて、単体で使用することも、さまざまな目的を達成するために組み合わせて使用することもできます。
-
-* **モバイルアプリケーションセキュリティ検証標準 (MASVS):** モバイルアプリのセキュリティモデルを定義し、モバイルアプリの一般的なセキュリティ要件を示す標準。これはアーキテクト、開発者、テスト担当者、セキュリティ専門家、消費者がセキュアなモバイルアプリケーションとは何であるかを定義するために使用できます。
-* **モバイルセキュリティテストガイド (MSTG):** モバイルアプリのセキュリティをテストするためのマニュアル。オペレーティングシステム特有のベストプラクティス(現時点では Android および iOS 向け)とともに MASVS で定義されている要件の検証手順を提供します。MSTG はモバイルアプリのセキュリティテストの完全性と一貫性を保証します。また、モバイルアプリケーションセキュリティテスト担当者の単体の学習リソースやリファレンスガイドとしても役立ちます。
-* **モバイルアプリセキュリティチェックリスト:** 実際の評価の中で MASVS に対するコンプライアンスを追跡するためのチェックリスト。このリストは各要件の MSTG テストケースに都合よくリンクしており、モバイルペネトレーションアプリテストを簡単に行うことができます。
-
-![Document Overview](Images/Chapters/0x03/owasp-mobile-overview.jpg)
-
-例えば、MASVS 要件は計画およびアーキテクチャ設計の段階で使用され、チェックリストやテストガイドは手動セキュリティテストのベースラインとして、もしくは開発後の自動セキュリティテストのテンプレートとして使用できます。次の章では、モバイルアプリケーションのペネトレーションテストの中でチェックリストやガイドを実際にどのように適用できるかについて説明します。
+## モバイルセキュリティテストガイドの使い方
 
 ## モバイルセキュリティテストガイドの構成
 
