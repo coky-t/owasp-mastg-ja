@@ -1,10 +1,6 @@
 ## iOS プラットフォーム概要
 
-他のプラットフォームと同様に、Apple は iOS 向けのソフトウェア開発キット (SDK) を提供しています。さまざまなツールやインタフェースを提供することで開発者がネイティブ iOS アプリを開発、インストール、実行、テストできます。この目的のために XCode 統合開発環境 (IDE) が使用され、iOS アプリケーションは Objective-C もしくは Swift を使用して実装されます。
-
-Objective-C は Smalltalk スタイルのメッセージングを C 言語に追加したオブジェクト指向プログラミング言語で、macOS や iOS でそれぞれデスクトップアプリケーションやモバイルアプリケーションを開発するために使用されます。macOS と iOS の両方とも Objective-C を使用して実装されています。
-
-Swift は Objective-C の後継で、相互運用が可能であり、2014年に XCode 6 で導入されました。
+-- [TODO - iOS Platform introduction --]
 
 ### iOS セキュリティアーキテクチャ
 
@@ -17,6 +13,14 @@ iOS セキュリティアーキテクチャの主な機能：
 - 一般的な緩和策
 
 iOS セキュリティアーキテクチャに関する非常に詳細な分析は Johnatan Levin in MacOS and iOS Internals Vol. 3 - http://www.newosxbook.com/2ndUpdate.html <sup>[4]</sup> を参照ください。
+
+#### Hardware Security
+
+The iOS security architecture makes heavy use of hardware-based security features that enhance overall performance and security. Each device comes with two built-in AES 256-bit keys, UID and GID, fused/compiled into the application processor and Secure Enclave during manufacturing. There is no way to directly read these keys through software or debugging interfaces such as JTAG. Encryption and decryption operations are performed by hardware AES crypto-engines with exclusive access to the keys. 
+
+The GID is a common value shared between all processors in a class of devices and known to Apple, and is used to prevent tampering with firmware files and other cryptographic tasks not directly related to the user's private data. UIDs, which are unique to each device, are used to protect the key hierarchy used for device-level file system encrytion. Because they are not recorded during manufacturing, not even Apple can restore the file encryption keys for a particular device.
+
+To enable secure deletion of sensitive data on flash memory, iOS devices inlcude a feature called Effaceable Storage. This feature provides direct low-level access to the storage technology, making it possible to securely erase selected blocks <sup>[6]</sup>.
 
 #### セキュアブート
 
@@ -70,10 +74,20 @@ ASLR はプログラムの実行ごとにプログラムの実行可能ファイ
 ![iOS Security Architecture (iOS Security Guide)](http://bb-conservation.de/sven/iOS_Security_Architecture.png)
 *iOS Security Architecture (iOS Security Guide)*
 
+### iOS でのソフトウェア開発
+
+他のプラットフォームと同様に、Apple は iOS 向けのソフトウェア開発キット (SDK) を提供しています。さまざまなツールやインタフェースを提供することで開発者がネイティブ iOS アプリを開発、インストール、実行、テストできます。この目的のために XCode 統合開発環境 (IDE) が使用され、iOS アプリケーションは Objective-C もしくは Swift を使用して実装されます。
+
+Objective-C は Smalltalk スタイルのメッセージングを C 言語に追加したオブジェクト指向プログラミング言語で、macOS や iOS でそれぞれデスクトップアプリケーションやモバイルアプリケーションを開発するために使用されます。macOS と iOS の両方とも Objective-C を使用して実装されています。
+
+Swift は Objective-C の後継で、相互運用が可能であり、2014年に Xcode 6 で導入されました。
+
 ### iOS アプリの理解
 
 iOS アプリケーションは IPA (iOS App Store Package) アーカイブで配布されています。この IPA ファイルにはアプリケーションを実行するために必要な(ARM コンパイルされた)アプリケーションコードとリソースがすべて含まれています。コンテナは ZIP 圧縮ファイルであり、簡単に展開できます。
+
 IPA には iTunes および App Store が認識するための構造が組み込まれています。以下の例は IPA の上位構造を示しています。
+
 * /Payload/ フォルダにはすべてのアプリケーションデータが格納されています。このフォルダの内容を更に詳しく説明します。
 * /Payload/Application.app にはアプリケーションデータ自体(ARM コンパイルされたコード)と関連する静的リソースが格納されています
 * /iTunesArtwork はアプリケーションのアイコンとして使用される 512x512 ピクセルの PNG 画像です
