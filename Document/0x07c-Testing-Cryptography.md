@@ -43,68 +43,71 @@
 ##### その他
 [1] Supported Ciphers in KeyStore - https://developer.android.com/training/articles/keystore.html#SupportedCiphers
 
-### Testing for Insecure and/or Deprecated Cryptographic Algorithms
+### 安全ではない暗号アルゴリズムや廃止された暗号アルゴリズムに関するテスト
 
-#### Overview
+#### 概要
 
-Many cryptographic algorithms and protocols should not be used because they have been shown to have significant weaknesses or are otherwise insufficient for modern security requirements. Previously thought secure algorithms may become insecure over time. It is therefore important to periodically check current best practices and adjust configurations accordingly.
+多くの暗号アルゴリズムやプロトコルは使用すべきではありません。それらには重大な脆弱性があることが示されているか、現代のセキュリティ要件には不十分であるためです。以前はセキュアであると考えられていたアルゴリズムが時間の経過とともにセキュアではなくなることがあります。したがって、最新のベストプラクティスを定期的に確認し、それに応じて設定を調整することが重要です。
 
-#### Static Analysis
+#### 静的解析
 
-The source code should be checked that cryptographic algorithms are up to date and in-line with industry standards. This includes, but is not limited to outdated block ciphers (e.g. DES), stream ciphers (e.g. RC4), as well as hash functions (e.g. MD5) and broken random number generators like Dual_EC_DRBG. Please note, that an algorithm that was certified, e.g., by the NIST, can also become insecure over time. A certification does not replace periodic verification of an algorithm's soundness. All of these should be marked as insecure and should not be used and removed from the application code base.
+ソースコードは暗号アルゴリズムが最新で業界標準に適合していることを確認されるべきです。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、Dual_EC_DRBG などの不十分な乱数生成器が含まれますが、これに限定されません。NIST などにより認定されたアルゴリズムは時間の経過とともにセキュアではなくなる可能性があることにも注意します。認定はアルゴリズムの健全性の定期的な検証に置き換えられるものではありません。これらはすべてセキュアではないとマークすべきであり、使用すべきではなく、アプリケーションコードベースから削除すべきです。
 
-Inspect the source code to identify the instances of cryptographic algorithms throughout the application, and look for known weak ones, such as:
+ソースコードを調査し、アプリケーション全体の暗号アルゴリズムのインスタンスを特定し、以下のような既知の脆弱なものを探します。
 
-* DES, 3DES<sup>[6]</sup>
+* DES, 3DES <sup>[6]</sup>
 * RC2
 * RC4
-* BLOWFISH<sup>[6]</sup>
+* BLOWFISH <sup>[6]</sup>
 * CRC32
 * MD4
 * MD5
-* SHA1 and others.
+* SHA1 など
 
-Example initialization of DES algorithm, that is considered weak:
+脆弱とみなされている DES アルゴリズムの初期化の例：
 ```Java
 Cipher cipher = Cipher.getInstance("DES");
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-The recommended approach is be to decompile the APK and inspect the resulting source code for usage of custom encryption schemes (see "Static Analysis").
+カスタム暗号化方式の使用について、APK を逆コンパイルして得られたソースコードを調べることをお勧めします(「静的解析」を参照ください)。
 
-If you encounter locally stored data during the test, try to identify the used algorithm and verify them against a list of known insecure algorithms.
+テスト中にローカルに格納されているデータに遭遇した場合には、使用されているアルゴリズムを特定し、既知のセキュアではないアルゴリズムのリストと比較して検証します。
 
-#### Remediation
+#### 改善方法
 
-Periodically ensure that the cryptography has not become obsolete. Some older algorithms, once thought to require years of computing time, can now be broken in days or hours. This includes MD4, MD5, SHA1, DES, and other algorithms that were once considered as strong. Examples of currently recommended algorithms<sup>[1] [2]</sup>:
+暗号化が廃止されたものではないことを定期的に確認します。
+かつては何年もの計算時間を要すると考えられていた一部の古いアルゴリズムは、数日または数時間で破られる可能性があります。
+これには以前は強力であると考えられていた MD4, MD5, SHA1, DES やその他のアルゴリズムが含まれます。
+現在推奨されるアルゴリズムの例です <sup>[1] [2]</sup> ：
 
-* Confidentiality: AES-GCM-256 or ChaCha20-Poly1305
-* Integrity: SHA-256, SHA-384, SHA-512, Blake2
-* Digital signature: RSA (3072 bits and higher), ECDSA with NIST P-384
-* Key establishment: RSA (3072 bits and higher), DH (3072 bits or higher), ECDH with NIST P-384
+* 機密性: AES-GCM-256, ChaCha20-Poly1305
+* 完全性: SHA-256, SHA-384, SHA-512, Blake2
+* デジタル署名: RSA (3072 ビット以上), ECDSA with NIST P-384
+* 鍵共有: RSA (3072 ビット以上), DH (3072 ビット以上), ECDH with NIST P-384
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 * M6 - Broken Cryptography
 
 ##### OWASP MASVS
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
-- V3.4: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated for security purposes"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
+- V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
 
 ##### CWE
 * CWE-326: Inadequate Encryption Strength
 * CWE-327: Use of a Broken or Risky Cryptographic Algorithm
 
-##### Info
+##### その他
 - [1] Commercial National Security Algorithm Suite and Quantum Computing FAQ - https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf
 - [2] NIST Special Publication 800-57 - http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf
 - [4] NIST recommendations (2016) - https://www.keylength.com/en/4/
 - [5] BSI recommendations (2017) - https://www.keylength.com/en/8/
 - [6] Sweet32 attack -- https://sweet32.info/
 
-##### Tools
+##### ツール
 * QARK - https://github.com/linkedin/qark
 * Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
 
