@@ -11,36 +11,36 @@
 * 対称暗号化は秘密鍵を使用します。暗号化されたデータの機密性は機密鍵の機密性にのみ依存します。これは、秘密鍵は秘密でなければならず、したがって予測可能ではないことを意味します。
 * 非対称暗号化は2つの鍵を使用します。プレーンテキストを暗号化するために使用できる公開鍵とプレーンテキストから元のデータを再構築するために使用できる秘密鍵です。
 
-### Testing for Custom Implementations of Cryptography
+### 暗号のカスタム実装に関するテスト
 
-#### Overview
+#### 概要
 
-The use of non-standard or custom built cryptographic algorithms is dangerous because a determined attacker may be able to break the algorithm and compromise data that has been protected. Implementing cryptographic functions is time consuming, difficult and very likely to fail. Instead well-known algorithms that were already proven to be secure should be used. All mature frameworks and libraries offer cryptographic functions that should also be used when implementing mobile apps.
+非標準の暗号アルゴリズムやカスタムビルドの暗号アルゴリズムの使用は危険です。特定の攻撃者がアルゴリズムを破り、保護されているデータを侵害する可能性があります。暗号化機能の実装には時間がかかり、困難であり、失敗する可能性が非常に高くなります。代わりに既にセキュアであることが証明されている既知のアルゴリズムを使用すべきです。すべての成熟したフレームワークやライブラリはモバイルアプリを実装する際にも使用すべき暗号化機能を提供します。
 
-#### Static Analysis
+#### 静的解析
 
-Carefully inspect all the cryptographic methods used within the source code, especially those which are directly applied to sensitive data. Pay close attention to seemingly standard but modified algorithms. Remember that encoding is not encryption! Any appearance of bit shift operators like exclusive OR operations might be a good sign to start digging deeper.
+ソースコードに含まれるすべての暗号手法、特に機密データに直接適用されている手法を注意深く調べます。一見標準のようにみえるが改変されたアルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。排他的 OR 演算などのビットシフト演算子が現れたら深く掘り下げてみる良い兆候かもしれません。
 
-#### Dynamic Analysis
+#### 動的解析
 
-The recommended approach is be to decompile the APK and inspect the resulting source code for usage of custom encryption schemes (see "Static Analysis").
+カスタム暗号化方式の使用について、APK を逆コンパイルして得られたソースコードを調べることをお勧めします(「静的解析」を参照ください)。
 
-#### Remediation
+#### 改善方法
 
-Do not develop custom cryptographic algorithms, as it is likely they are prone to attacks that are already well-understood by cryptographers. Select a well-vetted algorithm that is currently considered to be strong by experts in the field, and use well-tested implementations.
+カスタム暗号アルゴリズムを開発してはいけません。これは暗号技術者によりよく知られている攻撃を受ける可能性が高いためです。その分野の専門家により現在強力であると考えられている十分に検証されたアルゴリズムを選択し、十分にテストされた実装を使用します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 * M6 - Broken Cryptography
 
 ##### OWASP MASVS
-- V3.2: "The app uses proven implementations of cryptographic primitives"
+- V3.2: "アプリは実績のある暗号プリミティブの実装を使用している。"
 
 ##### CWE
 * CWE-327: Use of a Broken or Risky Cryptographic Algorithm
 
-##### Info
+##### その他
 [1] Supported Ciphers in KeyStore - https://developer.android.com/training/articles/keystore.html#SupportedCiphers
 
 ### Testing for Insecure and/or Deprecated Cryptographic Algorithms
