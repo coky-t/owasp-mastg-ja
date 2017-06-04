@@ -51,7 +51,7 @@
 
 #### 静的解析
 
-ソースコードは暗号アルゴリズムが最新で業界標準に適合していることを確認されるべきです。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、Dual_EC_DRBG などの不十分な乱数生成器が含まれますが、これに限定されません。NIST などにより認定されたアルゴリズムは時間の経過とともにセキュアではなくなる可能性があることにも注意します。認定はアルゴリズムの健全性の定期的な検証に置き換えられるものではありません。これらはすべてセキュアではないとマークすべきであり、使用すべきではなく、アプリケーションコードベースから削除すべきです。
+ソースコードは暗号アルゴリズムが最新で業界標準に適合していることを確認されるべきです。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、Dual_EC_DRBG などの不十分な乱数生成器が含まれますが、これに限定されません。NIST などにより認定されたアルゴリズムは時間の経過とともにセキュアではなくなる可能性があることにも注意します。認定はアルゴリズムの堅牢性の定期的な検証に置き換えられるものではありません。これらはすべてセキュアではないとマークすべきであり、使用すべきではなく、アプリケーションコードベースから削除すべきです。
 
 ソースコードを調査し、アプリケーション全体の暗号アルゴリズムのインスタンスを特定し、以下のような既知の脆弱なものを探します。
 
@@ -169,46 +169,46 @@ Cipher cipher = Cipher.getInstance("DES");
 
 -- TODO --
 
-### Testing for Insecure Cryptographic Algorithm Configuration
+### 安全ではない暗号アルゴリズム設定に関するテスト
 
-#### Overview
+#### 概要
 
-Choosing strong cryptographic algorithm alone is not enough. Often security of otherwise sound algorithms can be affected through their configuration. Most prominent for cryptographic algorithms is the selection of their used key length.
+強力な暗号アルゴリズムを選択するだけでは十分ではありません。多くの場合、そのような堅牢なアルゴリズムのセキュリティはその構成により影響を受けることがあります。暗号アルゴリズムに対して最も顕著なものは使用される鍵長の選択です。
 
-#### Static Analysis
+#### 静的解析
 
-Through source code analysis the following non-exhausting configuration options should be checked:
+ソースコード解析を行い、以下のような検討されていない設定オプションをチェックすべきです。
 
-* cryptographic salt, which should be at least the same length as hash function output
-* * reasonable choice of iteration counts when using password derivation functions
-* IVs being random and unique
-* fit-for-purpose block encryption modes
-* key management being done properly
+* 暗号ソルト、少なくともハッシュ関数出力と同じ長さであるべきです
+* * パスワード導出関数を使用する場合の反復カウントの合理的な選択
+* ランダムかつユニークである IV
+* 目的に合ったブロック暗号モード
+* 適切に行われている鍵管理
 
-#### Dynamic Analysis
+#### 動的解析
 
-If hashes were extracted during the analysis, and they have been configured in an insecure manner, a brute-force password cracking tool, e.g. hashcat, can be used to extract the original plain-text passwords from the encrypted hashes. Hashcat's wiki contains examples of cracking speeds for different algorithms, this can be utilized to estimate the effort that an attacker would have to recover plain-text passwords.
+解析中にハッシュが抽出され、それらがセキュアではない方法で構成されている場合、hashcat などのブルートフォースパスワードクラッキングツールを使用して、暗号化されたハッシュから元のプレーンテキストパスワードを抽出することができます。hashcat の wiki にはさまざまなアルゴリズムのクラッキング速度の事例があり、これを利用して攻撃者はプレーンテキストパスワードを復元するために必要な工数を見積もることができます。
 
-To utilize brute-force tools, the used hash algorithm (e.g., MD5 or SHA1) must be known. If this knowledge is not gathered during the Testing, tools like hashID can be used to automatically identify hash algorithms.
+ブルートフォースツールを利用するには、使用されているハッシュアルゴリズム （MD5 や SHA1 など) を知っている必要があります。この知見がテスト中に収集されない場合には、hashID などのツールを使用して自動的にハッシュアルゴリズムを識別することができます。
 
-#### Remediation
+#### 改善方法
 
-Periodically ensure that used key length fulfill accepted industry standards<sup>[6]</sup>.
+使用されている鍵長が業界標準 <sup>[6]</sup> を満たしていることを定期的に確認します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 * M6 - Broken Cryptography
 
 ##### OWASP MASVS
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
-- V3.4: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated for security purposes"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
+- V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
 
 ##### CWE
 * CWE-326: Inadequate Encryption Strength
 * CWE-327: Use of a Broken or Risky Cryptographic Algorithm
 
-##### Info
+##### その他
 - [1] Commercial National Security Algorithm Suite and Quantum Computing FAQ - https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf
 - [2] NIST Special Publication 800-57 - http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf
 - [3] Security "Crypto" provider deprecated in Android N -  https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html
@@ -216,7 +216,7 @@ Periodically ensure that used key length fulfill accepted industry standards<sup
 - [5] BSI recommendations (2017) - https://www.keylength.com/en/8/
 - [6] ENISA Algorithms, key size and parameters report 2014 - https://www.enisa.europa.eu/publications/algorithms-key-size-and-parameters-report-2014
 
-##### Tools
+##### ツール
 * QARK - https://github.com/linkedin/qark
 * Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
 * hashcat - https://hashcat.net/hashcat/
