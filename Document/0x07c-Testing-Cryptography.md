@@ -111,41 +111,41 @@ Cipher cipher = Cipher.getInstance("DES");
 * QARK - https://github.com/linkedin/qark
 * Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
 
- 
-### If symmetric encryption or MACs are used, test for hard coded secret keys
 
-#### Overview
+### 対称暗号化または MAC が使用されている場合、ハードコードされた秘密鍵に関するテスト
 
-The security of symmetric encryption and keyed hashes (MACs) is highly dependent upon the secrecy of the used secret key. If the secret key is disclosed, the security gained by encryption/MACing is rendered naught.
+#### 概要
 
-This mandates, that the secret key is protected and should not be stored together with the encrypted data.
+対称暗号化と鍵付きハッシュ (MAC) のセキュリティは使用されている秘密鍵の秘密性に大きく依存します。秘密鍵が開示されている場合、暗号化や MAC により得られるセキュリティはゼロになります。
 
-#### Static Analysis
+これは秘密鍵が保護されており、暗号化されたデータとともに格納すべきではないことを要求します。
 
-The following checks would be performed against the used source code:
+#### 静的解析
 
-* Ensure that no keys/passwords are hard coded and stored within the source code. Pay special attention to any 'administrative' or backdoor accounts enabled in the source code. Storing fixed salt within application or password hashes may cause problems too.
+使用されているソースコードに対して以下のチェックを行います。
+
+* 鍵やパスワードがハードコードされておらず、ソースコード内に格納されていないことを確認します。ソースコードで有効になっている管理者アカウントやバックドアアカウントには特に注意します。アプリケーション内の固定ソルトやパスワードハッシュの格納が問題を引き起こすこともあります。
 *
-* Ensure that no obfuscated keys or passwords are in the source code. Obfuscation is easily bypassed by dynamic instrumentation and in principle does not differ from hard coded keys.
+* ソースコードに難読化された鍵やパスワードがないことを確認します。難読化は動的計装により簡単にバイパスされるため、基本的にハードコードされた鍵とかわりません。
 *
-* If the application is using two-way SSL (i.e. there is both server and client certificate validated) check if:
-   * the password to the client certificate is not stored locally, it should be in the Keychain
-   * the client certificate is not shared among all installations (e.g. hard coded in the app)
-* if the app relies on an additional encrypted container stored in app data, ensure how the encryption key is used;
-   * if key wrapping scheme is used, ensure that the master secret is initialized for each user, or container is re-encrypted with new key;
-   * check how password change is handled and specifically, if you can use master secret or previous password to decrypt the container.
+* アプリケーションが双方向 SSL を使用している場合 (つまり、サーバー証明書とクライアント証明書の両方が検証されている場合)、以下をチェックします。
+   * クライアント証明書のパスワードがローカルに保存されていないこと、キーチェーンにあるべきです
+   * クライアント証明書はすべての装置で共有されていないこと (アプリ内にハードコードされているなど)
+* アプリがアプリデータに格納されている追加の暗号化コンテナに依存している場合、暗号鍵の使用方法を確認します。
+   * 鍵ラッピングスキームが使用されている場合、マスターシークレットが各ユーザーに対して初期化されているか、コンテナが新しい鍵で再暗号化されることを確認します。
+   * (特にマスターシークレットや以前のパスワードを使用してコンテナを復号化できる場合、) パスワードの変更がどのように処理されるかを確認します。
 
-Mobile operating systems provide a specially protected storage area for secret keys, commonly named key stores or key chains. Those storage areas will not be part of normal backup routines and might even be protected by hardware means. The application should use this special storage locations/mechanisms for all secret keys.
+モバイルオペレーティングシステムは一般的にキーストアやキーチェーンと呼ばれる秘密鍵のための特別に保護された記憶域を提供します。これらの記憶域は通常のバックアップルーチンの一部ではなく、ハードウェアにより保護される場合もあります。アプリケーションはすべての秘密鍵に対してこの特別な格納場所やメカニズムを使用すべきです。
 
-#### Dynamic Analysis
+#### 動的解析
 
-The recommended approach is be to decompile the APK and inspect the resulting source code for usage of custom encryption schemes (see "Static Analysis").
+カスタム暗号化方式の使用について、APK を逆コンパイルして得られたソースコードを調べることをお勧めします(「静的解析」を参照ください)。
 
-#### Remediation
+#### 改善方法
 
 -- TODO --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 
@@ -159,13 +159,13 @@ The recommended approach is be to decompile the APK and inspect the resulting so
 
 -- TODO --
 
-##### Info
+##### その他
 
 * iOS: Managing Keys, Certificates, and Passwords -- https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/KeyManagementAPIs/KeyManagementAPIs.html
 * Android: The Android Keystore System -- https://developer.android.com/training/articles/keystore.html
 * Android: Hardware-backed Keystore -- https://source.android.com/security/keystore/
 
-##### Tools
+##### ツール
 
 -- TODO --
 
