@@ -1,21 +1,69 @@
 ## データストレージのテスト (iOS)
 
-すべてのテストケースについてアプリのコンテキストでどのような機密情報があるかを知る必要があります。詳細については「データの分類」をご覧ください。
+The protection of sensitive data, such as user credentials and private information, is a key focus in mobile security. In this chapter, you will learn about the APIs iOS offers for local data storage, as well as best practices for using those APIs.
+
+Note that "sensitive data" needs to be identified in the context of each specific app. Data classification is described in detail in the chapter "Testing Processes and Techniques".
 
 ### ローカルデータストレージのテスト
 
 #### 概要
 
-多くのモバイルアプリケーションではデータを格納することが不可欠です。例えば、ユーザー設定やユーザーが入力したデータを追跡してローカルやオフラインで格納する必要があります。データはさまざまなオペレーティングシステムでさまざまな方法でモバイルアプリケーションにより永続的に格納されます。以下は iOS プラットフォームで使用できるメカニズムを示しています。通常、機密データを格納することは考慮されません。
+Common wisdom suggest to save as little sensitive data as possible on permanent local storage. However, in most practical scenarios, a least some types user-related data need to be stored. For example, asking the user to enter a highly complex password every time the app is started isn't a great idea from a usability perspective. As a result, most apps must locally cache some kind of session token. Other types of sensitive data, such as personally identifyable information, might also be saved if the particular scenario calls for it.
+
+Fortunately, Apple's data storage APIs allow developers to make use of the crypto hardware available in every iOS device. Provided that these APIs are used correclty, key data and files can be secured using hardware-backed 256 bit AES encryption.
+
+-- [TODO: Where data shouldn't be saved:] -- 
 
 * CoreData/SQLite データベース
 * NSUserDefaults
 * プロパティリスト (Plist) ファイル
 * プレーンファイル
 
+##### The Keychain
+
+The iOS Keychain is used to securely store short, sensitive bits of data, such as encryption keys and session tokens. It is implemented as an SQLite database that can be accessed only through Keychain APIs. The Keychain database is encrypted using the device Key and the user PIN/password (if one has been set by the user).
+
+By default, each app only can access Keychain created by itself. Access can however be shared between apps signed by the same developer by using the "access groups" feature. Access to the Keychain is managed by the securityd daemon, which grants access based on the app's <code>Keychain-access-groups</code>, <code>application-identifier</code> and <code>application-group</code> entitlements. 
+
+The KeyChain API consists of the following main operations with self-explaining names:
+
+- SecItemAdd
+- SecItemUpdate
+- SecItemCopyMatching
+- SecItemDelete
+
+Keychain data is protected using a class structure similar to the one used for file encryption (see also iOS platfom overview).
+
+Items added with the SecItemAdd call are encoded as a binary plist and encrypted with using an 128 bit AES per-item key. 
+
+Note that larger blobs of data are not to meant to be saved directly in the keychain. That's what the Data Protection API is for (which also makes use of the Keychain).
+
+##### The Data Protection API
+
+App developers can leverage the iOS *Data Protection* APIs to implement fine-grained access control for user data stored in flash memory. The API is built on top of the Secure Enclave, a coprocessor that provides cryptographic operations for Data Protection key management. A device-specific hardware key is embedded into the secure enclave, ensuring the integrity of Data Protection even if the operating system kernel is compromised.
+
+The data protection architecture is based on a hierarchy of keys. The hardware key sits at the top of this hierarchy, and can be used to "unlock" so-called class keys which are associated with different device states (e.g. locked / unlocked).
+
+Every file stored in the iOS file system is encrypted with its own, individual per-file key, which is contained in the file metadata. The metadata is encrypted with the file system key and wrapped with one of the class keys, depending on the protection class selected by the app when creating the the Keychain item.
+
+<img src="Images/Chapters/0x06d/key_hierarchy_apple.jpg" width="500px"/>
+*iOS Data Protection Key Hierarchy <sup>[3]</sup>*
+
+Files can be assigned one of four protection classes:
+
+- Complete Protection (NSFileProtectionComplete): This class key is protected with a key derived from the user passcode and the device UID. It is wiped from memory shortly after the device is locked, makimg the data inaccessible until the user unlocks the device.
+
+- Protected Unless Open (NSFileProtectionCompleteUnlessOpen): Behaves similar to Complete Protection, but if the file is opened when unlocked, the app can continue to access the file even if the user locks the device. This is implemented using asymmetric elliptic curve cryptography <sup>[3]</sip>.
+
+- Protected Until First User Authentication (NSFileProtectionCompleteUntilFirstUserAuthentication): The file can be accessed from the moment the user unlocks the device for the first time after booting. It can be accessed even if the user subsequently locks the device.
+
+- No Protection (NSFileProtectionNone): This class key is protected only with the UID and is kept in Effaceable Storage. This protection class exists to enable fast remote wipe: Deleting the class key immediately makes the data inacessible. 
+
+-- [TODO: Finish data protection overview] -- 
+
 #### 静的解析
 
-理想的には機密情報はデバイスに格納すべきではありません。機密情報をデバイス自体に格納する必要がある場合、キーチェーンなどを使用して iOS デバイスのデバイスを保護するために利用できる関数/API呼び出しがあります。
+機密情報をデバイス自体に格納する必要がある場合、キーチェーンなどを使用して iOS デバイスのデバイスを保護するために利用できる関数/API呼び出しがあります。
 
 静的解析の中で機密データがデバイスに永続的に格納されるかどうかを確認する必要があります。機密データを扱う際には以下のフレームワークや関数をチェックする必要があります。
 
@@ -311,7 +359,12 @@ action == @select(copy:)
 
 @end
 ```
+ペーストボードをクリアするには <sup>[2]</sup>。
 
+```
+UIPasteboard *pb = [UIPasteboard generalPasteboard];
+[pb setValue:@"" forPasteboardType:UIPasteboardNameGeneral];
+```
 
 #### 参考情報
 
@@ -323,11 +376,11 @@ action == @select(copy:)
 - V2.5: "機密データを含む可能性があるテキストフィールドでは、クリップボードが無効化されている。"
 
 ##### CWE
-- CWE
+- CWE-200: Information Exposure
 
 #### Info
 [1] Disable clipboard on iOS - http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-all-in-uitextview
-
+[2] UIPasteboardNameGeneral - https://developer.apple.com/reference/uikit/uipasteboardnamegeneral?language=objc
 
 
 ### 機密データがIPCメカニズムを介して漏洩しているかのテスト
@@ -364,8 +417,6 @@ action == @select(copy:)
 -- TODO --
 
 
-
-
 ### ユーザーインタフェースを介しての機密データ漏洩に関するテスト
 
 ##### 概要
@@ -379,7 +430,6 @@ action == @select(copy:)
 #### 動的解析
 
 -- TODO [Add content on black-box testing of "Testing for Sensitive Data Disclosure Through the User Interface"] --
-
 
 #### 改善方法
 
@@ -401,24 +451,129 @@ action == @select(copy:)
 -- TODO --
 
 
-
 ### 機密データに関するテスト(バックアップ)
 
 #### 概要
 
--- TODO [Add content on overview of "Testing for Sensitive Data in Backups"] --
+This vulnerability occurs when sensitive data is not properly protected by an app when persistently storing it. The app might be able to store it in different places. When trying to exploit this kind of issues, consider that there might be a lot of information processed and stored in different locations. It is important to identify at the beginning what kind of information is processed by the mobile application and keyed in by the user and what might be interesting and valuable for an attacker (e.g. passwords, credit card information, PII).
+
+Consequences for disclosing sensitive information can be various, like disclosure of encryption keys that can be used by an attacker to decrypt information. More generally speaking an attacker might be able to identify this information to use it as a basis for other attacks like social engineering (when PII is disclosed), session hijacking (if session information or a token is disclosed) or gather information from apps that have a payment option in order to attack and abuse it.
+
+Storing data is essential for many mobile applications, for example in order to keep track of user settings or data a user has keyed in that needs to be stored locally or offline. Data can be stored persistently in various ways. The following list shows those mechanisms that are available on the iOS platform<sup>[6]</sup>:
+
+* AppName.app
+  * The app’s bundle, contains the app and all of its resources
+  * Visible to users but users cannot write to this directory
+  * Contents in this directory are not backed up
+* Documents/
+  * Use this directory to store user-generated content
+  * Visible to users and users can write to this directory
+  * Contents in this directory are being backed up
+  * App can disable paths by setting `NSURLIsExcludedFromBackupKey`
+* Library/
+  * This is the top-level directory for any files that are not user data files
+  * iOS apps commonly use the `Application Support` and `Caches` subdirectories, but you can create custom subdirectories
+* Library/Caches/
+  * Semi-persistent cached files
+  * Not visible to users and users cannot write to this directory
+  * Contents in this directory are not backed up
+  * OS may delete the files automatically when app is not running (e.g. storage space running low)
+* Library/Application Support/
+  * Persistent files necessary to run the app
+  * Not visible to users and users cannot write to this directory
+  * Contents in this directory are being backed up
+  * App can disable paths by setting `NSURLIsExcludedFromBackupKey`
+* tmp/ 
+  * Use this directory to write temporary files that do not need to persist between launches of your app
+  * Non-persistent cached files
+  * Not visible to the user
+  * Not backed up
+  * OS may delete the files automatically when app is not running (e.g. storage space running low)
 
 #### 静的解析
 
--- TODO [Add content on white-box testing of "Testing for Sensitive Data in Backups"] --
+Review the iOS mobile application source code to see if there is any usage of the `NSURLIsExcludedFromBackupKey`<sup>[1]</sup> or `kCFURLIsExcludedFromBackupKey`<sup>[2]</sup> file system properties to exclude files and directories from backups. Apps that need to exclude a large number of files can exclude them by creating their own sub-directory and marking that directory as excluded. Apps should create their own directories for exclusion, rather than excluding the system defined directories. 
+
+Either of these APIs is preferred over the older, deprecated approach of directly setting an extended attribute. All apps running on iOS 5.1 and later should use these APIs to exclude data from backups. 
+
+The following is a sample code for excluding a file from backup on iOS 5.1 and later (Objective-C)<sup>[3]</sup>:
+
+```#ObjC
+- (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
+{
+    NSURL* URL= [NSURL fileURLWithPath: filePathString];
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+ 
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
+}
+```
+
+The following is a sample code for excluding a file from backup on iOS 5.1 and later (Swift)<sup>[3]</sup>:
+
+```
+ func addSkipBackupAttributeToItemAtURL(filePath:String) -> Bool
+    {
+        let URL:NSURL = NSURL.fileURLWithPath(filePath)
+ 
+        assert(NSFileManager.defaultManager().fileExistsAtPath(filePath), "File \(filePath) does not exist")
+ 
+        var success: Bool
+        do {
+            try URL.setResourceValue(true, forKey:NSURLIsExcludedFromBackupKey)
+            success = true
+        } catch let error as NSError {
+            success = false
+            print("Error excluding \(URL.lastPathComponent) from backup \(error)");
+        }
+ 
+        return success
+    }
+```
+
+If your app must support iOS 5.0.1, you can use the following method to set the "do not back up" extended attribute. Whenever you create a file or folder that should not be backed up, write the data to the file and then call the following method, passing in a URL to the file<sup>[3]</sup>:
+
+```
+#import <sys/xattr.h>
+- (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
+{
+    assert([[NSFileManager defaultManager] fileExistsAtPath: filePathString]);
+ 
+    const char* filePath = [filePathString fileSystemRepresentation];
+ 
+    const char* attrName = "com.apple.MobileBackup";
+    u_int8_t attrValue = 1;
+ 
+    int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
+    return result == 0;
+}
+```
+
+Lastly, it is not possible to exclude data from backups on iOS 5.0. If your app must support iOS 5.0, then you will need to store your app data in `Caches` to avoid having the data being backed up. iOS will delete your files from the Caches directory when necessary, so your app will need to degrade gracefully if its data files are deleted.
 
 #### 動的解析
 
--- TODO [Add content on black-box testing of "Testing for Sensitive Data in Backups"] --
+After the App data has been backed up, review the data content of the backup files and folders. Specifically, the following directories should be reviewed to check if it contains any sensitive data: 
+
+* Documents/
+* Library/Caches/
+* Library/Application Support/
+* tmp/
+
+Refer to the Overview of this section to read up more on the purpose of each of the mentioned directories and the type of information they stores.  
 
 #### 改善方法
 
--- TODO [Add content on remediation of "Testing for Sensitive Data in Backups"] --
+In performing an iTunes backup of a device on which a particular mobile application has been installed, the backup will include all subdirectories (except for the `Library/Caches/` subdirectory) and files contained within that app's private directory on the device's file system<sup>[4]</sup>. 
+
+As such, avoid storing any sensitive data in plaintext within any of the files or folders within the app's private directory or subdirectories.
+
+While all the files in `Documents/` and `Library/Application Support/` are always being backed up by default, it is possible to exclude files from the backup by calling `[NSURL setResourceValue:forKey:error:]` using the `NSURLIsExcludedFromBackupKey` key<sup>[5]</sup>. 
 
 #### 参考情報
 
@@ -430,11 +585,16 @@ action == @select(copy:)
 - V2.8: "機密データがモバイルオペレーティングシステムにより生成されるバックアップに含まれていない。"
 
 ##### CWE
-- CWE
+- CWE-200: Information Exposure
+- CWE-538: File and Directory Information Exposure
 
-#### Info
--- TODO [Add references for "Testing for Sensitive Data in Backups"] --
-
+#### その他
+- [1] NSURLIsExcludedFromBackupKey - https://developer.apple.com/reference/foundation/nsurl#//apple_ref/c/data/NSURLIsExcludedFromBackupKey
+- [2] kCFURLIsExcludedFromBackupKey - https://developer.apple.com/reference/corefoundation/cfurl-rd7#//apple_ref/c/data/kCFURLIsExcludedFromBackupKey
+- [3] How do I prevent files from being backed up to iCloud and iTunes? - https://developer.apple.com/library/content/qa/qa1719/index.html
+- [4] Directories of an iOS App - https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW12
+- [5] Where You Should Put Your App’s Files - https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW28
+- [6] - iOS File System Overview https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW28
 
 
 ### 自動生成されるスクリーンショットの機密情報に関するテスト
