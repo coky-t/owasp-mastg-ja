@@ -14,11 +14,21 @@ Xcode は macOS, iOS, watchOS, tvOS 用のソフトウェアを開発するた�
 
 Steve Nygard <sup>[1]</sup> による Class-dump は Mach-O ファイルに格納された Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。クラス、カテゴリ、プロトコルの宣言を生成します。
 
-Class-dump-z <sup>[9]</sup> は Objective-C で書かれた class-dump や class-dump-x とは異なり、動的コールの使用を避けるため C++ を使用してゼロから書かれています。これらの不要なコールを削除することで class-dump-z はそれらより10倍近く高速になります。
+Class-dump-z <sup>[9]</sup> は動的コールの使用を避けるため C++ を使用してゼロから class-dump を書き直したものです。これらの不要なコールを削除することで class-dump-z はそれらより10倍近く高速になります。
 
 Elias Limneos <sup>[2]</sup> による Class-dump-dyld は共有キャッシュから直にシンボルをダンプおよび取得できるため、ファイルを最初に抽出する必要がありません。アプリバイナリ、ライブラリ、フレームワーク、バンドル、または dyld_shared_cache 全体からヘッダファイルを生成します。dyld_shared_cache 全体やディレクトリを再帰的に Mass-dump することもできます。
 
 MachoOView <sup>[3]</sup> は有用なビジュアル Mach-O ファイルブラウザで、ARM バイナリのインファイル編集も可能です。
+
+-- TODO [otool] --
+
+#### リバースフレームワーク
+
+Radare2
+
+#### 商用逆アセンブラ
+
+Hopper / IDA Pro.
 
 ### iOSの脱獄
 
@@ -27,8 +37,6 @@ iOS の世界では、脱獄とは Apple のコード署名メカニズムを無
 任意のバージョンの iOS 向けに脱獄を開発することは簡単な努力ではありません。セキュリティテスト担当者としては、一般に公開されている脱獄ツールを使用したいと考えています(心配することはありません。私たちは皆、何かしらの領域ではスクリプトキディーなのです)。それでも、過去のさまざまなバージョンの iOS を脱獄するために使われる技法を学習することをお勧めします。非常に面白いエクスプロイトが多数あり、OS の内部について多くのことが学べます。例えば、 iOS 9.x 用の Pangu9 は、カーネルの use-after-free バグ(CVE-2015-6794)や写真アプリの任意のファイルシステムアクセスの脆弱性(CVE-2015-7037)など、少なくとも5つの脆弱性を悪用していました <sup>[4]</sup>。
 
 脱獄用語での、紐付きおよび紐なし脱獄手法について説明します。「紐付き」シナリオでは、脱獄は再起動後には維持されませんので、再起動するたびにデバイスをコンピュータに接続(紐付き)して再適用する必要があります。「紐なし」脱獄は一度だけ適用すればよく、エンドユーザーにとって最も一般的な選択となっています。
-
-#### iOSの脱獄の理由
 
 iOS デバイスの脱獄の利点には以下のものなどがあります。
 
@@ -51,7 +59,7 @@ iOS の脱獄に関するコンテンツについて読める信頼できるリ�
 * Redmond Pie - http://www.redmondpie.com/
 * Reddit Jailbreak - https://www.reddit.com/r/jailbreak/
 
-#### iOSの脱獄のジレンマ
+#### 脱獄検出の扱い
 
 一部のアプリはインストールされている iOS デバイスが脱獄済みであるかどうかを検出しようとします。この脱獄により iOS のデフォルトセキュリティメカニズムの一部を無効にするため、環境の信頼性低下につながります。
 
@@ -65,7 +73,7 @@ iOS の脱獄に関するコンテンツについて読める信頼できるリ�
 
 #### 静的解析
 
--- TODO [Basic static analysis ] --
+-- TODO [iOS Static Analysis with examples] --
 
 #### デバッグ
 
@@ -76,8 +84,6 @@ iOS でのデバッグは一般的に Mach IPC を介して実装されます。
 XNU カーネルは <code>ptrace()</code> システムコールも実装していますが、レジスタステートやメモリ内容を読み書きする機能などの一部の機能が削除されています。それでも、<code>lldb</code> や <code>gdb</code> などの標準的なデバッガでは <code>ptrace()</code> が限定的に使用されます。Radare2 の iOS デバッガなどの一部のデバッガは <code>ptrace</code> をまったく使用しません。
 
 ##### Using lldb
-
--- TODO [Complete lldb tutorial] --
 
 iOS にはコンソールアプリケーション debugserver が付属しており、gdb または lldb を使用したリモートでバッグが可能です。但し、デフォルトでは debugserver を任意のプロセスにアタッチすることはできません(通常は XCode でデプロイされた自己開発アプリのデバッグにのみ使用されます)。サードパーティアプリのデバッグを有効にするには、task_for_pid entitlement を debugserver 実行可能ファイルに追加する必要があります。これを行う簡単な方法は XCode に同梱されている debugserver バイナリに entitlement を追加することです <sup>[5]</sup>。
 
@@ -127,6 +133,8 @@ debugserver-@(#)PROGRAM:debugserver  PROJECT:debugserver-320.2.89
  for armv7.
 Attaching to process 2670...
 ~~~
+
+-- TODO [Solving UnCrackable App with lldb] --
 
 ##### Using Radare2
 
