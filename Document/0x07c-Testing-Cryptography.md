@@ -222,54 +222,54 @@ Cipher cipher = Cipher.getInstance("DES");
 * hashcat - https://hashcat.net/hashcat/
 * hashID - https://pypi.python.org/pypi/hashID
 
-### Testing for Usage of ECB Mode
+### ECB モードの使用に関するテスト
 
-#### Overview
+#### 概要
 
-As the name implies, block-based encryption is performed upon discrete input blocks, e.g., 128 bit blocks when using AES. If the plain-text is larger than the block-size, it is internally split up into blocks of the given input size and encryption is performed upon each block. The so called block mode defines, if the result of one encrypted block has any impact upon subsequently encrypted blocks.
+その名前が暗示するように、ブロックベースの暗号化は離散入力ブロックに対して実行されます。例えば、AES を使用する場合には 128 ビットのブロックです。プレーンテキストがブロックサイズよりも大きい場合、与えられた入力サイズのブロックに内部的に分割され、各ブロックに対して暗号化が実行されます。一つの暗号化されたブロックの結果がその後に暗号化されるブロックに影響を及ぼす場合、いわゆるブロックモードが定義されます。
 
-The ECB (Electronic Codebook) encryption mode should not be used, as it is basically divides the input into blocks of fixed size and each block is encrypted separately<sup>[6]</sup>. For example, if an image is encrypted utilizing the ECB block mode, then the input image is split up into multiple smaller blocks. Each block might represent a small area of the original image. Each of which is encrypted using the same secret input key. If input blocks are similar, e.g., each input block is just a white background, the resulting encrypted output block will also be the same. While each block of the resulting encrypted image is encrypted, the overall structure of the image will still be recognizable within the resulting encrypted image.
+ECB (Electronic Codebook) 暗号化モードは使用すべきではありません。基本的に入力を固定サイズのブロックに分割して、各ブロックを個別に暗号化します <sup>[6]</sup> 。例えば、画像が ECB ブロックモードを利用して暗号化されている場合、入力画像は複数の小さなブロックに分割されます。各ブロックは元の画像の小さな領域を表しています。それぞれが同じ秘密の入力鍵を使用して暗号化されます。入力ブロックが類似している場合、例えば入力ブロックが白い背景のみである場合、結果として得られる暗号化された出力ブロックも同じになります。結果として得られる暗号化画像の各ブロックは暗号化されていますが、画像の全体的な構造は結果として得られる暗号化画像内で依然として認識可能です。
 
 ![Electronic Codebook (ECB mode encryption)](Images/Chapters/0x07c/ECB.png)
 
 ![Difference of encryption modes](Images/Chapters/0x07c/EncryptionMode.png)
 
-#### Static Analysis
+#### 静的解析
 
-Use the source code to verify the used blcok mode. Especially check for ECB mode, e.g.:
+ソースコードを使用して、使用されているブロックモードを確認します。特に ECB モードについてチェックします。以下に例を示します。
 
 ```
 Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-Test encrypted data for reoccuring patterns -- those can be an indication of ECB mode being used.
+再発するパターンについて暗号化されたデータをテストします。これらは ECB モードが使用されていることを示すものです。
 
-#### Remediation
+#### 改善方法
 
-Use an established block mode that provides a feedback mechanism for subsequent blocks, e.g. Counter Mode (CTR). For storing encrypted data it is often advisable to use a block mode that additionally protects the integrity of the stored data, e.g. Galois/Counter Mode (GCM). The latter has the additional benefit that the algorithm is mandatory for each TLSv1.2 implementation -- thus being available on all modern plattforms.
+カウンターモード (CTR) などの後続するブロックに対するフィードバック機構を提供する確立されたブロックモードを使用します。暗号化されたデータを格納するために、ガロア・カウンターモード (GCM) などの格納されたデータの完全性を付加的に保護するブロックモードを使用することが多くの場合賢明です。後者はアルゴリズムが各 TLSv1.2 の実装に必須であるという追加の利点があります。したがって、すべての最新のプラットフォームで利用っできます。
 
-Consult the NIST guidelines on block mode selection<sup>[1]</sup>.
+ブロックモード選択に関する NIST のガイドライン <sup>[1]</sup> を参照ください。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 * M6 - Broken Cryptography
 
 ##### OWASP MASVS
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 
 ##### CWE
 * CWE-326: Inadequate Encryption Strength
 * CWE-327: Use of a Broken or Risky Cryptographic Algorithm
 
-##### Info
+##### その他
 
 - [1] NIST Modes Development, Proposed Modes - http://csrc.nist.gov/groups/ST/toolkit/BCM/modes_development.html
 - [6] Electronic Codebook (ECB) - https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_.28ECB.29
 
-##### Tools
+##### ツール
 * QARK - https://github.com/linkedin/qark
 * Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
 
