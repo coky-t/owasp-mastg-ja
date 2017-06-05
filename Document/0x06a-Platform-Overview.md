@@ -14,13 +14,13 @@ iOS セキュリティアーキテクチャの主な機能：
 
 iOS セキュリティアーキテクチャに関する非常に詳細な分析は Johnatan Levin in MacOS and iOS Internals Vol. 3 - http://www.newosxbook.com/2ndUpdate.html <sup>[4]</sup> を参照ください。
 
-#### Hardware Security
+#### ハードウェアセキュリティ
 
-The iOS security architecture makes heavy use of hardware-based security features that enhance overall performance and security. Each device comes with two built-in AES 256-bit keys, UID and GID, fused/compiled into the application processor and Secure Enclave during manufacturing. There is no way to directly read these keys through software or debugging interfaces such as JTAG. Encryption and decryption operations are performed by hardware AES crypto-engines with exclusive access to the keys. 
+iOS セキュリティアーキテクチャはハードウェアベースのセキュリティ機能を大いに使用し、全体的なパフォーマンスとセキュリティを強化しています。各デバイスには製造時にアプリケーションプロセッサとセキュアエンクレーブに融合・コンパイルされた2つの内蔵 AES 256 ビット鍵、UID と GID が付属しています。ソフトウェアや JTAG などのデバッグインタフェースを介してこれらの鍵を直接読み取る方法はありません。暗号化および復号化操作は鍵への排他的アクセスを有するハードウェア AES 暗号エンジンにより実行されます。
 
-The GID is a common value shared between all processors in a class of devices and known to Apple, and is used to prevent tampering with firmware files and other cryptographic tasks not directly related to the user's private data. UIDs, which are unique to each device, are used to protect the key hierarchy used for device-level file system encrytion. Because they are not recorded during manufacturing, not even Apple can restore the file encryption keys for a particular device.
+GID はデバイスクラス内のすべてのプロセッサ間で共有され Apple に知られている共通の値であり、ユーザーの個人データに直接関係しないファームウェアファイルやその他の暗号化タスクの改竄を防止するために使用されます。各デバイスに固有の UID はデバイスレベルのファイルシステムの暗号化に使用される鍵階層を保護するために使用されます。製造中には記録されないため、Apple でも特定のデバイスのファイル暗号鍵を復元することはできません。
 
-To enable secure deletion of sensitive data on flash memory, iOS devices inlcude a feature called Effaceable Storage. This feature provides direct low-level access to the storage technology, making it possible to securely erase selected blocks <sup>[6]</sup>.
+フラッシュメモリの機密データを安全に削除するために、iOS デバイスには Effaceable Storage という機能があります。この機能はストレージテクノロジへの直接的な低レベルアクセスを提供し、選択されたブロックを安全に消去することを可能にします <sup>[6]</sup> 。
 
 #### セキュアブート
 
