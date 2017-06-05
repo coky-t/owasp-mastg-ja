@@ -1,15 +1,15 @@
 # OWASP モバイルセキュリティテストガイドの序文
 
-The OWASP Mobile Security Testing Guide (MSTG) is an extension of the OWASP Testing Project specifically focusing on the security testing of Android and iOS devices.
+OWASP モバイルセキュリティテストガイド (MSTG) は Android や iOS デバイスのセキュリティテストに特に焦点を当てた OWASP テストプロジェクトの拡張版です。
 
-The goal of this project is to help people understand the what, why, when, where, and how of testing applications on Android
-and iOS devices. The project delivers a complete suite of test cases designed to address the OWASP Mobile Top 10, the Mobile App Security Checklist and the Mobile Application Security Verification Standard (MASVS). 
+このプロジェクトの目標は Android や iOS デバイスでのアプリケーションのテストの対象、理由、時期、場所、方法を人々が理解できるようにすることです。
+このプロジェクトは OWASP Mobile Top 10, モバイルアプリセキュリティチェックリスト、モバイルアプリケーションセキュリティ検証標準 (MASVS) に対処するために設計された完全な一連のテストケースを提供します。
 
-The guide is organized as follows: This introduction describes the layout of the Mobile Security Testing Guide, and explains what makes mobile security testing unique. The Testing Processes and Techniques Section presents the mobile app security testing methodology, vulnerability analysis techniques, security testing in the SDLC, and vulnerability analysis techniques. The Android Testing
-Guide covers the android platform, security basics, security test cases, and reverse engineering and tampering techniques and preventions. The iOS Testing Guide Testing Guide covers everything the Android Testing Guide covers but on iOS devices. Finally,
-the appendix presents some technical test cases such as authentication and session management endpoint, network communications, and cryptography that are not Android or iOS specific followed by a set of testing tools. 
+このガイドは次のように構成されています。この序文ではモバイルセキュリティテストガイドのレイアウトについて説明し、モバイルセキュリティテストの特徴を説明します。テストプロセスと技法セクションでは、モバイルアプリのセキュリティテスト手法、脆弱性解析技法、SDLC におけるセキュリティテスト、脆弱性解析技法を紹介します。
+Android テストガイドには、android プラットフォーム、セキュリティ入門、セキュリティテストケース、リバースエンジニアリングと改竄技法と予防策が含まれています。iOS テストガイドには、Android テストガイドで扱うすべてのものを対象としていますが、iOS デバイスに関するものです。
+最後に、付録では Android や iOS 固有ではない、認証とセッション管理 (エンドポイント)、ネットワーク通信、暗号化などの技術的テストケースと一連のテストツールについて説明します。
 
-# What Makes Mobile Security Testing Unique?
+# モバイルセキュリティテストの特徴
 
 技術革新は迅速に起こります。一昔前、スマートフォンは小さいキーボードを持つ魅力のない端末、技術に精通したビジネスユーザーのための高価な玩具でした。今日、スマートフォンは私たちの生活に不可欠なものです。私たちは情報、ナビゲーション、コミュニケーションのためにそれらに頼っています。ビジネスや社会生活の中の至るところにあります。
 
