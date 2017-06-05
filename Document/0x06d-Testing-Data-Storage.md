@@ -8,50 +8,22 @@ Note that "sensitive data" needs to be identified in the context of each specifi
 
 #### 概要
 
-Common wisdom suggest to save as little sensitive data as possible on permanent local storage. However, in most practical scenarios, a least some types user-related data need to be stored. For example, asking the user to enter a highly complex password every time the app is started isn't a great idea from a usability perspective. As a result, most apps must locally cache some kind of session token. Other types of sensitive data, such as personally identifyable information, might also be saved if the particular scenario calls for it.
+As already mentioned many times in this guide, as little sensitive data as possible should be saved on permanent local storage. However, in most practical scenarios, a least some types user-related data needs to be stored. Fortunately, iOS offers secure storage APIs allow developers to make use of the crypto hardware available in every iOS device. Provided that these APIs are used correctly, key data and files can be secured using hardware-backed 256 bit AES encryption.
 
-Fortunately, Apple's data storage APIs allow developers to make use of the crypto hardware available in every iOS device. Provided that these APIs are used correclty, key data and files can be secured using hardware-backed 256 bit AES encryption.
-
--- [TODO: Where data shouldn't be saved:] -- 
-
-* CoreData/SQLite データベース
-* NSUserDefaults
-* プロパティリスト (Plist) ファイル
-* プレーンファイル
-
-##### The Keychain
-
-The iOS Keychain is used to securely store short, sensitive bits of data, such as encryption keys and session tokens. It is implemented as an SQLite database that can be accessed only through Keychain APIs. The Keychain database is encrypted using the device Key and the user PIN/password (if one has been set by the user).
-
-By default, each app only can access Keychain created by itself. Access can however be shared between apps signed by the same developer by using the "access groups" feature. Access to the Keychain is managed by the securityd daemon, which grants access based on the app's <code>Keychain-access-groups</code>, <code>application-identifier</code> and <code>application-group</code> entitlements. 
-
-The KeyChain API consists of the following main operations with self-explaining names:
-
-- SecItemAdd
-- SecItemUpdate
-- SecItemCopyMatching
-- SecItemDelete
-
-Keychain data is protected using a class structure similar to the one used for file encryption (see also iOS platfom overview).
-
-Items added with the SecItemAdd call are encoded as a binary plist and encrypted with using an 128 bit AES per-item key. 
-
-Note that larger blobs of data are not to meant to be saved directly in the keychain. That's what the Data Protection API is for (which also makes use of the Keychain).
-
-##### The Data Protection API
+##### Data Protection API
 
 App developers can leverage the iOS *Data Protection* APIs to implement fine-grained access control for user data stored in flash memory. The API is built on top of the Secure Enclave, a coprocessor that provides cryptographic operations for Data Protection key management. A device-specific hardware key is embedded into the secure enclave, ensuring the integrity of Data Protection even if the operating system kernel is compromised.
 
 The data protection architecture is based on a hierarchy of keys. The hardware key sits at the top of this hierarchy, and can be used to "unlock" so-called class keys which are associated with different device states (e.g. locked / unlocked).
 
-Every file stored in the iOS file system is encrypted with its own, individual per-file key, which is contained in the file metadata. The metadata is encrypted with the file system key and wrapped with one of the class keys, depending on the protection class selected by the app when creating the the Keychain item.
+Every file stored in the iOS file system is encrypted with its own, individual per-file key, which is contained in the file metadata. The metadata is encrypted with the file system key and wrapped with one of the class keys, depending on the protection class selected by the app when creating the file.
 
 <img src="Images/Chapters/0x06d/key_hierarchy_apple.jpg" width="500px"/>
 *iOS Data Protection Key Hierarchy <sup>[3]</sup>*
 
 Files can be assigned one of four protection classes:
 
-- Complete Protection (NSFileProtectionComplete): This class key is protected with a key derived from the user passcode and the device UID. It is wiped from memory shortly after the device is locked, makimg the data inaccessible until the user unlocks the device.
+- Complete Protection (NSFileProtectionComplete): This class key is protected with a key derived from the user passcode and the device UID. It is wiped from memory shortly after the device is locked, making the data inaccessible until the user unlocks the device.
 
 - Protected Unless Open (NSFileProtectionCompleteUnlessOpen): Behaves similar to Complete Protection, but if the file is opened when unlocked, the app can continue to access the file even if the user locks the device. This is implemented using asymmetric elliptic curve cryptography <sup>[3]</sip>.
 
@@ -59,20 +31,50 @@ Files can be assigned one of four protection classes:
 
 - No Protection (NSFileProtectionNone): This class key is protected only with the UID and is kept in Effaceable Storage. This protection class exists to enable fast remote wipe: Deleting the class key immediately makes the data inacessible. 
 
--- [TODO: Finish data protection overview] -- 
+All class keys except <code>NSFileProtectionNone</code> are encrypted with a key derived from the device UID and the user's passcode. As a result, decryption can only happen on the device itself, and requires the correct passcode to be entered.
+
+Since iOS 7, the default data protection class is "Protected Until First User Authentication".
+
+##### The Keychain
+
+The iOS Keychain is used to securely store short, sensitive bits of data, such as encryption keys and session tokens. It is implemented as an SQLite database that can be accessed only through Keychain APIs. The Keychain database is encrypted using the device Key and the user PIN/password (if one has been set by the user).
+
+By default, each app only can access Keychain created by itself. Access can however be shared between apps signed by the same developer by using the "access groups" feature. Access to the Keychain is managed by the <code>securityd</code> daemon, which grants access based on the app's <code>Keychain-access-groups</code>, <code>application-identifier</code> and <code>application-group</code> entitlements. 
+
+The KeyChain API consists of the following main operations with self-explanatory names:
+
+- SecItemAdd
+- SecItemUpdate
+- SecItemCopyMatching
+- SecItemDelete
+
+Keychain data is protected using a class structure similar to the one used for file encryption. Items added to the Keychain are encoded as a binary plist and encrypted with using an 128 bit AES per-item key. Note that larger blobs of data are not to meant to be saved directly in the keychain - that's what the Data Protection API is for.
+
+- kSecAttrAccessibleAfterFirstUnlock: The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
+- kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
+- kSecAttrAccessibleAlways: The data in the keychain item can always be accessed regardless of whether the device is locked.
+- kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: The data in the keychain can only be accessed when the device is unlocked. Only available if a passcode is set on the device.
+- kSecAttrAccessibleAlwaysThisDeviceOnly: The data in the keychain item can always be accessed regardless of whether the device is locked.
+- kSecAttrAccessibleWhenUnlocked: The data in the keychain item can be accessed only while the device is unlocked by the user.
+- kSecAttrAccessibleWhenUnlockedThisDeviceOnly: The data in the keychain item can be accessed only while the device is unlocked by the user.
+
+The keychain file is located at:
+
+```
+/private/var/Keychains/keychain-2.db
+```
 
 #### 静的解析
 
-機密情報をデバイス自体に格納する必要がある場合、キーチェーンなどを使用して iOS デバイスのデバイスを保護するために利用できる関数/API呼び出しがあります。
+Identify sensitive data saved throughout the app. This includes passwords, secret keys, and personally identifyable information, as well as other data identified as sensitive by the client. Look for instances where this data is saved using any of the local storage APIs listed below. Make sure that sensitive data is never stored without appropriate protection. For example, usernames and passwords should not be saved in NSUserDefaults without additional encryption. In any case, the encryption must be implemented such that the secret key is stored in the Keychain using secure settings, ideally <code>kSecAttrAccessibleWhenUnlockedThisDeviceOnly</code>.
 
-静的解析の中で機密データがデバイスに永続的に格納されるかどうかを確認する必要があります。機密データを扱う際には以下のフレームワークや関数をチェックする必要があります。
+When looking for instances of insecure data storage in an iOS app you should consider the following data storage mechanisms.
 
 ##### CoreData/SQLite データベース
 
 * `Core Data` はアプリケーションのモデルレイヤーオブジェクトを管理するために使用するフレームワークです。オブジェクトライフサイクルおよびオブジェクトグラフ管理(persistenceを含む)に関連する一般的なタスクに一般化および自動化されたソリューションを提供します。Core Data はより低いレベルの sqlite データベースで動作します。
 
 * `sqlite3`: フレームワークセクションの `libsqlite3.dylib` ライブラリはアプリケーションに追加する必要があります。SQLite コマンドに API を提供する C++ ラッパーです。
-
 
 ##### NSUserDefaults
 
@@ -81,11 +83,10 @@ Files can be assigned one of four protection classes:
 ##### プレーンファイル / Plist ファイル
 
 * `NSData`: NSData は静的データオブジェクトを作成し、NSMutableData は動的データオブジェクトを作成します。NSData と NSMutableData は通常データストレージとして使用されますが、データオブジェクトに含まれるデータをアプリケーション間でコピーや移動ができる、分散オブジェクトアプリケーションでも役に立ちます。
-  * NSData オブジェクトの書き込むために使用されるメソッドのオプション: `NSDataWritingWithoutOverwriting, NSDataWritingFileProtectionNone, NSDataWritingFileProtectionComplete, NSDataWritingFileProtectionCompleteUnlessOpen, NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication`
-  * NSData クラスの一部としてデータを格納する: `writeToFile`
+* NSData オブジェクトの書き込むために使用されるメソッドのオプション: `NSDataWritingWithoutOverwriting, NSDataWritingFileProtectionNone, NSDataWritingFileProtectionComplete, NSDataWritingFileProtectionCompleteUnlessOpen, NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication`
+* NSData クラスの一部としてデータを格納する: `writeToFile`
 * ファイルパスを管理する: `NSSearchPathForDirectoriesInDomains, NSTemporaryDirectory`
 * `NSFileManager` オブジェクトはファイルシステムの内容を調べて変更することができます。`createFileAtPath` でファイルを作成して書き込みます。
-
 
 #### 動的解析
 
@@ -98,18 +99,26 @@ Files can be assigned one of four protection classes:
 3. 格納されたデータに次のような grep コマンドを実行します。 `grep -irn "USERID"`
 4. 機密データがプレーンテキストに格納されている場合、このテストは失敗となります。
 
-また、デバッグなどの手動による動的解析を利用して、特定のシステム資格情報がデバイス上でどのように格納および処理されるかを検証することもできます。このアプローチは時間がかかり手動で実行される可能性が高いため、特定のユースケースでのみ実行します。
+For a more detailed analysis, uses an API monitoring tool such as IntroSpy to instrument the app.
 
--- TODO [Add content on Dynamic Testing of "Testing Local Data Storage "] --
+To dump the Keychain data, use keychain dumper <sup>[9]</sup> as described in the chapter "Basic Security Testing on iOS".
 
 #### 改善方法
 
-機密情報(資格情報、鍵、PIIなど)がデバイス上でローカルに必要な場合、車輪を再発明したりデバイス上で暗号化せずに残す代わりに、iOS によって安全にデータを格納するために使用すべきいくつかのベストプラクティスが提供されています。
+Hardware-backed storage mechanisms must be used for storing sensitive data. Permitted options for storing sensitive data are:
 
-以下は証明書や鍵や機密情報の安全な保管に一般的に使用されるベストプラクティスのリストです。
-* 証明書や鍵などの少量の機密データについては Keychain Services <sup>[1]</sup> を参照ください。キーチェーンデータはファイルデータ保護で使用されているものと同様のクラス構造を使用して保護されます。これらのクラスはファイルデータ保護クラスと同等の振る舞いをしますが、異なる鍵を使用し、異なる名前の API の一部です。デフォルトの振る舞いは `kSecAttrAccessibleWhenUnlocked` です。詳細については、Keychain Item Accessibility <sup>[8]</sup> を参照ください。
-* ローカルファイルを暗号化または復号化するために独自実装した暗号化機能は避けるべきです。
+- Storing the data in the keychain with the <code>kSecAttrAccessibleWhenUnlocked</code> attribute.
+- Encrypting the data using standard crypto APIs before storing it, and storing the encryption key in the keychain.
+- Creating a file with the <code>NSFileProtectionComplete</code> attribute.
 
+The following example shows how to create a securely encrypted file using the <code>createFileAtPath</code> method:
+
+```objective-c
+[[NSFileManager defaultManager] createFileAtPath:[self filePath]
+  contents:[@"secret text" dataUsingEncoding:NSUTF8StringEncoding]
+  attributes:[NSDictionary dictionaryWithObject:NSFileProtectionComplete
+  forKey:NSFileProtectionKey]];
+```
 
 #### 参考情報
 
@@ -136,6 +145,7 @@ Files can be assigned one of four protection classes:
 [6] NSFileManager - https://developer.apple.com/reference/foundation/nsfilemanager
 [7] NSUserDefaults - https://developer.apple.com/reference/foundation/userdefaults
 [8] Keychain Item Accessibility -  https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons
+[9] Keychain Dumper - https://github.com/ptoomey3/Keychain-Dumper/
 
 
 ### 機密データに関するテスト(ログ)
