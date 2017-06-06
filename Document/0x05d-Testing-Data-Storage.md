@@ -14,8 +14,6 @@ Common wisdom suggest to save as little sensitive data as possible on permanent 
 
 A vulnerability occurs when sensitive data is not properly protected by an app when persistently storing it. The app might be able to store it in different places, for example locally on the device or on an external SD card. When trying to exploit this kind of issues, consider that there might be a lot of information processed and stored in different locations. It is important to identify at the beginning what kind of information is processed by the mobile application and keyed in by the user and what might be interesting and valuable for an attacker (e.g. passwords, credit card information, PII).
 
-This vulnerability occurs when sensitive data is not properly protected by an app when persistently storing it. The app might be able to store it in different places, for example locally on the device or on an external SD card. When trying to exploit this kind of issues, consider that there might be a lot of information processed and stored in different locations. It is important to identify at the beginning what kind of information is processed by the mobile application and keyed in by the user and what might be interesting and valuable for an attacker (e.g. passwords, credit card information, PII).
-
 Consequences for disclosing sensitive information can be various, like disclosure of encryption keys that can be used by an attacker to decrypt information. More generally speaking an attacker might be able to identify this information to use it as a basis for other attacks like social engineering (when PII is disclosed), session hijacking (if session information or a token is disclosed) or gather information from apps that have a payment option in order to attack and abuse it.
 
 Storing data<sup>[1]</sup> is essential for many mobile applications, for example in order to keep track of user settings or data a user has keyed in that needs to be stored locally or offline. Data can be stored persistently in various ways. The following list shows those mechanisms that are available on the Android platform:
@@ -855,11 +853,23 @@ In order to prevent leaking of data, sensitive information should be masked in t
 
 #### 概要
 
-When backup options are available, it is important to consider that user data may be stored within the app data directory. The backup feature could potentially leak sensitive information such as session identifiers, usernames, email addresses, passwords, keys and much more. Consider to encrypt backup data and avoid to store any sensitive information that is not strictly required within the data directory of the app.
+Like other modern mobile operating systems Android offers auto-backup features. The backups usually include copies of the data and settings of all apps installed on the the device. An obvious concern is whether sensitive user data stored by the app might unintentionally leak to those data backups. 
 
-Besides a local backup, Android provides two ways for apps to backup their data to the cloud:
-* Auto Backup for apps in Android 6.0 (available >= API level 23), which uploads the data to the user's Google Drive account.
-* Key/Value Backup (Backup API or Android Backup Service), which uploads the data to the Android Backup Service.
+Given its diverse ecosystem, Android has a lot of backup options to account for. 
+
+- Stock Android has built-in USB backup facilities. A full data backup, or a backup of a particular app's data directory, can be obtained using the <code>abd backup</code> command when USB debugging is enabled.
+
+- Google also provides a "Back Up My Data" feature that backs up all app data to Google's servers.
+
+- Multiple Backup APIs are available to app developers:
+
+  - Key/Value Backup (Backup API or Android Backup Service) uploads selected data to the Android Backup Service.
+
+  - Auto Backup for Apps: With Android 6.0 (>= API level 23), Google added the "Auto Backup for Apps feature". This feature automatically syncs up to 25MB of app data to the user's Google Drive account.
+
+- OEMs may add additional options. For example, HTC devices have a "HTC Backup" option that, when activated, performs daily backups to the cloud.
+
+-- [TODO - recommended approach] -- 
 
 #### 静的解析
 
