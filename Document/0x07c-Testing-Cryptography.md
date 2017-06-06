@@ -384,38 +384,38 @@ Key theAESKEy = new SecretKeySpec(validKey, "AES");
 * hashcat - https://hashcat.net/hashcat/
 * hashID - https://pypi.python.org/pypi/hashID
 
-### Test if sensitive data is integrity protected
+### 機密データが完全性を保護されているかどうかのテスト
 
-#### Overview
+#### 概要
 
-The attack surface of an application is defined as the sum of all potential input paths. An often forgotten attack vector are files stored on insecure locations, e.g., cloud storage or local file storage.
+アプリケーションの攻撃領域は潜在的なすべての入力パスの合計として定義されます。よく忘れられる攻撃ベクトルにはクラウドストレージやローカルファイルストレージなどの安全でない場所に格納されたファイルがあります。
 
-All data that is stored on potential insecure locations should be integrity protected, i.e., an attacker should not be able to change their content without the application detecting the change prior to the data being used.
+潜在的に安全でない場所に格納されているすべてのデータは完全性を保護すべきです。つまり、データが使用される前にアプリケーションが変更を検出することなく攻撃者がコンテンツを変更できてはいけません。
 
-Most countermeasures work by calculating a checksum for the stored data, and then by comparing the checksum with the retrieved data prior to the data's import. If the checksum/hash is stored with the data on the insecure location, typical hash algorithms will not be sufficient. As they do not posess a secret key, an attacker that is able to change the stored data, can easily recalculate the hash and store the newly calculated hash.
+ほとんどの対策は格納されているデータのチェックサムを計算してから、データをインポートする前に取得したデータのチェックサムを比較することによって機能します。チェックサムやハッシュが安全でない場所にデータとともに格納されている場合、一般的なハッシュアルゴリズムは十分ではありません。それらは秘密鍵を持っていないため、格納されたデータを変更することができる攻撃者は容易にハッシュを再計算して新たに計算されたハッシュを格納することができます。
 
-#### Static Analysis
-
--- TODO --
-
-* check source code for used algorithm
-
-#### Dynamic Analysis
+#### 静的解析
 
 -- TODO --
 
+* 使用されているアルゴリズムについてソースコードを確認します
 
-#### Remediation
+#### 動的解析
 
-Two typical cryptographic counter-measures for integrity protection are:
+-- TODO --
 
-* MACs (Message Authentication Codes, also known as keyed hashes) combine hashes with a secret key. The MAC can only be calculated or verified if the secret key is known. In contrast to hashes this means, that an attacker cannot easily calculate a MAC after the original data was modified. This is well suited, if the application can store the secret key within its own storage and no other party needs to verify the authenticity of the data.
 
-* Digital Signatures are a public key-based scheme where, instead of a single secret key, a combination of a secret private key and a a public key is sued. The signature is created utilizing the secret key and can be verified utilizing the public key. Similar to MACs, an attacker cannot easily create a new signature. In contrast to MACs, signatures allow verification without needed to disclose the secret key. Why is not everyone using Signatures instead of MACs? Mostly for performance reasons.
+#### 改善方法
 
-* Another possibility is the usage of encryption using AEAD schemes (see "Test if encryption provides data integrity protection")
+完全性保護について2つの典型的な暗号対策があります。
 
-#### References
+* MAC (Message Authentication Codes, メッセージ認証コード、鍵付きハッシュとも呼ばれます) はハッシュと秘密鍵を結合します。MAC は秘密鍵が分かっている場合にのみ計算もしくは検証することができます。ハッシュとは対照的に、これは攻撃者が元のデータを改変した後、MAC を容易に計算できないことを意味します。これはアプリケーションが秘密鍵を独自のストレージに格納し、他の当事者がデータの信頼性を検証する必要がない場合に適しています。
+
+* デジタル署名は公開鍵ベースのスキームです。単一の秘密鍵の代わりに、秘密鍵と公開鍵の組み合わせを使用します。署名は秘密鍵を利用して生成され、公開鍵を利用して検証することができます。MAC と同様に、攻撃者は新しい署名を簡単に作成できません。MAC とは対照的に、署名は秘密鍵を開示する必要なしで検証を可能にします。誰もが MAC の代わりに署名を使用しているのはなぜでしょう。主にパフォーマンス上の理由からです。
+
+* もうひとつの可能性として AEAD スキームを使用した暗号化の使用があります (「暗号化がデータの完全性保護を提供しているかどうかのテスト」を参照ください)。
+
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 
@@ -423,17 +423,17 @@ Two typical cryptographic counter-measures for integrity protection are:
 
 ##### OWASP MASVS
 
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 
 ##### CWE
 
 -- TODO --
 
-##### Info
+##### その他
 
 -- TODO --
 
-##### Tools
+##### ツール
 
 -- TODO --
 
