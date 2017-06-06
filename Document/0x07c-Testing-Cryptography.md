@@ -328,19 +328,19 @@ PBKDF2 (RFC 2898<sup>[5]</sup>), Argon2<sup>[4]</sup>, bcrypt<sup>[3]</sup>, scr
 * hashcat - https://hashcat.net/hashcat/
 * hashID - https://pypi.python.org/pypi/hashID
 
-### Test if user-supplied credentials are not directly used as key material
+### ユーザー提供の資格情報が鍵マテリアルとして直接使用されていないかどうかのテスト
 
-#### Overview
+#### 概要
 
-Cryptographic algorithms -- such as symmetric encryption or MACs -- expect a secret input of a a given size, e.g. 128 or 256 bit. A naive implementation might use the use-supplied password directly as an input key. There are a couple of problems with this approach:
+対称暗号化や MAC などの暗号アルゴリズムは 128 ビットや 256 ビットなどの所定のサイズの秘密の入力を期待しています。単純な実装ではユーザー提供のパスワードを入力鍵として直接使用することがあります。このアプローチにはいくつかの問題があります。
 
-* if the password is smaller than the key, then not the full key-space is used (the rest is padded, sometimes even with spaces)
-* A user-supplied password will realistically consist mostly of display- and pronounce-able characters. So instead of the full entropy, i.e. 2<sup>8</sup> when using ASCII, only a small subset is (approx. 2<sup>6</sup>) is used.
-* If two users select the same password an attacker can match the encrypted files. This opens up the possibility of rainbow table attacks.
+* パスワードが鍵より小さい場合、完全な鍵空間は使用されません (残りは多くの場合スペースで埋められます)。
+* ユーザー提供のパスワードは現実的には大部分が表示可能かつ発音可能な文字で構成されます。したがって、完全なエントロピー (すなわち ASCII を使用する場合には 2<sup>8</sup>) ではなく、小さなサブセット (およそ 2<sup>6</sup>) のみが使用されます。
+* 二人のユーザーが同じパスワードを選択した場合、攻撃者は暗号化されたファイルと一致させることができます。これはレインボーテーブル攻撃の可能性が広がります。
 
-#### Static Analysis
+#### 静的解析
 
-Use the source code to verify that no password is directly passed into an encryption function, e.g.:
+ソースコードを使用して、パスワードが暗号化機能に直接渡されていないことを確認します。
 
 
 ```
@@ -353,15 +353,15 @@ System.arraycopy(userKeyByte, 0, validKey, 0, (userKeyByte.length > 16) ? 16 : u
 Key theAESKEy = new SecretKeySpec(validKey, "AES");
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-Test extrated hashes as within "Testing if anything but a KDF (key-derivation function) is used for storing passwords". If no hash or KDF has been used, brute-force attacks or attacks using dictionaries will be more efficient due to the reduced key space.
+「パスワードの保存に KDF (鍵導出関数) 以外のものが使用されているかどうかのテスト」にあるように抽出されたハッシュをテストします。ハッシュや KDF が使用されていない場合には、ブルートフォース攻撃や辞書攻撃は鍵空間が縮小されることによりより効率的になります。
 
-#### Remediation
+#### 改善方法
 
-Pass the user-supplied password into a salted hash funcation or KDF; use its resuls as key for the cryptographic function.
+ユーザー提供のパスワードをソルトされたハッシュ関数もしくは KDF に渡します。その結果を暗号機能の鍵として使用します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 
@@ -369,17 +369,17 @@ Pass the user-supplied password into a salted hash funcation or KDF; use its res
 
 ##### OWASP MASVS
 
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 
 ##### CWE
 
 -- TODO --
 
-##### Info
+##### その他
 
 * Wikipedia -- https://en.wikipedia.org/wiki/Key_stretching
 
-##### Tools
+##### ツール
 
 * hashcat - https://hashcat.net/hashcat/
 * hashID - https://pypi.python.org/pypi/hashID
