@@ -272,17 +272,17 @@ Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 
 
 
-### Testing if anything but a KDF (key-derivation function) is used for storing passwords
+### パスワードの保存に KDF (鍵導出関数) 以外のものが使用されているかどうかのテスト
 
-#### Overview
+#### 概要
 
-Normal hashes are optimized for speed, e.g., optimized to verify large media in short time. For password storage this property is not desirable as it implies that an attacker can crack retrieved password hashes (using rainbow tables or through brute-force attacks) in a short time. For example, when the insecure MD5 hash has been used, an attacker with access to eight high-level graphics cards can test 200.3 Giga-Hashes per Second<sup>[1]</sup>.
+通常のハッシュは速度に関して最適化されます。例えば大きなメディアを短時間で検証するために最適化されているように。パスワードの保存のためには、このプロパティは望ましくありません。攻撃者が取得したパスワードハッシュを (レインボーテーブルを使用したりブルートフォース攻撃を介して) 短時間で解読できることを意味します。例えば、安全でない MD5 ハッシュが使用されている場合、8枚のハイレベルグラフィックカードにアクセスできる攻撃者は1秒当たり200.3ギガのハッシュをテストできます <sup>[1]</sup> 。
 
-A solution this are Key-Derivation Functions (KDFs) that have a configurable calculation time. While this imposes a larger performance overhead this is negligible during normal operation but prevents brute-force attacks. Recently developed key derivation functions such as Argon2 or scrypt have been hardened against GPU-based password cracking.
+その解決策は構成可能な計算時間を持つ鍵導出関数 (KDF) です。これはより大きなパフォーマンスのオーバーヘッドを課し、これは通常の操作では無視できますが、ブルートフォース攻撃を防ぎます。最近開発された Argon2 や scrypt などの鍵導出関数は GPU ベースのパスワードクラッキングに対して強化されています。
 
-#### Static Analysis
+#### 静的解析
 
-Use the source code to determine how the hash is calculated, an exmaple of an insecure instantiation would be:
+ソースコードを使用して、ハッシュがどのように計算されているか判断します。安全でないインスタンス化の例は以下のようになります。
 
 ```
 MessageDigest md = MessageDigest.getInstance("MD5");
@@ -290,17 +290,17 @@ md.updat("too many secrets");
 byte[] digest = md.digest();
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-If hashes were extracted and they have been configured in an insecure manner, a brute-force password cracking tool, e.g. hashcat, can be used to extract the original plain-text passwords from the encrypted hashes. Hashcat's wiki contains examples of cracking speeds for different algorithms, this can be utilized to estimate the effort that an attacker would have to recover plain-text passwords.
+ハッシュが抽出され、それらが安全でない方法で構成されている場合、hashcat などのブルートフォースパスワードクラッキングツールを使用して、暗号化されたハッシュから元のプレーンテキストパスワードを抽出することができます。hashcat の wiki にはさまざまなアルゴリズムのクラッキング速度の事例があり、これを利用して、攻撃者がプレーンテキストのパスワードを復元するために必要な工数を見積もることができます
 
-To utilize brute-force tools, the used hash algorithm (e.g., MD5 or SHA1) must be known. If this knowledge is not gathered during the Testing, tools like hashID can be used to automatically identify hash algorithms.
+ブルートフォースツールを利用するには、使用されているハッシュアルゴリズム (MD5 や SHA1 など) を知っている必要があります。この知識がテスト中に収集されない場合、hashID などのツールを使用してハッシュアルゴリズムを自動的に識別することができます。
 
-#### Remediation
+#### 改善方法
 
-Use an established key derivation function such as PBKDF2 (RFC 2898<sup>[5]</sup>), Argon2<sup>[4]</sup>, bcrypt<sup>[3]</sup> or scrypt (RFC 7914<sup>[2]</sup>).
+PBKDF2 (RFC 2898<sup>[5]</sup>), Argon2<sup>[4]</sup>, bcrypt<sup>[3]</sup>, scrypt (RFC 7914<sup>[2]</sup>) などの確立した鍵導出関数を使用します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 
@@ -308,14 +308,14 @@ Use an established key derivation function such as PBKDF2 (RFC 2898<sup>[5]</sup
 
 ##### OWASP MASVS
 
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
-- V3.4: "The app does not use cryptographic protocols or algorithms that are widely considered depreciated for security purposes"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
+- V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
 
 ##### CWE
 
 -- TODO --
 
-##### Info
+##### その他
 
 [1] 8x Nvidia GTX 1080 Hashcat Benchmarks -- https://gist.github.com/epixoip/a83d38f412b4737e99bbef804a270c40
 [2] The scrypt Password-Based Key Derivation Function -- https://tools.ietf.org/html/rfc7914
@@ -323,7 +323,7 @@ Use an established key derivation function such as PBKDF2 (RFC 2898<sup>[5]</sup
 [4] https://github.com/p-h-c/phc-winner-argon2
 [5] PKCS #5: Password-Based Cryptographic Specification Version 2.0 -- https://tools.ietf.org/html/rfc2898
 
-##### Tools
+##### ツール
 
 * hashcat - https://hashcat.net/hashcat/
 * hashID - https://pypi.python.org/pypi/hashID
