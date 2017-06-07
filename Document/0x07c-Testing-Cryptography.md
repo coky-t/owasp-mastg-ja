@@ -438,33 +438,33 @@ Key theAESKEy = new SecretKeySpec(validKey, "AES");
 -- TODO --
 
 
-### Test if encryption provides data integrity protection
+### 暗号化がデータの完全性保護を提供しているかどうかのテスト
 
-#### Overview
+#### 概要
 
-Please note that, encryption does not provide data integrity, i.e., if an attacker modifies the cipher text and a user decrypts the modified cipher text, the resulting plain-text will be garbage (but the decryption operation itself will perform successfully).
+暗号化ではデータの完全性は提供されないことに注意します。つまり、攻撃者が暗号テキストを改変してユーザーが改変された暗号テキストを復号した場合、結果のプレーンテキストはがらくたです (但し復号操作自体は正常に実行されます)。
 
-A good example for an symmetric algorithm that does not protect integrity is One-Time-Pad. This algorithm XORs the input data with a secret input key. This leads to a cipher text which's data confidenciality is information theoretical secure -- i.e. even an attacker with unlimited processing power would not be able to crack the encryption. But data integrity is not protected.
+完全性を保護しない対象アルゴリズムの良い例はワンタイムパッドです。このアルゴリズムは入力データを秘密の入力鍵と XOR します。これにより、データの機密性が情報理論上安全であるという暗号テキストが生成されます。つまり、無限の処理能力を持つ攻撃者でも暗号を解読することはできないでしょう。しかし、データ完全性は保護されていません。
 
-For example, image that you have a message with an amount of money to be transfered. Let the amount be 1000 Euro/Dollars, which would be `0x0011 1110 1000` the secret key that you are using is `0x0101 0101 0101` (not very random, I know). XORing those two leads to a transfered message of `0x0110 1011 1101`. The attacker has no idea of knowning the plain-text. But she imagines that normally a low amount of money is transfered and bit-flips the highest bit of the message, making it `0x1110 1011 1101`. The victim now retrieves the message, decrypts it through XORing it with the secret key and has retrieved the value of `0x1011 1110 1000` which amounts to 3048 Euro/Dollars. So while the attacker was not able to break the encryption, she was able to change the undelying message as the underlying message was not integrity protected.
+例えば、送金額のメッセージがあることをイメージします。額は 1000 ユーロ/ドル となる `0x0011 1110 1000` であり、あなたが使用している秘密鍵は `0x0101 0101 0101` (それほどランダムではないことは承知しています) とします。これらの2つを XOR すると転送メッセージは `0x0110 1011 1101` になります。攻撃者はプレーンテキストを知ることができません。しかし、彼女は通常小額のお金を送金しており、メッセージの最上位ビットをビットフリップして `0x1110 1011 1101` とすることをイメージします。被害者はメッセージを受け取り、秘密鍵と XOR をとって復号し、3048 ユーロ/ドルの額となる `0x1011 1110 1000` の値を取得しました。攻撃者は暗号化を破ることができませんでしたが、元となるメッセージは完全性が保護されていないため、彼女は元となるメッセージを変更できました。
 
-#### Static Analysis
+#### 静的解析
 
 -- TODO --
 
-* check source code for used algorithm
+* 使用されているアルゴリズムについてソースコードを確認します
 
-#### Dynamic Analysis
+#### 動的解析
 
 -- TODO [Give examples of Dynamic Testing for "Testing for Insecure and/or Deprecated Cryptographic Algorithms"] --
 
-#### Remediation
+#### 改善方法
 
-The cryptographic method that secures encrypted data is unsurprisingly called Authenticated Encryption<sup>[1]</sup>. The basic primitive used for creating the checksum is a MAC (also known as keyed hash). The exact selection what data is MACed (plain-text or cipher-text) is highly complex<sup>[2]</sup>.
+暗号化されたデータを保護する暗号方式は認証付き暗号 <sup>[1]</sup> と呼ばれます。チェックサムの作成に使用される基本プリミティブは MAC (鍵付きハッシュとも呼ばれます) です。どのデータ (プレーンテキストまたは暗号テキスト) を MAC 化するかの正しい選択は非常に複雑です <sup>[2]</sup> 。
 
-It is recommended to use an AEAD scheme for integrity-protecting encryption such as AES-GCM.
+暗号化の完全性保護に AES-GCM などの AEAD スキームの使用を推奨します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10
 
@@ -472,17 +472,17 @@ It is recommended to use an AEAD scheme for integrity-protecting encryption such
 
 ##### OWASP MASVS
 
-- V3.3: "The app uses cryptographic primitives that are appropriate for the particular use-case, configured with parameters that adhere to industry best practices"
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 
 ##### CWE
 
 -- TODO --
 
-##### Info
+##### その他
 
 * [1] Wikipedia: Authenticated Encryption -- https://en.wikipedia.org/wiki/Authenticated_encryption
 * [2] Luck Thirteen: Breaking the TLS and DTLS Record Protocols -- http://www.isg.rhul.ac.uk/tls/TLStiming.pdf
 
-##### Tools
+##### ツール
 
 -- TODO --
