@@ -12,28 +12,28 @@
 
 ##### Data Protection API
 
-App developers can leverage the iOS *Data Protection* APIs to implement fine-grained access control for user data stored in flash memory. The API is built on top of the Secure Enclave, a coprocessor that provides cryptographic operations for Data Protection key management. A device-specific hardware key is embedded into the secure enclave, ensuring the integrity of Data Protection even if the operating system kernel is compromised.
+アプリ開発者は iOS *Data Protection* API を活用して、フラッシュメモリに格納されたユーザーデータに対してきめ細かなアクセス制御を実装することができます。この API は Secure Enclave 上に構築されています。Secure Enclave は Data Protection の鍵管理に対して暗号操作を提供するコプロセッサです。デバイス固有のハードウェアキーが Secure Enclave に組み込まれているため、オペレーティングシステムカーネルが侵害された場合でも Data Protection の完全性が保証されます。
 
-The data protection architecture is based on a hierarchy of keys. The hardware key sits at the top of this hierarchy, and can be used to "unlock" so-called class keys which are associated with different device states (e.g. locked / unlocked).
+データ保護アーキテクチャは鍵の階層に基づいています。ハードウェアキーはこの階層の最上位に位置し、さまざまなデバイス状態 (ロック、アンロックなど) に関連するいわゆるクラスキーを「アンロック」するために使用できます。
 
-Every file stored in the iOS file system is encrypted with its own individual per-file key, which is contained in the file metadata. The metadata is encrypted with the file system key and wrapped with one of the class keys, depending on the protection class selected by the app when creating the file.
+iOS ファイルシステムに格納されているすべてのファイルはファイルメタデータに含まれている独自の個別ファイルごとの鍵で暗号化されています。メタデータはファイルシステムキーで暗号化され、クラスキーのひとつでラップされます。クラスキーはファイルを作成する際にアプリにより選択された保護クラスに依存します。
 
 <img src="Images/Chapters/0x06d/key_hierarchy_apple.jpg" width="500px"/>
-*iOS Data Protection Key Hierarchy <sup>[3]</sup>*
+*iOS Data Protection 鍵階層 <sup>[3]</sup>*
 
-Files can be assigned one of four protection classes:
+ファイルには4つの保護クラスのいずれかを割り当てることができます。
 
-- Complete Protection (NSFileProtectionComplete): This class key is protected with a key derived from the user passcode and the device UID. It is wiped from memory shortly after the device is locked, making the data inaccessible until the user unlocks the device.
+- 完全保護 (NSFileProtectionComplete): このクラスキーはユーザーパスコードとデバイス UID から導出される鍵で保護されます。デバイスがロックされた直後にメモリから消去され、ユーザーがデバイスをアンロックするまでデータにアクセスできなくなります。
 
-- Protected Unless Open (NSFileProtectionCompleteUnlessOpen): Behaves similar to Complete Protection, but if the file is opened when unlocked, the app can continue to access the file even if the user locks the device. This is implemented using asymmetric elliptic curve cryptography <sup>[3]</sip>.
+- オープンするまで保護 (NSFileProtectionCompleteUnlessOpen): 完全保護と同様の動作をしますが、アンロック状態でファイルを開くと、ユーザーがデバイスをロックしてもアプリはファイルにアクセスできます。これは非対称楕円曲線暗号を使用して実装されています <sup>[3]</sip> 。
 
-- Protected Until First User Authentication (NSFileProtectionCompleteUntilFirstUserAuthentication): The file can be accessed from the moment the user unlocks the device for the first time after booting. It can be accessed even if the user subsequently locks the device.
+- 最初のユーザー認証まで保護 (NSFileProtectionCompleteUntilFirstUserAuthentication): このファイルはユーザーが起動後初めてデバイスをアンロックした瞬間からアクセスできます。後でユーザーがデバイスをロックした場合でもアクセスできます。
 
-- No Protection (NSFileProtectionNone): This class key is protected only with the UID and is kept in Effaceable Storage. This protection class exists to enable fast remote wipe: Deleting the class key immediately makes the data inacessible. 
+- 保護なし (NSFileProtectionNone): このクラスキーは UID でのみ保護され、Effaceable Storage に保存されます。この保護クラスは迅速なリモートワイプを可能にするために存在します。クラスキーが即座に削除されるとデータはアクセス不可になります。
 
-All class keys except <code>NSFileProtectionNone</code> are encrypted with a key derived from the device UID and the user's passcode. As a result, decryption can only happen on the device itself, and requires the correct passcode to be entered.
+<code>NSFileProtectionNone</code> を除くすべてのクラスキーはデバイスの UID とユーザーのパスコードから導出された鍵で暗号化されています。その結果、復号化はデバイス自体でのみ発生し、正しいパスコードを入力する必要があります。
 
-Since iOS 7, the default data protection class is "Protected Until First User Authentication".
+iOS 7 以降、デフォルトデータ保護クラスは「最初のユーザー認証まで保護」となっています。
 
 ##### The Keychain
 
