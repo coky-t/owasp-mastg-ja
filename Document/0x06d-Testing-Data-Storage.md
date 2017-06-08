@@ -8,7 +8,7 @@
 
 #### 概要
 
-As already mentioned many times in this guide, as little sensitive data as possible should be saved on permanent local storage. However, in most practical scenarios, at least some type of user-related data needs to be stored. Fortunately, iOS offers secure storage APIs which allow developers to make use of the crypto hardware available in every iOS device. Provided that these APIs are used correctly, key data and files can be secured using hardware-backed 256 bit AES encryption.
+このガイドでは何度も述べているように、できるだけ機密性の低いデータを永続的なローカルストレージに保存すべきです。しかし、ほとんどの実際のシナリオでは、少なくともいくつかのタイプのユーザー関連データを格納する必要があります。幸運にも、iOS はセキュアなストレージ API を提供しています。これにより開発者はすべての iOS デバイスで利用可能な暗号ハードウェアを使用できます。提供されるこれらの API が正しく使用されれば、ハードウェア支援の 256 ビット AES 暗号化を使用して、重要なデータやファイルを保護することができます。
 
 ##### Data Protection API
 
