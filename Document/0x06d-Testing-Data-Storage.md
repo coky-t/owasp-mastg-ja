@@ -1,8 +1,8 @@
 ## データストレージのテスト (iOS)
 
-The protection of sensitive data, such as user credentials and private information, is a key focus in mobile security. In this chapter, you will learn about the APIs iOS offers for local data storage, as well as best practices for using those APIs.
+ユーザー資格情報や個人情報などの機密データを保護することはモバイルセキュリティの重要な焦点です。この章では、iOS がローカルデータストレージ用に提供する API およびそれらの API を使用するためのベストプラクティスについて学びます。
 
-Note that "sensitive data" needs to be identified in the context of each specific app. Data classification is described in detail in the chapter "Testing Processes and Techniques".
+「機密データ」は特定のアプリごとのコンテキストで識別する必要があることに注意します。データ分類については「テストプロセスと技法」の章で詳しく説明しています。
 
 ### ローカルデータストレージのテスト
 
