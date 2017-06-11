@@ -509,11 +509,11 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 
 #### 静的解析
 
-Review the iOS mobile application source code to see if there is any usage of the <code>NSURLIsExcludedFromBackupKey</code> <sup>[1]</sup> or <code>CFURLIsExcludedFromBackupKey</code> <sup>[2]</sup> file system properties to exclude files and directories from backups. Apps that need to exclude a large number of files can exclude them by creating their own sub-directory and marking that directory as excluded. Apps should create their own directories for exclusion, rather than excluding the system defined directories. 
+iOS モバイルアプリケーションのソースコードをレビューして、<code>NSURLIsExcludedFromBackupKey</code> <sup>[1]</sup> や <code>CFURLIsExcludedFromBackupKey</code> <sup>[2]</sup> ファイルシステムプロパティを使用してバックアップからファイルやディレクトリを除外している箇所があるか確認します。多数のファイルを除外する必要があるアプリでは、独自のサブディレクトリを作成し、そのディレクトリを除外としてマークすることでファイルを除外できます。アプリはシステム定義のディレクトリを除外するのではなく、独自の除外ディレクトリを作成すべきです。
 
-Either of these APIs is preferred over the older, deprecated approach of directly setting an extended attribute. All apps running on iOS 5.1 and later should use these APIs to exclude data from backups. 
+これらの API はそれぞれ、拡張属性を直接設定する古く非推奨の方式よりも優先されます。iOS 5.1 および以降で動作するすべてのアプリはこれらの API を使用してバックアップからデータを除外すべきです。
 
-The following is a sample code for excluding a file from backup on iOS 5.1 and later (Objective-C)<sup>[3]</sup>:
+以下は iOS 5.1 および以降でファイルをバックアップから除外するサンプルコートです (Objective-C) <sup>[3]</sup> 。
 
 ```#ObjC
 - (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
@@ -531,7 +531,7 @@ The following is a sample code for excluding a file from backup on iOS 5.1 and l
 }
 ```
 
-The following is a sample code for excluding a file from backup on iOS 5.1 and later (Swift)<sup>[3]</sup>:
+以下は iOS 5.1 および以降でファイルをバックアップから除外するサンプルコートです (Swift) <sup>[3]</sup> 。
 
 ```
  func addSkipBackupAttributeToItemAtURL(filePath:String) -> Bool
@@ -553,7 +553,7 @@ The following is a sample code for excluding a file from backup on iOS 5.1 and l
     }
 ```
 
-If your app must support iOS 5.0.1, you can use the following method to set the "do not back up" extended attribute. Whenever you create a file or folder that should not be backed up, write the data to the file and then call the following method, passing in a URL to the file<sup>[3]</sup>:
+アプリが iOS 5.0.1 をサポートする必要がある場合は、以下のメソッドを使用して "do not back up" 拡張属性を設定できます。バックアップすべきではないファイルやフォルダを作成するときには、データをファイルに書き込んでからファイルに URL を渡して、以下のメソッドをコールします <sup>[3]</sup> 。
 
 ```
 #import <sys/xattr.h>
