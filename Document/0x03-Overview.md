@@ -2,14 +2,9 @@
 
 OWASP モバイルセキュリティテストガイド (MSTG) は Android や iOS デバイスのセキュリティテストに特に焦点を当てた OWASP テストプロジェクトの拡張版です。
 
-このプロジェクトの目標は Android や iOS デバイスでのアプリケーションのテストの対象、理由、時期、場所、方法を人々が理解できるようにすることです。
-このプロジェクトは OWASP Mobile Top 10, モバイルアプリセキュリティチェックリスト、モバイルアプリケーションセキュリティ検証標準 (MASVS) に対処するために設計された完全な一連のテストケースを提供します。
+このプロジェクトの目標は Android や iOS デバイスでのアプリケーションのテストの対象、理由、時期、場所、方法を人々が理解できるようにすることです。このプロジェクトは OWASP Mobile Top 10, モバイルアプリセキュリティチェックリスト、モバイルアプリケーションセキュリティ検証標準 (MASVS) に対処するために設計された完全な一連のテストケースを提供します。
 
-このガイドは次のように構成されています。この序文ではモバイルセキュリティテストガイドのレイアウトについて説明し、モバイルセキュリティテストの特徴を説明します。テストプロセスと技法セクションでは、モバイルアプリのセキュリティテスト手法、脆弱性解析技法、SDLC におけるセキュリティテスト、脆弱性解析技法を紹介します。
-Android テストガイドには、android プラットフォーム、セキュリティ入門、セキュリティテストケース、リバースエンジニアリングと改竄技法と予防策が含まれています。iOS テストガイドには、Android テストガイドで扱うすべてのものを対象としていますが、iOS デバイスに関するものです。
-最後に、付録では Android や iOS 固有ではない、認証とセッション管理 (エンドポイント)、ネットワーク通信、暗号化などの技術的テストケースと一連のテストツールについて説明します。
-
-# モバイルセキュリティテストの特徴
+## モバイルセキュリティテストの違い
 
 技術革新は迅速に起こります。一昔前、スマートフォンは小さいキーボードを持つ魅力のない端末、技術に精通したビジネスユーザーのための高価な玩具でした。今日、スマートフォンは私たちの生活に不可欠なものです。私たちは情報、ナビゲーション、コミュニケーションのためにそれらに頼っています。ビジネスや社会生活の中の至るところにあります。
 
@@ -17,15 +12,39 @@ Android テストガイドには、android プラットフォーム、セキュ�
 
 すべての新しいテクノロジーは新しいセキュリティリスクをもたらします。モバイルコンピューティングも同様です。iOS や Android などの最新のモバイルオペレーティングシステムは従来のデスクトップオペレーティングシステムと比較して設計上セキュアであるにもかかわらず、モバイルアプリ開発プロセスでセキュリティが考慮されていない場合、うまくいかないことがまだ多くあります。データストレージ、アプリ間通信、暗号APIの適切な使い方や安全なネットワーク通信は慎重な検討が必要な局面のほんの一部です。
 
-## モバイルアプリケーションの脅威
+## モバイルアプリセキュリティの主要な領域
 
 モバイルアプリ領域におけるセキュリティの問題は従来のデスクトップソフトウェアとはいくつかの重要な点で異なります。まず、デスクトップタワーをポケットに入れて持ち歩くことを望んでいる人はほとんどいませんが、モバイルデバイスでこれを行うことは明らかです。その結果として、モバイルデバイスの紛失や盗難が増え、攻撃者はデバイスに物理的にアクセスし格納されているデータにアクセスする可能性が高くなります。また、デバイスを放置すると、攻撃者は一時的に物理的にアクセスでき(悪意あるメイド攻撃)、所有者が気付かないうちにデバイスを完全に侵害したりデータを盗んだりすることができます。
 
-モバイルアプリの観点からは、適切なキーストレージ API を使用したり、利用可能であればハードウェア支援のセキュリティ機能を利用するなど、ユーザーデータを格納する際には細心の注意が必要であることを意味します。しかしここで別の問題が発生します。多くはアプリが実行されているデバイスやオペレーティングシステムおよびその設定によって異なります。キーチェーンはパスコードでロックされていますか？一部の Android デバイスのようにハードウェア支援のセキュアストレージを提供しない場合はどうなりますか？アプリはこれを確認すべきですか、それともそれはユーザーの責任ですか？
+### Local Data Storage
+
+From the view of a mobile app, this extra care has to be taken when storing user data, such as using appropriate key storage APIs and taking advantage of hardware-backed security features when available. Here however we encounter another problem: Much depends on the device and operating system the app is running on, as well as its configuration. Is the keychain locked with a passcode? What if the device doesn't offer hardware-backed secure storage, as is the case with some Android devices? Can and should the app even verify this, or is it the responsibility of the user?
 
 モバイルデバイスに格納されるデータもデスクトップやラップトップに格納されるデータとは異なります。いずれも個人情報へのアクセスに使用されますが、これらの情報のコピーをモバイルデバイスで見つける可能性は非常に高くなります。さらに、さまざまな接続オプションとそれらの携帯性により、モバイルデバイスは電子ドアロックの鍵や支払カードの代替などとして使用されます。
 
-最後に、モバイルデバイスは他の(おそらく悪意のある)クライアントと共有されている公衆 WiFi ネットワークを含め、さまざまなネットワークに定期的に接続しています。これは単純なパケット傍受から不正なアクセスポイントの作成や SSL 中間者攻撃まで (もしくはルーティングプロトコルインジェクションなどの古いものであっても、悪意のあるものはどんなものでも使用します) ネットワークベースの攻撃に大きなチャンスをもたらします。
+The protection of sensitive data, such as user credentials and private information, is a key focus in mobile security. Firstly, sensitive data can be unintentionally exposed to other apps running on the same device if operating system mechanisms like IPC are used improperly. Data may also unintentionally leak to cloud storage, backups, or the keyboard cache. Additionally, mobile devices can be lost or stolen more easily compared to other types of devices, so an adversary gaining physical access is a more likely scenario.
+
+### Communication with Trusted Endpoints
+
+Mobile devices regularly connect to a variety of networks, including public WiFi networks shared with other (possibly malicious) clients. This creates great opportunities for network-based attacks, from simple packet sniffing to creating a rogue access point and going SSL man-in-the-middle (or even old-school stuff like routing protocol injection - those baddies use whatever works).
+
+It is crucial to maintain confidentiality and integrity of information exchanged between the mobile app and remote service endpoints. At the very least, a mobile app must set up a secure, encrypted channel for network communication using the TLS protocol with appropriate settings. Level 2 lists additional defense-in-depth measure such as SSL pinning.
+
+### Authentication and Session Management
+
+In most cases, user login to a remote service is an integral part of the overall mobile app architecture. Even though most of the logic happens at the endpoint, MASVS defines some basic requirements regarding how user accounts and sessions are managed. The requirements can be easily verified without access to the source code of the service endpoint.
+
+### Interaction with the Mobile Platform
+
+-- [TODO] --
+
+### Code Quality and Exploit Mitigation
+
+-- [TODO] --
+
+### Anti-Tampering and Anti-Reversing
+
+-- [TODO] --
 
 ## OWASP モバイルアプリセキュリティ検証標準、チェックリスト、テストガイド
 
@@ -39,114 +58,16 @@ Android テストガイドには、android プラットフォーム、セキュ�
 
 例えば、MASVS 要件は計画およびアーキテクチャ設計の段階で使用され、チェックリストやテストガイドは手動セキュリティテストのベースラインとして、もしくは開発後の自動セキュリティテストのテンプレートとして使用できます。次の章では、モバイルアプリケーションのペネトレーションテストの中でチェックリストやガイドを実際にどのように適用できるかについて説明します。
 
-## OWASP モバイルアプリケーションセキュリティ検証標準 (MASVS)
+## Organization of the Mobile Security Testing Guide
 
-OWASP モバイルアプリケーションセキュリティ検証標準 (MASVS) ... 
+All requirements specified in the MASVS are described in technical detail in the testing guide. The main sections of the MSTG are explained briefly in this chapter.
 
-MASVS の8つの要件カテゴリは以下のとおりです。
+The guide is organized as follows: 
 
-* V1: アーキテクチャ、設計、脅威モデリング要件
-* V2: データストレージとプライバシー要件
-* V3: 暗号化要件
-* V4: 認証とセッション管理要件
-* V5: ネットワーク通信要件
-* V6: プラットフォーム相互作用要件
-* V7: コード品質とビルド設定要件
-* V8: リバースエンジニアリングの耐性要件
+- In the Testing Processes and Techniques Section, we present the mobile app security testing methodology, vulnerability analysis techniques, security testing in the SDLC, and vulnerability analysis techniques. 
 
-## OWASP モバイルアプリケーションセキュリティチェックリスト
+- The Android Testing Guide covers the everything specific to the Android platform, including security basics, security test cases, and reverse engineering and tampering techniques and preventions.
 
-OWASP モバイルアプリケーションセキュリティチェックリスト ...
+- The iOS Testing Guide Testing Guide covers everything specific to iOS, including an overview of the iOS OS, security testing, reverse engineering and anti-reversing.
 
-## OWASP モバイルセキュリティテストガイド (MSTG)
-
-OWASP モバイルセキュリティテストガイド (MSTG) ... 
-
-## OWASP Mobile Top 10 2016
-
-OWASP Mobile Top 10 は OWASP Top Ten プロジェクトと同等のものですが、モバイルアプリケーションセキュリティに重点を置いて設計されています。ほとんどの場合、情報セキュリティ業界の人々が "OWASP Top Ten" プロジェクトについて話し合っていますが、実際には Web アプリケーションセキュリティだけを指しています。
-
-このガイドは OWASP Mobile Top 10 2016 と同等の機能を持つモバイルアプリケーションセキュリティに関する重要な文書です。
-
-OWASP Mobile Top 10 は情報セキュリティ業界のさまざまなベンダーやコンサルタントから得られた生のデータに基づいて導出されており、実際のモバイルアプリケーションで最も重要なモバイルアプリケーションセキュリティの欠陥が何であるかについて広く合意しています。
-
-以下が OWASP Mobile Top 10 です。
-
-* M1 - 不適切なプラットフォームの利用 <sup>[1]</sup>
-  * モバイルプラットフォーム機能の誤用、またはプラットフォームセキュリティコントロールの不適切な使用
-  * カバレッジの範囲には、Android インテント、プラットフォームパーミッション、TouchID の誤用、キーチェーン、またはモバイルオペレーティングシステムの一部であるその他のセキュリティコントロールが含まれます。
-  * 一例として、公表されたガイドラインの違反、慣例や一般的な慣行の違反、意図しない誤用があります。
-* M2 - 安全でないデータストレージ <sup>[2]</sup>
-  * モバイルデバイスにローカルに格納されているユーザーデータやアプリデータに対する不十分な保護メカニズム
-  * カバレッジの範囲には、紛失や盗難されたモバイルデバイスを獲得した攻撃者、モバイルデバイス上で実行される攻撃者に代わって動作するマルウェアや再パッケージ化されたアプリが含まれます。
-  * 安全性に欠けているデータには、SQLite データベース、ログファイル、XML ファイル、クッキーなどのファイルが含まれます。
-* M3 - 安全でない通信 <sup>[3]</sup>
-  * モバイルデバイスのキャリアネットワークやインターネット上で転送されるユーザーデータやアプリデータに対する不十分な保護メカニズム
-  * カバレッジの範囲には、同一ローカルエリアネットワーク (LAN) を共有する攻撃者、ネットワークデバイス、マルウェア、および証明書ピンニングなどの防御メカニズムがモバイルアプリに実装されているかどうかが含まれます。
-* M4 - 安全でない認証 <sup>[4]</sup>
-  * 適切な認証方法とコントロールの欠如
-  * カバレッジの範囲には脆弱なパスワードポリシーなどの認証脆弱性の悪用が含まれます。
-* M5 - 不十分な暗号化 <sup>[5]</sup>
-  * 不十分な強度の暗号標準の使用、または脆弱な暗号実装や使用方法
-  * カバレッジの範囲には、物理的なアクセスによる不適切に暗号化されたデータのクラッキングや攻撃者に代わって動作するモバイルマルウェアが含まれます。
-* M6 - 安全でない認可 <sup>[6]</sup>
-  * 適切なロール、パーミッションの検証、アクセス権のコントロールの欠如
-  * カバレッジの範囲には安全でない直接オブジェクト参照などの認証脆弱性の悪用が含まれます。
-* M7 - 脆弱なコード品質 <sup>[7]</sup>
-  * コーディングパターンの不十分な一貫性や適切なユーザーデータ入力検証やメソッド呼び出しの欠如
-  * カバレッジの範囲にはモバイルアプリのコード内で行われたメソッドコールに信頼されない入力を渡す可能性のある任意のエンドポイントが含まれます。マルウェアやフィッシング詐欺による悪用の可能性があります。
-* M8 - コード改竄 <sup>[8]</sup>
-  * アプリコードの完全性チェックを実行する実行時チェック機能の欠如
-  * カバレッジの範囲にはサードパーティアプリストアにホストとされている悪意のあるアプリを介するコード改変による悪用が含まれます。悪意のある攻撃者はユーザーを騙してフィッシング攻撃によりアプリをインストールする可能性もあります。
-* M9 - リバースエンジニアリング <sup>[9]</sup>
-  * 難読化メソッドの欠落
-  * カバレッジの範囲には、アプリストアからモバイルアプリをダウンロードし、ローカル環境でさまざまなツールを使用して解析し、潜在的な攻撃経路を特定することが含まれます。
-* M10 - 余計な機能 <sup>[10]</sup>
-  * 製品ビルドを公開する前のログやエンドポイント検証の欠如
-  * カバレッジの範囲には、バックエンドシステムやモバイルアプリ自体の隠し機能や余計な機能の特定、およびエンドユーザーの関与なしに自身のシステムから直接その機能を悪用することが含まれます。
-
-脆弱性のカテゴリおよびモバイルアプリケーションへの侵害を防ぐための手順についての詳細は、OWASP Mobile Top 10 2016 プロジェクトページ <sup>11</sup> を参照ください。
-
-## モバイルセキュリティテストガイドの使い方
-
-## モバイルセキュリティテストガイドの構成
-
-MASVS で指定されているすべての要件はテストガイドに技術的な詳細を記述されています。この章では MSTG のメインセクションについて簡単に説明します。
-
-### テストプロセスと技法
-
-このセクションではチェックリストとプロジェクトセキュリティ評価でそれを使用する方法について説明します。テストケースで使用されるそれぞれの解析技法はソースコードやバイナリの静的解析および動的解析として説明されています。改竄やリバースエンジニアリングの紹介もこのセクションの一部です。
-
-### Android テストガイド
-
--- TODO
-テストガイドの Android の章には Android プラットフォーム上で MASVS の要件を検証するための技術的な手順がすべて記載されています。
-
-### iOS テストガイド
-
--- TODO
-テストガイドの iOS の章には iOS プラットフォーム上で MASVS の要件を検証するための技術的な手順がすべて記載されています。
-
-### リバースエンジニアリングと改竄
-
--- TODO
-
-### テストツール
-
-効果的にモバイルセキュリティテストを実行するために使用できるさまざまなツールがあり、ツールの選択は好みや予算に依存します。このドキュメントの末尾にある「テストツール」の章に豊富なツールのリストがあります。
-
--- TODO [Describe the organization of the current guide] --
-
-## 参考情報
-
-* [1] M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-* [2] M2 - Insecure Data Storage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
-* [3] M3 - Insecure Communication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
-* [4] M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
-* [5] M5 - Insufficient Cryptography - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
-* [6] M6 - Insecure Authorization - https://www.owasp.org/index.php/Mobile_Top_10_2016-M6-Insecure_Authorization
-* [7] M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
-* [8] M8 - Code Tampering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M8-Code_Tampering
-* [9] M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-* [10] M10 - Extraneous Functionality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M10-Extraneous_Functionality
-* [11] OWASP Mobile Top 2016 Project Page - https://www.owasp.org/index.php/Mobile_Top_10_2016-Top_10
+- The appendix presents technical test cases that apply independent of mobile OS, such as authentication and session management endpoint, network communications, and cryptography. We also include a methodology for assessing software protection schemes.
