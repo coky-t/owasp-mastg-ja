@@ -25,16 +25,16 @@
 
 ### iOS の脱獄
 
-In the iOS world, jailbreaking means among others disabling Apple's code signing mechanisms so that apps not signed by Apple can be run. If you're planning to do any form of dynamic security testing on an iOS device, you'll have a much easier time on a jailbroken device, as most useful testing tools are only available outside the app store.
+iOS の世界では、脱獄は Apple のコード署名メカニズムを無効にして、Apple が署名していないアプリを実行できるにすることを意味します。iOS デバイスで何かしらの動的セキュリティテストを行う予定がある場合、最も有用なテストツールはアプリストア以外でのみ利用可能であるため、脱獄済みデバイスで作業がはるかに楽になります。
 
-There's an important different between exploit chain and jailbreak. The former will disable iOS system protections like code signing or MAC, but will not install Cydia store for you. A jailbreak is a complete tool that will leverage exploit chain, disable system protections and install Cydia. 
+エクスプロイトチェーンと脱獄の間には重要な違いがあります。前者はコード署名や MAC などの iOS システム保護を無効にしますが、Cydia ストアはインストールしません。脱獄はエクスプロイトチェーンを活用し、システム保護を無効にして、Cydia をインストールする完全なツールです。
 
-In jailbreak lingo, we talk about tethered and untethered jailbreaking methods. In the "tethered" scenario, the jailbreak doesn't persist throughout reboots, so the device must be connected (tethered) to a computer during every reboot to re-apply it. "Untethered" jailbreaks need only be applied once, making them the most popular choice for end users.
+脱獄用語で、紐付きと紐なし脱獄手法についてお話しします。「紐付き」シナリオでは、脱獄は再起動前後で持続しないため、再起動するたびにデバイスをコンピュータに接続 (紐付き) して再適用する必要があります。「紐なし」脱獄は一度しか適用する必要がなく、エンドユーザーにとって最も人気のある選択となっています。
 
-Jailbreaking methods vary across iOS versions. Best choice is to check if a public jailbreak is available for your iOS version<sup>[25]</sup>. Beware of fake tools and spyware that is often distributed around the Internet, often hiding behind domain names similar to the jailbreaking group/author.
+脱獄手法は iOS のバージョンによって異なります。最良の選択はあなたの iOS バージョンに対して一般的な脱獄が利用可能であるかどうかを確認することです <sup>[25]</sup> 。脱獄グループや著者に似たドメイン名で隠した、インターネットでしばしば配布されている偽ツールやスパイウェアに注意します。
 
-**Important** caveat regarding jailbreaking iOS: contrary to Android, you **can't** downgrade iOS version with one exception explained below. Naturally, this creates a problem, when there is a major bump in iOS version (e.g. from 9 to 10) and there is no public jailbreak for the new OS. One possible solution is to have at least two iOS devices: one that will be jailbroken and have all necessary tools for testing and second, which will be updated with every major iOS release and wait for public jailbreak to be released. Once a public jailbreak is released, Apple is quite fast in releasing a patch, hence you have only a couple of days to upgrade to the newest iOS version and jailbreak it (if upgrade is necessary). 
-The iOS upgrade process is performed online and is based on challenge-response process. The device will perform OS installation if and only if the response to challenge is signed by Apple. This is what researchers call 'signing window' and explains the fact that you can't simply store the OTA firmware package downloaded via iTunes and load it to the device at any time. During minor iOS upgrades, it is possible that two versions are signed at the same time by Apple. This is the only case when you can possibly downgrade iOS version. You can check current signing window and download OTA Firmwares from this site<sup>[30]</sup>. More information on jailbreaking is available on The iPhone Wiki<sup>[26]</sup>.
+**重要** iOS の脱獄に関する注意：Android とは異なり、あなたは下記の例外を除いて iOS バージョンをダウングレード **できません** 。当然ながら、iOS バージョンに大きなバンプがあり (9 から 10 など)、新しい OS に公開された脱獄が存在しないとき、これは問題を引き起こします。一つの可能な解決策は少なくとも二つの iOS デバイスを持つことです。一つは脱獄済みでテストに必要なすべてのツールを持ち、二つ目はすべての主要な iOS リリースごとに更新され、公開された脱獄がリリースされるまで待ちます。一旦公開された脱獄がリリースされると、Apple はパッチをリリースするのがかなり速いので、数日中に最新の iOS バージョンにアップグレードして脱獄する必要があります (アップグレードが必要な場合) 。
+iOS のアップグレードプロセスはオンラインで実行され、チャレンジレスポンスプロセスに基づいています。チャレンジに対するレスポンスが Apple により署名されている場合にのみ、デバイスは OS インストールを実行します。これは研究者が「署名ウィンドウ」と呼ぶものです。iTunes 経由でダウンロードした OTA ファームウェアパッケージを保存していつでもデバイスにロードすることはできないという事実を説明しています。iOS のマイナーアップグレードでは、Apple により同時に二つのバージョンが署名されている可能性があります。これはiOS バージョンをダウングレードできる可能性のある唯一のケースです。このサイト <sup>[30]</sup> から現在の署名ウィンドウを確認し、OTA ファームウェアをダウンロードできます。脱獄の詳細については iPhone Wiki <sup>[26]</sup> を参照ください。
 
 ### Preparing your test environment
 
