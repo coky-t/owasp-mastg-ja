@@ -40,7 +40,7 @@ iOS のアップグレードプロセスはオンラインで実行され、チ�
 
 ![Cydia Store](Images/Chapters/0x06b/cydia.png "Cydia Store")
 
-iOS デバイスを脱獄させて Cydia が (スクリーンショットのように) インストールされたら、以下の手順に従います。
+iOS デバイスを脱獄させて Cydia が (スクリーンショットと同様に) インストールされたら、以下の手順に従います。
 
 1. Cydia から aptitude と openssh をインストールする
 2. iDevice へ SSH する
@@ -70,13 +70,13 @@ bigbosshackertools
 $ sudo pip install frida
 ```
 
-#### SSH Connection via USB
+#### USB 経由の SSH 接続
 
-As per the normal behavior, iTunes communicates with the iPhone via the <code>usbmux</code>, which is a system for multiplexing several "connections" over one USB pipe. This system provides a TCP-like system where multiple processes on the host machine open up connections to specific, numbered ports on the mobile device. 
+通常の動作と同様に、iTunes は <code>usbmux</code> を経由して iPhone と通信します。<code>usbmux</code> は一つの USB パイプで複数の「接続」を多重化するシステムです。このシステムは TCP のようなシステムを提供します。ホストマシン上の複数のプロセスがモバイルデバイス上の特定の番号付きポートへの接続を開きます。
 
-The *usbmux* is handled by */System/Library/PrivateFrameworks/MobileDevice.framework/Resources/usbmuxd*, which is a socket daemon that watches for iPhone connections via USB<sup>[18]</sup>. You can use it to map listening localhost sockets from the mobile device to TCP ports on your host machine. This conveniently allows you to SSH into your device independent of network settings. When it detects an iPhone running in normal mode, it will connect to it and then start relaying requests that it receives via */var/run/usbmuxd*<sup>[27]</sup>.
+*usbmux* は */System/Library/PrivateFrameworks/MobileDevice.framework/Resources/usbmuxd* により処理されます。USB を経由して iPhone 接続を監視するソケットデーモンです <sup>[18]</sup> 。これを使用して、モバイルデバイスのローカルホストソケットをホストマシンの TCP ポートに接続することができます。これによりネットワーク設定とは関係なくデバイスに SSH を使用できます。標準モードで動作している iPhone を検出すると、iPhone に接続して、*/var/run/usbmuxd* <sup>[27]</sup> 経由で受信したリクエストの中継を開始します。
 
-On MacOS:
+MacOS
 
 ```
 $ brew install libimobiledevice
@@ -85,14 +85,14 @@ $ ssh -p 2222 root@localhost
 iPhone:~ root# 
 ```
 
-Python client:
+Python クライアント
 
 ```bash
 $ ./tcprelay.py -t 22:2222
 $ ssh -p 2222 root@localhost
 iPhone:~ root# 
 ```
-See also iphonedevwiki <sup>[24]</sup>.
+iphonedevwiki <sup>[24]</sup> も参照ください。
 
 ### Typical iOS Application Test Workflow
 
