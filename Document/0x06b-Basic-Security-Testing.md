@@ -115,10 +115,10 @@ iOS アプリケーションテストの一般的なワークフローは以下�
 
 #### ソースコードなし
 
-##### Folder structure
+##### フォルダ構造
 
-System applications can be found in `/Applications`
-For all the rest you can use `installipa` to navigate to appropriate folders [14]:
+システムアプリケーションは `/Applications` にあります。
+残りについてはすべて、`installipa` を使用して適切なフォルダにナビゲートできます [14]
 
 ```
 iOS8-jailbreak:~ root# installipa -l
@@ -129,9 +129,9 @@ Application: /private/var/mobile/Containers/Bundle/Application/09D08A0A-0BC5-423
 Data: /private/var/mobile/Containers/Data/Application/297EEF1B-9CC5-463C-97F7-FB062C864E56
 ```
 
-As you can see, there are three main directories: Bundle, Application and Data. The Application directory is just a subdir of Bundle.
-The static installer files are located in Application, whereas all user data resides in the Data directory.
-The random string in the URI is application's GUID, which will be different from installation to installation.
+ご覧のとおり、Bundle, Application, Data の三つの主要なディレクトリがあります。Application ディレクトリは Bundle ディレクトリのサブディレクトリです。
+静的インストーラファイルは Application にありますが、すべてのユーザーデータは Data ディレクトリにあります。
+URI のランダムな文字列はアプリケーションの GUID であり、インストールするごとに異なります。
 
 ##### インストールされたアプリから IPA ファイルを取り戻す
 
