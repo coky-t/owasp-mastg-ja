@@ -25,6 +25,7 @@ MASVS の認証とセッション管理要件のほとんどは汎用的なも�
 
 #### 改善方法
 
+Example: https://www.raywenderlich.com/92667/securing-ios-data-keychain-touch-id-1password
 -- TODO [Describe the best practices that developers should follow to prevent this issue "Testing Biometric Authentication".] --
 
 #### 参考情報
