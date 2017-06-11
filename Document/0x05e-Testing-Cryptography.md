@@ -1,113 +1,12 @@
 ## 暗号化のテスト (Android アプリ)
 
-### ハードコードされた暗号鍵のテスト
-
-#### 概要
-
--- REVIEW --
-ハードコードされた暗号鍵や誰でも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。攻撃者がそれを取得すると、機密データを復号する作業は簡単になり、機密性を保護するという当初の考えは失敗します。
-
-対称暗号を使用する場合、鍵はデバイス内に格納する必要があり、攻撃者がそれを識別するのは時間と労力の問題となります。
-
-#### 静的解析
-
-次のシナリオを考えます。アプリケーションは暗号化されたデータベースを読み書きしていますが、復号化はハードコードされた鍵に基づいて行われています。
-
-```Java
-this.db = localUserSecretStore.getWritableDatabase("SuperPassword123");
-```
-
-鍵はすべてのアプリインストールに対して同じであり取得は容易です。機密データを暗号化する利点はなくなり、そのような暗号化にはまったく意味がありません。同様に、ハードコードされた API 鍵 / 秘密鍵やその他の重要なものを探します。暗号化鍵/復号化鍵は、王冠の宝石を手に入れることは困難であるが不可能ではないという単なる試みです。
-
-次のコードを考えてみます。
-
-```Java
-//A more complicated effort to store the XOR'ed halves of a key (instead of the key itself)
-private static final String[] myCompositeKey = new String[]{
-  "oNQavjbaNNSgEqoCkT9Em4imeQQ=","3o8eFOX4ri/F8fgHgiy/BS47"
-};
-```
-
-この場合に元の鍵を解読するアルゴリズムは次のようになります <sup>[1]</sup> 。
-
-```Java
-public void useXorStringHiding(String myHiddenMessage) {
-  byte[] xorParts0 = Base64.decode(myCompositeKey[0],0);
-  byte[] xorParts1 = Base64.decode(myCompositeKey[1],0);
-
-  byte[] xorKey = new byte[xorParts0.length];
-  for(int i = 0; i < xorParts1.length; i++){
-    xorKey[i] = (byte) (xorParts0[i] ^ xorParts1[i]);
-  }
-  HidingUtil.doHiding(myHiddenMessage.getBytes(), xorKey, false);
-}
-```
-
-#### 動的解析
-
-秘密が隠される一般的な場所を確認します。
-* リソース (res/values/strings.xml が一般的)
-
-例：
-```xml
-<resources>
-    <string name="app_name">SuperApp</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="secret_key">My_S3cr3t_K3Y</string>
-  </resources>
-```
-
-* ビルド設定、local.properties や gradle.properties など
-
-例：
-```
-buildTypes {
-  debug {
-    minifyEnabled true
-    buildConfigField "String", "hiddenPassword", "\"${hiddenPassword}\""
-  }
-}
-```
-
-* 共有プリファレンス、/data/data/package_name/shared_prefs が一般的
-
-#### 改善方法
-
-繰り返し使用するために鍵を格納する必要がある場合は、暗号鍵の長期保存や取り出しの仕組みを提供する KeyStore <sup>[2]</sup> などの機構を使用します。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-* M6 - Broken Cryptography
-
-##### OWASP MASVS
-- V3.1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
-- V3.5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
-
-##### CWE
-* CWE-320: Key Management Errors
-* CWE-321: Use of Hard-coded Cryptographic Key
-
-##### その他
-
-[1] Hiding Passwords in Android - https://github.com/pillfill/hiding-passwords-android/
-[2] KeyStore - https://developer.android.com/reference/java/security/KeyStore.html
-[3] Hiding Secrets in Android - https://rammic.github.io/2015/07/28/hiding-secrets-in-android-apps/
-[4] Securely storing secrets in Android - https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3#.7z5yruotu
-
-##### ツール
-* [QARK](https://github.com/linkedin/qark)
-* [Mobile Security Framework](https://github.com/ajinabraham/Mobile-Security-Framework-MobSF)
-
-
-
 ### 暗号化標準アルゴリズムの構成の検証
 
 #### 概要
 
--- REVIEW --
-適切な暗号化アルゴリズムを選択するだけでは十分ではありません。間違った構成はそれ以外の妥当なアルゴリズムのセキュリティに影響を及ぼすことがあります。過去に強力であるとされた多くのアルゴリズムや構成は、脆弱もしくはベストプラクティスに準拠していないとみなされています。したがって、最新のベストプラクティスを定期的に確認し、それに応じて構成を調整することが重要です。
+A general rule in app development is that one should never attempt to invent their own cryptography. In mobile apps in particular, any form of crypto should be implemented using existing, robust implementations. In 99% of cases, this simply means using the data storage APIs and cryptographic libraries that come with the mobile OS.
+
+Android developers don't need to bother much with the intricate details of cryptography most of the time. However, even when using standard algorithms can be affected if misconfigured. 
 
 #### 静的解析
 
@@ -154,7 +53,6 @@ NIST <sup>1</sup> や BSI <sup>2</sup> 推奨のような現在強力である�
 
 -- TODO [Add relevant tools for "Verifying the Configuration of Cryptographic Standard Algorithms"] --
 * Enjarify - https://github.com/google/enjarify
-
 
 
 ### 乱数生成器のテスト
