@@ -1,6 +1,8 @@
 ## iOS プラットフォーム概要
 
--- [TODO - iOS Platform introduction --]
+iOS is the operating system that powers all of Apple's iDevices, including the iPhone, iPad, and iPod Touch. It is a derivate of Mac OS (formerly OS X), and as such runs a modified version version of the XNU kernel. Compared to their Desktop relatives however, iOS apps run in a more restricted environment: They are isolated from each other on the file system level, and are significantly limited in terms of system API access. Apple also keeps tight control over which apps are allowed to run on iOS devices.
+
+In many ways, iOS is more "closed" than Android. Sideloading is only possible with jailbreak or complicated workarounds. There is hardly any IPC functionality to speak of.
 
 ### iOS セキュリティアーキテクチャ
 
@@ -35,6 +37,7 @@ Secure Enclave コプロセッサを搭載したすべての新しいデバイ�
 
 iOS サンドボックスはカーネル拡張 'Seatbelt' により実装されている TrustedBSD MAC フレームワークから派生しました。
 iPhone Dev Wiki (http://iphonedevwiki.net/index.php/Seatbelt) ではサンドボックスに関する(少し古くなった)情報を提供しています。
+
 原則として、すべてのユーザーアプリケーションは同じユーザー `mobile` の下で実行されますが、ほんの一部のシステムアプリケーションやサービルは `root` として実行されます。ファイル、ネットワークソケット、IPC、共有メモリなどのすべてのリソースへのアクセスはサンドボックスによってコントロールされます。
 
 #### コード署名
