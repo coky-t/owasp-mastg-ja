@@ -75,6 +75,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 #### 改善方法
 
 開発者はリリースビルドがリリースキーストアの適切な証明書で署名されていることを確認する必要があります。Android Studio では、手動もしくは署名設定を設定してリリースビルドタイプに割り当てることで設定できます <sup>[2]</sup> 。
+
 署名の設定は Android Studio の GUI もしくは <code>build.gradle</code> の <code>signingConfigs {}</code> ブロックで管理できます。v1 および v2 の両方の方式を有効にするには、以下の値を設定する必要があります。
 
 ```
@@ -99,7 +100,6 @@ N/A
 
 ##### ツール
 - jarsigner - http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html
-
 
 
 ### アプリがデバッグ可能であるかのテスト
