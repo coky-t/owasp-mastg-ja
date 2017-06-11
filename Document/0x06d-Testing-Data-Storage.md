@@ -136,13 +136,13 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 
 #### 改善方法
 
-Hardware-backed storage mechanisms must be used for storing sensitive data. Permitted options for storing sensitive data are:
+機密データを格納するにはハードウェア支援のストレージメカニズムを使用する必要があります。機密データを格納するために許可される選択肢は以下の通りです。
 
-- Storing the data in the keychain with the <code>kSecAttrAccessibleWhenUnlocked</code> attribute.
-- Encrypting the data using standard crypto APIs before storing it, and storing the encryption key in the keychain.
-- Creating a file with the <code>NSFileProtectionComplete</code> attribute.
+- <code>kSecAttrAccessibleWhenUnlocked</code> 属性でキーチェーンにデータを格納する。
+- 格納する前に標準の暗号 API を使用してデータを暗号化し、キーチェーンに暗号鍵を格納する。
+- <code>NSFileProtectionComplete</code> 属性でファイルを作成する。
 
-The following example shows how to create a securely encrypted file using the <code>createFileAtPath</code> method:
+以下の例は <code>createFileAtPath</code> メソッドを使用して安全に暗号化されたファイルを作成する方法を示しています。
 
 ```objective-c
 [[NSFileManager defaultManager] createFileAtPath:[self filePath]
