@@ -1,8 +1,8 @@
 ## セキュリティテスト入門 (iOS)
 
-### Foreword on Swift and Objective-C 
+### Swift および Objective-C の紹介
 
-Vast majority of this tutorial is relevant to applications written mainly in Objective-C or having bridged Swift types. Please note that these languages are fundamentally different. Features like method swizzling, which is heavily used by Cycript will not work with Swift methods. At the time of writing of this testing guide, Frida does not support instrumentation of Swift methods. 
+このチュートリアルのほとんどは主に Objective-C で書かれたアプリケーションやブリッジされた Swift タイプのアプリケーションに関連しています。これらの言語は基本的に異なることに注意してください。Cycript で頻繁に使用されるメソッドスウィズルなどの機能は Swift メソッドでは機能しません。このテストガイドの執筆時には、Frida は Swift メソッドの計装をサポートしていません。
 
 ### テスト環境のセットアップ
 
