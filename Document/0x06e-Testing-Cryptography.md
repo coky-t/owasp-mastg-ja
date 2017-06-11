@@ -1,44 +1,5 @@
 ## 暗号化のテスト (iOS アプリ)
 
-### ハードコードされた暗号鍵のテスト
-
-#### 概要
-
--- TODO [Note: The content originally found in this test case was moved to 0x07c - Testing cryptography. This test case should pertain only to finding hardcoded keys on iOS (how are they typically used and stored,... )] --
-
-#### 静的解析
-
--- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
-
-#### 動的解析
-
--- TODO [Describe how to test for this issue "Verifying Cryptographic Key Management" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
-
-#### 改善方法
-
--- TODO [Describe the best practices that developers should follow to prevent this issue "Verifying Cryptographic Key Management".] --
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-* M5 - 不十分な暗号化 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
-
-##### OWASP MASVS
-* V3.1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
-* V3.5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
-
-##### CWE
-* CWE-320: Key Management Errors
-* CWE-321: Use of Hard-coded Cryptographic Key
-
-##### その他
-- [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
-- [2] Another Informational Article - http://www.securityfans.com/informational_article.html
-
-##### ツール
-
--- TODO [Add links to relevant tools] --
-
 ### 暗号化標準アルゴリズムの構成の検証
 
 #### 概要
