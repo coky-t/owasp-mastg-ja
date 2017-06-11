@@ -496,7 +496,7 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 
 #### 概要
 
-Like other modern mobile operating systems iOS offers auto-backup features that create copies of the data on the device, including the data and settings of installed apps. An obvious concern is whether sensitive user data stored by the app might unintentionally leak to those data backups. 
+他の最新のモバイルオペレーティングシステムと同様に、iOSはインストールされたアプリのデータや設定など、デバイス上のデータのコピーを作成する自動バックアップ機能を備えています。よくある懸念事項はアプリにより格納された機密ユーザーデータがこれらのデータバックアップに意図せず漏洩する可能性があるかどうかです。
 
 
 ##### How the Keychain is Backed Up
