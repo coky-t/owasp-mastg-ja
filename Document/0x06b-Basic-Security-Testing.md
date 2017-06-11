@@ -155,11 +155,11 @@ iPhone:~ root# ipainstaller -b com.example.targetapp -o /tmp/example.ipa
 
 ###### 非脱獄デバイスから
 
-If the app is available on itunes, you are able to recover the ipa on MacOS with the following simple steps:
+アプリが iTunes で利用可能な場合は、以下の簡単な手順で MacOS の ipa を復元できます。
 
-- Download the app in itunes
-- Go to your itunes Apps Library
-- Right-click on the app and select show in finder
+- iTunes でアプリをダウンロードする
+- iTunes の Apps Library にアクセスする
+- アプリを右クリックし、finder で表示を選択する
 
 -- TODO [Further develop section on Static Analysis of an iOS app from non-jailbroken devices without source code] --
 
