@@ -584,11 +584,11 @@ iOS モバイルアプリケーションのソースコードをレビューし�
 
 #### 改善方法
 
-In performing an iTunes backup of a device on which a particular mobile application has been installed, the backup will include all subdirectories (except for the `Library/Caches/` subdirectory) and files contained within that app's private directory on the device's file system<sup>[4]</sup>. 
+特定のモバイルアプリケーションがインストールされているデバイスの iTunes バックアップを実行する際、バックアップにはすべてのサブディレクトリ (`Library/Caches/` サブディレクトリを除く) とデバイスのファイルシステム上のそのアプリのプライベートディレクトリに含まれるファイルが含まれます <sup>[4]</sup> 。
 
-As such, avoid storing any sensitive data in plaintext within any of the files or folders within the app's private directory or subdirectories.
+そのため、アプリのプライベートディレクトリやサブディレクトリ内の任意のファイルやフォルダ内に平文で機密データを格納することは避けます。
 
-While all the files in `Documents/` and `Library/Application Support/` are always being backed up by default, it is possible to exclude files from the backup by calling `[NSURL setResourceValue:forKey:error:]` using the `NSURLIsExcludedFromBackupKey` key<sup>[5]</sup>. 
+`Documents/` および `Library/Application Support/` 内のすべてのファイルはデフォルトで常にバックアップされていますが、`NSURLIsExcludedFromBackupKey` キーを使用して `[NSURL setResourceValue:forKey:error:]` をコールすることでバックアップからファイルを除外することができます <sup>[5]</sup> 。
 
 #### 参考情報
 
