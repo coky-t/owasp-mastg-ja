@@ -101,38 +101,38 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 3. 格納されたデータに次のような grep コマンドを実行します。 `grep -irn "USERID"`
 4. 機密データがプレーンテキストに格納されている場合、このテストは失敗となります。
 
-Important filesystem locations are:
+重要なファイルシステムの場所は以下の通りです。
 
 * AppName.app
-  * The app’s bundle, contains the app and all of its resources
-  * Visible to users but users cannot write to this directory
-  * Contents in this directory are not backed up
+  * アプリのバンドル、アプリとそのすべてのリソースが含まれています
+  * ユーザーには見えますが、ユーザーはこのディレクトリに書き込むことができません
+  * このディレクトリの内容はバックアップされません
 * Documents/
-  * Use this directory to store user-generated content
-  * Visible to users and users can write to this directory
-  * Contents in this directory are being backed up
-  * App can disable paths by setting `NSURLIsExcludedFromBackupKey`
+  * このディレクトリを使用して、ユーザーが作成したコンテンツを格納します
+  * ユーザーに見えており、ユーザーはこのディレクトリに書き込むことができます
+  * このディレクトリの内容はバックアップされます
+  * アプリは `NSURLIsExcludedFromBackupKey` を設定することによりパスを無効にできます
 * Library/
-  * This is the top-level directory for any files that are not user data files
-  * iOS apps commonly use the `Application Support` and `Caches` subdirectories, but you can create custom subdirectories
+  * これはユーザーデータファイルではないファイルのための最上位ディレクトリです
+  * iOS アプリは一般的に `Application Support` と `Caches` サブディレクトリを使用しますが、カスタムサブディレクトリを作成することもできます
 * Library/Caches/
-  * Semi-persistent cached files
-  * Not visible to users and users cannot write to this directory
-  * Contents in this directory are not backed up
-  * OS may delete the files automatically when app is not running (e.g. storage space running low)
+  * 半永続的なキャッシュファイル
+  * ユーザーには見えず、ユーザーはこのディレクトリに書き込むこともできません
+  * このディレクトリの内容はバックアップされません
+  * OS はアプリが実行されていないときに自動的にファイルを削除することがあります (ストレージ容量が不足しているなど)
 * Library/Application Support/
-  * Persistent files necessary to run the app
-  * Not visible to users and users cannot write to this directory
-  * Contents in this directory are being backed up
-  * App can disable paths by setting `NSURLIsExcludedFromBackupKey`
+  * アプリを実行するために必要な永続的なファイル
+  * ユーザーには見えず、ユーザーはこのディレクトリに書き込むこともできません
+  * このディレクトリの内容はバックアップされます
+  * アプリは `NSURLIsExcludedFromBackupKey` を設定することによりパスを無効にできます
 * tmp/ 
-  * Use this directory to write temporary files that do not need to persist between launches of your app
-  * Non-persistent cached files
-  * Not visible to the user
-  * Not backed up
-  * OS may delete the files automatically when app is not running (e.g. storage space running low).
+  * このディレクトリを使用して、アプリの実行中に維持する必要のない一時ファイルを書き込みます
+  * 非永続的なキャッシュファイル
+  * ユーザーにいは見えません
+  * バックアップされません
+  * OS はアプリが実行されていないときに自動的にファイルを削除することがあります (ストレージ容量が不足しているなど)
 
-For a more detailed analysis, uses an API monitoring tool such as IntroSpy to instrument the app.
+より詳細な解析には、IntroSpy などの API 監視ツールを使用してアプリを計装します。
 
 #### 改善方法
 
