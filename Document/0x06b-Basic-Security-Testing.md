@@ -6,22 +6,22 @@
 
 ### テスト環境のセットアップ
 
-**Requirements for iOS testing lab**
+**iOS テストラボの要件**
 
-Bare minimum is:
+最小構成
 
-- Laptop with admin rights, VirtualBox with Kali Linux
-- WiFi network with client to client traffic permitted (multiplexing through USB is also possible)
-- Hopper Disassembler 
-- At least one jailbroken iOS device (with desired iOS version)
-- Burp Suite tool
+- 管理者権限を持つラップトップ、Kali Linux を搭載した VirtualBox
+- クライアントからクライアントへのトラフィックが許可された WiFi ネットワーク (USB を介した多重化も可能)
+- Hopper 逆アセンブラ
+- 少なくとも一つの脱獄済み iOS デバイス (必要な iOS バージョンのもの)
+- Burp Suite ツール
 
-Recommended is:
-- Macbook with XCode and Developer's Profile
-- WiFi network as previously
-- Hopper Disassembler or IDA Pro with Hex Rays
-- At least two iOS devices, one jailbroken, second non-jailbroken
-- Burp Suite tool
+推奨構成
+- Xcode と開発者プロファイルありの MacBook
+- 前述と同様の WiFi ネットワーク
+- Hopper 逆アセンブラもしくは Hex Rays の IDA Pro
+- 少なくとも二つの iOS デバイス、一つは脱獄済み、二つ目は脱獄なし
+- Burp Suite ツール
 
 ### iOS の脱獄
 
