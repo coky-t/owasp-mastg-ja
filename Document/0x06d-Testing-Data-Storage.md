@@ -68,9 +68,9 @@ iOS キーチェーンは暗号鍵やセッショントークンなどの短く�
 
 #### 静的解析
 
-Identify sensitive data saved throughout the app. This includes passwords, secret keys, and personally identifyable information, as well as other data identified as sensitive by the client. Look for instances where this data is saved using any of the local storage APIs listed below. Make sure that sensitive data is never stored without appropriate protection. For example, usernames and passwords should not be saved in NSUserDefaults without additional encryption. In any case, the encryption must be implemented such that the secret key is stored in the Keychain using secure settings, ideally <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code>.
+アプリ全体を通して保存されている機密データを特定します。これにはパスワード、秘密鍵、個人識別可能情報、その他クライアントにより機密扱いとされているデータが含まれます。下記のローカルストレージ API を使用して、このデータが保存されているインスタンスを探します。機密データは適切な保護なしで格納されることが決してないことを確認します。たとえば、ユーザー名とパスワードは暗号化を付加することなく NSUserDefaults に格納すべきではありません。いずれの場合でも、セキュアな設定 (理想的には <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code>) を使用して秘密鍵がキーチェーンに格納されるように暗号化を実装する必要があります。
 
-When looking for instances of insecure data storage in an iOS app you should consider the following possible means of storing data.
+iOS アプリで安全でないデータストレージのインスタンスを探す際には、データを格納する以下のような手段を考慮すべきです。
 
 ##### CoreData/SQLite データベース
 
