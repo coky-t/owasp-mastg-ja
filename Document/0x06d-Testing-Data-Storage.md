@@ -499,11 +499,11 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 他の最新のモバイルオペレーティングシステムと同様に、iOSはインストールされたアプリのデータや設定など、デバイス上のデータのコピーを作成する自動バックアップ機能を備えています。よくある懸念事項はアプリにより格納された機密ユーザーデータがこれらのデータバックアップに意図せず漏洩する可能性があるかどうかです。
 
 
-##### How the Keychain is Backed Up
+##### キーチェーンはどのようにバックアップされているか
 
-When a user backs up their iPhone, the keychain data is backed up as well, but the secrets in the keychain remain encrypted. The class keys needed to decrypt they keychain data are not included in the backup. To restore the keychain data, the backup must be restored to a device, and the device must be unlocked with the same passcode. 
+ユーザーが自分の iPhone をバックアップすると、キーチェーンデータもバックアップされますが、キーチェーン内の秘密は暗号化されたままです。キーチェーンデータを復号化するために必要なクラスキーはバックアップには含まれません。キーチェーンデータを復元するには、バックアップはデバイスに復元する必要があり、そのデバイスは同じパスコードでアンロックする必要があります。
 
-Note that keychain items with the <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code> attribute set can be decrypted only if the backup is restored to the same device. If the backup is restored to a new device, these items are missing. 
+<code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code> 属性が設定されたキーチェーンアイテムはバックアップが同じデバイスに復元された場合にのみ復号できることに注意します。バックアップが新しいデバイスに復元された場合、これらのアイテムは失われます。
 
 -- [TODO complete the backups overview] --
 
