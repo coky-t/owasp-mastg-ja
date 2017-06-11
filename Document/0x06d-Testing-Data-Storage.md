@@ -35,36 +35,36 @@ iOS ファイルシステムに格納されているすべてのファイルは�
 
 iOS 7 以降、デフォルトデータ保護クラスは「最初のユーザー認証まで保護」となっています。
 
-##### The Keychain
+##### キーチェーン
 
-The iOS Keychain is used to securely store short, sensitive bits of data, such as encryption keys and session tokens. It is implemented as a SQLite database that can be accessed only through Keychain APIs. The Keychain database is encrypted using the device Key and the user PIN/password (if one has been set by the user).
+iOS キーチェーンは暗号鍵やセッショントークンなどの短く機密性の高いデータを安全に保管するために使用されます。キーチェーン API を介してのみアクセスできる SQLite データベースとして実装されています。キーチェーンデータベースはデバイスキーとユーザー PIN やパスワード (ユーザーによって設定されている場合) を使用して暗号化されています。
 
-By default, each app can only access the Keychain created by itself. Access can however be shared between apps signed by the same developer by using the "access groups" feature. Access to the Keychain is managed by the <code>securityd</code> daemon, which grants access based on the app's <code>Keychain-access-groups</code>, <code>application-identifier</code> and <code>application-group</code> entitlements.
+デフォルトでは、各アプリは自分で作成したキーチェーンにのみアクセスできます。但し、同じ開発者が「アクセスグループ」機能を使用して署名したアプリ間でアクセスを共有することができます。キーチェーンへのアクセスは <code>securityd</code> デーモンにより管理されています。<code>securityd</code> デーモンはアプリの <code>キーチェーンアクセスグループ</code>, <code>アプリケーション識別子</code>, <code>アプリケーショングループ</code> 資格に基づきアクセスを許可します。
 
-The KeyChain API consists of the following main operations with self-explanatory names:
+キーチェーン API は自己説明的な名称の以下の主要な操作で構成されています。
 
 - SecItemAdd
 - SecItemUpdate
 - SecItemCopyMatching
 - SecItemDelete
 
-Keychain data is protected using a class structure similar to the one used for file encryption. Items added to the Keychain are encoded as a binary plist and encrypted using a 128 bit AES per-item key. Note that larger blobs of data are not meant to be saved directly in the keychain - that's what the Data Protection API is for.
+キーチェーンデータはファイルの暗号化に使用されるものと同様のクラス構造を使用して保護されています。キーチェーンに追加されたアイテムはバイナリ plist としてエンコードされ、アイテムごとに 128 ビットの AES 鍵を使用して暗号化されます。より大きなサイズのデータはキーチェーンに直接保存されることはないことに注意します。それは Data Protection API の対象となります。
 
-- kSecAttrAccessibleAfterFirstUnlock: The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
-- kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user. The data will not be included in an iCloud or iTunes backup.
-- kSecAttrAccessibleAlways: The data in the keychain item can always be accessed regardless of whether the device is locked.
-- kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: The data in the keychain can only be accessed when the device is unlocked. Only available if a passcode is set on the device. The data will not be included in an iCloud or iTunes backup.
-- kSecAttrAccessibleAlwaysThisDeviceOnly: The data in the keychain item can always be accessed regardless of whether the device is locked. The data will not be included in an iCloud or iTunes backup.
-- kSecAttrAccessibleWhenUnlocked: The data in the keychain item can be accessed only while the device is unlocked by the user.
-- kSecAttrAccessibleWhenUnlockedThisDeviceOnly: The data in the keychain item can be accessed only while the device is unlocked by the user. The data will not be included in an iCloud or iTunes backup.
+- kSecAttrAccessibleAfterFirstUnlock: キーチェーンアイテムのデータは再起動後デバイスがユーザーにより一度アンロックされるまでアクセスできません。
+- kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: キーチェーンアイテムのデータは再起動後デバイスがユーザーにより一度アンロックされるまでアクセスできません。データは iCloud や iTunes のバックアップには含まれません。
+- kSecAttrAccessibleAlways: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。
+- kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: キーチェーンのデータはデバイスがアンロックされている場合のみアクセスできます。デバイスにパスコードが設定されている場合のみ使用できます。データは iCloud や iTunes のバックアップには含まれません。
+- kSecAttrAccessibleAlwaysThisDeviceOnly: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
+- kSecAttrAccessibleWhenUnlocked: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。
+- kSecAttrAccessibleWhenUnlockedThisDeviceOnly: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
 
-The keychain file is located at:
+キーチェーンファイルは以下にあります。
 
 ```
 /private/var/Keychains/keychain-2.db
 ```
 
-If necessary during dynamic analysis, the contents of the Keychain can be dumped using keychain dumper <sup>[9]</sup> as described in the chapter "Basic Security Testing on iOS".
+動的解析中に必要な場合は、「セキュリティテスト入門 (iOS)」の章で説明しているように、keychain dumper <sup>[9]</sup> を使用してキーチェーンの内容をダンプできます。
 
 #### 静的解析
 
