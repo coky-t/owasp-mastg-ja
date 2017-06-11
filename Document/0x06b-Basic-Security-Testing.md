@@ -137,7 +137,7 @@ URI のランダムな文字列はアプリケーションの GUID であり、�
 
 ###### 脱獄デバイスから
 
-You can use Saurik's IPA Installer to recover IPAs from apps installed on the device. To do this, install IPA installer console [1] via Cydia. Then, ssh into the device and look up the bundle id of the target app. For example:
+Saurik の IPA インストーラを使用して、デバイスにインストールされたアプリから IPA を復元することができます。これを行うには、Cydia 経由で IPA installer console [1] をインストールします。次に、デバイスに ssh 接続して、ターゲットアプリのバンドル ID を調べます。
 
 ~~~
 iPhone:~ root# ipainstaller -l
@@ -147,7 +147,7 @@ com.google.ios.youtube
 com.spotify.client
 ~~~
 
-Generate the IPA file for using the following command:
+以下のコマンドを使用して、IPA ファイルを生成します。
 
 ~~~
 iPhone:~ root# ipainstaller -b com.example.targetapp -o /tmp/example.ipa
