@@ -36,19 +36,19 @@ iOS の世界では、脱獄は Apple のコード署名メカニズムを無効
 **重要** iOS の脱獄に関する注意：Android とは異なり、あなたは下記の例外を除いて iOS バージョンをダウングレード **できません** 。当然ながら、iOS バージョンに大きなバンプがあり (9 から 10 など)、新しい OS に公開された脱獄が存在しないとき、これは問題を引き起こします。一つの可能な解決策は少なくとも二つの iOS デバイスを持つことです。一つは脱獄済みでテストに必要なすべてのツールを持ち、二つ目はすべての主要な iOS リリースごとに更新され、公開された脱獄がリリースされるまで待ちます。一旦公開された脱獄がリリースされると、Apple はパッチをリリースするのがかなり速いので、数日中に最新の iOS バージョンにアップグレードして脱獄する必要があります (アップグレードが必要な場合) 。
 iOS のアップグレードプロセスはオンラインで実行され、チャレンジレスポンスプロセスに基づいています。チャレンジに対するレスポンスが Apple により署名されている場合にのみ、デバイスは OS インストールを実行します。これは研究者が「署名ウィンドウ」と呼ぶものです。iTunes 経由でダウンロードした OTA ファームウェアパッケージを保存していつでもデバイスにロードすることはできないという事実を説明しています。iOS のマイナーアップグレードでは、Apple により同時に二つのバージョンが署名されている可能性があります。これはiOS バージョンをダウングレードできる可能性のある唯一のケースです。このサイト <sup>[30]</sup> から現在の署名ウィンドウを確認し、OTA ファームウェアをダウンロードできます。脱獄の詳細については iPhone Wiki <sup>[26]</sup> を参照ください。
 
-### Preparing your test environment
+### テスト環境の準備
 
 ![Cydia Store](Images/Chapters/0x06b/cydia.png "Cydia Store")
 
-Once you have your iOS device jailbroken and Cydia is installed (as per screenshot), proceed as following:
+iOS デバイスを脱獄させて Cydia が (スクリーンショットのように) インストールされたら、以下の手順に従います。
 
-1. From Cydia install aptitude and openssh
-2. SSH to your iDevice
-  * Two users are `root` and `mobile`
-  * Default password is `alpine`
-3. Add the following repository to Cydia: `https://build.frida.re`
-4. Install Frida from Cydia 
-5. Install following packages with aptitude
+1. Cydia から aptitude と openssh をインストールする
+2. iDevice へ SSH する
+  * 二つのユーザー `root` と `mobile` がある
+  * デフォルトパスワードは `alpine` である
+3. Cydia に次のリポジトリを追加する `https://build.frida.re`
+4. Cydia から Frida をインストールする
+5. aptitude で以下のパッケージをインストールする
 
 ```
 inetutils 
@@ -64,7 +64,7 @@ adv-cmds
 bigbosshackertools
 ```
 
-Your workstation should have SSH client, Hopper Disassembler, Burp and Frida installed. You can install Frida with pip, for instance:
+あなたのワークステーションには SSH クライアント、Hopper 逆アセンブラ、Burp、Frida がインストールされている必要があります。pip で Frida をインストールできます。
 
 ```
 $ sudo pip install frida
