@@ -2,7 +2,7 @@
 
 ユーザー資格情報や個人情報などの機密データを保護することはモバイルセキュリティの重要な焦点です。この章では、iOS がローカルデータストレージ用に提供する API およびそれらの API を使用するためのベストプラクティスについて学びます。
 
-「機密データ」は特定のアプリごとのコンテキストで識別する必要があることに注意します。データ分類については「テストプロセスと技法」の章で詳しく説明しています。
+「機密データ」は特定のアプリごとのコンテキストで識別する必要があることに注意します。データ分類については「モバイルアプリセキュリティのベストプラクティスと落とし穴」の章で詳しく説明しています。
 
 ### ローカルデータストレージのテスト
 
@@ -12,9 +12,9 @@
 
 ##### Data Protection API
 
-アプリ開発者は iOS *Data Protection* API を活用して、フラッシュメモリに格納されたユーザーデータに対してきめ細かなアクセス制御を実装することができます。この API は Secure Enclave 上に構築されています。Secure Enclave は Data Protection の鍵管理に対して暗号操作を提供するコプロセッサです。デバイス固有のハードウェアキーが Secure Enclave に組み込まれているため、オペレーティングシステムカーネルが侵害された場合でも Data Protection の完全性が保証されます。
+アプリ開発者は iOS *Data Protection* API を活用して、フラッシュメモリに格納されたユーザーデータに対してきめ細かなアクセス制御を実装することができます。この API は Secure Enclave 上に構築されています。Secure Enclave は Data Protection の鍵管理に対して暗号操作を提供するコプロセッサです。デバイス固有のハードウェアキー - デバイス UID - が Secure Enclave に組み込まれているため、オペレーティングシステムカーネルが侵害された場合でも Data Protection の完全性が保証されます。
 
-データ保護アーキテクチャは鍵の階層に基づいています。ハードウェアキーはこの階層の最上位に位置し、さまざまなデバイス状態 (ロック、アンロックなど) に関連するいわゆるクラスキーを「アンロック」するために使用できます。
+データ保護アーキテクチャは鍵の階層に基づいています。UID とユーザーパスコードキーは PBKDF2 アルゴリズムを使用してユーザーのパスフレーズから導出され、この階層の最上位に位置します。ともに、それらはさまざまなデバイス状態 (デバイスのロック、アンロックなど) に関連するいわゆるクラスキーを「アンロック」するために使用できます。
 
 iOS ファイルシステムに格納されているすべてのファイルはファイルメタデータに含まれている独自の個別ファイルごとの鍵で暗号化されています。メタデータはファイルシステムキーで暗号化され、クラスキーのひとつでラップされます。クラスキーはファイルを作成する際にアプリにより選択された保護クラスに依存します。
 
@@ -48,39 +48,30 @@ iOS キーチェーンは暗号鍵やセッショントークンなどの短く�
 - SecItemCopyMatching
 - SecItemDelete
 
-キーチェーンデータはファイルの暗号化に使用されるものと同様のクラス構造を使用して保護されています。キーチェーンに追加されたアイテムはバイナリ plist としてエンコードされ、アイテムごとに 128 ビットの AES 鍵を使用して暗号化されます。より大きなサイズのデータはキーチェーンに直接保存されることはないことに注意します。それは Data Protection API の対象となります。
+キーチェーンデータはファイルの暗号化に使用されるものと同様のクラス構造を使用して保護されています。キーチェーンに追加されたアイテムはバイナリ plist としてエンコードされ、アイテムごとに 128 ビットの AES 鍵を使用して暗号化されます。より大きなサイズのデータはキーチェーンに直接保存されることはないことに注意します。それは Data Protection API の対象となります。データ保護は <code>kSecAttrAccessible</code> 属性を設定した <code>SecItemAdd</code> や <code>SecItemUpdate</code> コールで有効になります。以下の設定を利用できます。
 
 - kSecAttrAccessibleAfterFirstUnlock: キーチェーンアイテムのデータは再起動後デバイスがユーザーにより一度アンロックされるまでアクセスできません。
-- kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: キーチェーンアイテムのデータは再起動後デバイスがユーザーにより一度アンロックされるまでアクセスできません。データは iCloud や iTunes のバックアップには含まれません。
 - kSecAttrAccessibleAlways: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。
 - kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: キーチェーンのデータはデバイスがアンロックされている場合のみアクセスできます。デバイスにパスコードが設定されている場合のみ使用できます。データは iCloud や iTunes のバックアップには含まれません。
 - kSecAttrAccessibleAlwaysThisDeviceOnly: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
 - kSecAttrAccessibleWhenUnlocked: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。
 - kSecAttrAccessibleWhenUnlockedThisDeviceOnly: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
 
-キーチェーンファイルは以下にあります。
-
-```
-/private/var/Keychains/keychain-2.db
-```
-
-動的解析中に必要な場合は、「セキュリティテスト入門 (iOS)」の章で説明しているように、keychain dumper <sup>[9]</sup> を使用してキーチェーンの内容をダンプできます。
-
 #### 静的解析
 
-アプリ全体を通して保存されている機密データを特定します。これにはパスワード、秘密鍵、個人識別可能情報、その他クライアントにより機密扱いとされているデータが含まれます。下記のローカルストレージ API を使用して、このデータが保存されているインスタンスを探します。機密データは適切な保護なしで格納されることが決してないことを確認します。たとえば、ユーザー名とパスワードは暗号化を付加することなく NSUserDefaults に格納すべきではありません。いずれの場合でも、セキュアな設定 (理想的には <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code>) を使用して秘密鍵がキーチェーンに格納されるように暗号化を実装する必要があります。
+When having access to the source code of the iOS app, try to spot sensitive data that is saved and processed throughout the app. This includes in general passwords, secret keys, and personally identifiable information (PII), but might as well also include other data identified as sensitive through industry regulations, laws or internal policies. Look for instances where this data is saved using any of the local storage APIs listed below. Make sure that sensitive data is never stored without appropriate protection. For example, authentication tokens should not be saved in NSUserDefaults without additional encryption. In any case, the encryption must be implemented such that the secret key is stored in the Keychain using secure settings, ideally <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code>.
 
 iOS アプリで安全でないデータストレージのインスタンスを探す際には、データを格納する以下のような手段を考慮すべきです。
 
 ##### CoreData/SQLite データベース
 
-* `Core Data` はアプリケーションのモデルレイヤーオブジェクトを管理するために使用するフレームワークです。オブジェクトライフサイクルおよびオブジェクトグラフ管理(persistenceを含む)に関連する一般的なタスクに一般化および自動化されたソリューションを提供します。Core Data はより低いレベルの sqlite データベースで動作します。
+* `Core Data` <sup>[10]</sup>: アプリケーションのオブジェクトのモデルレイヤーを管理するために使用するフレームワークです。オブジェクトライフサイクルおよびオブジェクトグラフ管理(persistenceを含む)に関連する一般的なタスクに一般化および自動化されたソリューションを提供します。Core Data はより低いレベルの sqlite データベースで動作します。
 
-* `sqlite3`: フレームワークセクションの `libsqlite3.dylib` ライブラリはアプリケーションに追加する必要があります。SQLite コマンドに API を提供する C++ ラッパーです。
+* `sqlite3`: `libsqlite3.dylib` ライブラリをアプリケーションに追加する必要があります。このライブラリは SQLite コマンドに API を提供する C++ ラッパーです。
 
 ##### NSUserDefaults
 
-`NSUserDefaults` クラスは default システムと対話するためのプログラム的なインタフェースを提供します。default システムではアプリケーションはユーザーの好みに合わせて動作をカスタマイズできます。NSUserDefaults によって保存されたデータはアプリケーションバンドルから閲覧できます。また plist ファイルにデータを保存しますが、データ量が少なくて済みます。
+`NSUserDefaults` <sup>[11]</sup> クラスは default システムと対話するためのプログラム的なインタフェースを提供します。default システムではアプリケーションはユーザーの好みに合わせて動作をカスタマイズできます。NSUserDefaults によって保存されたデータはアプリケーションバンドルから閲覧できます。また plist ファイルにデータを保存しますが、データ量が少なくて済みます。
 
 ##### ファイルシステム
 
@@ -129,20 +120,26 @@ iOS アプリで安全でないデータストレージのインスタンスを�
   * このディレクトリを使用して、アプリの実行中に維持する必要のない一時ファイルを書き込みます
   * 非永続的なキャッシュファイル
   * ユーザーにいは見えません
-  * バックアップされません
+  * このディレクトリの内容はバックアップされません
   * OS はアプリが実行されていないときに自動的にファイルを削除することがあります (ストレージ容量が不足しているなど)
 
 より詳細な解析には、IntroSpy などの API 監視ツールを使用してアプリを計装します。
+
+If necessary during dynamic analysis, the contents of the Keychain can be dumped using keychain dumper <sup>[9]</sup> as described in the chapter "Basic Security Testing on iOS". The keychain file is located at:
+
+```
+/private/var/Keychains/keychain-2.db
+```
 
 #### 改善方法
 
 機密データを格納するにはハードウェア支援のストレージメカニズムを使用する必要があります。機密データを格納するために許可される選択肢は以下の通りです。
 
-- <code>kSecAttrAccessibleWhenUnlocked</code> 属性でキーチェーンにデータを格納する。
+- `kSecAttrAccessibleWhenUnlocked` 属性でキーチェーンにデータを格納する。
 - 格納する前に標準の暗号 API を使用してデータを暗号化し、キーチェーンに暗号鍵を格納する。
-- <code>NSFileProtectionComplete</code> 属性でファイルを作成する。
+- `NSFileProtectionComplete` 属性でファイルを作成する。
 
-以下の例は <code>createFileAtPath</code> メソッドを使用して安全に暗号化されたファイルを作成する方法を示しています。
+以下の例は `createFileAtPath` メソッドを使用して安全に暗号化されたファイルを作成する方法を示しています。
 
 ```objective-c
 [[NSFileManager defaultManager] createFileAtPath:[self filePath]
@@ -150,6 +147,8 @@ iOS アプリで安全でないデータストレージのインスタンスを�
   attributes:[NSDictionary dictionaryWithObject:NSFileProtectionComplete
   forKey:NSFileProtectionKey]];
 ```
+
+A generic example for using the KeyChain to store, update or delete data can be found in the official Apple documentation<sup>[12]</sup>.
 
 #### 参考情報
 
@@ -177,6 +176,9 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 [7] NSUserDefaults - https://developer.apple.com/reference/foundation/userdefaults
 [8] Keychain Item Accessibility -  https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons
 [9] Keychain Dumper - https://github.com/ptoomey3/Keychain-Dumper/
+[10] Core Data iOS - https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/nsfetchedresultscontroller.html#//apple_ref/doc/uid/TP40001075-CH8-SW1
+[11] NSUserDefaults - https://developer.apple.com/documentation/foundation/nsuserdefaults
+[12] GenericKeyChain - https://developer.apple.com/library/content/samplecode/GenericKeychain/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007797-Intro-DontLinkElementID_2
 
 
 ### 機密データに関するテスト(ログ)
@@ -193,7 +195,7 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 
 #### 静的解析
 
-以下のキーワードを使用して定義済み/カスタムのロギングステートメントの使用についてソースコードを確認します。
+以下のキーワードを使用して定義済みやカスタムのロギングステートメントの使用についてアプリソースコードを確認します。
 * 定義済みおよびビルトイン関数の場合：
   * NSLog
   * NSAssert
@@ -202,7 +204,6 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 * カスタム関数の場合：
   * Logging
   * Logfile
-
 
 #### 動的解析
 
@@ -216,7 +217,6 @@ tail -f /var/log/syslog
 * iOS デバイスを USB 経由で接続して Xcode を起動します。Windows > Devices に移動し、デバイスとそれぞれのアプリケーションを選択します。
 
 入力フィールドのプロンプトを完了した後、上記のコマンドの出力に機密データが表示されている場合、このテストは失敗となります。
-
 
 #### 改善方法
 
@@ -237,13 +237,15 @@ tail -f /var/log/syslog
 * M2 - 安全でないデータストレージ
 
 ##### OWASP MASVS
-- V2.2: "機密データがアプリケーションログに書き込まれていない。"
+* V2.2: "機密データがアプリケーションログに書き込まれていない。"
 
 ##### CWE
 * CWE-117: Improper Output Neutralization for Logs
 * CWE-532: Information Exposure Through Log Files
 * CWE-534: Information Exposure Through Debug Log Files
 
+##### ツール
+* Xcode
 
 
 ### 機密データがサードパーティに送信されているかのテスト
@@ -264,11 +266,11 @@ tail -f /var/log/syslog
 
 #### 動的解析
 
-機密情報が埋め込まれている場合には、外部サービスに対するすべてのリクエストを解析する必要があります。動的解析は _Burp Proxy_ や _OWASP ZAP_ を使用して中間者 (MITM) 攻撃を行い、クライアントとサーバー間で交換されるトラフィックを傍受することによって実行します。トラフィックを傍受プロキシにルーティングできるようになると、アプリからのトラフィックを盗聴することが可能になります。アプリを使用する場合、主機能がホストされているサーバーに直接接続していないすべてのリクエストに対し、機密情報がサードパーティに送信されていないかをチェックする必要があります。これには追跡サービスや広告サービスでの PII (個人識別情報) などがあります。
+All requests made to external services should be analyzed if any sensitive information is embedded into them. By using an interception proxy, we can try to investigate the traffic from the app to the 3rd party endpoints. When using the app all requests that are not going directly to the server where the main function is hosted should be checked, if any sensitive information is sent to a 3rd party. This could be for example PII (Personal Identifiable Information) in a tracker or ad service.
 
 #### 改善方法
 
-サードパーティサービスに送信されるすべてのデータは匿名化する必要があります。そのため PII データは使用できません。また、ユーザーアカウントやセッションにマップできるアプリケーション内の ID などの他のすべてのデータもサードパーティに送信してはいけません。
+All data that is sent to 3rd Party services should be anonymized, so no PII data is available that would allow the 3rd party to identify the user account. Also all other data, like IDs in an application that can be mapped to a user account or session should not be sent to a third party.  
 
 #### 参考情報
 
@@ -277,10 +279,10 @@ tail -f /var/log/syslog
 * M2 - 安全でないデータストレージ
 
 ##### OWASP MASVS
-- V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
+* V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
 
 ##### CWE
-- CWE-359 "Exposure of Private Information ('Privacy Violation')": [Link to CWE issue]
+* CWE-359 "Exposure of Private Information ('Privacy Violation')": [Link to CWE issue]
 
 ##### ツール
 * OWASP ZAP
@@ -300,16 +302,14 @@ tail -f /var/log/syslog
 
 #### 静的解析
 
-
 * 提供されたソースコードを検索して、以下と同様の実装を探します。
 
-  ```
+  ```#ObjC
   textObject.autocorrectionType = UITextAutocorrectionTypeNo;
   textObject.secureTextEntry = YES;
   ```
 
-* Interface Builder で xib と storyboard ファイルを開き、適切なオブジェクトの Attributes Inspector の Secure Text Entry and Correction の状態を確認します。
-
+* Xcode の `Interface Builder` で xib と storyboard ファイルを開き、適切なオブジェクトの `Attributes Inspector` の `Secure Text Entry` と `Correction` の状態を確認します。
 
 #### 動的解析
 
@@ -347,7 +347,6 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 [1] UIText​Input​Traits protocol - https://developer.apple.com/reference/uikit/uitextinputtraits
 
 
-
 ### 機密データに関するテスト(クリップボード)
 
 #### 概要
@@ -358,7 +357,7 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 
 提供されたソースコードを検索して、`UITextField` のサブクラス実装を探します。
 
-```
+```#ObjC
 @interface name_of_sub_class : UITextField
 action == @select(cut:)
 action == @select(copy:)
@@ -400,6 +399,7 @@ action == @select(copy:)
 
 @end
 ```
+
 ペーストボードをクリアするには <sup>[2]</sup>。
 
 ```
@@ -428,11 +428,19 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 
 #### 概要
 
--- TODO [Add content on overview of "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
+Inter Process Communication (IPC) is a method that allows processes to send each other messages and data<sup>[1]</sup>. Due to security reasons each process get's it's own memory assigned. Through this design feature it's not possible by process A to modify any content in the memory of process B. In case two processes need to communicate with each other, different methods are available to implement IPC on iOS<sup>[2]</sup>:
+
+* XPC
+* (Distributed) Notifications
+* (Distributed) Objects
+* libobjcipc
+* LightMessaging
+* Pasteboard
+* AppleEvents & AppleScript
 
 #### 静的解析
 
--- TODO [Add content on white-box testing of "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"] --
+
 
 #### 動的解析
 
@@ -455,8 +463,8 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 - CWE
 
 #### その他
--- TODO --
-
+[1] iPhoneDevWiki IPC - http://iphonedevwiki.net/index.php/IPC
+[2] Inter-Process Communication - http://nshipster.com/inter-process-communication/
 
 ### ユーザーインタフェースを介しての機密データ漏洩に関するテスト
 
@@ -496,20 +504,21 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 
 #### 概要
 
-他の最新のモバイルオペレーティングシステムと同様に、iOSはインストールされたアプリのデータや設定など、デバイス上のデータのコピーを作成する自動バックアップ機能を備えています。よくある懸念事項はアプリにより格納された機密ユーザーデータがこれらのデータバックアップに意図せず漏洩する可能性があるかどうかです。
+Like other modern mobile operating systems iOS offers auto-backup features that create copies of the data on the device. On iOS, backups can be made either through iTunes, or the the cloud using the iCloud backup feature. In both cases, the backup includes nearly all data stored on the device, except some highly sensitive things like Apple Pay information and TouchID settings.
 
+Since iOS backs up installed apps and their data, an obvious concern is whether sensitive user data stored by the app might unintentionally leak through the backup. The answer to this question is "yes" - but only if the app insecurely stores sensitive data in the first place.
 
 ##### キーチェーンはどのようにバックアップされているか
 
 ユーザーが自分の iPhone をバックアップすると、キーチェーンデータもバックアップされますが、キーチェーン内の秘密は暗号化されたままです。キーチェーンデータを復号化するために必要なクラスキーはバックアップには含まれません。キーチェーンデータを復元するには、バックアップはデバイスに復元する必要があり、そのデバイスは同じパスコードでアンロックする必要があります。
 
-<code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code> 属性が設定されたキーチェーンアイテムはバックアップが同じデバイスに復元された場合にのみ復号できることに注意します。バックアップが新しいデバイスに復元された場合、これらのアイテムは失われます。
+Keychain items with the <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code> attribute set can be decrypted only if the backup is restored to the same device. An evildoer trying to extract this Keychain data from the backup would be unable to decrypt it without access to the crypto hardware inside the originating device.
 
--- [TODO complete the backups overview] --
+The takeaway: As long as sensitive data is handled as recommended earlier in this chapter (stored in the Keychain, or encrypted with a key locked inside the Keychain), then backups aren't an issue.
 
 #### 静的解析
 
-iOS モバイルアプリケーションのソースコードをレビューして、<code>NSURLIsExcludedFromBackupKey</code> <sup>[1]</sup> や <code>CFURLIsExcludedFromBackupKey</code> <sup>[2]</sup> ファイルシステムプロパティを使用してバックアップからファイルやディレクトリを除外している箇所があるか確認します。多数のファイルを除外する必要があるアプリでは、独自のサブディレクトリを作成し、そのディレクトリを除外としてマークすることでファイルを除外できます。アプリはシステム定義のディレクトリを除外するのではなく、独自の除外ディレクトリを作成すべきです。
+<code>NSURLIsExcludedFromBackupKey</code> <sup>[1]</sup> や <code>CFURLIsExcludedFromBackupKey</code> <sup>[2]</sup> ファイルシステムプロパティを使用してバックアップからファイルやディレクトリを除外できます。多数のファイルを除外する必要があるアプリでは、独自のサブディレクトリを作成し、そのディレクトリを除外としてマークすることでファイルを除外できます。アプリはシステム定義のディレクトリを除外するのではなく、独自の除外ディレクトリを作成すべきです。
 
 これらの API はそれぞれ、拡張属性を直接設定する古く非推奨の方式よりも優先されます。iOS 5.1 および以降で動作するすべてのアプリはこれらの API を使用してバックアップからデータを除外すべきです。
 
@@ -520,7 +529,7 @@ iOS モバイルアプリケーションのソースコードをレビューし�
 {
     NSURL* URL= [NSURL fileURLWithPath: filePathString];
     assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
- 
+
     NSError *error = nil;
     BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
                                   forKey: NSURLIsExcludedFromBackupKey error: &error];
@@ -537,9 +546,9 @@ iOS モバイルアプリケーションのソースコードをレビューし�
  func addSkipBackupAttributeToItemAtURL(filePath:String) -> Bool
     {
         let URL:NSURL = NSURL.fileURLWithPath(filePath)
- 
+
         assert(NSFileManager.defaultManager().fileExistsAtPath(filePath), "File \(filePath) does not exist")
- 
+
         var success: Bool
         do {
             try URL.setResourceValue(true, forKey:NSURLIsExcludedFromBackupKey)
@@ -548,7 +557,7 @@ iOS モバイルアプリケーションのソースコードをレビューし�
             success = false
             print("Error excluding \(URL.lastPathComponent) from backup \(error)");
         }
- 
+
         return success
     }
 ```
@@ -560,17 +569,21 @@ iOS モバイルアプリケーションのソースコードをレビューし�
 - (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *) filePathString
 {
     assert([[NSFileManager defaultManager] fileExistsAtPath: filePathString]);
- 
+
     const char* filePath = [filePathString fileSystemRepresentation];
- 
+
     const char* attrName = "com.apple.MobileBackup";
     u_int8_t attrValue = 1;
- 
+
     int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
     return result == 0;
 }
 ```
 
+
+#### 静的解析
+
+Review the iOS mobile application source code to see if there is any usage of
 #### 動的解析
 
 アプリデータがバックアップされた後、バックアップファイルやフォルダのデータ内容をレビューします。具体的には、以下のディレクトリをレビューして機密データが含まれているかどうかを確認すべきです。
