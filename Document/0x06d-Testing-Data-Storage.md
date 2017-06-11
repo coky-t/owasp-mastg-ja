@@ -573,14 +573,14 @@ iOS モバイルアプリケーションのソースコードをレビューし�
 
 #### 動的解析
 
-After the App data has been backed up, review the data content of the backup files and folders. Specifically, the following directories should be reviewed to check if it contains any sensitive data: 
+アプリデータがバックアップされた後、バックアップファイルやフォルダのデータ内容をレビューします。具体的には、以下のディレクトリをレビューして機密データが含まれているかどうかを確認すべきです。
 
 * Documents/
 * Library/Caches/
 * Library/Application Support/
 * tmp/
 
-Refer to the Overview of this section to read up more on the purpose of each of the mentioned directories and the type of information they stores.  
+前述の各ディレクトリの目的やそれらに格納される情報の種類についての詳細は、このセクションの概要を参照します。
 
 #### 改善方法
 
