@@ -2,35 +2,39 @@
 
 以下の章ではテクニカルテストケースでの MASVS の認証とセッション管理要件について説明します。この章に記載されるテストケースはサーバー側に焦点を当てているため、iOS や Android の特定の実装に依存しません。
 
+For all of the test cases below, it need to be investigated first what kind of authentication mechanism is used. There are different mechanisms available, to implement server side authentication, either:
+* Cookie-Based Authentication or
+* Token-Based Authentication.
+
+Cookie-Based Authentication is the traditional authentication mechanism used in web applications. In order to adopt to the different requirements of mobile apps Token-Based Authentication was specified and is more and more used nowadays in mobile apps. A prominent example for this is JSON Web Token or JWT<sup>[1]</sup> which can be part of an OAuth2 authentication and authorization framework.
+
+
 ### ユーザーが正しく認証されていることの検証
 
 #### 概要
 
 アプリケーションは、一方では公的で非特権的な情報や機能、他方で機密性が高く特権的な情報や機能といったさまざまなエリアを有することがよくあります。ユーザーは前者に制限なしで合法的にアクセスできます。しかし、機密性が高く特権的な情報や機能は正当なユーザーだけに保護されアクセスできるようにするために、適切な認証が行われる必要があります。
 
-サーバー側認証を実装するには以下のいずれかの方法があります。
-* クッキーベースの認証
-* トークンベースの認証
+Authentication always need to be handled in the server side code and should never rely on client-side controls. Client-side controls can be used to improve the user workflow and only allow specific actions, but there always need to be the server-side counterpart that defines what a user is allowed to access.
 
-クッキーベースの認証は Web アプリケーションで使用される旧来の認証メカニズムです。モバイルアプリのさまざまな要件に対応するためにトークンベースの認証が設計され、今日ではモバイルアプリでますます使用されています。この顕著な例は OAuth2 認証および認可フレームワークの一部である JSON Web トークンもしくは JWT <sup>[1]</sup> です。
+In case Token-Based authentication with JWT is used, please also look at the test case "Testing JSON Web Token (JWT)".
 
 #### 静的解析
 
-サーバーソースコードが入手可能である場合は、まずサーバー側で使用および実施されている認証メカニズム(トークンまたはクッキーベース)を特定します。それから機密性が高く特権的な情報や機能を持つすべてのセクションを突き止めます。それらは保護する必要があるものです。アイテムにアクセスする前に、アプリケーションはユーザーが実際に誰でありセクションにアクセスすることを許可されていることを確認する必要があります。ユーザーを認証したり既存のセッショントークンを取得およびチェックするために使用されるサーバーソースコードのキーワードを探します。
+サーバー側ソースコードが入手可能である場合は、まずサーバー側で使用および実施されている認証メカニズム(トークンまたはクッキーベース)を特定します。それから機密性が高く特権的な情報や機能を持つすべてのエンドポイントを突き止めます。それらは保護する必要があるものです。アイテムにアクセスする前に、アプリケーションはユーザーが実際に誰でありエンドポイントにアクセスすることを許可されていることを確認する必要があります。ユーザーを認証したり既存のセッショントークンを取得およびチェックするために使用されるサーバーソースコードのキーワードを探します。
 
-認証メカニズムはゼロから実装するのではなく、この機能を提供するフレームワーク上に構築すべきです。サーバー側で使用されるフレームワークを特定し、利用可能な API を使用してベストプラクティスに応じて使用されるかどうか検証すべきです。サーバー側のサンプルフレームワークは以下のとおりです。
+認証メカニズムはゼロから実装するのではなく、この機能を提供するフレームワーク上に構築すべきです。サーバー側で使用されるフレームワークを特定し、利用可能な認証 API や関数を使用してベストプラクティスに応じて使用されるかどうか検証すべきです。サーバー側で広く使用されるフレームワークは以下のとおりです。
 
 - Spring (Java) - https://projects.spring.io/spring-security/
-- PHP - http://php.net/manual/en/features.http-auth.php
+- Struts (Java) - https://struts.apache.org/docs/
+- Laravel (PHP) - https://laravel.com/docs/5.4/authentication
 - Ruby on Rails -  http://guides.rubyonrails.org/security.html
-
-JWT は PHP <sup>[3]</sup> や Java Spring <sup>[4]</sup> などの主要なプログラミング言語でも利用できます。JWT を使用する場合は、OWASP JWT Cheat Sheet <sup>[1]</sup> のテストケースにも従います。また認証のテストケースについては OWASP Testing Guide <sup>[2]</sup> も参照ください。
 
 #### 動的解析
 
-認証を検証するには、まずユーザーがアプリ内でアクセスできるすべての特権セクションを調べるべきです。エンドポイントに送信されるすべてのリクエストに対して、傍受プロキシを使用して認証されている間のネットワークトラフィックを取得します。次に、認証情報を削除してリクエストの再生を試みます。エンドポイントが依然としてリクエストされたデータを送り返している場合、認証されたユーザーにのみ利用可能にすべきであり、認証チェックがエンドポイントで正しく実装されていません。
+認証を検証するには、まずユーザーがアプリ内でアクセスできるすべての特権エンドポイントを調べるべきです。エンドポイントに送信されるすべてのリクエストに対して、傍受プロキシを使用して認証されている間のネットワークトラフィックを取得します。次に、認証情報を削除してリクエストの再生を試みます。エンドポイントが依然としてリクエストされたデータを送り返している場合、認証されたユーザーにのみ利用可能にすべきであり、認証チェックがエンドポイントで正しく実装されていません。
 
-さらなる攻撃方法については Web ベースアプリケーションに関する OWASP テストガイド V4 (OTG-AUTHN-004) <sup>[5]</sup> にあります。
+さらなる攻撃方法については Web ベースアプリケーションに関する OWASP テストガイド V4 (OTG-AUTHN-004) <sup>[3]</sup> にあります。また、OWASP テストガイド <sup>[2]</sup> には多くの認証についてのテストケースがあります。
 
 #### 改善方法
 
@@ -58,9 +62,84 @@ JWT は PHP <sup>[3]</sup> や Java Spring <sup>[4]</sup> などの主要なプ�
 
 [1] OWASP JWT Cheat Sheet for Java: `https://www.owasp.org/index.php/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java`
 [2] OWASP Testing Guide V4 (Testing for Session Management) - https://www.owasp.org/index.php/Testing_for_Session_Management
-[3] PHP JWT - https://github.com/firebase/php-jwt
-[4] Java Spring with JWT - http://projects.spring.io/spring-security-oauth/docs/oauth2.html
-[5] OWASP Testing Guide V4 (OTG-AUTHN-004) - https://www.owasp.org/index.php/Testing_for_Bypassing_Authentication_Schema
+[3] OWASP Testing Guide V4 (OTG-AUTHN-004) - https://www.owasp.org/index.php/Testing_for_Bypassing_Authentication_Schema_(OTG-AUTHN-004)
+
+
+### Testing JSON Web Token (JWT)
+
+#### Overview
+
+The standard RFC 7519 is defining JSON Web Token (JWT). JWT ensures the integrity and secure transmission of information within a JSON object between two parties. For mobile apps it's more and more used to authenticate both, the message sender and receiver.
+
+An example of an encoded JSON Web Token can be found below<sup>[5]</sup>.
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+```
+
+JWTs are Base-64 encoded and are divided into three parts:
+
+* **Header** Algorith and Token Type (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9):
+```JSON
+{"alg":"HS256","typ":"JWT"}
+```
+* **Payload** Data  (eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9):
+```JSON
+{"sub":"1234567890","name":"John Doe","admin":true}
+```
+* **Verify Signature** (TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ):
+```JSON
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret
+)
+```
+
+JWT implementations are available for all major programming languages, like PHP<sup>[1]</sup> or Java Spring<sup>[2]</sup>.
+
+#### Static Analysis
+
+[Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.]
+
+[Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>.]
+
+
+#### Dynamic Analysis
+
+Several known vulnerabilities can be checked while executing a dynamic analysis:
+* NONE hashing algorithm:
+  *
+* Token Storage on client side:
+  * When using a mobile app that uses JWT it should be verified where the token is stored locally on the device<sup>[5]</sup>.
+
+
+#### Remediation
+
+Store the JWT using the browser sessionStorage container and add it as a Bearer with JavaScript when calling service.
+Please also follow the test cases in the OWASP JWT Cheat Sheet<sup>[1]</sup> if JWT is used.
+
+#### References
+
+##### OWASP Mobile Top 10 2016
+
+* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+
+##### OWASP MASVS
+
+- 4.1: "If the app provides users with access to a remote service, an acceptable form of authentication such as username/password authentication is performed at the remote endpoint."
+
+##### CWE
+
+- CWE-287: Improper Authentication - https://cwe.mitre.org/data/definitions/287.html
+
+##### Info
+
+* [1] RFC 7519 JSON Web Token (JWT) - https://tools.ietf.org/html/rfc7519
+* [2] PHP JWT - https://github.com/firebase/php-jwt
+* [3] Java Spring with JWT - http://projects.spring.io/spring-security-oauth/docs/oauth2.html
+* [4] OWASP JWT Cheat Sheet - `https://www.owasp.org/index.php/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java`
+* [5] Sample of JWT Token - https://jwt.io/#debugger
 
 
 ### セッション管理のテスト
