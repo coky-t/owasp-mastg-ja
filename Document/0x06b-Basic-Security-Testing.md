@@ -94,18 +94,18 @@ iPhone:~ root#
 ```
 iphonedevwiki <sup>[24]</sup> も参照ください。
 
-### Typical iOS Application Test Workflow
+### 一般的な iOS アプリケーションテストのワークフロー
 
-Typical workflow for iOS Application test is following:
+iOS アプリケーションテストの一般的なワークフローは以下のとおりです。
 
-1. Obtain IPA file
-2. Bypass jailbreak detection (if present)
-3. Bypass certificate pinning (if present)
-4. Inspect HTTP(S) traffic - usual web app test
-5. Abuse application logic by runtime manipulation
-6. Check for local data storage (caches, binary cookies, plists, databases)
-7. Check for client-specific bugs, e.g. SQLi, XSS
-8. Other checks like: logging to ASL with NSLog, application compile options, application screenshots, no app backgrounding
+1. IPA ファイルを入手する
+2. 脱獄検出をバイパスする (存在する場合)
+3. 証明書ピンニングをバイパスする (存在する場合)
+4. HTTP(S) トラフィックを検査する - 通常の Web アプリテスト
+5. ランタイム操作によりアプリケーションロジックを不正使用する
+6. ローカルデータストレージ (キャッシュ、バイナリクッキー、plist、データベース) を確認する
+7. クライアント固有のバグ SQLi や XSS などを確認する
+8. その他の確認：NSLog を使用した ASL へのログ出力、アプリケーションのコンパイルオプション、アプリケーションのスクリーンショット、アプリのバックグラウンド化有無
 
 ### 静的解析
 
