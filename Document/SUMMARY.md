@@ -5,7 +5,13 @@
 ### 概要
 
 - [モバイルセキュリティテストガイドの序文](0x03-Overview.md)
-- [テストプロセスと技法](0x04-Testing-Processes-and-Techniques.md)
+
+### 総合テストガイド
+
+- [モバイルアプリの分類](Document/0x04a-Mobile-App-Taxonomy.md)
+- [モバイルアプリのセキュリティテスト](Document/0x04b-Mobile-App-Security-Testing.md)
+- [改竄とリバースエンジニアリング](Document/0x04c-Tampering-and-Reverse-Engineering.md)
+- [ソフトウェア開発ライフサイクル内でのセキュリティテスト](Document/0x04d-Security-Testing-SDLC.md)
 
 ### Android テストガイド
 
@@ -35,8 +41,8 @@
 
 ### 付録
 
-* [認証とセッション管理のテスト (エンドポイント)](0x07a-Testing-Authentication-and-Session-Management.md)
+* [リモート認証と認可](0x07a-Testing-Authentication-and-Session-Management.md)
 * [ネットワーク通信のテスト](0x07b-Testing-Network-Communication.md)
-* [暗号化のテスト](0x07c-Testing-Cryptography.md)
+* [モバイルアプリでの暗号化](0x07c-Testing-Cryptography.md)
 * [アンチリバースエンジニアリングスキームの評価](0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md)
 * [テストツール](0x08-Testing-Tools.md)
