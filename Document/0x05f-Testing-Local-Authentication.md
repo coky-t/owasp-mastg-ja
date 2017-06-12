@@ -10,15 +10,26 @@ Android 6.0 では指紋でユーザーを認証するパブリック API が導
 
 Android KeyGenerator と一緒に指紋 API を使用することで、アプリはユーザーの指紋で「ロックされていない」暗号鍵を作成できます。これはより便利な形でユーザーログインを実装するために使用できます。例えば、ユーザーがリモートサービスにアクセスできるようにするために、対称鍵を作成し、ユーザー PIN や認証トークンを暗号化することができます。鍵を作成する際に <code>setUserAuthenticationRequired(true)</code> をコールすることで、ユーザーが鍵を取得するために指紋を使用して再認証することを保証します。暗号化された認証データ自体は通常のストレージ (SharedPreferences など) を使用して保存できます。
 
-この比較的合理的な方法のほかに、安全でない方法で指紋認証を実装することもできます。例えば、開発者は <code>onAuthenticationSucceeded</code> コールバック <sup>3</sup> がコールされたかどうかだけに基づいて認証成功とすることを選択できます。しかし、このイベントはユーザーが生体認証を行ったことを証明するものではありません。このようなチェックは計装を使用して簡単にパッチ適用やバイパスが可能です。キーストアを利用することはユーザーが実際に指紋を入力したことを合理的に確認する唯一の方法です (もちろん、キーストアが侵害されている場合を除きます) 。
+この比較的合理的な方法のほかに、安全でない方法で指紋認証を実装することもできます。例えば、開発者は <code>onAuthenticationSucceeded</code> コールバック <sup>3</sup> がコールされたかどうかや Samsung Pass SDK がインスタンスに使用されている時のみに基づいて認証成功とすることを選択できます。しかし、このイベントはユーザーが生体認証を行ったことを証明するものではありません。このようなチェックは計装を使用して簡単にパッチ適用やバイパスが可能です。キーストアを利用することはユーザーが実際に指紋を入力したことを合理的に確認する唯一の方法です。
+
+Unless, of course, the keystore is compromised. Which has been the case as reported in [5] and mostly explained in [6]. There are a few known CVEs registered for instance: CVE-2016-2431, CVE-2016-2432, CVE-2015-6639, CVE-2015-6647. Therefore one should always check the security patch-level:
+
+```java
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", 	Locale.getDefault());
+	sdf.parse(Build.VERSION.SECURITY_PATCH).after(sdf.parse("2016-05-01"));
+```
+
 
 #### 静的解析
+
+First make sure that the actual Android SDK is used for fingerprint evaluation and not any vendor specific SDKs, such as Samsung Pass as it is inherently flawed.
 
 <code>FingerprintManager.authenticate()</code> のコールを検索します。このメソッドに渡される最初のパラメータは <code>CryptoObject</code> インスタンスが必要です。<code>CryptoObject</code> は FingerprintManager <sup>[2]</sup> によりサポートされている暗号オブジェクトのラッパークラスです。このパラメータに <code>null</code> を設定している場合、指紋認証は純粋にイベントバウンドであるため、セキュリティ上の問題が発生する可能性があります。
 
 CryptoObject でラップされた暗号を初期化するために使用される鍵の生成を追跡します。鍵が <code>KeyGenerator</code> クラスを使用して作成され、<code>KeyGenParameterSpec</code> オブジェクトを作成するときに <code>setUserAuthenticationRequired(true)</code> をコールすることを確認します (以下のコードサンプルも参照ください) 。
 
 認証ロジックを確認します。認証が成功するには、リモートエンドポイントはキーストアから取得した秘密や秘密から派生した値を提示することをクライアントに要求する **必要があります** 。
+
 
 #### 動的解析
 
@@ -28,7 +39,33 @@ CryptoObject でラップされた暗号を初期化するために使用され�
 
 指紋認証は以下の行のように実装する必要があります。
 
-指紋認証が可能であるかどうかを確認します。デバイスは Android 6.0 またはそれ以降 (SDK 23+) で動作し、指紋センサーを搭載している必要があります。ユーザーはロックスクリーンを保護し、デバイスに少なくともひとつの指紋を登録する必要があります。これらのチェックのいずれかが失敗した場合、指紋認証のオプションは提供すべきではありません。
+指紋認証が可能であるかどうかを確認します。デバイスは Android 6.0 またはそれ以降 (SDK 23+) で動作し、指紋センサーを搭載している必要があります。チェックすべき二つの前提条件があります。
+
+- The user must have protected their lockscreen 
+
+```java
+	 KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+	 keyguardManager.isKeyguardSecure();
+```
+- Fingerprinthardware must be available:
+
+```java
+	 FingerprintManager fingerprintManager = (FingerprintManager)
+                    context.getSystemService(Context.FINGERPRINT_SERVICE);
+    fingerprintManager.isHardwareDetected();                
+```
+
+- At least one finger should be registered:
+```java
+	fingerprintManager.hasEnrolledFingerprints();
+```
+
+- The application should have permission to ask for the users fingerprint:
+```java
+	context.checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PermissionResult.PERMISSION_GRANTED;
+```
+
+If any of those checks failed, the option for fingerprint authentication should not be offered.
 
 指紋認証を設定する際には、<code>KeyGenerator</code> クラスを使用して新しい AES 鍵を作成します。<code>KeyGenParameterSpec.Builder</code> に <code>setUserAuthenticationRequired(true)</code> を追加します。
 
@@ -45,6 +82,7 @@ CryptoObject でラップされた暗号を初期化するために使用され�
 
 	generator.generateKey();
 ```
+Please note, that since Android 7 you can use the `setInvalidatedByBiometricEnrollment(boolean value)` as a method of the builder. If you set this to true, then the fingerprint will not be invalidated when new fingerprints are enroled. Even though this might provide user-convinience, it opens op a problem area when possible attackers are somehow able to social-engineer their fingerprint in.
 
 暗号化や復号化を実行するには、<code>Cipher</code> オブジェクトを作成し、それを AES 鍵で初期化します。
 
@@ -72,7 +110,21 @@ public void authenticationSucceeded(FingerprintManager.AuthenticationResult resu
 }
 ```
 
+Please bare in mind that the keys might not be always in secure hardware, for that you can do the following to validate the posture of the key:
+
+```java
+SecretKeyFactory factory = SecretKeyFactory.getInstance(getEncryptionKey().getAlgorithm(), ANDROID_KEYSTORE);
+                KeyInfo secetkeyInfo = (KeyInfo) factory.getKeySpec(yourencryptionkeyhere, KeyInfo.class);
+secetkeyInfo.isInsideSecureHardware()
+```
+Please note that, on some systems, you can make sure that the biometric authentication policy itself is hardware enforced as well. This is checked by:
+
+```java
+	keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
+```
+
 完全な例については、Deivi Taka <sup>[4]</sup> のブログ記事を参照ください。
+
 
 #### 参考情報
 
@@ -95,6 +147,8 @@ public void authenticationSucceeded(FingerprintManager.AuthenticationResult resu
 - [2] FingerprintManager.CryptoObject - https://developer.android.com/reference/android/hardware/fingerprint/FingerprintManager.CryptoObject.html
 - [3] https://developer.android.com/reference/android/security/keystore/KeyGenParameterSpec.Builder.html#setUserAuthenticationRequired(boolean)
 - [4] Securing Your Android Appps with the Fingerprint API - https://www.sitepoint.com/securing-your-android-apps-with-the-fingerprint-api/#savingcredentials
+- [5] Android Security Bulletins - https://source.android.com/security/bulletin/
+- [6] Extracting Qualcomm's KeyMaster Keys - Breaking Android Full Disk Encryption - http://bits-please.blogspot.co.uk/2016/06/extracting-qualcomms-keymaster-keys.html
 
 ##### ツール
 
