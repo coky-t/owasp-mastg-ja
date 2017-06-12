@@ -1,5 +1,6 @@
 ## コード品質とビルド設定のテスト (iOS アプリ)
 
+
 ### アプリが正しく署名されていることの検証
 
 #### 概要
@@ -21,18 +22,23 @@
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.1: "アプリは有効な証明書で署名およびプロビジョニングされている。"
 
 ##### CWE
+
 -- TODO [Add relevant CWE for "Verifying that the App is Properly Signed"] --
 
 ##### その他
+
 - [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
 
 ##### ツール
+
 -- TODO [Add tools for "Verifying that the App is Properly Signed"] --
 
 ### アプリがデバッグ可能であるかのテスト
@@ -49,8 +55,7 @@
 
 #### 動的解析
 
-このテストケースは静的解析で実行する必要があります。
--- TODO [Develop content on black-box testing of "Testing Whether the App is Debuggable"] --
+このテストケースは静的解析で実行する必要があります。-- TODO [Develop content on black-box testing of "Testing Whether the App is Debuggable"] --
 
 #### 改善方法
 
@@ -59,20 +64,24 @@ App Store 経由もしくは Ad Hoc や エンタープライズビルドのい�
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である。（非デバッグなど）"
 
 ##### CWE
+
 -- TODO [Add relevant CWE for "Testing Whether the App is Debuggable"] --
 
 ##### その他
+
 - [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
 
 ##### ツール
--- TODO [Add tools for "Testing Whether the App is Debuggable"] --
 
+-- TODO [Add tools for "Testing Whether the App is Debuggable"] --
 
 ### デバッグシンボルの検証
 
@@ -109,62 +118,61 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.3: "デバッグシンボルはネイティブバイナリから削除されている。"
 
 ##### CWE
+
 -- TODO [Add relevant CWE for "Verifying that Debugging Symbols Have Been Removed"] --
 
 ##### その他
+
 - [1] Binutils - https://www.gnu.org/s/binutils/
-
-
 
 ### デバッグコードや詳細エラーログに関するテスト
 
 #### 概要
-開発者は検証をスピードアップしエラーの理解を深めるために API からのレスポンスやアプリケーションの状況や状態について (`NSLog`, `println`, `print`, `dump`, `debugPrint` を使用して) 詳細なログ出力文などのデバッグコードをしばしば埋め込みます。
-さらに、API からの疑似応答などアプリケーションの状態を設定するために開発者が使用する「管理機能」と呼ばれるデバッグコードが存在する可能性があります。
-この情報はリバースエンジニアがアプリケーションで起こっていることを追跡するために簡単に使用できます。したがって、デバッグコードはリリースバージョンのアプリケーションから削除する必要があります。
+
+開発者は検証をスピードアップしエラーの理解を深めるために API からのレスポンスやアプリケーションの状況や状態について (`NSLog`, `println`, `print`, `dump`, `debugPrint` を使用して) 詳細なログ出力文などのデバッグコードをしばしば埋め込みます。さらに、API からの疑似応答などアプリケーションの状態を設定するために開発者が使用する「管理機能」と呼ばれるデバッグコードが存在する可能性があります。この情報はリバースエンジニアがアプリケーションで起こっていることを追跡するために簡単に使用できます。したがって、デバッグコードはリリースバージョンのアプリケーションから削除する必要があります。
 
 #### 静的解析
-静的解析では、ログ出力文に関して以下のアプローチをとることができます。
-1. Xcode にアプリケーションのコードをインポートする。
-2. 次の出力関数でコードを検索する:`NSLog`, `println`, `print`, `dump`, `debugPrint`.
-3. いずれか一つを見つけたら、ログ出力のマークアップとしてログ出力関数の周りにラップ関数を使用しているか確認し、その関数を検索に追加する。
-4. 手順2と3で見つけたすべてのものについて、マクロやデバッグ状態に関連するガードがログ出力なしに設定されているかどうかを確認する。Objective-C がプリプロセッサマクロをどのように使用して変更するかに注意する。
+
+静的解析では、ログ出力文に関して以下のアプローチをとることができます。1. Xcode にアプリケーションのコードをインポートする。2. 次の出力関数でコードを検索する:`NSLog`, `println`, `print`, `dump`, `debugPrint`.3. いずれか一つを見つけたら、ログ出力のマークアップとしてログ出力関数の周りにラップ関数を使用しているか確認し、その関数を検索に追加する。4. 手順2と3で見つけたすべてのものについて、マクロやデバッグ状態に関連するガードがログ出力なしに設定されているかどうかを確認する。Objective-C がプリプロセッサマクロをどのように使用して変更するかに注意する。
+
 ```objc
 #ifdef DEBUG
     // Debug-only code
 #endif
 ```
+
 Swift ではこれとは異なります。スキームに環境変数を設定するか、ターゲットのビルド設定にカスタムフラグを設定する必要があります。アプリが Swift 2.1 のリリース構成でビルドされているかどうかを確認できる次の関数が推奨されていることに注意します (Xcode 8 および Swift3 ではサポートされません): `_isDebugAssertConfiguration()`, `_isReleaseAssertConfiguration()`, `_isFastAssertConfiguration()`.
 
 アプリケーションの設定により、より多くのログ出力関数があることに注意します。例えば、CocoaLumberjack (https://github.com/CocoaLumberjack/CocoaLumberjack) が使用された場合などでは、静的解析は多少異なったものになります。
 
-組み込みの「デバッグ管理」コードにて、ストーリーボードを調査して、アプリケーションによりサポートされるものとは異なる機能を提供するフローやビューコントローラがあるかどうかを調べます。
---TODO: reviewer: should we go in depth on different patterns one can find on this subject? --
+組み込みの「デバッグ管理」コードにて、ストーリーボードを調査して、アプリケーションによりサポートされるものとは異なる機能を提供するフローやビューコントローラがあるかどうかを調べます。これはいろいろあります。デバッグビューから、エラーメッセージ出力まで。カスタムスタブレスポンス構成からアプリケーション上のファイルやリモートサーバーへのログ出力まで。
 
 #### 動的解析
-動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードの実行有無のために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あります。
-1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールに出力を見つけることができるか確認する。
-2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールに出力を見つけることができるか確認する。
+
+動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードの実行有無のために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あります。1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールに出力を見つけることができるか確認する。2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールに出力を見つけることができるか確認する。
 
 他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、いくつかの機能を見つけることができるか確認します。アプリの事前設定プロファイルを許可する機能、実サーバーを選択する機能、API からの可能なレスポンスを選択する機能など。
 
 #### 改善方法
-デバッグ用に作成した文が以下でないことが分かっている限りにおいては、開発者がデバッグバージョンのアプリケーションにデバッグ文を組み込むことは問題ではありません。
-- コードがリリースバージョンのアプリケーションに存在して実際の計算結果に影響を与える。
-- 最終的にアプリケーションのリリース構成にもある。
+
+デバッグ用に作成した文が以下でないことが分かっている限りにおいては、開発者がデバッグバージョンのアプリケーションにデバッグ文を組み込むことは問題ではありません。- コードがリリースバージョンのアプリケーションに存在して実際の計算結果に影響を与える。- 最終的にアプリケーションのリリース構成にもある。
 
 Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
+
 ```objc
 #ifdef DEBUG
     // Debug-only code
 #endif
 ```
+
 Swift 2 では、Xcode 7 を使用して、すべてのターゲットにカスタムコンパイラフラグを設定する必要があります。コンパイラフラグは -D で始まる必要があります。したがって、デバッグフラグ -DMSTG-DEBUG を設定されている場合、以下のアノテーションが使用できます。
 
 ```swift
@@ -184,23 +192,26 @@ Swift 3 では、Xcode 8 を使用して、Build settings / Swift compiler - Cus
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
 
 ##### CWE
+
 -- TODO [Add relevant CWE for "Testing for Debugging Code and Verbose Error Logging"] --
 
 ##### その他
+
 - [1] CocoaLumberjack - [https://github.com/CocoaLumberjack/CocoaLumberjack]
 - [2] Swift conditional compilation blocks - [https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34]
 
 ##### ツール
+
 - XCode およびシミュレータ
 - 標準的な iPhone/iPad
-
-
 
 ### 例外処理のテスト
 
@@ -226,22 +237,25 @@ Swift 3 では、Xcode 8 を使用して、Build settings / Swift compiler - Cus
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.5: "アプリは可能性のある例外をキャッチし処理している。"
 - V7.6: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
 
 ##### CWE
+
 -- TODO [Add relevant CWE for "Testing Exception Handling"] --
 
 ##### Info
+
 - [1] https://www.gnu.org/s/binutils/
 
 ##### Tools
+
 -- TODO [Add tools for "Testing Exception Handling"] --
-
-
 
 ### アンマネージドコードでのメモリバグのテスト
 
@@ -264,20 +278,24 @@ Swift 3 では、Xcode 8 を使用して、Build settings / Swift compiler - Cus
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.7: "アンマネージドコードでは、メモリは安全に割り当て、解放、使用されている。"
 
 ##### CWE
+
 -- TODO [Add relevant CWE for "Testing for Memory Management Bugs"] --
 
 ##### その他
+
 -- TODO [Add info sor "Testing for Memory Management Bugs"] --
 
 ##### ツール
--- TODO [Add tools for "Testing for Memory Management Bugs"] --
 
+-- TODO [Add tools for "Testing for Memory Management Bugs"] --
 
 ### フリーなセキュリティ機能が有効であることの検証
 
@@ -286,7 +304,7 @@ Swift 3 では、Xcode 8 を使用して、Build settings / Swift compiler - Cus
 XCode ではデフォルトですべてのバイナリセキュリティが設定されていますが、古いアプリケーションやコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用されます。
 
 - **ARC** - Automatic Reference Counting - メモリ管理機能
-  * 必要に応じてメッセージを保持および解放します
+  - 必要に応じてメッセージを保持および解放します
 - **Stack Canary** - バッファオーバーフロー攻撃の防止に役立ちます
 - **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
 
@@ -301,6 +319,7 @@ XCode ではデフォルトですべてのバイナリセキュリティが設�
 以下はこれらの機能をチェックする方法の例です。これらの例ではすべてが有効になっています。
 
 - PIE:
+
 ```
 $ unzip DamnVulnerableiOSApp.ipa
 $ cd Payload/DamnVulnerableIOSApp.app
@@ -318,6 +337,7 @@ WEAK_DEFINES BINDS_TO_WEAK PIE
 ```
 
 - Stack Canary:
+
 ```
 $ otool -Iv DamnVulnerableIOSApp | grep stack
 0x0046040c 83177 ___stack_chk_fail
@@ -333,6 +353,7 @@ $ otool -Iv DamnVulnerableIOSApp | grep stack
 ```
 
 - Automatic Reference Counting:
+
 ```
 $ otool -Iv DamnVulnerableIOSApp | grep release
 0x0045b7dc 83156 ___cxa_guard_release
@@ -357,30 +378,32 @@ IDB <sup>[2]</sup> は Stack Canary と PIE サポートの両方をチェック
 iOS アプリケーション内でスタックスマッシュ保護を有効にする手順：
 
 1. Xcodeで、"Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックして設定を表示します。
-1. "Other C Flags" セクションで "–fstack-protector-all" オプションが選択されていることを確認します。
+2. "Other C Flags" セクションで "–fstack-protector-all" オプションが選択されていることを確認します。
 
 - PIE サポート
 
 iOS アプリケーションを PIE としてビルドする手順：
 
 1. Xcodeで、"Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックして設定を表示します。
-1. iOS アプリの場合、iOS Deployment Target を iOS 4.3 もしくはそれ以降に設定します。
-1. "Generate Position-Dependent Code" がデフォルト値の NO に設定されていることを確認します。
-1. "Create Position Independent Executables" がデフォルト値の NO に設定されていないことを確認します。
+2. iOS アプリの場合、iOS Deployment Target を iOS 4.3 もしくはそれ以降に設定します。
+3. "Generate Position-Dependent Code" がデフォルト値の NO に設定されていることを確認します。
+4. "Create Position Independent Executables" がデフォルト値の NO に設定されていないことを確認します。
 
 - ARC 保護
 
 iOS アプリケーションで ACR 保護を有効にする手順：
 
 1. Xcodeで、"Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックして設定を表示します。
-1. "Objective-C Automatic Reference Counting" がデフォルト値の YES に設定されていることを確認します。
+2. "Objective-C Automatic Reference Counting" がデフォルト値の YES に設定されていることを確認します。
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
+
 - M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
+
 - V7.8: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
 ##### CWE
@@ -393,4 +416,5 @@ iOS アプリケーションで ACR 保護を有効にする手順：
 - [2] idb - https://github.com/dmayer/idb
 
 ##### ツール
+
 -- TODO [Add tools for "Testing Compiler Settings"] --
