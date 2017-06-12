@@ -9,11 +9,14 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [ヘッダ](Document/0x00-Header.md)
 - [序文](Document/Foreword.md)
 - [扉](Document/0x02-Frontispiece.md)
+- [モバイルセキュリティテストガイドの序文](Document/0x03-Overview.md)
 
-### 概要
+### 総合テストガイド
 
-* [モバイルセキュリティテストガイドの序文](Document/0x03-Overview.md)
-* [テストプロセスと技法] <!-- (Document/0x04-Testing-Processes-and-Techniques.md) -->
+- [モバイルアプリの分類] <!-- (Document/0x04a-Mobile-App-Taxonomy.md) -->
+- [モバイルアプリのセキュリティテスト] <!-- (Document/0x04b-Mobile-App-Security-Testing.md) -->
+- [改竄とリバースエンジニアリング] <!-- (Document/0x04c-Tampering-and-Reverse-Engineering.md) -->
+- [ソフトウェア開発ライフサイクルでのセキュリティテスト] <!-- (Document/0x04d-Security-Testing-SDLC.md) -->
 
 ### Android テストガイド
 
@@ -43,9 +46,9 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### 付録
 
-* [認証とセッション管理のテスト (エンドポイント)](Document/0x07a-Testing-Authentication-and-Session-Management.md)
-* [ネットワーク通信のテスト](Document/0x07b-Testing-Network-Communication.md)
-* [暗号化のテスト](Document/0x07c-Testing-Cryptography.md)
-* [アンチリバースエンジニアリングスキームの評価] <!-- (Document/0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md) -->
-* [テストツール](Document/0x08-Testing-Tools.md)
-* [推薦図書](Document/0x09-Suggested-Reading.md)
+- [リモート認証と認可](Document/0x07a-Testing-Authentication-and-Session-Management.md)
+- [ネットワーク通信のテスト](Document/0x07b-Testing-Network-Communication.md)
+- [モバイルアプリでの暗号化](Document/0x07c-Testing-Cryptography.md)
+- [アンチリバースエンジニアリングスキームの評価] <!-- (Document/0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md) -->
+- [テストツール](Document/0x08-Testing-Tools.md)
+- [推薦図書](Document/0x09-Suggested-Reading.md)
