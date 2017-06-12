@@ -86,6 +86,9 @@
 
 #### 概要
 
+
+Check: https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html
+https://labs.mwrinfosecurity.com/blog/needle-how-to/ (dynamic/ipc/open_uri: Test IPC attacks by launching URI Handlers)
 -- TODO [Provide a general description of the issue "Testing Custom URL Schemes".]
 
 #### 静的解析
@@ -187,15 +190,15 @@ WKWebView オブジェクトはデフォルトで JavaScript の実行を許可�
 @implementation ViewController
 
 - (void)viewDidLoad {
-    
+
     NSURL *url = [NSURL URLWithString:@"http://www.example.com/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     WKPreferences *pref = [[WKPreferences alloc] init];
-    
+
     //Disable javascript execution:
     [pref setJavaScriptEnabled:NO];
     [pref setJavaScriptCanOpenWindowsAutomatically:NO];
-    
+
     WKWebViewConfiguration *conf = [[WKWebViewConfiguration alloc] init];
     [conf setPreferences:pref];
     _webView = [[WKWebView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x,85, self.view.frame.size.width, self.view.frame.size.height-85) configuration:conf] ;
