@@ -10,7 +10,7 @@ Android 6.0 では指紋でユーザーを認証するパブリック API が導
 
 Android KeyGenerator と一緒に指紋 API を使用することで、アプリはユーザーの指紋で「ロックされていない」暗号鍵を作成できます。これはより便利な形でユーザーログインを実装するために使用できます。例えば、ユーザーがリモートサービスにアクセスできるようにするために、対称鍵を作成し、ユーザー PIN や認証トークンを暗号化することができます。鍵を作成する際に <code>setUserAuthenticationRequired(true)</code> をコールすることで、ユーザーが鍵を取得するために指紋を使用して再認証することを保証します。暗号化された認証データ自体は通常のストレージ (SharedPreferences など) を使用して保存できます。
 
-この比較的合理的な方法のほかに、安全でない方法で指紋認証を実装することもできます。例えば、開発者は <code>onAuthenticationSucceeded</code> コールバック <sup>3</sup> がコールされたかどうかや Samsung Pass SDK がインスタンスに使用されている時のみに基づいて認証成功とすることを選択できます。しかし、このイベントはユーザーが生体認証を行ったことを証明するものではありません。このようなチェックは計装を使用して簡単にパッチ適用やバイパスが可能です。キーストアを利用することはユーザーが実際に指紋を入力したことを合理的に確認する唯一の方法です。
+この比較的合理的な方法のほかに、安全でない方法で指紋認証を実装することもできます。例えば、開発者は <code>onAuthenticationSucceeded</code> コールバック <sup>[3]</sup> がコールされたかどうかや Samsung Pass SDK がインスタンスに使用されている時のみに基づいて認証成功とすることを選択できます。しかし、このイベントはユーザーが生体認証を行ったことを証明するものではありません。このようなチェックは計装を使用して簡単にパッチ適用やバイパスが可能です。キーストアを利用することはユーザーが実際に指紋を入力したことを合理的に確認する唯一の方法です。
 
 もちろん、キーストアが危険にさらされない限りです。これは [5] で報告され、主に [6] で説明されているような場合です。既知の CVE として、例えば CVE-2016-2431, CVE-2016-2432, CVE-2015-6639, CVE-2015-6647 が登録されています。したがって、常にセキュリティパッチレベルをチェックすべきです。
 
@@ -149,7 +149,3 @@ secetkeyInfo.isInsideSecureHardware()
 - [4] Securing Your Android Appps with the Fingerprint API - https://www.sitepoint.com/securing-your-android-apps-with-the-fingerprint-api/#savingcredentials
 - [5] Android Security Bulletins - https://source.android.com/security/bulletin/
 - [6] Extracting Qualcomm's KeyMaster Keys - Breaking Android Full Disk Encryption - http://bits-please.blogspot.co.uk/2016/06/extracting-qualcomms-keymaster-keys.html
-
-##### ツール
-
-N/A
