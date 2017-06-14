@@ -22,7 +22,7 @@ Android KeyGenerator と一緒に指紋 API を使用することで、アプリ
 
 #### 静的解析
 
-First make sure that the actual Android SDK is used for fingerprint evaluation and not any vendor specific SDKs, such as Samsung Pass as it is inherently flawed.
+最初に実際の Android SDK が指紋評価に使用されていることを確認します。Samsung Pass などのベンダー固有の SDK は本質的に欠陥があります。
 
 <code>FingerprintManager.authenticate()</code> のコールを検索します。このメソッドに渡される最初のパラメータは <code>CryptoObject</code> インスタンスが必要です。<code>CryptoObject</code> は FingerprintManager <sup>[2]</sup> によりサポートされている暗号オブジェクトのラッパークラスです。このパラメータに <code>null</code> を設定している場合、指紋認証は純粋にイベントバウンドであるため、セキュリティ上の問題が発生する可能性があります。
 
