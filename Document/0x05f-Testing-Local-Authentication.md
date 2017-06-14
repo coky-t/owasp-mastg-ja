@@ -12,7 +12,7 @@ Android KeyGenerator と一緒に指紋 API を使用することで、アプリ
 
 この比較的合理的な方法のほかに、安全でない方法で指紋認証を実装することもできます。例えば、開発者は <code>onAuthenticationSucceeded</code> コールバック <sup>3</sup> がコールされたかどうかや Samsung Pass SDK がインスタンスに使用されている時のみに基づいて認証成功とすることを選択できます。しかし、このイベントはユーザーが生体認証を行ったことを証明するものではありません。このようなチェックは計装を使用して簡単にパッチ適用やバイパスが可能です。キーストアを利用することはユーザーが実際に指紋を入力したことを合理的に確認する唯一の方法です。
 
-Unless, of course, the keystore is compromised. Which has been the case as reported in [5] and mostly explained in [6]. There are a few known CVEs registered for instance: CVE-2016-2431, CVE-2016-2432, CVE-2015-6639, CVE-2015-6647. Therefore one should always check the security patch-level:
+もちろん、キーストアが危険にさらされない限りです。これは [5] で報告され、主に [6] で説明されているような場合です。既知の CVE として、例えば CVE-2016-2431, CVE-2016-2432, CVE-2015-6639, CVE-2015-6647 が登録されています。したがって、常にセキュリティパッチレベルをチェックすべきです。
 
 ```java
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", 	Locale.getDefault());
