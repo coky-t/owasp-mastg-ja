@@ -16,13 +16,13 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 モバイルアプリ領域におけるセキュリティの問題は従来のデスクトップソフトウェアとはいくつかの重要な点で異なります。まず、デスクトップタワーをポケットに入れて持ち歩くことを望んでいる人はほとんどいませんが、モバイルデバイスでこれを行うことは明らかです。その結果として、モバイルデバイスの紛失や盗難が増え、攻撃者はデバイスに物理的にアクセスし格納されているデータにアクセスする可能性が高くなります。また、デバイスを放置すると、攻撃者は一時的に物理的にアクセスでき(悪意あるメイド攻撃)、所有者が気付かないうちにデバイスを完全に侵害したりデータを盗んだりすることができます。
 
-### Local Data Storage
+### ローカルデータストレージ
 
-From the view of a mobile app, this extra care has to be taken when storing user data, such as using appropriate key storage APIs and taking advantage of hardware-backed security features when available. Here however we encounter another problem: Much depends on the device and operating system the app is running on, as well as its configuration. Is the keychain locked with a passcode? What if the device doesn't offer hardware-backed secure storage, as is the case with some Android devices? Can and should the app even verify this, or is it the responsibility of the user?
+モバイルアプリの観点から、ユーザーデータを格納する際には、適切なキーストレージ API を使用したり、利用可能であればハードウェア支援のセキュリティ機能を使用するなど、特別な注意が必要です。しかしここで別の問題が発生します。多くはアプリが実行されているデバイスやオペレーティングシステム、およびその設定に依存します。キーチェーンはパスコードでロックされていますか。一部の Android デバイスの場合のように、デバイスがハードウェア支援のセキュアストレージを提供しない場合はどうなりますか。アプリはこれを確認することができますか、そしてすべきですか、それともそれはユーザーの責任でしょうか。
 
 モバイルデバイスに格納されるデータもデスクトップやラップトップに格納されるデータとは異なります。いずれも個人情報へのアクセスに使用されますが、これらの情報のコピーをモバイルデバイスで見つける可能性は非常に高くなります。さらに、さまざまな接続オプションとそれらの携帯性により、モバイルデバイスは電子ドアロックの鍵や支払カードの代替などとして使用されます。
 
-The protection of sensitive data, such as user credentials and private information, is a key focus in mobile security. Firstly, sensitive data can be unintentionally exposed to other apps running on the same device if operating system mechanisms like IPC are used improperly. Data may also unintentionally leak to cloud storage, backups, or the keyboard cache. Additionally, mobile devices can be lost or stolen more easily compared to other types of devices, so an adversary gaining physical access is a more likely scenario.
+ユーザーの資格情報や個人情報などの機密データを保護することはモバイルセキュリティの重要な焦点です。まず、IPC などのオペレーティングシステムのメカニズムが不適切に使用されている場合、機密データは同じデバイス上で動作している他のアプリに意図せずさらされている可能性があります。た、データはクラウドストレージ、バックアップ、キーボードキャッシュに意図せずリークすることもあります。さらに、モバイルデバイスは他の種類のデバイスに比べて紛失や盗難の可能性が高いため、攻撃者が物理的なアクセスを行うことはより可能性が高いシナリオとなります。
 
 ### Communication with Trusted Endpoints
 
