@@ -4,11 +4,23 @@
 
 #### 概要
 
-ネットワーク上で機密情報を転送するために TLS を使用することは、セキュリティの観点から不可欠です。しかし、モバイルアプリケーションとバックエンド API との間の暗号化通信の仕組みを実装することは簡単な作業ではありません。開発者はしばしば、開発プロセスを楽にするために、より簡単ではあるものの安全ではない(任意の証明書を受け入れるなどの)ソリューションを選びます。往々にして製造後に修正されず [1]、同時にアプリケーションを中間者攻撃に晒します [2]。
+ネットワーク上で機密情報を転送するために TLS を使用することは、セキュリティの観点から不可欠です。しかし、モバイルアプリケーションとバックエンド API との間の暗号化通信の仕組みを実装することは簡単な作業ではありません。開発者はしばしば、開発プロセスを楽にするために、より簡単ではあるものの安全ではない(任意の証明書を受け入れるなどの)ソリューションを選びます。往々にして製造後に修正されず <sup>[1]</sup>、同時にアプリケーションを中間者攻撃に晒します <sup>[2]</sup>。
 
 #### 静的解析
 
-TLS 接続の妥当性確認には主に2つの問題があります。一つ目は証明書が信頼できるソースから取得されたかどうかの検証であり、二つ目はエンドポイントサーバーが正しい証明書を提示しているかどうかを確認することです <sup>[3]</sup> 。
+The static analysis approach is to decompile an application, if the source code was not provided. There are 2 main issues related with validating TLS connection that should be verified in the code:
+* 一つ目は証明書が信頼できるソースから取得されたかどうかの検証
+* 二つ目はエンドポイントサーバーが正しい証明書を提示しているかどうかを確認すること <sup>[3]</sup> 。
+
+Simply look in the code for TrustManager and HostnameVerifier usage. You can find insecure usage examples in the sections below.
+
+Such checks of improper certificate verification, may be done automatically, using a tool called MalloDroid<sup>[4]</sup>. It simply decompiles an application and warns you if it finds something suspicious. To run it, simply type this command:
+
+```bash
+$ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
+```
+
+Now, you should be warned if any suspicious code was found by MalloDroid and in `./outputDir` you will find decompiled application for further manual analysis.
 
 ##### サーバー証明書の検証
 
@@ -71,35 +83,25 @@ HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
 
 #### 動的解析
 
-不適切な証明書の検証は静的解析または動的解析を使用して発見できます。
-
-* 静的解析のアプローチはアプリケーションを逆コンパイルして単に TrustManager や HostnameVerifier を使用するコードを調べることです。上記の「静的解析」のセクションに安全でない使用例があります。このような不適切な証明書の検証の確認には、MalloDroid [4] というツールを使用して自動的に行うことができます。単にアプリケーションを逆コンパイルして何か不審なものがある場合には警告します。実行するには、以下のコマンドを入力します。
-
-```bash
-$ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
-```
-
-ここで MalloDroid により `./outputDir` 内に不審なコードが見つかったか場合には、更に手動解析を行うために逆コンパイルされたアプリケーションを探します。
-
-* 動的解析のアプローチは Burp Suite などの傍受プロキシの使用を必要とします。不適切な証明書の検証をテストするには、以下のコントロールチェックを実行する必要があります。
+動的解析のアプローチは傍受プロキシの使用を必要とします。不適切な証明書の検証をテストするには、以下のコントロールチェックを実行する必要があります。
 
  1) 自己署名証明書
 
-  Burp で Proxy -> Options タブに移動し、Proxy Listeners セクションに移動し、リスナを強調表示にしてから Edit ボタンをクリックします。それから Certificate タブに移動し 'Use a self-signed certificate' をチェックして Ok をクリックします。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが自己署名証明書を受け入れていることを意味します。
+  Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクションに移動し、リスナを強調表示にしてから `Edit` をクリックします。それから `Certificate` タブに移動し `Use a self-signed certificate` をチェックして `Ok` をクリックします。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが自己署名証明書を受け入れていることを意味します。
 
  2) 無効な証明書の受け入れ
 
-  Burp で Proxy -> Options タブに移動し、Proxy Listeners セクションに移動し、リスナを強調表示にしてから Edit ボタンをクリックします。それから Certificate タブに移動し 'Generate a CA-signed certificate with a specific hostname' をチェックしてバックエンドサーバーのホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意の証明書を受け入れていることを意味します。
+  Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクションに移動し、リスナを強調表示にしてから `Edit` をクリックします。それから `Certificate` タブに移動し `Generate a CA-signed certificate with a specific hostname` をチェックしてバックエンドサーバーのホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意の証明書を受け入れていることを意味します。
 
  3) 間違ったホスト名の受け入れ
 
-  Burp で Proxy -> Options タブに移動し、Proxy Listeners セクションに移動し、リスナを強調表示にしてから Edit ボタンをクリックします。それから Certificate タブに移動し 'Generate a CA-signed certificate with a specific hostname' をチェックして 'example.org' などの無効なホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意のホスト名を受け入れていることを意味します。
+  Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクションに移動し、リスナを強調表示にしてから `Edit` をクリックします。それから `Certificate` タブに移動し `Generate a CA-signed certificate with a specific hostname` をチェックして example.org などの無効なホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意のホスト名を受け入れていることを意味します。
 
-> **注意** さらに MITM 分析を行う場合や傍受プロキシの設定に問題がある場合には、Tapioca [6] の使用を検討します。これはソフトウェアの MITM 分析を実行するために CERT が事前設定した VM アプライアンス [7] です。行うべきことはテストされるアプリケーションをエミュレータにデプロイしてトラフィックのキャプチャを開始するだけです [8]。
+> **注意** さらに MITM 分析を行う場合や傍受プロキシの設定に問題がある場合には、Tapioca <sup>[6]</sup> の使用を検討します。これはソフトウェアの MITM 分析を実行するために CERT が事前設定した VM アプライアンス <sup>[7]</sup> です。行うべきことはテストされるアプリケーションをエミュレータにデプロイしてトラフィックのキャプチャを開始するだけです <sup>[8]</sup> 。
 
 #### 改善方法
 
-ホスト名と証明書が正しく検証されていることを確認します。一般的な TLS 証明書の問題を克服する方法についてはこちらを参照ください [2]。
+ホスト名と証明書が正しく検証されていることを確認します。事例や一般的な落とし穴は公式の Android ドキュメント <sup>[3]</sup> を参照ください。
 
 
 #### 参考情報
@@ -116,20 +118,21 @@ $ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
 * CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
 
 #### その他
-* [1] https://www.owasp.org/images/7/77/Hunting_Down_Broken_SSL_in_Android_Apps_-_Sascha_Fahl%2BMarian_Harbach%2BMathew_Smith.pdf
-* [2] https://cwe.mitre.org/data/definitions/295.html
-* [3] https://developer.android.com/training/articles/security-ssl.html
-* [4] https://github.com/sfahl/mallodroid
-* [5] https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
-* [6] https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html
-* [7] http://www.cert.org/download/mitm/CERT_Tapioca.ova
-* [8] https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html
+* [1] Hunting Down Broken SSL in Android Apps -  https://www.owasp.org/images/7/77/Hunting_Down_Broken_SSL_in_Android_Apps_-_Sascha_Fahl%2BMarian_Harbach%2BMathew_Smith.pdf
+* [2] CWE-295 - https://cwe.mitre.org/data/definitions/295.html
+* [3] Android Official Documentation SSL - https://developer.android.com/training/articles/security-ssl.html
+* [4] MalloDroid - https://github.com/sfahl/mallodroid
+* [5] Configuring an Android device to work with Burp -  https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
+* [6] Announcing CERT Tapioca for MITM Analysis - https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html
+* [7] Downloading the CERT Tapioca Virtual Machine - http://www.cert.org/download/mitm/CERT_Tapioca.ova
+* [8] Finding Android SSL vulnerabilites with CERT Tapioca - https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html
+
 
 ### カスタム証明書ストアおよび SSL ピンニングのテスト
 
 #### 概要
 
-証明書ピンニングはサーバーで使用されることが既知である証明書をクライアントにハードコードするものです。この技法は不正な CA や CA の危殆化の脅威を軽減するために使用されます。サーバー証明書のピンニングは CA のゲームを終わらせます。証明書ピンニングを実装するモバイルアプリケーションは限られた数のサーバーにのみ接続できます。信頼できる CA やサーバー証明書の小さなリストをアプリケーションにハードコードされるためです。
+証明書ピンニングはサーバーで使用されることが既知である証明書やその要素をアプリにハードコードするものです。この技法は不正な CA や CA の危殆化の脅威を軽減するために使用されます。サーバー証明書のピンニングは CA のゲームを終わらせます。証明書ピンニングを実装するモバイルアプリは限られた数のサーバーにのみ接続できます。信頼できる CA やサーバー証明書の小さなリストをアプリケーションにハードコードされるためです。
 
 #### 静的解析
 
@@ -159,6 +162,8 @@ Create an SSLContext that uses the TrustManager
 // SSLContext context = SSLContext.getInstance("TLS");
 sslContext.init(null, tmf.getTrustManagers(), null);
 ```
+
+The specific implementation in the app might be different, as it might be pinning against only the public key of the certificate, the whole certificate or a whole certificate chain. 
 
 #### 動的解析
 
