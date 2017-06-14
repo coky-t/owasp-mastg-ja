@@ -302,7 +302,7 @@ sys.stdin.read()
 
 ##### OWASP Mobile Top 10 2016
 
-- M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+- M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
@@ -579,7 +579,7 @@ int xyz(char *dst) {
 
 ##### OWASP Mobile Top 10 2016
 
-- M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+- M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
@@ -630,7 +630,7 @@ int xyz(char *dst) {
 
 ##### OWASP Mobile Top 10 2016
 
-- M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+- M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
@@ -688,7 +688,7 @@ return 0; // good
 
 ##### OWASP Mobile Top 10 2016
 
-- M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+- M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
@@ -711,9 +711,9 @@ return 0; // good
 
 #### 概要
 
-The goal of device binding is to impede an attacker when he tries to copy an app and its state from device A to device B and continue the execution of the app on device B. When device A has been deemed trusted, it might have more privileges than device B, which should not change when an app is copied from device A to device B.
+デバイス結合の目的は、デバイス A からデバイス B へアプリとその状態をコピーしようとする攻撃者を妨害し、デバイス B のアプリの実行を継続することです。デバイス A が信頼されているとみなされた場合、デバイス B よりも多くの権限を持つ可能性がありますが、アプリをデバイス A からデバイス B へコピーする際に変更すべきではありません。
 
-Please note that since iOS 7.0 hardware identifiers, such as the MAC addresses are off-limits [1]. The possible ways to bind an application to a device are based on using `identifierForVendor`, storing something in the keychain or using Google its InstanceID for iOS [2]. See Remediation for more details.
+MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止であることに注意します [1] 。アプリケーションをデバイスに結合する方法は `identifierForVendor` を使用することに基づいています。`identifierForVendor` はキーチェーンに何かを格納するか、iOS 用の Google の InstanceID を使用します。詳細は改善方法を参照ください。
 
 #### 静的解析
 
