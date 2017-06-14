@@ -12,23 +12,23 @@ Xcode は macOS, iOS, watchOS, tvOS 用のソフトウェアを開発するた�
 
 #### ユーティリティ
 
-Steve Nygard <sup>[1]</sup> による Class-dump は Mach-O ファイルに格納された Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。クラス、カテゴリ、プロトコルの宣言を生成します。
+- Steve Nygard <sup>[1]</sup> による Class-dump は Mach-O ファイルに格納された Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。クラス、カテゴリ、プロトコルの宣言を生成します。
 
-Class-dump-z <sup>[9]</sup> は動的コールの使用を避けるため C++ を使用してゼロから class-dump を書き直したものです。これらの不要なコールを削除することで class-dump-z はそれらより10倍近く高速になります。
+- Class-dump-z <sup>[9]</sup> は動的コールの使用を避けるため C++ を使用してゼロから class-dump を書き直したものです。これらの不要なコールを削除することで class-dump-z はそれらより10倍近く高速になります。
 
-Elias Limneos <sup>[2]</sup> による Class-dump-dyld は共有キャッシュから直にシンボルをダンプおよび取得できるため、ファイルを最初に抽出する必要がありません。アプリバイナリ、ライブラリ、フレームワーク、バンドル、または dyld_shared_cache 全体からヘッダファイルを生成します。dyld_shared_cache 全体やディレクトリを再帰的に Mass-dump することもできます。
+- Elias Limneos <sup>[2]</sup> による Class-dump-dyld は共有キャッシュから直にシンボルをダンプおよび取得できるため、ファイルを最初に抽出する必要がありません。アプリバイナリ、ライブラリ、フレームワーク、バンドル、または dyld_shared_cache 全体からヘッダファイルを生成します。dyld_shared_cache 全体やディレクトリを再帰的に Mass-dump することもできます。
 
-MachoOView <sup>[3]</sup> は有用なビジュアル Mach-O ファイルブラウザで、ARM バイナリのインファイル編集も可能です。
+- MachoOView <sup>[3]</sup> は有用なビジュアル Mach-O ファイルブラウザで、ARM バイナリのインファイル編集も可能です。
 
--- TODO [otool] --
+- otool is a tool for  displays  specified  parts	of object files or libraries. It understands both Mach-O (Mach object) files and universal file formats.  
 
 #### リバースフレームワーク
 
-Radare2
+Radare2 is a complete framework for reverse-engineering and analyzing. It is built around the Capstone disassembler, Keystone assembler, and Unicorn CPU emulation engine. Radare2 has support for iOS binaries and many useful iOS-specific features, such as a native Objective-C parser, and an iOS debugger.
 
 #### 商用逆アセンブラ
 
-Hopper / IDA Pro.
+IDA Pro can deal with iOS binaries and has a built-in iOS debugger. IDA is widely seen as the gold standard for GUI-based, interactive static analysis, but it isn't cheap. For the more budget-minded reverse engineer, Hopper offers similar static analysis features.
 
 ### iOSの脱獄
 
@@ -49,9 +49,9 @@ iOS アプリケーションはアプリケーションサンドボックスに�
 
 #### iOSの脱獄の方法
 
-iOS で脱獄を行う方法を説明する前に、このセクションは一般的なガイドラインを提供するだけであり、このガイドの執筆時点での最新情報であることに注意することが重要です。iOS デバイスを脱獄するための手順を実行している際に iOS デバイスが操作不能に陥ったとしても OWASP および MSTG は責任を負いません。
+The iOS jailbreak scene is evolving so rapidly that it is difficult to provide-up-to-date instructions.
 
--- TODO [Jailbreaking howto] --
+Note that obviously OWASP and the MSTG will not be responsible if you end up bricking your iOS device!
 
 iOS の脱獄に関するコンテンツについて読める信頼できるリソースです。
 
@@ -63,13 +63,13 @@ iOS の脱獄に関するコンテンツについて読める信頼できるリ�
 
 一部のアプリはインストールされている iOS デバイスが脱獄済みであるかどうかを検出しようとします。この脱獄により iOS のデフォルトセキュリティメカニズムの一部を無効にするため、環境の信頼性低下につながります。
 
-このアプローチの中核となるジレンマは、定義上、脱獄がアプリの環境を信頼できないものにすることです。デバイスが脱獄されているかどうかをテストするために使用される API を操作することができ、コード署名を無効にすると、脱獄検出コードを簡単に修正することができます。したがって、リバースエンジニアリングを妨げる非常に効果的な方法ではありません。それでも、脱獄検出はより大きなソフトウェア保護スキームの文脈において有用となります。また、MASVS L2 では脱獄検出されたときにユーザーに警告を表示したりアプリを終了させたりする必要があります。ここでのアイデアはデバイスを脱獄することを選択することでの潜在的なセキュリティへの影響(および積極的なリバースエンジニアを妨げるものではないこと)についてユーザーに通知することです。
-
-このトピックは「リバースエンジニアリングに対する耐性のテスト」の章で再考します。
+このアプローチの中核となるジレンマは、定義上、脱獄がアプリの環境を信頼できないものにすることです。デバイスが脱獄されているかどうかをテストするために使用される API を操作することができ、コード署名を無効にすると、脱獄検出コードを簡単に修正することができます。したがって、リバースエンジニアリングを妨げる非常に効果的な方法ではありません。それでも、脱獄検出はより大きなソフトウェア保護スキームの文脈において有用となります。このトピックは次の章で再考します。
 
 ### iOS アプリのリバースエンジニアリング
 
--- TODO [Overview] --
+iOS reverse engineering is a mixed bag. On the one hand, apps programmed in Objective-C and Swift can be disassembled nicely. In Objective-C, object methods are called through dynamic function pointers called "selectors", which are resolved by name during runtime. The advantage of this is that these names need to stay intact in the final binary, making the disassembly more readable. Unfortunately, this also has the effect that no direct cross-references between methods are available in the disassembler, and constructing a flow graph is challenging. 
+
+In this guide, we'll give an introduction on static and dynamic analysis and instrumentation. Throughtout this chapter, we'll be referring to the OWASP UnCrackable Apps for iOS, so download them from MSTG repository if you're planning to follow the examples.
 
 #### 静的解析
 
@@ -169,6 +169,8 @@ http://iphonedevwiki.net/index.php/Cycript_Tricks
 
 ### 参考情報
 
+-- TODO [Clean up References] --
+
 * [1] Class-dump - http://stevenygard.com/projects/class-dump/
 * [2] Class-dump-dyld - https://github.com/limneos/classdump-dyld/
 * [3] MachOView - https://sourceforge.net/projects/machoview/
@@ -179,3 +181,6 @@ http://iphonedevwiki.net/index.php/Cycript_Tricks
 * [7] Apple Xcode IDE - https://developer.apple.com/xcode/ide/
 * [8] Apple iOS 10 SDK - https://developer.apple.com/ios/
 * [9] Class-dump-z - https://code.google.com/archive/p/networkpx/wikis/class_dump_z.wiki
+
+
+- [x] IDA Pro - https://www.hex-rays.com/products/ida/
