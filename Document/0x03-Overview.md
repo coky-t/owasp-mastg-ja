@@ -58,16 +58,16 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 例えば、MASVS 要件は計画およびアーキテクチャ設計の段階で使用され、チェックリストやテストガイドは手動セキュリティテストのベースラインとして、もしくは開発後の自動セキュリティテストのテンプレートとして使用できます。次の章では、モバイルアプリケーションのペネトレーションテストの中でチェックリストやガイドを実際にどのように適用できるかについて説明します。
 
-## Organization of the Mobile Security Testing Guide
+## モバイルセキュリティテストガイドの構成
 
-All requirements specified in the MASVS are described in technical detail in the testing guide. The main sections of the MSTG are explained briefly in this chapter.
+MASVS で指定されているすべての要件はテストガイドに技術的な詳細を記述されています。MSTG の主要なセクションについてこの章で簡単に説明します。
 
-The guide is organized as follows: 
+このガイドは以下のように構成されています。
 
-- In the Testing Processes and Techniques Section, we present the mobile app security testing methodology, vulnerability analysis techniques, security testing in the SDLC, and vulnerability analysis techniques. 
+- テストプロセスと技法のセクションでは、モバイルアプリのセキュリティテスト手法、脆弱性解析技法、SDLC におけるセキュリティテスト、脆弱性解析技法を紹介します。
 
-- The Android Testing Guide covers the everything specific to the Android platform, including security basics, security test cases, and reverse engineering and tampering techniques and preventions.
+- Android テストガイドには、セキュリティ入門、セキュリティテストケース、リバースエンジニアリングと改竄の技法と対策など、Android プラットフォームに固有のすべてが含まれています。
 
-- The iOS Testing Guide Testing Guide covers everything specific to iOS, including an overview of the iOS OS, security testing, reverse engineering and anti-reversing.
+- iOS テストガイドには、iOS オペレーティングシステムの概要、セキュリティテスト、リバースエンジニアリングとリバース防止など、iOS に固有のすべてが含まれています。
 
-- The appendix presents technical test cases that apply independent of mobile OS, such as authentication and session management endpoint, network communications, and cryptography. We also include a methodology for assessing software protection schemes.
+- 付録では、認証とセッション管理 (エンドポイント) 、ネットワーク通信、暗号化などのモバイル OS とは独立して適用される技術的なテストケースについて説明します。また、ソフトウェア保護スキームを評価するための方法論も含んでいます。
