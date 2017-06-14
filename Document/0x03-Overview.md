@@ -24,11 +24,11 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ユーザーの資格情報や個人情報などの機密データを保護することはモバイルセキュリティの重要な焦点です。まず、IPC などのオペレーティングシステムのメカニズムが不適切に使用されている場合、機密データは同じデバイス上で動作している他のアプリに意図せずさらされている可能性があります。た、データはクラウドストレージ、バックアップ、キーボードキャッシュに意図せずリークすることもあります。さらに、モバイルデバイスは他の種類のデバイスに比べて紛失や盗難の可能性が高いため、攻撃者が物理的なアクセスを行うことはより可能性が高いシナリオとなります。
 
-### Communication with Trusted Endpoints
+### 信頼できるエンドポイントとの通信
 
-Mobile devices regularly connect to a variety of networks, including public WiFi networks shared with other (possibly malicious) clients. This creates great opportunities for network-based attacks, from simple packet sniffing to creating a rogue access point and going SSL man-in-the-middle (or even old-school stuff like routing protocol injection - those baddies use whatever works).
+モバイルデバイスは一般的にさまざまなネットワークに接続します。それには他の (おそらく悪意のある) クライアントと共有される公衆 WiFi ネットワークもあります。これはネットワークベースの攻撃の大きな機会を生み出します。簡単なパケットスニッフィングから不正なアクセスポイントの作成や SSL 中間者攻撃 (またはルーティングプロトコルの注入など古いものであっても、動作している悪意のある行為の使用) に至ります。
 
-It is crucial to maintain confidentiality and integrity of information exchanged between the mobile app and remote service endpoints. At the very least, a mobile app must set up a secure, encrypted channel for network communication using the TLS protocol with appropriate settings. Level 2 lists additional defense-in-depth measure such as SSL pinning.
+モバイルアプリとリモートサービスエンドポイントの間で交換される情報の機密性と完全性を維持することは重要です。最低限、モバイルアプリは適切な設定で TLS プロトコルを使用して、ネットワーク通信にセキュアで暗号化されたチャネルを設定する必要があります。レベル 2 では SSL ピンニングなどの多層防御が追加されています。
 
 ### Authentication and Session Management
 
