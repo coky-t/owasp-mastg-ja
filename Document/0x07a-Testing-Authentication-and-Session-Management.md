@@ -2,11 +2,11 @@
 
 以下の章ではテクニカルテストケースでの MASVS の認証とセッション管理要件について説明します。この章に記載されるテストケースはサーバー側に焦点を当てているため、iOS や Android の特定の実装に依存しません。
 
-For all of the test cases below, it need to be investigated first what kind of authentication mechanism is used. There are different mechanisms available, to implement server side authentication, either:
-* Cookie-Based Authentication or
-* Token-Based Authentication.
+以下のすべてのテストケースでは、まずどのような種類の認証メカニズムが使用されているかを調べる必要があります。サーバー側認証を実装するには、以下のいずれかの方法が利用できます。
+* クッキーベースの認証
+* トークンベースの認証
 
-Cookie-Based Authentication is the traditional authentication mechanism used in web applications. In order to adopt to the different requirements of mobile apps Token-Based Authentication was specified and is more and more used nowadays in mobile apps. A prominent example for this is JSON Web Token or JWT<sup>[1]</sup> which can be part of an OAuth2 authentication and authorization framework.
+クッキーベースの認証は Web アプリケーションで使用される従来の認証メカニズムです。モバイルアプリのさまざまな要件に対応するため、トークンベースの認証が指定され、今日ではモバイルアプリでますます使用されています。これの顕著な例は OAuth2 認証および認可のフレームワークである JSON Web Token または JWT <sup>[1]</sup> です。
 
 
 ### ユーザーが正しく認証されていることの検証
