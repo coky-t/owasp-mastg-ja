@@ -719,12 +719,12 @@ MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止で�
 
 ##### ソースコードあり
 
-When the source-code is available, then there are a few codes you can look for which are bad practices, such as: 
+ソースコードを利用可能な場合は、以下のようなバッドプラクティスとなるコードを探します。
 
-- MAC addresses: there are various ways to find the MAC address: when using the `CTL_NET` (network subystem), the `NET_RT_IFLIST` (getting the configured interfaces) or when the mac-address gets formatted, you often see formatting code for printing, in terms of `"%x:%x:%x:%x:%x:%x"`.
-- using the UDID: `[[[UIDevice currentDevice] identifierForVendor] UUIDString];` and in Swift3: `UIDevice.current.identifierForVendor?.uuidString
-`
-- Any keychain or filesystem based binding which are unprotected by any `SecAccessControlCreateFlags` or use protectionclasses such as `kSecAttrAccessibleAlways` or `kSecAttrAccessibleAlwaysThisDeviceOnly`.
+- MAC アドレス: MAC アドレスを見つけるにはさまざまな方法があります: `CTL_NET` (ネットワークサブシステム) の使用、`NET_RT_IFLIST` (設定されたインタフェースの取得) の使用、MAC アドレスが書式化されるときにはしばしば print 用の書式化コードとして `"%x:%x:%x:%x:%x:%x"` が見られる。
+- UDID の使用: `[[[UIDevice currentDevice] identifierForVendor] UUIDString];` および Swift3では: `UIDevice.current.identifierForVendor?.uuidString`
+- 任意のキーチェーンやファイルシステムに基づく結合: 任意の `SecAccessControlCreateFlags` により保護されない、または `kSecAttrAccessibleAlways` or `kSecAttrAccessibleAlwaysThisDeviceOnly` のような保護クラスを使用する。
+
 
 ##### ソースコードなし
 
@@ -780,7 +780,7 @@ Any scheme based on these variants will be more secure the moment passcode and/o
 
 ##### OWASP Mobile Top 10 2016
 
-- M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+- M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
@@ -833,7 +833,7 @@ Any scheme based on these variants will be more secure the moment passcode and/o
 
 ##### OWASP Mobile Top 10 2016
 
-- M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+- M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
