@@ -1,8 +1,8 @@
 ## iOS プラットフォーム概要
 
-iOS is the operating system that powers all of Apple's iDevices, including the iPhone, iPad, and iPod Touch. It is a derivate of Mac OS (formerly OS X), and as such runs a modified version version of the XNU kernel. Compared to their Desktop relatives however, iOS apps run in a more restricted environment: They are isolated from each other on the file system level, and are significantly limited in terms of system API access. Apple also keeps tight control over which apps are allowed to run on iOS devices.
+iOS は iPhone, iPad, iPod Touch などの Apple のすべての iDevice に対応するオペレーティングシステムです。これは Mac OS (以前の OS X) の派生物であり、XNU カーネルの改定版を実行します。しかし、デスクトップ環境と比べて、iOS アプリはより制限された環境で動作します。それらはファイルシステムレベルで互いに分離されており、システム API アクセスの点ではかなり制限されています。また、Apple は iOS デバイスで実行できるアプリを厳重に管理しています。
 
-In many ways, iOS is more "closed" than Android. Sideloading is only possible with jailbreak or complicated workarounds. There is hardly any IPC functionality to speak of.
+多くの点で、iOS は Android よりも "closed" です。サイドロードは脱獄や複雑な回避策でのみ可能です。IPC 機能は取り立てて言うほどありません。
 
 ### iOS セキュリティアーキテクチャ
 
