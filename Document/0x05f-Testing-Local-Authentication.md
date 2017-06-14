@@ -41,13 +41,13 @@ CryptoObject でラップされた暗号を初期化するために使用され�
 
 指紋認証が可能であるかどうかを確認します。デバイスは Android 6.0 またはそれ以降 (SDK 23+) で動作し、指紋センサーを搭載している必要があります。チェックすべき二つの前提条件があります。
 
-- The user must have protected their lockscreen 
+- ユーザーはロックスクリーンを保護している必要があります。
 
 ```java
 	 KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
 	 keyguardManager.isKeyguardSecure();
 ```
-- Fingerprinthardware must be available:
+- 指紋ハードウェアが利用可能である必要があります。
 
 ```java
 	 FingerprintManager fingerprintManager = (FingerprintManager)
@@ -55,17 +55,17 @@ CryptoObject でラップされた暗号を初期化するために使用され�
     fingerprintManager.isHardwareDetected();                
 ```
 
-- At least one finger should be registered:
+- 少なくとも一つの指を登録する必要があります。
 ```java
 	fingerprintManager.hasEnrolledFingerprints();
 ```
 
-- The application should have permission to ask for the users fingerprint:
+- アプリケーションにはユーザーの指紋を要求するパーミッションが必要です。
 ```java
 	context.checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PermissionResult.PERMISSION_GRANTED;
 ```
 
-If any of those checks failed, the option for fingerprint authentication should not be offered.
+これらのチェックのいずれかが失敗した場合、指紋認証のオプションは提供されません。
 
 指紋認証を設定する際には、<code>KeyGenerator</code> クラスを使用して新しい AES 鍵を作成します。<code>KeyGenParameterSpec.Builder</code> に <code>setUserAuthenticationRequired(true)</code> を追加します。
 
@@ -82,7 +82,7 @@ If any of those checks failed, the option for fingerprint authentication should 
 
 	generator.generateKey();
 ```
-Please note, that since Android 7 you can use the `setInvalidatedByBiometricEnrollment(boolean value)` as a method of the builder. If you set this to true, then the fingerprint will not be invalidated when new fingerprints are enroled. Even though this might provide user-convinience, it opens op a problem area when possible attackers are somehow able to social-engineer their fingerprint in.
+Android 7 以降では、builder のメソッドとして `setInvalidatedByBiometricEnrollment(boolean value)` を使用できることに注意します。これを true に設定すると、新しい指紋が登録されたときに指紋が無効になりません。これはユーザーに利便性を提供するかもしれませんが、攻撃者が何らかの形で指紋をソーシャルエンジニアリングできた場合に問題となります。
 
 暗号化や復号化を実行するには、<code>Cipher</code> オブジェクトを作成し、それを AES 鍵で初期化します。
 
@@ -110,14 +110,14 @@ public void authenticationSucceeded(FingerprintManager.AuthenticationResult resu
 }
 ```
 
-Please bare in mind that the keys might not be always in secure hardware, for that you can do the following to validate the posture of the key:
+鍵が常にセキュアなハードウェアにあるとは限らないことを心に留めておきます。以下の操作を行い、鍵の状態を検証できます。
 
 ```java
 SecretKeyFactory factory = SecretKeyFactory.getInstance(getEncryptionKey().getAlgorithm(), ANDROID_KEYSTORE);
                 KeyInfo secetkeyInfo = (KeyInfo) factory.getKeySpec(yourencryptionkeyhere, KeyInfo.class);
 secetkeyInfo.isInsideSecureHardware()
 ```
-Please note that, on some systems, you can make sure that the biometric authentication policy itself is hardware enforced as well. This is checked by:
+一部のシステムでは、生体認証ポリシー自体がハードウェアを強制していることを確認できることに注意します。これは以下のようにチェックします。
 
 ```java
 	keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
