@@ -30,19 +30,19 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 モバイルアプリとリモートサービスエンドポイントの間で交換される情報の機密性と完全性を維持することは重要です。最低限、モバイルアプリは適切な設定で TLS プロトコルを使用して、ネットワーク通信にセキュアで暗号化されたチャネルを設定する必要があります。レベル 2 では SSL ピンニングなどの多層防御が追加されています。
 
-### Authentication and Session Management
+### 認証とセッション管理
 
-In most cases, user login to a remote service is an integral part of the overall mobile app architecture. Even though most of the logic happens at the endpoint, MASVS defines some basic requirements regarding how user accounts and sessions are managed. The requirements can be easily verified without access to the source code of the service endpoint.
+ほとんどの場合、リモートサービスへのユーザーログインはモバイルアプリのアーキテクチャ全体に不可欠な要素です。ほとんどのロジックはエンドポイントで発生しますが、MASVS ではユーザーアカウントとセッションの管理方法に関する基本的な要件をいくつか定義しています。要件はサービスエンドポイントのソースコードにアクセスすることなく簡単に検証できます。
 
-### Interaction with the Mobile Platform
-
--- [TODO] --
-
-### Code Quality and Exploit Mitigation
+### モバイルプラットフォームとの相互作用
 
 -- [TODO] --
 
-### Anti-Tampering and Anti-Reversing
+### コード品質とエクスプロイトの軽減
+
+-- [TODO] --
+
+### 改竄防止とリバース防止
 
 -- [TODO] --
 
