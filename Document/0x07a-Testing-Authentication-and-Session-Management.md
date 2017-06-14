@@ -98,42 +98,42 @@ HMACSHA256(
 
 JWT の実装は PHP <sup>[1]</sup> や Java Spring <sup>[2]</sup> などのすべての主要なプログラミング言語で利用できます。
 
-#### Static Analysis
+#### 静的解析
 
 [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.]
 
 [Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>.]
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-Several known vulnerabilities can be checked while executing a dynamic analysis:
-* NONE hashing algorithm:
+動的解析を実行する中で、いくつかの既知の脆弱性をチェックできます。
+* NONE ハッシュアルゴリズム
   *
-* Token Storage on client side:
-  * When using a mobile app that uses JWT it should be verified where the token is stored locally on the device<sup>[5]</sup>.
+* クライアント側のトークンストレージ
+  * JWT を使用するモバイルアプリを使用する場合、トークンがデバイス上のローカルに格納されている場所を確認する必要があります <sup>[5]</sup> 。
 
 
-#### Remediation
+#### 改善方法
 
-Store the JWT using the browser sessionStorage container and add it as a Bearer with JavaScript when calling service.
-Please also follow the test cases in the OWASP JWT Cheat Sheet<sup>[1]</sup> if JWT is used.
+ブラウザの sessionStorage コンテナを使用して JWT を保存し、サービスを呼び出すときにそれを Bearer として JavaScript とともに追加します。
+JWT を使用している場合は、OWASP JWT Cheat Sheet <sup>[1]</sup> のテストケースにも従ってください。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+* M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
 
-- 4.1: "If the app provides users with access to a remote service, an acceptable form of authentication such as username/password authentication is performed at the remote endpoint."
+- 4.1: "アプリがリモートサービスへのアクセスを提供する場合、ユーザー名/パスワード認証など許容される形態の認証がリモートエンドポイントで実行されている。"
 
 ##### CWE
 
 - CWE-287: Improper Authentication - https://cwe.mitre.org/data/definitions/287.html
 
-##### Info
+##### その他
 
 * [1] RFC 7519 JSON Web Token (JWT) - https://tools.ietf.org/html/rfc7519
 * [2] PHP JWT - https://github.com/firebase/php-jwt
