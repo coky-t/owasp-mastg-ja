@@ -732,26 +732,26 @@ MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止で�
 
 #### 動的解析
 
-There are a few ways to test the application binding:
+アプリケーションバインディングをテストする方法はいくつかあります。
 
-##### Dynamic Analysis using a simulator
+##### シミュレータを用いた動的解析
 
-Take the following steps when you want to verify app-binding at a simulator:
+シミュレータでアプリ・バインディングを検証する場合は、以下の手順を実行します。
 
-1.	Run the application on a simulator
-2.	Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3.	Retrieve the data from the Simulator This has a few steps: 
-  - As simulators use UUIDs to identify themselves, you could make it easer to locate the storage by creating a debug point and on that point execute `po NSHomeDirectory()`, which will reveal the location of where the simulator stores its contents. Otherwise you can do a `find ~/Library/Developer/CoreSimulator/Devices/ | grep <appname>` for the suspected plist file.
-  - go to the directory printed with the given command
-  - copy all 3 folders found (Documents, Library, tmp)
-  - Copy the contents of the keychain, these can be found, since iOS 8, in `~/Library/Developer/CoreSimulator/Devices/<Simulator Device ID>/data/Library/Keychains`. 
-4.	Start the application on another simulator & find its data location as described in step 3.
-5.	Stop the application on the second simulator, now overwrite the existing data with the data copied in step 3.
-6.	Can you continue in an authenticated state? If so, then binding might not be working properly.
+1. シミュレータでアプリケーションを実行する。
+2. アプリケーションのインスタンスで信頼を高められることを確認する (認証など) 。
+3. シミュレータからデータを取得する。これにはいくつかの手順があります。
+  - シミュレータは UUID を使用して自分自身を識別するため、デバッグポイントを作成して、その場所で `po NSHomeDirectory()` を実行することによりストレージを見つけることが容易になります。それでシミュレータがその内容を格納する場所がわかります。そうでなければ疑似 plist ファイル用に `find ~/Library/Developer/CoreSimulator/Devices/ | grep <appname>` を実行します。
+  - 指定されたコマンドで表示されたディレクトリに移動する。
+  - 見つかった3つのフォルダをすべてコピーする (Documents, Library, tmp) 。
+  - キーチェーンの内容をコピーする、iOS8 以降では `~/Library/Developer/CoreSimulator/Devices/<Simulator Device ID>/data/Library/Keychains` にあります。
+4. 別のシミュレータでアプリケーションを起動し、手順3の説明に従ってデータの場所を確認する。
+5. 二つ目のシミュレータでアプリを停止し、既存のデータを手順3でコピーしたデータで上書きする。
+6. 認証された状態で継続できますか？その場合、バインディングが正しく機能していない可能性があります。
 
-Please note that we are saying that the binding "might" not be working as not everything is unique in simulators.
+シミュレータではすべてがユニークではないため、バインディングが機能していない「可能性がある」と言っていることに注意してください。
 
-##### Dynamic Analysis using 2 jailbroken devices
+##### 2つの脱獄済みデバイスを用いた動的解析
 
 Take the following steps when you want to verify app-binding by using 2 jailbroken devices:
 
