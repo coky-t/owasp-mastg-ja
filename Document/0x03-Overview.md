@@ -4,17 +4,15 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 このプロジェクトの目標は Android や iOS デバイスでのアプリケーションのテストの対象、理由、時期、場所、方法を人々が理解できるようにすることです。このプロジェクトは OWASP Mobile Top 10, モバイルアプリセキュリティチェックリスト、モバイルアプリケーションセキュリティ検証標準 (MASVS) に対処するために設計された完全な一連のテストケースを提供します。
 
-## モバイルセキュリティテストの違い
+## Why Does the World Need a Mobile Application Security Testing Guide?
 
-技術革新は迅速に起こります。一昔前、スマートフォンは小さいキーボードを持つ魅力のない端末、技術に精通したビジネスユーザーのための高価な玩具でした。今日、スマートフォンは私たちの生活に不可欠なものです。私たちは情報、ナビゲーション、コミュニケーションのためにそれらに頼っています。ビジネスや社会生活の中の至るところにあります。
+Every new technology introduces new security risks, and mobile computing is no different. Even though modern mobile operating systems like iOS and Android are arguably more secure by design compared to traditional Desktop operating systems, there's still a lot of things that can go wrong when security is not considered during the mobile app development process. Data storage, inter-app communication, proper usage of cryptographic APIs and secure network communication are only some of the aspects that require careful consideration.
 
-これらのデバイスで実行されているアプリは、私たちの個人情報、画像、音声、メモ、アカウントデータ、ビジネス情報、位置情報などを格納します。私たちが日常的に使用するサービスに接続するクライアントとして、そして他の人と交換するすべてのメッセージを処理する通信ハブとして動作します。他人のスマートフォンに侵入するとその人の人生にフィルタなしでアクセスできます。モバイルデバイスの紛失や盗難が増えモバイルマルウェアが増加していると考えられ、データ保護の必要性はよりいっそう明らかになっています。
-
-すべての新しいテクノロジーは新しいセキュリティリスクをもたらします。モバイルコンピューティングも同様です。iOS や Android などの最新のモバイルオペレーティングシステムは従来のデスクトップオペレーティングシステムと比較して設計上セキュアであるにもかかわらず、モバイルアプリ開発プロセスでセキュリティが考慮されていない場合、うまくいかないことがまだ多くあります。データストレージ、アプリ間通信、暗号APIの適切な使い方や安全なネットワーク通信は慎重な検討が必要な局面のほんの一部です。
+Security concerns in the mobile app space differ from traditional desktop software in some important ways. Firstly, while not many people opt to carry a desktop tower around in their pocket, doing this with a mobile device is decidedly more common. As a consequence, mobile devices are more readily lost and stolen, so adversaries are more likely to get physical access to a device and access any of the data stored. Also leaving a device unattended, which allows adversaries temporary physical access (Evil-Maid attack) can already lead to full compromise of the device or steal data without the owner noticing it.
 
 ## モバイルアプリセキュリティの主要な領域
 
-モバイルアプリ領域におけるセキュリティの問題は従来のデスクトップソフトウェアとはいくつかの重要な点で異なります。まず、デスクトップタワーをポケットに入れて持ち歩くことを望んでいる人はほとんどいませんが、モバイルデバイスでこれを行うことは明らかです。その結果として、モバイルデバイスの紛失や盗難が増え、攻撃者はデバイスに物理的にアクセスし格納されているデータにアクセスする可能性が高くなります。また、デバイスを放置すると、攻撃者は一時的に物理的にアクセスでき(悪意あるメイド攻撃)、所有者が気付かないうちにデバイスを完全に侵害したりデータを盗んだりすることができます。
+Many mobile app pentesters have a background in network and web app penetration testing, and a lot of their knowledge is useful in mobile app testing. Practically every mobile app talks to some kind of backend service, and those services are prone to the same kinds of attacks we all know and love. On the mobile app side however, there is only little attack surface for injection attacks and similar attacks. Here, the main focus shifts to data protection both on the device itself and on the network. The following are some of the key areas in mobile app security.
 
 ### ローカルデータストレージ
 
@@ -70,4 +68,4 @@ MASVS で指定されているすべての要件はテストガイドに技術�
 
 - iOS テストガイドには、iOS オペレーティングシステムの概要、セキュリティテスト、リバースエンジニアリングとリバース防止など、iOS に固有のすべてが含まれています。
 
-- 付録では、認証とセッション管理 (エンドポイント) 、ネットワーク通信、暗号化などのモバイル OS とは独立して適用される技術的なテストケースについて説明します。また、ソフトウェア保護スキームを評価するための方法論も含んでいます。
+- 付録では、認証とセッション管理、ネットワーク通信、暗号化などのモバイル OS とは独立して適用される技術的なテストケースについて説明します。また、ソフトウェア保護スキームを評価するための方法論も含んでいます。
