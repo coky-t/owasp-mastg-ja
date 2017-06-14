@@ -16,8 +16,8 @@ https://www.github.com/OWASP/owasp-mstg/
 
 ---
 
-If this was a normal security book, the introduction would start with a list of impressive facts and data proving importance of mobile devices in this day and age. The author would then go on to explain how mobile application security is broken, and why a book like this was sorely needed. And, thank you so much to the wife and friends for all the support, the book wouldn't have been possible without it.
+これが通常のセキュリティ本であれば、序文は今の時代におけるモバイルデバイスの重要性を証明する印象的な事実やデータのリストから始めることでしょう。それから著者はモバイルアプリケーションのセキュリティがどのように破られ、なぜこのような本が必要なのかについて説明します。そして、サポートしてくれた妻と友人に感謝して、それなしでは本はできなかったとするでしょう。
 
-But the MSTG is not a normal security book. Nor does it have a single author. It is an open, crowd-sourced effort, made of the contributions of dozens of authors and reviewers from all over the world. Our wholehearted thanks go to everyone who contributed to this project. Special commendations also go to the OWASP Foundation, for being the hub bringing all of us together, as well as funding the project.
+しかし MSTG は通常のセキュリティ本ではありません。著者は一人ではないのです。それは世界中の何十人もの著者やレビュー担当者の貢献により作られた、オープンで群衆を基調とした取り組みです。このプロジェクトに貢献した皆様に感謝の意を表します。また、私たち全員を集めてプロジェクト資金を拠出するハブである OWASP 財団には特に敬意を表します。
 
-We do have a message to our readers however. The first rule of the OWASP Mobile Security Testing Guide is: Don't just follow the OWASP Mobile Security Testing Guide. True excellence at mobile application security requires a deep understanding of mobile operating system, coding, network security, cryptography, and a whole lot of other things, many of which we can only touch on briefly in this book. Don't stop at security testing. Write your own apps, compile your own kernels, dissect mobile malware, learn how things tick. And as you keep learning new things, consider contributing to the MSTG yourself! "Do a pull request", as they say.
+しかし私たちは読者にメッセージがあります。OWASP モバイルセキュリティテストガイドの最初のルールは次のとおりです。OWASP モバイルセキュリティガイドに従ってはいけません。モバイルアプリケーションセキュリティで真に秀でているには、モバイルオペレーティングシステム、コーディング、ネットワークセキュリティ、暗号化などの多くのことが深く理解されている必要があります。その多くは本書で簡単に触れることができます。セキュリティテストをやめてはいけません。自分のアプリを書き、自分のカーネルをコンパイルし、モバイルマルウェアを解剖して、物事の仕組みを学びましょう。そしてあなたが新しいことを勉強し続けるとき、あなた自身が MSTG に貢献することを検討してください。彼らが言うように「プルリクエストを行いましょう」。
