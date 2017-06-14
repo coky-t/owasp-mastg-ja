@@ -65,29 +65,29 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 [3] OWASP Testing Guide V4 (OTG-AUTHN-004) - https://www.owasp.org/index.php/Testing_for_Bypassing_Authentication_Schema_(OTG-AUTHN-004)
 
 
-### Testing JSON Web Token (JWT)
+### JSON Web Token (JWT) のテスト
 
-#### Overview
+#### 概要
 
-The standard RFC 7519 is defining JSON Web Token (JWT). JWT ensures the integrity and secure transmission of information within a JSON object between two parties. For mobile apps it's more and more used to authenticate both, the message sender and receiver.
+標準 RFC 7519 では JSON Web Token (JWT) が定義されています。JWT は二者間の JSON オブジェクト内の情報の完全性とセキュアな転送を保証します。モバイルアプリでは、メッセージの送信者と受信者の双方を認証することがますます増えています。
 
-An example of an encoded JSON Web Token can be found below<sup>[5]</sup>.
+エンコードされた JSON Web Token の例が以下にあります <sup>[5]</sup> 。
 
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
 
-JWTs are Base-64 encoded and are divided into three parts:
+JWT は Base-64 でエンコードされ、三つの部分に分かれています。
 
-* **Header** Algorith and Token Type (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9):
+* **ヘッダー** アルゴリズムとトークンタイプ (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9):
 ```JSON
 {"alg":"HS256","typ":"JWT"}
 ```
-* **Payload** Data  (eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9):
+* **ペイロード** データ  (eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9):
 ```JSON
 {"sub":"1234567890","name":"John Doe","admin":true}
 ```
-* **Verify Signature** (TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ):
+* **検証署名** (TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ):
 ```JSON
 HMACSHA256(
   base64UrlEncode(header) + "." +
@@ -96,7 +96,7 @@ HMACSHA256(
 )
 ```
 
-JWT implementations are available for all major programming languages, like PHP<sup>[1]</sup> or Java Spring<sup>[2]</sup>.
+JWT の実装は PHP <sup>[1]</sup> や Java Spring <sup>[2]</sup> などのすべての主要なプログラミング言語で利用できます。
 
 #### Static Analysis
 
