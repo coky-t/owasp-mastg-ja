@@ -15,9 +15,9 @@
 
 アプリケーションは、一方では公的で非特権的な情報や機能、他方で機密性が高く特権的な情報や機能といったさまざまなエリアを有することがよくあります。ユーザーは前者に制限なしで合法的にアクセスできます。しかし、機密性が高く特権的な情報や機能は正当なユーザーだけに保護されアクセスできるようにするために、適切な認証が行われる必要があります。
 
-Authentication always need to be handled in the server side code and should never rely on client-side controls. Client-side controls can be used to improve the user workflow and only allow specific actions, but there always need to be the server-side counterpart that defines what a user is allowed to access.
+認証は常にサーバー側コードで処理する必要があり、クライアント側のコントロールに頼るべきではありません。ユーザーのワークフローを改善するために、クライアント側のコントロールを使用して特定のアクションのみを許可することはできますが、ユーザーがアクセスできるものを定義するサーバー側の対応が常に必要です。
 
-In case Token-Based authentication with JWT is used, please also look at the test case "Testing JSON Web Token (JWT)".
+JWT によるトークンベースの認証が使用される場合は、「JSON Web Token (JWT) のテスト」も参照ください。
 
 #### 静的解析
 
