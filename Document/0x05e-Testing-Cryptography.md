@@ -4,9 +4,9 @@
 
 #### 概要
 
-A general rule in app development is that one should never attempt to invent their own cryptography. In mobile apps in particular, any form of crypto should be implemented using existing, robust implementations. In 99% of cases, this simply means using the data storage APIs and cryptographic libraries that come with the mobile OS.
+アプリ開発の一般的なルールは自分自身の暗号を発明しようとすべきではないということです。特にモバイルアプリでは、あらゆる形式の暗号は既存の堅牢な実装を使用して実装されるべきです。99% のケースでは、モバイル OS に付属のデータストレージ API と暗号化ライブラリを使用するだけです。
 
-Android developers don't need to bother much with the intricate details of cryptography most of the time. However, even when using standard algorithms can be affected if misconfigured. 
+Android 開発者はほとんどの場合において複雑な暗号化の詳細をあまり気にする必要がありません。但し、標準のアルゴリズムを使用している場合でも誤って構成されていると影響を受ける可能性があります。
 
 #### 静的解析
 
@@ -43,7 +43,7 @@ NIST <sup>1</sup> や BSI <sup>2</sup> 推奨のような現在強力である�
 * CWE-326: Inadequate Encryption Strength
 
 
-##### Info
+##### その他
 
 -- REVIEW --
 - [1] NIST recommendations (2016) - https://www.keylength.com/en/4/
