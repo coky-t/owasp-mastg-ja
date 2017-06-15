@@ -32,28 +32,27 @@ Android で信頼できる接続を確立するための条件を検証するた
 
 前述の条件のコントロールチェックがあるかどうかコードを参照します。例えば、以下のコードは任意の証明書を受け入れます。
 
-```
+```java
 TrustManager[] trustAllCerts = new TrustManager[] {
-new X509TrustManager()
-{
+    new X509TrustManager() {
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new java.security.cert.X509Certificate[] {};
+        }
 
-    public java.security.cert.X509Certificate[] getAcceptedIssuers()
-    {
-        return new java.security.cert.X509Certificate[] {};
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+        }
     }
-    public void checkClientTrusted(X509Certificate[] chain,
-    String authType) throws CertificateException
-    {
+};
 
-    }
-    public void checkServerTrusted(X509Certificate[] chain,
-    String authType) throws CertificateException
-    {
-
-    }
-
-}};
-
+// SSLContext context
 context.init(null, trustAllCerts, new SecureRandom());
 ```
 
@@ -61,12 +60,10 @@ context.init(null, trustAllCerts, new SecureRandom());
 
 TLS 実装のもう一つのセキュリティ違反はホスト名検証の欠如です。開発環境では通常、有効なドメイン名の代わりに内部アドレスを使用するため、開発者はホスト名の検証を無効にする(もしくはアプリケーションに任意のホスト名を許可する)ことがあり、アプリケーションが実稼働に移行する際に変更することを忘れてしまいます。以下のコードはホスト名の検証を無効にする役割を果たします。
 
-```
-final static HostnameVerifier NO_VERIFY = new HostnameVerifier()
-{
-    public boolean verify(String hostname, SSLSession session)
-    {
-              return true;
+```java
+final static HostnameVerifier NO_VERIFY = new HostnameVerifier() {
+    public boolean verify(String hostname, SSLSession session) {
+        return true;
     }
 };
 ```
@@ -165,6 +162,16 @@ sslContext.init(null, tmf.getTrustManagers(), null);
 
 The specific implementation in the app might be different, as it might be pinning against only the public key of the certificate, the whole certificate or a whole certificate chain. 
 
+Applications that use third-party networking libraries may utilize the certificate pinning functionality in those libraries. For example, okhttp<sup>[3]</sup> can be set up with the `CertificatePinner` as follows:
+
+```java
+OkHttpClient client = new OkHttpClient.Builder()
+        .certificatePinner(new CertificatePinner.Builder()
+            .add("bignerdranch.com", "sha256/UwQAapahrjCOjYI3oLUx5AQxPBR02Jz6/E2pt0IeLXA=")
+            .build())
+        .build();
+```
+
 #### 動的解析
 
 動的解析は好みの傍受プロキシ <sup>[1]</sup> を使用して MITM 攻撃を開始することで実行できます。これによりクライアント(モバイルアプリケーション)とバックエンドサーバーとの間で交換されるトラフィックを監視することができます。プロキシが HTTP リクエストやレスポンスを傍受できない場合、SSL ピンニングは正しく実装されています。
@@ -188,3 +195,185 @@ SSL ピンニングプロセスは静的解析セクションで説明したよ�
 
 * [1] Setting Burp Suite as a proxy for Android Devices -  https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp)
 * [2] OWASP Certificate Pinning for Android - https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android
+* [3] okhttp library - https://github.com/square/okhttp/wiki/HTTPS
+
+
+### Testing used connectivity and communication libraries
+
+#### Overview 
+Android relies on a security provider to provide SSL/TLS based connections. The problem with this security provider (for instance OpenSSL) which is packed with the device, is that it often has bugs and/or vulnerabilities<sup>[1]</sup>.
+Developers need to make sure that the application will install a proper security provider to make sure that there will be lesser bugs and vulnerabilities.
+Since July 11, 2016, Google rejects Play Store application submissions (both new applications and updates) if they are using vulnerable versions of OpenSSL<sup>[3]</sup>.
+
+#### Static Analysis
+In case of an Android SDK based application. The application should have a dependency on the GooglePlayServices. (e.g. in a. gradle build file, you will find `compile 'com.google.android.gms:play-services-gcm:x.x.x'` in the dependencies block). Next you need to make sure that the `ProviderInstaller` class is called with either `installIfNeeded()` or with `installIfNeededAsync()` is called as soon as possible. Exceptions that are thrown by these methods should be caught and handled correctly.
+If the application cannot patch its securityprovider then it can either inform the API on his lesser secure state or it can restrict the user in its possible actions as all https-traffic should now be deemed more risky. 
+See remediation for possible examples.
+
+In case of an NDK based application: make sure that the application does only bind to a recent and properly patched library that provides SSL/TLS functionality.
+
+
+#### Dynamic Analysis
+When you have the source-code: 
+
+- Run the application in debug mode, then make a breakpoint right where the app will make its first contact with the backend (e.g. do a call to the backend-services/server).
+- Right click at the code that is highlighted and select `Evaluate Expression`
+- Type `Security.getProviders()` and press enter
+- Check the providers and see if you can find `GmsCore_OpenSSL` which should be the new toplisted provider.
+
+When you do not have the source-code:
+- Use Xposed to hook into `java.security` package, then hook into `java.security.Security` with the method `getProviders` with no arguments. The return value is an Array of `Provider`. 
+- Check if the first provider is `GmsCore_OpenSSL`.
+
+
+#### Remediation
+To make sure that the application is using a patched security provider, the application needs to use the `ProviderInstaller` class which comes with the Google Play services. The Google Play Services can be installed as a dependency in the build.gradle file by adding `compile 'com.google.android.gms:play-services-gcm:x.y.z'` (where x.y.z is a version number) in the dependencies block.
+Next, the `ProviderInstaller` needs to be called as early as possible by a component of the application. Here are two adjusted examples from Google on how this could work. In both cases, the developer needs to handle the exceptions properly and it might be wise to report to the backend when the application is working with an unpatched security provider. The first example shows how to do the installation synchronously, the second example shows how to do it asynchronously.
+
+```java
+//this is a syncadapter that runs in the background, so you can run the synchronous patching.
+public class SyncAdapter extends AbstractThreadedSyncAdapter {
+
+  ...
+
+  // This is called each time a sync is attempted; this is okay, since the
+  // overhead is negligible if the security provider is up-to-date.
+  @Override
+  public void onPerformSync(Account account, Bundle extras, String authority,
+      ContentProviderClient provider, SyncResult syncResult) {
+    try {
+      ProviderInstaller.installIfNeeded(getContext());
+    } catch (GooglePlayServicesRepairableException e) {
+
+      // Indicates that Google Play services is out of date, disabled, etc.
+
+      // Prompt the user to install/update/enable Google Play services.
+      GooglePlayServicesUtil.showErrorNotification(
+          e.getConnectionStatusCode(), getContext());
+
+      // Notify the SyncManager that a soft error occurred.
+      syncResult.stats.numIOExceptions++;
+      return;
+
+    } catch (GooglePlayServicesNotAvailableException e) {
+      // Indicates a non-recoverable error; the ProviderInstaller is not able
+      // to install an up-to-date Provider.
+
+      // Notify the SyncManager that a hard error occurred.
+      //in this case: make sure that you inform your API of it.
+      syncResult.stats.numAuthExceptions++;
+      return;
+    }
+
+    // If this is reached, you know that the provider was already up-to-date,
+    // or was successfully updated.
+  }
+}
+
+
+
+```
+
+```java
+//This is the mainactivity/first activity of the application that is there long enough to make the async installing of the securityprovider work.
+public class MainActivity extends Activity
+    implements ProviderInstaller.ProviderInstallListener {
+
+  private static final int ERROR_DIALOG_REQUEST_CODE = 1;
+
+  private boolean mRetryProviderInstall;
+
+  //Update the security provider when the activity is created.
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    ProviderInstaller.installIfNeededAsync(this, this);
+  }
+
+  /**
+   * This method is only called if the provider is successfully updated
+   * (or is already up-to-date).
+   */
+  @Override
+  protected void onProviderInstalled() {
+    // Provider is up-to-date, app can make secure network calls.
+  }
+
+  /**
+   * This method is called if updating fails; the error code indicates
+   * whether the error is recoverable.
+   */
+  @Override
+  protected void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
+    if (GooglePlayServicesUtil.isUserRecoverableError(errorCode)) {
+      // Recoverable error. Show a dialog prompting the user to
+      // install/update/enable Google Play services.
+      GooglePlayServicesUtil.showErrorDialogFragment(
+          errorCode,
+          this,
+          ERROR_DIALOG_REQUEST_CODE,
+          new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+              // The user chose not to take the recovery action
+              onProviderInstallerNotAvailable();
+            }
+          });
+    } else {
+      // Google Play services is not available.
+      onProviderInstallerNotAvailable();
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode,
+      Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
+      // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
+      // before the instance state is restored throws an error. So instead,
+      // set a flag here, which will cause the fragment to delay until
+      // onPostResume.
+      mRetryProviderInstall = true;
+    }
+  }
+
+  /**
+   * On resume, check to see if we flagged that we need to reinstall the
+   * provider.
+   */
+  @Override
+  protected void onPostResume() {
+    super.onPostResult();
+    if (mRetryProviderInstall) {
+      // We can now safely retry installation.
+      ProviderInstall.installIfNeededAsync(this, this);
+    }
+    mRetryProviderInstall = false;
+  }
+
+  private void onProviderInstallerNotAvailable() {
+    // This is reached if the provider cannot be updated for some reason.
+    // App should consider all HTTP communication to be vulnerable, and take
+    // appropriate action (e.g. inform backend, block certain high-risk actions, etc.).
+  }
+}
+
+```
+
+---TODO: {What to do in case of the NDK?}
+#### References
+##### OWASP Mobile Top 10 2016
+##### OWASP MASVS
+
+* V5.6 "The app only depends on up-to-date connectivity and security libraries."
+
+##### CWE
+
+-- {TODO: add CWE references }
+
+##### Info
+
+- [1] OpenSSL Vulnerabilities - https://www.openssl.org/news/vulnerabilities.html
+- [2] Updating Your Security Provider to Protect Against SSL Exploits - https://developer.android.com/training/articles/security-gms-provider.html
+- [3] How to address OpenSSL vulnerabilities in your apps - https://support.google.com/faqs/answer/6376725?hl=en
