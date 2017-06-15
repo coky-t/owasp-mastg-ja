@@ -39,27 +39,42 @@ iOS 7 以降、デフォルトデータ保護クラスは「最初のユーザ�
 
 iOS キーチェーンは暗号鍵やセッショントークンなどの短く機密性の高いデータを安全に保管するために使用されます。キーチェーン API を介してのみアクセスできる SQLite データベースとして実装されています。キーチェーンデータベースはデバイスキーとユーザー PIN やパスワード (ユーザーによって設定されている場合) を使用して暗号化されています。
 
-デフォルトでは、各アプリは自分で作成したキーチェーンにのみアクセスできます。但し、同じ開発者が「アクセスグループ」機能を使用して署名したアプリ間でアクセスを共有することができます。キーチェーンへのアクセスは <code>securityd</code> デーモンにより管理されています。<code>securityd</code> デーモンはアプリの <code>キーチェーンアクセスグループ</code>, <code>アプリケーション識別子</code>, <code>アプリケーショングループ</code> 資格に基づきアクセスを許可します。
+By default, each app can only access the Keychain created by itself. Access can however be shared between apps signed by the same developer by using the "access groups" feature (`kSecAttrAccessGroup` see <sup>[https://developer.apple.com/documentation/security/ksecattraccessgroup]</sup> for more details). Access to the Keychain is managed by the `securityd` daemon, which grants access based on the app's `Keychain-access-groups`, `application-identifier` and `application-group` entitlements (More information can be found within the Apple documentation <sup>[14], [15]</sup>).
 
 キーチェーン API は自己説明的な名称の以下の主要な操作で構成されています。
 
-- SecItemAdd
-- SecItemUpdate
-- SecItemCopyMatching
-- SecItemDelete
+- `SecItemAdd`
+- `SecItemUpdate`
+- `SecItemCopyMatching`
+- `SecItemDelete`
 
-キーチェーンデータはファイルの暗号化に使用されるものと同様のクラス構造を使用して保護されています。キーチェーンに追加されたアイテムはバイナリ plist としてエンコードされ、アイテムごとに 128 ビットの AES 鍵を使用して暗号化されます。より大きなサイズのデータはキーチェーンに直接保存されることはないことに注意します。それは Data Protection API の対象となります。データ保護は <code>kSecAttrAccessible</code> 属性を設定した <code>SecItemAdd</code> や <code>SecItemUpdate</code> コールで有効になります。以下の設定を利用できます。
+キーチェーンデータはファイルの暗号化に使用されるものと同様のクラス構造を使用して保護されています。キーチェーンに追加されたアイテムはバイナリ plist としてエンコードされ、アイテムごとに 128 ビットの AES 鍵を使用して暗号化されます。より大きなサイズのデータはキーチェーンに直接保存されることはないことに注意します。それは Data Protection API の対象となります。データ保護は <code>kSecAttrAccessible</code> 属性を設定した <code>SecItemAdd</code> や <code>SecItemUpdate</code> コールで有効になります。以下のデータ保護クラスを利用できます。
 
-- kSecAttrAccessibleAfterFirstUnlock: キーチェーンアイテムのデータは再起動後デバイスがユーザーにより一度アンロックされるまでアクセスできません。
-- kSecAttrAccessibleAlways: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。
-- kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: キーチェーンのデータはデバイスがアンロックされている場合のみアクセスできます。デバイスにパスコードが設定されている場合のみ使用できます。データは iCloud や iTunes のバックアップには含まれません。
-- kSecAttrAccessibleAlwaysThisDeviceOnly: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
-- kSecAttrAccessibleWhenUnlocked: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。
-- kSecAttrAccessibleWhenUnlockedThisDeviceOnly: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
+- `kSecAttrAccessibleAfterFirstUnlock`: キーチェーンアイテムのデータは再起動後デバイスがユーザーにより一度アンロックされるまでアクセスできません。
+- `kSecAttrAccessibleAlways`: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。
+- `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly`: キーチェーンのデータはデバイスがアンロックされている場合のみアクセスできます。デバイスにパスコードが設定されている場合のみ使用できます。データは iCloud や iTunes のバックアップには含まれません。
+- `kSecAttrAccessibleAlwaysThisDeviceOnly`: キーチェーンアイテムのデータはデバイスがロックされているかどうかにかかわらず常にアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
+- `kSecAttrAccessibleWhenUnlocked`: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。
+- `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`: キーチェーンアイテムのデータはユーザーによりデバイスがアンロックされている間のみアクセスできます。データは iCloud や iTunes のバックアップには含まれません。
+
+Next to the Data Protection classes, there are `AccessControlFlags` which define with which mechanism one can authenticate to unlock the key(`SecAccessControlCreateFlags`):
+- `kSecAccessControlDevicePasscode`: only access the item using a passcode
+- `kSecAccessControlTouchIDAny` : access the item using one of your fingerprints registered to TouchID. Adding or removing a fingerprint will not invalidate the item.
+- `kSecAccessControlTouchIDCurrentSet`: access the item using one of your fingerprints registered to TouchID. Adding or removing a fingerprint _will_ invalidate the item.
+- `kSecAccessControlUserPresence`: access the item using either one of the registered fingerprint (using TouchID) or fallback to the PassCode.
+
+Please note that keys secured by TouchID (using `kSecAccessControlTouchIDCurrentSet` or `kSecAccessControlTouchIDAny`) are protected by the Secure Enclave: the keychain only holds a token, but not the actual key. The key resides in the Secure Enclave.
+
+Next, from iOS 9 onward, you can do ECC based signing operations in the Secure Enclave. In that case the private key as well as the cryptographic operations reside within the Secure Enclave. See the remedation chapter for more info on creating the ECC keys.
+iOS 9 only supports ECC with length of 256 bits. Furthermore, you still need to store the public key in the Keychain, as that cannot be stored in the Secure Enclave.
+
+Next, you can use the `kSecAttrKeyType` to instruct what type of algorithm you want to use this key with upon creation of the key.
+
 
 #### 静的解析
 
-When having access to the source code of the iOS app, try to spot sensitive data that is saved and processed throughout the app. This includes in general passwords, secret keys, and personally identifiable information (PII), but might as well also include other data identified as sensitive through industry regulations, laws or internal policies. Look for instances where this data is saved using any of the local storage APIs listed below. Make sure that sensitive data is never stored without appropriate protection. For example, authentication tokens should not be saved in NSUserDefaults without additional encryption. In any case, the encryption must be implemented such that the secret key is stored in the Keychain using secure settings, ideally <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code>.
+When having access to the source code of the iOS app, try to spot sensitive data that is saved and processed throughout the app. This includes in general passwords, secret keys, and personally identifiable information (PII), but might as well also include other data identified as sensitive through industry regulations, laws or internal policies. Look for instances where this data is saved using any of the local storage APIs listed below. Make sure that sensitive data is never stored without appropriate protection. For example, authentication tokens should not be saved in NSUserDefaults without additional encryption. In any case, the encryption must be implemented such that the secret key is stored in the Keychain using secure settings, ideally `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly`.
+Furthermore, make sure that the `AccessControlFlags` are set appropriately according to the security policy for the given keys in the Keychain.
 
 iOS アプリで安全でないデータストレージのインスタンスを探す際には、データを格納する以下のような手段を考慮すべきです。
 
@@ -68,6 +83,9 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 * `Core Data` <sup>[10]</sup>: アプリケーションのオブジェクトのモデルレイヤーを管理するために使用するフレームワークです。オブジェクトライフサイクルおよびオブジェクトグラフ管理(persistenceを含む)に関連する一般的なタスクに一般化および自動化されたソリューションを提供します。Core Data はより低いレベルの sqlite データベースで動作します。
 
 * `sqlite3`: `libsqlite3.dylib` ライブラリをアプリケーションに追加する必要があります。このライブラリは SQLite コマンドに API を提供する C++ ラッパーです。
+
+##### Realm databases
+The Realm Objective-C <sup>[16]</sup> and the Realm Swift <sup>[17]</sup> are not supplied by Apple, but still worth noting here. They either store everything unencrypted, unless the configuration has encryption enabled.
 
 ##### NSUserDefaults
 
@@ -137,6 +155,20 @@ If necessary during dynamic analysis, the contents of the Keychain can be dumped
 
 - `kSecAttrAccessibleWhenUnlocked` 属性でキーチェーンにデータを格納する。
 - 格納する前に標準の暗号 API を使用してデータを暗号化し、キーチェーンに暗号鍵を格納する。
+- Another option is to use the encryption support, such as Realm provides. 
+
+```swift
+
+// Open the encrypted Realm file where getKey() is a method to obtain a key from the keychain or a server
+let config = Realm.Configuration(encryptionKey: getKey())
+do {
+  let realm = try Realm(configuration: config)
+  // Use the Realm as normal
+} catch let error as NSError {
+  // If the encryption key is wrong, `error` will say that it's an invalid database
+  fatalError("Error opening realm: \(error)")
+}
+```
 - `NSFileProtectionComplete` 属性でファイルを作成する。
 
 以下の例は `createFileAtPath` メソッドを使用して安全に暗号化されたファイルを作成する方法を示しています。
@@ -149,6 +181,41 @@ If necessary during dynamic analysis, the contents of the Keychain can be dumped
 ```
 
 A generic example for using the KeyChain to store, update or delete data can be found in the official Apple documentation<sup>[12]</sup>.
+
+A sample for using TouchID and passcode protected keys can be found in the official Apple documentaiton <sup>[13]</sup>.
+
+Here is a sample in swift with which you can create the keys as follows (notice the `kSecAttrTokenID as String: kSecAttrTokenIDSecureEnclave`: here you instruct that we want to use the Secure Enclave directly):
+
+```swift
+ // private key parameters
+    let privateKeyParams: [String: AnyObject] = [
+        kSecAttrLabel as String: "privateLabel",
+        kSecAttrIsPermanent as String: true,
+        kSecAttrApplicationTag as String: "applicationTag"
+    ]        
+    // public key parameters
+    let publicKeyParams: [String: AnyObject] = [
+        kSecAttrLabel as String: "publicLabel",
+        kSecAttrIsPermanent as String: false,
+        kSecAttrApplicationTag as String: "applicationTag"
+    ]
+
+    // global parameters
+    let parameters: [String: AnyObject] = [
+        kSecAttrKeyType as String: kSecAttrKeyTypeEC,
+        kSecAttrKeySizeInBits as String: 256,
+        kSecAttrTokenID as String: kSecAttrTokenIDSecureEnclave,
+        kSecPublicKeyAttrs as String: publicKeyParams,
+        kSecPrivateKeyAttrs as String: privateKeyParams
+    ]        
+
+    var pubKey, privKey: SecKeyRef?
+    let status = SecKeyGeneratePair(parameters, &pubKey, &privKey)
+
+```
+
+
+--- {TODO: add key generation for RSA encryption 
 
 #### 参考情報
 
@@ -167,19 +234,23 @@ A generic example for using the KeyChain to store, update or delete data can be 
 
 ##### その他
 
-[1] KeyChain Services - https://developer.apple.com/reference/security/1658642-keychain_services?language=objc
-[2] Keychain Services Programming Guide - https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html
-[3] iOS Security Guide - https://www.apple.com/business/docs/iOS_Security_Guide.pdf
-[4] File System Basics - https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html
-[5] Foundation Functions - https://developer.apple.com/reference/foundation/1613024-foundation_functions
-[6] NSFileManager - https://developer.apple.com/reference/foundation/nsfilemanager
-[7] NSUserDefaults - https://developer.apple.com/reference/foundation/userdefaults
-[8] Keychain Item Accessibility -  https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons
-[9] Keychain Dumper - https://github.com/ptoomey3/Keychain-Dumper/
-[10] Core Data iOS - https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/nsfetchedresultscontroller.html#//apple_ref/doc/uid/TP40001075-CH8-SW1
-[11] NSUserDefaults - https://developer.apple.com/documentation/foundation/nsuserdefaults
-[12] GenericKeyChain - https://developer.apple.com/library/content/samplecode/GenericKeychain/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007797-Intro-DontLinkElementID_2
-
+- [1] KeyChain Services - https://developer.apple.com/reference/security/1658642-keychain_services?language=objc
+- [2] Keychain Services Programming Guide - https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html
+- [3] iOS Security Guide - https://www.apple.com/business/docs/iOS_Security_Guide.pdf
+- [4] File System Basics - https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html
+- [5] Foundation Functions - https://developer.apple.com/reference/foundation/1613024-foundation_functions
+- [6] NSFileManager - https://developer.apple.com/reference/foundation/nsfilemanager
+- [7] NSUserDefaults - https://developer.apple.com/reference/foundation/userdefaults
+- [8] Keychain Item Accessibility -  https://developer.apple.com/reference/security/1658642-keychain_services/1663541-keychain_item_accessibility_cons
+- [9] Keychain Dumper - https://github.com/ptoomey3/Keychain-Dumper/
+- [10] Core Data iOS - https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/nsfetchedresultscontroller.html#//apple_ref/doc/uid/TP40001075-CH8-SW1
+- [11] NSUserDefaults - https://developer.apple.com/documentation/foundation/nsuserdefaults
+- [12] GenericKeyChain - https://developer.apple.com/library/content/samplecode/GenericKeychain/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007797-Intro-DontLinkElementID_2
+- [13] KeychainTouchID - https://developer.apple.com/library/content/samplecode/KeychainTouchID/Listings/KeychainTouchID_AAPLLocalAuthenticationTestsViewController_m.html#//apple_ref/doc/uid/TP40014530-KeychainTouchID_AAPLLocalAuthenticationTestsViewController_m-DontLinkElementID_10
+- [14] Adding capabilities - https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html
+- [15] Keychain concepts - https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/02concepts/concepts.html
+- [16] Realm Objective-C - https://realm.io/docs/objc/latest/
+- [17] Realm Swift - https://realm.io/docs/swift/latest/
 
 ### 機密データに関するテスト(ログ)
 
@@ -344,7 +415,7 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 - CWE-524: Information Exposure Through Caching
 
 #### その他
-[1] UIText​Input​Traits protocol - https://developer.apple.com/reference/uikit/uitextinputtraits
+- [1] UIText​Input​Traits protocol - https://developer.apple.com/reference/uikit/uitextinputtraits
 
 
 ### 機密データに関するテスト(クリップボード)
@@ -420,8 +491,8 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 - CWE-200: Information Exposure
 
 #### Info
-[1] Disable clipboard on iOS - http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-all-in-uitextview
-[2] UIPasteboardNameGeneral - https://developer.apple.com/reference/uikit/uipasteboardnamegeneral?language=objc
+- [1] Disable clipboard on iOS - http://stackoverflow.com/questions/1426731/how-disable-copy-cut-select-select-all-in-uitextview
+- [2] UIPasteboardNameGeneral - https://developer.apple.com/reference/uikit/uipasteboardnamegeneral?language=objc
 
 
 ### 機密データがIPCメカニズムを介して漏洩しているかのテスト
@@ -499,13 +570,13 @@ NSFileCoordinator<sup>[6]</sup> methods run synchronously, so your code will blo
 - CWE-634 - Weaknesses that Affect System Processes
 
 #### その他
-[1] iPhoneDevWiki IPC - http://iphonedevwiki.net/index.php/IPC
-[2] Inter-Process Communication - http://nshipster.com/inter-process-communication/
-[3] XPC Services - https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingXPCServices.html
-[4] xpc.h - https://developer.apple.com/documentation/xpc/xpc_services_xpc.h
-[5] NSMachPort - https://developer.apple.com/documentation/foundation/nsmachport
-[6] NSFileCoordinator - http://www.atomicbird.com/blog/sharing-with-app-extensions
-[7] Security Attributes of NSXPCConnection -  https://www.objc.io/issues/14-mac/xpc/#security-attributes-of-the-connection
+- [1] iPhoneDevWiki IPC - http://iphonedevwiki.net/index.php/IPC
+- [2] Inter-Process Communication - http://nshipster.com/inter-process-communication/
+- [3] XPC Services - https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingXPCServices.html
+- [4] xpc.h - https://developer.apple.com/documentation/xpc/xpc_services_xpc.h
+- [5] NSMachPort - https://developer.apple.com/documentation/foundation/nsmachport
+- [6] NSFileCoordinator - http://www.atomicbird.com/blog/sharing-with-app-extensions
+- [7] Security Attributes of NSXPCConnection -  https://www.objc.io/issues/14-mac/xpc/#security-attributes-of-the-connection
 
 
 ### ユーザーインタフェースを介しての機密データ漏洩に関するテスト
