@@ -2,14 +2,33 @@
 
 以下の章では MASVS の暗号化要件の技術的なテストケースを説明します。この章に記載されているテストケースは一般的な暗号の概念に基づいており、iOS や Android の特定の実装に依存していません。
 
-適切な暗号システムの設計はモバイルアプリケーション開発での一般的な落とし穴です。適切なセキュリティを実現するには、開発者は適切な暗号化ディレクティブ (対称暗号化など) を選択し、そのディレクティブに対する適切な実装 (AES-GCM など) を選択し、その実装を正しく設定する (鍵長、ブロックモード、鍵管理など) 必要があります。この章では暗号の説明はしませんが、その質問は前述の選択と実装のプロセスで共通の問題を見つけるように設計されています。
+The primary goal of cryptography is to provide confidentiality, data integrity, and authentication, even in the presence of a malicious attacker. Confidentiality is achieved through use of encryption, with the aim of ensuring secrecy of the contents. Data integrity deals with maintaining and ensuring consistency of data and detection of tampering/modification. Authentication ensures that the data came from a trusted source.
 
-この章では、複数の基本的な暗号化ビルディングブロックが使用されています。以下に一般的に言及されている概念を紹介します。
+Encryption converts the plain-text data into a form (called cipher text) that does not reveal any information about the original contents. The original data can be restored from the cipher text through decryption. Two main forms of encryption are symmetric (or secret key) and asymmetric (or public key).
 
-* ハッシュは元のデータに基づく固定長のチェックサムを迅速に計算するために使用されます。同じ入力データは同じ出力ハッシュを生成します。暗号学的ハッシュは、生成されたハッシュが元のデータについて推論することを制限すること、元のデータ内の小さな変更が完全に異なるハッシュを生成すること、ハッシュを取得して同じハッシュにつながる入力データを提供することが実現可能でないこと、を保証します。秘密鍵は使用されないため、攻撃者はデータが変更された後に新しいハッシュを再計算できます。
-* 暗号化は元のプレーンテキストデータを暗号化されたテキストに変換して、その後暗号化されたテキスト (暗号テキストともいいます) から元のデータを再構築することを可能にします。したがってデータの機密性を提供します。
-* 対称暗号化は秘密鍵を使用します。暗号化されたデータの機密性は機密鍵の機密性にのみ依存します。これは、秘密鍵は秘密でなければならず、したがって予測可能ではないことを意味します。
-* 非対称暗号化は2つの鍵を使用します。プレーンテキストを暗号化するために使用できる公開鍵とプレーンテキストから元のデータを再構築するために使用できる秘密鍵です。
+* Symmetric-key encryption algorithms use the same key for both encryption and decryption. Since everybody who has access to the key is able to decrypt the encrypted content, they require careful key management.
+* Public-key (or asymmetric) encryption algorithms operate with two separate keys: the public key and the private key. The public key can be distributed freely, while the private key should not be shared with anyone. A message encrypted with the public key can only be decrypted with the private key.
+
+Hash functions deterministically map arbitrary pieces of data into fixed-length values. It is typically easy to compute the hash, but difficult (or impossible) to determine the original input based on the hash. Cryptographic hash functions additionally guarantee that even small changes to the input data result in large changes to the resulting hash values. Cryptographic hash functions are used for authentication, data verification, digital signatures, message authentication codes, etc.
+
+Two uses of cryptography are covered in other chapters:
+* Secure communications. TLS (Transport Layer Security) uses both symmetric and public-key cryptography.
+* Secure storage. Android and iOS both support disk and file encryption. In addition, they also provide secure data storage (Keychain and Keystore) capabilities.
+
+Other uses of cryptography require careful adherence to best practices:
+* For encryption, use a strong, modern cipher with the appropriate, secure mode and a strong key. Examples:
+  - 256-bit key AES in GCM mode (provides both encryption and integrity verification.)
+  - 4096-bit RSA with OAEP padding.
+  - 224/256-bit elliptic curve cryptography.
+* Do not use known weak algorithms. For example:
+  - AES in ECB mode is not considered secure, because it leaks information about the structure of the original data.
+  - Several other AES modes can be weak.
+  - RSA with 768-bit and weaker keys can be broken. Older PKCS#1 padding leaks information.
+* Rely on secure hardware, if available, for storing encryption keys, performing cryptographic operations, etc.
+
+#### References
+
+[1] Best Practices for Security & Privacy: Cryptography - https://developer.android.com/training/articles/security-tips.html#Crypto
 
 ### 暗号のカスタム実装に関するテスト
 
@@ -19,11 +38,7 @@
 
 #### 静的解析
 
-ソースコードに含まれるすべての暗号手法、特に機密データに直接適用されている手法を注意深く調べます。一見標準のようにみえるが改変されたアルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。排他的 OR 演算などのビットシフト演算子が現れたら深く掘り下げてみる良い兆候かもしれません。
-
-#### 動的解析
-
-カスタム暗号化方式の使用について、APK を逆コンパイルして得られたソースコードを調べることをお勧めします(「静的解析」を参照ください)。
+ソースコードに含まれるすべての暗号手法、特に機密データに直接適用されている手法を注意深く調べます。一見標準のようにみえるが改変されたアルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。XOR (排他的 OR) などのビット操作演算子が現れたら深く掘り下げてみる良い兆候かもしれません。
 
 #### 改善方法
 
@@ -59,15 +74,11 @@
 * RC2
 * RC4
 * BLOWFISH <sup>[6]</sup>
-* CRC32
 * MD4
 * MD5
 * SHA1 など
 
-脆弱とみなされている DES アルゴリズムの初期化の例：
-```Java
-Cipher cipher = Cipher.getInstance("DES");
-```
+On Android (via Java Cryptography APIs), selecting an algorithm is done by requesting an instance of the `Cipher` (or other primitive) by passing a string containing the algorithm name. For example, `Cipher cipher = Cipher.getInstance("DES");`. On iOS, algorithms are typically selected using predefined constants defined in CommonCryptor.h, e.g., `kCCAlgorithmDES`. Thus, searching the source code for the presence of these algorithm names would indicate that they are used. Note that since the constants on iOS are numeric, an additional check needs to be performed to check whether the algorithm values sent to CCCrypt function map to one of the deprecated/insecure algorithms.
 
 #### 動的解析
 
@@ -133,10 +144,6 @@ Cipher cipher = Cipher.getInstance("DES");
    * (特にマスターシークレットや以前のパスワードを使用してコンテナを復号化できる場合、) パスワードの変更がどのように処理されるかを確認します。
 
 モバイルオペレーティングシステムは一般的にキーストアやキーチェーンと呼ばれる秘密鍵のための特別に保護された記憶域を提供します。これらの記憶域は通常のバックアップルーチンの一部ではなく、ハードウェアにより保護される場合もあります。アプリケーションはすべての秘密鍵に対してこの特別な格納場所やメカニズムを使用すべきです。
-
-#### 動的解析
-
-カスタム暗号化方式の使用について、APK を逆コンパイルして得られたソースコードを調べることをお勧めします(「静的解析」を参照ください)。
 
 #### 改善方法
 
@@ -219,57 +226,6 @@ Cipher cipher = Cipher.getInstance("DES");
 * hashcat - https://hashcat.net/hashcat/
 * hashID - https://pypi.python.org/pypi/hashID
 
-### ECB モードの使用に関するテスト
-
-#### 概要
-
-その名前が暗示するように、ブロックベースの暗号化は離散入力ブロックに対して実行されます。例えば、AES を使用する場合には 128 ビットのブロックです。プレーンテキストがブロックサイズよりも大きい場合、与えられた入力サイズのブロックに内部的に分割され、各ブロックに対して暗号化が実行されます。一つの暗号化されたブロックの結果がその後に暗号化されるブロックに影響を及ぼす場合、いわゆるブロックモードが定義されます。
-
-ECB (Electronic Codebook) 暗号化モードは使用すべきではありません。基本的に入力を固定サイズのブロックに分割して、各ブロックを個別に暗号化します <sup>[6]</sup> 。例えば、画像が ECB ブロックモードを利用して暗号化されている場合、入力画像は複数の小さなブロックに分割されます。各ブロックは元の画像の小さな領域を表しています。それぞれが同じ秘密の入力鍵を使用して暗号化されます。入力ブロックが類似している場合、例えば入力ブロックが白い背景のみである場合、結果として得られる暗号化された出力ブロックも同じになります。結果として得られる暗号化画像の各ブロックは暗号化されていますが、画像の全体的な構造は結果として得られる暗号化画像内で依然として認識可能です。
-
-![Electronic Codebook (ECB mode encryption)](Images/Chapters/0x07c/ECB.png)
-
-![Difference of encryption modes](Images/Chapters/0x07c/EncryptionMode.png)
-
-#### 静的解析
-
-ソースコードを使用して、使用されているブロックモードを確認します。特に ECB モードについてチェックします。以下に例を示します。
-
-```
-Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-```
-
-#### 動的解析
-
-再発するパターンについて暗号化されたデータをテストします。これらは ECB モードが使用されていることを示すものです。
-
-#### 改善方法
-
-カウンターモード (CTR) などの後続するブロックに対するフィードバック機構を提供する確立されたブロックモードを使用します。暗号化されたデータを格納するために、ガロア・カウンターモード (GCM) などの格納されたデータの完全性を付加的に保護するブロックモードを使用することが多くの場合賢明です。後者はアルゴリズムが各 TLSv1.2 の実装に必須であるという追加の利点があります。したがって、すべての最新のプラットフォームで利用っできます。
-
-ブロックモード選択に関する NIST のガイドライン <sup>[1]</sup> を参照ください。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10
-* M6 - Broken Cryptography
-
-##### OWASP MASVS
-- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
-
-##### CWE
-* CWE-326: Inadequate Encryption Strength
-* CWE-327: Use of a Broken or Risky Cryptographic Algorithm
-
-##### その他
-
-- [1] NIST Modes Development, Proposed Modes - http://csrc.nist.gov/groups/ST/toolkit/BCM/modes_development.html
-- [6] Electronic Codebook (ECB) - https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_.28ECB.29
-
-##### ツール
-* QARK - https://github.com/linkedin/qark
-* Mobile Security Framework - https://github.com/ajinabraham/Mobile-Security-Framework-MobSF
-
 
 
 ### パスワードの保存に KDF (鍵導出関数) 以外のものが使用されているかどうかのテスト
@@ -286,7 +242,7 @@ Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 
 ```
 MessageDigest md = MessageDigest.getInstance("MD5");
-md.updat("too many secrets");
+md.update("too many secrets");
 byte[] digest = md.digest();
 ```
 
@@ -446,7 +402,7 @@ Key theAESKEy = new SecretKeySpec(validKey, "AES");
 
 完全性を保護しない対象アルゴリズムの良い例はワンタイムパッドです。このアルゴリズムは入力データを秘密の入力鍵と XOR します。これにより、データの機密性が情報理論上安全であるという暗号テキストが生成されます。つまり、無限の処理能力を持つ攻撃者でも暗号を解読することはできないでしょう。しかし、データ完全性は保護されていません。
 
-例えば、送金額のメッセージがあることをイメージします。額は 1000 ユーロ/ドル となる `0x0011 1110 1000` であり、あなたが使用している秘密鍵は `0x0101 0101 0101` (それほどランダムではないことは承知しています) とします。これらの2つを XOR すると転送メッセージは `0x0110 1011 1101` になります。攻撃者はプレーンテキストを知ることができません。しかし、彼女は通常小額のお金を送金しており、メッセージの最上位ビットをビットフリップして `0x1110 1011 1101` とすることをイメージします。被害者はメッセージを受け取り、秘密鍵と XOR をとって復号し、3048 ユーロ/ドルの額となる `0x1011 1110 1000` の値を取得しました。攻撃者は暗号化を破ることができませんでしたが、元となるメッセージは完全性が保護されていないため、彼女は元となるメッセージを変更できました。
+例えば、送金額のメッセージがあることをイメージします。額は 1000 ユーロ/ドル となる `0x0011 1110 1000` であり、あなたが使用している秘密鍵は `0x0101 0101 0101` (それほどランダムではないことは承知しています) とします。これらの2つを XOR すると転送メッセージは `0x0110 1011 1101` になります。攻撃者はプレーンテキストの内容を知りません。しかし、彼女は通常小額のお金を送金しており、メッセージの最上位ビットをビットフリップして `0x1110 1011 1101` とすることをイメージします。被害者はメッセージを受け取り、秘密鍵と XOR をとって復号し、3048 ユーロ/ドルの額となる `0x1011 1110 1000` の値を取得しました。攻撃者は暗号化を破ることができませんでしたが、元となるメッセージは完全性が保護されていないため、彼女は元となるメッセージを変更できました。
 
 #### 静的解析
 
