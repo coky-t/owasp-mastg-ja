@@ -114,7 +114,7 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 
 ##### CWE
 
-- CWE-287: Improper Authentication - https://cwe.mitre.org/data/definitions/287.html
+- CWE-287: Improper Authentication
 
 ##### その他
 
@@ -179,7 +179,7 @@ It is strongly advised to use session ID generators that are build-in within the
 
 ##### CWE
 
-- CWE-613 - Insufficient Session Expiration https://cwe.mitre.org/data/definitions/613.html
+- CWE-613: Insufficient Session Expiration
 
 ##### Info
 
@@ -276,7 +276,7 @@ The following best practices should be considered, when implementing JWT:
 
 ##### CWE
 
-* CWE-287: Improper Authentication - https://cwe.mitre.org/data/definitions/287.html
+* CWE-287: Improper Authentication
 
 ##### Info
 
@@ -341,7 +341,7 @@ Many mobile apps do not automatically logout a user, because of customer conveni
 
 ##### CWE
 
-* CWE-613 - Insufficient Session Expiration
+* CWE-613: Insufficient Session Expiration
 
 ##### Info
 
@@ -410,7 +410,7 @@ For further details check the OWASP Authentication Cheat Sheet<sup>[2]</sup>. A 
 * 4.5: "A password policy exists and is enforced at the remote endpoint."
 
 ##### CWE
-* CWE-521 - Weak Password Requirements
+* CWE-521: Weak Password Requirements
 
 ##### Info
 * [1] OWASP Testing Guide (OTG-AUTHN-007) - https://www.owasp.org/index.php/Testing_for_Weak_password_policy_(OTG-AUTHN-007)
@@ -459,7 +459,7 @@ Alternatives to locking accounts are enforcing 2-Factor-Authentication (2FA) for
 
 ##### CWE
 
-- CWE-307 - Improper Restriction of Excessive Authentication Attempts
+- CWE-307: Improper Restriction of Excessive Authentication Attempts
 
 ##### Info
 * [1] OTG-AUTHN-003 - https://www.owasp.org/index.php/Testing_for_Weak_lock_out_mechanism
@@ -486,12 +486,33 @@ We will explain here how to check that this control is implemented correctly, bo
 
 If server side code is available, it should be reviewed that the session timeout or token invalidation functionality is correctly configured and a timeout is triggered after a defined period of time.  
 The check needed here will be different depending on the technology used. Here are different examples on how a session timeout can be configured:
-- Spring (Java)<sup>[3]</sup>
-- Ruby on Rails<sup>[4]</sup>  
-- PHP<sup>[5]</sup>
-- ASP.Net<sup>[6]</sup>
+* Spring (Java) - http://docs.spring.io/spring-session/docs/current/reference/html5/
+* Ruby on Rails - http://guides.rubyonrails.org/security.html#session-expiry
+* PHP - http://php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
+* ASP.Net - https://msdn.microsoft.com/en-GB/library/system.web.sessionstate.httpsessionstate.timeout(v=vs.110).aspx
 
--- TODO explain timeout for Stateless and give examples of implementations
+In case of stateless authentication, once a token is signed, it is valid forever unless the signing key is changed or expiration explicitly set. One could use "exp" expiration claim<sup>[3]</sup> to define the expiration time on or after which the JWT must not be accepted for processing.
+Speaking of tokens for stateless authentication, one should differentiate types of tokens, such as access tokens and refresh tokens<sup>[4]</sup>. Access tokens are used for accessing protected resources and should be short-lived. Refresh tokens are primarily used to obtain renewed access tokens. They are rather long-lived but should expire too, as otherwise their leakage would expose the system for unauthorized use. 
+
+The exact values for token expiration depend on the application requirements and capacity. Sample code for JWT token refreshments is presented below:
+```
+ app.post('/refresh_token', function (req, res) {
+  // verify the existing token
+  var profile = jwt.verify(req.body.token, secret);
+
+  // if more than 14 days old, force login
+  if (profile.original_iat - new Date() > 14) { // iat == issued at
+    return res.send(401); // re-logging
+  }
+
+  // check if the user still exists or if authorization hasn't been revoked
+  if (!valid) return res.send(401); // re-logging
+
+  // issue a new token
+  var refreshed_token = jwt.sign(profile, secret, { expiresInMinutes: 60*5 });
+  res.json({ token: refreshed_token });
+});
+```
 
 #### Dynamic Analysis
 
@@ -519,15 +540,14 @@ Most of the frameworks have a parameter to configure the session timeout. This p
 * 4.8: "Sessions and server side signed tokens are terminated at the remote endpoint after a predefined period of inactivity."
 
 ##### CWE
-- CWE-613 - Insufficient Session Expiration
+- CWE-613: Insufficient Session Expiration
 
 ##### Info
 * [1] OWASP Web Application Test Guide (OTG-SESS-007) - https://www.owasp.org/index.php/Test_Session_Timeout_(OTG-SESS-007)
 * [2] OWASP Session management cheatsheet - https://www.owasp.org/index.php/Session_Management_Cheat_Sheet
-* [3] Session Timeout in Java Spring - http://docs.spring.io/spring-session/docs/current/reference/html5/
-* [4] Session Timeout in Ruby on Rails - https://github.com/rails/rails/blob/318a20c140de57a7d5f820753c82258a3696c465/railties/lib/rails/application/configuration.rb#L130
-* [5] Session Timeout in PHP - http://php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
-* [6] Session Timeout in ASP -  https://msdn.microsoft.com/en-GB/library/system.web.sessionstate.httpsessionstate.timeout(v=vs.110).aspx
+* [3] RFC 7519 - https://tools.ietf.org/html/rfc7519#section-4.1.4
+* [4] Refresh tokens & access tokens - https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+
 
 ### Testing 2-Factor Authentication and Step-up Authentication
 
@@ -567,11 +587,15 @@ First, all privileged endpoints a user can only access with step-up authenticati
 
 The recorded requests should also be replayed without providing any authentication information, in order to check for a complete bypass of authentication mechanisms.
 
+Another attack is related to the case "Testing Excessive Login Attempts" - given that many OTPs are just numeric values, if the accounts are not locked after N unsuccessful attempts on this stage, an attacker can bypass second factor by simply bruterorcing the values within the range at the lifespan of the OTP. For 6-digit values and 30-second time step there's more than 90% probability to find a match within 72 hours.
+
 #### Remediation
 
 The implementation of a second or multiple factors should be strictly enforced on server-side for all critical operations. If cloud solutions are in place, they should be implemented accordingly to best practices.
 
 Step-up authentication should be optional for the majority of user scenarios and only enforced for critical functions or when accessing sensitive data.
+
+Account lockouts for the second factor should be implemented the same way as for non-2FA cases (see "Testing Excessive Login Attempts" and [5]).
 
 Regardless of 2FA or step-up authentication, additionally it should be supplemented with passive contextual authentication<sup>[1]</sup>, which can be:
 
@@ -594,8 +618,8 @@ An additional control to ensure that an authorized user is using the app on an a
 * 4.10: "Step-up authentication is required to enable actions that deal with sensitive data or transactions."
 
 ##### CWE
-
-- CWE-308 - Use of Single-factor Authentication
+- CWE-287: Improper Authentication
+- CWE-308: Use of Single-factor Authentication
 
 ##### Info
 
@@ -603,6 +627,7 @@ An additional control to ensure that an authorized user is using the app on an a
 * [2] Google Authenticator - https://support.google.com/accounts/answer/1066447?hl=en
 * [3] Microsoft Authenticator - https://docs.microsoft.com/en-us/azure/multi-factor-authentication/end-user/microsoft-authenticator-app-how-to
 * [4] Authy - https://authy.com/
+* [5] https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks
 
 
 ### Testing User Device Management
@@ -639,7 +664,7 @@ An additional control to ensure that an authorized user is using the app on an a
 ##### CWE
 
 -- TODO [Add relevant CWE for "Testing User Device Management"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
+- CWE-312: Cleartext Storage of Sensitive Information
 
 ##### Info
 
