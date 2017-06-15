@@ -1,8 +1,8 @@
 ## プラットフォームインタラクションのテスト (Android)
 
-### アプリ権限のテスト
+### Testing App Permissions
 
-#### 概要
+#### Overview
 
 Android assigns every installed app with a distinct system identity (Linux user ID and group ID). Because each Android app operates in a process sandbox, apps must explicitly request access to resources and data outside their sandbox. They request this access by declaring the permissions they need to use certain system data and features. Depending on how sensitive or critical the data or feature is, Android system will grant the permission automatically or ask the user to approve the request.
 
@@ -49,7 +49,7 @@ Now that the new permission `START_MAIN_ACTIVTY` is created, apps can request it
 <uses-permission android:name=“com.example.myapp.permission.START_MAIN_ACTIVITY”/>
 ```
 
-#### 静的解析
+#### Static Analysis
 
 **Android Permissions**
 
@@ -81,7 +81,7 @@ if (canProcess != PERMISSION_GRANTED)
 throw new SecurityException();
 ```
 
-#### 動的解析
+#### Dynamic Analysis
 
 Permissions of applications installed on a device can be retrieved using the Android security assessment framework Drozer. The following extract demonstrates how to examine the permissions used by an application, in addition to the the custom permissions defined by the app:
 
@@ -117,77 +117,162 @@ $ drozer agent build  --permission android.permission.REQUIRED_PERMISSION
 
 Note that this method cannot be used for `signature` level permissions, as Drozer would need to be signed by the same certificate as the target application.
 
-#### 改善方法
+#### Remediation
 
 Only permissions that are needed within the app should be requested in the Android Manifest file and all other permissions should be removed.
 
 Developers should take care to secure sensitive IPC components with the `signature` protection level, which will only allow applications signed with the same certificate to access the component.
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
 ##### OWASP MASVS
-* V6.1: "アプリは必要となる最低限の権限のみを要求している。"
+* V6.1: "The app only requires the minimum set of permissions necessary."
 
 ##### CWE
 * CWE-250 - Execution with Unnecessary Privileges
 
-##### その他
+##### Info
 * [1] Android Permissions - https://developer.android.com/guide/topics/permissions/requesting.html
 * [2] Custom Permissions - https://developer.android.com/guide/topics/permissions/defining.html
 * [3] An In-Depth Introduction to the Android Permission Model - https://www.owasp.org/images/c/ca/ASDC12-An_InDepth_Introduction_to_the_Android_Permissions_Modeland_How_to_Secure_MultiComponent_Applications.pdf
 * [4] Android Permissions - https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_LOCATION_EXTRA_COMMANDS
 
-##### ツール
+##### Tools
 * AAPT - http://elinux.org/Android_aapt
 * Drozer - https://github.com/mwrlabs/drozer
 
 
-### 入力の妥当性確認とサニタイズ化のテスト
+### Testing Input Validation and Sanitization
 
-#### 概要
+#### Overview
 
--- TODO [Provide a general description of the issue.] --
+Android apps can expose functionality to:
+* other apps via IPC mechanisms like Intents, Binders, Android Shared Memory (ASHMEM) or BroadcastReceivers,
+* through custom URL schemes (which are part of Intents) and
+* the user via the user interface.
 
-#### 静的解析
+All input that is coming from these different sources cannot be trusted and need to be validated and/or sanitized. Validation ensures that only data is processed that the app is expecting. If validation is not enforced any input can be sent to the app, which might allow an attacker or malicious app to exploit vulnerable functionalities within the app.
 
--- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
+#### Static Analysis
 
--- TODO [Clarify the purpose of "[Use the &lt;sup&gt; tag to reference external sources, e.g. Meyer's recipe for tomato soup<sup>[1]</sup>.]" ] --
+The source code should be checked if any functionality of the app is exposed, through:
+* Custom URL schemes: check also the test case "Testing Custom URL Schemes"
+* IPC Mechanisms (Intents, Binders, Android Shared Memory (ASHMEM) or BroadcastReceivers): check also the test case "Testing Whether Sensitive Data Is Exposed via IPC Mechanisms"
+* User interface
 
--- TODO [Develop content for "Testing Input Validation and Sanitization" with source code] --
+An example for a vulnerable IPC mechanisms is listed below.
 
-#### 動的解析
+_ContentProviders_ can be used to access database information, while services can be probed to see if they return data. If data is not validated properly the content provider might be prone to SQL injection when others apps are interacting with it. See the following vulnerable implementation of a _ContentProvider_:
 
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+```xml
+<provider
+    android:name=".OMTG_CODING_003_SQL_Injection_Content_Provider_Implementation"
+    android:authorities="sg.vp.owasp_mobile.provider.College">
+</provider>
+```
 
-#### 改善方法
+The `AndroidManifest.xml` above defines a content provider that is exported and therefore available for all other apps. . In the `OMTG_CODING_003_SQL_Injection_Content_Provider_Implementation.java` class the `query` function need to be inspected to detect if any sensitive information is leaked:
 
--- TODO [Describe the best practices that developers should follow to prevent this issue.] --
+```java
+@Override
+public Cursor query(Uri uri, String[] projection, String selection,String[] selectionArgs, String sortOrder) {
+    SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+    qb.setTables(STUDENTS_TABLE_NAME);
 
-#### 参考情報
+    switch (uriMatcher.match(uri)) {
+        case STUDENTS:
+            qb.setProjectionMap(STUDENTS_PROJECTION_MAP);
+            break;
+
+        case STUDENT_ID:
+            // SQL Injection when providing an ID
+            qb.appendWhere( _ID + "=" + uri.getPathSegments().get(1));
+            Log.e("appendWhere",uri.getPathSegments().get(1).toString());
+            break;
+
+        default:
+            throw new IllegalArgumentException("Unknown URI " + uri);
+    }
+
+    if (sortOrder == null || sortOrder == ""){
+        /**
+         * By default sort on student names
+         */
+        sortOrder = NAME;
+    }
+    Cursor c = qb.query(db,	projection,	selection, selectionArgs,null, null, sortOrder);
+
+    /**
+     * register to watch a content URI for changes
+     */
+    c.setNotificationUri(getContext().getContentResolver(), uri);
+    return c;
+}
+```
+
+The query statement would return all credentials when accessing `content://sg.vp.owasp_mobile.provider.College/students`. Prepared statements<sup>[4]</sup> need to be used to avoid the SQL injection, but ideally also input validation should be applied<sup>[3]</sup>.
+
+#### Dynamic Analysis
+
+The tester should test manually the input fields with strings like "' OR 1=1--'" if for example a local SQL injection vulnerability can be identified.
+
+When being on a rooted device the command content can be used to query the data from a Content Provider. The following command is querying the vulnerable function described above.
+
+```
+content query --uri content://sg.vp.owasp_mobile.provider.College/students
+```
+
+The SQL injection can be exploited by using the following command. Instead of getting the record for Bob all data can be retrieved.
+
+```
+content query --uri content://sg.vp.owasp_mobile.provider.College/students --where "name='Bob') OR 1=1--''"
+```
+
+Even if the risk is only locally on the device itself, it is possible for malicious Apps to exploit this functionality through SQL injection. Also tools like Drozer can be used to automate such attacks to check for SQL Injection or Path Traversal, as described in section 3.5.4 of the Drozer User Guide<sup>[5]</sup>.
+
+#### Remediation
+
+All functions in the app that process data that is coming from external and through the UI should be validated.
+* For input coming from the user interface Android Saripaar v2<sup>[1]</sup> can be used.
+* For input coming from IPC or URL schemes a validation function should be created. For example like the following that is checking if the value is alphanumeric<sup>[2]</sup>.
+
+```java
+public boolean isAlphaNumeric(String s){
+    String pattern= "^[a-zA-Z0-9]*$";
+    return s.matches(pattern);
+}
+```
+
+Alternatively to validation functions type conversion by using `Integer.parseInt()` should be considered for numbers. The OWASP Input Validation Cheat Sheet contains more information about this topic<sup>[3]</sup>
+
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V6.2: "外部ソースおよびユーザーからの入力がすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
+* V6.2: "All inputs from external sources and the user are validated and if necessary sanitized. This includes data received via the UI, IPC mechanisms such as intents, custom URLs, and network sources."
 
 ##### CWE
 * CWE-20 - Improper Input Validation
 
-##### その他
-* [1] xyz
+##### Info
+* [1] Android Saripaar v2 - https://github.com/ragunathjawahar/android-saripaar
+* [2] Input Validation - https://stackoverflow.com/questions/11241690/regex-for-checking-if-a-string-is-strictly-alphanumeric
+* [3] OWASP Input Validation Cheat Sheet - https://www.owasp.org/index.php/Input_Validation_Cheat_Sheet
+* [4] OWASP SQL Injection Cheat Sheet - https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet
+* [5] Drozer User Guide - https://labs.mwrinfosecurity.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf
 
-##### ツール
-* Enjarify - https://github.com/google/enjarify
+##### Tools
+* Drozer
 
 
-### カスタムURLスキームのテスト
+### Testing Custom URL Schemes
 
-#### 概要
+#### Overview
 
 Both Android and iOS allow inter-app communication through the use of custom URL schemes. These custom URLs allow other applications to perform specific actions within the application hosting the custom URL scheme. Much like a standard web URL that might start with `https://`, custom URIs can begin with any scheme prefix and usually define an action to take within the application and parameters for that action.
 
@@ -195,16 +280,36 @@ As a contrived example, consider: `sms://compose/to=your.boss@company.com&messag
 
 For any application, each of these custom URL schemes needs to be enumerated, and the actions they perform need to be tested.
 
-#### 静的解析
+#### Static Analysis
 
 It should be investigated if custom URL schemes are defined. This can be done in the AndroidManifest file inside of an intent-filter element<sup>[1]</sup>.
 
 ```xml
-<data android:scheme="myapp" android:host="path" />
-```
-The example above is specifying a new URL called `myapp://`.
+<activity android:name=".MyUriActivity">
+  <intent-filter>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="myapp" android:host="path" />
+  </intent-filter>
+</activity>
 
-#### 動的解析
+```
+The example above is specifying a new URL scheme called `myapp://`. The category `brwoseable` will allow to open the URI within a browser.
+
+Data can then be transmitted trough this new scheme, by using for example the following URI:  `myapp://path/to/what/i/want?keyOne=valueOne&keyTwo=valueTwo`. Code like the following can be used to retrieve the data:
+
+```
+Intent intent = getIntent();
+if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+  Uri uri = intent.getData();
+  String valueOne = uri.getQueryParameter("keyOne");
+  String valueTwo = uri.getQueryParameter("keyTwo");
+}
+```
+
+
+#### Dynamic Analysis
 
 To enumerate URL schemes within an application that can be called by a web browser, the Drozer module `scanner.activity.browsable` should be used:
 
@@ -224,38 +329,52 @@ Custom URL schemes can be called using the Drozer module `app.activity.start`:
 dz> run app.activity.start  --action android.intent.action.VIEW --data-uri "sms://0123456789"
 ```
 
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+When calling a defined schema (myapp://someaction/?var0=str&var1=string), it might be used to send data to the app as in the example below.
 
-#### 改善方法
+```Java
+Intent intent = getIntent();
+if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+  Uri uri = intent.getData();
+  String valueOne = uri.getQueryParameter("var0");
+  String valueTwo = uri.getQueryParameter("var1");
+}
+```
 
--- TODO [Describe the best practices that developers should follow to prevent this issue.] --
 
-#### 参考情報
+#### Remediation
+
+Defining your own URL scheme should be avoided. If it is needed to call an intent via an URL, it should be considered to use toUri()<sup>[2] [3]</sup>.
+
+Data coming in through URL schemes, which is processed by the app should also be validated, as described in the test case "Testing Input Validation and Sanitization".
+
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
 ##### OWASP MASVS
-* V6.3: "アプリはメカニズムが適切に保護されていない限り、カスタムURLスキームを介して機密な機能をエクスポートしていない。"
+* V6.3: "The app does not export sensitive functionality via custom URL schemes, unless these mechanisms are properly protected."
 
 ##### CWE
--- TODO [Add link to relevant CWE for "Testing Custom URL Schemes"]
+N/A
 
-##### その他
+##### Info
 - [1] Custom URL scheme - https://developer.android.com/guide/components/intents-filters.html#DataTest
+- [2] Intent.toUI() - https://developer.android.com/reference/android/content/Intent.html#toUri%28int%29
+- [3] How to register URL namespace  -  https://stackoverflow.com/questions/2430045/how-to-register-some-url-namespace-myapp-app-start-for-accessing-your-progr/2430468#2430468
 
-##### ツール
+##### Tools
 * Drozer - https://github.com/mwrlabs/drozer
 
 
 
-### IPC経由での機密性のある機能の開示に関するテスト
+### Testing For Sensitive Functionality Exposure Through IPC
 
-#### 概要
+#### Overview
 
 -- TODO [Provide a general description of the issue.] --
 
-#### 静的解析
+#### Static Analysis
 
 -- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
 
@@ -263,7 +382,7 @@ dz> run app.activity.start  --action android.intent.action.VIEW --data-uri "sms:
 
 -- TODO [Add content for "Testing For Sensitive Functionality Exposure Through IPC" with source code] --
 
-#### 動的解析
+#### Dynamic Analysis
 
 IPC components can be enumerated using Drozer. To list all exported IPC components, the module `app.package.attacksurface` should be used:
 
@@ -427,38 +546,38 @@ Extra: phonenumber=07123456789 (java.lang.String)
 Extra: newpass=12345 (java.lang.String)
 ```
 
-#### 改善方法
+#### Remediation
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue.] --
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
 ##### OWASP MASVS
-- V6.4: "アプリはメカニズムが適切に保護されていない限り、IPC機構を通じて機密な機能をエクスポートしていない。"
+- V6.4: "The app does not export sensitive functionality through IPC facilities, unless these mechanisms are properly protected."
 
 ##### CWE
 -- TODO [Add links and titles for CWE related to the "Testing For Sensitive Functionality Exposure Through IPC" topic] --
 
-##### その他
+##### Info
 - [1] Sieve: Vulnerable Password Manager - https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk
 - [2] Android Insecure Bank V2 - https://github.com/dineshshetty/Android-InsecureBankv2
 
-##### ツール
+##### Tools
 * Drozer - https://github.com/mwrlabs/drozer
 
 
-### WebViewでのJavaScript実行のテスト
+### Testing JavaScript Execution in WebViews
 
-#### 概要
+#### Overview
 
 In Web applications, JavaScript can be injected in many ways by leveraging reflected, stored or DOM based Cross-Site Scripting (XSS). Mobile Apps are executed in a sandboxed environment and when implemented natively do not possess this attack vector. Nevertheless, WebViews can be part of a native App to allow viewing of web pages. Every App has it's own cache for WebViews and doesn't share it with the native Browser or other Apps. WebViews in Android are using the WebKit rendering engine to display web pages but are stripped down to a minimum of functions, as for example no address bar is available. If the WebView is implemented too lax and allows the usage of JavaScript it can be used to to attack the App and gain access to it's data.
 
-#### 静的解析
+#### Static Analysis
 
-To create and use a WebView, an instance of the class WebView need to be created.
+The source code need to be checked for usage and implementations of the WebView class. To create and use a WebView, an instance of the class WebView need to be created.
 
 ```Java
 WebView webview = new WebView(this);
@@ -474,8 +593,7 @@ webview.getSettings().setJavaScriptEnabled(true);
 
 This allows the WebView to interpret JavaScript and execute it's command.
 
-
-#### 動的解析
+#### Dynamic Analysis
 
 A Dynamic Analysis depends on different surrounding conditions, as there are different possibilities to inject JavaScript into a WebView of an App:
 * Stored Cross-Site Scripting (XSS) vulnerability in an endpoint, where the exploit will be sent to the WebView of the Mobile App when navigating to the vulnerable function.
@@ -485,55 +603,52 @@ A Dynamic Analysis depends on different surrounding conditions, as there are dif
 In order to address these attack vectors, the outcome of the following checks should be verified:
 * All functions offered by the endpoint need to be free of stored XSS<sup>[4]</sup>.
 * The HTTPS communication need to be implemented according to best practices to avoid MITM attacks. This means:
-  * whole communication is encrypted via TLS (see OMTG-NET-001),
-  * the certificate is checked properly (see OMTG-NET-002) and/or
-  * the certificate is even pinned (see OMTG-NET-004)
-* Only files within the App data directory should be rendered in a WebView (see OMTG-ENV-007).
+  * whole communication is encrypted via TLS (see test case "Testing for Unencrypted Sensitive Data on the Network"),
+  * the certificate is checked properly (see test case "Testing Endpoint Identify Verification") and/or
+  * the certificate is even pinned (see "Testing Custom Certificate Stores and SSL Pinning")
+* Only files within the App data directory should be rendered in a WebView (see test case "Testing for Local File Inclusion in WebViews").
 
-#### 改善方法
+#### Remediation
 
 JavaScript is disabled by default in a WebView and if not needed shouldn't be enabled. This reduces the attack surface and potential threats to the App. If JavaScript is needed it should be ensured:
-* that the communication relies consistently on HTTPS (see also OMTG-NET-001) to protect the HTML and JavaScript from tampering while in transit.
+* that the communication relies consistently on HTTPS to protect the HTML and JavaScript from tampering while in transit.
 * that JavaScript and HTML is only loaded locally from within the App data directory or from trusted web servers.
 
 The cache of the WebView should also be cleared in order to remove all JavaScript and locally stored data, by using `clearCache()`<sup>[2]</sup> when closing the App.
 
 Devices running platforms older than Android 4.4 (API level 19) use a version of Webkit that has a number of security issues. As a workaround, if your app is running on these devices, it must confirm that WebView objects display only trusted content<sup>[3]</sup>.
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.5: "明示的に必要でない限りWebViewでJavaScriptが無効にされている。"
+- V6.5: "JavaScript is disabled in WebViews unless explicitly required."
 
 ##### CWE
 - CWE-79 - Improper Neutralization of Input During Web Page Generation https://cwe.mitre.org/data/definitions/79.html
 
-##### その他
+##### Info
 - [1] setJavaScriptEnabled in WebViews  - https://developer.android.com/reference/android/webkit/WebSettings.html#setJavaScriptEnabled(boolean)
 - [2] clearCache() in WebViews - https://developer.android.com/reference/android/webkit/WebView.html#clearCache(boolean)
 - [3] WebView Best Practices - https://developer.android.com/training/articles/security-tips.html#WebView
 - [4] Stored Cross-Site Scripting - https://www.owasp.org/index.php/Testing_for_Stored_Cross_site_scripting_(OTG-INPVAL-002)
 
 
-### WebViewプロトコルハンドラのテスト
+### Testing WebView Protocol Handlers
 
-#### 概要
+#### Overview
 
 Several schemas are available by default in an URI on Android and can be triggered within a WebView<sup>[3]</sup>, e.g:
 
 * http(s):
 * file:
 * tel:
-* geo:
 
-When using them in a link the App can be triggered for example to access a local file when using `file:///storage/emulated/0/private.xml`. This can be exploited by an attacker if he is able to inject JavaScript into the Webview to access local resources via the file schema.
+When using them in a link the App can be triggered for example to access a local file when using `file:///storage/emulated/0/private.xml`. This can be exploited by an attacker if he is able to inject JavaScript into the WebView to access local resources via the file schema.
 
--- TODO [Further develop content on "Testing WebView Protocol Handlers"] --
-
-#### 静的解析
+#### Static Analysis
 
 The following methods are available for WebViews to control access to different resources<sup>[4]</sup>:
 
@@ -544,13 +659,11 @@ The following methods are available for WebViews to control access to different 
 
 If one or all of the methods above can be identified and they are activated it should be verified if it is really needed for the App to work properly.
 
-#### 動的解析
+#### Dynamic Analysis
 
-While using the App look for ways to trigger phone calls or accessing files from the file system to identify usage of protocol handlers.
+While using the app look for ways to trigger phone calls or accessing files from the file system to identify usage of protocol handlers.
 
--- TODO [Further develop content on dynamic analysis for "Testing WebView Protocol Handlers" ] --
-
-#### 改善方法
+#### Remediation
 
 Set the following best practices in order to deactivate protocol handlers, if applicable<sup>[2]</sup>:
 
@@ -567,20 +680,18 @@ webView.getSettings().setAllowContentAccess(false);
 
 Access to files in the file system can be enabled and disabled for a WebView with `setAllowFileAccess()`. File access is enabled by default and should be deactivated if not needed. Note that this enables or disables file system access only. Assets and resources are still accessible using `file:///android_asset` and `file:///android_res`<sup>[1]</sup>.
 
--- TODO [How to disable tel and geo schema?] --
-
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.6: "WebViewは最低限必要なプロトコルハンドラのセットのみを許可するよう構成されている（理想的には、httpsのみがサポートされている）。file, tel, app-id などの潜在的に危険なハンドラは無効にされている。"
+- V6.6: "WebViews are configured to allow only the minimum set of protocol handlers required (ideally, only https is supported). Potentially dangerous handlers, such as file, tel and app-id, are disabled."
 
 ##### CWE
--- TODO [Add links and titles to relevant CWE for "Testing WebView Protocol Handlers"] --
+N/A
 
-##### その他
+##### Info
 - [1] File Access in WebView - https://developer.android.com/reference/android/webkit/WebSettings.html#setAllowFileAccess%28boolean%29
 - [2] WebView best practices - https://github.com/nowsecure/secure-mobile-development/blob/master/en/android/webview-best-practices.md#remediation
 - [3] Intent List - https://developer.android.com/guide/appendix/g-app-intents.html
@@ -588,15 +699,13 @@ Access to files in the file system can be enabled and disabled for a WebView wit
 
 
 
-### WebViewでのローカルファイルインクルージョンに関するテスト
+### Testing for Local File Inclusion in WebViews
 
-#### 概要
+#### Overview
 
-WebViews can load content remotely, but can also load it locally from the App data directory or external storage. If the content is loaded locally it should not be possible by the user to influence the filename or path where the file is loaded from or should be able to edit the loaded file.
+WebViews can load content remotely, but can also load it locally from the app data directory or external storage. If the content is loaded locally it should not be possible by the user to influence the filename or path where the file is loaded from or should be able to edit the loaded file.
 
--- TODO [Further develop content on the overview for "Testing for Local File Inclusion in WebViews"] --
-
-#### 静的解析
+#### Static Analysis
 
 Check the source code for the usage of WebViews. If a WebView instance can be identified check if local files are loaded through the method `loadURL()`<sup>[1]</sup>.
 
@@ -615,35 +724,35 @@ Environment.getExternalStorageDirectory().getPath() +
 
 The URL specified in `loadURL()` should be checked, if any dynamic parameters are used that can be manipulated, which may lead to local file inclusion.
 
-#### 動的解析
+#### Dynamic Analysis
 
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+This test case should be verified through static analysis.
 
-#### 改善方法
+#### Remediation
 
 Create a white-list that defines the web pages and it's protocols (HTTP or HTTPS) that are allowed to be loaded locally and remotely. Loading web pages from the external storage should be avoided as they are read and writable for all users in Android. Instead they should be placed in the assets directory of the App.
 
 Create checksums of the local HTML/JavaScript files and check it during start up of the App. Minify JavaScript files in order to make it harder to read them.
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.7: "アプリはWebViewにユーザー提供のローカルリソースをロードしていない。"
+- V6.7: "The app does not load user-supplied local resources into WebViews."
 
 ##### CWE
--- TODO [Add reference to relevant CWE for "Testing for Local File Inclusion in WebViews"] --
+N/A
 
-##### その他
+##### Info
 - [1] loadURL() in WebView - https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)
 
 
 
-### WebView経由でJavaオブジェクトが開示されるかのテスト
+### Testing Whether Java Objects Are Exposed Through WebViews
 
-#### 概要
+#### Overview
 
 Android offers two different ways that enables JavaScript executed in a WebView to call and use native functions within an Android App:
 
@@ -670,7 +779,7 @@ With API Level 17 this vulnerability was fixed and the access granted to methods
 An App that is targeting an Android version before Android 4.2 is still vulnerable to the identified flaw in `addJavascriptInterface()` and should only be used with extreme care. Therefore several best practices should be applied in case this method is needed.
 
 
-#### 静的解析
+#### Static Analysis
 
 **shouldOverrideUrlLoading**
 
@@ -747,15 +856,20 @@ var result = window.Android.returnString();
 
 If an attacker has access to the JavaScript code, for example through stored XSS or MITM, he can directly call the exposed Java methods in order to exploit them.
 
-#### 動的解析
+#### Dynamic Analysis
 
--- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+The dynamic analysis of the app can determine what HTML or JavaScript files are loaded and if known vulnerabilities are present. The procedure to exploit the vulnerability is to produce a JavaScript payload and then inject it into the file that the app is requesting for. The injection could be done either though MITM attack, or by modifying directly the file in case it is stored on the external storage.
+The whole process could be done through Drozer that using weasel (MWR's advanced exploitation payload) is able to install a full agent, injecting a limited agent into a running process, or connecting a reverse shell to act as a Remote Access Tool (RAT).
 
-#### 改善方法
+A full description of the attack can be found in the blog article by MWR<sup>[2]</sup>.
+
+#### Remediation
 
 If `shouldOverrideUrlLoading()` is needed, it should be verified how the input is processed and if it's possible to execute native functions through malicious JavaScript.
 
 If `addJavascriptInterface()` is needed, only JavaScript provided with the APK should be allowed to call it but no JavaScript loaded from remote endpoints.
+
+Moreover pay attention if you imported library, e.g. for advertising, because they con uses the methods mentioned before and bring the vulnerabilities in your app.
 
 Another compliant solution is to define the API level to 17 (JELLY_BEAN_MR1) and above in the manifest file of the App. For these API levels, only public methods that are annotated with `JavascriptInterface` can be accessed from JavaScript<sup>[1]</sup>.
 
@@ -766,34 +880,32 @@ Another compliant solution is to define the API level to 17 (JELLY_BEAN_MR1) and
 </manifest>
 ```
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.8: "WeｂViewでJavaオブジェクトが扱われる場合は、WebViewはアプリパッケージに含まれるJavaScriptのみ表示している。"
-##### CWE
--- TODO [Add links and titles to relevant CWE for "Testing Whether Java Objects Are Exposed Through WebViews"] --
+- V6.8: "If Java objects are exposed in a WebView, verify that the WebView only renders JavaScript contained within the app package."
 
-##### その他
+##### CWE
+* CWE-502 - Deserialization of Untrusted Data
+
+##### Info
 - [1] DRD13 addJavascriptInterface()  - https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=129859614
 - [2] WebView addJavascriptInterface Remote Code Execution - https://labs.mwrinfosecurity.com/blog/webview-addjavascriptinterface-remote-code-execution/
 - [3] Method shouldOverrideUrlLoading() - https://developer.android.com/reference/android/webkit/WebViewClient.html#shouldOverrideUrlLoading(android.webkit.WebView,%20java.lang.String)
 - [4] Method addJavascriptInterface() - https://developer.android.com/reference/android/webkit/WebView.html#addJavascriptInterface(java.lang.Object, java.lang.String)
 
-##### ツール
--- TODO [Add links to tools for "Testing Whether Java Objects Are Exposed Through WebViews"] --
 
 
+### Testing Object (De-)Serialization
 
-### オブジェクト(デ)シリアライズ化のテスト
-
-#### 概要
+#### Overview
 
 An object and it's data can be represented as a sequence of bytes. In Java, this is possible using object serialization. Serialization is not secure by default and is just a binary format or representation that can be used to store data locally as .ser file. It is possible to sign and encrypt serialized data but, if the source code is available, this is always reversible.  
 
-#### 静的解析
+#### Static Analysis
 
 Search the source code for the following keywords:
 
@@ -805,44 +917,39 @@ Check if serialized data is stored temporarily or permanently within the app's d
 **https://www.securecoding.cert.org/confluence/display/java/SER04-J.+Do+not+allow+serialization+and+deserialization+to+bypass+the+security+manager**
 
 
-#### 動的解析
+#### Dynamic Analysis
 
 -- TODO [Create content for dynamic analysis of "Testing Object (De-)Serialization" ] --
 
-#### 改善方法
+#### Remediation
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue "Testing Object (De-)Serialization".] --
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V6.9: "オブジェクトシリアライズ化は安全なシリアライズ化APIを使用して実装されている。"
+* V6.9: "Object serialization, if any, is implemented using safe serialization APIs."
 
 ##### CWE
+N/A
 
--- TODO [Add link and title to CWE for "Testing Object (De-)Serialization"] --
-
-##### その他
-
+##### Info
 * [1] Update Security Provider - https://developer.android.com/training/articles/security-gms-provider.html
 
 
-##### ツール
--- TODO [Add link to relevant tools for "Testing Object (De-)Serialization"] --
 
+### Testing Root Detection
 
-### ルート検出のテスト
-
-#### 概要
+#### Overview
 
 Checking the integrity of the environment where the app is running is getting more and more common on the Android platform. Due to the usage of rooted devices several fundamental security mechanisms of Android are deactivated or can easily be bypassed by any app. Apps that process sensitive information or have built in largely intellectual property (IP), like gaming apps, might want to avoid to run on a rooted phone to protect data or their IP.
 
 Keep in mind that root detection is not protecting an app from attackers, but can slow down an attacker dramatically and higher the bar for successful local attacks. Root detection should be considered as part of a broad security-in-depth strategy, to be more resilient against attackers and make analysis harder.
 
-#### 静的解析
+#### Static Analysis
 
 Root detection can either be implemented by leveraging existing root detection libraries, such as `Rootbeer`<sup>[1]</sup>, or by implementing manually checks.
 
@@ -872,7 +979,7 @@ If the root detection is implemented from scratch, the following should be check
 * Checking available commands, like is it possible to execute `su` and being root afterwards.
 
 
-#### 動的解析
+#### Dynamic Analysis
 
 A debug build with deactivated root detection should be provided in a white box test to be able to apply all test cases to the app.
 
@@ -884,11 +991,11 @@ Other options are dynamically patching the app with Friday or repackaging the ap
 
 Otherwise it should be switched to a non-rooted device in order to use the testing time wisely and to execute all other test cases that can be applied on a non-rooted setup. This is of course only possible if the SSL Pinning can be deactivated for example in smali and repackaging the app.
 
-#### 改善方法
+#### Remediation
 
 To implement root detection within an Android app, libraries can be used like `RootBeer`<sup>[1]</sup>. The root detection should either trigger a warning to the user after start, to remind him that the device is rooted and that the user can only proceed on his own risk. Alternatively, the app can terminate itself in case a rooted environment is detected. This decision is depending on the business requirements and the risk appetite of the stakeholders.
 
-#### 参考情報
+#### References
 
 ##### OWASP Mobile Top 10 2016
 * M8 - Code Tampering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M8-Code_Tampering
@@ -896,14 +1003,14 @@ To implement root detection within an Android app, libraries can be used like `R
 
 ##### OWASP MASVS
 
-- V6.10: "アプリはルート化デバイスや脱獄デバイスで実行されているかどうかを検出している。ビジネス要件に応じて、デバイスがルート化もしくは脱獄されている場合に、ユーザーに警告している、もしくはアプリが終了している。""
+- V6.10: "The app detects whether it is being executed on a rooted or jailbroken device. Depending on the business requirement, users are warned, or the app is terminated if the device is rooted or jailbroken."
 
 ##### CWE
-Not covered.
+N/A
 
-##### その他
+##### Info
 - [1] RootBeer - https://github.com/scottyab/rootbeer
 
-##### ツール
+##### Tools
 
 * RootCloak - http://repo.xposed.info/module/com.devadvance.rootcloak2
