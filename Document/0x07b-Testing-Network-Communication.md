@@ -6,7 +6,7 @@
 
 #### 概要
 
-ほとんどのモバイルアプリケーションの機能はインターネット上のサービスから情報を送信または受信することを要求します。これは途中のデータを対象とした攻撃の別の領域を明らかにします。攻撃者がネットワークインフラストラクチャ(WiFi アクセスポイントなど)の一部を制御する場合、暗号化されていない情報を盗聴または改変(MiTM 攻撃)する可能性があります [1]。このため、開発者は機密データを平文で送ることはできないという一般的なルールを立てるべきです [2]。
+ほとんどのモバイルアプリケーションの機能はインターネット上のサービスから情報を送信または受信することを要求します。これは途中のデータを対象とした攻撃の別の領域を明らかにします。攻撃者がネットワークインフラストラクチャ(WiFi アクセスポイントなど)の一部を制御する場合、暗号化されていない情報を盗聴または改変(MiTM 攻撃)する可能性があります <sup>[1]</sup>。このため、開発者は機密データを平文で送ることはできないという一般的なルールを立てるべきです <sup>[2]</sup>。
 
 #### 静的解析
 
@@ -35,11 +35,11 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 #### 改善方法
 
-機密情報をセキュアチャネル経由で送信されていることを確認します。TLS を使用したソケットレベルの通信には HTTPS [5] または SSLSocket [6] を使用します。
+機密情報をセキュアチャネル経由で送信されていることを確認します。TLS を使用したソケットレベルの通信には HTTPS <sup>[5]</sup> または SSLSocket <sup>[6]</sup> を使用します。
 
-> `SSLSocket` はホスト名を検証 **しない** ことに気をつけます。ホスト名検証には `getDefaultHostnameVerifier()` と期待されるホスト名を使用して行う必要があります。ここ [7] に正しい使い方の事例があります。
+`SSLSocket` はホスト名を検証 **しない** ことに気をつけます。ホスト名検証には `getDefaultHostnameVerifier()` と期待されるホスト名を使用して行う必要があります。正しい使い方の例についてはドキュメント <sup>[7]</sup> を参照ください。
 
-一部のアプリケーションでは 機密 IPC を処理するために localhost アドレスや INADDR_ANY にバインドすることがあります。このインタフェースはデバイスにインストールされている他のアプリケーションからアクセス可能であるため、セキュリティの観点からはよくありません。そのような目的のために開発者はセキュアな Android IPC メカニズム [8] の使用を検討すべきです。
+一部のアプリケーションでは 機密 IPC を処理するために localhost アドレスや INADDR_ANY にバインドすることがあります。このインタフェースはデバイスにインストールされている他のアプリケーションからアクセス可能であるため、セキュリティの観点からはよくありません。そのような目的のために開発者はセキュアな Android IPC メカニズム <sup>[8]</sup> の使用を検討すべきです。
 
 #### 参考情報
 
@@ -73,11 +73,52 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 #### 概要
 
-機密データを送信する場合、暗号化を使用することが不可欠です。ただし、十分に強力な暗号を使用する場合に限り、暗号化によってプライバシーが保護されます。この目標を達成するには、SSL ベースのサービスで脆弱な暗号スイートを選択してはいけません。暗号スイートは暗号化プロトコル(DES, RC4, AES など)、暗号鍵長(40, 56, 128 ビットなど)、完全性検査に使用されるハッシュアルゴリズム(SHA, MD5 など)によって明示されます。あなたの暗号化を容易に破られないようにするには、脆弱な暗号/プロトコル/鍵を使用していないことを TLS 設定で確認する必要があります [1]。
+Many mobile applications consume remote services over the HTTP protocol. HTTPS is HTTP over SSL/TLS. Other encrypted channels are less common. Thus, it is important to ensure that TLS configuration is done properly. SSL is the older name of the TLS protocol and should no longer be used, since SSLv3 is considered vulnerable. TLS v1.2 and v1.3 are the most modern and most secure versions, but many services still include configurations for TLS v1.0 and v1.1, to ensure compatibility with the older clients. This is especially true for browsers that can connect to arbitrary servers and for servers that expect connections from arbitrary clients.
+
+In the situation where both the client and the server are controlled by the same organization and are used for the purpose of only communicating with each other, higher levels of security can be achieved by more strict configurations<sup>[1]</sup>.
+
+If a mobile application connects to a specific server for a specific part of its functionality, the networking stack for that client can be tuned to ensure highest levels of security possible given the server configuration. Additionally, the mobile application may have to use a weaker configuration due to the lack of support in the underlying operating system.
+
+For example, the popular Android networking library okhttp uses the following list as the preferred set of cipher suites, but these are only available on Android 7.0 and later:
+
+* `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
+* `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
+* `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
+* `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
+* `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`
+* `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
+
+To support earlier versions of Android, it adds a few ciphers that are not considered as secure:
+
+* `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`
+* `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`
+* `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA`
+* `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`
+* `TLS_RSA_WITH_AES_128_GCM_SHA256`
+* `TLS_RSA_WITH_AES_256_GCM_SHA384`
+* `TLS_RSA_WITH_AES_128_CBC_SHA`
+* `TLS_RSA_WITH_AES_256_CBC_SHA`
+* `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
+
+
+Similarly, the iOS ATS (App Transport Security) configuration requires one of the following ciphers:
+
+* `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
+* `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
+* `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`
+* `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA`
+* `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`
+* `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`
+* `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
+* `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
+* `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`
+* `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`
+* `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`
+
 
 #### 静的解析
 
-静的解析はこのテストケースでは適用されません。
+This is platform/language/library specific.
 
 #### 動的解析
 
@@ -111,7 +152,7 @@ sslyze --regular www.example.com:443
 ```
 o-saft.tcl
 ```
-またはコマンドで実行します。複数のオプションが指定できます [2]。証明書、暗号、SSL 接続を検証する最も一般的なものは以下のとおりです。
+またはコマンドで実行します。複数のオプションが指定できます <sup>[2]</sup>。証明書、暗号、SSL 接続を検証する最も一般的なものは以下のとおりです。
 
 ```
 perl o-saft.pl +check www.example.com:443
@@ -137,6 +178,9 @@ perl o-saft.pl +check www.example.com:443
 * [2] O-Saft various tests - https://www.owasp.org/index.php/O-Saft/Documentation#COMMANDS
 * [3] Transport Layer Protection Cheat Sheet - https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet
 * [4] Qualys SSL/TLS Deployment Best Practices - https://dev.ssllabs.com/projects/best-practices/
+* [5] okhttp `okhttp.ConnectionSpec` class, `APPROVED_CIPHER_SUITES` array - https://github.com/square/okhttp/
+* [6] Requirements for Connecting Using ATS, App Transport Security - https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW57
+
 
 ##### ツール
 * testssl.sh- https://testssl.sh
@@ -147,7 +191,7 @@ perl o-saft.pl +check www.example.com:443
 
 #### 概要
 
-銀行業務アプリなどの機密性の高いアプリケーションでは、OWASP MASVS は「多層防御」検証レベル [1] を導入しています。そのような機密性の高いアプリケーションの(ユーザー登録やアカウント回復などの)重要な操作は攻撃者の視点から最も魅力的なターゲットです。ユーザーの行動を確認するために(SMSや電子メールなどの)追加のチャネルを加えるなどの、このような操作のために高度なセキュリティコントロールを実装する必要が生じます。追加のチャネルは多くの攻撃シナリオ(主にフィッシング)のリスクを軽減することができますが、セキュリティ上の障害が発生していない場合に限ります。
+銀行業務アプリなどの機密性の高いアプリケーションでは、OWASP MASVS は「多層防御」検証レベル <sup>[1]</sup> を導入しています。そのような機密性の高いアプリケーションの(ユーザー登録やアカウント回復などの)重要な操作は攻撃者の視点から最も魅力的なターゲットです。ユーザーの行動を確認するために(SMSや電子メールなどの)追加のチャネルを加えるなどの、このような操作のために高度なセキュリティコントロールを実装する必要が生じます。追加のチャネルは多くの攻撃シナリオ(主にフィッシング)のリスクを軽減することができますが、セキュリティ上の障害が発生していない場合に限ります。
 
 #### 静的解析
 
@@ -166,7 +210,7 @@ perl o-saft.pl +check www.example.com:443
 
 #### 改善方法
 
-重要な操作ではユーザーの操作を確認するために少なくとも一つの追加のチャネルが必要であることを確認します。重要な操作を実行するためにそれぞれのチャネルがバイパスできてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、Infobip 2FA ライブラリ [2] や Google Authenticator [3] を介したワンタイムパスワードの使用を検討します。
+重要な操作ではユーザーの操作を確認するために少なくとも一つの追加のチャネルが必要であることを確認します。重要な操作を実行するためにそれぞれのチャネルがバイパスできてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、Infobip 2FA ライブラリ <sup>[2]</sup> や Google Authenticator <sup>[3]</sup> を介したワンタイムパスワードの使用を検討します。
 
 #### 参考情報
 
