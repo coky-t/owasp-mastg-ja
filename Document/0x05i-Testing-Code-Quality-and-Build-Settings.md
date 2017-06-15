@@ -61,7 +61,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
 #### 改善方法
 
-開発者はリリースビルドがリリースキーストアの適切な証明書で署名されていることを確認する必要があります。Android Studio では、手動もしくは署名設定を設定してリリースビルドタイプに割り当てることで設定できます <sup>[2]</sup> 。
+開発者はリリースビルドがリリースキーストアの適切な証明書で署名されていることを確認する必要があります。Android Studio では、手動もしくは署名設定を作成してリリースビルドタイプに割り当てることで設定できます <sup>[2]</sup> 。
 
 署名の設定は Android Studio の GUI もしくは <code>build.gradle</code> の <code>signingConfigs {}</code> ブロックで管理できます。v1 および v2 の両方の方式を有効にするには、以下の値を設定する必要があります。
 
@@ -259,22 +259,7 @@ StrictMode is a developer tool to be able to detect policy violation, e.g. disk 
 It can be implemented in order to check the usage of good coding practices such as implementing high-performance code or usage of network access on the main thread.
 The policy are defined together with rules and different methods of showing the violation of a policy.
 
-There are two category of policies:
-* `StrictMode.ThreadPolicy`
-* `StrictMode.VmPolicy`
-
-The ThreadPolicy can monitor:
-* Disk Reads
-* Disk Writes
-* Network access
-* Custom Slow Code
-
-The VM policies,  applied to all threads in the virtual machine's process, are:
-* Leaked Activity objects
-* Leaked SQLite objects
-* Leaked Closable objects
-
-In order to enable `StrictMode`, the code should be implemented in onCreate().
+Here an example of `StrictMode`.
 Here is an example of enabling both policies mentioned above<sup>[1]</sup>:
 ```
 public void onCreate() {
@@ -301,43 +286,15 @@ With the purpose to check if `StrictMode` is enabled you could look for the meth
 
 The various detect methods for Thread Policy are<sup>[3]</sup>:
 ```
-detectDiskWrites() //API level 9
-detectDiskReads() //API level 9
-detectNetwork() //API level 9
-detectCustomSlowCalls()//Introduced in API level 11
-detectAll()
-detectCustomSlowCalls()
+detectDiskWrites()
+detectDiskReads()
+detectNetwork()
 ```
-
-Another possibility is to capture all kind of violation as:
-```
-detectAll()
-detectCustomSlowCalls()
-```
-
 The possible penalties for thread policy are<sup>[3]</sup>:
 ```
 penaltyLog() //Logs a message to LogCat
 penaltyDeath() //Crashes application, runs at the end of all enabled penalties
 penaltyDialog() //Show a dialog
-penaltyDeathOnNetwork() //Crashes the whole process on any network usage
-penaltyDropBox() //Enable detected violations log a stacktrace and timing data to the DropBox on policy violation
-penaltyFlashScreen() //Introduced in API level 11 which Flash the screen during a violation
-```
-
-Considering the VM policy of StrictMode, the policy are<sup>[3]</sup>:
-```
-detectActivityLeaks() //API level 11. Detect leaks of Activity subclasses.
-detectLeakedClosableObjects() //API level 11. Detect when an Closeable or other object with a explict termination method is finalized without having been closed.
-detectLeakedSqlLiteObjects() //API level 9. Detect when an SQLiteCursor or other SQLite object is finalized without having been closed.
-setClassInstanceLimit(Class.forName("my.app.sample.sampleclass"),10) //API level 11
-```
-
-The possible penalties for VM policy violation are<sup>[3]</sup>:
-```
-penaltyLog()
-penaltyDeath()
-penaltyDropBox()
 ```
 
 #### 動的解析
@@ -376,7 +333,7 @@ The DEVELOPER_MODE has to be disabled for release build in order to disable `Str
 ### 例外処理のテスト
 
 #### 概要
-Exceptions can often occur when an application gets into a non-normal or erroneous state. Both in Java and C++ exceptions can be thrown when such state occurs. 
+Exceptions can often occur when an application gets into a non-normal or erroneous state. Both in Java and C++ exceptions can be thrown when such state occurs.
 Testing exception handling is about reassuring that the application will handle the exception and get to a safe state without exposing any sensitive information at both the UI and the logging mechanisms used by the application.
 
 #### 静的解析
@@ -385,17 +342,17 @@ Testing exception handling is about reassuring that the application will handle 
 
 * アプリケーションが正しく設計され統一された方式を使用して例外を処理することを確認します <sup>[1]</sup>。
 * Verify that standard `RuntimeException`s (e.g.`NullPointerException`, `IndexOutOfBoundsException`, `ActivityNotFoundException`, `CancellationException`, `SQLException`) are anticipated upon by creating proper null-checks, bound-checks and alike. See <sup>[2]</sup> for an overview of the provided child-classes of `RuntimeException`. If the developer still throws a child of `RuntimeException` then this should always be intentional and that intention should be handled by the calling method.
-* Verify that for every non-runtime `Throwable`, there is a proper catch handler, which ends up handling the actual exception properly. 
+* Verify that for every non-runtime `Throwable`, there is a proper catch handler, which ends up handling the actual exception properly.
 * Verify that the application doesn't expose sensitive information while handling exceptions in its UI or in its log-statements, but are still verbose enough to explain the issue to the user.
 * Verify that any confidential information, such as keying material and/or authentication information is always wiped at the `finally` blocks in case of a high risk application.
 
 
 #### 動的解析
-There are various ways of doing dynamic analysis: 
+There are various ways of doing dynamic analysis:
 
 - Use Xposed to hook into methods and call the method with unexpected values or overwrite existing variables to unexpected values (e.g. Null values, etc.).
 - Provide unexpected values to UI fields in the Android application.
-- Interact with the application using its intents and public providers by using values that are unexpected. 
+- Interact with the application using its intents and public providers by using values that are unexpected.
 - Tamper the network communication and/or the files stored by the application.
 
 In all cases, the application should not crash, but instead, it should:
@@ -445,7 +402,7 @@ public class MemoryCleanerOnCrash implements Thread.UncaughtExceptionHandler {
 			//handle the cleanup here
 			//....
 			//and then show a message to the user if possible given the context
-			
+
         for (Thread.UncaughtExceptionHandler handler : mHandlers) {
             handler.uncaughtException(thread, ex);
         }
@@ -456,7 +413,7 @@ public class MemoryCleanerOnCrash implements Thread.UncaughtExceptionHandler {
 Now you need to call the initializer for the handler at your custom `Application` class (e.g. the class that extends `Application`):
 
 ```java
-	
+
 	 @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
