@@ -46,7 +46,7 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ### 改竄防止とリバース防止
 
-There is three things you should never bring up in date conversations: Religion, politics and code obfuscation. Many security experts dismiss client-side protections outright. However, the fast is that software protection controls are widely used in the mobile app world, so security testers need ways to deal with them. We also think that there is *some* benefit to be had, as long as the protections are employed with a clear purpose and realistic expectations in mind, and aren't used to *replace* security controls.
+宗教、政治、コードの難読化。日々の会話で提起すべきではない3つのものです。多くのセキュリティ専門家はクライアント側の保護をあえて対象外にしています。しかし、ソフトウェア保護コントロールはモバイルアプリの世界で広く使用されているため、セキュリティテスト担当者はそれらに対処する方法が必要です。また、*いくつか* の利点があると考えています。保護が明確な目的と現実的な期待を念頭に置いて使用されており、セキュリティコントロールを *置き換える* ために使用されていない限りにおいては。
 
 ## OWASP モバイルアプリセキュリティ検証標準、チェックリスト、テストガイド
 
