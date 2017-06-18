@@ -4,11 +4,11 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 このプロジェクトの目標は Android や iOS デバイスでのアプリケーションのテストの対象、理由、時期、場所、方法を人々が理解できるようにすることです。このプロジェクトは OWASP Mobile Top 10, モバイルアプリセキュリティチェックリスト、モバイルアプリケーションセキュリティ検証標準 (MASVS) に対処するために設計された完全な一連のテストケースを提供します。
 
-## Why Does the World Need a Mobile Application Security Testing Guide?
+## モバイルアプリケーションテストガイドが必要な理由
 
-Every new technology introduces new security risks, and mobile computing is no different. Even though modern mobile operating systems like iOS and Android are arguably more secure by design compared to traditional Desktop operating systems, there's still a lot of things that can go wrong when security is not considered during the mobile app development process. Data storage, inter-app communication, proper usage of cryptographic APIs and secure network communication are only some of the aspects that require careful consideration.
+新しいテクノロジはすべて新しいセキュリティリスクをもたらします。モバイルコンピューティングも変わりません。iOS や Android などの最新のモバイルオペレーティングシステムは従来のデスクトップオペレーティングシステムと比較して、設計上より安全であると言えますが、モバイルアプリ開発プロセスの中でセキュリティが考慮されていない場合には悪い方向に向かいことが多くあります。データストレージ、アプリ間通信、暗号 API の適切な使用方法、セキュアなネットワーク通信は慎重に検討する必要がある側面のほんの一部です。
 
-Security concerns in the mobile app space differ from traditional desktop software in some important ways. Firstly, while not many people opt to carry a desktop tower around in their pocket, doing this with a mobile device is decidedly more common. As a consequence, mobile devices are more readily lost and stolen, so adversaries are more likely to get physical access to a device and access any of the data stored.
+モバイルアプリ領域におけるセキュリティの問題は従来のデスクトップとはいくつかの重要な点で異なります。まず第一に、デスクトップタワーをポケットに入れて持ち歩くことを望んでいる人はほとんどいませんが、モバイルデバイスでこれを行うことはより一般的です。その結果、モバイルデバイスの紛失や盗難が起こりやすくなるため、攻撃者はデバイスに物理的にアクセスして、格納しているデータにアクセスする可能性が高くなります。
 
 ## モバイルアプリセキュリティの主要な領域
 
