@@ -16,11 +16,11 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ### ローカルデータストレージ
 
-The protection of sensitive data, such as user credentials and private information, is a key focus in mobile security. Firstly, sensitive data can be unintentionally exposed to other apps running on the same device if operating system mechanisms like IPC are used improperly. Data may also unintentionally leak to cloud storage, backups, or the keyboard cache. Additionally, mobile devices can be lost or stolen more easily compared to other types of devices, so an adversary gaining physical access is a more likely scenario.
+ユーザー資格情報や個人情報などの機密データを保護することはモバイルセキュリティの重要な焦点です。まず第一に、IPC などのオペレーティングシステムメカニズムが不適切に使用されている場合、機密データは同じデバイス上で実行されている他のアプリに意図せずさらされる可能性があります。また、データはクラウドストレージ、バックアップ、キーボードキャッシュに意図せずリークする可能性もあります。さらに、モバイルデバイスは他の種類のデバイスに比べて紛失や盗難の可能性が高くなるため、物理的なアクセスを得る攻撃者はより可能性の高いシナリオとなります。
 
-From the view of a mobile app, this extra care has to be taken when storing user data, such as using appropriate key storage APIs and taking advantage of hardware-backed security features when available. 
+モバイルアプリの観点からは、適切なキーストレージ API を使用したり、利用可能な場合はハードウェア支援のセキュリティ機能を利用するなど、ユーザーデータを格納する際にこの特別な注意が必要です。
 
-On Android in particular, one has to deal with the problem of fragmentation. Not every Android device offers hardware-backed secure storage. Additionally, a large percentage of devices run outdated versions of Android with older API versions. If those versions are to be supported, apps must restrict themselves to older API versions that may lack important security features. When the choice is between better security and locking out a good percentage of the potential user base, odds are in favor of better security. 
+特に Android では、断片化の問題に対処する必要があります。すべての Android がハードウェア支援のセキュアなストレージを提供するわけではありません。さらに、多くのデバイスでは古いバージョンの API を搭載した時代遅れのバージョンの Android が動いています。これらのバージョンをサポートするには、アプリは重要なセキュリティ機能が不足している可能性のある古いバージョンの API に制限する必要があります。選択がより良いセキュリティと潜在的なユーザーベースの多数の締め出しとの間で行われる場合、勝算はより良いセキュリティのほうが有利です。
 
 ### 信頼できるエンドポイントとの通信
 
