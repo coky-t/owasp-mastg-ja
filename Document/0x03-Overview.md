@@ -36,7 +36,7 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ### モバイルプラットフォームとの相互作用
 
-The controls in this group ensure that the app uses platform APIs and standard components in a secure manner. Additionally, the controls cover communication between apps (IPC).
+このグループ内のコントロールはアプリがプラットフォーム API や標準コンポーネントをセキュアな方法で使用していることを保証します。さらに、コントロールはアプリ間の通信 (IPC) をカバーします。
 
 ### コード品質とエクスプロイトの軽減
 
