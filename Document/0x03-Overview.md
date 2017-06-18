@@ -30,9 +30,9 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ### 認証と認可
 
-In most cases, user login to a remote service is an integral part of the overall mobile app architecture. Even though most of the the authentication and authentication and authorization logic happens at the endpoint, there are also some implementation challenges on the mobile app side. In contrast to web apps, mobile apps often store long-time session tokens that are are then unlocked via user-to-device authentication features such as fingerprint scan. While this allows for a better user experience (nobody likes to enter a complex password every time they start an app), it also introduces additional complexity and the concrete implementation has a lot of room for errors. 
+ほとんどの場合、リモートサービスへのユーザーログインはモバイルアプリのアーキテクチャ全体の不可欠な要素です。ほとんどの認証と認可のロジックはエンドポイントで行われますが、モバイルアプリ側での実装上の課題もいくつかあります。ウェブアプリとは対照的に、モバイルアプリでは指紋スキャンなどのユーザーとデバイス間の認証機能によりアンロックされるセッショントークンを長時間格納することがよくあります。これによりユーザーエクスペリエンスは向上します (アプリを起動するたびに複雑なパスワードを入力することが好きな人はいません) が、さらに複雑性も増し、具体的な実装には多くのエラーを生む可能性があります。
 
-Mobile app architectures also increasingly incorporate authorization frameworks such as OAuth2, delegating authentication to a separate service or outsourcing the authentication process to an authentication provider. Using OAuth2, even the client-side authentication logic can be "outsourced" to other apps on the same device (e.g. the system browser). Security testers must know the advantages and disadvantages of the different possible architectures.
+モバイルアプリアーキテクチャでは OAuth2 などの認証フレームワークの導入、別のサービスへの認証の委譲、認証プロバイダへの認証プロセスの委託も増えています。OAuth2 を使用すると、クライアント側の認証ロジックを同じデバイスの他のアプリ (システムブラウザなど) に「アウトソース」できます。セキュリティテスト担当者はさまざまな可能なアーキテクチャの長所と短所を知る必要があります。
 
 ### モバイルプラットフォームとの相互作用
 
