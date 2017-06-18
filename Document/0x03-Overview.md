@@ -12,7 +12,7 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ## モバイルアプリセキュリティの主要な領域
 
-Many mobile app pen testers have a background in network and web app penetration testing, and a lot of their knowledge is useful in mobile app testing. Practically every mobile app talks to some kind of backend service, and those services are prone to the same kinds of attacks we all know and love. On the mobile app side however, there is only little attack surface for injection attacks and similar attacks. Here, the main focus shifts to data protection both on the device itself and on the network. The following are some of the key areas in mobile app security.
+多くのモバイルアプリ侵入テスト担当者はネットワークやウェブアプリのペネトレーションテストの経験を持ち、その知識の多くがモバイルアプリテストに役立ちます。実際にはすべてのモバイルアプリは何らかのバックエンドサービスと対話しており、これらのサービスは私たちが皆知っている同じ種類の攻撃を受けやすいものです。しかし、モバイルアプリ側には、インジェクション攻撃や同様の攻撃に対する攻撃領域はほとんどありません。ここでは、主にデバイス自体とネットワークの双方でのデータ保護に焦点を当てています。以下はモバイルアプリセキュリティにおける主要な領域の一部です。
 
 ### ローカルデータストレージ
 
