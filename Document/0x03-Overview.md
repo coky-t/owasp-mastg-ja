@@ -40,9 +40,9 @@ OWASP モバイルセキュリティテストガイド (MSTG) は Android や iO
 
 ### コード品質とエクスプロイトの軽減
 
-"Classical" injection and memory management issues play less of a role on the mobile app side. This is mostly due to the lack of the necessary attack surface: For the most part, mobile apps only interface with the trusted backend service and the UI, so even if a ton of buffer overflow vulnerabilities exist in the app, those vulnerabilities usually don't open up any useful attack vectors. The same can be said for browser exploits such as XSS that are very prevalent in the web world. Of course, there's always exceptions, and XSS is theoretically possible in some cases, but it's very rare to see XSS issues that one can actually exploit for benefit.
+「古典的な」インジェクションやメモリ管理の問題はモバイルアプリ側ではあまり関係ありません。これは主に必要な攻撃領域がないためです。ほとんどの場合、モバイルアプリは信頼できるバックエンドサーバーと UI のみインタフェースをとるため、アプリに大量のバッファオーバーフロー脆弱性が存在する場合でも、これらの脆弱性は一般的に有効な攻撃方法をありません。ウェブの世界では非常に一般的な XSS などのブラウザエクスプロイトについても同じことが言えます。もちろん、常に例外はあり、XSS は理論的には場合によって可能ですが、XSS の問題を実際に利用することは非常に稀です。
 
-All this doesn't mean however that we should let developers get away with writing sloppy code. Following security best practice results in hardened release builds that are resilient against tampering. "Free" security features offered by compilers and mobile SDKs help to increase security and mitigate attacks.
+しかし、これは開発者がいい加減なコードを書くことを見逃すべきであることを意味するものではありません。セキュリティのベストプラクティスに従うと、改竄に対して耐性のある堅牢なリリースビルドとなります。コンパイラやモバイル SDK により提供される「フリー」のセキュリティ機能はセキュリティを強化し攻撃を軽減するのに役立ちます。
 
 ### 改竄防止とリバース防止
 
