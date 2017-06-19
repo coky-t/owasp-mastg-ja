@@ -5,13 +5,13 @@
 
 ### ネイティブアプリ
 
-Most operating systems, including Android and iOS, come with a set of high-level APIs that can be used to develop applications specifically for that system. Such applications are called `native` for the system for which they have been developed. Usually, when discussing a `mobile app`, the assumption is that it is a `native app`, implemented in the standard programming languages for that operating system - either Objective-C or Swift for iOS, and Java or Kotlin for Android.
+Android や iOS などのほとんどのオペレーティングシステムはそのシステム専用のアプリケーションを開発するために使用できる一連の高水準 API を備えています。そのようなアプリケーションはそれらが開発されたシステムにとって「ネイティブ」と呼ばれます。通常、「モバイルアプリ」について議論するときには、「ネイティブアプリ」はそのオペレーティングシステムの標準プログラミング言語である実装されるという前提があります。iOS では Objective-C または Swift、Android では Java または Kotlin です。
 
-Native mobile apps can provide fast performance and a high degree of reliability. They usually adhere to platform-specific design principles (e.g. the Android Design Principles<sup>[3]</sup>), and provide a more consistent UI than `hybrid` and `web` apps. Due to their close integration with the operating system, native apps have access to almost every component of the device (camera, sensors, hardware backed key stores, etc.)
+ネイティブモバイルアプリは高速なパフォーマンスと高い信頼性を提供します。通常、プラットフォーム固有の設計原則 (Android Design Principles <sup>[3]</sup> など) を遵守し、「ハイブリッド」や「ウェブ」アプリよりも一貫した UI を提供します。オペレーティングシステムとの緊密な統合により、ネイティブアプリはデバイスのほとんどすべてのコンポーネント (カメラ、センサー、ハードウェア支援のキーストアなど) にアクセスできます。
 
-There can be some ambiguity when discussing `native` apps for Android. Android provides two sets of APIs to develop against - the Android SDK and the Android NDK. The SDK (or Software Development Kit) is a Java API and is the default API against which applications are built. The NDK (or Native Development Kit) is a C/C++ based API used for developing application components that require specific optimization, or which can otherwise benefit from access to lower level APIs (such as OpenGL). Normally, you can only distribute apps built with the SDK, which potentially can also consume NDK APIs. Therefore we say that Android `native **apps**` (built with the SDK) can have `native **code**` (built with the NDK).
+Android の「ネイティブ」アプリについて議論する際には若干のあいまいさがあります。Android は開発に際して Android SDK と Android NDK の二種類の API を用意しています。SDK (ソフトウェア開発キット) は Java API であり、アプリケーションを構築するデフォルト API です。NDK (ネイティブ開発キット) は C/C++ ベースの API であり、特定の最適化を要求されるアプリケーションコンポーネントや、(OpenGL などの) 低水準 API へのアクセスの恩恵を受けるアプリケーションコンポーネントの開発に使用されます。通常、SDK で構築したアプリのみを配布しますが、NDK API を使用することもできます。したがって、私たちは (SDK で構築された) 「ネイティブ **アプリ**」が (NDK で構築された) 「ネイティブ **コード**」を持つことがある、といいます。
 
-The most obvious downside of native apps is that they target only one specific platform. To build the same app for both Android and iOS, one needs to maintain two independent code bases, or introduce often complex development tools to port a single code base to two platforms (e.g. Xamarin)
+ネイティブアプリの最も明白な欠点は特定のプラットフォームひとつだけをターゲットにすることです。Android と iOS の双方で同じアプリを構築するには、二つの独立したコードベースを維持するか、(Xamarin などの) 複合開発ツールを使用してひとつのコードベースを二つのプラットフォームに移植する必要があります。
 
 <!-- Note that Xamarin, unlike Cordova, actually creates native binaries for iOS and Android apps -->
 
