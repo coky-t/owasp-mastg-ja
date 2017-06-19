@@ -15,11 +15,11 @@ Android の「ネイティブ」アプリについて議論する際には若干
 
 <!-- Note that Xamarin, unlike Cordova, actually creates native binaries for iOS and Android apps -->
 
-### Web アプリ
+### ウェブアプリ
 
-Mobile Web apps, or simply Web apps, are websites designed to look and feel like a native app. They run in a browser and are usually developed in HTML5. Launcher icons may be created to give starting-up the app a native feel, but these often simply act as browser bookmarks, opening the default web browser and loading the bookmarked webpage.
+モバイルウェブアプリ、または単にウェブアプリ、はネイティブアプリのように見えるように設計されたウェブサイトです。それらはブラウザで実行され、通常は HTML5 で開発されます。ランチャーアイコンはアプリの起動にネイティブ感を与えるために作成されますが、これらの多くは単にブラウザのブックマークとして機能し、デフォルトウェブブラウザを開いてブックマークされたウェブページを読み込むだけです。
 
-Web apps have limited integration with the general components of the device (usually being sandboxed in the browser), and may have noticeable differences in performance from native apps. Since they typically target multiple platforms, their UIs do not follow some of the design principles users of a specific platform are used to. Their biggest advantage is reduced development and maintenance costs arising from having a single codebase, as well as allowing developers to distribute updates without engaging the platform specific app stores (such as by simply changing HTML files on the web server hosting the application).
+ウェブアプリはデバイスの一般的なコンポーネントとの統合が制限されており (通常はブラウザでサンドボックス化されています) 、ネイティブアプリとはパフォーマンスに大きな違いがあります。通常は複数のプラットフォームをターゲットにしているため、それらの UI は特定のプラットフォームで使用される設計原則のいくつかに従いません。最大の利点は単一のコードベースを使用することによる開発および保守コストの削減です。開発者はプラットフォーム固有のアプリストアを使用せずに更新プログラムを配布できます (アプリケーションをホストするウェブサーバーの HTML ファイルを単に変更するなど) 。
 
 ### ハイブリッドアプリ
 
