@@ -11,7 +11,7 @@ Android や iOS などのほとんどのオペレーティングシステムは�
 
 Android の「ネイティブ」アプリについて議論する際には若干のあいまいさがあります。Android は開発に際して Android SDK と Android NDK の二種類の API を用意しています。SDK (ソフトウェア開発キット) は Java API であり、アプリケーションを構築するデフォルト API です。NDK (ネイティブ開発キット) は C/C++ ベースの API であり、特定の最適化を要求されるアプリケーションコンポーネントや、(OpenGL などの) 低水準 API へのアクセスの恩恵を受けるアプリケーションコンポーネントの開発に使用されます。通常、SDK で構築したアプリのみを配布しますが、NDK API を使用することもできます。したがって、私たちは (SDK で構築された) 「ネイティブ **アプリ**」が (NDK で構築された) 「ネイティブ **コード**」を持つことがある、といいます。
 
-ネイティブアプリの最も明白な欠点は特定のプラットフォームひとつだけをターゲットにすることです。Android と iOS の双方で同じアプリを構築するには、二つの独立したコードベースを維持するか、(Xamarin などの) 複合開発ツールを使用してひとつのコードベースを二つのプラットフォームに移植する必要があります。
+ネイティブアプリの最も明白な欠点は特定のプラットフォームひとつだけを対象にすることです。Android と iOS の双方で同じアプリを構築するには、二つの独立したコードベースを維持するか、(Xamarin などの) 複合開発ツールを使用してひとつのコードベースを二つのプラットフォームに移植する必要があります。
 
 <!-- Note that Xamarin, unlike Cordova, actually creates native binaries for iOS and Android apps -->
 
@@ -19,15 +19,15 @@ Android の「ネイティブ」アプリについて議論する際には若干
 
 モバイルウェブアプリ、または単にウェブアプリ、はネイティブアプリのように見えるように設計されたウェブサイトです。それらはブラウザで実行され、通常は HTML5 で開発されます。ランチャーアイコンはアプリの起動にネイティブ感を与えるために作成されますが、これらの多くは単にブラウザのブックマークとして機能し、デフォルトウェブブラウザを開いてブックマークされたウェブページを読み込むだけです。
 
-ウェブアプリはデバイスの一般的なコンポーネントとの統合が制限されており (通常はブラウザでサンドボックス化されています) 、ネイティブアプリとはパフォーマンスに大きな違いがあります。通常は複数のプラットフォームをターゲットにしているため、それらの UI は特定のプラットフォームで使用される設計原則のいくつかに従いません。最大の利点は単一のコードベースを使用することによる開発および保守コストの削減です。開発者はプラットフォーム固有のアプリストアを使用せずに更新プログラムを配布できます (アプリケーションをホストするウェブサーバーの HTML ファイルを単に変更するなど) 。
+ウェブアプリはデバイスの一般的なコンポーネントとの統合が制限されており (通常はブラウザでサンドボックス化されています) 、ネイティブアプリとはパフォーマンスに大きな違いがあります。通常は複数のプラットフォームを対象にしているため、それらの UI は特定のプラットフォームで使用される設計原則のいくつかに従いません。最大の利点は単一のコードベースを使用することによる開発および保守コストの削減です。開発者はプラットフォーム固有のアプリストアを使用せずに更新プログラムを配布できます (アプリケーションをホストするウェブサーバーの HTML ファイルを単に変更するなど) 。
 
 ### ハイブリッドアプリ
 
-Hybrid apps attempt to fill the gap between native and web apps. Namely, hybrid apps are (distributed and executed as) native apps, that have majority of their content implemented on top of web technologies, running in an embedded web browser (web view). As such, hybrid apps inherit some of the pros and cons of both native and web apps.
+ハイブリッドアプリはネイティブアプリとウェブアプリのギャップを埋めるものです。つまり、ハイブリッドアプリはネイティブアプリ (として配布および実行されるもの) であり、ウェブテクノロジー上に実装されたコンテンツの大半を持ち、組み込みウェブブラウザ (WebView) 内で実行されます。このように、ハイブリッドアプリはネイティブアプリとウェブアプリの双方の長所と短所を継承しています。
 
-A web-to-native abstraction layer enables access to device capabilities for hybrid apps that are not accessible to mobile web applications. Depending on the framework used for developing, one code base can result in multiple applications, targeting separate platforms, with a UI closely resembling that of the targeted platform. Nevertheless, usually significant effort is required to exactly match the look and feel of a native app.
+ウェブからネイティブへの抽象化レイヤは、モバイルウェブアプリケーションからアクセスできないハイブリッドアプリのデバイス機能へのアクセスを可能にします。開発に使用するフレームワークによって、ひとつのコードベースで複数アプリケーションが作成され、個別のプラットフォームを対象とし、対象プラットフォームのものとよく似た UI を持ちます。それでも、ネイティブアプリと見た目を正確に一致されるには、通常かなりの労力が必要です。
 
-Following is a non-exhaustive list of more popular frameworks for developing Hybrid Apps:
+以下はハイブリッドアプリを開発するためのより一般的なフレームワークのリストですが、完全ではありません。
 
 * Apache Cordova<sup>[4]</sup>
 * Framework 7<sup>[5]</sup>
