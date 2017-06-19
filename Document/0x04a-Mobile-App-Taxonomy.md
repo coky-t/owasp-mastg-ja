@@ -1,7 +1,7 @@
 
 ## モバイルアプリの分類
 
-The term "mobile app" refers to self-contained computer programs that are designed to execute on mobile devices .Today, mobile Internet usage has surpassed desktop usage for the first time in history, and mobile apps are the most widespread kind of applications <sup>[1]</sup>. In this guide, we focus on mobile apps designed to run on the Android and iOS operating systems, which cumulatively take more than 99% of the mobile OS market share<sup>[2]</sup>. These apps don't necessarily always run only on mobile devices - they are increasingly used on other device types, such as smart watches, TVs, cars, and embedded systems. In this guide, we'll be using the term "app" to refer to any kinds of apps running on popular mobile OSes.
+用語「モバイルアプリ」はモバイルデバイス上で動作するように設計された自己完結型コンピュータプログラムを指します。今日、モバイルインターネットの使用率は歴史上初めてデスクトップ使用率を上回り、モバイルアプリは最も広く普及しています <sup>[1]</sup> 。このガイドでは、Android および iOS オペレーティングシステムで動作するように設計されたモバイルアプリに焦点を当てています。これはモバイル OS 市場シェアの 99% 以上を占めています <sup>[2]</sup> 。これらのアプリは必ずしもモバイルデバイスでのみ動作するとは限りません。スマートウォッチ、TV、車、組み込みシステムなど他の種類のデバイスで使用されることが増えています。このガイドでは、一般的なモバイル OS で動作するあらゆる種類のアプリを指して用語「アプリ」を使用しています。
 
 ### ネイティブアプリ
 
