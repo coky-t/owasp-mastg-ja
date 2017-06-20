@@ -6,15 +6,15 @@
 
 アプリ開発の一般的なルールは自分自身の暗号を発明しようとすべきではないということです。特にモバイルアプリでは、あらゆる形式の暗号は既存の堅牢な実装を使用して実装されるべきです。99% のケースでは、モバイル OS に付属のデータストレージ API と暗号化ライブラリを使用するだけです。
 
-Android cryptography APIs are based on the Java Cryptography Architecture (JCA). JCA separates the interfaces and implementation, making it possible to include several cryptographic service providers that can implement sets of cryptographic algorithms. Most of the JCA interfaces and classes are defined in the `java.security.*` and `javax.crypto.*` packages. In addition, there are Android specific packages `android.security.*` and `android.security.keystore.*`.
+Android 暗号化 API は Java Cryptography Architecture (JCA) に基づいています。JCA はインタフェースと実装を分離し、一連の暗号アルゴリズムを実装できる複数の暗号化サービスプロバイダを含めることができます。ほとんどの JCA インタフェースとクラスは `java.security.*` および `javax.crypto.*` パッケージで定義されています。さらに、Android 固有のパッケージ `android.security.*` および `android.security.keystore.*` もあります。
 
-The list of providers included in Android varies between versions of Android and the OEM-specific builds. Some provider implementations in older versions are now known to be less secure or vulnerable. Thus, Android applications should not only choose the correct algorithms and provide good configuration, in some cases they should also pay attention to the strength of the implementations in the legacy providers.
+Android に含まれるプロバイダのリストは Android のバージョンと OEM 固有のビルドにより異なります。一部の古いバージョンのプロバイダ実装は安全性が低く脆弱であることが知られています。したがって、Android アプリケーションは正しいアルゴリズムを選択して適切な設定を行うだけでなく、場合によっては従来のプロバイダの実装の強度にも注意を払う必要があります。
 
-For some applications that support older versions of Android, bundling an up-to-date library may be the only option. SpongyCastle (a repackaged version of BouncyCastle) is a common choice in these situations. Repackaging is necessary because BouncyCastle is included in the Android SDK. The latest version of SpongyCastle likely fixes issues encountered in the earlier versions of BouncyCastle that were included in older versions of Android.
+古いバージョンの Android をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。SpongyCastle (BouncyCastle の再パッケージ版) はこれらの状況では一般的な選択肢です。BouncyCastle は Android SDK に含まれているため、再パッケージ化が必要です。SpongyCastle の最新バージョンでは古いバージョンの Android に含まれていた旧バージョンの BouncyCastle で発生した問題が修正されている可能性があります。
 
-Android SDK provides mechanisms for specifying secure key generation and use. Android 6.0 (Marshmallow, API 23) introduced the `KeyGenParameterSpec` class that can be used to ensure the correct key usage in the application. 
+Android SDK はセキュアな鍵生成および使用を記述するためのメカニズムを提供します。Android 6.0 (Marshmallow, API 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。
 
-Here's an example of using AES/CBC/PKCS7Padding on API 23+:
+API 23 以降での AES/CBC/PKCS7Padding の使用例を以下に示します。
 
 ```
 String keyAlias = "MySecretKey";
@@ -33,13 +33,13 @@ keyGenerator.init(keyGenParameterSpec);
 SecretKey secretKey = keyGenerator.generateKey();
 ```
 
-The `KeyGenParameterSpec` indicates that the key can be used for encryption and decryption, but not for other purposes, such as signing or verifying. It further specifies the block mode (CBC), padding (PKCS7), and explicitly specifies that randomized encryption is required (this is the default.) `"AndroidKeyStore"` is the name of the cryptographic service provider used in this example.
+`KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的は示しません。さらに、ブロックモード (CBC)、パディング (PKCS7) を指定し、ランダム化された暗号化が必要であることを明示します (これがデフォルトです) 。`"AndroidKeyStore"` はこの例で使用される暗号化サービスプロバイダの名前です。
 
-GCM is another AES block mode that provides additional security benefits over other, older modes. In addition to being cryptographically more secure, it also provides authentication. When using CBC (and other modes), authentication would need to be performed separately, using HMACs (see the Reverse Engineering chapter). Note that GCM is the only mode of AES that does not support paddings.<sup>[3], [5]</sup>
+GCM はもうひとつの AES ブロックモードであり、他の古いモードよりもセキュリティ上の利点があります。暗号的によりセキュアであることに加えて、認証も提供します。CBC (および他のモード) を使用する場合は、認証は HMAC を使用して別に実行する必要があります (リバースエンジニアリングの章を参照ください) 。GCM はパディングをサポートしない AES の唯一のモードであることに注意します。 <sup>[3], [5]</sup>
 
-Attempting to use the generated key in violation of the above spec would result in a security exception.
+上記の仕様に違反して生成された鍵の使用を試みるとセキュリティ例外が発生します。
 
-Here's an example of using that key to decrypt:
+その鍵を使用して復号する例を以下に示します。
 
 ```
 String AES_MODE = KeyProperties.KEY_ALGORITHM_AES
@@ -58,9 +58,9 @@ byte[] iv = cipher.getIV();
 // save both the iv and the encryptedBytes
 ```
 
-Both the IV and the encrypted bytes need to be stored; otherwise decryption is not possible.
+IV および暗号化されたバイト列の双方を格納する必要があります。さもなければ解読は不可能です。
 
-Here's how that cipher text would be decrypted. The `input` is the encrypted byte array and `iv` is the initialization vector from the encryption step:
+暗号文を解読する方法を以下に示します。`input` は暗号化されたバイト配列であり、`iv` は暗号スペックの初期化ベクトルです。
 
 ```
 // byte[] input
@@ -74,11 +74,11 @@ cipher.init(Cipher.DECRYPT_MODE, key, params);
 byte[] result = cipher.doFinal(input);
 ```
 
-Since the IV (initialization vector) is randomly generated each time, it should be saved along with the cipher text (`encryptedBytes`) in order to decrypt it later.
+IV (初期化ベクトル) は毎回ランダムに生成されるため、後で解読するために暗号文 (`encryptedBytes`) とともに保存する必要があります。
 
-Prior to Android 6.0, AES key generation was not supported. As a result, many implementations chose to use RSA and generated public-private key pair for asymmetric encryption using `KeyPairGeneratorSpec` or used `SecureRandom` to generate AES keys.
+Android 6.0 以前は、AES 鍵の生成はサポートされていませんでした。結果として、多くの実装では RSA を使用することを選択し、`KeyPairGeneratorSpec` を使用して非対称暗号化の公開鍵と秘密鍵のペアを生成しました。あるいは `SecureRandom` を使用して AES 鍵を生成しました。
 
-Here's an example of `KeyPairGenerator` and `KeyPairGeneratorSpec` used to create the RSA key pair:
+RSA 鍵ペアの作成に使用される `KeyPairGenerator` および `KeyPairGeneratorSpec` の例を以下の示します。
 
 ```Java
 Date startDate = Calendar.getInstance().getTime();
@@ -102,7 +102,7 @@ KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
 ```
 
-This sample creates the RSA key pair with the 4096-bit key (i.e., modulus size).
+この例では 4096 ビットの鍵 (すなわち、モジュラスサイズ) を持つ RSA 鍵のペアを作成します。
 
 
 -- TODO Add the pre-Marshmallow AES example using BC --
