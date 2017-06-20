@@ -112,20 +112,20 @@ KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
 #### 静的解析
 
-Locate uses of the cryptographic primitives in code. Some of the most frequently used classes and interfaces:
+コード内の暗号化プリミティブの使用箇所を見つけます。最もよく使用されるクラスとインタフェースのいくつかを以下に示します。
 
 * `Cipher`
 * `Mac`
 * `MessageDigest`
 * `Signature`
 * `Key`, `PrivateKey`, `PublicKey`, `SecretKey`
-* And a few others in the `java.security.*` and `javax.crypto.*` packages.
+* `java.security.*` および `javax.crypto.*` パッケージにあるその他のもの
 
-Ensure that the best practices outlined in the Cryptography for Mobile Apps chapter are followed.
+「モバイルアプリでの暗号化」の章に記載されているベストプラクティスに従っていることを確かめます。
 
 #### 改善方法
 
-See the Remediation section in the Cryptography for Mobile Apps chapter.
+「モバイルアプリでの暗号化」の章の「改善方法」セクションを参照します。
 
 -- REVIEW --
 
