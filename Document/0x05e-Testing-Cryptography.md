@@ -166,11 +166,11 @@ NIST <sup>1</sup> や BSI <sup>2</sup> 推奨のような現在強力である�
 
 #### 概要
 
-Cryptography requires secure pseudo random number generation (PRNG). Standard Java classes do not provide sufficient randomness and in fact may make it possible for an attacker to guess the next value that will be generated, and use this guess to impersonate another user or access sensitive information.
+暗号には擬似乱数生成器 (PRNG) が必要です。標準の Java クラスは十分なランダム性を提供しないため、実際に攻撃者が生成される次の値を推測し、この推測を使用して別のユーザーになりすましたり機密情報にアクセスしたりする可能性があります。
 
-In general, `SecureRandom` should be used. However, if the Android versions below KitKat are supported, additional care needs to be taken in order to work around the bug in Jelly Bean (Android 4.1-4.3) versions that failed to properly initialize the PRNG<sup>[4]</sup>.
+一般的に、`SecureRandom` を使用すべきです。しかし、KitKat 以前の Android バージョンをサポートする場合には、PRNG を適切に初期化できない Jelly Bean (Android 4.1-4.3) バージョンのバグを回避するために更なる注意が必要です <sup>[4]</sup> 。
 
-Most developers should instantiate `SecureRandom` via the default constructor without any arguments. Other constructors are for more advanced uses and, if used incorrectly, can lead to decreased randomness and security. The PRNG provider backing `SecureRandom` uses the `/dev/urandom` device file as the source of randomness by default.<sup>[5]</sup>
+ほとんどの開発者は引数なしでデフォルトコンストラクタを介して `SecureRandom` をインスタンス化する必要があります。他のコンストラクタはより高度な用途のためにあり、誤って使用されると、ランダム性やセキュリティが低下する可能性があります。`SecureRandom` を支援する PRNG プロバイダは `/dev/urandom` デバイスファイルをデフォルトのランダム性のソースとして使用します <sup>[5]</sup> 。
 
 #### 静的解析
 
@@ -190,7 +190,7 @@ for (int i = 0; i < 20; i++) {
 }
 ```
 
-Identify all instances of `SecureRandom` that are not created using the default constructor. Specifying the seed value may reduce randomness.
+デフォルトコンストラクタを使用して作成されていない `SecureRandom` のすべてのインスタンスを特定します。シード値を指定するとランダム性が低下する可能性があります。
 
 #### 動的解析
 
