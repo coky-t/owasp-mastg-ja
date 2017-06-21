@@ -160,9 +160,9 @@ Create an SSLContext that uses the TrustManager
 sslContext.init(null, tmf.getTrustManagers(), null);
 ```
 
-The specific implementation in the app might be different, as it might be pinning against only the public key of the certificate, the whole certificate or a whole certificate chain. 
+アプリの特定の実装では異なる可能性があります。ピンニングの対象は証明書の公開鍵のみ、証明書全体、証明書チェーン全体となる可能性があるためです。
 
-Applications that use third-party networking libraries may utilize the certificate pinning functionality in those libraries. For example, okhttp<sup>[3]</sup> can be set up with the `CertificatePinner` as follows:
+サードパーティのネットワークライブラリを使用するアプリケーションではこれらのライブラリの証明書ピンニング機能を利用できます。例えば、okhttp <sup>[3]</sup> では以下のように `CertificatePinner` で設定できます。
 
 ```java
 OkHttpClient client = new OkHttpClient.Builder()
