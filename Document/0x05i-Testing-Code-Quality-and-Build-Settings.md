@@ -297,9 +297,9 @@ public void onCreate() {
 
 ```
 #### 静的解析
-With the purpose to check if `StrictMode` is enabled you could look for the methods `StrictMode.setThreadPolicy` or `StrictMode.setVmPolicy`. Most likely they will be in the onCreate() method.
+`StrictMode` が有効であるかどうかを確認するには、`StrictMode.setThreadPolicy` または `StrictMode.setVmPolicy` メソッドを探します。ほとんどの場合、それらは onCreate() メソッドにあります。
 
-The various detect methods for Thread Policy are<sup>[3]</sup>:
+Thread Policy のさまざまな検出メソッドは以下になります <sup>[3]</sup> 。
 ```
 detectDiskWrites() //API level 9
 detectDiskReads() //API level 9
@@ -309,13 +309,13 @@ detectAll()
 detectCustomSlowCalls()
 ```
 
-Another possibility is to capture all kind of violation as:
+もうひとつの可能性としてすべての種類の違反を以下のように捕捉します。
 ```
 detectAll()
 detectCustomSlowCalls()
 ```
 
-The possible penalties for thread policy are<sup>[3]</sup>:
+Thread Policy のペナルティには以下があります <sup>[3]</sup> 。
 ```
 penaltyLog() //Logs a message to LogCat
 penaltyDeath() //Crashes application, runs at the end of all enabled penalties
@@ -325,7 +325,7 @@ penaltyDropBox() //Enable detected violations log a stacktrace and timing data t
 penaltyFlashScreen() //Introduced in API level 11 which Flash the screen during a violation
 ```
 
-Considering the VM policy of StrictMode, the policy are<sup>[3]</sup>:
+StrictMode の VM Policy を考慮する場合、ポリシーは以下になります <sup>[3]</sup> 。
 ```
 detectActivityLeaks() //API level 11. Detect leaks of Activity subclasses.
 detectLeakedClosableObjects() //API level 11. Detect when an Closeable or other object with a explict termination method is finalized without having been closed.
@@ -333,7 +333,7 @@ detectLeakedSqlLiteObjects() //API level 9. Detect when an SQLiteCursor or other
 setClassInstanceLimit(Class.forName("my.app.sample.sampleclass"),10) //API level 11
 ```
 
-The possible penalties for VM policy violation are<sup>[3]</sup>:
+VM Policy 違反のペナルティには以下があります <sup>[3]</sup> 。
 ```
 penaltyLog()
 penaltyDeath()
@@ -341,14 +341,14 @@ penaltyDropBox()
 ```
 
 #### 動的解析
-There are different way of detecting the `StrictMode` and it depends on how the policies' role are implemented. Some of them are:
+`StrictMode` の検出にはさまざまな方法があり、ポリシーの役割の実装方法に依存します。それらの一部として以下があります。
 * Logcat
-* Warning Dialog
-* Crash of the application
+* 警告ダイアログ
+* アプリケーションのクラッシュ
 
 #### 改善方法
-It's recommended to insert the policy in the `if` statement with `DEVELOPER_MODE` as condition.
-The DEVELOPER_MODE has to be disabled for release build in order to disable `StrictMode` too.
+条件として `DEVELOPER_MODE` を指定した `if` 文にポリシーを挿入することを推奨します。
+`StrictMode` を無効にするには、リリースビルドで DEVELOPER_MODE を無効にする必要があります。
 
 #### 参考情報
 
