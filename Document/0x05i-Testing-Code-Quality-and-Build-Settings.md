@@ -255,27 +255,27 @@ build.gradle に以下を追加します。
 ### デバッグコードや詳細エラーログに関するテスト
 
 #### 概要
-StrictMode is a developer tool to be able to detect policy violation, e.g. disk or network access.
-It can be implemented in order to check the usage of good coding practices such as implementing high-performance code or usage of network access on the main thread.
-The policy are defined together with rules and different methods of showing the violation of a policy.
+StrictMode は開発ツールであり、ディスクやネットワークアクセスなどのポリシー違反を検出できます。
+高パフォーマンスコードの実装やメインスレッドでのネットワークアクセスの仕様など、優れたコーディング作法の使用状況をチェックするよう実装されています。
+ポリシーはポリシー違反を示すルールやさまざまな手法とともに定義されています。
 
-There are two category of policies:
+ポリシーには二つのカテゴリがあります。
 * `StrictMode.ThreadPolicy`
 * `StrictMode.VmPolicy`
 
-The ThreadPolicy can monitor:
+ThreadPolicy は以下を監視します。
 * Disk Reads
 * Disk Writes
 * Network access
 * Custom Slow Code
 
-The VM policies,  applied to all threads in the virtual machine's process, are:
+VM ポリシーは仮想マシンのプロセス内のすべてのスレッドに適用されます。
 * Leaked Activity objects
 * Leaked SQLite objects
 * Leaked Closable objects
 
-In order to enable `StrictMode`, the code should be implemented in onCreate().
-Here is an example of enabling both policies mentioned above<sup>[1]</sup>:
+`StrictMode` を有効にするには、onCreate() にコードを実装する必要があります。
+上記の両方のポリシー <sup>[1]</sup> を有効にする例を以下に示します。
 ```
 public void onCreate() {
      if (DEVELOPER_MODE) {
