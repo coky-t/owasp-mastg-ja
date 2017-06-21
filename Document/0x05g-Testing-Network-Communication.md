@@ -8,19 +8,19 @@
 
 #### 静的解析
 
-The static analysis approach is to decompile an application, if the source code was not provided. There are 2 main issues related with validating TLS connection that should be verified in the code:
+静的解析のアプローチは、ソースコードが提供されていない場合、アプリケーションを逆コンパイルすることです。TLS 接続の検証に関する 2 つの主要な問題をコードで検証する必要があります。
 * 一つ目は証明書が信頼できるソースから取得されたかどうかの検証
 * 二つ目はエンドポイントサーバーが正しい証明書を提示しているかどうかを確認すること <sup>[3]</sup> 。
 
-Simply look in the code for TrustManager and HostnameVerifier usage. You can find insecure usage examples in the sections below.
+TrustManager および HostnameVerifier を使用するコードを見てみます。安全でない使用例は後述のセクションにあります。
 
-Such checks of improper certificate verification, may be done automatically, using a tool called MalloDroid<sup>[4]</sup>. It simply decompiles an application and warns you if it finds something suspicious. To run it, simply type this command:
+このような不適切な証明書の確認は、MalloDroid <sup>[4]</sup> というツールを使用して自動的に行うことができます。単にアプリケーションを逆コンパイルして、疑わしいものが見つかった場合には警告します。これを実行するには、以下のコマンドを入力します。
 
 ```bash
 $ ./mallodroid.py -f ExampleApp.apk -d ./outputDir
 ```
 
-Now, you should be warned if any suspicious code was found by MalloDroid and in `./outputDir` you will find decompiled application for further manual analysis.
+ここで、MalloDroid が疑わしいコードを見つけていた場合には警告され、`./outputDir` にはさらなる手動解析のための逆コンパイルされたアプリケーションが見つかります。
 
 ##### サーバー証明書の検証
 
