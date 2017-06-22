@@ -405,10 +405,10 @@ penaltyDropBox()
 - アプリケーションで使用されるロギングメカニズムには何の情報も提供しない。
 
 #### 改善方法
-There are a few things a developer can do:
-- Ensure that the application use a well-designed and unified scheme to handle exceptions<sup>[1]</sup>.
-- When an exception is thrown, make sure that the application has centralized handlers for exceptions that result in similar behavior. This can be a static class for instance. For specific exceptions given the methods context, specific catch blocks should be provided.
-- When executing operations that involve high risk information, make sure you wipe the information in the finally block in java:
+開発者ができることはいくつかあります。
+- アプリケーションが適切に設計され統一されたスキームを使用して例外を処理することを確認する <sup>[1]</sup> 。
+- 例外をスローする場合には、アプリケーションが同様の振る舞いを引き起こす例外に対して一元的なハンドラを持つことを確認する。これはたとえば静的クラスにできる。メソッドのコンテキストで特定の例外が発生する場合は、特定の catch ブロックを提供すべきである。
+- 危険度の高い情報を含む操作を実行する場合には、Java の finally ブロックで情報を消去することを確認する。
 
 ```java
 byte[] secret;
@@ -421,7 +421,7 @@ try{
 }
 ```
 
-- Add a general exception-handler for uncaught exceptions to clear out the state of the application prior to a crash:
+- 捕捉されない例外に対する汎用の例外ハンドラを追加して、クラッシュする前にアプリケーションの状態をクリアする。
 ```java
 public class MemoryCleanerOnCrash implements Thread.UncaughtExceptionHandler {
 
@@ -453,7 +453,7 @@ public class MemoryCleanerOnCrash implements Thread.UncaughtExceptionHandler {
 }
 ```
 
-Now you need to call the initializer for the handler at your custom `Application` class (e.g. the class that extends `Application`):
+次にカスタム `Application` クラス (`Application` から派生するクラスなど) でハンドラのイニシャライザを呼び出す必要があります。
 
 ```java
 
