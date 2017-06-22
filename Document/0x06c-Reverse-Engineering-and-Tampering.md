@@ -20,7 +20,7 @@ Xcode は macOS, iOS, watchOS, tvOS 用のソフトウェアを開発するた�
 
 - MachoOView <sup>[3]</sup> は有用なビジュアル Mach-O ファイルブラウザで、ARM バイナリのインファイル編集も可能です。
 
-- otool is a tool for  displays  specified  parts	of object files or libraries. It understands both Mach-O (Mach object) files and universal file formats.  
+- otool はオブジェクトファイルやライブラリの指定された部分を表示するためのツールです。これは Mach-O ファイルとユニバーサルファイルフォーマットの両方を理解します。
 
 #### リバースフレームワーク
 
