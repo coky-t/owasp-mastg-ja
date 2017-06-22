@@ -383,11 +383,11 @@ penaltyDropBox()
 
 ソースコードをレビューして、アプリケーションがさまざまな種類のエラー(IPC 通信、リモートサービス呼び出しなど)を処理する方法を理解および特定します。この段階で実行されるチェックの例を以下に示します。
 
-* アプリケーションが正しく設計され統一された方式を使用して例外を処理することを確認します <sup>[1]</sup>。
-* Verify that standard `RuntimeException`s (e.g.`NullPointerException`, `IndexOutOfBoundsException`, `ActivityNotFoundException`, `CancellationException`, `SQLException`) are anticipated upon by creating proper null-checks, bound-checks and alike. See <sup>[2]</sup> for an overview of the provided child-classes of `RuntimeException`. If the developer still throws a child of `RuntimeException` then this should always be intentional and that intention should be handled by the calling method.
-* Verify that for every non-runtime `Throwable`, there is a proper catch handler, which ends up handling the actual exception properly.
-* Verify that the application doesn't expose sensitive information while handling exceptions in its UI or in its log-statements, but are still verbose enough to explain the issue to the user.
-* Verify that any confidential information, such as keying material and/or authentication information is always wiped at the `finally` blocks in case of a high risk application.
+* アプリケーションが正しく設計され統一された方式を使用して例外を処理することを確認する <sup>[1]</sup>。
+* 適切なヌルチェック、境界チェックなどを作成することにより、標準の `RuntimeException` 群 (`NullPointerException`, `IndexOutOfBoundsException`, `ActivityNotFoundException`, `CancellationException`, `SQLException` など) を未然に防ぐことを確認する。`RuntimeException` の提供される子クラスの概要については <sup>[2]</sup> を参照する。開発者が依然として `RuntimeException` の子をスローする場合、これは常に意図的であるべきで、その意図は呼出元のメソッドで処理すべきである。
+* すべての非実行時 Throwable` について、適切な catch ハンドラが存在し、実際の例外を適切に処理することを確認する。
+* UI または ログステートメントで例外を処理する際に、アプリケーションは機密情報を開示しないが、ユーザーに問題を十分詳細に説明していることを確認する。
+* 危険性の高いアプリケーションの場合には、鍵マテリアルや認証情報などの機密情報は `finally` ブロックで常に消去されることを確認する。
 
 
 #### 動的解析
