@@ -376,8 +376,8 @@ penaltyDropBox()
 ### 例外処理のテスト
 
 #### 概要
-Exceptions can often occur when an application gets into a non-normal or erroneous state. Both in Java and C++ exceptions can be thrown when such state occurs.
-Testing exception handling is about reassuring that the application will handle the exception and get to a safe state without exposing any sensitive information at both the UI and the logging mechanisms used by the application.
+例外はアプリケーションが正常ではない状態やエラーのある状態になったときによく発生します。このような状態が発生したときに Java と C++ のいずれも例外をスローします。
+例外処理のテストとは、アプリケーションで使用される UI とロギングメカニズムの両方で機密情報を開示することなく、アプリケーションが例外を処理して安全な状態になることを再確認することです。
 
 #### 静的解析
 
