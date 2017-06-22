@@ -391,18 +391,18 @@ penaltyDropBox()
 
 
 #### 動的解析
-There are various ways of doing dynamic analysis:
+動的解析を行うにはさまざまな方法があります。
 
-- Use Xposed to hook into methods and call the method with unexpected values or overwrite existing variables to unexpected values (e.g. Null values, etc.).
-- Provide unexpected values to UI fields in the Android application.
-- Interact with the application using its intents and public providers by using values that are unexpected.
-- Tamper the network communication and/or the files stored by the application.
+- Xposed を使用してメソッドにフックし、予期しない値でメソッドを呼び出すか、予期しない値 (NULL 値など) で既存の変数を上書きする。
+- Android アプリケーションの UI フィールドに予期しない値を入力する。
+- 予期しない値を使用してインテントや公開プロバイダを使用してアプリケーションと対話する。
+- ネットワーク通信やアプリケーションに格納されたファイルを改竄する。
 
-In all cases, the application should not crash, but instead, it should:
+すべての場合に、アプリケーションはクラッシュしてはいけません。代わりに、以下のようにすべきです。
 
-- Recover from the error or get into a state in which it can inform the user of not being able to continue.
-- If necessary, inform the user in an informative message to make him/her take appropriate action. The message itself should not leak sensitive information.
-- Not provide any information in logging mechanims used by the application.
+- エラーから回復する、もしくは継続できないことをユーザーに知らせることができる状態にする。
+- 必要に応じて、ユーザーに適切な措置をとるための情報メッセージを知らせる。そのメッセージ自体に機密情報を漏らさない。
+- アプリケーションで使用されるロギングメカニズムには何の情報も提供しない。
 
 #### 改善方法
 There are a few things a developer can do:
