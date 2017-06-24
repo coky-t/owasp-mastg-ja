@@ -24,7 +24,7 @@ Xcode は macOS, iOS, watchOS, tvOS 用のソフトウェアを開発するた�
 
 #### リバースフレームワーク
 
-Radare2 is a complete framework for reverse-engineering and analyzing. It is built around the Capstone disassembler, Keystone assembler, and Unicorn CPU emulation engine. Radare2 has support for iOS binaries and many useful iOS-specific features, such as a native Objective-C parser, and an iOS debugger.
+Radare2 はリバースエンジニアリングと解析のための完全なフレームワークです。これは Capstone 逆アセンブラ、Keystone アセンブラ、Unicorn CPU エミュレータエンジンを中心に構築されています。Radare2 はネイティブ Objective-C パーサーや iOS デバッガなど、iOS バイナリや多くの有用な iOS 固有の機能をサポートしています。
 
 #### 商用逆アセンブラ
 
