@@ -28,7 +28,7 @@ Radare2 はリバースエンジニアリングと解析のための完全なフ
 
 #### 商用逆アセンブラ
 
-IDA Pro can deal with iOS binaries and has a built-in iOS debugger. IDA is widely seen as the gold standard for GUI-based, interactive static analysis, but it isn't cheap. For the more budget-minded reverse engineer, Hopper offers similar static analysis features.
+IDA Pro は iOS バイナリを扱うことができ、iOS デバッガを内蔵しています。IDA は GUI ベースでインタラクティブな静的解析のためのゴールドスタンダードとして広く知られていますが、安価ではありません。より予算を重視するリバースエンジニアには、Hopper が同様の静的解析機能を提供します。
 
 ### iOSの脱獄
 
