@@ -83,7 +83,7 @@ iOS でのデバッグは一般的に Mach IPC を介して実装されます。
 
 XNU カーネルは <code>ptrace()</code> システムコールも実装していますが、レジスタステートやメモリ内容を読み書きする機能などの一部の機能が削除されています。それでも、<code>lldb</code> や <code>gdb</code> などの標準的なデバッガでは <code>ptrace()</code> が限定的に使用されます。Radare2 の iOS デバッガなどの一部のデバッガは <code>ptrace</code> をまったく使用しません。
 
-##### Using lldb
+##### lldb の使用
 
 iOS にはコンソールアプリケーション debugserver が付属しており、gdb または lldb を使用したリモートでバッグが可能です。但し、デフォルトでは debugserver を任意のプロセスにアタッチすることはできません(通常は XCode でデプロイされた自己開発アプリのデバッグにのみ使用されます)。サードパーティアプリのデバッグを有効にするには、task_for_pid entitlement を debugserver 実行可能ファイルに追加する必要があります。これを行う簡単な方法は XCode に同梱されている debugserver バイナリに entitlement を追加することです <sup>[5]</sup>。
 
@@ -136,7 +136,7 @@ Attaching to process 2670...
 
 -- TODO [Solving UnCrackable App with lldb] --
 
-##### Using Radare2
+##### Radare2 の使用
 
 -- TODO [Write Radare2 tutorial] --
 
@@ -146,28 +146,28 @@ Attaching to process 2670...
 
 #### Cycript と Cynject
 
-Cydia Substrate (formerly called MobileSubstrate) is the de-facto standard framework for developing run-time patches (“Cydia Substrate extensions”) on iOS. It comes with Cynject, a tool that provides code injection support for C. Cycript is a scripting language developed by Jay Freeman (saurik). Cycript injects a JavaScriptCore VM into the running process. Users can then manipulate the process using a hybrid of Objective-C++ and JavaScript syntax through the Cycript interactive console. It is also possible to access and instantiate Objective-C classes inside a running process. Some examples for the use of Cycript are listed in the iOS chapter.
+Cydia Substrate (以前は MobileSubstrate と呼ばれていました) は iOS 上でランタイムパッチ ("Cydia Substrate extensions") を開発するためのデファクトスタンダードなフレームワークです。これには C のコードインジェクションをサポートするツールである Cynject が付属しています。Cycript は Jay Freeman (saurik) により開発されたスクリプト言語です。Cycript は JavaScriptCore VM を実行中のプロセスに注入します。それから、ユーザーは Cycript 対話コンソールを通じて Objective-C++ と JavaScript の文法のハイブリッドを使用してプロセスを操作できます。また、実行中のプロセス内での Objective-C クラスのアクセスおよびインスタンス化もできます。Cycript の使用例はこの iOS の章に記載されています。
 
-Firt the SDK need to be downloaded, unpacked and installed.
+まず SDK をダウンロードし、展開してインストールする必要があります。
 ```bash
 $ wget https://cydia.saurik.com/api/latest/3 -O cycript.zip && unzip cycript.zip
 #on iphone
 $ sudo cp -a Cycript.lib/*.dylib /usr/lib
 $ sudo cp -a Cycript.lib/cycript-apl /usr/bin/cycript
 ```
-To spawn the interactive cycript shell, you can run “./cyript” or just “cycript” if cycript is on your path.
+対話式の cycript シェルを起動するには、"./cycript" を実行します。cycript がパス上にある場合は単に "cycript" です。
 ```bash
-$ cycyript
+$ cycript
 cy#
 ```
-To inject into a running process, we need to first find out the process ID (PID). We can run “cycript -p” with the PID to inject cycript into the process. To illustrate we will inject into springboard.
+実行中のプロセスに注入するには、まずプロセス ID (PID) を調べる必要があります。プロセスに cycript を注入するには、PID を付けて "cycript -p" を実行します。説明のために、SpringBoard に注入します。
 ```bash
 $ ps -ef | grep SpringBoard 
 501 78 1 0 0:00.00 ?? 0:10.57 /System/Library/CoreServices/SpringBoard.app/SpringBoard
 $ ./cycript -p 78
 cy#
 ```
-We have injected cycript into SpringBoard, lets try to trigger an alert message on SpringBoard with cycript. 		
+SpringBoard に cycript を注入しました。cycript で SpringBoard 上の警告メッセージをトリガできます。
 ```bash
 cy# alertView = [[UIAlertView alloc] initWithTitle:@"OWASP MSTG" message:@"Mobile Security Testing Guide"  delegate:nil cancelButtonitle:@"OK" otherButtonTitles:nil]
 #"<UIAlertView: 0x1645c550; frame = (0 0; 0 0); layer = <CALayer: 0x164df160>>"
@@ -176,17 +176,17 @@ cy# [alertView release]
 ```
 ![Cycript Alert Sample](Images/Chapters/0x06c/cycript_sample.png)
 
-Discover the document directory with cycript:
+cycript でドキュメントディレクトリを見つけます。
 ```bash
 cy# [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0]
 #"file:///var/mobile/Containers/Data/Application/A8AE15EE-DC8B-4F1C-91A5-1FED35212DF/Documents/"
 ```
 
-Get the delegate class for the application using the command below:
+以下のコマンドを使用して、アプリケーションの delegate クラスを取得します。
 ```bash
 cy# [UIApplication sharedApplication].delegate
 ```
-The command [[UIApp keyWindow] recursiveDescription].toString() returns the view hierarchy of keyWindow. The description of every subview and sub-subview of keyWindow will be shown and the indentation space reflects the relationships of each views. For an example UILabel, UITextField and UIButton are subviews of UIView. 
+コマンド [[UIApp keyWindow] recursiveDescription].toString() は keyWindow のビュー階層を返します。keyWindow のすべてのサブビューとサブサブビューの説明が表示され、インデントスペースには各ビューの関係が反映されます。例では、UILabel, UITextField, UIButton が UIView のサブビューです。
 
 ```
 cy# [[UIApp keyWindow] recursiveDescription].toString()
@@ -202,19 +202,19 @@ cy# [[UIApp keyWindow] recursiveDescription].toString()
    |    | <_UILayoutGuide: 0x16d92c10; frame = (0 568; 0 0); hidden = YES; layer = <CALayer: 0x16d92cb0>>`
 ```
 
-Obtain references to existing objects
+既存のオブジェクトへの参照を取得します。
 
 TODO
 
-Instantiate objects from classes
+クラスからオブジェクトをインスタンス化します。
 
 TODO
 
-Hooking native functions
+ネイティブ関数をフックします。
 
 TODO
 
-Hooking objective-C methods
+Objective-C メソッドをフックします。
 
 TODO
 
