@@ -67,9 +67,9 @@ iOS の脱獄に関するコンテンツについて読める信頼できるリ�
 
 ### iOS アプリのリバースエンジニアリング
 
-iOS reverse engineering is a mixed bag. On the one hand, apps programmed in Objective-C and Swift can be disassembled nicely. In Objective-C, object methods are called through dynamic function pointers called "selectors", which are resolved by name during runtime. The advantage of this is that these names need to stay intact in the final binary, making the disassembly more readable. Unfortunately, this also has the effect that no direct cross-references between methods are available in the disassembler, and constructing a flow graph is challenging. 
+iOS のリバースエンジニアリングは寄せ集めです。一方では、Objective-C や Swift でプログラムされたアプリはうまく逆アセンブルできます。Objective-C では、実行時に名前により解決する "selectors" と呼ばれる動的関数ポインタによりオブジェクトメソッドが呼び出されます。これの利点は、これらの名前が最終バイナリにそのまま残っている必要があり、逆アセンブリがより読みやすくなることです。残念ながら、これにはメソッド間の直接的な相互参照が逆アセンブラで利用できず、フローグラフの構築が難しいという効果もあります。
 
-In this guide, we'll give an introduction on static and dynamic analysis and instrumentation. Throughtout this chapter, we'll be referring to the OWASP UnCrackable Apps for iOS, so download them from MSTG repository if you're planning to follow the examples.
+このガイドでは、静的解析、動的解析、計装について紹介します。この章では、iOS 用の OWASP UnCrackable Apps について言及していますので、例に従うのであれば MSTG リポジトリからダウンロードしてください。
 
 #### 静的解析
 
