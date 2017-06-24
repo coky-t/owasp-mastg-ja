@@ -49,9 +49,9 @@ iOS アプリケーションはアプリケーションサンドボックスに�
 
 #### iOSの脱獄の方法
 
-The iOS jailbreak scene is evolving so rapidly that it is difficult to provide-up-to-date instructions.
+iOS の脱獄のシーンは急速に変化しており、最新の説明を提供することは困難です。
 
-Note that obviously OWASP and the MSTG will not be responsible if you end up bricking your iOS device!
+iOS デバイスを文鎮化してしまっても、OWASP および MSTG はいかなる責任も負わないことに注意します。
 
 iOS の脱獄に関するコンテンツについて読める信頼できるリソースです。
 
