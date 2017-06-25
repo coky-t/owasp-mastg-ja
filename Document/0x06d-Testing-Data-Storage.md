@@ -439,31 +439,31 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 
 #### 静的解析
 
-The following section summarizes different keywords that you should look for in order to identify IPC implementations within iOS source code.
+以下のセクションでは、iOS のソースコード内の IPC 実装を識別するために探す必要があるさまざまなキーワードをまとめています。
 
-##### XPC Services
+##### XPC サービス
 
-Several classes might be used when implementing the NSXPCConnection API:
+NSXPCConnection API を実装する際には、いくつかのクラスを使用できます。
 
 * NSXPCConnection
 * NSXPCInterface
 * NSXPCListener
 * NSXPCListenerEndpoint
 
-Several security attributes for the connection can be set and should be verified<sup>[7]</sup>.
+接続にはいくつかのセキュリティ属性を設定して検証する必要があります <sup>[7]</sup> 。
 
-For the XPC Services API, which are C-based, the availability of the following two files in the Xcode project should be checked:
+C ベースの XPC Services API では、Xcode プロジェクトで以下の二つのファイルの可用性をチェックする必要があります。
 
-* xpc.h<sup>[4]</sup>
+* xpc.h <sup>[4]</sup>
 * connection.h
 
-##### Mach Ports
+##### Mach ポート
 
-Keywords to look for in low-level implementations:
+低レベルの実装で探すキーワードです。
 * mach_port_t
 * mach_msg_*
 
-Keywords to look for in high-level implementations (Core Foundation and Foundation wrappers):
+高レベルの実装 (Core Foundation や Foundation ラッパー) で探すキーワードです。
 * CFMachPort
 * CFMessagePort
 * NSMachPort
@@ -472,19 +472,19 @@ Keywords to look for in high-level implementations (Core Foundation and Foundati
 
 ##### NSFileCoordinator
 
-Keywords to look for:
+検索キーワードです。
 * NSFileCoordinator
 
 #### 動的解析
 
-IPC mechanisms should be verified via static analysis in the iOS source code. At this point of time no tool is availalbe on iOS to verify IPC usage.
+IPC メカニズムは iOS ソースコードの静的解析を介して検証する必要があります。現時点で IPC の使用状況を検証するために iOS 上で利用可能なツールはありません。
 
 
 #### 改善方法
 
-XPC services is the most secure and flexible way when implementing IPC on iOS and should be used primarily.
+XPC サービスは iOS 上で IPC を実装する際に最もセキュアで柔軟な方法であり、優先的に使用すべきです。
 
-NSFileCoordinator<sup>[6]</sup> methods run synchronously, so your code will block until they complete. That's convenient since you don't have to wait for an asynchronous block callback. But it also means that they block the current thread.
+NSFileCoordinator <sup>[6]</sup> メソッドは同期的に実行されるため、コードは完了するまでブロックされます。これは非同期ブロックコールバックを待つ必要がないため便利です。しかし、現在のスレッドをブロックすることも意味します。
 
 #### 参考情報
 
