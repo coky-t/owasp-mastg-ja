@@ -128,8 +128,8 @@ $ plutil -convert xml1 Info.plist
 --TODO
 
 #### 改善方法
-* ATS should always be activated and only be deactivated under certain circumstances.
-* If the application connects to a defined number of domains that the application owner controls, then configure the servers to support the ATS requirements and opt-in for the ATS requirements within the app. In the following example, `example.com` is owned by the applicaiton owner and ATS is enabled for that domain.
+* ATS は常に有効にし、特定の状況下でのみ無効化する。
+* アプリケーションはアプリケーション所有者が管理する定義された数のドメインに接続する場合、ATS 要件をサポートするようにサーバーを構成し、アプリ内の ATS 要件をオプトインする。以下の例では、`example.com` はアプリケーション所有者が所有し、そのドメインに対して ATS が有効になっています。
 ```
 <key>NSAppTransportSecurity</key>
 <dict>
@@ -152,8 +152,8 @@ $ plutil -convert xml1 Info.plist
 </dict>
 ```
 
-* If connections to 3rd party domains are made (that are not under control of the app owner) it should be evaluated what ATS settings are not supported by the 3rd party domain and deactivated.
-* If the application opens third party web sites in web views, then from iOS 10 onwards NSAllowsArbitraryLoadsInWebContent can be used to disable ATS restrictions for the content loaded in web views 
+* (アプリ所有者の管理下にない) サードパーティのドメインとの接続が行われる場合、サードパーティのドメインでサポートされていない ATS 設定を評価し、無効化する必要がある。
+* アプリケーションが WebView でサードパーティのウェブサイトを開く場合、iOS 10 以降では NSAllowsArbitraryLoadsInWebContent を使用して、WebView でロードされるコンテンツの ATS 制限を無効化する。
 
 #### 参考情報
 
