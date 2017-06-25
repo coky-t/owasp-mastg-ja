@@ -125,7 +125,7 @@ iOS アプリで安全でないデータストレージのインスタンスを�
 
 より詳細な解析には、IntroSpy などの API 監視ツールを使用してアプリを計装します。
 
-If necessary during dynamic analysis, the contents of the Keychain can be dumped using keychain dumper <sup>[9]</sup> as described in the chapter "Basic Security Testing on iOS". The keychain file is located at:
+動的解析の中で必要な場合には、「セキュリティテスト入門 (iOS)」の章で説明しているように keychain dumper <sup>[9]</sup> を使用してキーチェーンの内容をダンプできます。キーチェーンファイルは以下の場所にあります。
 
 ```
 /private/var/Keychains/keychain-2.db
