@@ -546,9 +546,9 @@ NSFileCoordinator <sup>[6]</sup> メソッドは同期的に実行されるた�
 
 #### 概要
 
-Like other modern mobile operating systems iOS offers auto-backup features that create copies of the data on the device. On iOS, backups can be made either through iTunes, or the the cloud using the iCloud backup feature. In both cases, the backup includes nearly all data stored on the device, except some highly sensitive things like Apple Pay information and TouchID settings.
+他の最新のモバイルオペレーティングシステムと同様に、iOS はデバイス上のデータのコピーを作成する自動バックアップ機能を提供します。iOS では、バックアップは iTunes を介して行うか、iCloud バックアップ機能を使用してクラウドを介して行います。いずれの場合でも、バックアップはデバイス上のほぼすべてのデータを含みますが、Apple Pay 情報や TouchID 設定などの一部の非常に機密性の高いものは除きます。
 
-Since iOS backs up installed apps and their data, an obvious concern is whether sensitive user data stored by the app might unintentionally leak through the backup. The answer to this question is "yes" - but only if the app insecurely stores sensitive data in the first place.
+iOS はインストールされたアプリとそのデータをバックアップするので、アプリに格納される機密性のあるユーザーデータが意図せずバックアップを介して漏洩するかどうかが明らかに懸念されます。この質問の答えは「はい」ですが、アプリがそもそも機密データをセキュアではなく格納している場合に限ります。
 
 ##### キーチェーンはどのようにバックアップされているか
 
@@ -836,4 +836,4 @@ Review the iOS mobile application source code to see if there is any usage of
 - CWE: -- TODO [Add link to CWE issue for "Verifying User Education Controls"] --
 
 #### その他
--- TODO
+-- TOD
