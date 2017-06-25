@@ -554,9 +554,9 @@ iOS はインストールされたアプリとそのデータをバックアッ�
 
 ユーザーが自分の iPhone をバックアップすると、キーチェーンデータもバックアップされますが、キーチェーン内の秘密は暗号化されたままです。キーチェーンデータを復号化するために必要なクラスキーはバックアップには含まれません。キーチェーンデータを復元するには、バックアップはデバイスに復元する必要があり、そのデバイスは同じパスコードでアンロックする必要があります。
 
-Keychain items with the <code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code> attribute set can be decrypted only if the backup is restored to the same device. An evildoer trying to extract this Keychain data from the backup would be unable to decrypt it without access to the crypto hardware inside the originating device.
+<code>kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly</code> 属性がセットされたキーチェーンアイテムは、バックアップが同じデバイスに復元される場合にのみ復号化できます。バックアップからこのキーチェーンデータを抽出しようとする悪意のあるユーザーは、元のデバイス内の暗号ハードウェアにアクセスすることなくそれを復号化することはできません。
 
-The takeaway: As long as sensitive data is handled as recommended earlier in this chapter (stored in the Keychain, or encrypted with a key locked inside the Keychain), then backups aren't an issue.
+注意点：この章の前半で推奨されるように機密データが処理される (キーチェーンに格納される、もしくはキーチェーン内にロックされた鍵で暗号化されている) 限り、バックアップは問題ではありません。
 
 #### 静的解析
 
@@ -836,4 +836,4 @@ Review the iOS mobile application source code to see if there is any usage of
 - CWE: -- TODO [Add link to CWE issue for "Verifying User Education Controls"] --
 
 #### その他
--- TOD
+-- TODO
