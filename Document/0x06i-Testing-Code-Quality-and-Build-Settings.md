@@ -217,17 +217,17 @@ Swift 3 では、Xcode 8 を使用して、Build settings / Swift compiler - Cus
 ### 例外処理のテスト
 
 #### 概要
-Exceptions can often occur when an application gets into a non-normal or erroneous state. 
-Testing exception handling is about reassuring that the application will handle the exception and get to a safe state without exposing any sensitive information at both the UI and the logging mechanisms used by the application.
+例外はアプリケーションが正常ではない状態やエラーのある状態になった場合によく発生します。
+例外処理のテストとは、アプリケーションで使用される UI とロギングメカニズムの両方で機密情報を開示することなく、アプリケーションが例外を処理して安全な状態になることを再確認することです。
 
-However, bear in mind that exception handling in objective-C is quite different than in Swift. Bridging the two concepts to one another in application that has both legacy objective-C code and Swift-code can be problematic. 
+但し、Objective-C の例外処理は Swift とはまったく異なることに注意します。従来の Objective-C コードと Swift コードの両方を持つアプリケーションで二つの概念を相互に橋渡しすることは問題になる可能性があります。
 
-##### Exception handling in Objective-C
-Objective-C has two types of errors :
+##### 例外処理 (Objective-C)
+Objective-C には二種類のエラーがあります。
 
 **NSException**
-`NSException` is used for handling programming or low-level errors (e.g. divided by 0, out-of-bounds array access). 
-An `NSException` can either be raised by `raise()` or thrown with `@throw`, unless caught, will invoke the unhandled exception handler where you can log the statement and then the program will be halted, `@catch` allows you to recover from it if you are using a `@try`-`@catch`-block:
+`NSException` はプログラミングエラーや低レベルエラー (0 による除算、配列の境界外アクセスなど) を処理するために使用されます。
+`NSException` は `raise()` によるレイズ、または `@throw` でスローされます。catch されない場合、unhandled 例外ハンドラが呼び出され、ステートメントをログ出力してプログラムを停止します。`@try`-`@catch` ブロックを使用している場合、`@catch` はそれから回復できます。
 ```obj-c
  @try {
  	//do work here
@@ -241,10 +241,10 @@ An `NSException` can either be raised by `raise()` or thrown with `@throw`, unle
  	//cleanup
 ```
 
-Bear in mind that using NSException comes with pitfalls regarding memory management: you need to cleanup allocations from the try block in the finally block <sup>[1], [2]</sup>. Note that you can promote `NSException` objects to `NSError` by instantiating an `NSError` at the `@catch` block.
+NSException の使用にはメモリ管理に関する落とし穴があることに気をつけます。finally ブロック内で try ブロックでの割り当てをクリーンアップする必要があります <sup>[1], [2]</sup> 。`@catch` ブロックで `NSError` をインスタンス化することにより `NSException` オブジェクトを `NSError` に変換できることに注意します。
 
 **NSError**
-`NSError` is used for all other type of errors <sup>[3]</sup>. Some APIs of the Cocoa frameworks provide them as as an object in their failure callback in case something went wrong, otherwise a pointer to an `NSError` object is passed by reference. It can be a good practice to provide a `BOOL` return type to the method that takes a pointer to an `NSError` object and originally not having a return value a return type (to indicate a success or failure). If there is a return type, then make sure to return nil in case of an error. So in case of NO or nil, you can inspect the error/reason for failure.
+`NSError` は他のすべてのタイプのエラーに使用されます <sup>[3]</sup> 。Cocoa フレームワークの一部の API では何かが間違っている場合の失敗時コールバックのオブジェクトしてそれらを提供します。もしくは、`NSError` オブジェクトへのポインタが参照渡しされます。`NSError` オブジェクトへのポインタをとり、もともと (成功か失敗かを示す) 戻りタイプの戻り値を持たないメソッドに、`BOOL` の戻り値型を提供することはよい習慣です。戻り値の型がある場合、エラーの場合に nil を戻すことを確認します。したがって NO または nil の場合には、エラーや失敗の理由を調べることができます。
  
 ##### Exception handling in Swift
 Exception handing in Swift (2~4) is quite different. Even-though there is a try-catch block, it is not there to handle NSException. Instead, it is used to handle errors that conform to the `Error` (Swift3, `ErrorType` in Swift2) protocol. This can be challenging when combinding Objective-C and Swift code in the same application. Therefore, using `NSError` is recommended above using `NSException` in programs with both the languages involved. Furthermore, in Objective-C error-handling is opt-in, but in Swift you have to explicitly handle the `throws`. For conversion on the error throwing, have a look at the Apple documentation<sup>[4]</sup>
