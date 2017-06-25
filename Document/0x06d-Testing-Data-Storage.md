@@ -148,7 +148,7 @@ iOS アプリで安全でないデータストレージのインスタンスを�
   forKey:NSFileProtectionKey]];
 ```
 
-A generic example for using the KeyChain to store, update or delete data can be found in the official Apple documentation<sup>[12]</sup>.
+キーチェーンを使用してデータを保存、更新、削除する一般的な例は公式の Apple ドキュメント <sup>[12]</sup> にあります。
 
 #### 参考情報
 
