@@ -428,13 +428,13 @@ UIPasteboard *pb = [UIPasteboard generalPasteboard];
 
 #### 概要
 
-Inter Process Communication (IPC) is a method that allows processes to send each other messages and data<sup>[1]</sup>. In case two processes need to communicate with each other, different methods are available to implement IPC on iOS:
+プロセス間通信 (IPC) はプロセスが相互にメッセージやデータを送信できるようにする方法です <sup>[1]</sup> 。二つのプロセスが相互に通信する必要がある場合に、iOS 上で IPC を実装するさまざまな方法が利用できます。
 
-* **XPC Services**<sup>[3]</sup>: XPC is a structured, asynchronous interprocess communication library which provides basic interprocess communication and is managed by `launchd`. It runs with the most restricted environment possible: sandboxed with minimal file system access, network access, and no root privilege escalation. There are two different APIs, when working with XPC Services:
-  * NSXPCConnection API and
+* **XPC サービス** <sup>[3]</sup>: XPC は基本的なプロセス間通信を提供し、`launchd` により管理される、構造化された非同期プロセス間通信ライブラリです。これは可能な限り制限された環境で実行されます。最小限のファイルシステムアクセス、ネットワークアクセス、ルート権限昇格なしでサンドボックス化されています。XPC サービスには、二つの異なる API があります。
+  * NSXPCConnection API
   * XPC Services API
-* **Mach Ports**<sup>[5]</sup>: All IPC communication ultimately relies on the Mach Kernel API. Mach Ports allow for local communication (on the same device) only. They can either be implemented natively or by using Core Foundation (CFMachPort) and Foundation (NSMachPort) wrappers.
-* **NSFileCoordinator**: The class NSFileCoordinator can be used to manage and exchange data between apps through files that are accessible on the local file system for different processes.
+* **Mach ポート**<sup>[5]</sup>: すべての IPC 通信は Mach Kernel API に依存しています。Mach ポートは (同じデバイス上の) ローカル通信のみ許可します。それらはネイティブに実装することも、Core Foundation (CFMachPort) や Foundation (NSMachPort) ラッパーを使用することも可能です。
+* **NSFileCoordinator**: NSFileCoordinator クラスはさまざまなプロセスに対してローカルファイルシステム上でアクセス可能なファイルを介して、アプリ間のデータを管理及び交換するために使用できます。
 
 
 #### 静的解析
