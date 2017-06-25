@@ -91,9 +91,9 @@ NSAppTransportSecurity : Dictionary {
 
 #### 静的解析
 
-If the source code is available, open then `Info.plist` file in the application bundle directory using a text editor and look for any exceptions that the application developer has configured. This file should be examined taking the applications context into consideration. 
+ソースコードが利用可能である場合、テキストエディタを使用してアプリケーションバンドルディレクトリの `Info.plist` ファイルを開き、アプリケーション開発者が設定した例外を探します。このファイルはアプリケーションコンテキストを考慮して調べる必要があります。
 
-The following listing is an example of an exception configured to disable ATS restrictions globally. 
+以下のリストは ATS 制限をグローバルに無効化するように設定された例外の例です。
 
 ```
 	<key>NSAppTransportSecurity</key>
@@ -103,24 +103,24 @@ The following listing is an example of an exception configured to disable ATS re
 	</dict>
 ```
 
-If the source code is not available, then the `Info.plist` file should be either can be obtained from a jailbroken device or by extracting the application IPA file.
+ソースコードが利用可能ではない場合、`Info.plist` ファイルは脱獄済みデバイスから取得するか、アプリケーション IPA ファイルから抽出する必要があります。
 
-Since IPA files are ZIP archives, they can be extracted using any zip utility.
+IPA ファイルは ZIP アーカイブであるため、任意の zip ユーティリティを使用して抽出できます。
 
 ```
 $ unzip app-name.ipa
 ```
 
-`Info.plist` file can be found in the `Payload/BundleName.app/` directory of the extract. It’s a binary encoded file and has to be converted to a human readable format for the analysis. 
+`Info.plist` ファイルは抽出した `Payload/BundleName.app/` ディレクトリにあります。これはバイナリエンコードされたファイルであり、解析には人が読める形式に変換する必要があります。
 
-`plutil`<sup>[6]</sup> is a tool that’s designed for this purpose. It comes natively with Mac OS 10.2 and above versions.
+`plutil` <sup>[6]</sup> はこの目的のために設計されたツールです。Mac OS 10.2 以降のバージョンでネイティブに提供されます。
 
-The following command shows how to convert the Info.plist file into XML format.
+以下のコマンドは Info.plist ファイルを XML 形式に変換する方法を示しています。
 ```
 $ plutil -convert xml1 Info.plist
 ```
 
-Once the file is converted to a human readable format, the exceptions can analysed. The application may have ATS exceptions defined to allow it’s normal functionality. For an example, the Firefox iOS application has ATS disabled globally. This exception is acceptable because otherwise the application would not be able to connect to any HTTP web sites or website that do not have the ATS requirements.
+このファイルを人が読める形式に変換すると、例外を解析できます。アプリケーションには通常の機能を許可するために ATS 例外が定義されている場合があります。例えば、Firefox iOS アプリケーションでは ATS がグローバルに無効化されています。アプリケーションが任意のHTTP ウェブサイトや ATS 要件を満たさないウェブサイトに接続できなくなるため、この例外は許容されます。
 
 
 #### 動的解析
