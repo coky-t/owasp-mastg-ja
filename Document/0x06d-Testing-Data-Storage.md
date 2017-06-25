@@ -39,7 +39,7 @@ iOS 7 以降、デフォルトデータ保護クラスは「最初のユーザ�
 
 iOS キーチェーンは暗号鍵やセッショントークンなどの短く機密性の高いデータを安全に保管するために使用されます。キーチェーン API を介してのみアクセスできる SQLite データベースとして実装されています。キーチェーンデータベースはデバイスキーとユーザー PIN やパスワード (ユーザーによって設定されている場合) を使用して暗号化されています。
 
-By default, each app can only access the Keychain created by itself. Access can however be shared between apps signed by the same developer by using the "access groups" feature. Access to the Keychain is managed by the <code>securityd</code> daemon, which grants access based on the app's <code>Keychain-access-groups</code>, <code>application-identifier</code> and <code>application-group</code> entitlements.
+デフォルトでは、各アプリは自分で作成したキーチェーンにのみアクセスできます。但し、「アクセスグループ」機能を使用して同じ開発者が署名したアプリ間でアクセスを共有することはできます。キーチェーンへのアクセスは <code>securityd</code> デーモンにより管理され、アプリの <code>Keychain-access-groups</code>, <code>application-identifier</code>, <code>application-group</code> エンタイトルメントに基づいてアクセスを許可します。
 
 キーチェーン API は自己説明的な名称の以下の主要な操作で構成されています。
 
