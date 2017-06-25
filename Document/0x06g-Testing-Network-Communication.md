@@ -1,8 +1,8 @@
 ## ネットワーク通信のテスト (iOS アプリ)
 
-Almost every every iOS app acts as a client to one or more remote services. As this network communcation usually takes place of the public Internet, and often over unstrusted networks such as public Wifi, classical, network based-attacks become a potential issue.
+ほぼすべての iOS アプリは一つ以上のリモートサービスのクライアントとして機能します。このネットワーク通信は一般に公開されたインターネットから行われ、たいていは公衆 Wi-Fi などの信頼できないネットワークを介して行われるため、古典的なネットワークベースの攻撃が潜在的な問題になります。
 
-Most modern mobile apps use variants of http-based (web-)services, as these protocols are well-documented and supported. On iOS, the The <code>NSURLConnection</code> class provides convenience class methods to load URL requests asynchronously and synchronously.
+ほとんどの最新のモバイルアプリは http ベースの (ウェブ) サービスのバリエーションを使用しています。これらのプロトコルは十分に文書化されサポートされています。iOS では、<code>NSURLConnection</code> クラスが URL リクエストを非同期および同期的にロードする便利なクラスメソッドを提供します。
 
 ### App Transport Security のテスト
 
