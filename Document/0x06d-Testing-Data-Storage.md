@@ -270,7 +270,7 @@ tail -f /var/log/syslog
 
 #### 改善方法
 
-All data that is sent to 3rd Party services should be anonymized, so no PII data is available that would allow the 3rd party to identify the user account. Also all other data, like IDs in an application that can be mapped to a user account or session should not be sent to a third party.  
+サードパーティサービスに送信されるすべてのデータは匿名化される必要があります。そのため、サードパーティがユーザーアカウントを識別できる PII データはありません。また、ユーザーアカウントやセッションにマップできるアプリケーション内の ID などの他のすべてのデータもサードパーティに送信してはいけません。
 
 #### 参考情報
 
