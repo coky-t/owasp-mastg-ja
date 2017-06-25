@@ -71,17 +71,17 @@ NSAppTransportSecurity : Dictionary {
 | `NSAllowsArbitraryLoadsForMedia` | AV Foundation フレームワークからロードされたメディアのすべての ATS 制限を無効にする |
 
 
-The following table summarises the per-domain ATS exceptions. For more information about these exceptions, please refer to Table 3 in reference [1].
+以下の表はドメインごとの ATS 例外をまとめたものです。これらの例外の詳細については、参考情報 [1] の Table 3 を参照ください。
 
-|  Key | Description |
-| -----| ------------|
-| `NSIncludesSubdomains` | Indicates whether ATS exceptions should apply to subdomains of the named domain |
-| `NSExceptionAllowsInsecureHTTPLoads` | Allows HTTP connections to the named domain, but does not affect TLS requirements |
-| `NSExceptionMinimumTLSVersion` | Allows connections to servers with TLS versions less than 1.2 |
-| `NSExceptionRequiresForwardSecrecy` | Disable perfect forward secrecy (PFS) |
+| キー | 説明 |
+| -----| -----|
+| `NSIncludesSubdomains` | ATS 例外を名前付きドメインのサブドメインに適用すべきかどうかを示す |
+| `NSExceptionAllowsInsecureHTTPLoads` | 名前付きドメインへの HTTP 接続を許可するが、TLS 要件には影響しない |
+| `NSExceptionMinimumTLSVersion` | TLS バージョン 1.2 未満のサーバーへの接続を許可する |
+| `NSExceptionRequiresForwardSecrecy` | Perfect Forward Secrecy (PFS) を無効化する |
 
 
-Starting from January 1 2017, Apple App Store review and requires justification if one of the following ATS exceptions are defined. However this decline is extended later by Apple stating “To give you additional time to prepare, this deadline has been extended and we will provide another update when a new deadline is confirmed”<sup>[5]</sup>
+2017年1月1日から Apple App Store はレビューを開始し、以下の ATS 例外の一つが定義されている場合は正当な理由を要求します。しかし、この不同意は延期されました。後に Apple が「準備期間を増やすためにこの期限を延長し、新しい締め切りが確定したときに別のアップデートを提供する」と述べています <sup>[5]</sup> 。
 
 * `NSAllowsArbitraryLoads`
 * `NSAllowsArbitraryLoadsForMedia`
