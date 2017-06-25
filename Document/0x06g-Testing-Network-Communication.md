@@ -14,7 +14,7 @@ ATS はパブリックホスト名に接続する際にのみ強制されます�
 
 以下は App Transport Security Requirements <sup>[1]</sup> の要約リストです。
 
-- HTTP 接続は許可されない
+- HTTP 接続は許可されない。
 - X.509 証明書には SHA256 フィンガープリントがあり、少なくとも 2048 ビットの RSA 鍵または 256 ビットの楕円曲線暗号 (ECC) 鍵で署名する必要がある。
 - Transport Layer Security (TLS) バージョンは 1.2 もしくは以降が必要であり、Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) 鍵交換による Perfect Forward Secrecy (PFS) および AES-128 もしくは AES-256 対称暗号をサポートする必要がある。
 
@@ -40,7 +40,7 @@ ATS の制限は Info.plist ファイルの `NSAppTransportSecurity` キーに�
 * PFS の無効化
 * ローカルドメインへの接続の許可
 
-ATS exceptions can be applied globally or per domain basis. The application can globally disable ATS, but opt in for individual domains. The following listing from Apple Developer documentation shows the structure of the `NSAppTransportSecurity` dictionary<sup>[1]</sup>.
+ATS 例外はグローバルまたはドメイン単位で適用できます。アプリケーションは ATS をグローバルに無効化できますが、個々のドメインをオプトインできます。Apple Developer ドキュメントの以下のリストでは `NSAppTransportSecurity` Dictionary の構造を示しています <sup>[1]</sup> 。
 
 ```
 NSAppTransportSecurity : Dictionary {
@@ -59,16 +59,16 @@ NSAppTransportSecurity : Dictionary {
     }
 }
 ```
-Source: Apple Developer Documentation<sup>[1]</sup>.
+情報源: Apple Developer Documentation <sup>[1]</sup>.
 
-The following table summarises the global ATS exceptions. For more information about these exceptions, please refer to Table 2 in reference [1].
+以下の表はグローバル ATS 例外をまとめたものです。これらの例外の詳細については、参考情報 [1] の Table 2 を参照ください。
 
-|  Key | Description |
-| -----| ------------|
-| `NSAllowsArbitraryLoads` | Disable ATS restrictions globally excepts for individual domains specified under `NSExceptionDomains` |
-| `NSAllowsArbitraryLoadsInWebContent` | Disable ATS restrictions for all the connections made from web views |
-| `NSAllowsLocalNetworking` | Allow connection to unqualified domain names and .local domains |
-| `NSAllowsArbitraryLoadsForMedia` | Disable all ATS restrictions for media loaded through the AV Foundations framework |
+| キー | 説明 |
+| -----| -----|
+| `NSAllowsArbitraryLoads` | `NSExceptionDomains` の下に指定された個々のドメインを除いてグローバルに ATS 制限を無効化する |
+| `NSAllowsArbitraryLoadsInWebContent` | WebView から作成されたすべての接続に対して ATS 制限を無効にする |
+| `NSAllowsLocalNetworking` | 非修飾ドメイン名と .local ドメインへの接続を許可する |
+| `NSAllowsArbitraryLoadsForMedia` | AV Foundation フレームワークからロードされたメディアのすべての ATS 制限を無効にする |
 
 
 The following table summarises the per-domain ATS exceptions. For more information about these exceptions, please refer to Table 3 in reference [1].
