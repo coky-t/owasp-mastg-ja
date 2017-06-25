@@ -266,7 +266,7 @@ tail -f /var/log/syslog
 
 #### 動的解析
 
-All requests made to external services should be analyzed if any sensitive information is embedded into them. By using an interception proxy, we can try to investigate the traffic from the app to the 3rd party endpoints. When using the app all requests that are not going directly to the server where the main function is hosted should be checked, if any sensitive information is sent to a 3rd party. This could be for example PII (Personal Identifiable Information) in a tracker or ad service.
+外部サービスに対するすべてのリクエストに対して、機密情報が埋め込まれていないか解析する必要があります。傍受プロキシを使用することで、アプリからサードパーティのエンドポイントまでのトラフィックを調べることができます。アプリを使用するときには、主要機能がホストされているサーバーに直接接続されていないすべてのリクエストに対して、機密データがサードパーティへ送信されていないかチェックする必要があります。例えば、これにはトラッカーや広告サービスの PII (個人識別情報) があります。
 
 #### 改善方法
 
