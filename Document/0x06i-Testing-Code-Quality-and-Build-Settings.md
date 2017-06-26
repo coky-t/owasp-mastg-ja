@@ -246,18 +246,18 @@ NSException の使用にはメモリ管理に関する落とし穴があるこ�
 **NSError**
 `NSError` は他のすべてのタイプのエラーに使用されます <sup>[3]</sup> 。Cocoa フレームワークの一部の API では何かが間違っている場合の失敗時コールバックのオブジェクトしてそれらを提供します。もしくは、`NSError` オブジェクトへのポインタが参照渡しされます。`NSError` オブジェクトへのポインタをとり、もともと (成功か失敗かを示す) 戻りタイプの戻り値を持たないメソッドに、`BOOL` の戻り値型を提供することはよい習慣です。戻り値の型がある場合、エラーの場合に nil を戻すことを確認します。したがって NO または nil の場合には、エラーや失敗の理由を調べることができます。
  
-##### Exception handling in Swift
-Exception handing in Swift (2~4) is quite different. Even-though there is a try-catch block, it is not there to handle NSException. Instead, it is used to handle errors that conform to the `Error` (Swift3, `ErrorType` in Swift2) protocol. This can be challenging when combinding Objective-C and Swift code in the same application. Therefore, using `NSError` is recommended above using `NSException` in programs with both the languages involved. Furthermore, in Objective-C error-handling is opt-in, but in Swift you have to explicitly handle the `throws`. For conversion on the error throwing, have a look at the Apple documentation<sup>[4]</sup>
-Methods that can throw an error use the `throws` keyword. There are four ways to handle errors in Swift<sup>[5]</sup>:  
+##### 例外処理 (Swift)
+Swift (2～4) の例外処理はまったく異なります。try-catch ブロックがあるにもかかわらず、NSException を処理することはできません。代わりに、`Error` (Swift3 の場合、Swift2 では `ErrorType`) プロトコルに準拠するエラーを処理するために使用されます。同じアプリケーションで Objective-C と Swift コードを組み合わせる場合、これは困難になることがあります。したがって、両方の言語が関係するプログラムでは `NSException` を使用するよりも `NSError`を使用することを推奨します。さらに、Objective-C のエラー処理はオプトインですが、Swift では明示的に `throws` を処理する必要があります。エラーを throw する際の変換には、Apple のドキュメント <sup>[4]</sup> を参照ください。
+エラーを throw するメソッドは `throws` キーワードを使用します。Swift でエラーを処理する方法は四つあります <sup>[5]</sup> 。
 
-- You can propagate the error from a function to the code that calls that function: in this case there is no do-catch, there is only a `throw` throwing the acutal error or there is a `try` to execute the method that throws. The method containing the `try` will need the `throws` keyword as well:
+- 関数からその関数を呼び出すコードにエラーを伝えることができます。この場合、do-catch はありません。単に実際のエラーを throw する `throw` があるか、throw するメソッドを実行する `try` があります。`try` を含むメソッドには `throws` キーワードも必要です。
 
 ```swift
 func dosomething(argumentx:TypeX) throws {
 	try functionThatThrows(argumentx: argumentx)
 }
 ```
-- Handle the error using a do-catch statement: here you can use the following pattern:
+- do-catch 文を使用してエラーを処理します。ここでは以下のパターンを使用できます。
 
 ```swift
 do {
@@ -273,14 +273,14 @@ do {
 }
 ```
 
-- Handle the error as an optional value: 
+- エラーを optional 値として処理します。
 
 ```
 	let x = try? functionThatThrows()
 	//In this case the value of x is nil in case of an error.
 
 ```
-- Assert that the error will not occur: by using the `try!` expression.
+- エラーが発生しないことを assert します。`try!` 式を使用します。
 
 
 
