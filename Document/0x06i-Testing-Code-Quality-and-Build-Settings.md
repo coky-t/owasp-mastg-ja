@@ -285,19 +285,19 @@ do {
 
 
 #### 静的解析
-Review the source code to understand/identify how the application handles various types of errors (IPC communications, remote services invocation, etc). Here are some examples of the checks to be performed at this stage per language.
+ソースコードをレビューして、アプリケーションがさまざまなタイプのエラー (IPC 通信、リモートサービス呼び出しなど) をどのように処理するか理解および特定します。言語ごとにこのステージで実行されるチェックの例をいくつか示します。
 
-##### Static Analysis in Objective-C
-Here you can verify that:
+##### 静的解析 (Objective-C)
+ここでは以下を検証します。
 
-* The application uses a well-designed and unified scheme to handle exceptions and errors.
-* The exceptions from the Cocoa frameworks are handled correctly.
-* The allocated memory in the `@try` blocks are released in the `@finally` blocks.
-* For every `@throw` the calling method has a proper `@catch` on either the calling method level or at the level of the `NSApplication` / `UIApplication` objects in order to clean up any sensitive information and possibly try to recover from the issue.
-* That the application doesn't expose sensitive information while handling errors in its UI or in its log-statements, but are still verbose enough to explain the issue to the user.
-* That any confidential information, such as keying material and/or authentication information is always wiped at the `@finally` blocks in case of a high risk application.
-* That `raise()` is only used in rare occassions when termination of the program without any further warning is required.
-* That `NSError` objects do not contain information that might leak any sensitive information.
+* アプリケーションは例外やエラーを処理するために十分に設計および統合されたスキームを使用している。
+* Cocoa フレームワークの例外を正しく処理している。
+* `@try` ブロックで割り当てたメモリは `@finally` ブロックで解放している。
+* すべての `@throw` に対して、呼び出し側のメソッドは適切な `@catch` を呼び出し側のメソッドレベルか `NSApplication` / `UIApplication` オブジェクトのレベルで持ち、機密情報をクリーンアップし、あるいは問題から回復しようと試みる。
+* UI またはログステートメントでエラーを処理する際に、アプリケーションは機密情報を開示することはないが、ユーザーに問題を十分詳細に説明している。
+* リスクの高いアプリケーションの場合には、鍵マテリアルや認証情報などの機密情報は `@finally` ブロックで常に消去される。
+* これ以上の警告なしでプログラムの終了が必要がある場合のまれな状況でのみ `raise()` が使用される。
+* `NSError` オブジェクトには機密情報が漏洩する可能性のある情報を含まない。
 
 ##### Static Analysis in Swift
 Here you can verify that:
