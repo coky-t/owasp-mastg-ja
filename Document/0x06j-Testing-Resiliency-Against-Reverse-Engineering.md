@@ -494,11 +494,11 @@ static int $_my_ptrace(int request, pid_t pid, caddr_t addr, int data) {
 
 #### 概要
 
-There are two file-integrity related topics:
+ファイル整合性に関連するトピックは二つあります。
 
- 1. _The application-source related integrity checks:_ In the "Tampering and Reverse Engineering" chapter, we discussed iOS IPA application signature check. We also saw that determined reverse engineers can easily bypass this check by re-packaging and re-signing an app using a developer or enterprise certificate. One way to make this harder, is to add an internal runtime check in which you check whether the signatures still match at runtime.
+ 1. _アプリケーションソースに関連する整合性チェック：_ 「改竄とリバースエンジニアリング」の章では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックを簡単に回避できることも判明しました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックする内部ランタイムチェックを追加することです。
 
- 2. _The file storage related integrity checks:_ When files are stored by the application or key-value pars in the keychain, `UserDefaults`/`NSUserDefaults`, a SQLite database or a Realm database, then their integrity should be protected.
+ 2. _ファイルストレージに関連する整合性チェック：_ ファイルがアプリケーションにより格納される、またはキーチェーン、`UserDefaults`/`NSUserDefaults`、SQLite データベース、Realm データベースにキー・バリューペアが格納されるとき、それらの完全性を保護する必要があります。
 
 ##### Sample Implementation - application-source
 Integrity checks are already taken care off by Apple using their DRM. However, there are additional controls possible, such as in the example below. Here the `mach_header` is parsed through to calculate the start of the instruction data and then use that to generate the signature. Now the signature is compared to the one given. Please make sure that the signature to be compared to is stored or coded somewhere else.
