@@ -309,12 +309,12 @@ do {
 
 #### 動的解析
 
-There are various methods for dynamic analysis:
+動的解析にはさまざまな方法があります。
 
-- Provide unexpected values to UI fields in the iOS application.
-- Test the custom url-schemes, pasteboard and other inter-app communication controls by providing values that are unexpected or could raise an exception.
-- Tamper the network communication and/or the files stored by the application.
-- In case of Objective-C, you can use Cycript to hook into methods and provide them with arguments that could possibly make the callee throw an exception.
+- iOS アプリケーションの UI フィールドに予期しない値を入力する。
+- 予期しない値や例外を発生させる可能性のある値を指定して、カスタム URL スキーム、ペーストボード、その他アプリ間通信制御をテストする。
+- ネットワーク通信やアプリケーションにより格納されたファイルを改竄する。
+- Objective-C の場合には、Cycript を使用してメソッドにフックし、呼出先に例外をスローする可能性のある引数を入力する。
 
 In most cases, the application should not crash, but instead, it should:
 
