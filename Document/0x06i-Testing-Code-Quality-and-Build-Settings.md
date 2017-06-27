@@ -133,7 +133,7 @@ gobjdump は binutils <sup>[1]</sup> の一部であり、Homebrew 経由でイ�
 
 - [1] Binutils - https://www.gnu.org/s/binutils/
 
-### デバッグコードや詳細エラーログに関するテスト
+### デバッグコードと詳細エラーログに関するテスト
 
 #### 概要
 
@@ -323,12 +323,12 @@ do {
 - アプリケーションにより使用されるログ出力機構には何も情報を提供しない。
 
 #### 改善方法
-There are a few things a developer can do:
-- Ensure that the application use a well-designed and unified scheme to handle errors.
-- Make sure that all logging is removed or guarded as described in ["Testing for Debugging Code and Verbose Error Logging" for iOS]{TODO: whatlinkshouldbehere?}.
-- For Objective-C, in case of a high-risk application: create your own exception handler which cleans out any secret that should not be easily retrieved. The handler that can be set through `NSSetUncaughtExceptionHandler`.
-- When using Swift, make sure that you do not use `try!` unless you have made sure that there really cannot be any error in the method the throwing method that is being called.
-- When using Swift, make sure that the error does not propagate too far off through intermediate methods.
+開発者ができることはいくつかあります。
+- アプリケーションがエラーを処理するために十分に設計および統合されたスキームを使用していることを確認する。
+- すべてのログ出力が削除されている、もしくはガードされていることを確認する。[「デバッグコードと詳細エラーログのテスト」(iOS)]{TODO: whatlinkshouldbehere?} を参照。
+- Objective-C で、リスクの高いアプリケーションの場合、容易に取得されてはいけない任意の秘密をすべて消去する例外ハンドラを作成する。ハンドラは `NSSetUncaughtExceptionHandler` で設定可能である。
+- Swift を使用する場合、呼び出されているスローメソッドが実際にメソッドにエラーがないことを確認しない限り、`try!` を使用しないことを確認する。
+- Swift を使用する場合、エラーが中間メソッドを介して遠くまで伝播していないことを確認する。
 
 #### 参考情報
 
