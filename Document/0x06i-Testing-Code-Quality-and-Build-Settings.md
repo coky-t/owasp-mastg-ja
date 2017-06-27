@@ -299,13 +299,13 @@ do {
 * これ以上の警告なしでプログラムの終了が必要がある場合のまれな状況でのみ `raise()` が使用される。
 * `NSError` オブジェクトには機密情報が漏洩する可能性のある情報を含まない。
 
-##### Static Analysis in Swift
-Here you can verify that:
+##### 静的解析 (Swift)
+ここでは以下を検証します。
 
-* The application uses a well-designed and unified scheme to handle errors.
-* The application doesn't expose sensitive information while handling errors in its UI or in its log-statements, but are still verbose enough to explain the issue to the user.
-* That any confidential information, such as keying material and/or authentication information is always wiped at the `defer` blocks in case of a high risk application.
-* That `try!` is only used with proper guarding up front, so it is programmatically verified that indeed no error can be thrown by the method that is called using `try!`.
+* アプリケーションはエラーを処理するために十分に設計および統合されたスキームを使用している。
+* UI またはログステートメントでエラーを処理する際に、アプリケーションは機密情報を開示することはないが、ユーザーに問題を十分詳細に説明している。
+* リスクの高いアプリケーションの場合には、鍵マテリアルや認証情報などの機密情報は `defer` ブロックで常に消去される。
+* `try!` は前面を適切にガードすることにのみ使用される。`try!` を使用して呼び出されるメソッドによりエラーはスローされないことがプログラムで検証されている。
 
 #### 動的解析
 
