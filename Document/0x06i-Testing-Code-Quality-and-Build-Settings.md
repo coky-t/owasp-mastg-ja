@@ -316,11 +316,11 @@ do {
 - ネットワーク通信やアプリケーションにより格納されたファイルを改竄する。
 - Objective-C の場合には、Cycript を使用してメソッドにフックし、呼出先に例外をスローする可能性のある引数を入力する。
 
-In most cases, the application should not crash, but instead, it should:
+ほとんどの場合には、アプリケーションはクラッシュしてはいけません。代わりに、以下のようにすべきです。
 
-- Recover from the error or get into a state in which it can inform the user that it is not able to continue.
-- If necessary, inform the user in an informative message to make him/her take appropriate action. The message itself should not leak sensitive information.
-- Not provide any information in logging mechanims used by the application.
+- エラーから回復するか、継続できないことをユーザーに通知できる状態にする。
+- 必要に応じて、ユーザーに適切な措置を取らせるための情報メッセージを通知する。メッセージ自体は機密情報を漏洩してはいけない。
+- アプリケーションにより使用されるログ出力機構には何も情報を提供しない。
 
 #### 改善方法
 There are a few things a developer can do:
