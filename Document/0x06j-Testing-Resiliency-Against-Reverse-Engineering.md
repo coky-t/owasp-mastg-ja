@@ -624,14 +624,14 @@ CC で HMAC を検証する場合：
 - 防御を無効化するためにカスタムコードを書く必要はあるか。どのくらいの時間を投じる必要があるか。
 - 困難の主観的評価は何か。
 
-For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+より詳細な評価を行うには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載される基準を適用します。
 
-*For the storage integrity checks*
-A similar approach holds here, but now answer the following questions:
-- Can the mechanisms be bypassed using trivial methods (e.g. changing the contents of a file or a key-value)?
-- How difficult is it to obtain the HMAC key or the asymmetric private key?
-- Did you need to write custom code to disable the defenses? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+*ストレージの整合性チェック*
+同様のアプローチがここにありますが、以下の質問に答えます。
+- 簡単な方法 (ファイルやキー・バリューの内容を変更するなど) を使用して、メカニズムをバイパスできるか。
+- HMAC 鍵や非対称秘密鍵を取得することはどのくらい困難であるか。
+- 防御を無効化するためにカスタムコードを書く必要はあるか。どのくらいの時間を投じる必要があるか。
+- 困難の主観的評価は何か。
 
 #### 参考情報
 
