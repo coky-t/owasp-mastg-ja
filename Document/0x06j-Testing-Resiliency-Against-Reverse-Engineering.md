@@ -500,8 +500,8 @@ static int $_my_ptrace(int request, pid_t pid, caddr_t addr, int data) {
 
  2. _ファイルストレージに関連する整合性チェック：_ ファイルがアプリケーションにより格納される、またはキーチェーン、`UserDefaults`/`NSUserDefaults`、SQLite データベース、Realm データベースにキー・バリューペアが格納されるとき、それらの完全性を保護する必要があります。
 
-##### Sample Implementation - application-source
-Integrity checks are already taken care off by Apple using their DRM. However, there are additional controls possible, such as in the example below. Here the `mach_header` is parsed through to calculate the start of the instruction data and then use that to generate the signature. Now the signature is compared to the one given. Please make sure that the signature to be compared to is stored or coded somewhere else.
+##### サンプル実装 - アプリケーションソース
+完全性チェックは既に Apple が用心して DRM を使用しています。しかし、以下の例にあるように、制御を追加できます。ここでは `mach_header` を解析し、命令データの開始を計算し、それを使用して署名を生成しています。署名を与えられたものと比較します。比較される署名がどこに格納もしくはコード化されているか確認します。
 
 ```c
 int xyz(char *dst) {
