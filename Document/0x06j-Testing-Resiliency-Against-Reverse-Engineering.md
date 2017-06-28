@@ -501,7 +501,7 @@ static int $_my_ptrace(int request, pid_t pid, caddr_t addr, int data) {
  2. _ファイルストレージに関連する整合性チェック：_ ファイルがアプリケーションにより格納される、またはキーチェーン、`UserDefaults`/`NSUserDefaults`、SQLite データベース、Realm データベースにキー・バリューペアが格納されるとき、それらの完全性を保護する必要があります。
 
 ##### サンプル実装 - アプリケーションソース
-完全性チェックは既に Apple が用心して DRM を使用しています。しかし、以下の例にあるように、制御を追加できます。ここでは `mach_header` を解析し、命令データの開始を計算し、それを使用して署名を生成しています。署名を与えられたものと比較します。比較される署名がどこに格納もしくはコード化されているか確認します。
+整合性チェックは既に Apple が用心して DRM を使用しています。しかし、以下の例にあるように、制御を追加できます。ここでは `mach_header` を解析し、命令データの開始を計算し、それを使用して署名を生成しています。署名を与えられたものと比較します。比較される署名がどこに格納もしくはコード化されているか確認します。
 
 ```c
 int xyz(char *dst) {
@@ -559,18 +559,18 @@ int xyz(char *dst) {
 }
 ```
 
-##### Sample Implementation - Storage
+##### サンプル実装 - ストレージ
 
-When providing integrity on the application storage itself, you can either create an HMAC or a signature over a given key-value pair or over a file stored on the device. When you create an HMAC, it is best to use the CommonCrypto implementation.
-In case of the need for encryption: Please make sure that you encrypt and then HMAC as described in [1].
+アプリケーションストレージ自体に整合性を提供する場合は、指定されたキー・バリューペア上またはデバイスに格納されたファイル上に HMAC や署名を作成します。HMAC を作成する場合は、CommonCrypto 実装を使用することをお勧めします。
+暗号化が必要な場合、暗号化してから HMAC を確認します。[1] を参照ください。
 
-When generating an HMAC with CC:
+CC で HMAC を生成する場合：
 
-1. get the data as `NSMutableData`.
-2. Get the data key (possibly from the keychain)
-3. Calculate the hashvalue
-4. Append the hashvalue to the actual data
-5. Store the results of step 4.
+1. データを `NSMutableData` として取得する。
+2. データキーを取得する (おそらくキーチェーンから) 。
+3. ハッシュ値を計算する。
+4. ハッシュ値を実データに追加する。
+5. 手順 4. の結果を格納する。
 
 
 ```obj-c
@@ -583,12 +583,12 @@ When generating an HMAC with CC:
      bytes], (CC_LONG)[actualData length], [digestBuffer mutableBytes]);
    [actualData appendData: digestBuffer];
 ```
-Alternatively you can use NSData for step 1 and 3, but then you need to create a new buffer in step 4.
+代替として、手順 1 と 3 で NSData を使用できますが、手順 4 で新しいバッファを作成する必要があります。
 
-When verifying the HMAC with CC:
-1. Extract the message and the hmacbytes as separate `NSData` .
-2. Repeat step 1-3 of generating an hmac on the `NSData`.
-3. Now compare the extracted hamcbytes to the result of step 1.
+CC で HMAC を検証する場合：
+1. メッセージと HMAC バイトを個別の `NSData` として抽出する。
+2. `NSData` で HMAC を生成する手順 1-3 を繰り返す。
+3. 抽出された HMAC バイトを手順 1 の結果と比較する。
 
 ```obj-c
 	NSData* hmac = [data subdataWithRange:NSMakeRange(data.length - CC_SHA256_DIGEST_LENGTH, CC_SHA256_DIGEST_LENGTH)];
