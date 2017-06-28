@@ -562,7 +562,7 @@ int xyz(char *dst) {
 ##### サンプル実装 - ストレージ
 
 アプリケーションストレージ自体に整合性を提供する場合は、指定されたキー・バリューペア上またはデバイスに格納されたファイル上に HMAC や署名を作成します。HMAC を作成する場合は、CommonCrypto 実装を使用することをお勧めします。
-暗号化が必要な場合、暗号化してから HMAC を確認します。[1] を参照ください。
+暗号化が必要な場合、[1] を参照して、暗号化してから HMAC を確認します。
 
 CC で HMAC を生成する場合：
 
@@ -600,18 +600,18 @@ CC で HMAC を検証する場合：
 ```
 
 
-##### Bypassing File Integrity Checks
+##### ファイル整合性チェックのバイパス
 
-*When trying to bypass the application-source integrity checks* 
+*アプリケーションソースの整合性チェックをバイパスしようとする場合*
 
-1. Patch out the anti-debugging functionality. Disable the unwanted behaviour by simply overwriting the respective code with NOP instructions.
-2. Patch any stored hash that is used to evaluate the integrity of the code.
-3. Use Frida to hook APIs to hook file system APIs. Return a handle to the original file instead of the modified file.
+1. アンチデバッグ機能にパッチを当てる。それぞれのコードを NOP 命令で上書きするだけで、不要な動作を無効化できる。
+2. コードの整合性を評価するために使用される格納されたハッシュにパッチを適用する。
+3. Frida を使用して API をフックし、ファイルシステム API をフックする。改変されたファイルの代わりに元のファイルへのハンドルを返す。
 
-*When trying to bypass the storage integrity checks*
+*ストレージの整合性チェックをバイパスしようとする場合*
 
-1. Retrieve the data from the device, as described at the secion for device binding.
-2. Alter the data retrieved and then put it back in the storage
+1. デバイス結合のセクションを参照して、デバイスからデータを取得する。
+2. 取得したデータを改変して、ストレージに戻す。
 
 #### Effectiveness Assessment
 
