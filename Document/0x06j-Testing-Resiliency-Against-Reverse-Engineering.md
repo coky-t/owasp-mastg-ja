@@ -613,16 +613,16 @@ CC で HMAC を検証する場合：
 1. デバイス結合のセクションを参照して、デバイスからデータを取得する。
 2. 取得したデータを改変して、ストレージに戻す。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-*For the application source integrity checks*
-Run the app on the device in an unmodified state and make sure that everything works. Then apply patches to the executable using optool and re-sign the app as described in the chapter "Basic Security Testing" and run it. 
-The app should detect the modification and respond in some way. At the very least, the app should alert the user and/or terminate the app. Work on bypassing the defenses and answer the following questions:
+*アプリケーションソースの整合性チェック*
+改変していない状態でデバイス上でアプリを実行し、すべてが機能することを確認します。それから optool を使用して実行可能ファイルにパッチを適用し、「セキュリティテスト入門」の章に説明されているようにアプリを再署名し、実行します。
+アプリは改変を検出して何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したりアプリを終了する必要があります。防御のバイパスが機能するか、以下の質問に答えます。
 
-- Can the mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
-- How difficult is it to identify the anti-debugging code using static and dynamic analysis?
-- Did you need to write custom code to disable the defenses? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+- 簡単な方法 (単一の API 関数をフックするなど) を使用して、メカニズムをバイパスできるか。
+- 静的解析や動的解析を使用してアンチデバッグコードを特定することはどのくらい困難であるか。
+- 防御を無効化するためにカスタムコードを書く必要はあるか。どのくらいの時間を投じる必要があるか。
+- 困難の主観的評価は何か。
 
 For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
 
