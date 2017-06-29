@@ -610,7 +610,7 @@ CC で HMAC を検証する場合：
 
 *ストレージの整合性チェックをバイパスしようとする場合*
 
-1. デバイス結合のセクションを参照して、デバイスからデータを取得する。
+1. デバイスバインディングのセクションを参照して、デバイスからデータを取得する。
 2. 取得したデータを改変して、ストレージに戻す。
 
 #### 有効性評価
@@ -760,13 +760,13 @@ return 0; // good
 
 -- TODO [Add relevant tools for "Testing Memory Integrity Checks"] --* Enjarify - https://github.com/google/enjarify
 
-### デバイス結合のテスト
+### デバイスバインディングのテスト
 
 #### 概要
 
-デバイス結合の目的は、デバイス A からデバイス B へアプリとその状態をコピーしようとする攻撃者を妨害し、デバイス B のアプリの実行を継続することです。デバイス A が信頼されているとみなされた場合、デバイス B よりも多くの権限を持つ可能性がありますが、アプリをデバイス A からデバイス B へコピーする際に変更すべきではありません。
+デバイスバインディングの目的は、デバイス A からデバイス B へアプリとその状態をコピーしようとする攻撃者を妨害し、デバイス B のアプリの実行を継続することです。デバイス A が信頼されているとみなされた場合、デバイス B よりも多くの権限を持つ可能性がありますが、アプリをデバイス A からデバイス B へコピーする際に変更すべきではありません。
 
-MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止であることに注意します [1] 。アプリケーションをデバイスに結合する方法は `identifierForVendor` を使用することに基づいています。`identifierForVendor` はキーチェーンに何かを格納するか、iOS 用の Google の InstanceID を使用します。詳細は改善方法を参照ください。
+MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止であることに注意します [1] 。アプリケーションをデバイスにバインドする方法は `identifierForVendor` を使用することに基づいています。`identifierForVendor` はキーチェーンに何かを格納するか、iOS 用の Google の InstanceID を使用します。詳細は改善方法を参照ください。
 
 #### 静的解析
 
@@ -776,7 +776,7 @@ MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止で�
 
 - MAC アドレス: MAC アドレスを見つけるにはさまざまな方法があります: `CTL_NET` (ネットワークサブシステム) の使用、`NET_RT_IFLIST` (設定されたインタフェースの取得) の使用、MAC アドレスが書式化されるときにはしばしば print 用の書式化コードとして `"%x:%x:%x:%x:%x:%x"` が見られる。
 - UDID の使用: `[[[UIDevice currentDevice] identifierForVendor] UUIDString];` および Swift3では: `UIDevice.current.identifierForVendor?.uuidString`
-- 任意のキーチェーンやファイルシステムに基づく結合: 任意の `SecAccessControlCreateFlags` により保護されない、または `kSecAttrAccessibleAlways` or `kSecAttrAccessibleAlwaysThisDeviceOnly` のような保護クラスを使用する。
+- 任意のキーチェーンやファイルシステムに基づくバインディング: 任意の `SecAccessControlCreateFlags` により保護されない、または `kSecAttrAccessibleAlways` or `kSecAttrAccessibleAlwaysThisDeviceOnly` のような保護クラスを使用する。
 
 
 ##### ソースコードなし
@@ -820,13 +820,13 @@ MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止で�
 
 #### 改善方法
 
-Before we describe the usable identifiers, let's quickly discuss how they can be used for binding. There are 3 methods which allow for device binding in iOS: 
+使用可能な識別子について説明する前に、バインディングを使用する方法について簡単に説明します。iOS のデバイスバインディングを可能にする3つの方法があります。
 
-- You can use `[[UIDevice currentDevice] identifierForVendor]` (in Objective-C) or `UIDevice.current.identifierForVendor?.uuidString` (in swift3) and `UIDevice.currentDevice().identifierForVendor?.UUIDString` (in swift2). Which might change upon reinstalling the application when no other applications from the same vendor are installed. 
-- You can store something in the keychain to identify the application its instance. One needs to make sure that this data is not backed up by using `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` (if you want to secure it and properly enforce having a passcode or touch-id) or by using `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`, or `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`. 
-- You can use Google its instanceID for iOS [2].
+- `[[UIDevice currentDevice] identifierForVendor]` (Objective-C の場合) または `UIDevice.current.identifierForVendor?.uuidString` (Swift3 の場合) や `UIDevice.currentDevice().identifierForVendor?.UUIDString` (Swift2 の場合) を使用します。同じベンダーの他のアプリケーションがインストールされていない場合には、アプリケーションの再インストール時に変更される可能性があります。
+- キーチェーンに何かを格納して、アプリケーションのインスタンスを識別できます。`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` (セキュアにするためにパスコードやTouchIDを適切に適用する場合) または `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` や `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` を使用することで、このデータがバックアップされないことを確認する必要があります。
+- iOS 向けの Google の instanceID を使用できます [2] 。
 
-Any scheme based on these variants will be more secure the moment passcode and/or touch-id has been enabled and the materials stored in the Keychain or filesystem have been protected with protectionclasses such as  `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` and `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` and the the `SecAccessControlCreateFlags` is set with `kSecAccessControlDevicePasscode` (for passcodes), `kSecAccessControlUserPresence` (passcode or touchid), `kSecAccessControlTouchIDAny` (touchID), `kSecAccessControlTouchIDCurrentSet` (touchID: but current fingerprints only). 
+これらのバリアントに基づくスキームはパスコードや touch-id が有効になった時点でよりセキュアになります。キーチェーンやファイルシステムに格納されるマテリアルは `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` および `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` などの保護クラスで保護されます。`SecAccessControlCreateFlags` には `kSecAccessControlDevicePasscode` (パスコードの場合), `kSecAccessControlUserPresence` (パスコードまたは touchid), `kSecAccessControlTouchIDAny` (touchID), `kSecAccessControlTouchIDCurrentSet` (touchID: 但し現在の指紋のみ) で設定されます。
 
 
 #### 参考情報
