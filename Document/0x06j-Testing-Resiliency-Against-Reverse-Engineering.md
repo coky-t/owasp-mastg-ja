@@ -793,30 +793,30 @@ MAC アドレスなどの iOS 7.0 ハードウェア識別子は使用禁止で�
 
 1. シミュレータでアプリケーションを実行する。
 2. アプリケーションのインスタンスで信頼を高められることを確認する (認証など) 。
-3. シミュレータからデータを取得する。これにはいくつかの手順があります。
+3. シミュレータからデータを取得する。これにはいくつかの手順がある。
   - シミュレータは UUID を使用して自分自身を識別するため、デバッグポイントを作成して、その場所で `po NSHomeDirectory()` を実行することによりストレージを見つけることが容易になります。それでシミュレータがその内容を格納する場所がわかります。そうでなければ疑似 plist ファイル用に `find ~/Library/Developer/CoreSimulator/Devices/ | grep <appname>` を実行します。
   - 指定されたコマンドで表示されたディレクトリに移動する。
   - 見つかった3つのフォルダをすべてコピーする (Documents, Library, tmp) 。
   - キーチェーンの内容をコピーする、iOS8 以降では `~/Library/Developer/CoreSimulator/Devices/<Simulator Device ID>/data/Library/Keychains` にあります。
 4. 別のシミュレータでアプリケーションを起動し、手順3の説明に従ってデータの場所を確認する。
 5. 二つ目のシミュレータでアプリを停止し、既存のデータを手順3でコピーしたデータで上書きする。
-6. 認証された状態で継続できますか？その場合、バインディングが正しく機能していない可能性があります。
+6. 認証された状態で継続できるか？その場合、バインディングが正しく機能していない可能性がある。
 
 シミュレータではすべてがユニークではないため、バインディングが機能していない「可能性がある」と言っていることに注意してください。
 
-##### 2つの脱獄済みデバイスを用いた動的解析
+##### 2台の脱獄済みデバイスを用いた動的解析
 
-Take the following steps when you want to verify app-binding by using 2 jailbroken devices:
+2台の脱獄済みデバイスを用いてアプリ・バインディングを検証する場合は、以下の手順を実行します。
 
-1.	Run the app on your jailbroken device
-2.	Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3.	Retrieve the data from the jailbroken device:
-   - you can ssh to your device and then extract the data (just as with a similator, either use debugging or a `find /private/var/mobile/Containers/Data/Application/ |grep <name of app>`. The directory is in `/private/var/mobile/Containers/Data/Application/<Application uuid>`
-  - go to the directory printed with the given command using SSH or copy the folders in there using SCP (`scp <ipaddress>:/<folder_found_in_previous_step> targetfolder`. You can use an FTP client like Filezilla as well.
-  - retrieve the data from the keychain, which is stored `/private/var/Keychains/keychain-2.db`, which you can retrieve using the keychain dumper[3]. For that you first need to make it world readable `chmod +r /private/var/Keychains/keychain-2.db` and then execute `./keychain_dumper -a`
-4.	Install the application on the second jailbroken device.
-5.	Overwrite the data of the application extracted from step 3. They keychain data will have to be manually added.
-6.	Can you continue in an authenticated state? If so, then binding might not be working properly.
+1. 脱獄済みデバイスでアプリを実行する。
+2. アプリケーションのインスタンスで信頼を高められることを確認する (認証など) 。
+3. 脱獄済みデバイスからデータを取得する。
+  - デバイスに ssh してデータを抽出する (シミュレータの場合と同様に、デバッグを使用するか、`find /private/var/mobile/Containers/Data/Application/ |grep <name of app>` を使用する) 。ディレクトリは `/private/var/mobile/Containers/Data/Application/<Application uuid>` にある。
+  - SSH を使用して、指定されたコマンドで表示されたディレクトリに移動するか、SCP (`scp <IPアドレス>:/<前の手順で見つけたフォルダ> 対象フォルダ`) を使用して、そこにフォルダをコピーする。Filezilla などの FTP クライアントを使うこともできる。
+  - キーチェーンからデータを取得する。`/private/var/Keychains/keychain-2.db` に格納されており、keychain dumper [3] を使用して取得できる。そのためにはまず `chmod +r /private/var/Keychains/keychain-2.db` で world readable にする必要があり、それから `./keychain_dumper -a` を実行する。
+4. 二台目の脱獄済みデバイスにアプリケーションをインストールする。
+5. 手順 3 で抽出したアプリケーションのデータを上書きする。キーチェーンデータは手動で追加する必要がある。
+6. 認証された状態で検証できるか？その場合、バインディングが正しく機能していない可能性がある。
 
 #### 改善方法
 
