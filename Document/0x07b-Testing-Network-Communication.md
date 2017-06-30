@@ -73,13 +73,13 @@ nc localhost 1234 | sudo wireshark -k -S -i –
 
 #### 概要
 
-Many mobile applications consume remote services over the HTTP protocol. HTTPS is HTTP over SSL/TLS. Other encrypted channels are less common. Thus, it is important to ensure that TLS configuration is done properly. SSL is the older name of the TLS protocol and should no longer be used, since SSLv3 is considered vulnerable. TLS v1.2 and v1.3 are the most modern and most secure versions, but many services still include configurations for TLS v1.0 and v1.1, to ensure compatibility with the older clients. This is especially true for browsers that can connect to arbitrary servers and for servers that expect connections from arbitrary clients.
+多くのモバイルアプリケーションは HTTP プロトコル上でリモートサービスを使用します。HTTPS は HTTP over SSL/TLS です。他の暗号化されたチャネルはあまり一般的ではありません。したがって、TLS 設定が適切に行われていることを確認することが重要です。SSL は TLS プロトコルの古い名前であり、もはや使用すべきではありません。SSLv3 は脆弱であると考えられています。TLS v1.2 および v1.3 は最も新しくて最もセキュアなバージョンですが、多くのサービスでは古いクライアントとの互換性を確保するために未だに TLS v1.0 と v1.1 の構成を含んでいます。これは特に任意のサーバーに接続するブラウザや任意のクライアントからの接続が考えられるサーバーに当てはまります。
 
-In the situation where both the client and the server are controlled by the same organization and are used for the purpose of only communicating with each other, higher levels of security can be achieved by more strict configurations<sup>[1]</sup>.
+クライアントとサーバーの両方が同じ組織により制御され、互いに通信する目的でのみ使用される状況では、より厳密な設定によってより高いレベルのセキュリティを達成することができます <sup>[1]</sup> 。
 
-If a mobile application connects to a specific server for a specific part of its functionality, the networking stack for that client can be tuned to ensure highest levels of security possible given the server configuration. Additionally, the mobile application may have to use a weaker configuration due to the lack of support in the underlying operating system.
+モバイルアプリケーションが特定のサーバーにその機能の特定部分のために接続する場合、そのクライアントのネットワークスタックを調整して、サーバー構成を考慮して最高レベルのセキュリティを確保することができます。さらに、モバイルアプリケーションは基礎となるオペレーティングシステムにおけるサポートの欠如のために、脆弱な構成を使用する必要があるかもしれません。
 
-For example, the popular Android networking library okhttp uses the following list as the preferred set of cipher suites, but these are only available on Android 7.0 and later:
+例えば、一般的な Android ネットワークライブラリ okhttp は以下のリストを暗号スイートの推奨セットとして使用しますが、Android 7.0 以降でのみ使用できます。
 
 * `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
 * `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
@@ -88,7 +88,7 @@ For example, the popular Android networking library okhttp uses the following li
 * `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`
 * `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
 
-To support earlier versions of Android, it adds a few ciphers that are not considered as secure:
+以前のバージョンの Android をサポートするには、セキュアであるとは考えられていないいくつかの暗号を追加します。
 
 * `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`
 * `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`
@@ -101,7 +101,7 @@ To support earlier versions of Android, it adds a few ciphers that are not consi
 * `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
 
 
-Similarly, the iOS ATS (App Transport Security) configuration requires one of the following ciphers:
+同様に、iOS ATS (App Transport Security) の設定には以下の暗号のいずれかが必要です。
 
 * `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
 * `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
@@ -118,7 +118,7 @@ Similarly, the iOS ATS (App Transport Security) configuration requires one of th
 
 #### 静的解析
 
-This is platform/language/library specific.
+これはプラットフォーム、言語、ライブラリ固有のものです。
 
 #### 動的解析
 
