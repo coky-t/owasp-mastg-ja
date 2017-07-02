@@ -238,19 +238,19 @@ iOS8-jailbreak:~ root# class-dump DVIA32
 
 -- TODO [Dynamic analysis - copying data files, logs, from device, etc.] --
 
-#### Monitoring Console Logs
+#### コンソールログの監視
 
-Many apps log informative (and potentially sensitive) messages to the console log. Besides that, the log also contains crash reports and potentially other useful information. You can collect console logs through the XCode "Devices" window as follows:
+多くのアプリは有益な (そして潜在的に機密の) メッセージをコンソールログに記録します。それ以外にも、ログにはクラッシュレポートや潜在的に有益な情報が含まれています。コンソールログは Xcode の "Devices" ウィンドウで以下のように収集できます。
 
-1. Launch Xcode
-2. Connect your device to your host computer
-3. Choose Devices from the Window menu
-4. Click on your connected iOS device in the left section of the Devices window
-5. Reproduce the problem
-6. Click the triangle in a box toggle located in the lower-left corner of the right section of the Devices
-window to expose the console log contents
+1. Xcode を起動する
+2. デバイスをホストコンピュータに接続する
+3. デバイスを Window メニューから選択する
+4. Devices ウィンドウの左側のセクションで、接続している iOS デバイスをクリックする
+5. 問題を再現する
+6. Devices の右側のセクションの左下隅にあるボックストグルの三角形をクリックする
+コンソールログの内容を開示するウィンドウ
 
-To save the console output to a text file, click the circle with a downward-pointing arrow at the bottom right.
+コンソール出力をテキストファイルに保存するには、右下の下向き矢印がついた円をクリックします。
 
 ![Console logs](Images/Chapters/0x06b/device_console.jpg "Monitoring console logs through XCode")
 
