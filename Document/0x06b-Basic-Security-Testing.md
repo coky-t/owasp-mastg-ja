@@ -258,9 +258,9 @@ iOS8-jailbreak:~ root# class-dump DVIA32
 
 脱獄済みデバイスでのライフは簡単です。アプリのサンドボックスに簡単にアクセスできるだけでなく、コード署名の欠如のため、より強力な動的解析技法を使用することもできます。iOS では、ほとんどの動的解析ツールは Cydia Substrate 上に構築されています。このツールはランタイムパッチを開発するためのフレームワークです。これについては「改竄とリバースエンジニアリング」の章で詳しく説明します。しかし、基本的な API モニタリングの目的では、Substrate を詳しく知る必要はありません。この目的のために構築された既存のツールをそのまま使用できます。
 
-##### Copying App Data Files
+##### アプリデータファイルのコピー
 
-Files belonging to an app are stored app's data directory. To identify the correct path, ssh into the device and retrieve the package information using IPA Installer Console:
+アプリに属するファイルはアプリのデータディレクトリに格納されます。正しいパスを特定するには、デバイスに ssh し、IPA インストーラコンソールを使用してパッケージ情報を取得します。
 
 ```bash
 iPhone:~ root# ipainstaller -l 
@@ -278,7 +278,7 @@ Application: /private/var/mobile/Containers/Bundle/Application/A8BD91A9-3C81-467
 Data: /private/var/mobile/Containers/Data/Application/A8AE15EE-DC8B-4F1C-91A5-1FED35258D87
 ```
 
-You can now simply archive the data directory and pull it from the device using scp.
+これでデータディレクトリをアーカイブし、scp を使用してデバイスから取り出すことができます。
 
 ```bash
 iPhone:~ root# tar czvf /tmp/data.tgz /private/var/mobile/Containers/Data/Application/A8AE15EE-DC8B-4F1C-91A5-1FED35258D87
