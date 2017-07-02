@@ -2,31 +2,31 @@
 
 以下の章では MASVS の暗号化要件の技術的なテストケースを説明します。この章に記載されているテストケースは一般的な暗号の概念に基づいており、iOS や Android の特定の実装に依存していません。
 
-The primary goal of cryptography is to provide confidentiality, data integrity, and authentication, even in the presence of a malicious attacker. Confidentiality is achieved through use of encryption, with the aim of ensuring secrecy of the contents. Data integrity deals with maintaining and ensuring consistency of data and detection of tampering/modification. Authentication ensures that the data came from a trusted source.
+暗号化の主な目的は、悪意のある攻撃者が現れたとしても、機密性、データの完全性、認証を提供することです。機密性は、コンテンツの秘密を保証するために、暗号化を使用することで達成されます。データの完全性は、データの一貫性を維持および保証し、改竄や改変を検出することを目的としています。認証はデータが信頼できるソースから取得されたことを保証します。
 
-Encryption converts the plain-text data into a form (called cipher text) that does not reveal any information about the original contents. The original data can be restored from the cipher text through decryption. Two main forms of encryption are symmetric (or secret key) and asymmetric (or public key).
+暗号化は平文のデータを元の内容に関する情報を表示しない形式 (暗号文と呼ばれます) に変換します。元のデータは復号化により暗号文から復元できます。暗号化の二つの主要な形式は対称 (または秘密鍵) と非対称 (または公開鍵) です。
 
-* Symmetric-key encryption algorithms use the same key for both encryption and decryption. Since everybody who has access to the key is able to decrypt the encrypted content, they require careful key management.
-* Public-key (or asymmetric) encryption algorithms operate with two separate keys: the public key and the private key. The public key can be distributed freely, while the private key should not be shared with anyone. A message encrypted with the public key can only be decrypted with the private key.
+* 対称鍵暗号アルゴリズムは暗号化と復号化の両方に同じ鍵を使用します。鍵にアクセスするすべての人が暗号化されたコンテンツを復号化できるため、慎重な鍵管理が必要です。
+* 公開鍵 (または非対称) 暗号アルゴリズムは二つの個別の鍵、公開鍵と秘密鍵で操作します。公開鍵は自由に配布できますが、秘密鍵は誰とも共有すべきではありません。公開鍵で暗号化されたメッセージは秘密鍵でのみ解読できます。
 
-Hash functions deterministically map arbitrary pieces of data into fixed-length values. It is typically easy to compute the hash, but difficult (or impossible) to determine the original input based on the hash. Cryptographic hash functions additionally guarantee that even small changes to the input data result in large changes to the resulting hash values. Cryptographic hash functions are used for authentication, data verification, digital signatures, message authentication codes, etc.
+ハッシュ関数は任意のデータを固定長の値に決定論的にマップします。通常、ハッシュを計算することは簡単ですが、ハッシュに基づいて元の入力を決定することは困難 (または不可能) です。暗号ハッシュ関数は、入力データのわずかな変更であっても生成されるハッシュ値を大きく変更することを保証します。暗号ハッシュ関数は認証、データ検証、デジタル署名、メッセージ認証コードなどに使用されます。
 
-Two uses of cryptography are covered in other chapters:
-* Secure communications. TLS (Transport Layer Security) uses both symmetric and public-key cryptography.
-* Secure storage. Android and iOS both support disk and file encryption. In addition, they also provide secure data storage (Keychain and Keystore) capabilities.
+二つの暗号の使用方法については他の章で説明しています。
+* セキュアな通信。TLS (Transport Layer Security) は対称暗号と公開鍵暗号の両方を扱います。
+* セキュアなストレージ。Android と iOS はどちらもディスクとファイルの暗号化をサポートしています。さらに、セキュアなデータストレージ (キーチェーンおよびキーストア) 機能も提供しています。
 
-Other uses of cryptography require careful adherence to best practices:
-* For encryption, use a strong, modern cipher with the appropriate, secure mode and a strong key. Examples:
-  - 256-bit key AES in GCM mode (provides both encryption and integrity verification.)
-  - 4096-bit RSA with OAEP padding.
-  - 224/256-bit elliptic curve cryptography.
-* Do not use known weak algorithms. For example:
-  - AES in ECB mode is not considered secure, because it leaks information about the structure of the original data.
-  - Several other AES modes can be weak.
-  - RSA with 768-bit and weaker keys can be broken. Older PKCS#1 padding leaks information.
-* Rely on secure hardware, if available, for storing encryption keys, performing cryptographic operations, etc.
+暗号の他の用途ではベストプラクティスを順守する必要があります。
+* 暗号化には、強力で最新の暗号を適切でセキュアなモードと強力な鍵で使用します。以下に例を示します。
+  - GCM モード (暗号化と完全性検証の両方を提供します) の 256 ビット鍵 AES 
+  - OAEP パディング付き 4096 ビット RSA
+  - 224/256 ビットの楕円暗号曲線
+* 既知の脆弱なアルゴリズムを使用してはいけません。以下に例を示します。
+  - ECB モードの AES はセキュアとは見なされていません。元のデータ構造に関する情報を漏洩するためです。
+  - 他のいくつかの AES モードにも脆弱なものがあります。
+  - 768 ビットの脆弱な鍵の RSA は破られる可能性があります。古い PKCS#1 パディングは情報を漏洩します。
+* 暗号化鍵の格納、暗号操作の実行などに、利用可能である場合、セキュアなハードウェアを使用します。
 
-#### References
+#### 参考情報
 
 [1] Best Practices for Security & Privacy: Cryptography - https://developer.android.com/training/articles/security-tips.html#Crypto
 
