@@ -320,9 +320,9 @@ Keychain Data: WOg1DfuH
 
 但し、このバイナリは「ワイルドカード」資格の自己署名証明書で署名されていることに注意します。キーチェーンの *すべて* のアイテムへのアクセスを許可します。あなたが疑い深い場合やテストデバイスに機密性の高いプライベートデータを入れている場合、ツールをソースからビルドしてビルドに適切な資格を手作業で署名したいかもしれません。これを行うための説明はその GitHub リポジトリで利用可能です。
 
-##### Security Profiling with Introspy
+##### Introspy でのセキュリティプロファイリング
 
-Intospy <sup>[31]</sup> is an open-source security profiler for iOS released by iSecPartners. Built on top of substrate, it can be used to log security-sensitive API calls on a jailbroken device.  The recorded API calls sent to the console and written to a database file, which can then be converted into an HTML report using Introspy-Analyzer <code>[32]</code>.
+Intospy <sup>[31]</sup> は iSecPartners によりリリースされた iOS 用のオープンソースのセキュリティプロファイラです。substrate の上に構築されていて、脱獄済みデバイス上のセキュリティの影響を受けやすい API 呼び出しを記録するために使用できます。記録された API 呼び出しはコンソールに送られ、データベースファイルに書き込まれます。Introspy-Analyzer <code>[32]</code> を使用して HTML レポートに変換できます。
 
 -- TODO [Write an IntroSpy howto] --
 
