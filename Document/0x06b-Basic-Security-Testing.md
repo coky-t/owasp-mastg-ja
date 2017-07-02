@@ -254,9 +254,9 @@ iOS8-jailbreak:~ root# class-dump DVIA32
 
 ![Console logs](Images/Chapters/0x06b/device_console.jpg "Monitoring console logs through XCode")
 
-#### Dynamic Analysis On Jailbroken Devices
+#### 脱獄済みデバイスでの動的解析
 
-Life is easy with a jailbroken device: Not only do you gain easy access to the app's sandbox, you can also use more powerful dynamic analysis techniques due to the lack of code singing. On iOS, most dynamic analysis tools are built on top of Cydia Substrate, a framework for developing runtime patches that we will cover in more detail in the "Tampering and Reverse Engineering" chapter. For basic API monitoring purposes however, you can get away without knowing Substrate in detail - you can simply use existing tools built for this purpose.
+脱獄済みデバイスでのライフは簡単です。アプリのサンドボックスに簡単にアクセスできるだけでなく、コード署名の欠如のため、より強力な動的解析技法を使用することもできます。iOS では、ほとんどの動的解析ツールは Cydia Substrate 上に構築されています。このツールはランタイムパッチを開発するためのフレームワークです。これについては「改竄とリバースエンジニアリング」の章で詳しく説明します。しかし、基本的な API モニタリングの目的では、Substrate を詳しく知る必要はありません。この目的のために構築された既存のツールをそのまま使用できます。
 
 ##### Copying App Data Files
 
