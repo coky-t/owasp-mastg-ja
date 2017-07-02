@@ -286,9 +286,9 @@ iPhone:~ root# exit
 $ scp -P 2222 root@localhost:/tmp/data.tgz .
 ```
 
-##### Dumping KeyChain Data
+##### キーチェーンデータのダンプ
 
-Keychain-Dumper [23] lets you dump the contents of the KeyChain on a jailbroken device. The easiest way of running the tool is to download the binary from its GitHub repo:
+Keychain-Dumper [23] は脱獄済みデバイス上のキーチェーンの内容をダンプできます。ツールを実行する最も簡単な方法は GitHub リポジトリからバイナリをダウンロードすることです。
 
 ``` bash
 $ git clone https://github.com/ptoomey3/Keychain-Dumper
@@ -318,7 +318,7 @@ Generic Field: (null)
 Keychain Data: WOg1DfuH
 ```
 
-Note however that this binary is signed with a self-signed certificate with a "wildcard" entitlement, granting access to *all* items in the Keychain - if you are paranoid, or have highly sensitive private data on your test device, you might want to build the tool from source and manually sign the appropriate entitlements into your build - instructions for doing this are available in the Github repository.
+但し、このバイナリは「ワイルドカード」資格の自己署名証明書で署名されていることに注意します。キーチェーンの *すべて* のアイテムへのアクセスを許可します。あなたが疑い深い場合やテストデバイスに機密性の高いプライベートデータを入れている場合、ツールをソースからビルドしてビルドに適切な資格を手作業で署名したいかもしれません。これを行うための説明はその GitHub リポジトリで利用可能です。
 
 ##### Security Profiling with Introspy
 
