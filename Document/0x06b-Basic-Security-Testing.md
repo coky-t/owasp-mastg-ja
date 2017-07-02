@@ -179,9 +179,9 @@ iPhone:~ root# ipainstaller -b com.example.targetapp -o /tmp/example.ipa
 
 出力に cryptoff, cryptsize, cryptid フィールドが含まれている場合、バイナリは暗号化されています。このコマンドの出力が空の場合、バイナリは暗号化されていないことを意味します。IPA ファイルではなく、バイナリに対して otool を使用することを **忘れないで** ください。
 
-#### Getting Basic Information with Class-dump and Hopper Disassembler
+#### class-dump と Hopper 逆アセンブラで基本情報の取得
 
-Class-dump tool can be used to get information about methods in the application. Example below uses Damn Vulnerable iOS Application [12]. As our binary is so-called fat binary, which means that it can be executed on 32 and 64 bit platforms:
+class-dump ツールはアプリケーション内のメソッドに関する情報を取得できます。以下の例では Damn Vulnerable iOS アプリケーション [12] を使用しています。私たちのバイナリはいわゆるファットバイナリであり、32ビットと64ビットのプラットフォームで実行できます。
 
 ```
 $ unzip DamnVulnerableiOSApp.ipa
@@ -202,14 +202,14 @@ MH_MAGIC_64   ARM64        ALL  0x00     EXECUTE    38       4856   NOUNDEFS DYL
 
 ```
 
-Note architecture `armv7` which is 32 bit and `arm64`. This design permits to deploy the same application on all devices. 
-In order to analyze the application with class-dump we must create so-called thin binary, which contains only one architecture:
+32ビットである `armv7` と `arm64` のアーキテクチャに注意します。この設計によりすべてのデバイスに同じアプリケーションを配備できます。
+class-dump でアプリケーションを解析するには、ひとつのアーキテクチャのみを含む、いわゆるシンバイナリを作成する必要があります。
 
 ```
 iOS8-jailbreak:~ root# lipo -thin armv7 DamnVulnerableIOSApp -output DVIA32
 ```
 
-And then we can proceed to performing class-dump:
+それから class-dump の実行に進みます。
 
 ```
 iOS8-jailbreak:~ root# class-dump DVIA32 
@@ -221,20 +221,20 @@ iOS8-jailbreak:~ root# class-dump DVIA32
 + (BOOL)deviceIsJailbroken;
 ```
 
-Note the plus sign, which means that this is a class method returning BOOL type. 
-A minus sign would mean that this is an instance method. Please refer to further sections to understand the practical difference between both.
+プラス記号は BOOL 型を返すクラスメソッドを意味することに注意します。
+マイナス記号は、これがインスタンスメソッドであることを意味します。両者の実際的な違いを理解するには、以降のセクションを参照ください。
 
-Alternatively, you can easily decompile the application with Hopper Disassembler [13]. All these steps will be performed automatically and you will be able to see disassembled binary and class information. 
+あるいは、Hopper 逆アセンブラ [13] でアプリケーションを簡単に逆コンパイルすることもできます。これらのすべての手順は自動的に実行され、逆アセンブルされたバイナリやクラス情報が表示されます。
 
-Your main focus while performing static analysis would be:
-* Identifying and undestanding functions responsible for jailbreak detection and certificate pinning
-  * For jailbreak detection, look for methods or classess containing words like `jailbreak`, `jailbroken`, `cracked`, etc. Please note that sometimes, the name of function performing jailbreak detection will be 'obfuscated' to slow down the analysis. Your best bet is to look for jailbreak detection mechanisms discussed in further section (cf. Dynamic Analysis - Jailbreak Detection)
-  * For certificate pinning, look for keywords like `pinning`, `X509` or for native method calls like `NSURLSession`, `CFStream`, `AFNetworking`
-* Understanding application logic and possible ways to bypass it 
-* Any hardcoded credentials, certificates
-* Any methods that are used for obfuscation and in consequence may reveal sensitive information
+静的解析を実行する際の主な焦点は以下のとおりです。
+* 脱獄検出と証明書ピンニングを担当する機能の特定と理解
+  * 脱獄検出には、`jailbreak`, `jailbroken`, `cracked` などの単語を含むメソッドやクラスを探します。脱獄検出を実行する関数の名前は解析を鈍化させるために「難読化」されることがあります。最善の策は以降のセクションで説明されている脱獄検出メカニズムを探すことです (動的解析 - 脱獄検出を参照ください) 。
+  * 証明書ピンニングには、`pinning`, `X509` などのキーワードや `NSURLSession`, `CFStream`, `AFNetworking` などのネイティブメソッドコールを探します。
+* アプリケーションロジックとそれを回避する可能性のある方法の理解
+* ハードコードされた資格情報、証明書
+* 難読化に使用され、結果として機密情報が明らかになる可能性がある任意のメソッド
 
-### Dynamic Analysis
+### 動的解析
 
 -- TODO [Dynamic analysis - copying data files, logs, from device, etc.] --
 
