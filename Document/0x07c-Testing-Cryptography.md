@@ -78,7 +78,7 @@
 * MD5
 * SHA1 など
 
-On Android (via Java Cryptography APIs), selecting an algorithm is done by requesting an instance of the `Cipher` (or other primitive) by passing a string containing the algorithm name. For example, `Cipher cipher = Cipher.getInstance("DES");`. On iOS, algorithms are typically selected using predefined constants defined in CommonCryptor.h, e.g., `kCCAlgorithmDES`. Thus, searching the source code for the presence of these algorithm names would indicate that they are used. Note that since the constants on iOS are numeric, an additional check needs to be performed to check whether the algorithm values sent to CCCrypt function map to one of the deprecated/insecure algorithms.
+Android (Java Cryptography API 経由) では、アルゴリズムの選択は、アルゴリズム名を含む文字列を渡して `Cipher` (または他のプリミティブ) のインスタンスを要求することにより行われます。例えば、`Cipher cipher = Cipher.getInstance("DES");` となります。iOS では、アルゴリズムは通常 `kCCAlgorithmDES` などの CommonCryptor.h に定義された所定の定数を使用して選択されます。したがって、これらのアルゴリズム名の存在をソースコードで検索すると、それらが使用されていることが示されます。iOS 上の定数は数値であるため、CCCrypt 関数に送られたアルゴリズム値が推奨されないアルゴリズムやセキュアではないアルゴリズムのひとつにマップされているかどうかを確認するために追加のチェックが必要であることに注意します。
 
 #### 動的解析
 
