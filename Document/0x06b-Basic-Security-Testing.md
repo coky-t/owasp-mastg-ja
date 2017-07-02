@@ -165,19 +165,19 @@ iPhone:~ root# ipainstaller -b com.example.targetapp -o /tmp/example.ipa
 
 #### 復号された実行可能ファイルのダンプ
 
-On top of code signing, apps distributed via the app store are also protected using Apple's FairPlay DRM system. This system uses asymmetric cryptography to ensure that any app (including free apps) obtained from the app store only executes on the particular device it is approved to run on. The decryption key is unique to the device and burned into the processor. As of now, the only possible way to obtain the decrypted code from a FairPlay-decrypted app is dumping it from memory while the app is running. On a jailbroken device, this can be done with Clutch tool that is included in standard Cydia repositories [2]. Use clutch in interactive mode to get a list of installed apps, decrypt them and pack to IPA file:
+コード署名の上に、App Store 経由で配布されるアプリも Apple の FairPlay DRM システムを使用して保護されています。このシステムでは非対称暗号を使用して App Store から取得した任意のアプリ (フリーのアプリを含みます) が、実行が承認された特定のデバイスでのみ実行されることを保証します。復号鍵はデバイス固有のもので、プロセッサに焼き付けられています。今のところ、FairPlayで復号化されたアプリから復号化されたコードを取得する唯一の方法は、アプリの実行中にメモリからダンプすることです。脱獄済みデバイスでは、これは標準の Cydia リポジトリに含まれている Clutch ツールで行うことができます [2] 。インタラクティブモードでクラッチを使用して、インストールされているアプリのリストを取得し、復号して IPA ファイルにパックします。
 
 ~~~
 # Clutch -i 
 ~~~
 
-**NOTE:** Only applications distributed with AppStore are protected with FairPlay DRM. If you obtained your application compiled and exported directly from XCode, you don't need to decrypt it. The easiest way is to load the application into Hopper and check if it's being correctly disassembled. You can also check it with otool:
+**注意：** AppStore で配布されているアプリケーションのみが FairPlay DRM で保護されています。Xcode から直接コンパイルおよびエクスポートしたアプリケーションを取得した場合、復号化する必要はありません。もっとも簡単な方法は、アプリケーションを Hopper にロードして、それが正しく逆アセンブルされるか確認することです。otool で確認することもできます。
 
 ~~~
 # otool -l yourbinary | grep -A 4 LC_ENCRYPTION_INFO
 ~~~
 
-If the output contains cryptoff, cryptsize and cryptid fields, then the binary is encrypted. If the output of this comand is empty, it means that binary is not encrypted. **Remember** to use otool on binary, not on the IPA file.
+出力に cryptoff, cryptsize, cryptid フィールドが含まれている場合、バイナリは暗号化されています。このコマンドの出力が空の場合、バイナリは暗号化されていないことを意味します。IPA ファイルではなく、バイナリに対して otool を使用することを **忘れないで** ください。
 
 #### Getting Basic Information with Class-dump and Hopper Disassembler
 
