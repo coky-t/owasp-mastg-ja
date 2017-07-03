@@ -414,7 +414,7 @@ $ curl -O https://build.frida.re/frida/ios/lib/FridaGadget.dylib
 
 ##### パッチ適用、再パッケージ化、再署名
 
-Time to get serious! As you already now, IPA files are actually ZIP archives, so use any zip tool to unpack the archive. Then, copy FridaGadget.dylib into the app directory, and add a load command to the "UnCrackable Level 1" binary using optool.
+本気になるときです。すでにご存知のとおり、IPA ファイルは実は ZIP アーカイブですので、任意の zip ツールを使用してアーカイブを展開します。その後、そのアプリディレクトリに FridaGadget.dylib をコピーし、optool を使用して "UnCrackable Level 1" バイナリに load コマンドを追加します。
 
 ~~~
 $ unzip UnCrackable_Level1.ipa
@@ -430,21 +430,21 @@ Successfully inserted a LC_LOAD_DYLIB command for arm64
 Writing executable to Payload/UnCrackable Level 1.app/UnCrackable Level 1...
 ~~~
 
-Such blatant tampering of course invalidates the code signature of the main executable, so this won't run on a non-jailbroken device. You'll need to replace the provisioning profile and sign both the main executable and FridaGadget.dylib with the certificate listed in the profile.
+このような露骨な改竄はもちろんメインの実行可能ファイルのコード署名を無効にするため、これは非脱獄済みデバイスでは実行されません。プロビジョニングプロファイルを置き換え、メインの実行可能ファイルと FridaGadget.dylib の両方にそのプロファイルに記載されている証明書で署名する必要があります。
 
-First, let's add our own provisioning profile to the package:
+まず、独自のプロビジョニングプロファイルをパッケージに追加します。
 
 ~~~
 $ cp AwesomeRepackaging.mobileprovision Payload/UnCrackable\ Level\ 1.app/embedded.mobileprovision
 ~~~
 
-Next, we need to make sure that the BundleID in Info.plist matches the one specified in the profile. The reason for this is that the "codesign" tool will read the Bundle ID from Info.plist during signing - a wrong value will lead to an invalid signature.
+次に、Info.plist の BundleID がプロファイルに指定されているものと一致することを確認する必要があります。この理由は "codesign" ツールが署名時に Info.plist から Bundle ID を読み取るためです。間違った値は無効な署名につながります。
 
 ~~~
 $ /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier sg.vantagepoint.repackage" Payload/UnCrackable\ Level\ 1.app/Info.plist
 ~~~
 
-Finally, we use the codesign tool to re-sign both binaries:
+最後に、codesign ツールを使用して、両方のバイナリを再署名します。
 
 ~~~
 $ rm -rf Payload/F/_CodeSignature
