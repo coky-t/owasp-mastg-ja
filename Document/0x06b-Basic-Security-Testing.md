@@ -202,7 +202,7 @@ MH_MAGIC_64   ARM64        ALL  0x00     EXECUTE    38       4856   NOUNDEFS DYL
 
 ```
 
-32ビットである `armv7` と `arm64` のアーキテクチャに注意します。この設計によりすべてのデバイスに同じアプリケーションを配備できます。
+32ビットである `armv7` と `arm64` のアーキテクチャに注意します。この設計によりすべてのデバイスに同じアプリケーションをデプロイできます。
 class-dump でアプリケーションを解析するには、ひとつのアーキテクチャのみを含む、いわゆるシンバイナリを作成する必要があります。
 
 ```
@@ -318,7 +318,7 @@ Generic Field: (null)
 Keychain Data: WOg1DfuH
 ```
 
-但し、このバイナリは「ワイルドカード」資格の自己署名証明書で署名されていることに注意します。キーチェーンの *すべて* のアイテムへのアクセスを許可します。あなたが疑い深い場合やテストデバイスに機密性の高いプライベートデータを入れている場合、ツールをソースからビルドしてビルドに適切な資格を手作業で署名したいかもしれません。これを行うための説明はその GitHub リポジトリで利用可能です。
+但し、このバイナリは「ワイルドカード」エンタイトルメントの自己署名証明書で署名されていることに注意します。キーチェーンの *すべて* のアイテムへのアクセスを許可します。あなたが疑い深い場合やテストデバイスに機密性の高いプライベートデータを入れている場合、ツールをソースからビルドしてビルドに適切な資格を手作業で署名したいかもしれません。これを行うための説明はその GitHub リポジトリで利用可能です。
 
 ##### Introspy でのセキュリティプロファイリング
 
@@ -338,13 +338,13 @@ Apple のプロビジョニングとコード署名システムが混乱して�
 
 ##### 開発用プロビジョニングプロファイルと証明書の取得
 
-The *provisioning profile* is a plist file signed by Apple that whitelists your code signing certificate on one or multiple devices. In other words, this is Apple explicitly allowing your app to run in certain contexts, such as debugging on selected devices (development profile). The provisioning profile also includes the *entitlements* granted to your app. The *certificate* contains the private key you'll use to do the actual signing.
+*プロビジョニングプロファイル* は Apple が署名した plist ファイルで、ひとつまたは複数のデバイスのコード署名証明書をホワイトリストに追加します。言い換えれば、これは Apple が選択したデバイス (開発プロファイル) でのデバッグなど、特定のコンテキストでアプリを明示的に実行できるように許可するものです。プロビジョニングプロファイルはアプリに付与された *エンタイトルメント* も含みます。*証明書* には実際の署名を行うために使用する秘密鍵を含みます。
 
-Depending on whether you're registered as an iOS developer, you can use one of the following two ways to obtain a certificate and provisioning profile.
+iOS 開発者として登録しているかどうかに応じて、以下の二つの方法のいずれかを使用して証明書とプロビジョニングプロファイルを取得できます。
 
-**With an iOS developer account:**
+**iOS 開発者アカウント：**
 
-If you have developed and deployed apps iOS using Xcode before, you'll already have your own code signing certificate installed. Use the *security* tool to list your existing signing identities:
+以前に Xcode を使用して iOS アプリを開発およびデプロイした場合、既に独自のコード署名証明書がインストールされています。*security* ツールを使用して、既存の署名識別子を一覧表示します。
 
 ~~~
 $ security find-identity -p codesigning -v
@@ -352,9 +352,9 @@ $ security find-identity -p codesigning -v
   2) 8004380F331DCA22CC1B47FB1A805890AE41C938 "iPhone Developer: Bernhard Müller (RV852WND79)"
 ~~~
 
-Log into the Apple Developer portal to issue a new App ID, then issue and download the profile [8]. The App ID can be anything - you can use the same App ID for re-signing multiple apps. Make sure you create a *development* profile and not a *distribution* profile, as you'll want to be able to debug the app.
+Apple Developer ポータルにログインして新しい App ID を発行し、プロファイルを発行およびダウンロードします [8] 。App ID は何でもかまいません。同じ App ID を使用して、複数のアプリに再署名できます。アプリをデバッグできるようにするには、*development* プロファイルを作成することを確認します。*distribution* プロファイルではありません。
 
-In the examples below I'm using my own signing identity which is associated with my company's development team. I created the app-id "sg.vp.repackaged", as well as a provisioning profile aptly named "AwesomeRepackaging" for this purpose, and ended up with the file AwesomeRepackaging.mobileprovision - exchange this with your own filename in the shell commands below.
+以下の例では、私の会社の開発チームに関連する独自の署名 ID を使用しています。この目的のために App ID "sg.vp.repackaged" と、"AwesomeRepackaging" という名前のプロビジョニングプロファイルを作成し、ファイル AwesomeRepackaging.mobileprovision にしました。これを以下のシェルコマンドで独自のファイル名と交換します。
 
 **With a regular iTunes account:**
 
