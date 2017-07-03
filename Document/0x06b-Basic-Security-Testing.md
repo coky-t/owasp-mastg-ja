@@ -388,7 +388,7 @@ application identitifier は Team ID (LRUD9L355Y) と Bundle ID (sg.vantagepoint
 
 ##### その他の準備
 
-To make our app load an additional library at startup we need some way of inserting an additional load command into the Mach-O header of the main executable. Optool [3] can be used to automate this process:
+起動時にアプリに追加のライブラリをロードさせるには、メインの実行可能ファイルの Mach-O ヘッダに追加の load コマンドをを挿入する方法が必要です。optool [3] を使用してこのプロセスを自動化できます。
 
 ~~~
 $ git clone https://github.com/alexzielenski/optool.git
@@ -396,7 +396,7 @@ $ cd optool/
 $ git submodule update --init --recursive
 ~~~
 
-We'll also use ios-deploy [10], a tools that enables deploying and debugging of iOS apps without using Xcode:
+また、ios-deploy [10] も使用します。Xcode を使用せずに iOS アプリのデプロイとデバッグを可能にするツールです。
 
 ~~~
 git clone https://github.com/alexzielenski/optool.git
@@ -404,13 +404,13 @@ cd optool/
 git submodule update --init --recursive
 ~~~
 
-To follow the examples below, you also need FridaGadget.dylib:
+以下の例に示すように、FridaGadget.dylib も必要です。
 
 ~~~
 $ curl -O https://build.frida.re/frida/ios/lib/FridaGadget.dylib
 ~~~
 
-Besides the tools listed above, we'll be using standard tools that come with OS X and Xcode (make sure you have the Xcode command line developer tools installed).
+上記のツールのほかに、OS X と Xcode に付属の標準ツールを使用します (Xcode コマンドライン開発者ツールがインストールされていることを確認します) 。
 
 ##### パッチ適用、再パッケージ化、再署名
 
