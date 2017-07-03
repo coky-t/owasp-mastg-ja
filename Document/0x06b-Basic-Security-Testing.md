@@ -342,7 +342,7 @@ Apple のプロビジョニングとコード署名システムが混乱して�
 
 iOS 開発者として登録しているかどうかに応じて、以下の二つの方法のいずれかを使用して証明書とプロビジョニングプロファイルを取得できます。
 
-**iOS 開発者アカウント：**
+**iOS 開発者アカウントの場合：**
 
 以前に Xcode を使用して iOS アプリを開発およびデプロイした場合、既に独自のコード署名証明書がインストールされています。*security* ツールを使用して、既存の署名識別子を一覧表示します。
 
@@ -356,11 +356,11 @@ Apple Developer ポータルにログインして新しい App ID を発行し�
 
 以下の例では、私の会社の開発チームに関連する独自の署名 ID を使用しています。この目的のために App ID "sg.vp.repackaged" と、"AwesomeRepackaging" という名前のプロビジョニングプロファイルを作成し、ファイル AwesomeRepackaging.mobileprovision にしました。これを以下のシェルコマンドで独自のファイル名と交換します。
 
-**With a regular iTunes account:**
+**通常の iTunes アカウントの場合：**
 
-Mercifully, Apple will issue a free development provisioning profile even if you're not a paying developer. You can obtain the profile with Xcode using your regular Apple account - simply build an empty iOS project and extract embedded.mobileprovision from the app container. The NCC blog explains this process in great detail [5].
+幸いなことに、あなたが有料の開発者ではなくても、Apple はフリーの開発者プロビジョニングプロファイルを発行します。通常の Apple アカウントを使用して Xcode でプロファイルを取得することができます。空の iOS プロジェクトをビルドして、アプリコンテナから embedded.mobileprovision を抽出するだけです。NCC のブログでは、このプロセスを詳細に説明しています [5] 。
 
-Once you have obtained the provisioning profile, you can check its contents with the *security* tool. Besides the allowed certificates and devices, you'll find the entitlements granted to the app in the profile. You'll need those later for code signing, so extract them to a separate plist file as shown below. It is also worth having a look at the contents of the file to check if everything looks as expected.
+プロビジョニングプロファイルを取得したら、*security* ツールでその内容を確認できます。許可された証明書とデバイスに加えて、プロファイルにはアプリに付与されているエンタイトルメントがあります。コード署名には後でそれらが必要になりますので、以下に示すように別の plist ファイルに抽出します。また、ファイルの内容を見て、すべてが期待通りであるかどうかを確認することも重要です。
 
 ~~~
 $ security cms -D -i AwesomeRepackaging.mobileprovision > profile.plist
@@ -384,7 +384,7 @@ $ cat entitlements.plist
 </plist>
 ~~~
 
-Note the application identitifier, which is a combination of the Team ID (LRUD9L355Y) and Bundle ID (sg.vantagepoint.repackage). This provisioning profile is only valid for the one app with this particular app id. The "get-task-allow" key is also important - when set to "true", other processes, such as the debugging server, are allowed to attach to the app (consequently, this would be set to "false" in a distribution profile).
+application identitifier は Team ID (LRUD9L355Y) と Bundle ID (sg.vantagepoint.repackage) の組み合わせであることに注意します。このプロビジョニングプロファイルはこの特定の App ID を持つ一つのアプリに対してのみ有効です。"get-task-allow" key も重要です。"true" に設定する場合、デバッグサーバーなどの他のプロセスがアプリにアタッチすることが許可されます (結果的に、これはディストリビューションプロファイルでは "false" に設定されます) 。
 
 ##### その他の準備
 
