@@ -1,14 +1,14 @@
 ## モバイルアプリのセキュリティテスト
 
-You'll find that various terms such as "Mobile App Penetration Testing", "Mobile App Security Review", and others are used (somehat inconsistenly) in the security industry. Throughout the guide, we'll simply use "mobile app security testing" as an catch-all phrase for evaluating the security of mobile apps using static and/or dynamic analysis. Often (but not necessarily) this is done in the context of a larger security assessment or penetration test that also encompasses the overall client-server architecture, as well as server-side APIs used by the mobile app. 
+セキュリティ業界では「モバイルアプリペネトレーションテスト」、「モバイルアプリセキュリティレビュー」などのさまざまな用語が使用されています (何らかの不一致があります) 。このガイドでは、静的解析や動的解析を使用してモバイルアプリのセキュリティを評価するための包括的なフレーズとして「モバイルアプリのセキュリティテスト」を使用します。往々にして (必ずしもそうとは限りませんが) これはモバイルアプリで使用されるサーバー側 API だけでなく、クライアント・サーバーアーキテクチャ全体も包括するより大きなセキュリティ監査やペネトレーションテストのコンテキストで行われます。
 
-A few key points to consider:
+考慮すべき重要な点は以下のとおりです。
 
-- It doesn't make a lot of sense to talk of mobile app "penetration testing" because there's nothing to penetrate.
+- モバイルアプリの「ペネトレーションテスト」の話はあまり意味がありません。何もペネトレートしていないためです。
 
-- As far as mobile apps are concerned, there isn't really a difference between white-box and black-box testing. You always have access to the compiled app, and once you learn reading bytecode and binary code (or using a decompiler), having the compiled app is pretty much equivalent to having the source code.
+- モバイルアプリに関する限り、ホワイトボックステストとブラックボックステストの間に違いはありません。あなたは常にコンパイルされたアプリにアクセスすることができ、一度バイトコードやバイナリコードを読むこと (または逆コンパイラを使用すること) を学ぶと、コンパイルされたアプリを持つこととソースコードを持つことはほぼ同じになります。
 
-In this guide, we'll cover mobile app security testing in two different contexts. The first one is the "classical" security test done towards the end of the development lifecyle. Here, the tester gets access to a near-final or production-ready version of the app, identifies security issues, and writes an (usually devastating) report. The other context is automating security tests during earlier stages of the software development lifecycle. In both cases, the same basic requirements and test cases apply, but there's a big difference in the high-level methodology and level of interaction with the client.
+このガイドでは、二つの異なるコンテキストでのモバイルアプリのセキュリティテストについて説明します。最初のひとつは「古典的な」セキュリティテストで、開発ライフサイクルの終わりに向かって行われます。ここでは、テスト担当者は最終版に近いバージョンのアプリまたは出荷準備バージョンのアプリにアクセスし、セキュリティの問題を特定し、(通常は壊滅的な) レポートを作成します。もうひとつは、ソフトウェア開発ライフサイクルの初期段階におけるセキュリティテストの自動化です。どちらの場合でも、同じ基本要件とテストケースが適用されますが、高レベルの方法論およびクライアントとの対話のレベルに大きな違いがあります。
 
 ### セキュリティテストの従来の方法
 
