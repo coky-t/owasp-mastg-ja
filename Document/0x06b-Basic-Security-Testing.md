@@ -456,14 +456,14 @@ Payload/UnCrackable Level 1.app/UnCrackable Level 1: replacing existing signatur
 
 ##### アプリのインストールと実行
 
-Now you should be all set for running the modified app. Deploy and run the app on the device as follows.
+ここで改変されたアプリを実行するために設定する必要があります。以下のようにデバイス上にアプリをデプロイおよび実行します。
 
 ~~~
 $ ios-deploy --debug --bundle Payload/UnCrackable\ Level\ 1.app/
 ~~~
 
-If everything went well, the app should launch on the device in debugging mode with lldb attached. Frida should now be able to attach to the app as well. You can verify this with the frida-ps command:
- 
+すべてうまくいけば、lldb をアタッチしてデバッグモードでデバイス上でアプリを実行します。ここで Frida はアプリにアタッチできるはずです。これを確認するには、frida-ps コマンドを使用します。
+
 ~~~
 $ frida-ps -U
 PID  Name
