@@ -477,11 +477,11 @@ PID  Name
 
 何かが間違っている (通常はそうなります) 場合、プロビジョニングプロファイルとコード署名ヘッダの間の不一致がもっとも疑われます。この場合、公式のドキュメントを読んでシステム全体の仕組みを理解することが有用です [7][8] 。Apple の entitlement トラブルシューティングページ [9] に役に立つリソースがあります。
 
-### Setting up Burp
+### Burp のセットアップ
 
-Setting up burp to proxy your traffic through is pretty straightforward. It is assumed that you have both: iDevice and workstation connected to the same WiFi network where client to client traffic is permitted. If client-to-client traffic is not permitted, it should be possible to use usbmuxd [18] in order to connect to burp through USB. 
+トラフィックをプロキシするように Burp をセットアップすることはとても簡単です。iDevice とワークステーションの両方が同じ Wi-Fi ネットワークに接続され、クライアントからクライアントへのトラフィックが許可されていることが前提となります。クライアントからクライアントへのトラフィックが許可されていない場合、usbmuxd [18] を使用して USB 経由で Burp に接続することが可能である必要があります。
 
-The first step is to configure proxy of your burp to listen on all interfaces (alternatively only on the WiFi interface). Then we can configure our iDevice to use our proxy in advanced wifi settings. Portswigger provides good tutorial on setting an iOS Device and Burp [22].
+最初のステップでは、すべてのインタフェース (または Wi-Fi インタフェースのみ) で listen するように Burp のプロキシを設定します。それから、高度な Wi-Fi 設定でプロキシを使用するように iDevice を設定します。Portswigger は iOS Device と Burp の設定に関するよいチュートリアルを提供しています [22] 。
 
 ### Bypassing Certificate Pinning
 
