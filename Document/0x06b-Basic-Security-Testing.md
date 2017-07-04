@@ -501,14 +501,14 @@ PID  Name
 - Apache Cordova や Adobe Phonegap を使用して書かれた一部のデュアルスタックアプリケーションはコールバックを頻繁に使用します。成功したときに呼び出されるコールバック関数を探し、Cycript を使用して手動で呼び出します。
 - 証明書がアプリケーションバンドル内にファイルとして存在することがあります。それを Burp の証明書で置き換えるだけで十分ですが、バイナリにハードコードされている可能性がある証明書の SHA サムに注意します。その場合はそれも置き換える必要があります。
 
-#### Recommendations
+#### 推奨事項
 
-Certificate pinning is a good security practice and should be used for all applications handling sensitive information. 
-EFF's Observatory<sup>[28]</sup> provides list of root and intermediate CAs that are by default trusted on major operating systems. Please also refer to a map of the 650-odd organizations that function as Certificate Authorities trusted (directly or indirectly) by Mozilla or Microsoft<sup>[29]</sup>. Use certificate pinning if you don't trust at least one of these CAs.
+証明書ピンニングは適切なセキュリティプラクティスであり、機密情報を扱うすべてのアプリケーションで使用すべきです。
+EFF の Observatory <sup>[28]</sup> は主要なオペレーティングシステムでデフォルトで信頼されているルート CA および中間 CA の一覧を提供します。Mozilla や Microsoft により (直接もしくは間接的に) 信頼された認証機関として機能する 650 異常の組織のマップも参照します <sup>[29]</sup> 。これらの CA のうち少なくともひとつを信頼しない場合には、証明書ピンニングを使用します。
 
-If you want to get more details on white-box testing and usual code patters, refer to iOS Application Security by David Thiel [21]. It contains description and code snippets of most-common techniques used to perform certificate pinning.
+ホワイトボックステストや一般的なコードパターンの詳細については David Thiel による iOS Application Security [21] を参照ください。証明書ピンニングを実行するために使用される最も一般的な技法の説明とコードスニペットが含まれています。
 
-To get more information on testing transport security, please refer to section 'Testing Network Communication' 
+トランスポートセキュリティのテストの詳細については、「ネットワーク通信のテスト」のセクションを参照ください。
 
 ### 参考情報
 
