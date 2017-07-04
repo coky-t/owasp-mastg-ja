@@ -16,7 +16,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [モバイルアプリの分類](Document/0x04a-Mobile-App-Taxonomy.md)
 - [モバイルアプリのセキュリティテスト] <!-- (Document/0x04b-Mobile-App-Security-Testing.md) -->
 - [改竄とリバースエンジニアリング] <!-- (Document/0x04c-Tampering-and-Reverse-Engineering.md) -->
-- [ソフトウェア開発ライフサイクルにおけるセキュリティテスト] <!-- (Document/0x04d-Security-Testing-SDLC.md) -->
+- [ソフトウェア開発ライフサイクルにおけるセキュリティテスト](Document/0x04d-Security-Testing-SDLC.md)
 
 ### Android テストガイド
 
@@ -46,7 +46,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### 付録
 
-- [リモート認証と認可](Document/0x07a-Testing-Authentication-and-Session-Management.md)
+- [リモート認証と認可] <!-- Document/0x07a-Testing-Authentication-and-Session-Management.md) -->
 - [ネットワーク通信のテスト](Document/0x07b-Testing-Network-Communication.md)
 - [モバイルアプリでの暗号化](Document/0x07c-Testing-Cryptography.md)
 - [アンチリバースエンジニアリングスキームの評価] <!-- (Document/0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md) -->
