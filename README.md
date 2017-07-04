@@ -34,7 +34,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 ### iOS テストガイド
 
 - [プラットフォーム概要](Document/0x06a-Platform-Overview.md)
-- [iOS セキュリティテスト入門] <!-- (Document/0x06b-Basic-Security-Testing.md) -->
+- [iOS セキュリティテスト入門](Document/0x06b-Basic-Security-Testing.md)
 - [データストレージのテスト (iOS)](Document/0x06d-Testing-Data-Storage.md)
 - [暗号化のテスト (iOS アプリ)](Document/0x06e-Testing-Cryptography.md)
 - [ローカル認証のテスト (iOS アプリ)](Document/0x06f-Testing-Local-Authentication.md)
