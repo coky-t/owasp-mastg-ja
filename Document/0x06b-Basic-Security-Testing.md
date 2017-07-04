@@ -483,23 +483,23 @@ PID  Name
 
 最初のステップでは、すべてのインタフェース (または Wi-Fi インタフェースのみ) で listen するように Burp のプロキシを設定します。それから、高度な Wi-Fi 設定でプロキシを使用するように iDevice を設定します。Portswigger は iOS Device と Burp の設定に関するよいチュートリアルを提供しています [22] 。
 
-### Bypassing Certificate Pinning
+### 証明書ピンニングのバイパス
 
-Certificate Pinning is a practice used to tighten security of TLS connection. When an application is connecting to the server using TLS, it checks if the server's certificate is signed with trusted CA's private key. The verification is based on checking the signature with public key that is within device's key store. This in turn contains public keys of all trusted root CAs.
+証明書ピンニングは TLS 接続のセキュリティを強化するために使用される方法です。アプリケーションが TLS を使用してサーバーに接続する場合、サーバーの証明書が信頼できる CA の秘密鍵で署名されているかどうかがチェックされます。その検証はデバイスのキーストア内にある公開鍵で署名をチェックすることに基づいています。これにはすべての信頼できるルート CA の公開鍵が含まれています。
 
-Certificate pinning means that our application will have server's certificate or hash of the certificate hardcoded into the source code. 
-This protects against two main attack scenarios:
+証明書ピンニングはアプリケーションがサーバーの証明書や証明書のハッシュをソースコード内にハードコードされることを意味します。
+これは二つの主要な攻撃シナリオに対して保護します。
 
-* Compromised CA issuing certificate for our domain to a third-party
-* Phishing attacks that would add a third-party root CA to device's trust store
+* 私たちのドメインの証明書をサードパーティに発行する不正な CA
+* デバイスのトラストストアにサードパーティルート CA を追加するフィッシング攻撃
 
-The simplest method is to use `SSL Kill Switch` (can be installed via Cydia store), which will hook on all high-level API calls and bypass certificate pinning. There are some cases, though, where certificate pinning is more tricky to bypass. Things to look for when you try to bypass certificate pinning are:
+最も簡単な方法は `SSL Kill Switch` (Cydia ストア経由でインストール可能) を使用して、すべての高レベル API 呼び出しをフックし、証明書ピンニングをバイパスすることです。但し、証明書ピンニングはバイパスが難しい場合もあります。証明書ピンニングをバイパスしようとする際に探すべき事項は以下のとおりです。
 
-- following API calls: `NSURLSession`, `CFStream`, `AFNetworking`
-- during static analysis, try to look for methods/strings containing words like 'pinning', 'X509', 'Certificate', etc.
-- sometimes, more low-level verification can be done using e.g. openssl. There are tutorials [20] on how to bypass this. 
-- some dual-stack applications written using Apache Cordova or Adobe Phonegap heavily use callbacks. You can look for the callback function called upon success and call it manually with Cycript
-- sometimes the certificate resides as a file within application bundle. It might be sufficient to replace it with burp's certificate, but beware of certificate's SHA sum that might be hardcoded in the binary. In that case you must replace it too!
+- API 呼び出し： `NSURLSession`, `CFStream`, `AFNetworking`
+- 静的解析の中で、'pinning', 'X509', 'Certificate' などの単語を含むメソッドや文字列を探してみます。
+- 時には、openssl などを使用して、より低レベルの検証が行われます。これをバイパスする方法のチュートリアル [20] があります。
+- Apache Cordova や Adobe Phonegap を使用して書かれた一部のデュアルスタックアプリケーションはコールバックを頻繁に使用します。成功したときに呼び出されるコールバック関数を探し、Cycript を使用して手動で呼び出します。
+- 証明書がアプリケーションバンドル内にファイルとして存在することがあります。それを Burp の証明書で置き換えるだけで十分ですが、バイナリにハードコードされている可能性がある証明書の SHA サムに注意します。その場合はそれも置き換える必要があります。
 
 #### Recommendations
 
