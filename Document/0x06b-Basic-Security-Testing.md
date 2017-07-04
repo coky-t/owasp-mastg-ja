@@ -475,7 +475,7 @@ PID  Name
 
 ##### トラブルシューティング
 
-If something goes wrong (which it usually does), mismatches between the provisioning profile and code signing header are the most likely suspect. In that case it is helpful to read the official documentation and gaining an understanding of how the whole system works [7][8]. I also found Apple's entitlement troubleshooting page [9] to be a useful resource.
+何かが間違っている (通常はそうなります) 場合、プロビジョニングプロファイルとコード署名ヘッダの間の不一致がもっとも疑われます。この場合、公式のドキュメントを読んでシステム全体の仕組みを理解することが有用です [7][8] 。Apple の entitlement トラブルシューティングページ [9] に役に立つリソースがあります。
 
 ### Setting up Burp
 
