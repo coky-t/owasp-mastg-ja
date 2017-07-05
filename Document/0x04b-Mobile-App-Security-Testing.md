@@ -21,15 +21,15 @@
 
 ### 準備
 
-Before conducting a test, an agreement must be reached as to what security level of the MASVS<sup>[1]</sup> to test against. The security requirements should ideally have been decided at the beginning of the SDLC, but this may not always be the case. In addition, different organizations have different security needs, and different amounts of resources to invest in test activity. While the controls in MASVS Level 1 (L1) are applicable to all mobile apps, it is a good idea to walk through the entire checklist of L1 and Level 2 (L2) MASVS controls with technical and business stakeholders to agree an appropriate level of test coverage.
+テストを行う前に、テストするための MASVS<sup>[1]</sup> のセキュリティレベルを何にするか合意に達する必要があります。セキュリティ要件は理想的には SDLC の開始時に決定すべきですが、必ずしもそうであるとは限りません。また、異なる組織ではセキュリティニーズが異なり、テスト活動に投じるリソース量も異なります。MASVS Level 1 (L1) のコントロールはすべてのモバイルアプリに適用されますが、テクニカルステークホルダおよびビジネスステークホルダが L1 および Level 2 (L2) MASVS コントロールのチェックリスト全体を確認し、適切なレベルのテストカバレッジに合意することをお勧めします。
 
-Organizations/applications may have different regulatory and legal obligations in certain territories. Even if an app does not handle sensitive data, it may be important to consider whether some L2 requirements may be relevant due to industry regulations or local laws. For example, 2-factor-authentation (2FA) may be obligatory for a financial app, as enforced by the respective country's central bank and/or financial regulatory authority.
+組織やアプリケーションは特定の地域でさまざまな規制や法的義務を負う可能性があります。アプリが機密データを処理しない場合でも、業界の規制や地域の法律により L2 要件に関連するものがあるかどうかを検討することが重要です。例えば、二要素認証 (2FA) は金融アプリに対して義務付けられ、各国の中央銀行や金融監督庁により強制されます。
 
-Security goals/controls defined earlier in the SDLC may also be reviewed during the stakeholder discussion. Some controls may conform to MASVS controls, but others may be specific to the organization or application.
+SDLC の最初に定義されるセキュリティの目標やコントロールはステークホルダのディスカッションの中でレビューされることもあります。コントロールの中には MASVS コントロール に従うものもあれば、組織やアプリケーションに固有のものもあります。
 
 ![Preparation](Images/Chapters/0x03/mstg-preparation.png)
 
-All involved parties need to agree on the decisions made and on the scope in the checklist, as this will define the baseline for all security testing, regardless if done manually or automatically.
+すべての関係者は決定事項とチェックリストの範囲に合意する必要があります。これは、手動で行われるか自動で行われるかに関わらず、すべてのセキュリティテストのベースラインを定義しています。
 
 #### 機密データの特定
 
