@@ -12,12 +12,12 @@
 
 ### セキュリティテストの従来の方法
 
-The following sections will show how to use the OWASP mobile application security checklist and testing guide during a security test. It is split into four sections:
+以下のセクションではセキュリティテストの中で OWASP モバイルアプリケーションのセキュリティチェックリストとテストガイドを使用する方法について説明します。それは四つのセクションに分かれています。
 
-* **Preparation** - defining the scope of security testing, such as which security controls are applicable, what goals the development team/organization have for the testing, and what counts as sensitive data in the context of the test.
-* **Intelligence Gathering** - involves analysing the **environmental** and **architectural** context of the app, to gain a general contextual understanding of the app.
-* **Threat Modeling** - consumes information gathered during the earlier phases to determine what threats are the most likely, or the most serious, and therefore which should receive the most attention from a security tester. Produces test cases that may be used during test execution.
-* **Vulnerability Analysis** - identifies vulnerabilities using the previously created test cases, including static, dynamic and forensic methodologies.
+* **準備** - セキュリティテストの範囲を定義します。どのセキュリティコントロールが適用可能か、開発チームや組織がテストについてどのような目標を持っているか、テストのコンテキストで機密データとみなされるものは何かなどです。
+* **情報収集** - アプリの **環境** と **アーキテクチャ** のコンテキストを分析して、アプリの一般的なコンテキストの理解を得ます。
+* **脅威モデリング** - 初期段階に収集された情報を用いて、最も可能性の高い、または最も深刻である脅威を特定します。したがって、セキュリティテスト担当者からもっとも注目を集めるべきです。テスト実行で使用されるテストケースを生成します。
+* **脆弱性解析** - 事前に作成されたテストケースを使用して脆弱性を特定します。静的手法、動的手法、フォレンジック手法があります。
 
 ### 準備
 
