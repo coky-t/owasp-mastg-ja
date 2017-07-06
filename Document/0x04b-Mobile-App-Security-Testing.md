@@ -87,9 +87,9 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### 静的解析
 
-When executing static analysis, the source code of the mobile app(s) will be analysed to ensure sufficient and correct implementation of security controls, focusing on crucial components such as cryptographic and data storage mechanisms. Due to the amount of code a tester may be confronted with, the ideal approach for static analysis should be a mixture of using tools that scan the code automatically and manual code review.
+静的解析を実行する際には、モバイルアプリのソースコードを解析して、セキュリティコントロールの十分かつ正確な実装を保証します。暗号化やデータストレージメカニズムなどの重要なコンポーネントに焦点を当てます。テスト担当者が直面する可能性のあるコード量により、静的解析の理想的なアプローチはコードを自動的にスキャンするツールを使用することと手動コードレビューを組み合わせたものであるべきです。
 
-Through this approach you can get the best out of both worlds. You can get the so called "low hanging fruits" through the automatic scan, as the scanning engine and its (predefined) rules can detect many common vulnerabilities in the code. A manual code review can explore the code base with specific business and usage contexts in mind, providing enhanced relevance and coverage.
+このアプローチにより、あなたは両方の世界から最高のものを得ることができます。自動スキャンでは「低い位置にぶら下がった果実」 (訳注：「簡単に解決できる問題」の比喩) とよばれるものを取得できます。スキャンエンジンとその (事前定義された) ルールはコード内の多くの一般的な脆弱性を検知できます。手動コードレビューは特定のビジネスや使用状況を念頭においてコードベースを探索します。関連性とカバレッジが向上します。
 
 #### 自動コード解析
 
