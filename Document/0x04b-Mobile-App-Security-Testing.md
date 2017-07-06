@@ -55,16 +55,16 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 ### 情報収集
 
-Intelligence gathering involves the collection of information about the architecture of the app, the business use cases it serves, and the context in which it operates. Such information may be broadly divided into `environmental` and `architectural`.
+情報収集には、アプリのアーキテクチャ、それが提供するビジネスユースケース、それが動作するコンテキストについての情報の収集が含まれます。そのような情報は「環境」と「アーキテクチャ」に大別できます。
 
 #### 環境情報
 
-Environmental information concerns understanding:
+環境情報は以下を理解することと関係します。
 
-* **The goals the organization has for the app** - what the app is supposed to do shapes the ways users are likely to interact with it, and may make some surfaces more likely to be targeted than others by attackers.   
-* **The industry in which they operate** - specific industries may have differing risk profiles, and may be more or less exposed to particular attack vectors.
-* **Stakeholders and investors** - understanding who is interested in or responsible for the app.
-* **Internal processes, workflows and organizational structures** - organization-specific internal processes and workflows may create opportunities for business logic exploits<sup>[2]</sup>.
+* **組織がアプリのために持っている目標** - アプリが行おうとしているものは、ユーザーがそれとやりとりしようとする方法を形作り、一部の領域では他よりも攻撃者がターゲットにする可能性が高くなります。
+* **それらが動作する業界** - 特定の業界では異なるリスクプロファイルを持ち、特定の攻撃ベクトルにさらされる度合いが増減する可能性があります。
+* **ステークホルダと投資家** - アプリに興味を持っているのは誰か、責任を持っているのは誰かを理解します。
+* **内部プロセス、ワークフロー、組織構造** - 組織固有の内部プロセスおよびワークフローはビジネスロジックを悪用する機会をもたらす可能性があります <sup>[2]</sup> 。
 
 #### アーキテクチャ情報
 
