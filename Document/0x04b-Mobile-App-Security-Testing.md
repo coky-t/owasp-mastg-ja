@@ -77,9 +77,9 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 ### 脅威モデリング
 
-Threat Modeling involves using the results of the information gathering phase to determine what threats are likely or severe, producing test cases that may be executed at later stages. Threat Modeling should be a key part of the general SDLC, ideally performed throughout development, rather than just before a penetration test.
+脅威モデリングは情報収集フェーズの結果を使用して、どのような脅威の可能性があるか否かを判断し、後のステージで実行されるテストケースを生成します。脅威モデリングは一般的な SDLC の重要な部分であり、理想的にはペネトレーションテストの直前ではなく、開発を通して実行する必要があります。
 
-General threat Modeling guidelines have been defined by OWASP<sup>[3]</sup>, and these are usually applicable to mobile apps.
+一般的な脅威モデリングのガイドラインは OWASP により定義されており <sup>[3]</sup> 、通常はモバイルアプリに適用可能です。
 
 <!-- are there any threat Modeling techniques specially applicable to mobile apps? -->
 
