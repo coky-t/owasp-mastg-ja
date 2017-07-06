@@ -68,12 +68,12 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### アーキテクチャ情報
 
-Architectural information concerns understanding:
+アーキテクチャ情報は以下を理解することと関係します。
 
-* **App:** - how the app accesses data and manages it in-process, how it communicates with other resources, manages user sessions, and whether it detects and reacts to running on jailbroken or rooted phones.
-* **Operating System:** - what operating systems and versions does the app run on (e.g. is it restricted to only newer Android or iOS, and do we need to be concerned about vulnerabilities in earlier OS versions), is it expected to run on devices with Mobile Device Management (MDM<sup>[3]</sup>) controls, and what OS vulnerabilities might be relevant to the app.
-* **Network:** - are secure transport protocols used (e.g. TLS), is network traffic encryption secured with strong keys and cryptographic algorithms (e.g. SHA-2), is certificate pinning used to verify the endpoint, etc.
-* **Remote Services:** - what remote services does the app consume? If they were compromised, could the client by compromised?
+* **アプリ:** - アプリがデータにアクセスしそれをプロセス内で管理する方法、他のリソースとの通信方法、ユーザーセッションの管理方法、脱獄済み電話やルート化された電話上で実行していることを検出および反応するかどうか。
+* **オペレーティングシステム:** - アプリが実行されるオペレーティングシステムとバージョン (新しい Android または iOS のみに限定されているか、以前の OS バージョンの脆弱性を気にする必要があるかなど) 、モバイルデバイス管理 (MDM <sup>[3]</sup>) コントロールを備えたデバイス上で動作することが期待されているか、アプリに関連する可能性がある OS 脆弱性は何か。
+* **ネットワーク:** - セキュアなトランスポートプロトコル (TLS など) が使用されるか、ネットワークトラフィック暗号化は強力な鍵および暗号アルゴリズム (SHA-2 など) で保護されているか、エンドポイントの検証に証明書ピンニングが使用されているか、など。
+* **リモートサービス:** - アプリが使用するリモートサービスは何か、それらが侵害された場合クライアントは侵害される可能性があるか。
 
 ### 脅威モデリング
 
