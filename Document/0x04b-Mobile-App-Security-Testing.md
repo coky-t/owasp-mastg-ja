@@ -93,15 +93,15 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### 自動コード解析
 
-During automatic static analysis, a tool will check the source code for compliance with a predefined set of rules or industry best practices. It is a standard development practice to use analytical methods to review and inspect the mobile application's source code to detect bugs and implementation errors.
+自動静的解析の中では、ツールは事前定義された一連のルールや業界のベストプラクティスを遵守しているかどうかについてソースコードをチェックします。解析手法を使用することは標準的な開発のプラクティスです。モバイルアプリケーションのソースコードをレビューおよび検査して、バグや実装エラーを検出します。
 
-The automatic static analysis tools will provide assistance with the manual code review and inspection process. The tool will typically display a list of findings or warnings and then flag all detected violations. Automatic static tools come in different varieties - some only run against built code, some just need to be fed with the source code and some run as live-analysis plugins in an Integrated Development Environments (IDE)<sup>[4]</sup>. Ideally these tools should be used during the development process, but can also be useful during a source code review.
+自動静的解析ツールは手動コードレビューおよびインスペクションプロセスを支援します。ツールは一般的に調査結果や警告の一覧を表示し、検出されたすべての違反にフラグを立てます。自動静的ツールはさまざまな種類があります。ビルドされたコードに対してのみ実行するもの、ソースコードを与える必要があるもの、統合開発環境 (IDE) のライブ解析プラグインとして動作するもの <sup>[4]</sup> 。理想的にはこれらのツールは開発プロセスの中で使用すべきですが、ソースコードレビューの中でも役に立ちます。
 
-Some static code analysis tools encapsulate a deep knowledge of the underlying rules and semantics required to perform the specific type of analysis, but still require a professional to identify whether a reported violation is a false positive or not.
+一部の静的コード解析ツールは要求される基本的なルールやセマンティクスの深い知識をカプセル化して特定の種類の解析を実行しますが、報告された違反が誤検知であるかどうかを特定するために専門家が必要とされます。
 
-It should be noted that automatic static analysis can produce a high number of false positives, particularly if the tool is not configured properly for the target environment. Initially executing the scan for only a limited class of vulnerabilities might be a good decision - to avoid getting overwhelmed by the volume of results.
+特にツールが対象環境に対して適切に構成されていない場合、自動静的解析は多数の誤検知を生み出す可能性があることに注意する必要があります。最初に限定されたクラスの脆弱性に対してのみスキャンを実行することをお勧めします。結果の量に圧倒されることを避けるためです。
 
-A full list of tools for static analysis can be found in the chapter "Testing tools".
+静的解析のためのツールの完全なリストは「テストツール」の章にあります。
 
 #### 手動コード解析
 
