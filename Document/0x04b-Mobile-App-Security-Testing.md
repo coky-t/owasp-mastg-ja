@@ -121,14 +121,14 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 ##### 動的解析の利点
 
-* Does not require access to the source code
-* Does not need an understanding of how the mobile application is supposed to behave
-* Able to identify infrastructure, configuration and patch issues that Static Analysis tools may miss
+* ソースコードにアクセスする必要はありません
+* モバイルアプリケーションがどのような動作を期待されるかを理解する必要はありません
+* 静的解析ツールでは見逃す可能性のあるインフラストラクチャ、構成、パッチの問題を特定できます
 
 ##### 動的解析の欠点
 
-* Limited scope of coverage because the mobile application must be footprinted to identify the specific test area
-* No access to the actual instructions being executed, as the tool exercises the mobile application and conducts pattern matching on requests and responses
+* モバイルアプリケーションは特定のテストエリアを識別するために足跡を残す必要があるため、カバレッジのスコープが制限されます
+* ツールがモバイルアプリケーションを実行し、リクエストとレスポンスのパターンマッチングを実行するため、実際の命令へのアクセスは実行されません
 
 #### 実行時解析
 
