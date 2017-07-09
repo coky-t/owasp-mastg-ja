@@ -105,13 +105,13 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### 手動コード解析
 
-In manual code analysis, a human code reviewer will look through the source code of the mobile application, to identify security vulnerabilities. This can be as basic as searching with grep for key words within the source code repository to identify usages of potentially vulnerable code patterns, or as sophisticated as live-analysis using an IDE plugin. An IDE provides basic code review functionality and can be extended through different tools to assist in the reviewing process.
+手動コード解析では、人間のコードレビュー担当者がモバイルアプリケーションのソースコードを調べ、セキュリティ上の脆弱性を特定します。これは、基本的にはソースコードリポジトリ内をキーワードで grep で検索して潜在的に脆弱なコードパターンの使用を特定することであり、拡張として IDE プラグインを使用したライブ解析があります。IDE は基本的なコードレビュー機能を提供し、レビュープロセスを支援するさまざまなツールを通じて拡張できます。
 
-During a manual code review, the code base will be scanned to look for key indicators of security vulnerabilities. This is also known as "Crawling Code"<sup>[9]</sup> and will be executed by looking for certain keywords used within functions and APIs. For example, cryptographic strings like DES, MD5 or Random, or even database related strings like executeStatement or executeQuery are key indicators which may be of interest.
+手動コードレビューの中で、コードベースをスキャンしてセキュリティ上の脆弱性の重要な指標を探します。これは "Crawling Code" <sup>[9]</sup> とも呼ばれ、関数や API 内で使用される特定のキーワードを検索することにより実行されます。例えば、DES, MD5, Random などの暗号化文字列、executeStatement や executeQuery などのデータベース関連の文字列も興味深い主要な指標となりえます。
 
-The main difference between a manual code review and the use of an automatic code analysis tool is that manual code review is better at identifying vulnerabilities in the business logic, standards violations and design flaws, especially in situations where the code is technically secure but logically flawed. Such scenarios are unlikely to be detected by any automatic code analysis tool.
+手動コードレビューと自動コード解析ツールの使用の間の主な相違点は、手動コードレビューがビジネスロジック、標準規約の違反、設計上の欠陥での脆弱性を特定することに優れています。特にコードが技術的にセキュアであるが論理的に欠陥があるような状況です。このようなシナリオは自動コード解析ツールでは検出されない可能性があります。
 
-A manual code review requires an expert human code reviewer who is proficient in both the language and the frameworks used in the mobile application. It is essential to have a deep understanding of the security implementation of the technologies used in the mobile application's source code. As a result it can be time consuming, slow and tedious for the reviewer; especially for large codebases with many dependencies.
+手動コードレビューはモバイルアプリケーションで使用される言語とフレームワークの両方に精通した専門家のコードレビュー担当者を要求します。モバイルアプリケーションのソースコードで使用されるテクノロジのセキュリティ実装を深く理解していることが不可欠です。その結果、レビュー担当者にとって時間がかかり、遅く、面倒です。多くの依存関係を持つ巨大なコードベースの場合には特にそうです。
 
 #### 動的解析
 
