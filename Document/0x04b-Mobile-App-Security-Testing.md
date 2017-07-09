@@ -136,12 +136,12 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### トラフィック解析
 
-Dynamic analysis of the traffic exchanged between client and server can be performed by launching a Man-in-the-middle (MITM) attack. This can be achieved by using an interception proxy like Burp Suite or OWASP ZAP for HTTP traffic.  
+クライアントとサーバーの間で交換されるトラフィックの動的解析は中間者 (MITM) 攻撃を行うことにより実行できます。これは Burp Suite や OWASP ZAP などの HTTP トラフィックに対する傍受プロキシを使用することで実現できます。
 
 * Configuring an Android Device to work with Burp - https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
 * Configuring an iOS Device to work with Burp - https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp
 
-In case another (proprietary) protocol is used in a mobile app that is not HTTP, the following tools can be used to try to intercept or analyse the traffic:
+モバイルアプリで HTTP 以外の別の (独自の) プロトコルが使用されている場合、以下のツールを使用してトラフィックの傍受や解析を行うことができます。
 * Mallory - https://github.com/intrepidusgroup/mallory
 * Wireshark - https://www.wireshark.org/
 
