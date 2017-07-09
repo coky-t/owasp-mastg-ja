@@ -115,9 +115,9 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### 動的解析
 
-In dynamic analysis the focus is on testing and evaluating an app by executing it in real-time, in different situations. The main objective of dynamic analysis is to find security vulnerabilities or weak spots in a program while it is running. Dynamic analysis should also be conducted against the backend services and APIs of mobile applications, where its request and response patterns can be analysed.
+動的解析では、アプリをリアルタイムにさまざまな状況で実行することによりテストおよび評価することに重点を置いています。動的解析の主な目的は、プログラムを実行する中でセキュリティ上の脆弱性や弱点を見つけることです。動的解析はモバイルアプリケーションのバックエンドサービスや API に対しても実行され、そのリクエストやレスポンスパターンを解析する必要があります。
 
-Usually, dynamic analysis is performed to check whether there are sufficient security mechanisms in place to prevent disclosure of data in transit, authentication and authorization issues and server configuration errors.
+通常、動的解析を実行して、転送時のデータの開示、認証および認可の問題、サーバーの構成エラーを防止するための十分なセキュリティ機構があるかどうかをチェックします。
 
 ##### 動的解析の利点
 
