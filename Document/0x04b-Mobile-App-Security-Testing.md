@@ -160,9 +160,9 @@ OWASP Fuzzing guide <sup>[5]</sup> も参照ください。
 
 注意：ファジングはソフトウェアバグのみを検出します。この問題をセキュリティ欠陥として分類するには研究者による更なる解析を要求します。
 
-* **Protocol adherence** - for data to be handled at all by an application, it may need to adhere relatively closely to a given protocol (e.g. HTTP) or format (e.g. file headers). The greater the adherence to the structure of a given protocol or format, the more likely it is that meaningful errors will be detected in a short time frame. However, it comes at the cost of decreasing the test surface, potentially missing low level bugs in the protocol or format.
+* **プロトコルの遵守** - データがアプリケーションにより処理されるためには、特定のプロトコル (HTTP など) やフォーマット (ファイルヘッダなど) に比較的密接に従う必要があります。特定のプロトコルやフォーマットの構造に対する遵守度がより高いほど、短期間で有意義なエラーが検出される可能性が高くなります。しかし、これはテストサーフェスを減少させるコストとなり、プロトコルやフォーマットの低レベルのバグを失う可能性があります。
 
-* **Fuzz Vectors**<sup>[6]</sup> - fuzz vectors may be used to provide a list of known risky values likely to cause undefined or dangerous behaviour in an app. Using such a list focuses tests more closely on likely problems, reducing the number of false positives and decreasing the test execution time.
+* **ファズベクトル** <sup>[6]</sup> - ファズベクトルを使用して、アプリで未定義または危険な動作を引き起こす可能性のある既知の危険を伴う値のリストを提供します。このようなリストを使用することで、可能性のある問題をより詳しくテストし、誤検知数を減らし、テスト実行時間を短縮します。
 
 ### 一般的な落とし穴
 
