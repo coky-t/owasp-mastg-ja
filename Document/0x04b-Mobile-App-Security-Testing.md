@@ -147,18 +147,18 @@ SDLC の最初に定義されるセキュリティの目標やコントロール
 
 #### 入力ファジング
 
-The process of fuzzing is to repeatedly feeding an application with various combinations of input value, with the goal of finding security vulnerabilities in the input-parsing code. There were instances when the application simply crashes, but also were also occasions when it did not crash but behave in a manner which the developers did not expect them to be, which may potentially lead to exploitation by attackers.  
+ファジングのプロセスは入力値のさまざまな組み合わせをアプリケーションに繰り返し与えることであり、入力解析コードにセキュリティ上の脆弱性を見つけることが目的です。アプリケーションが単にクラッシュする場合だけでなく、クラッシュはしないけれども開発者が期待しない振る舞いをし、攻撃者による悪用につながる可能性がある場合もあります。
 
-Fuzzing, is a method for testing software input validation by feeding it intentionally malformed input. Below are the steps in performing the fuzzing:
+ファジングは意図的に不正な入力を与えることによりソフトウェアの入力検証をテストする手法です。以下にファジングを実行する手順を示します。
 
-* Identifying a target
-* Generating malicious inputs
-* Test case delivery
-* Crash monitoring
+* 対象の特定
+* 不正な入力の生成
+* テストケースの配信
+* クラッシュ監視
 
-Also refer to the OWASP Fuzzing guide<sup>[5]</sup>
+OWASP Fuzzing guide <sup>[5]</sup> も参照ください。
 
-Note: Fuzzing only detects software bugs. Classifying this issue as a security flaw requires further analysis by the researcher.
+注意：ファジングはソフトウェアバグのみを検出します。この問題をセキュリティ欠陥として分類するには研究者による更なる解析を要求します。
 
 * **Protocol adherence** - for data to be handled at all by an application, it may need to adhere relatively closely to a given protocol (e.g. HTTP) or format (e.g. file headers). The greater the adherence to the structure of a given protocol or format, the more likely it is that meaningful errors will be detected in a short time frame. However, it comes at the cost of decreasing the test surface, potentially missing low level bugs in the protocol or format.
 
