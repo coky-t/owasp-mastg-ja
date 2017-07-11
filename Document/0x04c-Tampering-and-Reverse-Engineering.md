@@ -12,15 +12,15 @@
 
 常に機能する一般的なリバースエンジニアリングプロセスはありません。それでは、よく使われる手法やツールをについて説明した後で、最も一般的な防御に取り組む例を挙げます。
 
-### Why You Need It
+### あなたがそれを必要とする理由
 
-Mobile security testing requires at least basic reverse engineering skills for several reasons:
+モバイルセキュリティテストには以下のいくつかの理由から少なくとも基本的なリバースエンジニアリングのスキルを要求されます。
 
-**1. To enable black-box testing of mobile apps.** Modern apps often employ technical controls that will hinder your ability to perform dynamic analysis. SSL pinning and end-to-end (E2E) encryption sometimes prevent you from intercepting or manipulating traffic with a proxy. Root detection could prevent the app from running on a rooted device, preventing you from using advanced testing tools. In this cases, you must be able to deactivate these defenses.
+**1. モバイルアプリのブラックボックステストを可能にするため。** 現在のアプリは動的解析を行う能力を妨げる技術的なコントロールを採用することがよくあります。SSL ピンニングとエンドツーエンド (E2E) 暗号化により、プロキシを使用してトラフィックを傍受または操作できないことがあります。ルート検出はアプリがルート化されたデバイスで実行できなくなるため、高度なテストツールを使用することができなくなる可能性があります。この場合には、これらの防御を無効にする必要があります。
 
-**2. To enhance static analysis in black-box security testing.** In a black-box test, static analysis of the app bytecode or binary code is helpful for getting a better understanding of what the app is doing. It also enables you to identify certain flaws, such as credentials hardcoded inside the app.
+**2. ブラックボックスセキュリティテストの静的解析を強化するため。** ブラックボックステストでは、アプリのバイトコードやバイナリコードの静的解析はアプリが何をしているかをよりよく理解するのに役立ちます。また、アプリ内にハードコードされた資格情報など、特定の欠陥を識別することもできます。
 
-**3. To assess resilience against reverse engineering.**  Apps that implement the software protection measures listed in MASVS-R should be resilient against reverse engineering to a certain degree. In this case, testing the reverse engineering defenses ("resiliency assessment") is part of the overall security test. In the resilience assessment, the tester assumes the role of the reverse engineer and attempts to bypass the defenses.
+**3. リバースエンジニアリングに対する耐性を評価するため。** MASVS-R にリストされているソフトウェア保護対策を実装しているアプリはある程度のリバースエンジニアリングに対して耐性を持つ必要があります。この場合、リバースエンジニアリング防御のテスト (「耐性評価」) はセキュリティテスト全体の一部です。耐性評価では、テスト技術者はリバースエンジニアの役割を引き受け、防御をバイパスすることを試みます。
 
 Before we dive into the world of mobile app reversing, we have some good news and some bad news to share. Let's start with the good news:
 
