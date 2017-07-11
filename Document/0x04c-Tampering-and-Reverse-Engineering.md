@@ -1,10 +1,10 @@
 ## 改竄とリバースエンジニアリング
 
-In the context of mobile apps, reverse engineering is the process of analyzing the compiled app to extract knowledge about its inner workings. It is akin to reconstructing the original source code from the bytecode or binary code, even though this doesn't need to happen literally. The main goal in reverse engineering is *comprehending* the code.
+モバイルアプリのコンテキストでは、リバースエンジニアリングはコンパイルされたアプリを解析するプロセスであり、内部の動作に関する知識を抽出します。それはバイトコードやバイナリコードから元のソースコードを再構築することに似ていますが、そっくりそのままである必要はありません。リバースエンジニアリングの主な目標はコードを *理解すること* です。
 
-*Tampering* is the process of making changes to a mobile app (either the compiled app, or the running process) or its environment to affect its behavior. For example, an app might refuse to run on your rooted test device, making it impossible to run some of your tests. In cases like that, you'll want to alter that particular behavior.
+*改竄* はモバイルアプリ (コンパイルされたアプリ、または実行中のプロセス) またはその動作に影響を与える環境を変更するプロセスです。 例えば、アプリがルート化されたテストデバイス上での実行を拒否する可能性があるため、テストの一部を実行できなくなる可能性があります。そのような場合は、特定の動作を変更する必要があります。
 
-Reverse engineering and tampering techniques have long belonged to the realm of crackers, modders, malware analysts, and other more exotic professions. For "traditional" security testers and researchers, reverse engineering has been more of a complementary, nice-to-have-type skill that wasn't all that useful in 99% of day-to-day work. But the tides are turning: Mobile app black-box testing increasingly requires testers to disassemble compiled apps, apply patches, and tamper with binary code or even live processes. The fact that many mobile apps implement defenses against unwelcome tampering doesn't make things easier for us.
+リバースエンジニアリングと改竄の技法はクラッカー、改造者、マルウェア解析者、その他のよりエキゾチックな職業の領域に長く属していました。「伝統的な」セキュリティテスト担当者や研究者にとって、リバースエンジニアリングは補完的で、あると便利な種類のスキルですが、日々の業務の 99% において有用ではありませんでした。しかし、状況は一変します。モバイルアプリのブラックボックステストではコンパイルされたアプリを逆アセンブルし、パッチを適用し、バイナリコードやライブプロセスを改竄するテスト担当者がますます必要になっています。多くのモバイルアプリが歓迎されない改竄に対する防御を実装しているという事実は、私たちにとってより簡単なものにはなりません。
 
 Mobile security testers should be able to understand basic reverse engineering concepts. It goes without saying that they should also know mobile devices and operating systems inside out: the processor architecture, executable format, programming language intricacies, and so forth.
 
