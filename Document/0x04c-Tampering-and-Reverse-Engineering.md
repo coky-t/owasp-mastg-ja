@@ -4,13 +4,13 @@
 
 *改竄* はモバイルアプリ (コンパイルされたアプリ、または実行中のプロセス) またはその動作に影響を与える環境を変更するプロセスです。 例えば、アプリがルート化されたテストデバイス上での実行を拒否する可能性があるため、テストの一部を実行できなくなる可能性があります。そのような場合は、特定の動作を変更する必要があります。
 
-リバースエンジニアリングと改竄の技法はクラッカー、改造者、マルウェア解析者、その他のよりエキゾチックな職業の領域に長く属していました。「伝統的な」セキュリティテスト担当者や研究者にとって、リバースエンジニアリングは補完的で、あると便利な種類のスキルですが、日々の業務の 99% において有用ではありませんでした。しかし、状況は一変します。モバイルアプリのブラックボックステストではコンパイルされたアプリを逆アセンブルし、パッチを適用し、バイナリコードやライブプロセスを改竄するテスト担当者がますます必要になっています。多くのモバイルアプリが歓迎されない改竄に対する防御を実装しているという事実は、私たちにとってより簡単なものにはなりません。
+リバースエンジニアリングと改竄の技法はクラッカー、改造者、マルウェア解析者、その他のよりエキゾチックな職業の領域に長く属していました。「伝統的な」セキュリティテスト技術者や研究者にとって、リバースエンジニアリングは補完的で、あると便利な種類のスキルですが、日々の業務の 99% において有用ではありませんでした。しかし、状況は一変します。モバイルアプリのブラックボックステストではコンパイルされたアプリを逆アセンブルし、パッチを適用し、バイナリコードやライブプロセスを改竄するテスト担当者がますます必要になっています。多くのモバイルアプリが歓迎されない改竄に対する防御を実装しているという事実は、私たちにとってより簡単なものにはなりません。
 
-Mobile security testers should be able to understand basic reverse engineering concepts. It goes without saying that they should also know mobile devices and operating systems inside out: the processor architecture, executable format, programming language intricacies, and so forth.
+モバイルセキュリティテスト技術者は基本的なリバースエンジニアリングの概念を理解できる必要があります。言うまでもなく、モバイルデバイスやオペレーティングシステムも十分に知る必要があります。プロセッサアーキテクチャ、実行形式、プログラミング言語の複雑さなどがあります。
 
-Reverse engineering is an art, and describing every available facet of it would fill a whole library. The sheer range of techniques and possible specializations is mind-blowing: One can spend years working on a very specific, isolated sub-problem, such as automating malware analysis or developing novel de-obfuscation methods. Security testers are generalists: To be effective reverse engineers, they must be able filter through the vast amount of information to build a workable methodology.
+リバースエンジニアリングは芸術であり、利用可能なすべてのファセットがライブラリ全体を占めると説明しています。技術の範囲と専門化の可能性は驚異的です。マルウェア解析の自動化や新しい逆難読化手法の開発など、非常に特殊で独立した部分問題の取り組みに何年も費やすことがあります。セキュリティテスト技術者はジェネラリストです。有能なリバースエンジニアであるためには、膨大な量の情報をフィルタして、実行可能な方法論を構築する必要があります。
 
-There is no generic reverse engineering process that always works. That said, we'll describe commonly used methods and tools later on, and give examples for tackling the most common defenses.
+常に機能する一般的なリバースエンジニアリングプロセスはありません。それでは、よく使われる手法やツールをについて説明した後で、最も一般的な防御に取り組む例を挙げます。
 
 ### Why You Need It
 
