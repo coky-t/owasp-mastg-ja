@@ -34,13 +34,13 @@
 
 以下のセクションでは、モバイルアプリのセキュリティテストで最も良く使用される技法の大まかな概要を説明します。後の章では、Android と iOS の両方について OS 固有の詳細を掘り下げます。
 
-### Basic Tampering Techniques
+### 基本的な改竄技法
 
-#### Binary Patching
+#### バイナリパッチ適用
 
-*Patching* means making changes to the compiled app - e.g. changing code in binary executable file(s), modifying Java bytecode, or tampering with resources. The same process is known as *modding* in the mobile game hacking scene. Patches can be applied in any number of ways, from decompiling, editing and re-assembling an app, to editing binary files in a hex editor - anything goes (this rule applies to all of reverse engineering). We'll give some detailed examples for useful patches in later chapters.
+*パッチ適用* とはコンパイルされたアプリに変更を加えることを意味します。バイナリ実行形式ファイル内のコード変更、Java バイトコードの改変、リソースの改竄などがあります。モバイルゲームのハッキングシーンで同じプロセスが *MOD 適用* として知られています。パッチはさまざまな方法で適用することができます。アプリの逆コンパイル、編集、再アセンブルから16進エディタでのバイナリファイルの編集に至るまで - なんでもありです (このルールはすべてのリバースエンジニアリングに適用されます) 。有用なパッチの詳細な例について後の章で説明します。
 
-One thing to keep in mind is that modern mobile OSes strictly enforce code signing, so running modified apps is not as straightforward as it used to be in traditional Desktop environments. Yep, security experts had a much easier life in the 90s! Fortunately, this is not all that difficult to do if you work on your own device - it simply means that you need to re-sign the app, or disable the default code signature verification facilities to run modified code.
+心に留めておくもののひとつとして、最新のモバイル OS はコード署名を厳しく強制することがあります。そのため、従来のデスクトップ環境と同様に改変されたアプリの実行することは簡単ではありません。そう、セキュリティ専門家は90年代にははるかに簡単な人生を送っていました。幸運なことに、あなた自身のデバイスで作業する場合、これは難しいことではありません。つまり改変したコードを実行するには、アプリを再署名するか、デフォルトのコード署名検証機能を無効にする必要があるということです。
 
 #### Code Injection
 
