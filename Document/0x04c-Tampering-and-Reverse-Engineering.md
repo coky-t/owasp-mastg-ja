@@ -22,17 +22,17 @@
 
 **3. リバースエンジニアリングに対する耐性を評価するため。** MASVS-R にリストされているソフトウェア保護対策を実装しているアプリはある程度のリバースエンジニアリングに対して耐性を持つ必要があります。この場合、リバースエンジニアリング防御のテスト (「耐性評価」) はセキュリティテスト全体の一部です。耐性評価では、テスト技術者はリバースエンジニアの役割を引き受け、防御をバイパスすることを試みます。
 
-Before we dive into the world of mobile app reversing, we have some good news and some bad news to share. Let's start with the good news:
+私たちはモバイルアプリのリバーシングの世界に飛び込む前に、よいニュースと悪いニュースを共有しています。よいニュースからはじめましょう。
 
-**Ultimately, the reverse engineer always wins.**
+**最終的に、リバースエンジニアが常に勝ちます。**
 
-This is even more true in the mobile world, where the reverse engineer has a natural advantage: The way mobile apps are deployed and sandboxed is more restrictive by design, so it is simply not feasible to include the rootkit-like functionality often found in Windows software (e.g. DRM systems). At least on Android, you have a much higher degree of control over the mobile OS, giving you easy wins in many situations (assuming you know how to use that power). On iOS, you get less control - but defensive options are even more limited.
+これはモバイルの世界ではよりいっそう真実です。リバースエンジニアは本質的な利点を持っています。モバイルアプリをデプロイおよびサンドボックス化する方法は設計上より制約があるため、Windows ソフトウェア (DRM システムなど) でよく見られるルートキットのような機能を含めることは簡単ではありません。少なくとも Android では、モバイル OS をより高度にコントロールできるため、さまざまな状況で簡単に勝利できます (その力の使い方を知っていると仮定します) 。iOS ではほとんどコントロールできませんが、防御オプションはより制限されます。
 
-The bad news is that dealing with multi-threaded anti-debugging controls, cryptographic white-boxes, stealthy anti-tampering features and highly complex control flow transformations is not for the faint-hearted. The most effective software protection schemes are highly proprietary and won't be beaten using standard tweaks and tricks. Defeating them requires tedious manual analysis, coding, frustration, and - depending on your personality - sleepless nights and strained relationships.
+悪いニュースとしては、マルチスレッドのアンチデバッグコントロール、暗号化ホワイトボックス、隠れた耐タンパ性機能、非常に複雑なコントロールフロー変換を扱うことは臆病者向きではないということです。最も効果的なソフトウェア保護スキームは非常に独占的であり、標準の微調整やトリックを使用してごまかすことはありません。それらを打ち破るには面倒な手動解析、コーディング、フラストレーション、そして - あなたの人格に応じて - 眠れない夜と緊張状態の関係が要求されます。
 
-It's easy to get overwhelmed by the sheer scope of it in the beginning. The best way to get started is to set up some basic tools (see the respective sections in the Android and iOS reversing chapters) and starting doing simple reversing tasks and crackmes. As you go, you'll need to learn about the assembler/bytecode language, the operating system in question, obfuscations you encounter, and so on. Start with simple tasks and gradually level up to more difficult ones.
+最初にその膨大な範囲に圧倒されることはよくあります。始める際の最善の方法は、いくつかの基本的なツール (Android および iOS リバーシングの章の各セクションを参照) をセットアップして、簡単なリバーシングタスクや crackme を開始することです。進むにつれ、アセンブラやバイトコード言語、問題になっているオペレーティングシステム、遭遇する難読化などについて学ぶ必要があります。簡単なタスクから始めて、より難しいものへ徐々にレベルアップします。
 
-In the following section we'll give a high level overview of the techniques most commonly used in mobile app security testing. In later chapters, we'll drill down into OS-specific details for both Android and iOS.
+以下のセクションでは、モバイルアプリのセキュリティテストで最も良く使用される技法の大まかな概要を説明します。後の章では、Android と iOS の両方について OS 固有の詳細を掘り下げます。
 
 ### Basic Tampering Techniques
 
