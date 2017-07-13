@@ -54,9 +54,9 @@ Substrate, Frida, XPosed はモバイル業界で最も広く使用されてい�
 
 三つのフレームワークについて例をいくつか紹介します。最初の選択肢として、Frida で始めることをお勧めします。これは三つの中で最も汎用性が高いためです (この理由から、Frida の詳細と事例が多く紹介されています) 。特に、Frida は Android と iOS の両方のプロセスに Javascript VM をインジェクトできます。一方で Substrate での Cycript インジェクションは iOS 上でのみ動作します。しかし最終的には、いずれのフレームワークでも多くの同じ最終目標に到達できます。
 
-### Static and Dynamic Binary Analysis
+### 静的および動的バイナリ解析
 
-Reverse engineering is the process of reconstructing the semantics of the original source code from a compiled program. In other words, you take the program apart, run it, simulate parts of it, and do other unspeakable things to it, in order to understand what it is doing and how.
+リバースエンジニアリングはコンパイルされたプログラムから元のソースコードの意味を再構築するプロセスです。言い換えると、何をしているのか、どのようにしているのかを理解するために、プログラムを分割し、実行し、その一部をシミュレートし、他に言い表せないものにします。
 
 #### Using Disassemblers and Decompilers
 
