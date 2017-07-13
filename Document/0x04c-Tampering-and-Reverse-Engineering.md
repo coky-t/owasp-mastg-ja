@@ -64,11 +64,11 @@ Substrate, Frida, XPosed はモバイル業界で最も広く使用されてい�
 
 高価ですが便利な GUI ツールから、オープンソースの逆アセンブラエンジンやリバースエンジニアリングフレームワークまで、幅広いツールやフレームワークが利用可能です。これらのツールのいずれかについての高度な使用方法は大抵それ自体で簡単に一冊の本になってしまいます。それでも、開始する最適な方法は、あなたのニーズと予算にあったツールを選んで、それに関する十分にレビューされたユーザーガイドを購入するだけです。OS ごとの「リバースエンジニアリングと改竄」の章で最も一般的のツールをいくつか紹介します。
 
-#### Debugging and Tracing
+#### デバッグとトレース
 
-In the traditional sense, debugging is the process of identifying and isolating problems in a program as part of the software development lifecycle. The very same tools used for debugging are of great value to reverse engineers even when identifying bugs is not the primary goal. Debuggers enable suspending a program at any point during runtime, inspect the internal state of the process, and even modify the content of registers and memory. These abilities make it *much* easier to figure out what a program is actually doing.
+従来の意味では、デバッグはソフトウェア開発ライフサイクルの一部としてプログラム内の問題を特定および分離するプロセスです。デバッグに使用される同じツールは、バグを特定することが主要な目的ではありませんが、リバースエンジニアにとって大きな価値があります。デバッガは実行時に任意の箇所でプログラムを一時停止したり、プロセスの内部状態を検査したり、レジスタやメモリの内容を変更することさえできます。これらの能力はプログラムが実際に何をしているか把握することを *とても* 容易にします。
 
-When talking about debugging, we usually mean interactive debugging sessions in which a debugger is attached to the running process. In contrast, *tracing* refers to passive logging of information about the app's execution, such as API calls. This can be done in a number of ways, including debugging APIs, function hooks, or Kernel tracing facilities. Again, we'll cover many of these techniques in the OS-specific "Reverse Engineering and Yampering" chapters.
+デバッグについて語る場合、一般的には対話的デバッグセッションを意味し、デバッガは実行中のプロセスにアタッチされます。対照的に、*トレース* は API コールなどのアプリの実行に関する情報の受動的なロギングを指します。これは、デバッグ API、関数フック、カーネルトレース機能を含む多くの方法で実行できます。改めて、これらの技法の多くは OS ごとの「リバースエンジニアリングと改竄」の章で説明します。
 
 ### Advanced Techniques
 
