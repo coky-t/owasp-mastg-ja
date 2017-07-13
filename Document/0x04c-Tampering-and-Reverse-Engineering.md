@@ -42,17 +42,17 @@
 
 心に留めておくもののひとつとして、最新のモバイル OS はコード署名を厳しく強制することがあります。そのため、従来のデスクトップ環境と同様に改変されたアプリの実行することは簡単ではありません。そう、セキュリティ専門家は90年代にははるかに簡単な人生を送っていました。幸運なことに、あなた自身のデバイスで作業する場合、これは難しいことではありません。つまり改変したコードを実行するには、アプリを再署名するか、デフォルトのコード署名検証機能を無効にする必要があるということです。
 
-#### Code Injection
+#### コードインジェクション
 
-Code injection is a very powerful technique that allows you to explore and modify processes during runtime. The injection process can be implemented in various ways, but you'll get by without knowing all the details thanks to freely available, well-documented tools that automate it. These tools give you direct access to process memory and important structures such as live objects instantiated by the app, and come with many useful utility functions for resolving loaded libraries, hooking methods and native functions, and more. Tampering with process memory is more difficult to detect than patching files, making in the preferred method in the majority of cases.
+コードインジェクションは非常に強力な技法であり、実行時のプロセスを探索および改変できます。インジェクションプロセスはさまざまな方法で実装されますが、自動化され自由に入手可能で十分に文書化されたツールのおかげで、すべての詳細を知らなくても取得できます。これらのツールは、アプリによりインスタンス化されたライブオブジェクトなどの、プロセスメモリや重要な構造体に直接アクセスできます。また、ロードされたライブラリの解決、メソッドやネイティブ関数のフックなどのための多くの便利なユーティリティ関数があります。プロセスメモリの改竄はファイルにパッチを適用するより検出が難しく、大半の場合に推奨される方法です。
 
-Substrate, Frida and XPosed are the most widely used hooking and code injection frameworks in the mobile world. The three frameworks differ in design philosophy and implementation details: Substrate and Xposed focus on code injection and/or hooking, while Frida aims to be a full-blown "dynamic instrumentation framework" that incorporates both code injection and language bindings, as well as an injectable JavaScript VM and console.
+Substrate, Frida, XPosed はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。この三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方で Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクションと言語バインディング、インジェクト可能な JavaScript VM とコンソールを組み込んでいます。
 
-However, you can also instrument apps with Substrate by using it to inject Cycript, the programming environment (a.k.a. "Cycript-to-JavaScript" compiler) authored by Saurik of Cydia fame. To complicate things even more, Frida's authors also created a fork of Cycript named "frida-cycript" that replaces Cycript's runtime with a Frida-based runtime called Mjølner<sup>[1]</sup>. This enables Cycript to run on all the platforms and architectures maintained by frida-core (if you are confused now don't worry, it's perfectly OK to be).
+しかし、Cycript をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も "frida-cycript" という名前の Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner <sup>[1]</sup> と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で維持されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (混乱しても心配ありません、それで十分 OK です) 。
 
-The release was accompanied by a blog post by Frida's developer Ole titled "Cycript on Steroids", which did not go that down that well with Saurik<sup>[2]</sup>.
+このリリースは Frida の開発者 Ole による "Cycript on Steroids" というタイトルのブログ記事にあります。Saurik <sup>[2]</sup> ではうまく機能していませんでした。
 
-We'll include some examples for all three frameworks. As your first pick, we recommend starting with Frida, as it is the most versatile of the three (for this reason we'll also include more Frida details and examples). Notably, Frida can inject a Javascript VM into a process on both Android and iOS, while Cycript injection with Substrate only works on iOS. Ultimately however, you can of course achieve many of the same end goals with either framework.
+三つのフレームワークについて例をいくつか紹介します。最初の選択肢として、Frida で始めることをお勧めします。これは三つの中で最も汎用性が高いためです (この理由から、Frida の詳細と事例が多く紹介されています) 。特に、Frida は Android と iOS の両方のプロセスに Javascript VM をインジェクトできます。一方で Substrate での Cycript インジェクションは iOS 上でのみ動作します。しかし最終的には、いずれのフレームワークでも多くの同じ最終目標に到達できます。
 
 ### Static and Dynamic Binary Analysis
 
