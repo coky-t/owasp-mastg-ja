@@ -58,11 +58,11 @@ Substrate, Frida, XPosed はモバイル業界で最も広く使用されてい�
 
 リバースエンジニアリングはコンパイルされたプログラムから元のソースコードの意味を再構築するプロセスです。言い換えると、何をしているのか、どのようにしているのかを理解するために、プログラムを分割し、実行し、その一部をシミュレートし、他に言い表せないものにします。
 
-#### Using Disassemblers and Decompilers
+#### 逆アセンブラと逆コンパイラの使用
 
-Disassemblers and decompilers allow you to translate an app binary code or byte-code back into a more or less understandable format. In the case of native binaries, you'll usually obtain assembler code matching the architecture which the app was compiled for. Android Java apps can be disassembled to Smali, which is an assembler language for the dex format used by dalvik, Android's Java VM. The Smali assembly is also quite easily decompiled back to Java code.
+逆アセンブラと逆コンパイラはアプリのバイナリコードやバイトコードを多かれ少なかれ理解できる形式に逆変換できます。ネイティブバイナリの場合は、通常、アプリがコンパイルされたアーキテクチャに一致するアセンブラコードを取得します。Android Java アプリは Smali に逆アセンブルできます。これは Android の Java VM である dalvik で使用される dex 形式のアセンブラ言語です。Smali アセンブリは逆コンパイルして Java コードに戻すこともとても簡単です。
 
-A wide range of tools and frameworks is available: from expensive but convenient GUI tools, to open source disassembling engines and reverse engineering frameworks. Advanced usage instructions for any of these tools often easily fill a book on their own. The best way to get started though is simply picking a tool that fits your needs and budget and buying a well-reviewed user guide along with it. We'll list some of the most popular tools in the OS-specific "Reverse Engineering and Yampering" chapters.
+高価ですが便利な GUI ツールから、オープンソースの逆アセンブラエンジンやリバースエンジニアリングフレームワークまで、幅広いツールやフレームワークが利用可能です。これらのツールのいずれかについての高度な使用方法は大抵それ自体で簡単に一冊の本になってしまいます。それでも、開始する最適な方法は、あなたのニーズと予算にあったツールを選んで、それに関する十分にレビューされたユーザーガイドを購入するだけです。OS ごとの「リバースエンジニアリングと改竄」の章で最も一般的のツールをいくつか紹介します。
 
 #### Debugging and Tracing
 
