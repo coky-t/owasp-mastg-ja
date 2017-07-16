@@ -82,9 +82,9 @@ Substrate, Frida, XPosed はモバイル業界で最も広く使用されてい�
 
 Valgrind README には Android 用のコンパイル手順が記述されています - http://valgrind.org/docs/manual/dist.readme-android.html
 
-#### Emulation-based Dynamic Analysis
+#### エミュレーションベースの動的解析
 
-Running an app in the emulator gives you powerful ways to monitor and manipulate its environment. For some reverse engineering tasks, especially those that require low-level instruction tracing, emulation is the best (or only) choice. Unfortunately, this type of analysis is only viable for Android, as no emulator for iOS exists (the iOS simulator is not an emulator, and apps compiled for an iOS device don't run on it). We'll provide an overview of popular emulation-based analysis frameworks for Android in the "Tampering and Reverse Engineering on Android" chapter.
+エミュレータでアプリを実行することにより、その環境を監視および操作するための強力な方法が得られます。一部のリバースエンジニアリングタスク、特に低レベルの命令トレースが必要な場合、エミュレーションは最善の (または唯一の) 選択肢です。残念ながら、このタイプの解析は Android の場合にのみ実行可能であり、iOS のエミュレータは存在しません (iOS シミュレータはエミュレータではなく、iOS デバイス向けにコンパイルされたアプリは実行できません) 。「改竄とリバースエンジニアリング (Android)」の章で Android 用の一般的なエミュレーションベースの解析フレームワークの概要を説明します。
 
 #### Custom Tooling using Reverse Engineering Frameworks
 
