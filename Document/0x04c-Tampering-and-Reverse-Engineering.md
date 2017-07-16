@@ -86,9 +86,9 @@ Valgrind README には Android 用のコンパイル手順が記述されてい�
 
 エミュレータでアプリを実行することにより、その環境を監視および操作するための強力な方法が得られます。一部のリバースエンジニアリングタスク、特に低レベルの命令トレースが必要な場合、エミュレーションは最善の (または唯一の) 選択肢です。残念ながら、このタイプの解析は Android の場合にのみ実行可能であり、iOS のエミュレータは存在しません (iOS シミュレータはエミュレータではなく、iOS デバイス向けにコンパイルされたアプリは実行できません) 。「改竄とリバースエンジニアリング (Android)」の章で Android 用の一般的なエミュレーションベースの解析フレームワークの概要を説明します。
 
-#### Custom Tooling using Reverse Engineering Frameworks
+#### リバースエンジニアリングフレームワークを使用したカスタムツール
 
-Even though most professional GUI-based disassemblers feature scripting facilities and extensibility, they sometimes simply not well-suited to solving a particular problem. Reverse engineering frameworks allow you perform and automate any kind of reversing task without the dependence for heavy-weight GUI, while also allowing for increased flexibility. Notably, most reversing frameworks are open source and/or available for free. Popular frameworks with support for mobile architectures include Radare2<sup>[3]</sup> and Angr <sup>[4]</sup>.
+ほとんどのプロフェッショナルな GUI ベースの逆アセンブラはスクリプト機能と拡張性を備えていますが、特定の問題を解決するにはあまり適していないことがあります。リバースエンジニアリングフレームワークは重量のある GUI の依存性を排除してあらゆる種類のリバーシングタスクを実行及び自動化することができ、柔軟性も向上します。特に、ほとんどのリバーシングフレームワークはオープンソースであるか、フリーで利用可能です。モバイルアーキテクチャをサポートする一般的なフレームワークには Radare2 <sup>[3]</sup> と Angr <sup>[4]</sup> があります。
 
 ##### Example: Program Analysis using Symbolic / Concolic Execution
 
