@@ -76,11 +76,11 @@ Substrate, Frida, XPosed はモバイル業界で最も広く使用されてい�
 
 ハッキングは常にそうですが、何でもありのルールが適用されます。目標に最も効率よく近づくためにどんなものでも使用します。すべてのバイナリは異なり、すべてのリバースエンジニアは独自のスタイルを持っています。多くの場合、目標に到達する最善の方法は、手近なタスクにフィットするように、エミュレータベースのトレースやシンボリック実行など、さまざまなアプローチを組み合わせることです。始めるには、優れた逆アセンブラやリバースエンジニアリングフレームワークを選択し、それらを使用して特定の機能や拡張 API に慣れることです。最終的には、より良くなる最善の方法は実戦的な経験を積むことです。
 
-#### Dynamic Binary Instrumentation
+#### 動的バイナリ計装
 
-Another useful method for dealing with native binaries is dynamic binary instrumentations (DBI). Instrumentation frameworks such as Valgrind and PIN support fine-grained instruction-level tracing of single processes. This is achieved by inserting dynamically generated code at runtime. Valgrind compiles fine on Android, and pre-built binaries are available for download.
+ネイティブバイナリを扱うもう一つの便利な手法には動的バイナリ計装 (DBI) があります。Valgrind や PIN などの計装フレームワークは単一プロセスの細かい命令レベルのトレースをサポートします。これは動的に生成されたコードを実行時に挿入することにより実現されます。Valgrind は Android でうまくコンパイルされ、事前にビルドされたバイナリをダウンロードできます。
 
-The Valgrind README contains specific compilation instructions for Android - http://valgrind.org/docs/manual/dist.readme-android.html
+Valgrind README には Android 用のコンパイル手順が記述されています - http://valgrind.org/docs/manual/dist.readme-android.html
 
 #### Emulation-based Dynamic Analysis
 
