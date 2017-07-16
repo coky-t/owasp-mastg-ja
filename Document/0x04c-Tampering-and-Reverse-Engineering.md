@@ -90,13 +90,13 @@ Valgrind README には Android 用のコンパイル手順が記述されてい�
 
 ほとんどのプロフェッショナルな GUI ベースの逆アセンブラはスクリプト機能と拡張性を備えていますが、特定の問題を解決するにはあまり適していないことがあります。リバースエンジニアリングフレームワークは重量のある GUI の依存性を排除してあらゆる種類のリバーシングタスクを実行及び自動化することができ、柔軟性も向上します。特に、ほとんどのリバーシングフレームワークはオープンソースであるか、フリーで利用可能です。モバイルアーキテクチャをサポートする一般的なフレームワークには Radare2 <sup>[3]</sup> と Angr <sup>[4]</sup> があります。
 
-##### Example: Program Analysis using Symbolic / Concolic Execution
+##### 例：シンボリック実行やコンコリック実行を使用したプログラム解析
 
-In the late 2000s, symbolic-execution based testing has gained popularity as a means of identifying security vulnerabilities. Symbolic "execution" actually refers to the process of representing possible paths through a program as formulas in first-order logic, whereby variables are represented by symbolic values, which are actually entire ranges of values. Satisfiability Modulo Theories (SMT) solvers are used to check satisfiability of those formulas and provide a solution, including concrete values for the variables needed to reach a certain point of execution on the path corresponding to the solved formula.
+2000年代後半には、シンボリック実行ベースのテストがセキュリティ上の脆弱性を特定する手段として普及しました。シンボリック「実行」とは実際にプログラムを通る可能性のあるパスを一次論理の式として表現するプロセスを指し、変数は実際に値の全体的な範囲である記号値で表現されます。充足可能性モジュロ理論 (SMT) ソルバはこれらの式の充足可能性をチェックし、解決された式に対応するパス上の特定の実行点に到達するために必要な変数の具体的な値を含むソリューションを提供します。
 
-Typically, this approach is used in combination with other techniques such as dynamic execution (hence the name concolic stems from *conc*rete and symb*olic*), in order to tone down the path explosion problem specific to classical symbolic execution. This together with improved SMT solvers and current hardware speeds, allow concolic execution to explore paths in medium size software modules (i.e. in the order of 10s KLOC). However, it also comes in handy for supporting de-obfuscation tasks, such as simplifying control flow graphs. For example, Jonathan Salwan and Romain Thomas have shown how to reverse engineer VM-based software protections using Dynamic Symbolic Execution (i.e., using a mix of actual execution traces, simulation and symbolic execution)<sup>[5]</sup>.
+典型的には、このアプローチは動的実行などの他の技法と組み合わせて使用され (したがって、conclic の名前は *conc*rete と symb*olic* に由来します) 、古典的なシンボリック実行に特有のパス爆発の問題を抑制します。これは改善された SMT ソルバと現在のハードウェアスピードと併せて、中規模のソフトウェアモジュール (すなわち、10 KLOC オーダー) のパスを探索するコンコリック実行が可能になります。それだけでなく、コントロールフローグラフの簡素化など、逆難読化タスクをサポートする場合にも便利です。例えば、Jonathan Salwan と Romain Thomas は動的シンボリック実行を使用して (すなわち、実際の実行トレース、シミュレーション、シンボリック実行を組み合わせて使用して) VM ベースのソフトウェア保護をリバースエンジニアリングする方法を示しました <sup>[5]</sup> 。
 
-In the Android section, you'll find a walkthrough for cracking a simple license check in an Android application using symbolic execution.
+Android のセクションでは、シンボリック実行を使用して Android アプリケーションの簡単なライセンスチェックをクラックするためのウォークスルーを説明します。
 
 ### 参考情報
 
