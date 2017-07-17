@@ -44,8 +44,8 @@ OAuth2 は 4 つの役割を定義します。
 - code グラントを使用する場合、code グラントを保護するために PKCE (Proof Key for Code Exchange) を実装する。サーバーもそれを実装していることを確認する。
 - 認可 "code" は短命であり、それを受信した直後にのみ使用されるべきである。transient メモリにのみ存在し、保存またはログに記録されていないことを確認する。
 
-Client secrets:
-- No shared secret should be used as proof of the client's identity as this could lead to client impersonation ("client_id" already serves this purpose). If for some reason they do use client secrets, be sure that they are stored in secure local storage.
+クライアントの機密情報:
+- クライアントの身元を証明するものとして共有の機密情報を使用すべきではない。これはクライアントの成りすましにつながる可能性がある ("client_id" はすでにこの目的を果たしている) 。何らかの理由でクライアントの機密情報を使用する場合、それらがセキュアなローカルストレージに格納されていることを確認する。
 
 End-User credentials:
 - The transmission of end-user credentials must be protected using transport-layer mechanisms such as TLS.
