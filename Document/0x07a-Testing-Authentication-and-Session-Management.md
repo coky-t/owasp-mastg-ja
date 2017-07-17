@@ -39,10 +39,10 @@ OAuth2 は 4 つの役割を定義します。
 - ユーザーは視覚的に信頼するメカニズム (トランスポート層セキュリティ (TLS) 確認、ウェブサイトメカニズムなど) を検証する方法を有するべきである。
 - クライアントは接続確立時にサーバーにより提示される公開鍵にサーバーの完全修飾ドメイン名を妥当性検査し、中間者攻撃を防ぐべきである。
 
-Type of grant:
-- Use code grant instead of implicit grant on native apps.
-- When using code grant, implement PKCE (Proof Key for Code Exchange) to protect the code grant. Make sure that the server also implements it.
-- The auth "code" should be short-lived and only used immediately after receiving it. Make sure that they only reside on transient memory and are not stored or logged.
+グラントの種類:
+- ネイティブアプリで implicit グラントの代わりに code グラントを使用する。
+- code グラントを使用する場合、code グラントを保護するために PKCE (Proof Key for Code Exchange) を実装する。サーバーもそれを実装していることを確認する。
+- 認可 "code" は短命であり、それを受信した直後にのみ使用されるべきである。transient メモリにのみ存在し、保存またはログに記録されていないことを確認する。
 
 Client secrets:
 - No shared secret should be used as proof of the client's identity as this could lead to client impersonation ("client_id" already serves this purpose). If for some reason they do use client secrets, be sure that they are stored in secure local storage.
