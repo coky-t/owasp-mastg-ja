@@ -123,11 +123,11 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 * [3] OWASP Testing Guide V4 (OTG-AUTHN-004) - https://www.owasp.org/index.php/Testing_for_Bypassing_Authentication_Schema_(OTG-AUTHN-004)
 
 
-### Testing Session Management
+### セッション管理のテスト
 
-#### Overview
+#### 概要
 
-All significant, if not privileged, actions must be done after a user is properly authenticated; the application will remember the user inside a session. When improperly managed, sessions are subject to a variety of attacks where the session of a legitimate user may be abused, allowing the attacker to impersonate the user. As a consequence, data may be lost, confidentiality compromised or illegitimate actions performed.
+権限がない場合、すべての重要なアクションはユーザーが適切に認証された後に実行する必要があります。アプリケーションはセッション内のユーザーを覚えています。不適切に管理される場合、セッションはさまざまな攻撃が行われ、正規のユーザーのセッションが悪用され、攻撃者がユーザーに成りすます可能性があります。その結果、データが失われたり、機密性が損なわれたり、不正行為が行われたりする可能性があります。
 
 Sessions must have a beginning and an end. It must be impossible for an attacker to forge a session ID: instead, it must be ensured that a session can only be started by the system on the server side. Also, the duration of a session should be as short as possible, and the session must be properly terminated after a given amount of time or after the user has explicitly logged out. It must be impossible to reuse session ID.
 
