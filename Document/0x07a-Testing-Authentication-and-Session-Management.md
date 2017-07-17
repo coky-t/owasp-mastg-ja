@@ -47,19 +47,19 @@ OAuth2 は 4 つの役割を定義します。
 クライアントの機密情報:
 - クライアントの身元を証明するものとして共有の機密情報を使用すべきではない。これはクライアントの成りすましにつながる可能性がある ("client_id" はすでにこの目的を果たしている) 。何らかの理由でクライアントの機密情報を使用する場合、それらがセキュアなローカルストレージに格納されていることを確認する。
 
-End-User credentials:
-- The transmission of end-user credentials must be protected using transport-layer mechanisms such as TLS.
+エンドユーザーの資格情報:
+- エンドユーザーの資格情報の送信は TLS などのトランスポート層メカニズムを使用して保護する必要がある。
 
-Tokens:
-- Keep access tokens in transient memory.
-- Access tokens must be securely transmitted via TLS.
-- The scope and expiry time of access tokens should be reduced when end-to-end confidentiality cannot be guaranteed or when the token provides access to sensitive information or allows the execution of high risk actions.
-- Remember that if the app uses access tokens as bearer tokens and no additional mechanism is used to identify the client, the attacker can access all resources associated with the token and its scope after stealing the tokens.
-- Store refresh tokens in secure local storage as they are long-term credentials.
+トークン:
+- アクセストークンを transient メモリに保持する。
+- アクセストークンは TLS を介してセキュアに送信する必要がある。
+- エンドツーエンドの機密性が保証されない場合、またはトークンが機密情報へのアクセスを提供する場合、またはトークンがハイリスクのアクションの実行を許可する場合、アクセストークンのスコープと有効期間を短縮すべきである。
+- アプリがアクセストークンをベアラトークンとして使用し、クライアントを識別するために追加のメカニズムを使用しない場合、攻撃者はトークンを盗んだ後にトークンとそのスコープに関連するすべてのリソースにアクセスできることに注意する。
+- 長期的な資格情報である場合、セキュアなローカルストレージにリフレッシュトークンを格納する。
 
-For additional best practices and detailed information please refer to the source documents <sup>[2]</sup> <sup>[3]</sup> <sup>[4]</sup>.
+ベストプラクティスと詳細情報についてはソースドキュメント <sup>[2]</sup> <sup>[3]</sup> <sup>[4]</sup> を参照ください。
 
-##### References
+##### 参考情報
 - [1] An Introduction into OAuth2 - https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
 - [2] RFC6749: The OAuth 2.0 Authorization Framework (October 2012) - https://tools.ietf.org/html/rfc6749
 - [3] draft_ietf-oauth-native-apps-12: OAuth 2.0 for Native Apps (June 2017) - https://tools.ietf.org/html/draft-ietf-oauth-native-apps-12
