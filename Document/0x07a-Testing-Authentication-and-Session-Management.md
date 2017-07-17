@@ -10,27 +10,27 @@
 
 #### OAuth2
 
-OAuth2 is an authorization framework used to authorize an application to use a user account on an HTTP service for a limited time and, at the same time, preventing the client applications from having knowledge of any user credentials.
+OAuth2 は認可フレームワークであり、アプリケーションを認可するために使用され、限定された時間に HTTP サービス上でユーザーアカウントを使用します。同時に、クライアントアプリケーションがユーザー資格情報を知ることを防ぎます。
 
-OAuth2 defines 4 roles:
+OAuth2 は 4 つの役割を定義します。
 
-* Resource Owner: the user owning the account.
-* Client: the application that wants to access the user's account using the access tokens.
-* Resource Server: hosts the user accounts.
-* Authorization Server: verifies the identity of the user and issues access tokens to the application.
+* リソース所有者：アカウントを所有しているユーザー。
+* クライアント：アクセストークンを使用してユーザーのアカウントにアクセスするアプリケーション。
+* リソースサーバー：ユーザーアカウントをホストする。
+* 認可サーバー：ユーザーの身元を検証し、アプリケーションのアクセストークンを発行する。
 
-Note: The API fulfills both the resource and authorization server roles. Therefore we will refer to both as the API.
+注意：API はリソースサーバーと認可サーバーの役割の両方を満たします。したがって、両方を API と呼ぶことにします。
 
 <img src="Images/Chapters/0x07a/abstract-oauth2-flow.png" width="350px"/>
 
-Here is a more detailed explanation of the steps in the diagram <sup>[1]</sup> <sup>[2]</sup>:
+図 <sup>[1]</sup> <sup>[2]</sup> の手順の詳細な説明は以下のとおりです。
 
-1. The application requests authorization to access service resources from the user.
-2. If the user authorized the request, the application receives an authorization grant. The authorization grant might have different forms (explicit, implicit, etc).
-3. The application requests an access token from the authorization server (API) by presenting authentication of its own identity, and the authorization grant. 
-4. If the application identity is authenticated and the authorization grant is valid, the authorization server (API) issues an access token to the application. The access token might have a companion refresh token. Authorization is complete.
-5. The application requests the resource from the resource server (API) and presents the access token for authentication. The access token might be used on different ways (e.g., as a bearer token). 
-6. If the access token is valid, the resource server (API) serves the resource to the application.
+1. アプリケーションはユーザーにサービスリソースへアクセスするための認可を要求する。
+2. ユーザーが要求を認可した場合、アプリケーションは認可許可を受け取る。認可許可にはさまざまな形式 (明示的、暗黙的など) がある。
+3. アプリケーションは、それ自身のIDの認証と認可許可を提示することにより、認可サーバー (API) にアクセストークンを要求する。
+4. アプリケーション ID が認証され、認可許可が有効である場合、認可サーバー (API) はアプリケーションにアクセストークンを発行する。アクセストークンにはコンパニオンリフレッシュトークンが含まれる可能性がある。認可は完了した。
+5. アプリケーションはリソースサーバー (API) にリソースを要求し、認証用のアクセストークンを提示する。アクセストークンは異なる方法で (ベアラトークンとしてなど) 使用される可能性がある。
+6. アクセストークンが有効である場合、リソースサーバー (API) はアプリケーションにリソースを提供する。
 
 These are some of the common best practices for OAuth2 on native apps:
 
