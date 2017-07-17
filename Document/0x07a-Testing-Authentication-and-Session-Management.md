@@ -32,12 +32,12 @@ OAuth2 は 4 つの役割を定義します。
 5. アプリケーションはリソースサーバー (API) にリソースを要求し、認証用のアクセストークンを提示する。アクセストークンは異なる方法で (ベアラトークンとしてなど) 使用される可能性がある。
 6. アクセストークンが有効である場合、リソースサーバー (API) はアプリケーションにリソースを提供する。
 
-These are some of the common best practices for OAuth2 on native apps:
+これらはネイティブアプリでの OAuth2 の一般的なベストプラクティスの一部です。
 
-User-agent:
-- Use an external user-agent (the browser) instead of an embedded user-agent (e.g. WebView or internal client user interface) to prevent End-User Credentials Phishing (e.g. you do not want an app offering you a "Login with Facebook" to get your Facebook password). However, by using the browser, the app relies on the OS Keychain for server trust. This way it will not be possible to implement certificate pinning. A solution for this would be to restrict the embedded user-agent to only the relevant domain.
-- The user should have a way to verify visual trust mechanisms (e.g., Transport Layer Security (TLS) confirmation, web site mechanisms).
-- The client should validate the fully qualified domain name of the server to the public key presented by the server during connection establishment to prevent man-in-the-middle attacks.
+ユーザーエージェント:
+- 埋め込まれたユーザーエージェント (WebView や内部クライアントユーザーインタフェースなど) の代わりに外部ユーザーエージェント (ブラウザ) を使用して、エンドユーザー資格情報のフィッシングを防止する (例えば、アプリが「Facebook でログイン」を提供して、あなたの Facebook パスワードを取得することは望まないだろう) 。しかし、ブラウザを使用することにより、アプリはサーバーの信頼のために OS キーチェーンに依存する。この方法では証明書ピンニングを実装することはできない。このためのソリューションは埋め込まれたユーザーエージェントを関連するドメインのみに制限することである。
+- ユーザーは視覚的に信頼するメカニズム (トランスポート層セキュリティ (TLS) 確認、ウェブサイトメカニズムなど) を検証する方法を有するべきである。
+- クライアントは接続確立時にサーバーにより提示される公開鍵にサーバーの完全修飾ドメイン名を妥当性検査し、中間者攻撃を防ぐべきである。
 
 Type of grant:
 - Use code grant instead of implicit grant on native apps.
