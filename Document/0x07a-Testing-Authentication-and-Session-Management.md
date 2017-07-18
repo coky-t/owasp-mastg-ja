@@ -133,9 +133,9 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 
 したがって、このテストのスコープは、セッションがセキュアに管理され、攻撃者により侵害されないことを検証することです。
 
-#### Static Analysis
+#### 静的解析
 
-When server source code is available, the tester should look for the place where sessions are initiated, stored, exchanged, verified and terminated. This must be done whenever any access to privileged information or action takes place. For those matters, automated tools or manual search can be used to look for relevant keywords in the target programming language. Sample frameworks on server side are:
+サーバーのソースコードが利用可能である場合、テスト担当者はセッションが開始、保存、交換、検証、終了される場所を探します。これは特権のある情報やアクションへのアクセスが行われるたびに実行する必要があります。これらの事項について、自動ツールや手動検索を使用して、ターゲットプログラミング言語の関連するキーワードを探します。サーバー側のフレームワークの例は以下のとおりです。
 
 - Spring (Java) - http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#ns-session-mgmt
 - PHP - http://php.net/manual/en/book.session.php
