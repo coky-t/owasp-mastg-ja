@@ -154,38 +154,38 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 
 また、OWASP Testing Guide <sup>[1]</sup> にあるセッション管理テストケースも参照します。
 
-#### Remediation
+#### 改善方法
 
-In order to offer proper protection against the attacks mentioned earlier, session IDs must:
-- always be created on the server side,
-- not be predictable (use proper length and entropy),
-- always be exchanged over secure connections (e.g. HTTPS),
-- be stored securely within the mobile app,
-- be verified when a user is trying to access privileged parts of an application (a session ID must be valid and correspond to the proper level of authorization),
-- be renewed when a user is asked to log in again to perform an operation requiring higher privileges and
-- be terminated on server side and deleted within the mobile app when a user logs out or after a specified timeout.
+前述の攻撃に対する適切な保護を提供するために、セッション ID は以下を満たす必要があります。
+- 常にサーバー側で作成される必要がある、
+- 予測できてはいけない (適切な長さとエントロピを使用する) 、
+- 常にセキュアな接続 (HTTPS など) の上で交換する、
+- モバイルアプリ内にセキュアに格納する、
+- ユーザーがアプリケーションの特権が必要な部分にアクセスを試みる場合には検証する (セッション ID は有効で、適切な認可レベルに対応している必要がある) 、
+- より高い権限を要求する操作を実行するため、ユーザーが再度ログインすることを求められた場合には更新する、
+- ユーザーがログアウトする場合、または指定されたタイムアウト後にはサーバー側で終了し、モバイルアプリ内で削除する。
 
-It is strongly advised to use session ID generators that are build-in within the framework used, as they are more secure than building a custom one. Such generators exist for most frameworks and languages.
+使用するフレームワーク内に組み込まれているセッション ID ジェネレータを使用することを強く推奨します。それらはカスタムなものを構築するよりもセキュアです。ほとんどのフレームワークや言語にはそのようなジェネレータが存在します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+* M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
 
-* 4.2: "The remote endpoint uses randomly generated session identifiers, if classical server side session management is used, to authenticate client requests without sending the user's credentials."
+* 4.2: "リモートエンドポイントはランダムに生成されたアクセストークンを使用し、ユーザーの資格情報を送信せずにクライアント要求を認証している。"
 
 ##### CWE
 
 - CWE-613 - Insufficient Session Expiration https://cwe.mitre.org/data/definitions/613.html
 
-##### Info
+##### その他
 
 [1] OWASP Testing Guide V4 (Testing for Session Management) - https://www.owasp.org/index.php/Testing_for_Session_Management
 
-##### Tools
+##### ツール
 
 * OWASP ZAP (Zed Attack Proxy)
 * Burp Suite
