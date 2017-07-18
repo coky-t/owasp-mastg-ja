@@ -135,24 +135,24 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 
 #### 静的解析
 
-サーバーのソースコードが利用可能である場合、テスト担当者はセッションが開始、保存、交換、検証、終了される場所を探します。これは特権のある情報やアクションへのアクセスが行われるたびに実行する必要があります。これらの事項について、自動ツールや手動検索を使用して、ターゲットプログラミング言語の関連するキーワードを探します。サーバー側のフレームワークの例は以下のとおりです。
+サーバーのソースコードが利用可能である場合、テスト担当者はセッションが開始、保存、交換、検証、終了される場所を探します。これは特権の必要な情報やアクションへのアクセスが行われるたびに実行する必要があります。これらの事項について、自動ツールや手動検索を使用して、ターゲットプログラミング言語の関連するキーワードを探します。サーバー側のフレームワークの例は以下のとおりです。
 
 - Spring (Java) - http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#ns-session-mgmt
 - PHP - http://php.net/manual/en/book.session.php
 - Ruby on Rails -  http://guides.rubyonrails.org/security.html
 
-#### Dynamic Analysis
+#### 動的解析
 
-A best practice is to crawl the application first, either manually or with an automated tool. The goal is to check if all parts of the application leading to privileged information or actions are protected and a valid session ID is required or not.
+ベストプラクティスは手動または自動ツールでアプリケーションをクロールすることです。目的は特権の必要な情報やアクションにつながるアプリケーションのすべての部分が保護され、有効なセッション ID が要求されているかどうかをチェックすることです。
 
-Then, you can use the crawled requests within any intercepting proxy to try to manipulate session IDs:
-- by modifying them into illegitimate ones (for instance, add 1 to the valid session ID or delete parts of it).
-- by deleting a valid one in the request to test if the information and/or function of the application can still be accessed.
-- by trying to log out and re-log in again to check if the session ID has changed or not.
-- when changing privilege level (step-up authentication). Try to use the former one (hence with a lower authorization level) to access the privileged part of the application.
-- by trying to re-use a session ID after logging out.
+次に、傍受プロキシ内でクロールされたリクエストを使用して、セッション ID の操作を試みます。
+- それらを不正なものに改変する (例えば、有効なセッション ID に 1 を加える、その一部を削除するなど) 。
+- リクエスト内の有効なものを削除し、アプリケーションの情報や機能が依然としてアクセスできるかどうかをテストする。
+- ログアウトおよび再ログインし、セッション ID が変更されているかどうかを確認する。
+- 特権レベルを変更 (ステップアップ認証) する場合。以前のものを使用して (つまり低い認可レベルで) 、アプリケーションの特権部分にアクセスを試みる。
+- ログアウト後にセッション ID の再使用を試みる。
 
-Also the OWASP Testing Guide<sup>[1]</sup> should be consulted for more session management test cases.
+また、OWASP Testing Guide <sup>[1]</sup> にあるセッション管理テストケースも参照します。
 
 #### Remediation
 
