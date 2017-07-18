@@ -129,9 +129,9 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 
 権限がない場合、すべての重要なアクションはユーザーが適切に認証された後に実行する必要があります。アプリケーションはセッション内のユーザーを覚えています。不適切に管理される場合、セッションはさまざまな攻撃が行われ、正規のユーザーのセッションが悪用され、攻撃者がユーザーに成りすます可能性があります。その結果、データが失われたり、機密性が損なわれたり、不正行為が行われたりする可能性があります。
 
-Sessions must have a beginning and an end. It must be impossible for an attacker to forge a session ID: instead, it must be ensured that a session can only be started by the system on the server side. Also, the duration of a session should be as short as possible, and the session must be properly terminated after a given amount of time or after the user has explicitly logged out. It must be impossible to reuse session ID.
+セッションには開始と終了が必要です。攻撃者がセッション ID を偽造することは不可能である必要があります。代わりに、セッションがサーバー側のシステムによってのみ開始できるようにする必要があります。また、セッションの持続時間は可能な限り短くすべきであり、セッションは一定時間が経過するか、ユーザーが明示的にログアウトした後に適切に終了する必要があります。セッション ID を再利用することは不可能である必要があります。
 
-As such, the scope of this test is to validate that sessions are securely managed and cannot be compromised by an attacker.
+したがって、このテストのスコープは、セッションがセキュアに管理され、攻撃者により侵害されないことを検証することです。
 
 #### Static Analysis
 
