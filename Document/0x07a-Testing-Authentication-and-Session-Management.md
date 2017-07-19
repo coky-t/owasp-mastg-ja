@@ -225,15 +225,15 @@ HMACSHA256(
 
 モバイルアプリでは、JWT を使用してメッセージ送信者と受信者の両方を認証することがますます増えています。JWT 実装は PHP <sup>[2]</sup> や Java Spring <sup>[3]</sup> などすべての主要なプログラミング言語で利用できます。
 
-#### Static Analysis
+#### 静的解析
 
-Identify the JWT library that is used on server and client side. Check if there are any known vulnerabilities available for the JWT libraries in use.
+サーバー側とクライアント側で使用される JWT ライブラリを特定します。使用中の JWT ライブラリに利用可能な既知の脆弱性が存在するかどうか確認します。
 
-The following best practices should be checked in the JWT libraries<sup>[7]</sup>:
-* Verify the signature or HMAC on server-side at all times for all incoming requests containing a token.
-* Verify where the private signing key or secret key for HMAC is located and stored. The key should always reside on the server side and never shared with the client. It should only be available for the issuer and verifier.
-* Verify if encryption is used to encrypt the data embedded into JWT.
-* Verify if replay attacks are addressed by using `jti` (JWT ID) claim, which provides a unique identifier for JWT.
+以下のベストプラクティスを JWT ライブラリにチェックすべきです <sup>[7]</sup> 。
+* トークンを含むすべての着信リクエストについて、サーバー側の署名または HMAC を常に確認する。
+* HMAC の秘密署名鍵または共通鍵がどこに配置および格納されるかを確認する。鍵は常にサーバー側に存在すべきであり、クライアントと共有してはいけない。それは発行者と検証者のためにのみ利用可能であるべき。
+* JWT に埋め込まれたデータを暗号化するために、暗号化が使用されているかどうかを確認する。
+* JWT の一意の識別子を提供する `jti` (JWT ID) クレームを使用して、リプレイ攻撃が対処されているかどうかを確認する。
 
 
 #### Dynamic Analysis
