@@ -192,25 +192,25 @@ JWT によるトークンベースの認証が使用される場合は、「JSON
 
 
 
-### Testing JSON Web Token (JWT)
+### JSON Web Token (JWT) のテスト
 
-#### Overview
+#### 概要
 
-JSON Web Token (JWT) ensures the integrity of information within a JSON object between two parties and is defined in RFC 7519<sup>[1]</sup>. A cryptographic signature is created for the data within the token. This only allows the server to create and modify tokens and enables a stateless authentication. The server doesn't need to remember any session or any other authentication information, as everything is contained within JWT.
+JSON Web Token (JWT) は二者間の JSON オブジェクト内の情報の完全性を保証します。RFC 7519 <sup>[1]</sup> で定義されています。トークン内のデータに対して暗号署名が作成されます。これにより、サーバーはトークンの作成および変更だけが可能になり、ステートレス認証が可能になります。サーバーはセッションやその他の認証情報を覚える必要はありません。すべては JWT 内に含まれます。
 
-An example of an encoded JSON Web Token can be found below<sup>[5]</sup>.
+エンコードされた JSON Web Token の例を以下に示します <sup>[5]</sup> 。
 
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
 
-JWTs are Base-64 encoded and are divided into three parts:
+JWT は Base-64 でエンコードされ、三つの部分に分けられます。
 
-* **Header** Algorithm and Token Type (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9):
+* **ヘッダ** アルゴリズムとトークンタイプ (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9):
 ```JSON
 {"alg":"HS256","typ":"JWT"}
 ```
-* **Claims** Data  (eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9):
+* **クレーム** データ  (eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9):
 ```JSON
 {"sub":"1234567890","name":"John Doe","admin":true}
 ```
@@ -223,7 +223,7 @@ HMACSHA256(
 )
 ```
 
-For mobile apps it's more and more used to authenticate both the message sender and receiver by using JWT. JWT implementations are available for all major programming languages, like PHP<sup>[2]</sup> or Java Spring<sup>[3]</sup>.
+モバイルアプリでは、JWT を使用してメッセージ送信者と受信者の両方を認証することがますます増えています。JWT 実装は PHP <sup>[2]</sup> や Java Spring <sup>[3]</sup> などすべての主要なプログラミング言語で利用できます。
 
 #### Static Analysis
 
