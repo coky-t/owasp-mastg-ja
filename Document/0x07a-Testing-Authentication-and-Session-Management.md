@@ -303,14 +303,14 @@ JWT を実装する場合には、以下のベストプラクティスを考慮�
 
 ログアウト機能を実装するときに最もよく起こるエラーのひとつは、単にセッションオブジェクトを破棄しないこと、またはサーバー側のトークンを無効にしないことです。これにより、ユーザーがアプリケーションからログアウトしても、セッションまたはトークンがまだ生きている状態になります。攻撃者が有効な認証情報を入手している場合、継続してそれを使用し、ユーザーアカウントを乗っ取ることが可能です。
 
-##### Static Analysis 
+##### 静的解析
 
-If server side code is available, it should be reviewed that the session is being terminated or token invalidated as part of the logout functionality. The check needed here will be different depending on the technology used. Here are different examples on how a session can be terminated in order to implement a proper logout on server side:
+サーバー側のコードが利用可能である場合には、ログアウト機能の一部としてセッションを終了しているか、もしくはトークンを無効にしているかをレビューすべきです。ここで必要なチェックは使用される技術によって異なります。サーバー側で適切なログアウトを実装するためにセッションを終了する方法の例を以下に示します。
 - Spring (Java) -  http://docs.spring.io/spring-security/site/docs/current/apidocs/org/springframework/security/web/authentication/logout/SecurityContextLogoutHandler.html
 - Ruby on Rails -  http://guides.rubyonrails.org/security.html
 - PHP - http://php.net/manual/en/function.session-destroy.php
 
-For stateless authentication the access token and refresh token (if used) should be deleted from the mobile device and the refresh token should be invalidated on server side<sup>[1]</sup>.
+ステートレス認証では、アクセストークンとリフレッシュトークン (使用されている場合) をモバイルデバイスから削除し、リフレッシュトークンをサーバー側で無効にする必要があります <sup>[1]</sup> 。
 
 #### Dynamic Analysis
 
