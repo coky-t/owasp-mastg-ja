@@ -295,13 +295,13 @@ JWT を実装する場合には、以下のベストプラクティスを考慮�
 
 
 
-### Testing the Logout Functionality
+### ログアウト機能のテスト
 
-#### Overview
+#### 概要
 
-Reducing the lifetime of session identifiers and tokens to a minimum decreases the likelihood of a successful account hijacking attack. The scope for this test case is to validate that the application has a logout functionality and it effectively terminates the session on client and server side or invalidates a stateless token.
+セッション識別子およびトークンの生存期間を抑えることは、アカウントハイジャック攻撃が成功する可能性を低減させます。このテストケースのスコープは、アプリケーションがログアウト機能を持つこと、それがクライアントとサーバー側とで実際にセッションを終了すること、またはステートレストークンを無効にすること、を検証することです。
 
-One of the most common errors done when implementing a logout functionality is simply not destroying the session object or invalidating the token on server side. This leads to a state where the session or token is still alive even though the user logs out of the application. If an attacker get’s in possession of valid authentication information he can continue using it and hijack a user account.
+ログアウト機能を実装するときに最もよく起こるエラーのひとつは、単にセッションオブジェクトを破棄しないこと、またはサーバー側のトークンを無効にしないことです。これにより、ユーザーがアプリケーションからログアウトしても、セッションまたはトークンがまだ生きている状態になります。攻撃者が有効な認証情報を入手している場合、継続してそれを使用し、ユーザーアカウントを乗っ取ることが可能です。
 
 ##### Static Analysis 
 
