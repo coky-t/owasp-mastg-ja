@@ -236,21 +236,21 @@ HMACSHA256(
 * JWT の一意の識別子を提供する `jti` (JWT ID) クレームを使用して、リプレイ攻撃が対処されているかどうかを確認する。
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-Several known vulnerabilities in JWT should be checked while executing a dynamic analysis:
-* Hashing algorithm `none`<sup>[6]</sup>:
-  * Modify the `alg` attribute in the token header and delete `HS256` and set it to `none` and use an empty signature (e.g. signature = ""). Use this token and replay it in a request. Some libraries treat tokens signed with the none algorithm as a valid token with a verified signature. This would allow an attacker to create their own "signed" tokens.
-* Usage of asymmetric algorithms<sup>[6]</sup>:
-  *  JWT offers several asymmetric algorithms as RSA or ECDSA. In this case the private key will be used to sign the tokens and the verification will be done through the public key. If a server is expecting a token signed with an asymmetric algorithm as RSA, but actually receives a token signed with HMAC, it will think the public key is actually an HMAC secret key. The public key can now be misused as HMAC secret key in order to sign the tokens.
-* Token Storage on client side:
-  * When using a mobile app that uses JWT it should be verified where the token is stored locally on the device<sup>[5]</sup>.
-* Cracking the signing key:
-  * Creating a signature of the token is done through a private key on server side. Once a JWT is obtained there are several tools available that can try to brute force the secret key offline<sup>[8]</sup>. See the tools section for details.
-* Information Disclosure:
-  * Decode the Base-64 encoded JWT and check what kind of data is transmitted within it and if it's encrypted or not.
+動的解析を実行する中で JWT の既存の脆弱性をチェックすべきです。
+* ハッシュアルゴリズム `none` <sup>[6]</sup>:
+  * トークンヘッダの `alg` 属性を修正する。`HS256` を削除し、それに `none` を設定する。空の署名 (signature = "" など) を使用する。このトークンを使用し、リクエストでリプレイする。一部のライブラリは none アルゴリズムで署名されたトークンを、検証済みの有効なトークンとして扱う。これにより攻撃者は独自の「署名付き」トークンを作成できる。
+* 非対称アルゴリズムの使用 <sup>[6]</sup>:
+  * JWT は RSA や ECDSA などのいくつかの非対称アルゴリズムを提供している。この場合、秘密鍵はトークンに署名するために使用され、検証は公開鍵を介して行われる。サーバーが RSA などの非対称アルゴリズムで署名されたトークンを期待しているが、実際には HMAC で署名されたトークンを受信する場合、公開鍵は実際には HMAC 共通鍵であると考えられる。公開鍵が HMAC 共通鍵として誤用され、トークンに署名している可能性があり。
+* クライアント側のトークンストレージ:
+  * JWT を使用するモバイルアプリを使用する場合、トークンがローカルのデバイスのどこに格納されているかを確認すべきである <sup>[5]</sup> 。
+* 署名鍵のクラック:
+  * トークンの署名を作成するにはサーバー側の秘密鍵を使用する。JWT を取得すると、オフラインで共通鍵をブルートフォースできるいくつかのツールが利用できる <sup>[8]</sup> 。詳細についてはツールのセクションを参照する。
+* 情報開示:
+  * Base-64 でエンコードされた JWT をデコードし、その中でどのような種類のデータが送信されているか、それは暗号化されているか否かを確認する。
 
-Please also follow the test cases in the OWASP JWT Cheat Sheet<sup>[4]</sup> and check the implementation of the logout as described in "Testing the Logout Functionality".
+OWASP JWT Cheat Sheet<sup>[4]</sup> のテストケースも参照ください。また、「ログアウト機能のテスト」の説明にしたがってログアウトの実装をチェックします。
 
 #### Remediation
 
