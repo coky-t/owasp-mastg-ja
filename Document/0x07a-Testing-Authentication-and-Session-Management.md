@@ -252,23 +252,22 @@ HMACSHA256(
 
 OWASP JWT Cheat Sheet<sup>[4]</sup> のテストケースも参照ください。また、「ログアウト機能のテスト」の説明にしたがってログアウトの実装をチェックします。
 
-#### Remediation
+#### 改善方法
 
-The following best practices should be considered, when implementing JWT:
+JWT を実装する場合には、以下のベストプラクティスを考慮すべきです。
 
-* The latest version available of the JWT libraries in use should be implemented, to avoid known vulnerabilities.
-* Make sure that tokens with a different signature type are guaranteed to be rejected.
-* Store the JWT on the mobile phone using a secure mechanism, like KeyChain on iOS or KeyStore on Android.
-* The private signing key or secret key for HMAC should only be available on server side.
-* If replay attacks are a risk for the app, `jti` (JWT ID) claim should be implemented.
-* Ideally the content of JWT should be encrypted in order to ensure the confidentially of the information contained within it. There might be description of roles, usernames or other sensitive information available that should be protected. An example implementation in Java can be found in the OWASP JWT Cheat Sheet<sup>[4]</sup>
-* Clarify if copying a token to another device should or should not make an attacker able to continue authenticated. Check the device binding test case, if this should be enforced.
+* 使用している JWT ライブラリの利用可能な最終バージョンで実装し、既知の脆弱性を避ける。
+* 異なる署名タイプのトークンはリジェクトされることが保証されていることを確認する。
+* iOS の KeyChain や Android の KeyStore などのセキュアなメカニズムを使用して、モバイルフォンに JWT を格納する。
+* HMAC の秘密署名鍵または共通鍵はサーバー側でのみ利用可能であるべき。
+* リプレイ攻撃がアプリのリスクである場合、`jti` (JWT ID) クレームを実装すべきである。* 理想的には JWT の内容は暗号化し、その中に含まれる情報の機密性を保証すべきである。保護すべきロール、ユーザー名、その他の利用可能な機密情報が記載されている可能性がある。Java の実装例は OWASP JWT Cheat Sheet <sup>[4]</sup> にある。
+* 別のデバイスにトークンをコピーする場合、攻撃者が認証を継続できないようにすべきである。これを強制するには、デバイスバインディングのテストケースを確認する。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+* M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
 
@@ -278,7 +277,7 @@ The following best practices should be considered, when implementing JWT:
 
 * CWE-287: Improper Authentication - https://cwe.mitre.org/data/definitions/287.html
 
-##### Info
+##### その他
 
 * [1] RFC 7519 JSON Web Token (JWT) - https://tools.ietf.org/html/rfc7519
 * [2] PHP JWT - https://github.com/firebase/php-jwt
@@ -289,7 +288,7 @@ The following best practices should be considered, when implementing JWT:
 * [7] JWT the right way - https://stormpath.com/blog/jwt-the-right-way
 * [8] Attacking JWT Authentication - https://www.sjoerdlangkemper.nl/2016/09/28/attacking-jwt-authentication/
 
-##### Tools
+##### ツール
 * jwtbrute - https://github.com/jmaxxz/jwtbrute
 * crackjwt - https://github.com/Sjord/jwtcrack/blob/master/crackjwt.py
 * John the ripper - https://github.com/magnumripper/JohnTheRipper
