@@ -382,25 +382,25 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 傍受プロキシを使用し、アプリ内のクライアントパスワードチェックをバイパスし、サーバー側で実装されるパスワードポリシーを検証できるようにします。テスト手法についての詳細情報は OWASP Testing Guide (OTG-AUTHN-007) <sup>[1]</sup> を参照ください。
 
 
-#### Remediation
+#### 改善方法
 
-A good password policy should define the following requirements<sup>[2]</sup> in order to avoid password brute-forcing:
+よいパスワードポリシーはパスワードブルートフォースを避けるために以下の要件 <sup>[2]</sup> を定義すべきです。
 
-**Password Length**
-* Minimum length of the passwords should be enforced, at least 10 characters.
-* Maximum password length should not be set too low, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.
+**パスワード長**
+* パスワードの最小長は少なくとも10文字以上であること。
+* パスワードの最大長は低すぎてはいけない。ユーザーがパスフレーズを作成することを妨げないこと。典型的な最大長は128文字である。
 
-**Password Complexity**
-* Password must meet at least 3 out of the following 4 complexity rules
-1. at least 1 uppercase character (A-Z)
-2. at least 1 lowercase character (a-z)
-3. at least 1 digit (0-9)
-4. at least 1 special character (punctuation)
+**パスワードの複雑さ**
+* パスワードは以下の4つの複雑さのルールのうち少なくとも3つを満たす必要があります。
+1. 少なくとも1つの大文字 (A-Z)
+2. 少なくとも1つの小文字 (a-z)
+3. 少なくとも1つの数字 (0-9)
+4. 少なくとも1つの特殊文字 (記号)
 
-For further details check the OWASP Authentication Cheat Sheet<sup>[2]</sup>. A common library that can be used for estimating password strength is zxcvbn<sup>[3]</sup>, which is availalbe for many programming languages. 
+詳細は OWASP Authentication Cheat Sheet <sup>[2]</sup> を参照ください。パスワード強度を推定するために使用できる共通ライブラリに zxcvbn <sup>[3]</sup> があり、多くのプログラミング言語で利用可能です。
 
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 * M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
@@ -411,7 +411,7 @@ For further details check the OWASP Authentication Cheat Sheet<sup>[2]</sup>. A 
 ##### CWE
 * CWE-521 - Weak Password Requirements
 
-##### Info
+##### その他
 * [1] OWASP Testing Guide (OTG-AUTHN-007) - https://www.owasp.org/index.php/Testing_for_Weak_password_policy_(OTG-AUTHN-007)
 * [2] OWASP Authentication Cheat Sheet - https://www.owasp.org/index.php/Authentication_Cheat_Sheet#Implement_Proper_Password_Strength_Controls
 * [3] zxcvbn - https://github.com/dropbox/zxcvbn
