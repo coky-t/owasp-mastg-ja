@@ -350,11 +350,11 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 
 
-### Testing the Password Policy
+### パスワードポリシーのテスト
 
-#### Overview
+#### 概要
 
-Password strength is a key concern when using passwords for authentication. Password policy defines requirements that end users should adhere to. Password length, password complexity and password topologies should properly be included in the password policy. A "strong" password policy makes it difficult or even infeasible for one to guess the password through either manual or automated means.
+認証にパスワードを使用する場合、パスワードの強度は重要な事項です。パスワードポリシーはエンドユーザーが遵守すべき要件を定義します。パスワード長、パスワードの複雑さ、パスワードのトポロジーがパスワードポリシーに適切に含まれる必要があります。「強力な」パスワードポリシーは手動または自動のいずれかの方法でパスワードを推測することを困難または不可能にさえします。
 
 
 #### Static Analysis
