@@ -357,19 +357,19 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 認証にパスワードを使用する場合、パスワードの強度は重要な事項です。パスワードポリシーはエンドユーザーが遵守すべき要件を定義します。パスワード長、パスワードの複雑さ、パスワードのトポロジーがパスワードポリシーに適切に含まれる必要があります。「強力な」パスワードポリシーは手動または自動のいずれかの方法でパスワードを推測することを困難または不可能にさえします。
 
 
-#### Static Analysis
+#### 静的解析
 
-Regular Expressions are often used to validate passwords. The password verification check against a defined password policy need to be reviewed if it rejects passwords that violate the password policy.
+パスワードの検証には正規表現がよく使用されます。定義されたパスワードポリシーに対するパスワード検証チェックは、パスワードポリシーに違反するパスワードを拒否するかどうかをレビューする必要があります。
 
-Passwords can be set when registering accounts, changing the password or when resetting the password in a forgot password process. All of the available functions in the application that are able to change or set a password need to be identified in the source code. They should all be using the same password verification check, that is aligned with the password policy.
+アカウントの登録、パスワードの変更、パスワードを忘れた際のパスワードリセット時にパスワードを設定できます。パスワードを変更または設定できるアプリケーション内で利用可能なすべての機能をソースコード内で特定する必要があります。それらはパスワードポリシーに割り当てられた同じパスワード検証チェックをすべて使用する必要があります。
 
-Here are different examples on how a validation can be implemented server-side:
+サーバー側で実装できる検証方法のさまざまな例を以下に示します。
 
 * Spring (Java) -  https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/Validator.html
 * Ruby on Rails -  http://guides.rubyonrails.org/active_record_validations.html
 * PHP - http://php.net/manual/en/filter.filters.validate.php
 
-If a framework is used that offers the possibility to create and enforce a password policy for all users of the application, the configuration should be checked.
+アプリケーションのすべてのユーザーに対してパスワードポリシーを作成および強制する可能性を提供するフレームワークを使用する場合、設定をチェックすべきです。
 
 #### Dynamic Analysis
 
