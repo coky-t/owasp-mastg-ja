@@ -323,16 +323,16 @@ JWT を実装する場合には、以下のベストプラクティスを考慮�
 ログアウトがサーバー側で正しく実装されている場合は、エラーメッセージまたはログインページへのリダイレクトがクライアントに返送されます。一方で、手順2と同じレスポンスがある場合、トークンやセッション ID は有効であり、サーバー側で正しく終了していません。
 OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くのテストケースを含む詳細な説明があります。
 
-#### Remediation 
+#### 改善方法
 
-The logout function on the server side must invalidate the session identifier or token immediately after logging out to prevent it to be reused by an attacker that could have intercepted it<sup>[3]</sup>.
+サーバー側のログアウト機能はログアウトした直後にセッション識別子やトークンを無効にして、それを傍受した可能性のある攻撃者によって再利用されないようにする必要があります <sup>[3]</sup> 。
 
-Many mobile apps do not automatically logout a user, because of customer convenience by implementing stateless authentication. There should still be a logout function available within the application and this should work accordingly to best practices by also destroying the access and refresh token on client and server side. Otherwise this could lead to another authentication bypass in case the refresh token is not invalidated.
+多くのモバイルアプリは自動的にユーザーをログアウトしません。ステートレス認証を実装することで顧客の利便性が高まるためです。アプリケーション内ではログアウト機能が利用可能であり、クライアント側とサーバー側とでアクセストークンとリフレッシュトークンを破棄することによりベストプラクティスとして機能します。もしくは、リフレッシュトークンが無効にされない場合、他の認証バイパスとなる可能性があります。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+* M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
 
@@ -342,7 +342,7 @@ Many mobile apps do not automatically logout a user, because of customer conveni
 
 * CWE-613 - Insufficient Session Expiration
 
-##### Info
+##### その他
 
 * [1] JWT token blacklisting - https://auth0.com/blog/blacklist-json-web-token-api-keys/
 * [2] OTG-SESS-006 - https://www.owasp.org/index.php/Testing_for_logout_functionality
