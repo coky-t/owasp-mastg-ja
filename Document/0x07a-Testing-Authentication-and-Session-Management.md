@@ -371,15 +371,15 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 アプリケーションのすべてのユーザーに対してパスワードポリシーを作成および強制する可能性を提供するフレームワークを使用する場合、設定をチェックすべきです。
 
-#### Dynamic Analysis
+#### 動的解析
 
-All available functions that allow a user to set a password need to be verified, if passwords can be used that violate the password policy specifications. This can be:
+パスワードポリシー仕様に違反するパスワードが使用可能かどうか、ユーザーがパスワードを設定できるすべての利用可能な機能を検証する必要があります。これは以下のようになります。
 
-- Self-registration function for new users that allows to specify a password,
-- Forgot Password function that allows a user to set a new password or
-- Change Password function that allows a logged in user to set a new password.
+- 新しいユーザーのためにパスワードを指定できる自己登録機能
+- ユーザーが新しいパスワードを設定できるパスワード忘れ機能
+- ログインユーザーが新しいパスワードを設定できるパスワード変更機能
 
-An interception proxy should be used, to bypass client passwords checks within the app in order to be able verify the password policy implemented on server side. More information about testing methods can be found in the OWASP Testing Guide (OTG-AUTHN-007)<sup>[1]</sup>
+傍受プロキシを使用し、アプリ内のクライアントパスワードチェックをバイパスし、サーバー側で実装されるパスワードポリシーを検証できるようにします。テスト手法についての詳細情報は OWASP Testing Guide (OTG-AUTHN-007) <sup>[1]</sup> を参照ください。
 
 
 #### Remediation
