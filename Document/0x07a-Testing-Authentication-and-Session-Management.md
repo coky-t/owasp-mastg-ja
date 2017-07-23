@@ -312,16 +312,16 @@ JWT を実装する場合には、以下のベストプラクティスを考慮�
 
 ステートレス認証では、アクセストークンとリフレッシュトークン (使用されている場合) をモバイルデバイスから削除し、リフレッシュトークンをサーバー側で無効にする必要があります <sup>[1]</sup> 。
 
-#### Dynamic Analysis
+#### 動的解析
 
-For a dynamic analysis of the application an interception proxy should be used. The following steps can be applied to check if the logout is implemented properly.  
-1.  Log into the application.
-2.  Do a couple of operations that require authentication inside the application.
-3.  Perform a logout operation.
-4.  Resend one of the operations detailed in step 2 using an interception proxy. For example, with Burp Repeater. The purpose of this is to send to the server a request with the session ID or token that has been invalidated in step 3.
- 
-If the logout is correctly implemented on the server side, either an error message or redirect to the login page will be sent back to the client. On the other hand, if you have the same response you had in step 2, then the token or session ID is still valid and has not been correctly terminated on the server side.
-A detailed explanation with more test cases, can also be found in the OWASP Web Testing Guide (OTG-SESS-006)<sup>[2]</sup>.
+アプリケーションの動的解析には傍受プロキシを使用する必要があります。以下の手順を実行して、ログアウトが適切に実装されているかどうかを確認します。
+1.  アプリケーションにログインする。
+2.  アプリケーション内で認証を必要とする操作をいくつか行う。
+3.  ログアウト操作を実行する。
+4.  傍受プロキシ (Burp Repeater など) を使用して、手順2で詳述されている操作のひとつを再送する。この目的は手順3で無効にされたセッション ID やトークンを使用してサーバーにリクエストを送信することである。
+
+ログアウトがサーバー側で正しく実装されている場合は、エラーメッセージまたはログインページへのリダイレクトがクライアントに返送されます。一方で、手順2と同じレスポンスがある場合、トークンやセッション ID は有効であり、サーバー側で正しく終了していません。
+OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くのテストケースを含む詳細な説明があります。
 
 #### Remediation 
 
