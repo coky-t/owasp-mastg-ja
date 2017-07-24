@@ -406,7 +406,7 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 * M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
-* 4.5: "A password policy exists and is enforced at the remote endpoint."
+* 4.5: "パスワードポリシーが存在し、リモートエンドポイントで実施されている。"
 
 ##### CWE
 * CWE-521 - Weak Password Requirements
@@ -438,36 +438,36 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 アプリケーションの動的解析には、傍受プロキシを使用する必要があります。以下の手順を適用して、ロックアウトメカニズムが適切に実装されているかどうかを確認します。
 1.  ロックアウトコントロールを引き起こす回数分の不正なログインを行う (一般的に 3 回から 15 回の不正な試行) 。これは Burp Intruder <sup>[5]</sup> を使用して自動化できる。
-2.  アカウントをロックアウトしたら、正しいログオン詳細を入力し、ログインが不可能であるかどうかを確認する。
+2.  アカウントをロックアウトしたら、正しいログオン情報を入力し、ログインが不可能であるかどうかを確認する。
 これが正しく実装されている場合、正しいパスワードを入力しても、アカウントは既にブロックされているため、ログオンは拒否されます。
 
-#### Remediation
+#### 改善方法
 
-Lockout controls have to be implemented on server side to prevent brute force attacks. Further mitigation techniques are described by OWASP in Blocking Brute Force Attacks<sup>[3]</sup>.
-It is interesting to clarify that incorrect login attempts should be cumulative and not linked to a session. If you implement a control to block the credential in your 3rd attempt in the same session, it can be easily bypassed by entering the details wrong two times and get a new session. This will then give another two free attempts.
+ロックアウトコントロールをサーバー側に実装して、ブルートフォース攻撃を防ぐ必要があります。さらなる軽減技法については OWASP が Blocking Brute Force Attacks <sup>[3]</sup> に記述しています。
+不正なログイン試行が累積され、セッションにリンクされていないことを明確にすることは重要です。同じセッションでの3回目の試行で資格情報をブロックするようコントロールを実装した場合、誤った情報を二回入力してから新しいセッションを取得することで簡単にバイパスできます。これによりさらに二回の自由な試行が得られます。
 
-Alternatives to locking accounts are enforcing 2-Factor-Authentication (2FA) for all accounts or the usage of CAPTCHAS. See also Credential Cracking OAT-007 in the OWASP Automated Thread Handbook<sup>[4]</sup>.
+アカウントをロックする代わりにすべてのアカウントに二要素認証 (2FA) または CAPTCHAS の使用を実施します。OWASP Automated Thread Handbook <sup>[4]</sup> の Credential Cracking OAT-007 も参照ください。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 * M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
-* 4.6: "The remote endpoint implements an exponential back-off, or temporarily locks the user account, when incorrect authentication credentials are submitted an excessive number of times ."
+* 4.6: "不正な認証資格情報が過度に送信される場合、リモートエンドポイントはExponential Backoffを実装しているか一時的にユーザーアカウントをロックしている。"
 
 ##### CWE
 
 - CWE-307 - Improper Restriction of Excessive Authentication Attempts
 
-##### Info
+##### その他
 * [1] OTG-AUTHN-003 - https://www.owasp.org/index.php/Testing_for_Weak_lock_out_mechanism
 * [2] Brute Force Attacks - https://www.owasp.org/index.php/Brute_force_attack
 * [3] Blocking Brute Force Attacks - https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks
 * [4] OWASP Automated Threats to Web Applications - https://www.owasp.org/index.php/OWASP_Automated_Threats_to_Web_Applications
 * [5] Burp Intruder - https://portswigger.net/burp/help/intruder.html
 
-##### Tools
+##### ツール
 * Burp Suite Professional - https://portswigger.net/burp/
 * OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 
