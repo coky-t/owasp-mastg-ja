@@ -429,9 +429,9 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 テストは不正なパスワード入力を定義された回数分の試行し、アカウントロックアウトを引き起こすことにより行われます。この時点で、耐ブルートフォースコントロールが有効であり、正しい資格情報を入力した場合でもログオンが拒否されるべきです。
 
-#### Static Analysis
+#### 静的解析
 
-It need to be checked that a validation method exists during logon that checks if the number of attempts for a username equals to the maximum number of attempts set. In that case, no logon should be granted once this threshold is meet. After a correct attempt, there should also be a mechanism in place to set the error counter to zero.
+ログイン時にユーザー名に対する試行回数が最大試行回数に等しいかどうかを確認する検証メソッドが存在することを確認する必要があります。この場合、この閾値が満たされるとログオンは許可すべきではありません。正しい試行の後、エラーカウンタをゼロに設定するための仕組みも必要です。
 
 
 #### Dynamic Analysis
