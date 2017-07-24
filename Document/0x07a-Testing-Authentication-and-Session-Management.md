@@ -473,13 +473,13 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 
 
-### Testing the Session Timeout
+### セッションタイムアウトのテスト
 
-#### Overview
+#### 概要
 
-Compared to web applications most mobile applications don’t have a visible timeout mechanism that terminates the session ID or token after some period of inactivity and force the user to login again. For most mobile applications users need to enter the credentials once and use a stateless authentication mechanism. Mobile apps that handle sensitive data like patient data or critical functions like financial transactions should implement a timeout as a security-in-depth measure that forces users to re-login after a defined period of time.
- 
-We will explain here how to check that this control is implemented correctly, both in the client and server side.
+ウェブアプリケーションと比較して、ほとんどのモバイルアプリケーションは、一定期間使用しない場合にセッション ID やトークンを終了し、ユーザーに再度ログインさせるような、明確なタイムアウトメカニズムがありません。ほとんどのモバイルアプリケーションではユーザーは資格情報を一度入力し、ステートレス認証メカニズムを使用します。患者データや金融取引のような重要な機能を扱うモバイルアプリは、定義された時間が経過した後にユーザーに再ログインさせるセキュリティ対策としてタイムアウトを実装すべきです。
+
+ここではこのコントロールがクライアント側とサーバー側の両方で正しく実装されていることを確認する方法を説明します。
 
 #### Static Analysis
 
