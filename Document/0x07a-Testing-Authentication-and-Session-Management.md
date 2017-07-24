@@ -417,17 +417,17 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 * [3] zxcvbn - https://github.com/dropbox/zxcvbn
 
 
-### Testing Excessive Login Attempts
+### 過度のログイン試行のテスト
 
-#### Overview
+#### 概要
 
-We all have heard about brute force attacks. This is one of the simplest attack types, as already many tools are available that work out of the box. It also doesn’t require a deep technical understanding of the target, as only a list of username and password combinations is sufficient to execute the attack. Once a valid combination of credentials is identified access to the application is possible and the account can be taken over.
- 
-To be protected against these kind of attacks, applications need to implement a control to block the access after a defined number of incorrect login attempts.
- 
-Depending on the application that you want to protect, the number of incorrect attempts allowed may vary. For example, in a banking application it should be around three to five attempts, but, in a app that doesn't handle sensitive information it could be a higher number. Once this threshold is reached it also needs to be decided if the account gets locked permanently or temporarily. Locking the account temporarily is also called login throttling.
- 
-The test consists by entering the password incorrectly for the defined number of attempts to trigger the account lockout. At that point, the anti-brute force control should be activated and your logon should be rejected when the correct credentials are entered.
+私たちはみなブルートフォース攻撃について聞いたことがあります。これは最も単純な攻撃タイプのひとつで、すでに多くのツールが用意されており、すぐに利用可能です。また、ターゲットの深い技術的な理解は必要なく、ユーザー名とパスワードの組み合わせのリストだけで攻撃を実行するのに十分です。資格情報の有効な組み合わせが識別されると、アプリケーションへのアクセスが可能になり、アカウントを奪うことができます。
+
+この種の攻撃から保護するために、アプリケーションは定義された回数の不正なログイン試行後にアクセスをブロックするコントロールを実装する必要があります。
+
+保護したいアプリケーションによって、許可される不正な試行回数が異なる場合があります。例えば、銀行業務アプリケーションでは三回から五回程度の試行とすべきですが、機密情報を処理しないアプリではそれ以上の回数になる可能性があります。この閾値に達したとき、アカウントを永続的にまたは一時的にロックするかどうかを決定する必要があります。一時的にアカウントをロックすることはログイン抑制とも呼ばれます。
+
+テストは不正なパスワード入力を定義された回数分の試行し、アカウントロックアウトを引き起こすことにより行われます。この時点で、耐ブルートフォースコントロールが有効であり、正しい資格情報を入力した場合でもログオンが拒否されるべきです。
 
 #### Static Analysis
 
