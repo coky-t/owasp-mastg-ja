@@ -434,12 +434,12 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 ログイン時にユーザー名に対する試行回数が最大試行回数に等しいかどうかを確認する検証メソッドが存在することを確認する必要があります。この場合、この閾値が満たされるとログオンは許可すべきではありません。正しい試行の後、エラーカウンタをゼロに設定するための仕組みも必要です。
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-For a dynamic analysis of the application an interception proxy should be used. The following steps can be applied to check if the lockout mechanism is implemented properly.  
-1.  Log in incorrectly for a number of times to trigger the lockout control (generally 3 to 15 incorrect attempts). This can be automated by using Burp Intruder<sup>[5]</sup>.
-2.  Once you have locked out the account, enter the correct logon details to verify if login is not possible anymore.
-If this is correctly implemented logon should be denied when the right password is entered, as the account has already been blocked.
+アプリケーションの動的解析には、傍受プロキシを使用する必要があります。以下の手順を適用して、ロックアウトメカニズムが適切に実装されているかどうかを確認します。
+1.  ロックアウトコントロールを引き起こす回数分の不正なログインを行う (一般的に 3 回から 15 回の不正な試行) 。これは Burp Intruder <sup>[5]</sup> を使用して自動化できる。
+2.  アカウントをロックアウトしたら、正しいログオン詳細を入力し、ログインが不可能であるかどうかを確認する。
+これが正しく実装されている場合、正しいパスワードを入力しても、アカウントは既にブロックされているため、ログオンは拒否されます。
 
 #### Remediation
 
