@@ -481,19 +481,19 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 ここではこのコントロールがクライアント側とサーバー側の両方で正しく実装されていることを確認する方法を説明します。
 
-#### Static Analysis
+#### 静的解析
 
-If server side code is available, it should be reviewed that the session timeout or token invalidation functionality is correctly configured and a timeout is triggered after a defined period of time.  
-The check needed here will be different depending on the technology used. Here are different examples on how a session timeout can be configured:
+サーバー側コードが利用可能である場合は、セッションタイムアウトやトークン無効化機能が適切に設定されており、定義された時間が経過するとタイムアウトが発生することをレビューすべきです。
+ここで必要なチェックは使用する技術により異なります。セッションタイムアウトを設定する方法の例を以下に示します。
 * Spring (Java) - http://docs.spring.io/spring-session/docs/current/reference/html5/
 * Ruby on Rails - http://guides.rubyonrails.org/security.html#session-expiry
 * PHP - http://php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
 * ASP.Net - https://msdn.microsoft.com/en-GB/library/system.web.sessionstate.httpsessionstate.timeout(v=vs.110).aspx
 
-In case of stateless authentication, once a token is signed, it is valid forever unless the signing key is changed or expiration explicitly set. One could use "exp" expiration claim<sup>[3]</sup> to define the expiration time on or after which the JWT must not be accepted for processing.
-Speaking of tokens for stateless authentication, one should differentiate types of tokens, such as access tokens and refresh tokens<sup>[4]</sup>. Access tokens are used for accessing protected resources and should be short-lived. Refresh tokens are primarily used to obtain renewed access tokens. They are rather long-lived but should expire too, as otherwise their leakage would expose the system for unauthorized use. 
+ステートレス認証の場合、トークンを署名した後は、署名鍵を変更したり期限を明示的に設定したりしない限り、永久に有効です。"exp" 期限切れクレーム <sup>[3]</sup> を使用して、JWT が処理のために受け入れてはいけない期限切れ時刻を定義できます。
+ステートレス認証のトークンについて言うと、アクセストークンやリフレッシュトークン <sup>[4]</sup> などのトークンのタイプを区別する必要があります。アクセストークンは保護されたりソースへのアクセスに使用され、存続期間は短くあるべきです。リフレッシュトークンは主に更新されたアクセストークンを取得するために使用されます。存続期間はかなり長くなりますが、期限もあります。さもなければ、その漏洩によりシステムが不正使用される可能性があります。
 
-The exact values for token expiration depend on the application requirements and capacity. Sample code for JWT token refreshments is presented below:
+トークンの有効期限の正確な値はアプリケーションの要件と能力により異なります。JWT トークンリフレッシュのサンプルコードを以下に示します。
 ```
  app.post('/refresh_token', function (req, res) {
   // verify the existing token
