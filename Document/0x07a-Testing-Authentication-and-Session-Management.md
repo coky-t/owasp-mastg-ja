@@ -513,24 +513,24 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 });
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-Dynamic analysis is an efficient option, as it is easy to validate if the session timeout is working or not at runtime using an interception proxy. This is similar to test case "Testing the Logout Functionality", but we need to leave the application in idle for the period of time required to trigger the timeout function. Once this condition has been launched, we need to validate that the session is effectively terminated on client and server side.
+動的解析は効率的な選択肢です。傍受プロキシを使用してセッションタイムアウトが実行時に機能しているかどうかを確認することは簡単です。これはテストケース「ログアウト機能のテスト」に似ていますが、タイムアウト機能が発動するために必要な一定時間をアイドル状態のままにする必要があります。この条件を満たしたら、クライアント側とサーバー側でセッションが実際に終了することを確認する必要があります。
 
-The following steps can be applied to check if the session timeout is implemented properly.  
-1. Log into the application.
-2. Do a couple of operations that require authentication inside the application.
-3. Leave the application in idle until the session expires (for testing purposes, a reasonable timeout can be configured, and amended later in the final version)
- 
-Resend one of the operations executed in step 2 using an interception proxy, for example with Burp Repeater. The purpose of this is to send to the server a request with the session ID that has been invalidated when the session has expired.
-If session timeout has been correctly configured on the server side, either an error message or redirect to the login page will be sent back to the client. On the other hand, if you have the same response you had in step 2, then, this session is still valid, which means that the session timeout is not configured correctly.
-More information can also be found in the OWASP Web Testing Guide (OTG-SESS-007)<sup>[1]</sup>.
+以下の手順を使用して、セッションタイムアウトが適切に実装されているかどうかを確認します。
+1. アプリケーションにログインする。
+2. アプリケーション内で認証を必要とするいくつかの操作を行う。
+3. セッションが期限切れになるまで、アプリケーションをアイドル状態のままにする (テストの目的では、手頃なタイムアウトを設定し、後の最終バージョンで修正する) 。
 
-#### Remediation
+傍受プロキシ (Burp Repeater など) を使用して手順2で実行した操作のひとつを再送します。この目的はセッションが期限切れとなった際に無効にされたセッション ID でリクエストをサーバーに送信することです。
+セッションタイムアウトがサーバー側で正しく設定させている場合は、エラーメッセージまたはログインページへのリダイレクトがクライアントに返送されます。一方で、手順2と同じレスポンスがある場合、このセッションはまだ有効であり、セッションタイムアウトは正しく設定されていないことを意味します。
+詳細は OWASP Web Testing Guide (OTG-SESS-007) <sup>[1]</sup> を参照ください。
 
-Most of the frameworks have a parameter to configure the session timeout. This parameter should be set accordingly to the best practices specified of the documentation of the framework. The best practice timeout setting may vary between 10 minutes to two hours, depending on the sensitivity of your application and the use case of it.
+#### 改善方法
 
-#### References
+ほとんどのフレームワークにはセッションタイムアウトを設定するパラメータがあります。このパラメータはフレームワークのドキュメントで指定されているベストプラクティスに応じて設定すべきです。ベストプラクティスのタイムアウト設定は、アプリケーションの機密性とその使用例に応じて、10分から2時間の間で遷移します。
+
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 * M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
@@ -541,7 +541,7 @@ Most of the frameworks have a parameter to configure the session timeout. This p
 ##### CWE
 - CWE-613 - Insufficient Session Expiration
 
-##### Info
+##### その他
 * [1] OWASP Web Application Test Guide (OTG-SESS-007) - https://www.owasp.org/index.php/Test_Session_Timeout_(OTG-SESS-007)
 * [2] OWASP Session management cheatsheet - https://www.owasp.org/index.php/Session_Management_Cheat_Sheet
 * [3] RFC 7519 - https://tools.ietf.org/html/rfc7519#section-4.1.4
