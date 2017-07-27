@@ -562,23 +562,23 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 ステップアップ認証の主な利点はユーザーの利便性が向上することです。ユーザーは必要な場合にのみ追加の要素での認証を求められます。
 
 
-#### Static Analysis
+#### 静的解析
 
-When server-side source code is available, first identify how a second factor or step-up authentication is used and enforced. Afterwards locate all endpoints with sensitive and privileged information and functions: they are the ones that need to be protected. Prior to accessing any item, the application must make sure the user has already passed 2FA or the step-up authentication and that he is allowed to access the endpoint.
+サーバー側ソースコードが利用可能である場合、まず第二要素やステップアップ認証がどのように使用および実施されているか特定します。その後、機密および特権の情報および機能を持つすべてのエンドポイントを特定します。これらは保護が必要なものです。そのアイテムにアクセスする前に、アプリケーションはユーザーが 2FA またはステップアップ認証をすでにパスしており、エンドポイントにアクセスすることが許可されていることを確認する必要があります。
 
-2FA or step-up authentication shouldn't be implemented from scratch, instead they should be build on top of available libraries that offer this functionality. The libraries used on the server side should be identified and the usage of the available APIs/functions should be verified if they are used accordingly to best practices.
+2FA やステップアップ認証はゼロから実装すべきではなく、代わりにこの機能を提供する利用可能なライブラリの上に構築すべきです。サーバー側で使用されるライブラリを特定し、利用可能な API や機能がベストプラクティスに応じて使用されているかどうか検証する必要があります。
 
-For example server side libraries like GoogleAuth<sup>[2]</sup> can be used. Such libraries rely on a widely accepted mechanism of implementing an additional factor by using Time-Based One-Time Password Algorithms (TOTP). TOTP is a cryptographic algorithm that computes a OTP from a shared secret key between the client and server and the current time. The created OTPs are only valid for a short amount of time, usually 30 to 60 seconds.
+例えば、GoogleAuth <sup>[2]</sup> などのサーバー側ライブラリを使用します。このようなライブラリはタイムベースのワンタイムパスワードアルゴリズム (TOTP) を使用して追加の要素を実装する広く受け入れられたメカニズムに依存しています。TOTP は暗号アルゴリズムであり、クライアントとサーバー間の共有された共通鍵と現在の時刻から OTP を計算します。作成された OTP は短い時間 (通常 30 から 60 秒) のみ有効です。
 
-Instead of using libraries in the server side code, also available cloud solutions can be used like for example:
+サーバー側コードでライブラリを使用する代わりに、例のような利用可能なクラウドソリューションも使用できます。
 
-- Google Authenticator<sup>[2]</sup>
-- Microsoft Authenticator<sup>[3]</sup>
-- Authy<sup>[4]</sup>
+- Google Authenticator <sup>[2]</sup>
+- Microsoft Authenticator <sup>[3]</sup>
+- Authy <sup>[4]</sup>
 
-Regardless if the implementation is done within the server side or by using a cloud provider, the TOTP app need to be started and will display the OTP that need to be keyed in into the app that is waiting to authenticate the user.
+実装がサーバー側またはクラウドプロバイダを使用して行われているかどうかにかかわらず、TOTP アプリを開始して、ユーザーの認証を待っているアプリに入力する必要のある OTP を表示する必要があります。
 
-For local biometric authentication as an additional factor, please verify the test case "Testing Biometric Authentication".
+ローカルの生体認証を追加の要素とするには、「生体認証のテスト」のテストケースを確認します。
 
 #### Dynamic Analysis
 
