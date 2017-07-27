@@ -548,18 +548,18 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 * [4] Refresh tokens & access tokens - https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
 
 
-### Testing 2-Factor Authentication and Step-up Authentication
+### 2要素認証とステップアップ認証のテスト
 
-#### Overview
+#### 概要
 
-Two-factor authentication (2FA) is becoming a standard when logging into mobile apps. Typically the first factor might be credentials (username/password), followed by a second factor which could be an One Time Password (OTP) sent via SMS. The key aspect of 2FA is to use two different factors out of the following categories:
-* Something you have: this can be a physical object like a hardware token, a digital object like X.509 certificates (in enterprise environments) or generation of software tokens on the mobile phone itself.
-* Something you know: this can be a secret only known to the user like a password.
-* Something you are: this can be biometric characteristics that identify the users like TouchID.
+モバイルアプリにログインする場合、二要素認証 (2FA) が標準になりつつあります。通常、最初の要素は資格情報 (ユーザー名/パスワード) で、次の要素には SMA 経由で送信されるワンタイムパスワード (OTP) が続きます。2FA の重要な側面は以下のカテゴリのうち二つの異なる要素を使用することです。
+* あなたが持っているもの：これにはハードウェアトークンなどの物理オブジェクト、X.509 証明書などのデジタルオブジェクト (エンタープライズ環境の場合) 、モバイルフォン自体で生成されるソフトウェアトークンがあります。
+* あなたが知っていること：これにはパスワードなどのユーザーだけが知っている秘密があります。
+* あなたの何か：これには TouchID などのユーザーを識別する生体的属性があります。
 
-Applications that offer access to sensitive data or critical functions, might require users additionally to re-authenticate with a stronger authentication mechanism. For example, after logging in via biometric authentication (e.g. TouchID) into a banking app, a user might need to do a so called "Step-up Authentication" again through OTP in order to execute a bank transfer.
+機密データや重要な機能へのアクセスを提供するアプリケーションでは、より強力な認証メカニズムでユーザーに再認証を要求する可能性があります。例えば、生体認証 (TouchID など) を介して銀行業務アプリにログインした後、ユーザーは銀行振込を実行するために OTP を介していわゆる「ステップアップ認証」を行う必要があるかもしれません。
 
-A key advantage of step-up authentication is improved usability for the user. A user is asked to authenticate with the additional factor only when necessary.
+ステップアップ認証の主な利点はユーザーの利便性が向上することです。ユーザーは必要な場合にのみ追加の要素での認証を求められます。
 
 
 #### Static Analysis
