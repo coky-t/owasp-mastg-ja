@@ -536,7 +536,7 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 * M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
-* 4.8: "Sessions and server side signed tokens are terminated at the remote endpoint after a predefined period of inactivity."
+* 4.8: "非アクティブな状態で所定の期間経過後、リモートエンドポイントでセッションまたはサーバー側署名トークンを終了している。"
 
 ##### CWE
 - CWE-613 - Insufficient Session Expiration
@@ -586,37 +586,37 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 記録されたリクエストは認証情報を提供することなしでも再生して、認証メカニズムの完全なバイパスをチェックします。
 
-#### Remediation
+#### 改善方法
 
-The implementation of a second or multiple factors should be strictly enforced on server-side for all critical operations. If cloud solutions are in place, they should be implemented accordingly to best practices.
+第二または複数要素の実装はすべての重要な操作に対してサーバー側で厳密に実施する必要があります。クラウドソリューションがある場合には、ベストプラクティスに従って実装します。
 
-Step-up authentication should be optional for the majority of user scenarios and only enforced for critical functions or when accessing sensitive data.
+ステップアップ認証は大部分のユーザーシナリオではオプションであり、重要な機能に対して、または機密データにアクセスする場合にのみ実行します。
 
-Regardless of 2FA or step-up authentication, additionally it should be supplemented with passive contextual authentication<sup>[1]</sup>, which can be:
+2FA またはステップアップ認証に関係なく、以下のような受動的なコンテキストの認証 <sup>[1]</sup> を補足すべきです。
 
-* Geolocation
-* IP address
-* Time of day
+* 位置情報
+* IP アドレス
+* 時刻
 
-Ideally the user's context is compared to previously recorded data to identify anomalies that might indicate account abuse or potential fraud. This is all happening transparent for the user, but can become a powerful control in order to stop attackers.
+理想的にはユーザーのコンテキストを以前に記録されたデータを比較して、アカウントの不正使用や潜在的な詐欺の可能性を示す可能性のある異常を特定します。これはユーザーにとってすべて透過的ですが、攻撃者を阻止するための強力なコントロールとなりえます。
 
-An additional control to ensure that an authorized user is using the app on an authorized device is to verify if device binding controls are in place. Please check also "Testing Device Binding" for iOS and Android.
+許可されたユーザーが許可されたデバイスでアプリを使用していることを確認する追加のコントロールでは、デバイスバインディングコントロールが適切かどうかを確認します。iOS および Android の「デバイスバインディングのテスト」も確認ください。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+* M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
 
-* 4.9: "A second factor of authentication exists at the remote endpoint and the 2FA requirement is consistently enforced."
-* 4.10: "Step-up authentication is required to enable actions that deal with sensitive data or transactions."
+* 4.9: "リモートエンドポイントに二要素認証が存在し、リモートエンドポイントで二要素認証要件が一貫して適用されている。"
+* 4.10: "機密データやトランザクションを処理するアクションを有効にするには、ステップアップ認証が必要とされている。"
 
 ##### CWE
 
 - CWE-308 - Use of Single-factor Authentication
 
-##### Info
+##### その他
 
 * [1] Best Practices for Step-up Multi-factor Authentication  - http://www.mtechpro.com/2016/newsletter/may/Ping_Identity_best-practices-stepup-mfa-3001.pdf
 * [2] Google Authenticator - https://support.google.com/accounts/answer/1066447?hl=en
@@ -624,13 +624,13 @@ An additional control to ensure that an authorized user is using the app on an a
 * [4] Authy - https://authy.com/
 
 
-### Testing User Device Management
+### ユーザーデバイス管理のテスト
 
-#### Overview
+#### 概要
 
 -- TODO [Provide a general description of the issue "Testing User Device Management".] --
 
-#### Static Analysis
+#### 静的解析
 
 -- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
 
@@ -639,33 +639,33 @@ An additional control to ensure that an authorized user is using the app on an a
 --TODO [Develop content on Testing User Device Management with source code] --
 
 
-#### Dynamic Analysis
+#### 動的解析
 
 -- TODO [Describe how to test for this issue "Testing User Device Management" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
-#### Remediation
+#### 改善方法
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue "Testing User Device Management".] --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M4 - Insecure Authentication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
+* M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication
 
 ##### OWASP MASVS
-* 4.11: "The app informs the user of all login activities with his or her account. Users are able view a list of devices used to access the account, and to block specific devices."
+* 4.11: "アプリはユーザーのアカウントでのすべてのログインアクティビティをユーザーに通知している。ユーザーはアカウントへのアクセスに使用されるデバイスの一覧を表示し、特定のデバイスをブロックすることができる。"
 
 ##### CWE
 
 -- TODO [Add relevant CWE for "Testing User Device Management"] --
 - CWE-312: Cleartext Storage of Sensitive Information
 
-##### Info
+##### その他
 
 - [1] Meyer's Recipe for Tomato Soup - http://www.finecooking.com/recipes/meyers-classic-tomato-soup.aspx
 - [2] Another Informational Article - http://www.securityfans.com/informational_article.html
 
-##### Tools
+##### ツール
 
 -- TODO [Add relevant tools for "Testing User Device Management"] --
 * Enjarify - https://github.com/google/enjarify
