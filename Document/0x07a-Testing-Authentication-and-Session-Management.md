@@ -580,11 +580,11 @@ OWASP Web Testing Guide (OTG-SESS-006) <sup>[2]</sup> には、更に多くの�
 
 ローカルの生体認証を追加の要素とするには、「生体認証のテスト」のテストケースを確認します。
 
-#### Dynamic Analysis
+#### 動的解析
 
-First, all privileged endpoints a user can only access with step-up authentication or 2FA within an app should be explored. For all of these requests sent to an endpoint, an interception proxy can be used to capture network traffic. Then, try to replay requests with a token or session information that hasn't been elevated yet via 2FA or step-up authentication. If the endpoint is still sending back the requested data, that should only be available after 2FA or step-up authentication, authentication checks are not implemented properly on the endpoint.
+まず、ユーザーがステップアップ認証またはアプリ内の 2FA でのみアクセスできるすべての特権エンドポイントを調べます。エンドポイントに送信されるこれらのリクエストのすべてについて、傍受プロキシを使用して、ネットワークトラフィックをキャプチャします。次に、まだ 2FA やステップアップ認証で昇格していないトークンまたはセッション情報でリクエストを再生します。データは 2FA またはステップアップ認証の後でのみ利用可能となるべきですが、エンドポイントが依然としてリクエストされたデータを返送している場合には、エンドポイントで認証チェックが正しく実装されていません。
 
-The recorded requests should also be replayed without providing any authentication information, in order to check for a complete bypass of authentication mechanisms.
+記録されたリクエストは認証情報を提供することなしでも再生して、認証メカニズムの完全なバイパスをチェックします。
 
 #### Remediation
 
