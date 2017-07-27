@@ -46,7 +46,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### 付録
 
-- [リモート認証と認可] <!-- Document/0x07a-Testing-Authentication-and-Session-Management.md) -->
+- [リモート認証と認可](Document/0x07a-Testing-Authentication-and-Session-Management.md)
 - [ネットワーク通信のテスト](Document/0x07b-Testing-Network-Communication.md)
 - [モバイルアプリでの暗号化](Document/0x07c-Testing-Cryptography.md)
 - [アンチリバースエンジニアリングスキームの評価] <!-- (Document/0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md) -->
