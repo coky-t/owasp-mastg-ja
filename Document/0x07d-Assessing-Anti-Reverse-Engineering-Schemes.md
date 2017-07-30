@@ -1,20 +1,20 @@
 # ソフトウェア保護スキームの評価
 
-Software protections are a controversial topic. Some security experts dismiss client-side protections outright. Security-by-obscurity, they argue, is not *real* security, thus from a security standpoint no value is added. In the MASVS and MSTG we take a more pragmatic approach. Given that software protection controls are used fairly widely in the mobile world, we argue that there is *some* benefit to such controls, as long as they are employed with a clear purpose and realistic expectations in mind, and aren't used to *replace* solid security controls.
+ソフトウェア保護は議論の余地のあるトピックです。一部のセキュリティ専門家はクライアント側の保護を完全に棄却しています。Security-by-obscurity (隠蔽によるセキュリティ) は *現実には* セキュリティではなく、セキュリティの観点からは価値が加味されないと主張しています。MASVS と MSTG では、より実用的なアプローチを採用しています。ソフトウェア保護コントロールはモバイルの世界でかなり広く使用されています。明確な目的と現実的な期待を念頭に置いて使用され、堅牢なセキュリティコントロールを *置き換える* ために使用されない限り、そのようなコントロールに *何らかの* 利点があると私たちは主張します。
 
-What's more, mobile app security testers encounter anti-reversing mechanisms in their daily work, and they not only need ways to "deal" with them to enable dynamic analysis, but also to assess whether these mechanisms are used appropriately and effectively. Giving clients  advice like "you must use obfuscation" or "never obfuscate code because it's useless" doesn't cut it. However, most mobile app security testers have a background in network and web application security, and lack the reverse engineering and cracking skills required to form an opinion. On top of that, there is no methodology or even industry consensus on how anti-reversing schemes should be assessed.
+さらに、モバイルアプリのセキュリティテスト技術者は日常業務の中でアンチリバースメカニズムに遭遇し、動的解析を可能にするためにそれらを「処理」する方法だけでなく、これらのメカニズムが適切かつ効果的に使用されているかどうかを評価する必要もあります。「難読化を使用する必要がある」または「役に立たないためコードを難読化しない」などのアドバイスをクライアントに与えることでそれを無視することはありません。しかし、ほとんどのモバイルアプリのセキュリティテスト技術者はネットワークやウェブアプリケーションのセキュリティをバックグラウンドに持ちますが、意見を形成するために要求されるリバースエンジニアリングやクラッキングのスキルが欠けています。それに加えて、アンチリバーススキームをどのように評価すべきかについての方法論や業界のコンセンサスさえありません。
 
-The point of software-based reversing defenses is indeed to add obscurity - enough to deter some adversaries from achieving certain goals. There are several reason why developers choose to do this: For example, the intention could be to make it more difficult to steal the source code and IP, or to prevent malware running on the same device from tampering with the runtime behaviour of the app.
+ソフトウェアベースのリバーシング防御のポイントはまさに不明瞭さを加えることです。一部の攻撃者が特定の目標を達成することを阻止するのに十分なほどの。開発者がこれを行うことを選択する理由はいくつかあります。例えば、その目的には、ソースコードや IP を盗み出すことをより困難にすることや、同じデバイス上で実行されているマルウェアがアプリの実行時の動作を改竄することを防ぐことがあります。
 
-Resilience testing is the process of evaluating the robustness of the a software protection scheme against particular threats. Typically, this kind of testing is performed using a black-box approach, with the objective of circumventing the software protection scheme and reaching a pre-defined goal, such as extracting sensitive assets. This process requires skills that are not typically associated with penetration testing: The tester must be able to handle advanced anti-reversing tricks and obfuscation techniques. Traditionally, this is the domain of malware analysts.
+耐性のテストは特定の脅威に対するソフトウェア保護スキームの堅牢性を評価するプロセスです。通常、この種のテストはブラックボックスアプローチを使用して実行されます。ソフトウェア保護スキームの回避や、機密資産の抽出などのあらかじめ定義された目標に達するという目的です。このプロセスは一般的にペネトレーションテストに関連しないスキルを要求します。テスト技術者は高度なアンチリバーストリックと難読化技術を処理できる必要があります。伝統的に、これはマルウェアアナリストの領域です。
 
-This form of testing can be performed in the context of a regular mobile app security test, or stand-alone to verify the effectiveness of a software protection scheme. The process consists of the following high-level steps:
+この形式のテストは通常のモバイルアプリのセキュリティテストのコンテキストで実行することも、ソフトウェア保護スキームの有効性を検証するためにスタンドアロンで実行することもできます。このプロセスは以下の高レベルの手順で構成されます。
 
-1. Assess whether a suitable and reasonable threat model exists, and the anti-reversing controls fit the threat model;
-2. Assess the effectiveness of the defenses in countering the identified threats using hybrid static/dynamic analysis. In other words, play the role of the adversary, and crack the defenses!
-3. In some scenarios, white-box testing can be added to assess specific features of the protection scheme in an isolated fashion (e.g., a particular obfuscation method).
+1. 適切かつ合理的な脅威モデルが存在し、アンチリバースコントロールが脅威モデルに適合しているかどうかを評価する。
+2. 静的解析と動的解析を組み合わせて使用して、特定された脅威に対抗する防御の有効性を評価する。言い換えると、攻撃者の役割を果たして、防御を破る。
+3. 一部のシナリオでは、ホワイトボックステストを追加して、保護スキームの特定の機能を独立した方法で評価する (特定の難読化メソッドなど) 。
 
-Note that software protections must never be used as a replacement for security controls. The controls listed in MASVR-R are intended to add threat-specific, additional protective controls to apps that also fulfil the MASVS security requirements.
+ソフトウェア保護はセキュリティコントロールの代替として使用してはいけないことに注意します。MASVS-R にリストされているコントロールは、MASVS のセキュリティ要件を満たしているアプリに、脅威に特有の追加の保護コントロールを追加することを意図しています。
 
 The effectiveness of software protection schemes depends to some extent on originality and secrecy. Standardizing a particular scheme has the unfortunate side effect of making the scheme ineffective: Soon enough, a generic tool available for bypassing the scheme will be available. Instead of defining a standard way of implementing protection, we take the following approach:
 
