@@ -27,21 +27,21 @@
 
 ## 脅威モデルとソフトウェア保護アーキテクチャの評価
 
-Client-side protections are desirable in some cases, but unnecessary or even counter-productive in others. In the worst case, software protections cause a false sense of security and encourage bad programming practices. It is impossible to provide a generic set of resilience controls that "just works" in every possible case. For this reason, proper attack modeling is a necessary prerequisite before implementing any form of software protections. The threat model must clearly outline the client-side threats defended against. Note that the threat model must be sensical. For example, hiding a cryptographic key in a white-box implementation is besides the point if the attacker can easily code-lift the white-box as a whole. Also, the expectations as to the effectiveness of scheme must be specified. 
+クライアント側の保護は場合によっては望ましいのですが、不必要であるか逆効果となることさえあります。最悪の場合、ソフトウェア保護はセキュリティに関する誤った意識を引き起こし、悪いプログラミングプラクティスを推奨します。可能性のあるすべての場合に「うまく機能する」耐性コントロールの一般的にセットを提供することは不可能です。このため、何らかの形のソフトウェア保護を実装する前に、適切な攻撃モデルが必要な前提条件となります。脅威モデルは防御するクライアント側脅威を明確にする必要があります。脅威モデルは合理的な必要があることに注意します。例えば、ホワイトボックス実装で暗号化鍵を隠すことは、攻撃者がホワイトボックス全体を簡単にコードリフトできるかどうかがポイントになります。また、スキームの有効性に関する期待を明示する必要があります。
 
-The OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup> lists the following technical threats associated with reverse engineering and tampering:
+OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup> にはリバースエンジニアリングと改竄に関連する以下の技術的脅威が記載されています。
 
-- Spoofing Identity - Attackers may attempt to modify the mobile application code on a victim’s device to force the application to transmit a user’s authentication credentials (username and password) to a third party malicious site. Hence, the attacker can masquerade as the user in future transactions;
+- なりすまし - 攻撃者は被害者のデバイス上のコードを改変して、アプリケーションがユーザーの認証資格情報 (ユーザー名およびパスワード) を第三者の悪意のあるサイトに送信するように強制する可能性があります。それにより、攻撃者は将来のトランザクションでそのユーザーとして偽装する可能性があります。
 
-- Tampering - Attackers may wish to alter higher-level business logic embedded within the application to gain some additional value for free. For instance, an attacker may alter digital rights management code embedded in a mobile application to attain digital assets like music for free;
+- 改竄 - 攻撃者はアプリケーションに埋め込まれた上位レベルのビジネスロジックを改変して、自由にいくつかの追加の価値を得ることを望む可能性があります。例えば、攻撃者はモバイルアプリケーションに埋め込まれたデジタル著作権管理コードを改変して、自由に音楽などのデジタル資産を得る可能性があります。
 
-- Repudiation - Attackers may disable logging or auditing controls embedded within the mobile application to prevent an organization from verifying that the user performed particular transactions;
+- 否認 - 攻撃者はモバイルアプリケーションに埋め込まれたログ出力または監査コントロールを無効にして、ユーザーが特定のトランザクションを実行したことを組織が検証できないようにする可能性があります。
 
-- Information Disclosure - Attackers may modify a mobile application to disclose highly sensitive assets contained within the mobile application. Assets of interest include: digital keys, certificates, credentials, metadata, and proprietary algorithms;
+- 情報開示 - 攻撃者はモバイルアプリケーションを改変して、モバイルアプリケーション内に含まれる非常に機密性の高い資産を開示する可能性があります。重要な資産には次のものがあります。デジタル鍵、証明書、資格情報、メタデータ、プロプライエタリであるアルゴリズム。
 
-- Denial of Service - Attackers may alter a mobile device application and force it to periodically crash or permanently disable itself to prevent the user from accessing online services through their device;
+- サービス拒否 - 攻撃者はモバイルデバイスアプリケーションを改変して、定期的にクラッシュさせるもしくは永久に無効化して、ユーザーがそのデバイスを介してオンラインサービスにアクセスできないようにする可能性があります。
 
-- Elevation of Privilege - Attackers may modify a mobile application and redistribute it in a repackaged form to perform actions that are outside of the scope of what the user should be able to do with the app.
+- 権限昇格 - 攻撃者はモバイルアプリケーションを改変し、再パッケージ化されたものを再配布して、ユーザーがアプリでできる範囲外の操作を実行する可能性があります。
 
 ## The Assessment Process
 
