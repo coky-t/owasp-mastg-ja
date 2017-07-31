@@ -16,14 +16,14 @@
 
 ソフトウェア保護はセキュリティコントロールの代替として使用してはいけないことに注意します。MASVS-R にリストされているコントロールは、MASVS のセキュリティ要件を満たしているアプリに、脅威に特有の追加の保護コントロールを追加することを意図しています。
 
-The effectiveness of software protection schemes depends to some extent on originality and secrecy. Standardizing a particular scheme has the unfortunate side effect of making the scheme ineffective: Soon enough, a generic tool available for bypassing the scheme will be available. Instead of defining a standard way of implementing protection, we take the following approach:
+ソフトウェア保護スキームの有効性はある程度まで独創性と秘密性に依存します。特定のスキームを標準化することはそのスキームを無効にするという不幸な副作用があります。時を置かずに、スキームをバイパスする汎用ツールが利用可能になります。保護を実装する標準的な方法を定義する代わりに、以下のアプローチを採用します。
 
-1. List high-level requirements pertaining the reverse engineering processes against which should be defended against;
-2. Highlight properties that determine the effectiveness of mechanisms and the overall scheme;
-3. List robustness criteria for specific types of obfuscation and tampering;
-3. Provide testers with knowledge, processes and tools for verifying effectiveness.
+1. 防御すべきリバースエンジニアリングプロセスに関する高水準の要件を列挙する。
+2. メカニズムと全体的なスキームの有効性を決定するプロパティを強調する。
+3. 特定のタイプの難読化および改竄のための堅牢性基準を列挙する。
+4. テスト技術者に有効性を検証するための知識、プロセス、ツールを提供する。
 
-Item 1 and 2 are covered in the "Resilience Against Reverse Engineering" group of controls in the MASVS (MASVS-R), and further elaborated on in the Testing Guide. The MSTG also goes into great detail on item 3 and 4, and also documents a wide range of offensive and defensive techniques. However, it is impossible to provide a complete step-by-step guide for testing every possible protection scheme. To perform a meaningful assessement, the test must be performed by a skilled reverse engineer who is familiar with the state-of-the-art in mobile app reversing and anti-reversing.
+項目1と2は MASVS (MASVS-R) のコントロールの「リバースエンジニアリングに対する耐性」グループにカバーされ、さらにテストガイドで詳述されています。MSTG はまた、項目3と4について非常に詳しく説明し、広範な攻撃と防御の技法を文書化しています。但し、すべての可能な保護スキームをテストするための完全なステップバイステップガイドを提供することは不可能です。有意義な評価を行うには、モバイルアプリのリバースおよびアンチリバースに精通している熟練のリバースエンジニアがテストを実施する必要があります。
 
 ## 脅威モデルとソフトウェア保護アーキテクチャの評価
 
