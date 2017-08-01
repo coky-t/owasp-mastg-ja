@@ -51,15 +51,15 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 ソフトウェア保護スキームとその個々のコンポーネント (改竄防止、デバッグ防止、デバイスバインディング、難読化変換など) をレビューおよび評価する。
 
-### Black-box Resilience Testing
+### ブラックボックスの耐性テスト
 
-Evaluate the robustness of their White-Box cryptographic solution against specific attacks. Without prior knowledge about the implementation, with the objective to break or circumvent the protections.
+特定の攻撃に対するホワイトボックスの暗号ソリューションの堅牢性を評価します。実装についての事前の知識なしに、保護を破るまたは回避することを目的とします。
 
-The advantage of the black-box approach is that it reflects the real-world effectiveness of the reverse engineering protections: The effort required by actual adversary with a comparable skill level and toolset would likely be close to the effort invested by the assessor. 
+ブラックボックスアプローチの利点はリバースエンジニアリング保護の実世界での有効性を反映していることです。同等のスキルレベルとツールセットを持つ実攻撃者に要求される労力は評価者が投じた労力に近くなります。
 
 --[ TODO ] --
 
-Drawbacks: For one, the result is highly influenced by the skill level of the assessor. Also, the effort for fully reverse engineering a program with state-of-the-art protections is very high (which is exactly the point of having them), and some apps may occupy even experienced reverse engineers for weeks. Experienced reverse engineers aren’t cheap either, and delaying the release of an app may not be feasible in an "agile" world. 
+欠点：一例として、その結果は評価者のスキルレベルに大きく影響を受けます。また、最先端の保護を備えたプログラムを完全にリバースエンジニアリングするための労力は非常に高くなります (まさにそれを持つことがポイントです) 。一部のアプリではリバースエンジニアを数週間占有する可能性があります。経験豊富なリバースエンジニアは安くはありませんし、アプリのリリースを遅らせることは「アジャイルな」世界では可能ではないかもしれません。
 
 <img src="Images/Chapters/0x07b/blackbox-resiliency-testing.png" width="650px" />
 
