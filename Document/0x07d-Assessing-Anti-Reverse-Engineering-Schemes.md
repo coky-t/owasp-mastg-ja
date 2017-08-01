@@ -43,9 +43,9 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 - 権限昇格 - 攻撃者はモバイルアプリケーションを改変し、再パッケージ化されたものを再配布して、ユーザーがアプリでできる範囲外の操作を実行する可能性があります。
 
-## The Assessment Process
+## 評価プロセス
 
-Software protection effectiveness can be assessed using the white-box or black-box approach. Just like in a "regular" security assessment, the tester performs static and dynamic analysis but with a different objective: Instead of identifying security flaws, the goal is to identify holes in the anti-reversing defenses, and the property assessed is *resilience* as opposed to *security*. Also, scope and depth of the assessment must be tailored to specific scenario(s), such as tampering with a particular function. Note that the resilience assessment can be performed as part of a regular security assessment.
+ソフトウェア保護の有効性はホワイトボックスまたはブラックボックスのアプローチを使用して評価できます。「通常の」セキュリティ評価と同様に、テスト担当者は静的および動的解析を実行しますが目的が異なります。セキュリティ上の欠陥を特定するのではなく、アンチリバース防御の穴を特定することが目標です。評価されるプロパティは *耐性* であり、*セキュリティ* とは対照的です。また、評価の範囲と深さは、特定の機能の改竄など、具体的なシナリオに合わせて調整する必要があります。耐性の評価は通常のセキュリティ評価の一環として実行することもできます。
 
 ### Design Review
 
