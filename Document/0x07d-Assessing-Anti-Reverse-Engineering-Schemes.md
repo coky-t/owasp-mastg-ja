@@ -63,9 +63,9 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 <img src="Images/Chapters/0x07b/blackbox-resiliency-testing.png" width="650px" />
 
-### Obfuscation Effectiveness Assessment
+### 難読化の有効性評価
 
-Complex obfuscation schemes, such as custom implementations of white-box cryptography or virtual machines, are better assessed in an isolated fashion using the white-box approach. Such an assessment requires specialized expertise in cracking the particular type(s) of obfuscation. In this type of assessment, the goal is to determine resilience against current state-of-the-art de-obfuscation techniques, and providing an estimate of robustness against manual analysis.
+ホワイトボックス暗号または仮想マシンのカスタム実装などの複雑な難読化スキームは、ホワイトボックスアプローチを使用して独立した方式で適切に評価します。このような評価には特定の種類の難読化をクラックする際の専門知識を要求します。この種類の評価では、現在の最先端の逆難読化技法に対する耐性を判断し、手動解析に対する堅牢性の見積りを提供することを目標としています。
 
 ## Key Questions
 
