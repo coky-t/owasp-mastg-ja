@@ -67,23 +67,23 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 ホワイトボックス暗号または仮想マシンのカスタム実装などの複雑な難読化スキームは、ホワイトボックスアプローチを使用して独立した方式で適切に評価します。このような評価には特定の種類の難読化をクラックする際の専門知識を要求します。この種類の評価では、現在の最先端の逆難読化技法に対する耐性を判断し、手動解析に対する堅牢性の見積りを提供することを目標としています。
 
-## Key Questions
+## 主要な質問
 
-Any resilience test should answer the following questions:
+耐性テストでは以下の質問に回答すべきです。
 
-**Does the protection scheme impede the threat(s) they are supposed to?**
+**保護スキームは想定している脅威を防ぐものですか？**
 
-It is worth re-iterating that there is no anti-reversing silver bullet. 
+アンチリバースの銀の弾丸はないことを繰り返す価値があります。
 
-**Does the protection scheme achieve the desired level of resilience?**
+**保護スキームの耐性は期待するレベル達していますか？**
 
-It is worth re-iterating that there is no anti-reversing silver bullet. 
+アンチリバースの銀の弾丸はないことを繰り返す価値があります。
 
-**Does the scheme defend comprehensively against processes and tools used by reverse engineers?**
+**スキームはリバースエンジニアが使用するプロセスやツールに対して包括的に防御していますか？**
 
 --[ TODO ] --
 
-**Are suitable types of obfuscation used in the approriate places and with the right parameters?**
+**適切な種類の難読化が適切な場所で適切なパラメータとともに使用されていますか？**
 
 --[ TODO ] --
 
