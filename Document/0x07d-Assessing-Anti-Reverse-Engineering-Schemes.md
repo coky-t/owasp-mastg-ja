@@ -101,11 +101,11 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 あなたは通常、所定のソフトウェア保護スキームで上記のすべての組み合わせを見つけるでしょう。
 
-## Overall Effectiveness of Programmatic Defenses
+## プログラムによる防御の全体的な有効性
 
-The main motto in anti-reversing is **the sum is greater than its parts.** The defender wants to make it as difficult as possible to get a first foothold for an analysis. They want the adversary to throw the towel before they even get started! Because once the adversary does get started, it's usually only a matter of time before the house of card collapses.
+アンチリバースの主なモットーは **総和は部分に勝る** です。防御者は解析のための最初の足掛かりを可能な限り困難にしたいと考えています。彼らは攻撃者が取り掛かる前にタオルを投げて欲しいのです。一旦、攻撃者が取り掛かれば、カードの家が崩壊するのはたいてい時間の問題です。
 
-To achieve this deterrant effect, one needs to combine a multitude of defenses, preferably including some original ones. The defenses need to be scattered throughout the app, but also work together in unison to create a greater whole. In the following sections, we'll describe the main criteria that contribute to the effectiveness of programmatic defenses.
+この抑止効果を達成するには、多数の防御を組み合わせる必要があり、できれば独自のものを含めます。防御はアプリ全体に散りばめる必要がありますが、全体をよりよくするために協調もして機能します。以下のセクションでは、プログラムによる防御の有効性に寄与する主な基準について説明します。
 
 #### Coverage
 
