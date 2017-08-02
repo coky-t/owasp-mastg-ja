@@ -87,19 +87,19 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 --[ TODO ] --
 
-- Programmatic defense is a fancy word for "anti-reversing-trick".  for  are For a protection scheme to be considered effective, it must incorporate many of these defenses. "Programmatic" refers to the fact that these kinds of defenses *do* things - they are functions that prevent, or react to, actions of the reverse engineer. In this, they differ from obfuscation, which changes the way the program looks. 
+- プログラムによる防御は「アンチリバーストリック」に対する耳当たりのよい言葉です。保護スキームが有効であると考えられるためには、これらの防御を多く組み込む必要があります。「プログラムによる」とはこれらの種類の防御が物事を *行う* ことを意味しています。それらはリバースエンジニアの行動を防止する、またはそれに反応する機能です。これはプログラムの見た目を変える難読化とは異なります。
 
-- Obfuscation is the process of transforming code and data in ways that make it more difficult to comprehend, while preserving its original meaning or function. Think about translating an English sentence into an French one that says the same thing (or pick a different language if you speak French - you get the point).
+- 難読化とは元の意味や機能を保持しながら、理解しにくくなるような方法でコードおよびデータを変換するプロセスです。英語の文章を同じ内容のフランス語に翻訳することを考えてください (あるいはあなたがフランス語を話す場合は別の言葉を選ぶことで要点が分かります) 。
 
-Note that these two categories sometimes overlap - for example, self-compiling or self-modifiying code, while most would refer to as a means of obfuscation, could also be said to "do something". In general however it is a useful distincton.
+これらの二つのカテゴリは時おり重複することに注意します。例えば、自己コンパイルコードや自己改変コードがあります。多くが難読化の意味で参照され、また「何かを行う」とも言えます。しかし、一般的にはそれは有用な区別です。
 
-Programmatic defenses can be further categorized into two modi operandi:
+プログラムによる防御はさらに二つのモードに分類されます。
 
-1. Preventive: Functions that aim to *prevent* anticipated actions of the reverse engineer. As an example, an app may use an operating system API to prevent debuggers from attaching.
+1. 予防：リバースエンジニアの予想された行動を *防止* することを目的とした機能です。例えば、アプリはオペレーティングシステム API を使用して、デバッガがアタッチすることを防止できます。
 
-2. Reactive: Features that aim to detect, and respond to, tools or actions of the reverse engineer. For example, an app could terminate when it suspects being run in an emulator, or change its behavior in some way if a debugger is detected.
+2. 反応：リバースエンジニアのツールや行動を検出および反応することを目的とした機能です。例えば、アプリはエミュレータで実行されている疑いがある場合に終了したり、デバッガが検出された場合に何らかの方法でその動作を変更することがあります。
 
-You'll usually find a mix of all the above in a given software protection scheme.
+あなたは通常、所定のソフトウェア保護スキームで上記のすべての組み合わせを見つけるでしょう。
 
 ## Overall Effectiveness of Programmatic Defenses
 
