@@ -107,7 +107,7 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 この抑止効果を達成するには、多数の防御を組み合わせる必要があり、できれば独自のものを含めます。防御はアプリ全体に散りばめる必要がありますが、全体をよりよくするために協調もして機能します。以下のセクションでは、プログラムによる防御の有効性に寄与する主な基準について説明します。
 
-#### Coverage
+#### カバレッジ
 
 --[ TODO ] --
 
@@ -115,31 +115,31 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 
 ```
-8.1 The app detects, and responds to, the presence of a rooted or jailbroken device either by alerting the user or terminating the app.
+8.1 アプリはユーザーに警告するかアプリを終了することでルート化デバイスや脱獄済みデバイスの存在を検出し応答している。
 ```
 
 
 ```
-8.2: The app implements prevents debugging and/or detects, and responds to, a debugger being attached. All available debugging protocols must be covered (Android: JDWP and ptrace, iOS: Mach IPC and ptrace).
+8.2: アプリはデバッグを防止し、デバッガのアタッチを検出し応答している。利用可能なすべてのデバッグプロトコルを網羅している必要がある (Android: JDWP および ptrace, iOS: Mach IPC および ptrace) 。
 ```
 
 
 ```
-8.3: The app detects, and responds to, tampering with executable files and critical data within its own container.
+8.3: アプリはそれ自身のコンテナ内の実行ファイルや重要なデータの改竄を検出し応答している。
 ```
 
 
 ```
-8.4: The app detects the presence of widely used reverse engineering tools and frameworks that support code injection, hooking, instrumentation and debugging.
+8.4: アプリはコードインジェクション、フック、計装、デバッグをサポートする広く使用されるリバースエンジニアリングツールおよびフレームワークの存在を検出している。
 ```
 
 
 ```
-8.5: The app detects, and responds to, being run in an emulator.
+8.5: アプリはエミュレータ内で動作していることを検出し応答している。
 ```
 
 ```
-8.6: The app continually verifies the integrity of critical code and data structures within its own memory space.
+8.6: アプリはそれ自身のメモリ空間内の重要なコードとデータ構造の完全性を継続的に検証している。
 ```
 
 
