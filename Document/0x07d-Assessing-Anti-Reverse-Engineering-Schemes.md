@@ -224,12 +224,12 @@ struct VT_JdwpAdbState *vtable = ( struct VT_JdwpAdbState *)dlsym(lib, "_ZTVN3ar
 - 自己完結型: この機能はライブラリやシステムコールが動作することを必要としません。
 
 
-##### Parallelism
+##### 並列処理
 
-Debugging and disabling a mechanism becomes more difficult when multiple threats or processes are involved.
+複数のスレッドやプロセスが関与している場合、メカニズムのデバッグおよび無効化は難しくなります。
 
-- Single thread 
-- Multiple threads or processes
+- シングルスレッド
+- マルチスレッドまたはプロセスMultiple threads or processes
 
 --[ TODO - description and examples ] --
 
