@@ -173,7 +173,7 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 - 公知: 十分に文書化され、一般的に使用される技法が使用されます。一般的に利用可能なツールを適度にカスタマイズして使用することでバイパスできます。
 - プロプライエタリ: この機能は一般的にリバースに関する資料や研究論文がありません。あるいは、既知の技法が十分に拡張、カスタマイズされ、リバースエンジニアに多大な労力をもたらします。
 
-##### API Layer
+##### API 層
 
 Generally speaking, the less your mechanisms relies on operating operating system APIs to work, the more difficult it is to discover and bypass. Also, lower-level calls are more difficult to defeat than higher level calls. To illustrate this, let's have a look at a few examples.
 
@@ -280,11 +280,11 @@ This requirement simply says that the code should be made to look fairly incompr
 
 **Stripping information**
 
-The first simple and highly effective step involves stripping any explanative information that is meaningful to humans, but isn窶冲 actually needed for the program to run. Debugging symbols that map machine code or byte code to line numbers, function names and variable names are obvious examples.
+The first simple and highly effective step involves stripping any explanative information that is meaningful to humans, but isn’t actually needed for the program to run. Debugging symbols that map machine code or byte code to line numbers, function names and variable names are obvious examples.
 
 For instance, class files generated with the standard Java compiler include the names of classes, methods and fields, making it trivial to reconstruct the source code. ELF and Mach-O binaries have a symbol table that contains debugging information, including the names of functions, global variables and types used in the executable.
 
-Stripping this information makes a compiled program less intelligible while fully preserving its functionality. Possible methods include removing tables with debugging symbols, or renaming functions and variables to random character combinations instead of meaningful names. This process sometimes reduces the size of the compiled program and doesn窶冲 affect its runtime behavior.
+Stripping this information makes a compiled program less intelligible while fully preserving its functionality. Possible methods include removing tables with debugging symbols, or renaming functions and variables to random character combinations instead of meaningful names. This process sometimes reduces the size of the compiled program and doesn’t affect its runtime behavior.
 
 **Packing, encryption, and other tricks**
 
