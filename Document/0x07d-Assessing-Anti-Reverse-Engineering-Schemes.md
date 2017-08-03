@@ -175,9 +175,9 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 
 ##### API 層
 
-Generally speaking, the less your mechanisms relies on operating operating system APIs to work, the more difficult it is to discover and bypass. Also, lower-level calls are more difficult to defeat than higher level calls. To illustrate this, let's have a look at a few examples.
+一般的に、オペレーティングシステム API の動作に依存するメカニズムが少ないほど、検出およびバイパスすることが難しくなる、と言われています。また、より低レベルのコールは高レベルのコールよりも無効化しにくくなります。この説明として、いくつか例を見てみます。
 
-As you have learned in the 
+あなたが学んだように
 
 
 ```c
@@ -219,9 +219,9 @@ struct VT_JdwpAdbState *vtable = ( struct VT_JdwpAdbState *)dlsym(lib, "_ZTVN3ar
 	mprotect((void *)page, pagesize, PROT_READ);
 ```
 
-- System library: The feature relies on public library functions or methods.
-- System call: The anti-reversing feature calls directly into the kernel. 
-- Self-contained: The feature does not require any library or system calls to work.
+- システムライブラリ: この機能は公開ライブラリ関数またはメソッドに依存しています。
+- システムコール: アンチリバース機能は直接カーネルをコールします。
+- 自己完結型: この機能はライブラリやシステムコールが動作することを必要としません。
 
 
 ##### Parallelism
