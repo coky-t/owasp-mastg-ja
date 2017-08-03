@@ -143,22 +143,22 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 ```
 
 
-#### Amount and Diversity
+#### 量と多様性
 
 --[ TODO ] --
 
-As a general rule of thumb, at least two to three defensive controls should be implemented for each category. These controls should operate independently of each other, i.e. use different techniques and APIs.
+一般的な経験則として、少なくとも二つから三つの防御コントロールを各カテゴリに実装すべきです。これらのコントロールは互いに独立して動作する必要があります。つまり、さまざまな技法や API を使用します。
 
 ```
-8.7 The app implements multiple mechanisms to fulfil requirements 8.1 to 8.6. Note that resilience scales with the amount, diversity of the originality of the mechanisms used.
-```
-
-```
-8.8 The detection mechanisms trigger different responses, including stealthy ones that don't simply terminate the app.
+8.7 アプリは要件8.1から8.6を満たす複数のメカニズムを実装している。耐性は使用されるメカニズムのオリジナリティの量、多様性と比例することに注意する。
 ```
 
 ```
-8.10: Obfuscating transformations and functional defenses are interdependent and well-integrated throughout the app.
+8.8 検出メカニズムはさまざまな応答をトリガーしている。単にアプリを終了しないステルス応答を含む。
+```
+
+```
+8.10: 難読化変換と機能的防御は相互依存であり、アプリ全体でうまく統合している。
 ```
 
 ##### Originality
