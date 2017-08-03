@@ -236,9 +236,9 @@ struct VT_JdwpAdbState *vtable = ( struct VT_JdwpAdbState *)dlsym(lib, "_ZTVN3ar
 <img src="Images/Chapters/0x07b/multiprocess-fork-ptrace.png" width="500px" />
 
 
-##### Response
+##### 応答
 
-Less is better in terms of information given to the adversary. This principle also applies to anti-tampering controls: A control that reacts to tampering immediately in a visible way is more easily discovered than a control that triggers some kind of hidden response with no apparent immediate consequences. For example, imagine a debugger detection mechanism that displays a message box saying "DEBUGGER DETECTED!" in big, red, all-caps letters. This gives away exactly what has happened, plus it gives the reverse engineer something to look for (the code displaying the messagebox). Now imagine a mechanism that quietly changes modifies function pointer when it detects a debugger, triggering a sequence of events that leads to a crash later on. This makes the reverse engineering process much more painful.
+攻撃者に与える情報という観点ではより少ないことがよりよいことです。この原則は改竄防止コントロールにも当てはまります。目に見える方法で直ちに改竄に反応するコントロールは、明白な即時の結果を伴わない何らかの隠れた応答をトリガとするコントロールよりも簡単に発見されます。例えば、大きく、赤く、すべて大文字で "DEBUGGER DETECTED!" というメッセージボックスを表示するデバッガ検出メカニズムを想像します。これは何が起こったのかを正確に示し、リバースエンジニアに探すべき何か (メッセージボックスを表示するコード) を与えます。ここで、デバッガを検出した場合に静かに関数ポインタを変更して、後でクラッシュに導くイベントのシーケンスをトリガするメカニズムを想像します。これはリバースエンジニアリングプロセスをはるかに苦痛なものにします。
 
 The most effective defensive features are designed to respond in stealth mode: The attacker is left completely unaware that a defensive mechanism has been triggered. For maximum effectiveness, we recommend mixing different types of responses including the following:
 
