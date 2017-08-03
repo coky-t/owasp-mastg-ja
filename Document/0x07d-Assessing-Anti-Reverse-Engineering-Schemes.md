@@ -161,17 +161,17 @@ OWASP Reverse Engineering and Code Modification Prevention Project <sup>[1]</sup
 8.10: 難読化変換と機能的防御は相互依存であり、アプリ全体でうまく統合している。
 ```
 
-##### Originality
+##### 独創性
 
-The effort required to reverse engineer an application highly depends on how much information is initially available to the adversary. This includes information about the functionality being reversed as well as knowledge about the obfuscation and anti-tampering techniques used by the target application. Therefore, the level of innovation that went into designing anti-reversing tricks is an important factor.
+アプリケーションをリバースエンジニアするために必要な労力は、攻撃者が最初にどれだけの情報を入手できるかに大きく依存します。これには、ターゲットアプリケーションにより使用される難読化や改竄防止技法についての知識だけでなく、リバースされる機能についての情報も含まれます。したがって、アンチリバーストリックを設計するに至る技術革新のレベルは重要な要素です。
 
-Adversaries are more likely to be familiar with ubiquituous techniques that are repeatedly documented in reverse engineering books, papers, presentations and tutorials. Such tricks can either be bypassed using generic tools or with little innovation. In contrast, a secret trick that hasn't been presented anywhere can only be bypassed by a reverser who truly understands the subject, and may force them to do additional research and/or scripting/coding.
+攻撃者はリバースエンジニアリングの書籍、論文、プレゼンテーション、チュートリアルで繰り返し記述されている遍在的な技法に精通しています。そのようなトリックは一般的なツールを使用するか、たいした技術革新なしでバイパスできます。対照的に、どこにも提示されていない秘密のトリックは、その内容を本当に理解しているリバーサによってのみバイパスされ、さらなる研究やスクリプティング、コーディングを行うことを強要する可能性があります。
 
-Defenses can be roughly categorized into the following categories in terms of originality:
+防御は独創性の観点から以下のカテゴリに大別されます。
 
-- Standard API: The feature relies on APIs that are specifically meant to prevent reverse engineering. It can be bypassed easily using generic tools.
-- Widely known: A well-documented and commonly used technique is used. It can be bypassed using commonly available tools with a moderate amount of customization.
-- Proprietary: The feature is not commonly found in reversing resources and research papers, or a known technique has been sufficiently extended / customized to cause significant effort for the reverse engineer.
+- 標準 API: この機能はリバースエンジニアリングを防ぐことを明確に意図した API に依存しています。一般的なツールを使用して容易にバイパスできます。
+- 公知: 十分に文書化され、一般的に使用される技法が使用されます。一般的に利用可能なツールを適度にカスタマイズして使用することでバイパスできます。
+- プロプライエタリ: この機能は一般的にリバースに関する資料や研究論文がありません。あるいは、既知の技法が十分に拡張、カスタマイズされ、リバースエンジニアに多大な労力をもたらします。
 
 ##### API Layer
 
