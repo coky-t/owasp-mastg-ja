@@ -240,13 +240,13 @@ struct VT_JdwpAdbState *vtable = ( struct VT_JdwpAdbState *)dlsym(lib, "_ZTVN3ar
 
 攻撃者に与える情報という観点ではより少ないことがよりよいことです。この原則は改竄防止コントロールにも当てはまります。目に見える方法で直ちに改竄に反応するコントロールは、明白な即時の結果を伴わない何らかの隠れた応答をトリガとするコントロールよりも簡単に発見されます。例えば、大きく、赤く、すべて大文字で "DEBUGGER DETECTED!" というメッセージボックスを表示するデバッガ検出メカニズムを想像します。これは何が起こったのかを正確に示し、リバースエンジニアに探すべき何か (メッセージボックスを表示するコード) を与えます。ここで、デバッガを検出した場合に静かに関数ポインタを変更して、後でクラッシュに導くイベントのシーケンスをトリガするメカニズムを想像します。これはリバースエンジニアリングプロセスをはるかに苦痛なものにします。
 
-The most effective defensive features are designed to respond in stealth mode: The attacker is left completely unaware that a defensive mechanism has been triggered. For maximum effectiveness, we recommend mixing different types of responses including the following:
+最も効果的な防御機能はステルスモードで応答するように設計されています。攻撃者は防御メカニズムがトリガされたことにまったく気付きません。最大限の効果を得るには、以下のようなさまざまなタイプの応答を組み合わせることを推奨します。
 
-- Feedback: When the anti-tampering response is triggered, an error message is displayed to the user or written to a log file. The adversary can immediately discern the nature of the defensive feature as well as the time at which the mechanism was triggered.
-- Indiscernible: The defense mechanism terminates the app without providing any error details and without logging the reason for the termination. The adversary does not learn information about the nature of the defensive feature, but can discern the approximate time at which the feature was triggered.
-- Stealth: The anti-tampering feature either does not visibly respond at all to the detected tampering, or the response happens with a significant delay. 
+- フィードバック: 改竄防御の応答がトリガされた場合、エラーメッセージがユーザーに表示されるか、ログファイルに書き込まれます。攻撃者は防御機能の性質と、メカニズムがトリガされた時間をすぐに識別できます。
+- 識別不明: 防御メカニズムはエラーの詳細を提供することなく、および終了の理由をログに記録することなく、アプリを終了します。攻撃者は防御木の性質についての情報を習得しませんが、機能がトリガされたおおよその時間を識別できます。
+- ステルス: 改竄防止機能は検出された改竄に目に見えた応答をまったくしないか、もしくは応答が大幅に遅れて発生します。
 
-See also MASVS V8.8: "The app implements multiple different responses to tampering, debugging and emulation, including stealthy responses that don't simply terminate the pap."
+MASVS V8.8: "アプリは改竄、デバッグ、エミュレーションに複数の異なる応答を実装している。単にアプリを終了しないステルス応答を含む。" も参照ください。
 
 #### Scattering
 
