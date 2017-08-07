@@ -286,16 +286,16 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 
 この情報を除去すると、コンパイルされたプログラムはその機能を完全に保持したまま、理解しにくくなります。可能な方法にはデバッグシンボルテーブルの削除や、関数や変数を意味のある名前の代わりにランダムな文字の組み合わせへの変更があります。このプロセスでは時折コンパイルされたプログラムのサイズが縮小されますが、実行時の動作に影響を与えません。
 
-**Packing, encryption, and other tricks**
+**パッキング、暗号化、およびその他のトリック**
 
-In addition to stripping information, there's many ways of making apps difficult and annoying to analyze, such as:
+情報の除去に加えて、以下のようにアプリを困難にし、解析を難しくする多くの方法があります。
 
-- Splitting up code and data between Java bytecode and native code; 
-- Encrypting strings;
-- Encrypting parts of the code and data withing the program;
-- Encrypting whole binary files and class files.
+- Java バイトコードとネイティブコードの間でコードとデータを分割する
+- 文字列を暗号化する
+- プログラムを使用してコードとデータの一部を暗号化する
+- バイナリファイルやクラスファイル全体を暗号化する
 
-This kind of transformations are "cheap" in the sense that they don't add significant runtime overhead. They form a part of every effective software protection scheme, no matter the particular threat model. The goal is simply to make it hard to understand what is going on, adding to the overall effectiveness of the protections. Seen in isolation, these techniques are not highly resilient against manual or automated de-obfuscation.
+この種の変換は、ランタイムオーバーヘッドを増やさないという意味で「安い」ものです。特定の脅威モデルに関係なく、効果的なソフトウェア保護スキームの一部を形成します。目標は、何が起こっているかを理解することを難しくし、保護の全体的な有効性を高めることです。切り離してみた場合、これらの技法は手動または自動の逆難読化に対して高い耐性はありません。
 
 The second requirement, V8.12, deals with cases where obfuscation is meant to perform a specific function, such as hiding a cryptographic key, or concealing some portion of code that is considered sensitive.
 
