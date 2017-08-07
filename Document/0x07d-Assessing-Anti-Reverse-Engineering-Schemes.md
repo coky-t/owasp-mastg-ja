@@ -268,23 +268,23 @@ MASVS V8.8: "アプリは改竄、デバッグ、エミュレーションに複�
 
 残念なことに、研究者は難読化の有効性が証明もしくは定量化できるかどうかには同意しておらず、それを行うために広く受け入れられている方法はありません。以下のセクションでは、一般的に使用されるタイプの難読化の分類を提供します。それから、執筆時点で入手可能な逆難読化ツールおよび研究を考慮して、*堅牢な* 難読化を考慮するうえで達成すべき要件を概説します。但し、この分野は急速に発展しているため、実際には、最新の動向を常に考慮する必要があります。
 
-### Obfuscation Controls in the MASVS
+### MASVS の難読化コントロール
 
-The MASVS lists only two requirements that deal with obfuscation <sup>[4]</sup>. The first requirement is V8.11:
+MASVS には難読化を扱う要件が二つだけ記載されています <sup>[4]</sup> 。最初の要件は V8.11 です。
 
 ```
-"8.11 All executable files and libraries belonging to the app are either encrypted on the file level and/or important code and data segments inside the executables are encrypted or packed. Trivial static analysis does not reveal important code or data."
+"8.11 アプリに属するすべての実行ファイルとライブラリはファイルレベルで暗号化されているか、実行形式内の重要なコードやデータセグメントが暗号化またはパックされている。単純な静的解析では重要なコードやデータは明らかにならない。"
 ```
 
-This requirement simply says that the code should be made to look fairly incomprehensible to someone inspecting it in a common disassembler or decompiler. This can be achieved by doing a combination of the following.
+この要件は、一般的な逆アセンブラや逆コンパイラでコードを検査している人にとって、コードを理解しづらいものにする必要があるということだけです。これは以下を組み合わせることで実現できます。
 
-**Stripping information**
+**情報の除去**
 
-The first simple and highly effective step involves stripping any explanative information that is meaningful to humans, but isn’t actually needed for the program to run. Debugging symbols that map machine code or byte code to line numbers, function names and variable names are obvious examples.
+最初のシンプルで非常に効果的なステップは説明的な情報を取り除くことです。これは人間にとって意味がありますが、実際にプログラムを実行するためには必要ありません。マシンコードやバイトコードに行番号、関数名、変数名をマップするデバッグシンボルはよくある例です。
 
-For instance, class files generated with the standard Java compiler include the names of classes, methods and fields, making it trivial to reconstruct the source code. ELF and Mach-O binaries have a symbol table that contains debugging information, including the names of functions, global variables and types used in the executable.
+例えば、標準の Java コンパイラで生成されたクラスファイルにはクラス、メソッド、フィールドの名前が含まれているため、ソースコードを容易に再構築できます。ELF および Mach-O バイナリにはデバッグ情報を含むシンボルテーブルがあり、実行可能ファイルで使用される関数、グローバル変数、型の名前が含まれています。
 
-Stripping this information makes a compiled program less intelligible while fully preserving its functionality. Possible methods include removing tables with debugging symbols, or renaming functions and variables to random character combinations instead of meaningful names. This process sometimes reduces the size of the compiled program and doesn’t affect its runtime behavior.
+この情報を除去すると、コンパイルされたプログラムはその機能を完全に保持したまま、理解しにくくなります。可能な方法にはデバッグシンボルテーブルの削除や、関数や変数を意味のある名前の代わりにランダムな文字の組み合わせへの変更があります。このプロセスでは時折コンパイルされたプログラムのサイズが縮小されますが、実行時の動作に影響を与えません。
 
 **Packing, encryption, and other tricks**
 
