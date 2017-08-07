@@ -264,9 +264,9 @@ MASVS V8.8: "アプリは改竄、デバッグ、エミュレーションに複�
 
 正確な学術的定義を示そうとすると、物事は複雑になります。よく引用される論文では、Barak et. al は難読化のブラックボックスモデルを記述しています。ブラックボックスモデルは、P' から学ぶことができる任意の特性が P へのアクセスを達成するシミュレータによっても得られる場合、プログラム P' は難読化されていると考えます。言い換えると、P' は入出力の振る舞い以外は何も明らかにしません。著者らは難読化できないプログラムを構築することにより、難読化が自身の定義を与えることは不可能であることも示しています <sup>[2]</sup> 。
 
-Does this mean that obfuscation is impossible? Well, it depends on what you obfuscate and how you define obfuscation. Barack’s result only shows that *some* programs cannot be obfuscated - but only if we use a very strong definition of obfuscation. Intuitively, most of us know from experience that code can have differing amounts of intelligibility and that understanding the code becomes harder as code complexity increases. Often enough, this happens unintentionally, but we can also observe that implementations of obfuscators exist and are more or less successfully used in practice <sup>[3]</sup>.
+これは難読化が不可能であることを意味するでしょうか。それはあなたが何を難読化し、難読化をどのように定義するかによります。Barak の結論は *一部の* プログラムは難読化できないことを示していますが、私たちが難読化に非常に強い定義を使用している場合に限ります。直感的に、私たちの大部分はコードの分かりやすさが異なり、コードの複雑さが増すとコードを理解することが難しくなることを経験から知っています。多くの場合、これは意図せず起こりますが、難読化プログラムの実装が存在し、実際には多かれ少なかれ仕様に成功しています <sup>[3]</sup> 。
 
-Unfortunately, reseachers don't agree on whether obfuscation effectiveness can ever be proven or quantified, and there are no widely accepted methods of doing it. In the following sections, we provide a taxonomy of commonly used types of obfuscation. We then outline the requirements for achieving what we would consider *robust* obfuscation, given the de-obfuscation tools and research available at the time of writing. Note however that the field is rapidly involving, so in practice, the most recent developments must always be taken into account.
+残念なことに、研究者は難読化の有効性が証明もしくは定量化できるかどうかには同意しておらず、それを行うために広く受け入れられている方法はありません。以下のセクションでは、一般的に使用されるタイプの難読化の分類を提供します。それから、執筆時点で入手可能な逆難読化ツールおよび研究を考慮して、*堅牢な* 難読化を考慮するうえで達成すべき要件を概説します。但し、この分野は急速に発展しているため、実際には、最新の動向を常に考慮する必要があります。
 
 ### Obfuscation Controls in the MASVS
 
