@@ -297,13 +297,13 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 
 この種の変換は、ランタイムオーバーヘッドを増やさないという意味で「安い」ものです。特定の脅威モデルに関係なく、効果的なソフトウェア保護スキームの一部を形成します。目標は、何が起こっているかを理解することを難しくし、保護の全体的な有効性を高めることです。切り離してみた場合、これらの技法は手動または自動の逆難読化に対して高い耐性はありません。
 
-The second requirement, V8.12, deals with cases where obfuscation is meant to perform a specific function, such as hiding a cryptographic key, or concealing some portion of code that is considered sensitive.
+第二の要件 V8.12 は、暗号鍵を隠す、機密扱いと考えられるコードの一部を隠すなど、難読化が特定の機能を実行することを意図している場合を扱います。
 
 ```
-8.12: If the goal of obfuscation is to protect sensitive computations, an obfuscation scheme is used that is both appropriate for the particular task and robust against manual and automated de-obfuscation methods, considering currently published research. The effectiveness of the obfuscation scheme must be verified through manual testing. Note that hardware-based isolation features should prefered over obfuscation whenever possible."
+8.12: 難読化の目的が機密性の高い計算を保護することである場合、現在公開されている研究を考慮して、特定のタスクに適しており手動および自動の逆難読化メソッドに対して堅牢な難読化スキームを使用している。難読化スキームの有効性は手動テストにより検証する必要がある。可能であればハードウェアベースの隔離機能が難読化より優先されることに注意する。"
 ```
 
-This is where more "advanced" (and often controversial) forms of obfuscation, such as white-box cryptography, come into play. This kind of obfuscation is meant to be truly robust against both human and automated analysis, and usually increases the size and complexity of the program. The methods aim to hide the semantics of a computation by computing the same function in a more complicated way, or encoding code and data in ways that are not easily comprehensible.
+これは、ホワイトボックス暗号化のような、より「高度な」（そしてしばしば論争の的となる）形態の難読化が作用するものです。この種の難読化は人間および自動解析の両方に対して真に堅牢であることを意味し、通常、プログラムのサイズと複雑さを増加させます。この方法は、より複雑な方法で同じ関数を計算するか、簡単には理解できない方法でコードとデータをエンコードすることにより、計算の意味を隠すことを目指しています。
 
 A simple example for this kind of obfuscations are opaque predicates. Opaque predicates are redundant code branches added to the program that always execute the same way, which is known a priori to the programmer but not to the analyzer. For example, a statement such as if (1 + 1) = 1 always evaluates to false, and thus always result in a jump to the same location. Opaque predicates can be constructed in ways that make them difficult to identify and remove in static analysis.
 
