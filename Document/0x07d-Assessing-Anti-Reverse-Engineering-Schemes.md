@@ -262,7 +262,7 @@ MASVS V8.8: "アプリは改竄、デバッグ、エミュレーションに複�
 
 暗号プリミティブの標準実装は、元の暗号鍵がメモリに開示されないように、鍵依存のルックアップテーブルのネットワークで置き換えられます (「ホワイトボックス暗号」) 。コードは、インタプリタ上で実行される秘密のバイトコード言語にできます (「仮想化」) 。コードとデータをエンコードおよび変換する方法は無限にあります。
 
-正確な学術的定義を示そうとすると、物事は複雑になります。よく引用される論文では、Barak et. al は難読化のブラックボックスモデルを記述しています。ブラックボックスモデルは、P' から学ぶことができる任意の特性が P へのアクセスを達成するシミュレータによっても得られる場合、プログラム P' は難読化されていると考えます。言い換えると、P' は入出力の振る舞い以外は何も明らかにしません。著者らは難読化できないプログラムを構築することにより、難読化が自身の定義を与えることは不可能であることも示しています <sup>[2]</sup> 。
+正確な学術的定義を示そうとすると、物事は複雑になります。よく引用される論文では、Barak らは難読化のブラックボックスモデルを記述しています。ブラックボックスモデルは、P' から学ぶことができる任意の特性が P へのアクセスを達成するシミュレータによっても得られる場合、プログラム P' は難読化されていると考えます。言い換えると、P' は入出力の振る舞い以外は何も明らかにしません。著者らは難読化できないプログラムを構築することにより、難読化が自身の定義を与えることは不可能であることも示しています <sup>[2]</sup> 。
 
 これは難読化が不可能であることを意味するでしょうか。それはあなたが何を難読化し、難読化をどのように定義するかによります。Barak の結論は *一部の* プログラムは難読化できないことを示していますが、私たちが難読化に非常に強い定義を使用している場合に限ります。直感的に、私たちの大部分はコードの分かりやすさが異なり、コードの複雑さが増すとコードを理解することが難しくなることを経験から知っています。多くの場合、これは意図せず起こりますが、難読化プログラムの実装が存在し、実際には多かれ少なかれ仕様に成功しています <sup>[3]</sup> 。
 
@@ -322,7 +322,7 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 
 特定の難読化スキームを決定することは「有効」の正確な定義に左右されます。スキームの目的がカジュアルなリバースエンジニアを抑止することであれば、コスト効率の高いトリックの混合で十分です。目的が熟練のリバースエンジニアによる高度な解析に対して一定の耐性を達成することを目的としている場合、スキームは以下を考慮する必要があります。
 
-1. 潜在力: プログラムの複雑さは人間や手作業による解析を著しく阻害するのに十分な量だけ増加する必要があります。複雑さおよびサイズとパフォーマンスとの間には常にトレードオフがあることに注意します。
+1. Potency: プログラムの複雑さは人間や手作業による解析を著しく阻害するのに十分な量だけ増加する必要があります。複雑さおよびサイズとパフォーマンスとの間には常にトレードオフがあることに注意します。
 2. 自動プログラム解析に対する耐性。例えば、難読化のタイプがコンコリック解析に対して「脆弱」であることが知られている場合、このスキームはこのタイプの解析で問題を引き起こす変換を含む必要があります。
 
 #### 一般的な基準
@@ -373,9 +373,9 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 
 -- TODO [Insert and link references] --
 
-Collberg et. al. introduce potency as an estimate of the degree of reverse engineering difficulty. A potent obfuscating transformation is any transformation that increases program complexity. Additionally, they propose the concept of resilience which measures how well a transformation holds up under attack from an automatic de-obfuscator. The same paper also contains a useful taxonomy of obfuscating transformations <sup>[5]</sup>.
+Collberg らはリバースエンジニアリングの難易度の推計として Potency を紹介しています。強力な難読化変換はプログラムの複雑さを増加させる変換です。さらに、自動逆難読化プログラムからの攻撃にもとで変換がどのくらいうまく持ちこたえるかを測定する耐性の概念を提案しています。同じ論文には難読化変換の有用な分類も含まれています <sup>[5]</sup> 。
 
-Potency can be estimated using a number of methods.  Anaeckart et. al apply traditional software complexity metrics to a control flow graphs generated from executed code <sup>[6]</sup>. The metrics applied are instruction count, cyclomatic number (i.e. number of decision points in the graph) and knot count (number of crossing in a function’s control flow graph). Simply put, the more instructions there are, and the more alternate paths and less expected structure the code has, the more complex it is.
+Potency はいくつかの方法を使用して推計できます。Anaeckart らは実行コードから生成されたコントロールフローグラフに従来のソフトウェア複雑度メトリクスを適用しています <sup>[6]</sup> 。適用されるメトリクスは命令数、サイクロマティック数 (すなわち、グラフ内の分岐点の数)、結合点数 (関数のコントロールフローグラフの交差数) です。簡単に言えば、より多くの命令があり、より多くの代替パスとより少ない期待される構造をコードが持つほど、より複雑になります。
 
 Jacubowsky et. al. use the same method and add further metrics, such as number of variables per instruction, variable indirection, operational indirection, code homogeneity and dataflow complexity <sup>[7]</sup>. Other complexity metrics such as N-Scope <sup>[8]</sup>, which is determined by the nesting levels of all branches in a program, can be used for the same purpose <sup>[9]</sup>.
 
