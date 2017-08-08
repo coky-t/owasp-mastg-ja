@@ -305,18 +305,18 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 
 これは、ホワイトボックス暗号化のような、より「高度な」（そしてしばしば論争の的となる）形態の難読化が作用するものです。この種の難読化は人間および自動解析の両方に対して真に堅牢であることを意味し、通常、プログラムのサイズと複雑さを増加させます。この方法は、より複雑な方法で同じ関数を計算するか、簡単には理解できない方法でコードとデータをエンコードすることにより、計算の意味を隠すことを目指しています。
 
-A simple example for this kind of obfuscations are opaque predicates. Opaque predicates are redundant code branches added to the program that always execute the same way, which is known a priori to the programmer but not to the analyzer. For example, a statement such as if (1 + 1) = 1 always evaluates to false, and thus always result in a jump to the same location. Opaque predicates can be constructed in ways that make them difficult to identify and remove in static analysis.
+このような種類の難読化についての簡単な例として Opaque Predicates があります。Opaque Predicates はプログラムに追加された冗長なコードブランチであり、常に同じ方法で実行されます。これはプログラマには先験的に知られていますが、アナライザにはそうではありません。例えば、if (1 + 1) = 1 のような文は常に false と評価され、したがって常に同じ場所にジャンプします。Opaque Predicates は静的解析での識別および削除が困難となる方法で構築されます。
 
-Other obfuscation methods that fall into this category are:
+このカテゴリに該当するその他の難読化手法には以下があります。
 
-- Pattern-based obfuscation, when instructions are replaced with more complicated instruction sequences
-- Control flow obfuscation
-- Control flow flattening
-- Function Inlining
-- Data encoding and reordering
-- Variable splitting
-- Virtualization
-- White-box cryptography
+- パターンベースの難読化、命令がより複雑な命令シーケンスに置き換えられる
+- コントロールフローの難読化
+- コントロールフローの平坦化
+- 関数のインライン化
+- データのエンコード化および配置換え
+- 変数の分割
+- 仮想化
+- ホワイトボックス暗号
 
 ### Obfuscation Effectiveness
 
