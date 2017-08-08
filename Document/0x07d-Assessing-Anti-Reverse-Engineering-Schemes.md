@@ -325,51 +325,51 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 1. 潜在力: プログラムの複雑さは人間や手作業による解析を著しく阻害するのに十分な量だけ増加する必要があります。複雑さおよびサイズとパフォーマンスとの間には常にトレードオフがあることに注意します。
 2. 自動プログラム解析に対する耐性。例えば、難読化のタイプがコンコリック解析に対して「脆弱」であることが知られている場合、このスキームはこのタイプの解析で問題を引き起こす変換を含む必要があります。
 
-#### General Criteria
+#### 一般的な基準
 
 --[ TODO - describe effectiveness criteria ] --
 
-**Increase in Overall Program Complexity**
+**全体的なプログラムの複雑さの増加**
 
 --[ TODO ] --
 
-**Difficulty of CFG Recovery**
+**CFG 復元の難しさ**
 
 --[ TODO ] --
 
-**Resilience against Automated Program Analysis**
+**自動プログラム解析に対する耐性**
 
 --[ TODO ] --
 
-#### The Use of Complexity Metrics
+#### 複雑さメトリクスの使用
 
 --[ TODO  - what metrics to use and how to apply them] --
 
-#### Common Transformations
+#### 一般的な変換
 
 --[ TODO  - describe commonly used schemes, and criteria associated with each scheme. e.g., white-box must incorportate X to be resilient against DFA,  etc.] --
 
-##### Control-flow Obfuscation
+##### コントロールフローの難読化
 
 --[ TODO ] --
 
-##### Polymorphic Code
+##### ポリモーフィックコード
 
 --[ TODO ] --
 
-##### Virtualization
+##### 仮想化
 
 --[ TODO ] --
 
-##### White-box Cryptography
+##### ホワイトボックス暗号
 
 --[ TODO ] --
 
-## Background and Caveats
+## 背景と注意
 
 --[ TODO ] --
 
-### Academic Research on Obfuscation Metrics
+### 難読化メトリクスに関する学術研究
 
 -- TODO [Insert and link references] --
 
@@ -389,7 +389,7 @@ More recently, Rabih Mosen and Alexandre Miranda Pinto proposed the use of a nor
 
 This makes intuitive sense and even though it doesn’t always hold true, the Kolmogorov complexity metric appears to be useful to quantify the impact of control flow and data obfuscation schemes that add random noise to a program.
 
-### Experimental Data
+### 実験データ
 
 With the limitations of existing complexity measures in mind we can see that more human studies on the subject would be helpful. Unfortunately, the body of experimental research is relatively small - in fact, the lack of empirical studies is one of the main issues researchers face  <sup>[14]</sup>. There are however some interesting papers linking some types of obfuscation to higher reverse engineering difficulty.
 
@@ -403,7 +403,7 @@ In a series of controlled experiments, M. Ceccato et. al. tested the impact of i
 
 *Boxplot of attack efficiency from the Ceccato et. al. experiment to measure the impact of identifier renaming on program comprehension. Subjects analyzing the obfuscated code gave less correct answers per minute.*
 
-### The Device Binding Problem
+### デバイスバインディングの問題
 
 In many cases it can be argued that obfuscating some secret functionality misses the point, as for all practical purposes, the adversary does not need to know all the details about the obfuscated functionality. Say, the function of an obfuscated program it to take an input value and use it to compute an output value in an indiscernible way (for example, through a cryptographic operation with a hidden key). In most scenarios, the adversaries goal would be to replicate the functionality of the program – i.e. computing the same output values on a system owned by the adversary. Why not simply copy and re-use whole implementation instead of painstakingly reverse engineering the code? Is there any reason why the adversary needs to look inside the black-box?
 
@@ -415,7 +415,7 @@ Even so, it is relatively easy (as opposed to fully reverse engineering the blac
 
 What all this means is that, for most practical purposes, the security of an obfuscated application is only as good as the device binding it implements. For device binding to be effective, specific characteristics of the system or device must be deeply intertwined with the various obfuscation layers, and these characteristics must be determined in stealthy ways (ideally, by reading content directly from memory). Advanced device binding methods are often deployed in DRM and malware and some research has been published in this area <sup>[22]</sup>.
 
-## References
+## 参考情報
 
 - [1] OWASP Reverse Engineering and Code Modification Prevention - https://www.owasp.org/index.php/OWASP_Reverse_Engineering_and_Code_Modification_Prevention_Project
 - [2] Boaz Barak, Oded Goldreich, Rusell Impagliazzo, Steven Rudich, Amit Sahai, Salil Vadhan, Ke Yang - On the (Im)possibility of Obfuscating Programs - Lecture Notes in Computer Science, issue 2139, 2001
