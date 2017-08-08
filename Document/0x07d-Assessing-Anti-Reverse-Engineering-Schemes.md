@@ -318,12 +318,12 @@ MASVS には難読化を扱う要件が二つだけ記載されています <sup
 - 仮想化
 - ホワイトボックス暗号
 
-### Obfuscation Effectiveness
+### 難読化の有効性
 
-To determine whether a particular obfuscation scheme is depends on the exact definition of "effective". If the purpose of the scheme is to deter casual reverse engineers, a mixture of cost-efficient tricks is sufficient. If the purpose is to achieve a level of resilience against advanced analysis performed by skilled reverse engineers, the scheme must achieve the following:
+特定の難読化スキームを決定することは「有効」の正確な定義に左右されます。スキームの目的がカジュアルなリバースエンジニアを抑止することであれば、コスト効率の高いトリックの混合で十分です。目的が熟練のリバースエンジニアによる高度な解析に対して一定の耐性を達成することを目的としている場合、スキームは以下を考慮する必要があります。
 
-1. Potency: Program complexity must increased by a sufficient amount to significantly impede human/manual analysis. Note that there is always a trade off between complexity and size and/or performance.
-2. Resilience against automated program analysis. For example, if the type of obfuscation is known to be "vulnerable" to concolic analysis, the scheme must include transformations that cause problems for this type of analysis.
+1. 潜在力: プログラムの複雑さは人間や手作業による解析を著しく阻害するのに十分な量だけ増加する必要があります。複雑さおよびサイズとパフォーマンスとの間には常にトレードオフがあることに注意します。
+2. 自動プログラム解析に対する耐性。例えば、難読化のタイプがコンコリック解析に対して「脆弱」であることが知られている場合、このスキームはこのタイプの解析で問題を引き起こす変換を含む必要があります。
 
 #### General Criteria
 
