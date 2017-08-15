@@ -44,5 +44,5 @@
 * [リモート認証と認可](0x07a-Testing-Authentication-and-Session-Management.md)
 * [ネットワーク通信のテスト](0x07b-Testing-Network-Communication.md)
 * [モバイルアプリでの暗号化](0x07c-Testing-Cryptography.md)
-* [アンチリバースエンジニアリングスキームの評価](0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md)
+* [ソフトウェア保護スキームの評価](0x07d-Assessing-Anti-Reverse-Engineering-Schemes.md)
 * [テストツール](0x08-Testing-Tools.md)
