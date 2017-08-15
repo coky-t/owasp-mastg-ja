@@ -401,7 +401,7 @@ Sutherland らはリバースエンジニアリングの尺度を収集するた
 
 <img src="Images/Chapters/0x07b/boxplot.png" width="650px" />
 
-*Boxplot of attack efficiency from the Ceccato et. al. experiment to measure the impact of identifier renaming on program comprehension. Subjects analyzing the obfuscated code gave less correct answers per minute.*
+*識別子の名前変更がプログラムの理解に及ぼす影響を測定する Ceccato らの実験による攻撃効率の箱ひげ図。難読化されたコードを解析する被験者は一分当たりの正答が少なかった。*
 
 ### デバイスバインディングの問題
 
