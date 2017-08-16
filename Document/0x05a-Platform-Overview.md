@@ -4,26 +4,26 @@
 
 Android プラットフォームの詳細については、公式の Android developer documentation <sup>[13]</sup> をご覧ください。このセクションでは多くの例が示されていますが、このガイドはこのトピックの唯一の参考資料と考えるべきではありません。
 
-### Android Architecture and Security Mechanisms
+### Android アーキテクチャとセキュリティメカニズム
 
-Android is an open source platform that can be found nowadays on many devices:
+Android はオープンソースプラットフォームであり、今日では多くのデバイスで利用されています。
 
-* Mobile Phones and Tablets
-* Wearables
-* "Smart" devices in general like TVs
+* モバイルフォンおよびタブレット
+* ウェアラブル
+* TV などの一般的な「スマート」デバイス
 
-It also offers an applicative environment that supports not only pre-installed apps on the device, but also 3rd party apps that can be downloaded from marketplaces like Google Play.
+また、デバイスにプリインストールされているアプリだけでなく、Google Play などのマーケットプレイスからダウンロードできるサードパーティのアプリをサポートするアプリケーション環境も用意されています。
 
-The software stack of Android comprises of different layers, where each layer is defining certain behavior and offering specific services to the layer above.
+Android のソフトウェアスタックはさまざまなレイヤーで構成されています。各レイヤーは特定の動作を定義しており、上のレイヤーに特定のサービスを提供しています。
 
 ![Android Software Stack](Images/Chapters/0x05a/android_software_stack.png)
 
-On the lowest level Android is using the Linux Kernel where the core operating system is built up on. The hardware abstraction layer defines a standard interface for hardware vendors. HAL implementations are packaged into shared library modules (.so files). These modules will be loaded by the Android system at the appropriate time. The Android Runtime consists of the core libraries and the Dalvik VM (Virtual Machine). Apps are most often implemented in Java and compiled in Java class files. However since Android integrates a Dalvik VM, not JVM, the Java class files are then compiled again into the `dex` format. The `dex` files are packed into APK (a ZIP archive containing all resources, including the executable) and then unpacked and executed within the Dalvik VM.
-In the next image you can see the differences between the normal process of compiling and running a typical project in Java vs the process in Android using Dalvik VM.
+最も低いレベルでは、Android は Linux Kernel を使用しており、コアオペレーティングシステムが構築されています。ハードウェア抽象化レイヤーはハードウェアベンダーのための標準インタフェースを定義しています。HAL の実装は共有ライブラリモジュール (.so ファイル) にパッケージ化されています。これらのモジュールは適切な時期に Android システムによってロードされます。Android ランタイムはコアライブラリと Dalvik VM (仮想マシン) で構成されています。アプリは大半が Java で実装され、Java クラスファイルにコンパイルされます。しかし、Android は JVM ではなく Dalvik VM を統合しているので、Java クラスファイルはさらに `dex` 形式にコンパイルされます。`dex` ファイルは APK (実行可能ファイルを含むすべてのリソースの ZIP アーカイブ) にパックされ、Dalvik VM 内でアンパックおよび実行されます。
+次の画像では、Java の典型的なプロジェクトをコンパイルおよび実行する通常のプロセスと、Dalvik VM を使用する Android プロセスとの違いを示しています。
 
 ![Java vs Dalvik](Images/Chapters/0x05a/java_vs_dalvik.png)
 
-With Android 4.4 (KitKat) the successor of Dalvik VM was introduced, called Android Runtime (ART). However, it has really been set for general use only in Android 5.0 (Lollipop) in November 2014, where it replaced Dalvik. In KitKat, ART was only available in the 'Developer' menu to those who wanted to try it explicitly. When no user action was done to modify the normal behaviour of the mobile, Dalvik was used.
+Android 4.4 (KitKat) では Dalvik VM の後継である Android Runtime (ART) が導入されました。しかし、実際に一般向けに設定されたのは2014年11月の Android 5.0 (Lollipop) で、Dalvik を置き換えました。KitKat では、ART は「開発者」メニューで明示的に試したい方のみ利用可能でした。モバイルの通常の動作を変更するための操作をユーザーが行わない場合、Dalvik が使用されました。
 
 In Android, apps are executed into their own environment in a Virtual Machine (VM), that was called Dalvik, located in the runtime environment. Each VM emulates the whole mobile and gives access to relevant resources from the Linux kernel while controlling this access. Apps do not have direct access to hardware resources, and their execution environments are therefore separate from each other. This allows fine-grained control over resources and apps: for instance, when an app crashes, it does not prevent other apps from working and only their environment and the app itself have to be restarted. Also, the fact apps are not run directly on the mobile hardware allow the use of the same app (same bytecode) on different architectures (e.g. ARM, x86) as the VM emulates a common hardware for the app. At the same time, the VM controls the maximum amount of resources provided to an app, preventing one app from using all resources while leaving only few resources to others.
 In Android, apps are installed as bytecode (.dex files, see "Android Application Overview" section). In Dalvik, this bytecode was compiled at execution time into machine language suiting the current processor: such a mechanism is known as Just In Time (JIT). However, this means that such compiling is done every time an app is executed on a given mobile. As a consequence, Dalvik has been improved to compile an app only once, at installation time (the principle is called AOT, a.k.a. Ahead  Of Time): ART was born, and compilation was required only once, saving precious time at execution time (the execution time of an app may be divided by 2). Another benefit was that ART was consuming less power than Dalvik, allowing the user to use the mobile device and its battery longer.
