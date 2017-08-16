@@ -1,8 +1,8 @@
 ## Android プラットフォーム概要
 
-This chapter is going to introduce Android on the architecture point of view and will provide the reader with detailed information on it's security mechanisms. Then, it will describe the structure of an Android application and will emphasize on the Inter Process Communication (IPC) mechanisms. Last, the way Android applications are published is explained to the reader.
+この章ではアーキテクチャの観点から Android を紹介し、セキュリティメカニズムの詳細情報を読者に提供します。次に、Android アプリケーションの構造について説明し、プロセス間通信 (IPC) のメカニズムを説明します。最後に、Android アプリケーションの公開方法を読者に説明します。
 
-The reader is invited to have a look at the official Android developer documentation<sup>[13]</sup> for more details on the Android platform. Even if numerous examples are given in this section, in no way this guide should be considered as the only reference on the topic.
+Android プラットフォームの詳細については、公式の Android developer documentation <sup>[13]</sup> をご覧ください。このセクションでは多くの例が示されていますが、このガイドはこのトピックの唯一の参考資料と考えるべきではありません。
 
 ### Android Architecture and Security Mechanisms
 
