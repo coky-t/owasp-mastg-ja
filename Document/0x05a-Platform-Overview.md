@@ -28,11 +28,11 @@ Android 4.4 (KitKat) では Dalvik VM の後継である Android Runtime (ART) �
 Android では、アプリはランタイム環境にある Dalvik と呼ばれる仮想マシン (VM) のそれら自身の環境で実行されます。各 VM はモバイル全体をエミュレートし、このアクセスを制御しながら Linux カーネルから関連するリソースにアクセスします。アプリはハードウェアリソースに直接アクセスすることはできず、その実行環境は互いに分離されています。これにより、リソースやアプリをきめ細かくコントロールできます。例えば、アプリがクラッシュしたときに、他のアプリの動作を妨げることはなく、その環境およびアプリ自体のみを再起動します。また、実際のアプリはモバイルハードウェア上で直接実行されないため、VM がアプリの共通のハードウェアをエミュレートし、さまざまなアーキテクチャ (ARM, x86 など) で同じアプリ (同じバイトコード) を使用できます。同時に、VM はアプリに提供されるリソースの量をコントロールし、あるアプリがすべてのリソースを使用して他にリソースが残らないようにすることを防ぎます。
 Android では、アプリはバイトコード (.dex ファイル、「Android アプリケーションの概要」セクションを参照) としてインストールされます。Dalvik では、このバイトコードは実行時に現在のプロセッサにあった機械語にコンパイルされます。そのようなメカニズムは Just In Time (JIT) として知られています。但しこれは、このようなコンパイルがアプリを特定のモバイルで実行するごとに行われることを意味します。その結果、Dalvik はインストール時に一度だけアプリをコンパイルするように改良されました (この原則は AOT つまり Ahead Of Time と呼ばれています) 。ART が誕生し、コンパイルは一度だけ要求され、実行時に貴重な時間を節約できました (アプリの実行時間は2つに分けられます) 。もう一つの利点は ART が Dalvik より消費電力が少なく、ユーザーがモバイルデバイスとそのバッテリーをより長く使用できることです。
 
-#### Android Users and Groups
+#### Android ユーザーとグループ
 
-Android is a system based on the Linux Kernel. However it does not deal with users the same way other Unix-like systems do. It does not have a _/etc/password_ file describing a list of users in the system. Instead Android utilizes the multi-user support of the Linux kernel, to achieve application sandboxing, by running each application under a separate user (with some exceptions).
-The file [system/core/include/private/android_filesystem_config.h](http://androidxref.com/7.1.1_r6/xref/system/core/include/private/android_filesystem_config.h) shows the complete list of the predefined users and groups used for system processes. UIDs for other applications are added as they are installed on the system. For more details you can check this [overview of Android application sandbox.](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html)
-File below depicts some of the users defined for Android Nougat:
+Android は Linux カーネルをベースにしたシステムです。しかし、他の Unix ライクなシステムと同じようにユーザーを扱うわけではありません。システム内にユーザーのリストを記述する _/etc/password_ ファイルはありません。代わりに Android は Linux カーネルのマルチユーザーサポートを利用して、アプリケーションのサンドボックス化を実現しています。各アプリケーションは別々のユーザーの下で実行しています (一部の例外を除きます) 。
+ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/7.1.1_r6/xref/system/core/include/private/android_filesystem_config.h) には、システムプロセスに使用される事前定義されたユーザーおよびグループの完全なリストがあります。他のアプリケーション用の UID はシステムにインストールされたときに追加されます。詳細については、この [overview of Android application sandbox.](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html) を確認ください。
+以下のファイルは Android Nougat 用に定義されているユーザーの一部を示しています。
 
 ```
     #define AID_ROOT             0  /* traditional unix root user */
