@@ -31,7 +31,7 @@ Android では、アプリはバイトコード (.dex ファイル、「Android 
 #### Android ユーザーとグループ
 
 Android は Linux カーネルをベースにしたシステムです。しかし、他の Unix ライクなシステムと同じようにユーザーを扱うわけではありません。システム内にユーザーのリストを記述する _/etc/password_ ファイルはありません。代わりに Android は Linux カーネルのマルチユーザーサポートを利用して、アプリケーションのサンドボックス化を実現しています。各アプリケーションは別々のユーザーの下で実行しています (一部の例外を除きます) 。
-ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/7.1.1_r6/xref/system/core/include/private/android_filesystem_config.h) には、システムプロセスに使用される事前定義されたユーザーおよびグループの完全なリストがあります。他のアプリケーション用の UID はシステムにインストールされたときに追加されます。詳細については、この [overview of Android application sandbox.](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html) を確認ください。
+ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/7.1.1_r6/xref/system/core/include/private/android_filesystem_config.h) には、システムプロセスに使用される事前定義されたユーザーおよびグループの完全なリストがあります。他のアプリケーション用の UID はシステムにインストールされたときに追加されます。詳細については、 [overview of Android application sandbox](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html) を確認ください。
 以下のファイルは Android Nougat 用に定義されているユーザーの一部を示しています。
 
 ```
@@ -45,32 +45,32 @@ Android は Linux カーネルをベースにしたシステムです。しか�
 	...
 ```
 
-### Understanding Android Apps
+### Android アプリについて
 
-#### Communication with the Operating System
+#### オペレーティングシステムとの通信
 
-As explained above, in Android, applications are written in Java and compiled into a `dex` bytecode. System resources are not accessed directly. Instead the Operating System offers libraries to interact with them. For example:
-* connectivity (Wifi, Bluetooth, NFC, ...),
-* files,
-* cameras,
-* geolocation (GPS),
-* microphone,
-* etc.
+上で説明したように、Android ではアプリケーションは Java で書かれ、`dex` バイトコードにコンパイルされます。システムリソースは直接的にはアクセスされません。代わりに、オペレーティングシステムはそれらと相互作用するライブラリを提供します。例えば、
+* 接続 (Wifi, Bluetooth, NFC, ...)
+* ファイル
+* カメラ
+* 位置情報 (GPS)
+* マイク
+* など
 
-The Android Framework is an abstraction layer, offering high-level API easily usable from Java, without the need of deeper understanding of system libraries. Among the rest, it offers common security functions like secure IPC and cryptography. At the time of writing this guide, the current version of Android is 7.1 (Nougat), API level 25.
+Android Framework は抽象レイヤーで、Java から簡単に使用できる高水準 API を提供しています。システムライブラリを深く理解する必要はありません。他にも、セキュア IPC や暗号化などの一般的なセキュリティ機能を提供しています。このガイドの執筆時点では、Android の最新バージョンは 7.1 (Nougat)、API レベルは 25 です。
 
-APIs have evolved a lot since first Android version (September 2008). Critical bug fixes and security patches are usually propagated several versions back. The oldest Android version supported, at the time of writing this guide, is 4.4 (KitKat), API level 19.
+API は最初の Android バージョン (2008年9月) 以降、多くの進化を遂げました。重大なバグフィックスやセキュリティパッチは通常、いくつかのバージョンをさかのぼって適用されます。このガイドの執筆時点でサポートされているもっとも古い Android バージョンは 4.4 (KitKat) 、API レベルは 19 です。
 
-Noteworthy API versions are:
-- Android 4.2 Jelly Bean (API 16) in November 2012 (introduction of SELinux)
-- Android 4.3 Jelly Bean (API 18) in July 2013 (SELinux becomes enabled by default)
-- Android 4.4 KitKat (API 19) in October 2013 (several new APIs and ART is introduced)
-- Android 5.0 Lollipop (API 21) in November 2014 (ART by default and many other new features)
-- Android 6.0 Marshmallow (API 23) in October 2015 (many new features and improvements, including granting fine-grained permissions at run time and not all or nothing at installation time)
-- Android 7.0 Nougat (API 24-25) in August 2016 (new JIT compiler on ART)
-- Android 8.0 O (API 26) beta (mayor security fixes expected) 
+注目すべき API バージョンは以下の通りです。
+- Android 4.2 Jelly Bean (API 16) 2012年11月 (SELinux の導入)
+- Android 4.3 Jelly Bean (API 18) 2013年7月 (SELinux がデフォルトで有効になる)
+- Android 4.4 KitKat (API 19) 2013年10月 (いくつかの新しい API と ART が導入された)
+- Android 5.0 Lollipop (API 21) 2014年11月 (ART がデフォルトになる、その他多くの新機能)
+- Android 6.0 Marshmallow (API 23) 2015年10月 (多くの新機能と改善点、インストール時の是非ではなく実行時のきめ細かい権限付与を含む)
+- Android 7.0 Nougat (API 24-25) 2016年8月 (ART 上の新しい JIT コンパイラ)
+- Android 8.0 O (API 26) beta (主要なセキュリティの修正予定)
 
-Apps can be installed on an Android device from a variety of sources: locally through USB, from Googles official store (Google Play Store) or from alternate stores.
+アプリはさまざまなソースから Android デバイスにインストールできます。ローカルで USB を介して、Google の公式ストア (Google Play Store) から、または代替のストアから。
 
 #### App Folder Structure
 
