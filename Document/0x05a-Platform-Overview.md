@@ -125,9 +125,9 @@ drwxrwx--x u0_a65   u0_a65            2016-01-10 09:44 shared_prefs
    * mips: MIPS プロセッサ専用のコンパイル済みコード
 * **shared_prefs**: このフォルダは実行時にアプリにより生成された設定ファイルを格納するために使用されます。データ、設定、セッションなどアプリの現在の状態を保存します。ファイルフォーマットは XML です。
 
-#### APK Structure
+#### APK の構造
 
-An app on Android is a file with the extension .apk. This file is a signed zip-file which contains all of the application's resources, byte code, etc. When unzipped the following directory structure can usually be identified:
+Android のアプリは拡張子 .apk のファイルです。このファイルは署名付き zip ファイルで、アプリケーションのリソース、バイトコードなどをすべて含んでいます。unzip すると、以下のディレクトリ構造が一般的に識別されます。
 
 ```bash
 $ unzip base.apk
@@ -141,18 +141,18 @@ drwxr-xr-x  27 sven  staff   918B Dec  5 16:17 res
 -rw-r--r--   1 sven  staff   241K Dec  5 14:45 resources.arsc
 ```
 
-* **AndroidManifest.xml**: Contains the definition of app’s package name, target and min API version, app configuration,  components, user-granted permissions, etc.
-* **META-INF**: This folder contains metadata of the app:
-   * MANIFEST.MF: Stores hashes of app resources.
-   * CERT.RSA: The certificate(s) of the app.
-   * CERT.SF: The list of resources and SHA-1 digest of the corresponding lines in the MANIFEST.MF file.
-* **assets**: A directory containing app assets (files used within the Android App like XML, Java Script or pictures) which can be retrieved by the AssetManager.
-* **classes.dex**: The classes compiled in the DEX file format understandable by the Dalvik virtual machine/Android Runtime. DEX is Java Byte Code for Dalvik Virtual Machine. It is optimized for running on small devices.
-* **lib**: A directory containing libraries that are part of the APK, for example 3rd party libraries that are not part of the Android SDK.
-* **res**: A directory containing resources not compiled into resources.arsc.
-* **resources.arsc**: A file containing precompiled resources, such as XML files for the layout.
+* **AndroidManifest.xml**: アプリのパッケージ名、ターゲット、最小 API バージョン、アプリの設定、コンポーネント、ユーザーが付与したパーミッションなどの定義を含みます。
+* **META-INF**: このフォルダはアプリのメタデータを含みます。
+   * MANIFEST.MF: アプリリソースのハッシュを格納します。
+   * CERT.RSA: アプリの証明書です。
+   * CERT.SF: MANIFEST.MF ファイル内の対応する行のリソースおよび SHA-1 ダイジェストのリストです。
+* **assets**: アプリアセット (XML, Javascript, 画像など Android アプリ内で使用されるファイル) を含むディレクトリです。AssetManager で取得できます。
+* **classes.dex**: Dalvik 仮想マシン/ Android Runtime が理解できる DEX ファイル形式でコンパイルされたクラスです。DEX は Dalvik 仮想マシン用の Java バイトコードです。小型のデバイスで動作するように最適化されています。
+* **lib**: APK の一部であるライブラリを含むディレクトリです。例えば、Android SDK の一部ではないサードパーティのライブラリです。
+* **res**: resources.arsc にコンパイルされていないリソースを含むディレクトリです。
+* **resources.arsc**: レイアウト用の XML ファイルなどのプリコンパイル済みのリソースを含むファイルです。
 
-Since some resources inside the APK are compressed using non-standard algorithms (e.g. the AndroidManifest.xml), simply unzipping the file does not reveal all information. A better way is to use the tool apktool to unpack and uncompress the files. The following is a listing of the the files contained in the apk:
+APK 内の一部のリソースは非標準のアルゴリズムを使用して圧縮されているため (AndroidManifest.xml など) 、単純に unzip したファイルではすべての情報は明らかになりません。よりよい方法はツール apktool を使用して、ファイルを unpack および uncompress することです。以下は apk に含まれるファイルのリストです。
 
 ```bash
 $ apktool d base.apk
@@ -181,13 +181,13 @@ drwxr-xr-x  131 sven  staff   4.3K Dec  5 16:29 res
 drwxr-xr-x    9 sven  staff   306B Dec  5 16:29 smali
 ```
 
-* **AndroidManifest.xml**: This file is not compressed anymore and can be opened in a text editor.
-* **apktool.yml** : This file contains information about the output of apktool.
-* **assets**: A directory containing app assets (files used within the Android App like XML, Java Script or pictures) which can be retrieved by the AssetManager.
-* **lib**: A directory containing libraries that are part of the APK, for example 3rd party libraries that are not part of the Android SDK.
-* **original**: This folder contains the MANIFEST.MF file which stores meta data about the contents of the JAR and signature of the APK. The folder is also named as META-INF.
-* **res**: A directory containing resources not compiled into resources.arsc.
-* **smali**: A directory containing the disassembled Dalvik bytecode in Smali. Smali is a human readable representation of the Dalvik executable.
+* **AndroidManifest.xml**: このファイルは圧縮されておらず、テキストエディタで開けます。
+* **apktool.yml** : このファイルは apktool の出力についての情報が含まれています。
+* **assets**: アプリアセット (XML, Javascript, 画像など Android アプリ内で使用されるファイル) を含むディレクトリです。AssetManager で取得できます。
+* **lib**: APK の一部であるライブラリを含むディレクトリです。例えば、Android SDK の一部ではないサードパーティのライブラリです。
+* **original**: このフォルダには MANIFEST.MF ファイルが含まれています。ファイルには JAR の内容に関するメタデータおよび APK の署名を格納しています。このフォルダは META-INF とも呼ばれます。
+* **res**: resources.arsc にコンパイルされていないリソースを含むディレクトリです。
+* **smali**: smali に逆アセンブルされた Dalvik バイトコードを含むディレクトリです。smali は Dalvik 実行可能ファイルの品源が読める形式です。
 
 #### Linux UID/GID of Normal Applications
 
