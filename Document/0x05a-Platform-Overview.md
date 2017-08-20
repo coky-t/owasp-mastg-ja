@@ -189,18 +189,18 @@ drwxr-xr-x    9 sven  staff   306B Dec  5 16:29 smali
 * **res**: resources.arsc にコンパイルされていないリソースを含むディレクトリです。
 * **smali**: smali に逆アセンブルされた Dalvik バイトコードを含むディレクトリです。smali は Dalvik 実行可能ファイルの品源が読める形式です。
 
-#### Linux UID/GID of Normal Applications
+#### 通常のアプリケーションの Linux UID/GID
 
-When a new app gets installed on Android a new UID is assigned to it. Generally apps are assigned UIDs in the range of 10000 (_AID_APP_) and 99999. Android apps also receive a user name based on its UID. As an example, apps with UID 10188 receive the user name _u0_a188_.
-If an app requested some permissions and they are granted, the corresponding group ID is added to the process of the app.
-For example, the user ID of the app below is 10188, and it also belongs to group ID 3003 (_inet_) that is the group related to _android.permission.INTERNET_ permission. The result of the `id` command is shown below:
+新しいアプリが Android にインストールされると、新しい UID が割り当てられます。一般的にアプリには 10000 (_AID_APP_) から 99999 の範囲の UID が割り当てられます。Android アプリにはその UID に基づくユーザー名も受け取ります。例えば、UID 10188 のアプリはユーザー名 _u0_a188_ を受け取ります。
+アプリがいくつかのパーミッションを要求し、それらが付与されている場合、対応するグループ ID がアプリのプロセスに追加されます。
+例えば、以下のアプリのユーザー ID は 10188 であり、_android.permission.INTERNET_ パーミッションに関連するグループであるグループ ID 3003 (_inet_) にも属しています。`id` コマンドの結果を以下に示します。
 
 ```
 $ id
 uid=10188(u0_a188) gid=10188(u0_a188) groups=10188(u0_a188),3003(inet),9997(everybody),50188(all_a188) context=u:r:untrusted_app:s0:c512,c768
 ```
 
-The relationship between group IDs and permissions are defined in the file [frameworks/base/data/etc/platform.xml](http://androidxref.com/7.1.1_r6/xref/frameworks/base/data/etc/platform.xml)
+グループ ID とパーミッションの関係はファイル [frameworks/base/data/etc/platform.xml](http://androidxref.com/7.1.1_r6/xref/frameworks/base/data/etc/platform.xml) に定義されています。
 ```
 <permission name="android.permission.INTERNET" >
 	<group gid="inet" />
@@ -216,7 +216,7 @@ The relationship between group IDs and permissions are defined in the file [fram
 </permission>
 ```
 
-An important element to understand Android security is that all apps have the same level of privileges: both native and third-party apps are built on the same APIs and are run in similar environments. Also, all apps are executed not as 'root', but with the user level of privileges. That means that, basically, apps cannot perform some actions or access some parts of the file system. In order to be able to execute an app with 'root' privileges (inject packets in a network, run interpreters like Python etc.) mobiles need to be rooted.
+Android セキュリティを理解するうえで重要な要素は、すべてのアプリが同じレベルの権限を持っているということです。ネイティブアプリとサードパーティアプリはいずれも同じ API 上に構築され、同様の環境で実行されます。また、すべてのアプリは 'root' ではなく、ユーザーレベルの権限で実行されます。つまり、基本的にはアプリはいくつかのアクションを実行したり、ファイルシステムの一部にアクセスすることができません。'root' 特権でアプリを実行できるようにするには (ネットワークにパケットを注入する、Python などのインタプリタを実行するなど) モバイルをルート化する必要があります。
 
 ##### Zygote
 
