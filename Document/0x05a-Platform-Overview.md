@@ -254,11 +254,11 @@ drwx------  6 u0_a120             u0_a120             4096 2017-01-19 12:54 com.
 
 Android アプリはアーキテクチャを構成するいくつかの上位コンポーネントで構成されています。主なコンポーネントはアクティビティ、フラグメント、インテント、ブロードキャストレシーバ、コンテンツプロバイダ、およびサービスです。これらの要素はすべて Android オペレーティングシステムにより API 経由で利用可能な事前定義されたクラスの形式で提供されています。
 
-##### Application Lifecycle
+##### アプリケーションライフサイクル
 
-Android apps have their own lifecycles, that is under the control of the operating system. Therefore, apps need to listen to state changes and must be able to react accordingly. For instance, when the system needs resources, apps may be killed. The system selects the ones that will be killed according to the app priority: active apps have the highest priority (actually the same as Broadcast Receivers), followed by visible ones, running services, background services, and last useless processes (for instance apps that are still open but not in use since a significant time).
+Android アプリはオペレーティングシステムのコントロールの下で独自のライフサイクルを持ちます。したがって、アプリは状態の変化に耳を傾ける必要があり、それに対応できる必要があります。例えば、システムはリソースが必要な場合、アプリが kill される可能性があります。システムはアプリの優先度に応じて kill されるものを選択します。アクティブなアプリは最も優先度が高く (実際にはブロードキャストレシーバと同様) 、visible なもの、実行中のサービス、バックグラウンドサービス、そして最後に不用なプロセス (例えば、まだ open しているが、かなりの時間、使用されていないアプリ) と続きます。
 
-Apps implement several event managers to handle events: for example, the onCreate handler implements what has to be done on app creation and will be called on that event. Other managers include onLowMemory, onTrimMemory and onConfigurationChanged.
+アプリはいくつかのイベントマネージャを実装し、イベントを処理します。例えば、onCreate ハンドラはアプリケーションの作成時に実行する必要があるものを実装し、そのイベントで呼び出されます。他のマネージャには onLowMemory, onTrimMemory, onConfigurationChanged があります。
 
 ##### Manifest
 
