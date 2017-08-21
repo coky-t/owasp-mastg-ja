@@ -250,9 +250,9 @@ drwx------  6 u0_a120             u0_a120             4096 2017-01-19 12:54 com.
 ```
 
 
-#### App Components
+#### アプリコンポーネント
 
-Android apps are made of several high-level components that make up their architectures. The main components are activities, fragments, intents, broadcast receivers, content providers and services. All these elements are provided by the Android operating system in the form of predefined classes available through APIs.
+Android アプリはアーキテクチャを構成するいくつかの上位コンポーネントで構成されています。主なコンポーネントはアクティビティ、フラグメント、インテント、ブロードキャストレシーバ、コンテンツプロバイダ、およびサービスです。これらの要素はすべて Android オペレーティングシステムにより API 経由で利用可能な事前定義されたクラスの形式で提供されています。
 
 ##### Application Lifecycle
 
