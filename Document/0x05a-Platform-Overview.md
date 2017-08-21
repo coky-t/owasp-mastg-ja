@@ -260,13 +260,13 @@ Android アプリはオペレーティングシステムのコントロールの
 
 アプリはいくつかのイベントマネージャを実装し、イベントを処理します。例えば、onCreate ハンドラはアプリケーションの作成時に実行する必要があるものを実装し、そのイベントで呼び出されます。他のマネージャには onLowMemory, onTrimMemory, onConfigurationChanged があります。
 
-##### Manifest
+##### マニフェスト
 
-Every app must have a manifest file, which embeds content in XML format. The name of this file is standardized as AndroidManifest.xml and is the same for every app. It is located in the root tree of the .apk file in which the app is published.
+すべてのアプリにはマニフェストファイルが必要です。XML 形式のコンテンツを埋め込みます。このファイルの名前は AndroidManifest.xml として標準化されており、すべてのアプリで同じです。アプリが展開されている .apk ファイルのルートツリーに配置されます。
 
-A manifest file describes the app structure as well as its exposed components (activities, services, content providers and intent receivers) and lists down the permissions it's requesting for. Permission filters for IPC can be implemented to refine the way the app will interact with the outside world. It also contains general metadata about the app, like its icon, its version number and the theme it uses for User Experience (UX). It may also list other information like the APIs it is compatible with (minimal, targeted and maximal SDK version) and the kind of storage it can be installed in (external or internal)<sup>[14]</sup>.
+マニフェストファイルはアプリ構造および公開されているコンポーネント (アクティビティ、サービス、コンテントプロバイダ、インテントレシーバ) を記述し、要求しているパーミッションをリストします。IPC のパーミッションフィルタを実装して、アプリが外部とやり取りする方法を改善します。また、アイコン、バージョン番号、ユーザーエクスペリエンス (UX) に使用するテーマなど、アプリに関する一般的なメタデータも含まれます。また、互換性のある API (最小、ターゲット、最大 SDK バージョン) やインストール可能なストレージ (外部または内部) などの他の情報もリストします <sup>[14]</sup> 。
 
-Here is an example of a manifest file, including the package name (the convention is to use a url in reverse order, but any string can be used), the app version, relevant SDKs, required permissions, exposed content providers, used broadcast receivers with intent filters, and the description of the app itself with its activities:
+マニフェストファイルの例を示します。パッケージ名 (慣例では逆順の URL を使用しますが、任意の文字列を使用できます) 、アプリのバージョン、関連する SDK 、必要なパーミッション、公開されているコンテントプロバイダ、使用されているブロードキャストレシーバとインテントフィルタ、アプリ自体の記述とアクティビティを含んでいます。
 ```
 <manifest
 	package="com.owasp.myapplication"
@@ -302,7 +302,7 @@ Here is an example of a manifest file, including the package name (the conventio
 </manifest>
 ```
 
-A manifest is a text file and can be edited within Android Studio, the preferred IDE for Android development. A lot more useful options can be added to manifest files, which are listed down in the official Android documentation<sup>[12]</sup>.
+マニフェストはテキストファイルで、Android 開発用に推奨されている IDE である Android Studio 内で編集できます。マニフェストファイルにはより多くの便利なオプションを追加できます。オプションは公式の Android ドキュメント <sup>[12]</sup> に記載されています。
 
 ##### Activities
 
