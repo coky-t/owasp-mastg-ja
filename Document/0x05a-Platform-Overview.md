@@ -222,26 +222,26 @@ Android セキュリティを理解するうえで重要な要素は、すべて
 
 Android を起動すると、init で `Zygote` というプロセスが立ち上がります <sup>[10]</sup> 。これはシステムサービスで、アプリを実行するために使用されます。Zygote は /dev/socket/zygote でソケットを開き、新しいアプリケーションを開始する要求を待ちます。`Zygote` は既に初期化されているプロセスであり、どのアプリでも必要とされるすべてのコアライブラリを含んでいます。ソケットが要求を受け取ると、Zygote プロセスをフォークすることにより Android 上で新しいアプリが始まり、アプリ固有のコードがロードおよび実行されます。
 
-#### The App Sandbox
+#### アプリサンドボックス
 
-Apps are executed in the Android Application Sandbox that enforces isolation of app data and code execution from other apps on the device, that adds an additional layer of security.
+アプリは Android アプリケーションサンドボックス内で実行されます。デバイス上の他のアプリからアプリデータとコードの実行を分離し、付加的なセキュリティ層を追加します。
 
-When installing a new app (From Google Play Store or External Sources), a new folder is created in the filesystem in the path `/data/data/<package name>`. This folder is going to be the private data folder for that particular app.
+(Google Play Store または外部ソースから) 新しいアプリをインストールすると、ファイルシステムのパス `/data/data/<package name>` に新しいフォルダが作成されます。このフォルダは特定アプリのプライベートデータフォルダになります。
 
-Since every app has its own unique Id, Android separates app data folders configuring the mode to _read_ and _write_ only to the owner of the app.
+すべてのアプリは独自の一意な ID を持っていて、Android はアプリデータフォルダのモードを _read_ および _write_ に設定することをアプリの所有者にのみ割り当てます。
 
 ![Sandbox](Images/Chapters/0x05a/Selection_003.png)
 
-In this example, the Chrome and Calendar app are completely segmented with different UID and different folder permissions.
+この例では、Chrome と Calendar アプリは異なる UID と異なるフォルダ権限で完全に分離されています。
 
-We can confirm this by looking at the filesystem permissions created for each folder:
+各フォルダに対して作成されたファイルシステム権限を調べることでことを確認できます。
 
 ```
 drwx------  4 u0_a97              u0_a97              4096 2017-01-18 14:27 com.android.calendar
 drwx------  6 u0_a120             u0_a120             4096 2017-01-19 12:54 com.android.chrome
 ```
 
-However, if two apps are signed with the same certificate and explicitly share the same user ID (by including the _sharedUserId_ in their _AndroidManifest.xml_) they can access each others data directory. See the following example on how this is achieved in the Nfc app:
+但し、二つのアプリが同じ証明書で署名され、(_AndroidManifest.xml_ に _sharedUserId_ を含めることにより) 明示的に同じユーザー ID を共有している場合には、それぞれ他のデータディレクトリにアクセスできます。これが NFC アプリでどのように行われているかについては、以下の例を参照ください。
 
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
