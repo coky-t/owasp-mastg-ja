@@ -304,20 +304,20 @@ Android アプリはオペレーティングシステムのコントロールの
 
 マニフェストはテキストファイルで、Android 開発用に推奨されている IDE である Android Studio 内で編集できます。マニフェストファイルにはより多くの便利なオプションを追加できます。オプションは公式の Android ドキュメント <sup>[12]</sup> に記載されています。
 
-##### Activities
+##### アクティビティ
 
-Activities make up the visible part of any app. More specifically, one activity exists per screen (e.g. user interface) in an app. For instance, apps that have 3 different screens implement 3 different activities, that allow the user to interact with the system (get and enter information). Activities are declared by extending the Activity class; they contain all user interface elements: fragments, views and layouts.
+アクティビティはアプリの visible な部分を構成します。より具体的には、アプリ内のひとつの画面 (例えば、ユーザーインタフェース) ごとにひとつのアクティビティが存在します。例えば、3 つの異なる画面を持つアプリは 3 つの異なるアクティビティを実装し、ユーザーがシステムとやり取りします (情報を取得および入力します) 。アクティビティは Activity クラスを拡張することにより宣言されます。フラグメント、ビュー、レイアウトのすべてのユーザーインタフェース要素が含まれています。
 
-Activities implement manifest files. Each activity needs to be declared in the app manifest with the following syntax:
+アクティビティはマニフェストファイルを実装します。各アクティビティは以下の構文でアプリのマニフェストで宣言する必要があります。
 
 ```
 <activity android:name="ActivityName">
 </activity>
 ```
 
-When activities are not declared in manifests, they cannot be displayed and would raise an exception.
+アクティビティがマニフェストで宣言されていない場合、表示できず、例外が発生します。
 
-In the same way as apps do, activities also have their own lifecycle and need to listen to system changes to be able to handle them accordingly. Activities can have the following states: active, paused, stopped and inactive. These states are managed by Android operating system. Accordingly, activities can implement the following event managers:
+アプリと同じように、アクティビティも独自のライフサイクルを持ちます。システムの変化に耳を傾ける必要があり、それに応じてそれらを処理します。アクティビティには、active, paused, stopped, inactive の状態があります。これらの状態は Android オペレーティングシステムにより管理されます。したがって、アクティビティでは以下のイベントマネージャを実装します。
 - onCreate
 - onSaveInstanceState
 - onStart
@@ -328,7 +328,7 @@ In the same way as apps do, activities also have their own lifecycle and need to
 - onRestart
 - onDestroy
 
-An app may not explicitly implement all event managers; in that situation, default actions are taken. However, usually at least the onCreate manager is overridden by app developers, as this is the place where most user interface components are declared and initialised. onDestroy may be overridden as well in case some resources need to be explicitly released (like network connections or connections to databases) or if specific actions need to take place at the end of the app.
+アプリは明示的にすべてのイベントマネージャを実装しない可能性があります。その状況では、デフォルトアクションがとられます。但し、一般的には少なくとも onCreate マネージャがアプリ開発者によりオーバーライドされ、ほとんどのユーザーインタフェースコンポーネントが宣言および初期化されます。(ネットワーク接続やデータベースへの接続など) 一部のリソースを明示的にリリースする必要がある場合や、アプリの最後に特定のアクションを実行する必要がある場合には、onDestroy をオーバーライドできます。
 
 ##### Fragments
 
