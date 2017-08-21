@@ -220,7 +220,7 @@ Android セキュリティを理解するうえで重要な要素は、すべて
 
 ##### Zygote
 
-When booting Android, a process called `Zygote` starts up at init<sup>[10]</sup>. This is a system service and is used to launch apps. Zygote opens up a socket in /dev/socket/zygote and listens on it for requests to start new applications. `Zygote` is an already initialized process and contains all the core libraries that are needed by any app. When the socket receives a request a new app starts on Android by forking the Zygote process and the app specific code is loaded and executed.
+Android を起動すると、init で `Zygote` というプロセスが立ち上がります <sup>[10]</sup> 。これはシステムサービスで、アプリを実行するために使用されます。Zygote は /dev/socket/zygote でソケットを開き、新しいアプリケーションを開始する要求を待ちます。`Zygote` は既に初期化されているプロセスであり、どのアプリでも必要とされるすべてのコアライブラリを含んでいます。ソケットが要求を受け取ると、Zygote プロセスをフォークすることにより Android 上で新しいアプリが始まり、アプリ固有のコードがロードおよび実行されます。
 
 #### The App Sandbox
 
