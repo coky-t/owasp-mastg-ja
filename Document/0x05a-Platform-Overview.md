@@ -356,32 +356,32 @@ FragmentManager fm = getFragmentManager();
 
 フラグメントは必ずしもユーザーインタフェースを持つとは限りません。それらはアプリのユーザーインタフェースを扱うバックグラウンド操作を管理するための便利で効率的な方法です。例えば、フラグメントが永続的であると宣言されているとき、その親アクティビティが破棄および再作成される場合などです。
 
-##### Intents
+##### インテント
 
-Intents are messaging components used between apps and components. They can be used by an app to send information to its own components (for instance, start inside the app a new activity) or to other apps, and may be received from other apps or from the operating system. Intents can be used to start activities or services, run an action on a given set of data, or broadcast a message to the whole system. They are a convenient way to decouple components.
+インテントはアプリとコンポーネントの間で使用されるメッセージングコンポーネントです。それらはアプリ自体のコンポーネントや他のアプリに情報を送信する (例えば、アプリ内で新しいアクティビティを開始する) ために使用でき、他のアプリやオペレーティングシステムから受信できます。インテントを使用して、アクティビティやサービスを開始したり、特定のデータセットでのアクションを実行したり、システム全体にメッセージをブロードキャストしたりできます。それらはコンポーネントを切り離す便利な方法です。
 
-There are two kinds of intents: explicit and implicit.
-* Explicit intents launch a specific app component, like an activity in your app. For instance:
+インテントには明示的と暗黙的の二種類があります。
+* 明示的インテントはアプリ内のアクティビティなどの特定のアプリコンポーネントを実行します。例を以下に示します。
 
 ```Java
 	Intent intent = new Intent(this, myActivity.myClass);
 ```
 
-* Implicit intents are sent to the system with a given action to perform on a given set of data ("http://www.example.com" in our example below). It is up to the system to decide which app or class will perform the corresponding service. For instance:
+* 暗黙的インテントは特定のアクションをシステムに送信し、特定のデータセット (以下の例では "http://www.example.com") で実行します。対応するサービスを実行するアプリまたはクラスを決定するのはシステムに任されています。例を以下に示します。
 
 ```Java
 	Intent intent = new Intent(Intent.MY_ACTION, Uri.parse("http://www.example.com"));
 ```
 
-Android uses intents to broadcast messages to apps, like an incoming call or SMS, important information on power supply (low battery for example) or network changes (loss of connection for instance). Extra data may be added to intents (through putExtra / getExtras).
+Android はインテントを使用して、着信通知やSMS、電源供給 (バッテリ不足など) やネットワークの変更 (接続の喪失など) に関する重要な情報など、アプリにメッセージをブロードキャストします。拡張データをインテントに追加できます (putExtra / getExtras を通じて) 。
 
-Here is a short list of intents from the operating system. All constants are defined in the Intent class, and the whole list can be found in Android official documentation:
+ここではオペレーティングシステムからのインテントのリストの一部を示します。すべての定数は Intent クラスで定義され、リスト全体は Android の公式ドキュメントにあります。
 - ACTION_CAMERA_BUTTON
 - ACTION_MEDIA_EJECT
 - ACTION_NEW_OUTGOING_CALL
 - ACTION_TIMEZONE_CHANGED
 
-In order to improve security and privacy, a Local Broadcast Manager exists and is used to send and receive intents inside an app, without having them sent to the outside world (other apps or operating system). This is very useful to guarantee sensitive or private data do not leave the app perimeter (geolocation data for instance).
+セキュリティとプライバシーを向上させるために、ローカルブロードバンドマネージャが存在し、アプリ内でインテントを送受信するために使用されます。外部の世界 (他のアプリやオペレーティングシステム) に送信されることはありません。これは機密データや個人データがアプリ境界を離れないようにするために非常に便利です (位置データなど) 。
 
 ##### Broadcast Receivers
 
