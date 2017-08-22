@@ -330,14 +330,14 @@ Android アプリはオペレーティングシステムのコントロールの
 
 アプリは明示的にすべてのイベントマネージャを実装しない可能性があります。その状況では、デフォルトアクションがとられます。但し、一般的には少なくとも onCreate マネージャがアプリ開発者によりオーバーライドされ、ほとんどのユーザーインタフェースコンポーネントが宣言および初期化されます。(ネットワーク接続やデータベースへの接続など) 一部のリソースを明示的にリリースする必要がある場合や、アプリの最後に特定のアクションを実行する必要がある場合には、onDestroy をオーバーライドできます。
 
-##### Fragments
+##### フラグメント
 
-Basically, a fragment represents a behavior or a portion of user interface in an Activity. Fragments have been introduced in Android with version Honeycomb 3.0 (API level 11).
+基本的に、フラグメントはアクティビティのビヘイビアまたはユーザーインタフェースの一部を表します。フラグメントは Honeycomb 3.0 (API level 11) バージョンで Android に導入されました。
 
-User interfaces are made of several elements: views, groups of views, fragments and activities. As for them, fragments are meant to encapsulate parts of the interface to make reusability easier and better adapt to different size of screens. Fragments are autonomous entities in that they embed all they need to work in themselves (they have their own layout, own buttons etc.).  However, they must be integrated in activities to become useful: fragments cannot exist on their own. They have their own lifecycle, which is tied to the one of the activity that implements them.
-As they have their own lifecycle, the Fragment class contains event managers, that can be redefined or extended. Such event managers can be onAttach, onCreate, onStart, onDestroy and onDetach. Several others exist; the reader should refer to Android specification for more details<sup>[15]</sup>.
+ユーザーインタフェースはビュー、ビューのグループ、フラグメント、アクティビティといったいくつかの要素で構成されています。それらについて、フラグメントはインタフェースの一部をカプセル化して再利用性を容易にし、さまざまなサイズの画面にうまく適応することを意図しています。フラグメントは自律的なエンティティで、それら自体で作業するために必要となるすべてを埋め込んでいます (それら自体のレイアウト、ボタンなどを持っています) 。しかし、それらは有用となるにはアクティビティに統合される必要があります。フラグメントはそれ自体では存在できません。それらはそれら自体のライフサイクルを持っています。ライフサイクルはそれらを実装するアクティビティのひとつに結び付けられています。
+それらはそれら自体のライフサイクルを持っているため、Fragment クラスにはイベントマネージャが含まれていて、再定義または拡張できます。そのようなイベントマネージャには onAttach, onCreate, onStart, onDestroy, onDetach があります。他にもいくつか存在します。読者は詳細について Android の仕様を参照すべきです <sup>[15]</sup> 。
 
-Fragments can be implemented easily by extending the Fragment class provided by Android:
+フラグメントは Android により提供される Fragment クラスを拡張することにより簡単に実装できます。
 
 ```Java
 public class myFragment extends Fragment {
@@ -345,16 +345,16 @@ public class myFragment extends Fragment {
 }
 ```
 
-Fragments don't need to be declared in manifest files as they depend on activities.
+フラグメントはアクティビティに依存するため、マニフェストファイルで宣言する必要はありません。
 
-In order to manage its fragments, an Activity can use a Fragment Manager (FragmentManager class). This class makes it easy to find, add, remove and replace associated fragments.
-Fragment Managers can be created simply with the following:
+フラグメントを管理するために、アクティビティはフラグメントマネージャ (FragmentManager クラス) を使用できます。このクラスは関連するフラグメントの検索、追加、削除、置換を容易にします。
+フラグメントマネージャは以下のように簡単に作成できます。
 
 ```Java
 FragmentManager fm = getFragmentManager();
 ```
 
-Fragments do not necessarily have a user interface: they can be a convenient and efficient way to manage background operations dealing with user interface in an app. For instance when a fragment is declared as persistent while its parent activity may be destroyed and created again.
+フラグメントは必ずしもユーザーインタフェースを持つとは限りません。それらはアプリのユーザーインタフェースを扱うバックグラウンド操作を管理するための便利で効率的な方法です。例えば、フラグメントが永続的であると宣言されているとき、その親アクティビティが破棄および再作成される場合などです。
 
 ##### Intents
 
