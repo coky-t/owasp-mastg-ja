@@ -256,7 +256,7 @@ Android アプリはアーキテクチャを構成するいくつかの上位コ
 
 ##### アプリケーションライフサイクル
 
-Android アプリはオペレーティングシステムのコントロールの下で独自のライフサイクルを持ちます。したがって、アプリは状態の変化に耳を傾ける必要があり、それに対応できる必要があります。例えば、システムはリソースが必要な場合、アプリが kill される可能性があります。システムはアプリの優先度に応じて kill されるものを選択します。アクティブなアプリは最も優先度が高く (実際にはブロードキャストレシーバと同様) 、visible なもの、実行中のサービス、バックグラウンドサービス、そして最後に不用なプロセス (例えば、まだ open しているが、かなりの時間、使用されていないアプリ) と続きます。
+Android アプリはオペレーティングシステムのコントロールの下で独自のライフサイクルを持ちます。したがって、アプリは状態の変化を listen する必要があり、それに対応できる必要があります。例えば、システムはリソースが必要な場合、アプリが kill される可能性があります。システムはアプリの優先度に応じて kill されるものを選択します。アクティブなアプリは最も優先度が高く (実際にはブロードキャストレシーバと同様) 、visible なもの、実行中のサービス、バックグラウンドサービス、そして最後に不用なプロセス (例えば、まだ open しているが、かなりの時間、使用されていないアプリ) と続きます。
 
 アプリはいくつかのイベントマネージャを実装し、イベントを処理します。例えば、onCreate ハンドラはアプリケーションの作成時に実行する必要があるものを実装し、そのイベントで呼び出されます。他のマネージャには onLowMemory, onTrimMemory, onConfigurationChanged があります。
 
@@ -317,7 +317,7 @@ Android アプリはオペレーティングシステムのコントロールの
 
 アクティビティがマニフェストで宣言されていない場合、表示できず、例外が発生します。
 
-アプリと同じように、アクティビティも独自のライフサイクルを持ちます。システムの変化に耳を傾ける必要があり、それに応じてそれらを処理します。アクティビティには、active, paused, stopped, inactive の状態があります。これらの状態は Android オペレーティングシステムにより管理されます。したがって、アクティビティでは以下のイベントマネージャを実装します。
+アプリと同じように、アクティビティも独自のライフサイクルを持ちます。システムの変化を listen する必要があり、それに応じてそれらを処理します。アクティビティには、active, paused, stopped, inactive の状態があります。これらの状態は Android オペレーティングシステムにより管理されます。したがって、アクティビティでは以下のイベントマネージャを実装します。
 - onCreate
 - onSaveInstanceState
 - onStart
@@ -383,13 +383,13 @@ Android はインテントを使用して、着信通知やSMS、電源供給 (�
 
 セキュリティとプライバシーを向上させるために、ローカルブロードバンドマネージャが存在し、アプリ内でインテントを送受信するために使用されます。外部の世界 (他のアプリやオペレーティングシステム) に送信されることはありません。これは機密データや個人データがアプリ境界を離れないようにするために非常に便利です (位置データなど) 。
 
-##### Broadcast Receivers
+##### ブロードキャストレシーバ
 
-Broadcast Receivers are components that allow to receive notifications sent from other apps and from the system itself. This way, apps can react to events (either internal, from other apps or from the operating system). They are generally used to update a user interface, start services, update content or create user notifications.
+ブロードキャストレシーバは他のアプリおよびシステム自体から送信される通知を受信できるコンポーネントです。これにより、アプリはイベント (内部、他のアプリから、オペレーティングシステムから) に反応できます。一般的には、ユーザーインタフェースの更新、サービスの開始、コンテンツの更新、ユーザー通知の作成に使用されます。
 
-Broadcast Receivers need to be declared in the Manifest file of the app. Any Broadcast Receiver must be associated to an intent filter in the manifest to specify which actions it is meant to listen with which kind of data. If they are not declared, the app will not listen to broadcasted messages. However, apps do not need to be started to receive intents: they are automatically started by the system when a relevant intent is raised.
+ブロードキャストレシーバはアプリのマニフェストファイルに宣言する必要があります。ブロードキャストレシーバはマニフェストのインテントフィルタに関連付けられ、どのアクションがどの種類のデータを listen するか指定します。宣言されていない場合、アプリはブロードキャストされたメッセージを listen しません。但し、アプリはインテントを受信するために開始されている必要はありません。関連するインテントが発生したときにシステムにより自動的に開始されます。
 
-An example of declaring a Broadcast Receiver with an Intent Filter in a manifest is:
+マニフェストにインテントフィルタを持つブロードキャストレシーバを宣言する例を以下に示します。
 ```
 	<receiver android:name=".myReceiver" >
 		<intent-filter>
@@ -398,11 +398,11 @@ An example of declaring a Broadcast Receiver with an Intent Filter in a manifest
 	</receiver>
 ```
 
-When receiving an implicit intent, Android will list all apps that have registered a given action in their filters. If more than one app is matching, then Android will list all those apps and will require the user to make a selection.
+暗黙のインテントを受信すると、Android はフィルタに特定のアクションを登録したすべてのアプリをリストします。複数のアプリが一致する場合、Android はそれらのアプリすべてを一覧表示し、ユーザーに選択を要求します。
 
-An interesting feature concerning Broadcast Receivers is that they be assigned a priority; this way, an intent will be delivered to all receivers authorized to get them according to their priority.
+ブロードキャストレシーバに関する興味深い機能として優先度の割り当てがあります。これにより、インテントは優先度に応じてそれらを取得することを認証されたすべてのレシーバにインテントを配信します。
 
-A Local Broadcast Manager can be used to make sure intents are received only from the internal app, and that any intent from any other app will be discarded. This is very useful to improve security.
+ローカルブロードキャストマネージャを使用するとて、インテントはアプリ内からのみ受信され、他のアプリからのインテントは破棄されます。これはセキュリティを向上するために非常に便利です。
 
 ##### Content Providers
 
