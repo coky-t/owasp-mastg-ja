@@ -422,17 +422,17 @@ Android アプリはサンドボックスにインストールされ、最初は
 例えば、アプリで電話のカメラを使用する場合は、カメラパーミッションを要求する必要があります。
 Marshmallow (API 23) 以前の Android バージョンでは、アプリが要求するすべてのパーミッションはインストール時に権限付与されていました。Android Marshmallow 以降、ユーザーはアプリの実行中にいくつかのパーミッションを承認する必要があります。
 
-###### Protection Levels
+###### 保護レベル
 
-Android permissions are classified in four different categories based on the protection level it offers.
-- *Normal*: Is the lower level of protection, it gives apps access to isolated application-level feature, with minimal risk to other apps, the user or the system. It is granted during the installation of the App. If no protection level is specified, normal is the default value.
-Example: `android.permission.INTERNET`
-- *Dangerous*: This permission usually gives the app control over user data or control over the device that impacts the user. This type of permissoin may not be granted at installation time, leaving to the user decide whether the app should have the permission or not.
-Example: `android.permission.RECORD_AUDIO`
-- *Signature*: This permission is granted only if the requesting app was signed with the same certificate as the app that declared the permission. If the signature matches, the permission is automatically granted.
-Example: `android.permission.ACCESS_MOCK_LOCATION`
-- *SystemOrSignature*: Permission only granted to apps embedded in the system image or that were signed using the same certificated as the app that declared the permission.
-Example: `android.permission.ACCESS_DOWNLOAD_MANAGER`
+Android のパーミッションは提供する保護レベルに基づいて四つの異なるカテゴリに分類されます。
+- *Normal*: 低いレベルの保護です。他のアプリ、ユーザー、システムに与えるリスクを最小限に抑えながら、アプリが分離されたアプリケーションレベルの機能にアクセスできるようにします。アプリのインストール中に権限付与されます。保護レベルが指定されていない場合、normal がデフォルト値です。
+例: `android.permission.INTERNET`
+- *Dangerous*: このパーミッションは通常、ユーザーデータのコントロール、またはユーザーに影響を与えるデバイスのコントロールをアプリに許可します。このタイプのパーミッションはインストール時には権限付与されない可能性があります。アプリにパーミッションが必要かどうかをユーザーの決定に委ねます。
+例: `android.permission.RECORD_AUDIO`
+- *Signature*: このパーミッションは要求元のアプリがそのパーミッションを宣言したアプリと同じ証明書で署名されている場合にのみ権限付与されます。署名が一致する場合、このパーミッションは自動で権限付与されます。
+例: `android.permission.ACCESS_MOCK_LOCATION`
+- *SystemOrSignature*: システムイメージに埋め込まれたアプリ、もしくはそのパーミッションを宣言したアプリと同じ証明書を使用して署名されたアプリにのみ権限付与されるパーミッションです。
+例: `android.permission.ACCESS_DOWNLOAD_MANAGER`
 
 ###### Requesting Permissions
 
