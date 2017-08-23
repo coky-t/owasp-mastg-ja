@@ -412,9 +412,9 @@ SQLite は特定のアプリとは別のプロセスでは実行されず、そ�
 
 コンテンツプロバイダは URI アドレッシングスキームを通じて実装されます。それらはすべて content:// モデルを使用します。ソースの性質が何 (SQLite データベース、フラットファイル、など) であっても、アドレッシングスキームは常に同じであり、ソースが何であるかを抽象化し、開発者に一意のスキームを提供します。コンテンツプロバイダはデータベースのすべての通常の操作 (作成、読取、更新、削除) を提供します。つまり、マニフェストファイルに適切な権限を持つアプリは他のアプリからデータを操作できます。
 
-##### Services
+##### サービス
 
-Services are components provided by Android operating system (in the form of the Service class) that will perform tasks in the background (data processing, start intents and notifications, ...), without presenting any kind of user interface. Services are meant to run processing on the long term. Their system priorities are lower than the ones active apps have, but are higher than inactive ones. As such, they are less likely to be killed when the system needs resources; they can also be configured to start again automatically when enough resources become available in case they get killed. Activities are executed in the main app thread. They are great candidates to run asynchronous tasks.
+サービスは Android オペレーティングシステムにより (Service クラスの形式で) 提供されるコンポーネントであり、バックグラウンドでタスクを実行 (データ処理、インテント及び通知の開始、など) し、あらゆる種類のユーザーインタフェースを表示しません。サービスは長期的に処理を実行するためのものです。それらのシステムの優先度はアクティブアプリのものより低くなりますが、非アクティブなものよりも高くなります。そのため、システムがリソースを必要とする場合には、それらは kill される可能性が少なくなります。また、それらが kill された場合に十分なリソースが利用可能になった際には、自動で再起動するように設定することも可能です。アクティビティはメインのアプリスレッドで実行されます。それらは非同期タスクを実行するための素晴らしい候補です。
 
 ##### Permissions
 
