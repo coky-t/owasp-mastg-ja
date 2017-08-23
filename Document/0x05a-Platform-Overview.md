@@ -416,11 +416,11 @@ SQLite は特定のアプリとは別のプロセスでは実行されず、そ�
 
 サービスは Android オペレーティングシステムにより (Service クラスの形式で) 提供されるコンポーネントであり、バックグラウンドでタスクを実行 (データ処理、インテント及び通知の開始、など) し、あらゆる種類のユーザーインタフェースを表示しません。サービスは長期的に処理を実行するためのものです。それらのシステムの優先度はアクティブアプリのものより低くなりますが、非アクティブなものよりも高くなります。そのため、システムがリソースを必要とする場合には、それらは kill される可能性が少なくなります。また、それらが kill された場合に十分なリソースが利用可能になった際には、自動で再起動するように設定することも可能です。アクティビティはメインのアプリスレッドで実行されます。それらは非同期タスクを実行するための素晴らしい候補です。
 
-##### Permissions
+##### パーミッション
 
-Because Android apps are installed in a sandbox and initially it does not have access to neither user information nor access to system components (such as using the camera or the microphone), it provides a system based on permissions where the system has a predefined set of permissions for certain tasks that the app can request.
-As an example, if you want your app to use the camera on the phone you have to request the camera permission.
-On Android versions before Marshmallow (API 23) all permissions requested by an app were granted at installation time. From Android Marshmallow onwards the user have to approve some permissions during app execution.
+Android アプリはサンドボックスにインストールされ、最初はユーザー情報にもシステムコンポーネント (カメラやマイクの使用など) にもアクセスできないため、システムベースのパーミッションを提供します。システムにはアプリが要求できる特定のタスクに対して事前定義された一連のパーミッションがあります。
+例えば、アプリで電話のカメラを使用する場合は、カメラパーミッションを要求する必要があります。
+Marshmallow (API 23) 以前の Android バージョンでは、アプリが要求するすべてのパーミッションはインストール時に権限付与されていました。Android Marshmallow 以降、ユーザーはアプリの実行中にいくつかのパーミッションを承認する必要があります。
 
 ###### Protection Levels
 
