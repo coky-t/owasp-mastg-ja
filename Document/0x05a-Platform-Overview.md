@@ -491,9 +491,9 @@ Android のパーミッションは提供する保護レベルに基づいて四
 
 アプリケーションが Android デバイスにインストールされる際、パッケージマネージャは APK に含まれている証明書で署名されていることを検証します。証明書の公開鍵がデバイス上の他の APK を署名するために使用された鍵と一致する場合、新しい APK はその APK と UID を共有するオプションがあります。これにより同じベンダの複数のアプリケーション間のやり取りが容易になります。また、signature 保護レベルをセキュリティパーミッションとして指定し、同じ鍵で署名されたアプリケーションにアクセスを制限することもできます。
 
-#### APK Signing Schemes
+#### APK 署名スキーム
 
-Android supports two application signing schemes: As of Android 7.0, APKs can be verified using the APK Signature Scheme v2 (v2 scheme) or JAR signing (v1 scheme). For backward compatibility, APKs signed with the v2 signature format can be installed on older Android devices, as long as these APKs are also v1-signed. Older platforms ignore v2 signatures and only verify v1 signatures <sup>[9]</sup>.
+Android は二つのアプリケーション署名スキームをサポートしています。Android 7.0 以降、APK は APK 署名スキーム v2 (v2 スキーム) または JAR 署名 (v1 スキーム) を使用して検証できます。後方互換のため、v2 署名形式で署名された APK は、これらの APK が v1 署名されている限り、古い Android デバイスにインストールできます。古いプラットフォームは v2 署名を無視し、v1 署名のみを検証します <sup>[9]</sup> 。
 
 ##### JAR Signing (v1 scheme):
 
