@@ -464,10 +464,10 @@ Android のパーミッションは提供する保護レベルに基づいて四
 ```
 同じ開発者証明書で署名されたアプリのみがこのパーミッションを使用できます。
 
-###### Enforcing Permissions on Android Components
+###### Android コンポーネントでのパーミッションの強制
 
-It is possible to protect Android components using permissions. Activities, Services, Content Providers and Broadcast Receivers all can use the permission mechanism to protect its interfaces.
-*Activities*, *Services* and *Broadcast Receivers* can enforce a permission by entering the attribute *android:permission* inside each tag in AndroidManifest.xml:
+パーミッションを使用することで Android コンポーネントを保護することが可能です。アクティビティ、サービス、コンテンツプロバイダ、ブロードキャストレシーバはいずれもそのインタフェースを保護するためにパーミッションメカニズムを使用できます。
+*アクティビティ*、*サービス*、*ブロードキャストレシーバ* は AndroidManifest.xml の各タグ内に属性 *android:permission* を入力することでパーミッションを強制できます。
 ```
 <receiver
     android:name="com.permissions.sample.AnalyticsReceiver"
@@ -476,10 +476,10 @@ It is possible to protect Android components using permissions. Activities, Serv
     ...
 </receiver>
 ```
-*Content Providers* are a little bit different. They allow separate permissions for read, write or access the Content Provider using a content URI.
-- `android:writePermission`, `android:readPermission`: The developer can set separate permissions to read or write.
-- `android:permission`: General permission that will control read and write to the Content Provider.
-- `android:grantUriPermissions`: True if the Content Provider can be accessed using a content URI, temporarily overcoming the restriction of other permissions and False, if not.
+コンテンツプロバイダは少し異なります。読み取り、書き込み、コンテンツ URI を使用したコンテンツプロバイダのアクセスを個別に許可します。
+- `android:writePermission`, `android:readPermission`: 開発者は読み取りまたは書き込みのパーミッションを個別に設定できます。
+- `android:permission`: コンテンツプロバイダへの読み書きをコントロールする一般的なパーミッションです。
+- `android:grantUriPermissions`: コンテンツ URI を使用してコンテンツプロバイダがアクセスでき、他のパーミッションの制限を一時的に打ち消す場合は True 、そうでない場合は False 。
 
 ### Signing and Publishing Process
 
