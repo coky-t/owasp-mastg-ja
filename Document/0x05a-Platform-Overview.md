@@ -448,10 +448,10 @@ Android のパーミッションは提供する保護レベルに基づいて四
 ```
 これにより、アプリはインストール時に SMS メッセージを読むことができるようになります (Android Marshmallow - 23 以前) 、または、アプリは実行時にパーミッションを許可するようユーザーに求めます (Android M 以降) 。
 
-###### Declaring Permissions
+###### パーミッションの宣言
 
-Any app is able to expose its features or content to other apps installed on the system. It can expose the information openly or restrict it some apps by declaring a permission.
-The example below shows an app declaring a permission of protection level *signature*.
+アプリはその機能やコンテンツをシステムにインストールされている他のアプリに公開することができます。情報をおおっぴらに公開でき、パーミッションを宣言することで一部のアプリに制限することができます。
+以下の例は保護レベル *signature* のパーミッションを宣言するアプリを示しています。
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.permissions.sample" ...>
@@ -462,7 +462,7 @@ The example below shows an app declaring a permission of protection level *signa
     <application>...</application>
 </manifest>
 ```
-Only apps signed with the same developer certificate can use this permission.
+同じ開発者証明書で署名されたアプリのみがこのパーミッションを使用できます。
 
 ###### Enforcing Permissions on Android Components
 
