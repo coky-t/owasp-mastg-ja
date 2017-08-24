@@ -485,11 +485,11 @@ Android のパーミッションは提供する保護レベルに基づいて四
 
 アプリがうまく開発されると、次のステップはそれを公開して他の人と共有することです。しかし、アプリを単純にストアに置いて共有することはできません。いくつかの理由から、それらに署名する必要があります。これはアプリが本物であることを保証し、作成者を証明するための便利な方法です。例えば、アプリのアップグレードはそのアップデートが元のアプリと同じ証明書で署名されている場合にのみ可能です。また、これは署名ベースのパーミッションが使用されているときに同じ証明書で署名されたアプリ間での共有を許可する方法です。
 
-#### Signing Process
+#### 署名のプロセス
 
-During development, apps are signed with an automatically generated certificate. This certificate is inherently insecure and is used for debugging only. Most stores do not accept this kind of certificates when trying to publish, therefore another certificate, with more secure features, has to be created and used.
+開発中では、アプリは自動的に生成された証明書で署名されます。この証明書は本質的にセキュアではなく、デバッグにのみ使用されます。ほとんどのストアは公開しようとするときにこの種の証明書を受け入れません。そのため、よりセキュアな特性を持つ他の証明書を作成および使用する必要があります。
 
-When an application  is installed onto an Android device, the Package Manager verifies that it has been signed with the certificate included in that APK. If the public key in the certificate matches the key used to sign any other APK on the device, the new APK has the option to share a UID with that APK. This facilitates interaction between multiple applications from the same vendor. Alternatively, it as also possible to specify security permissions the Signature protection level, restricting access to applications signed with the same key.
+アプリケーションが Android デバイスにインストールされる際、パッケージマネージャは APK に含まれている証明書で署名されていることを検証します。証明書の公開鍵がデバイス上の他の APK を署名するために使用された鍵と一致する場合、新しい APK はその APK と UID を共有するオプションがあります。これにより同じベンダの複数のアプリケーション間のやり取りが容易になります。また、signature 保護レベルをセキュリティパーミッションとして指定し、同じ鍵で署名されたアプリケーションにアクセスを制限することもできます。
 
 #### APK Signing Schemes
 
