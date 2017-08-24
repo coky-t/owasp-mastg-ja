@@ -434,10 +434,10 @@ Android のパーミッションは提供する保護レベルに基づいて四
 - *SystemOrSignature*: システムイメージに埋め込まれたアプリ、もしくはそのパーミッションを宣言したアプリと同じ証明書を使用して署名されたアプリにのみ権限付与されるパーミッションです。
 例: `android.permission.ACCESS_DOWNLOAD_MANAGER`
 
-###### Requesting Permissions
+###### パーミッションの要求
 
-Apps can request permissions of protection level Normal, Dangerous and Signature by inserting the XML tag `<uses-permission />` to its Android Manifest file.
-The example below shows an AndroidManifes.xml sample requesting permission to read SMS messages:
+アプリは Android マニフェストファイルに XML タグ `<uses-permission />` を挿入することにより、保護レベル Normal, Dangerous, Signature のパーミッションを要求できます。
+以下の例は SMS メッセージを読むパーミッションを要求する AndroidManifes.xml サンプルを示しています。
 ```
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.permissions.sample" ...>
@@ -446,7 +446,7 @@ The example below shows an AndroidManifes.xml sample requesting permission to re
     <application>...</application>
 </manifest>
 ```
-This will enable the app to read SMS messages at install time (before Android Marshmallow - 23) or will enable the app to ask the user to allow the permission at runtime (Android M onwards).
+これにより、アプリはインストール時に SMS メッセージを読むことができるようになります (Android Marshmallow - 23 以前) 、または、アプリは実行時にパーミッションを許可するようユーザーに求めます (Android M 以降) 。
 
 ###### Declaring Permissions
 
