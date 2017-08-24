@@ -481,9 +481,9 @@ Android のパーミッションは提供する保護レベルに基づいて四
 - `android:permission`: コンテンツプロバイダへの読み書きをコントロールする一般的なパーミッションです。
 - `android:grantUriPermissions`: コンテンツ URI を使用してコンテンツプロバイダがアクセスでき、他のパーミッションの制限を一時的に打ち消す場合は True 、そうでない場合は False 。
 
-### Signing and Publishing Process
+### 署名と公開のプロセス
 
-Once an app has been successfully developed, the next step is to publish it to share it with others. However, apps cannot simply be put on a store and shared: for several reasons, they need to be signed. This is a convenient way to ensure that apps are genuine and authenticate them to their authors: for instance, an upgrade to an app will only be possible if the update is signed with the same certificate as the original app. Also, this is a way to allow sharing between apps that are signed with the same certificate when signature-based permissions are used.
+アプリがうまく開発されると、次のステップはそれを公開して他の人と共有することです。しかし、アプリを単純にストアに置いて共有することはできません。いくつかの理由から、それらに署名する必要があります。これはアプリが本物であることを保証し、作成者を証明するための便利な方法です。例えば、アプリのアップグレードはそのアップデートが元のアプリと同じ証明書で署名されている場合にのみ可能です。また、これは署名ベースのパーミッションが使用されているときに同じ証明書で署名されたアプリ間での共有を許可する方法です。
 
 #### Signing Process
 
