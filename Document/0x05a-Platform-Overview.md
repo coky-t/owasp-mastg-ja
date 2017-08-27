@@ -499,13 +499,13 @@ Android は二つのアプリケーション署名スキームをサポートし
 
 アプリ署名のオリジナルバージョンでは、署名された APK は実際には標準署名付き JAR で、<code>META-INF/MANIFEST.MF</code> にリストされているエントリを含みます。すべてのエントリは同じ証明書を使用して署名する必要があります。このスキームは ZIP のメタデータなど APK の一部を保護しません。このスキームの欠点は APK verifier が署名を適用する前に信頼できない処理構造を処理し、署名が適用されていないデータを破棄する必要があることです。また、APK verifier はすべての圧縮ファイルを展開する必要があり、時間とメモリをかなり消費します。
 
-##### APK Signature Scheme (v2 scheme)
+##### APK 署名スキーム (v2 スキーム)
 
-In the APK signature scheme, the complete APK is hashed and signed, and an APK Signing Block is created and inserted into the APK. During validation, v2 scheme treats performs signature checking across the entire file. This form of APK verification is faster and offers more comprehensive protection against modification.
+APK 署名スキームでは、完全な APK がハッシュおよび署名され、APK 署名ブロックが作成されて APK に挿入されます。検証の間、v2 スキーム処理はファイル全体にわたって署名検査を実行します。この形式の APK 検証は高速で、改変に対するより包括的な保護を提供します。
 
 <img src="Images/Chapters/0x05a/apk-validation-process.png" width="600px"/>
 
-*APK signature verification process* <sup>[9]</sup>
+*APK 署名検証プロセス* <sup>[9]</sup>
 
 ##### Creating Your Certificate
 
