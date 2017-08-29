@@ -538,13 +538,13 @@ apksigner sign --out mySignedApp.apk --ks myKeyStore.jks myUnsignedApp.apk
 
 <code>zipalign</code> ツールは常に使用する必要があります。配布前に APK ファイルを調整します。このツールは APK 内の圧縮されていないすべてのデータ、画像や RAW ファイルなど、を4バイト境界に調整します。これにより、アプリ実行時のメモリ管理が改善されます。apksigner を使用する場合、APK ファイルに署名する前に zipalign を実行する必要があります。
 
-#### Publishing Process
+#### 公開プロセス
 
-The Android ecosystem is open, and, as such, it is possible to distribute apps from anywhere (your own site, any store, ...). However, Google Play is the more famous, trusted and popular store and is provided by Google itself.
+Android エコシステムはオープンであるため、どこから (自身のサイト、任意のストア、など) でもアプリを配布することができます。しかし、Google Play はより有名で信頼できる人気のあるストアで、Google 自体が提供しています。
 
-Whereas other vendors may review and approve apps before they are actually published, such things do not happen on Google Play; this way, a short release time can be expected between the moment when the developer starts the publishing process and the moment when the app is available to users.
+他のベンダーでは実際に公開する前にアプリのレビューおよび承認をする可能性がありますが、Google Play ではそのようなことは起こりません。この方法では、開発者が公開プロセスを開始してから、ユーザーがアプリを使用できるまで、短いリリース時間となることが期待できます。
 
-Publishing an app is quite straightforward, as the main operation is to make the signed .apk file itself downloadable. On Google Play, it starts with creating an account, and then delivering the app through a dedicated interface. Details are available on Android official documentation at https://developer.android.com/distribute/googleplay/start.html.
+主な操作は署名された .apk ファイル自体をダウンロード可能にすることであるため、アプリの公開は非常に簡単です。Google Play では、まずアカウントを作成し、それから専用のインタフェースを通じてアプリを配信します。詳細は Android 公式ドキュメント https://developer.android.com/distribute/googleplay/start.html でご覧いただけます。
 
 
 ### How Apps Communicate - Android IPC
