@@ -536,7 +536,7 @@ apksigner sign --out mySignedApp.apk --ks myKeyStore.jks myUnsignedApp.apk
 
 ###### Zipalign
 
-The <code>zipalign</code> tool should always be used to align an APK file before distribution. This tool aligns all uncompressed data within the APK, such as images or raw files, on 4-byte boundaries, which allows for improved memory management during app runtime. If using apksigner, zipalign must be performed before the APK file has been signed.
+<code>zipalign</code> ツールは常に使用する必要があります。配布前に APK ファイルを調整します。このツールは APK 内の圧縮されていないすべてのデータ、画像や RAW ファイルなど、を4バイト境界に調整します。これにより、アプリ実行時のメモリ管理が改善されます。apksigner を使用する場合、APK ファイルに署名する前に zipalign を実行する必要があります。
 
 #### Publishing Process
 
