@@ -547,11 +547,11 @@ Android エコシステムはオープンであるため、どこから (自身�
 主な操作は署名された .apk ファイル自体をダウンロード可能にすることであるため、アプリの公開は非常に簡単です。Google Play では、まずアカウントを作成し、それから専用のインタフェースを通じてアプリを配信します。詳細は Android 公式ドキュメント https://developer.android.com/distribute/googleplay/start.html でご覧いただけます。
 
 
-### How Apps Communicate - Android IPC
+### アプリの通信方法 - Android IPC
 
-As we know, every process on Android has its own sandboxed address space. Inter-process communication (IPC) facilities enable apps to exchange signals and data in a (hopefully) secure way. Instead of relying on the default Linux IPC facilities, IPC on Android is done through Binder, a custom implementation of OpenBinder. A lot of Android system services, as well as all high-level IPC services, depend on Binder.
+ご存知のとおり、Android のすべてのプロセスは自身のサンドボックス化されたアドレス空間を持っています。プロセス間通信 (IPC) 機能によりアプリが信号とデータを (うまくいけば) セキュアな方法で交換できます。デフォルトの Linux IPC 機能に頼る代わりに、Android 上の IPC では OpenBinder のカスタム実装である Binder を通じて行われます。Android システムサービスの多くとすべての高レベル IPC サービスは Binder に依存しています。
 
-In the Binder framework, a client-server communication model is used. IPC clients communicate through a client-side proxy. This proxy connects to the Binder server, which is implemented as a character driver (/dev/binder).The server holds a thread pool for handling incoming requests, and is responsible for delivering messages to the destination object. Developers  write interfaces for remote services using the Android Interface Descriptor Language (AIDL).
+Binder フレームワークでは、クライアント・サーバー通信モデルが使用されます。IPC クライアントはクライアント側プロキシを介して通信します。このプロキシは Binder サーバーに接続します。これはキャラクタードライバ (/dev/binder) として実装されています。サーバーは着信要求を処理するためのスレッドプールを保持し、宛先オブジェクトにメッセージを配信する責任があります。開発者は Android インタフェース記述言語 (AIDL) を使用してリモートサービス用のインタフェースを作成します。
 
 ![Binder Overview](Images/Chapters/0x05a/binder.jpg)
 *Binder Overview. Image source: [Android Binder by Thorsten Schreiber](https://www.nds.rub.de/media/attachments/files/2011/10/main.pdf)*
