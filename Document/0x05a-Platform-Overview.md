@@ -522,17 +522,17 @@ keytool -genkey -alias myDomain -keyalg RSA -keysize 2048 -validity 7300 -keysto
 
 Android 証明書の有効期間は関連するアプリ (その更新情報を含む) のものより長くする必要があります。例えば、Google Play では証明書は少なくとも2033年10月22日まで有効である必要があります。
 
-##### Signing an Application
+##### アプリケーションへの署名
 
-After the developer has generated its own private / public key pair, the signing process can take place. From a high-level point of view, this process is meant to associate the app file (.apk) with the public key of the developer (by encrypting the hash value of the app file with the private key, where only the associated public key can decrypt it to its actual value that anyone can calculate from the .apk file): this guarantees the authenticity of the app (e.g. that the app really comes from the user who claims it) and enforces a mechanism where it will only be possible to upgrade the app with other versions signed with the same private key (e.g. from the same developer).
+開発者が自身の秘密鍵/公開鍵のペアを生成した後、署名プロセスが実行されます。高レベルの観点から、このプロセスはアプリファイル (.apk) を開発者の公開鍵に関連付けることを目的としています (アプリファイルのハッシュ値を秘密鍵で暗号化することにより、関連する公開鍵で誰でも .apk ファイルから実際の値にそれを復号化できます) 。これはアプリの真正性 (アプリが本当にそれを主張するユーザーから提供されたかなど) を保証し、同じ秘密鍵 (同じ開発者など) で署名された他のバージョンでのみアプリをアップグレードできるメカニズムを実施します。
 
-Many Integrated Development Environments (IDE) integrate the app signing process to make it easier for the user. Be aware that some IDEs store private keys in clear text in configuration files; you should be aware of this and double-check this point in case others are able to access such files, and remove the information if needed.
+多くの統合開発環境 (IDE) はアプリの署名プロセスを統合して、ユーザーにとってより使いやすくしています。一部の IDE では秘密鍵を平文で設定ファイルに格納することに注意します。これを認識し、他の人がこのようなファイルにアクセスできるかどうかという点を再度確認します。必要に応じて、その情報を削除します。
 
-Apps can be signed from the command line by using the 'apksigner' tool provided in Android SDK (API 24 and higher) or the 'jarsigner' tool from Java JDK in case of earlier Android versions. Details about the whole process can be found in Android official documentation; however, an example is given below to illustrate the point:
+アプリはコマンドラインから署名できます。Android SDK (API 24 以降) で提供される 'apksigner' ツールを使用するか、以前の Android バージョンの場合には Java JDK の 'jarsigner' ツールを使用します。全体のプロセスについての詳細は Android 公式ドキュメントにあります。その例を以下に示し、その要点を説明します。
 ```
 apksigner sign --out mySignedApp.apk --ks myKeyStore.jks myUnsignedApp.apk
 ```
-In this example, an unsigned app ready for signing ('myUnsignedApp.apk') is going to be signed with a private key from the developer keystore 'myKeyStore.jks' located in the current directory and will become a signed app called 'mySignedApp.apk' ready for release on stores.
+この例では、署名を準備している未署名のアプリ ('myUnsignedApp.apk') はカレントディレクトリにある開発者キーストア 'myKeyStore.jks' の秘密鍵で署名され、ストアでのリリースに向けた 'mySignedApp.apk' という署名つきのアプリになります。
 
 ###### Zipalign
 
