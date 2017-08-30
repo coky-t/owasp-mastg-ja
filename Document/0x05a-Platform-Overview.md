@@ -556,40 +556,40 @@ Binder フレームワークでは、クライアント・サーバー通信モ�
 ![Binder Overview](Images/Chapters/0x05a/binder.jpg)
 *Binder Overview. Image source: [Android Binder by Thorsten Schreiber](https://www.nds.rub.de/media/attachments/files/2011/10/main.pdf)*
 
-#### High-Level Abstractions
+#### 高レベルの抽象化
 
-*Intent messaging* is a framework for asynchronous communication built on top of binder. This framework enables both point-to-point and publish-subscribe messaging. An *Intent* is a messaging object that can be used to request an action from another app component. Although intents facilitate communication between components in several ways, there are three fundamental use cases:
+*インテントメッセージング* は binder 上に構築された非同期通信のフレームワークです。このフレームワークはポイントツーポイントとパブリッシュ・サブスクライブの両方のメッセージングが可能です。*インテント* は他のアプリコンポーネントからアクションを要求するために使用できるメッセージングオブジェクトです。インテントにはいくつかの方法でコンポーネント間の通信を容易にしますが、三つの基本的な使用例があります。
 
-- Starting an activity
-	- An Activity represents a single screen in an app. You can start a new instance of an Activity by passing an Intent to startActivity(). The Intent describes the activity to start and carries any necessary data.
-- Starting a Service
-	- A Service is a component that performs operations in the background without a user interface. With Android 5.0 (API level 21) and later, you can start a service with JobScheduler.
-- Delivering a broadcast
-	- A broadcast is a message that any app can receive. The system delivers various broadcasts for system events, such as when the system boots up or the device starts charging. You can deliver a broadcast to other apps by passing an Intent to sendBroadcast() or sendOrderedBroadcast().
+- アクティビティの開始
+	- アクティビティはアプリ内のひとつの画面を表します。インテントを startActivity() に渡すことにより、アクティビティの新しいインスタンスを開始できます。インテントは開始するアクティビティを記述し、必要なデータを運びます。
+- サービスの開始
+	- サービスはユーザーインタフェースなしでバックグラウンドで操作を実行するコンポーネントです。Android 5.0 (API レベル 21) 以降では、JobScheduler を使用してサービスを開始できます。
+- ブロードキャストの配信
+	- ブロードキャストは任意のアプリが受信できるメッセージです。システムは、システム起動時やデバイスが充電を開始したときなど、システムイベント用のさまざまなブロードキャストを配信します。インテントを sendBroadcast() や sendOrderedBroadcast() に渡すことにより、ブロードキャストを他のアプリに配信できます。
 
-There are two types of Intents:
+インテントには二つのタイプがあります。
 
-- Explicit intents specify the component to start by name (the fully-qualified class name).
+- 明示的インテントは名前 (完全修飾クラス名)  で始まるコンポーネントを指定します。
 
-- Implicit intents do not name a specific component, but instead declare a general action to perform, which allows a component from another app to handle it. When you create an implicit intent, the Android system finds the appropriate component to start by comparing the contents of the intent to the intent filters declared in the manifest file of other apps on the device.
+- 暗黙的インテントは特定のコンポーネントを指名する代わりに、実行する一般的なアクションを宣言します。これにより他のアプリからコンポーネントを処理できるようになります。暗黙的インテントを作成すると、Android システムはインテントの内容をデバイス上の他のアプリのマニフェストファイルで宣言されているインテントフィルタと比較することにより、適切なコンポーネントを見つけ出します。
 
-An *intent filter* is an expression in an app's manifest file that specifies the type of intents that the component would like to receive. For instance, by declaring an intent filter for an activity, you make it possible for other apps to directly start your activity with a certain kind of intent. Likewise, if you do not declare any intent filters for an activity, then it can be started only with an explicit intent.
+*インテントフィルタ* はアプリのマニフェストファイル内の式であり、コンポーネントが受信したいインテントのタイプを指定します。例えば、アクティビティのインテントフィルタを宣言することにより、他のアプリが特定の種類のインテントでアクティビティを直接開始することを可能にします。同様に、アクティビティのインテントフィルタを宣言しなければ、明示的インテントでのみ開始できます。
 
-For activities and broadcast receivers, intents are the preferred mechanism for asynchronous IPC in Android. Depending on your app requirements, you might use sendBroadcast(), sendOrderedBroadcast(), or an explicit intent to a specific app component.
+アクティビティとブロードキャストレシーバでは、インテントは Android の非同期 IPC で推奨されるメカニズムです。アプリの要件に応じて、sendBroadcast(), sendOrderedBroadcast(), または特定のアプリコンポーネントの明示的インテントを使用できます。
 
-A BroadcastReceiver handles asynchronous requests initiated by an Intent.
+ブロードキャストレシーバはインテントにより開始された非同期要求を処理します。
 
-Using Binder or Messenger is the preferred mechanism for RPC-style IPC in Android. They provide a well-defined interface that enables mutual authentication of the endpoints, if required.
+Binder や Messenger を使用することは Android の RPC スタイルの IPC で推奨されるメカニズムです。必要に応じて、エンドポイントの相互認証を可能にする明確に定義されたインタフェースを提供します。
 
 -- TODO [Explain what vulnerabilities can be created while using IPC mechanisms. Give short examples in the form of code snippets] --
 
-Android’s Messenger represents a reference to a Handler that can be sent to a remote process via an Intent
+Android の Messenger はインテント経由でリモートプロセスに送信できるハンドラへの参照を表します。
 
-A reference to the Messenger can be sent via an Intent using the previously mentioned IPC mechanism
+Messenger への参照は、前述の IPC メカニズムを使用してインテント経由で送信できます。
 
-Messages sent by the remote process via the messenger are delivered to the local handler. Great for efficient call-backs from the service to the client
+Messenger を経由してリモートプロセスにより送信されたメッセージはローカルハンドラに渡されます。サービスからクライアントへの効率的なコールバックに最適です。
 
-### References
+### 参考情報
 
 * [1] Android Security - https://source.android.com/security/
 * [2] Android Developer: App Components - https://developer.android.com/guide/components/index.html
