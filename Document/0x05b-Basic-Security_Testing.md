@@ -1,10 +1,10 @@
 ## セキュリティテスト入門 (Android)
 
-### Setting Up Your Testing Environment
+### テスト環境の設定
 
-When setting up the testing environment, this can become a challenging task. For example when testing on-site at client premises there might be restrictions when using an enterprise Access Point due to limitations in the connections that can be made (e.g. ports are blocked), making it more difficult to start a dynamic analysis of the app. Rooted phones might also not be allowed within the enterprise network due to company policies. Also, root detection and other countermeasures implemented within an app can lead to significant extra work just to be able to finally test the app. Either way, the testing team responsible for the Android assessment need to work together with the app developer(s) and operation team in order to find a proper solution for a working testing environment.
+テスト環境を設定する場合、これは困難な作業になる可能性があります。例えば、クライアントの敷地内でオンサイトでテストする場合、作成できる接続の制限 (ポートがブロックされているなど) により、エンタープライズアクセスポイントを使用する際に制限があるため、アプリの動的解析を開始することがより困難になります。ルート化された電話は企業ポリシーによりエンタープライズネットワーク内で許可されないこともあります。また、アプリ内で実装されるルート検出やその他の対策は、最終的にアプリをテストできるようにするために、余計な作業につながる可能性があります。いずれにしても、Android 評価を担当するテストチームはアプリ開発者や運用チームと協力して、作業するテスト環境として最適なソリューションを見つける必要があります。
 
-This section will give an overview of different methods on how an Android app can be tested and will illustrate also its limitations. Due to the reasons stated above you should be aware of all possible testing methods to select the right one for your testing environment, but also to articulate restrictions so that everybody in the project is on the same page.
+このセクションでは Android アプリのテスト方法に関するさまざまな手法の概要を説明し、その制限についても説明します。上記の理由により、テスト環境に適したものを選択するために、すべての可能なテスト手法について注意する必要があります。また、プロジェクトの全員が同じ考えを持つようにするため、制限を明示します。
 
 #### Preparation
 
