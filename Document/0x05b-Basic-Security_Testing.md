@@ -20,18 +20,18 @@
 
 アプリケーションのテストを開始する前に、必要なハードウェアとソフトウェアをすべて用意することが重要です。これは検査ツールを実行する準備が整ったマシンを用意するだけでなく、正しいバージョンの Android OS がテストデバイスにインストールされていることも意味します。したがって、アプリケーションが特定のバージョンの Android OS でのみ動作するかどうかを尋ねることを常に推奨します。
 
-#### Testing on a Real Device
+#### 実デバイスでのテスト
 
-Different preparation steps need to be applied before a dynamic analysis of a mobile app can be started. Ideally the device is rooted, as otherwise some test cases cannot be tested properly. See "Rooting your device" for more information.
+モバイルアプリの動的解析を開始する前に、さまざまな準備手順を適用する必要があります。理想的にはデバイスはルート化されています。そうでなければいくつかのテストケースを適切にテストできません。詳細については「デバイスのルート化」を参照ください。
 
-The available setup options for the network need to be evaluated first. The mobile device used for testing and the machine running the interception proxy need to be placed within the same WiFi network. Either an (existing) access point is used or an ad-hoc wireless network is created<sup>[3]</sup>.
+ネットワーク用に利用可能なセットアップオプションを最初に評価する必要があります。テストに使用されるモバイルデバイスと傍受プロキシを実行するマシンは同じ WiFi ネットワーク内に配置する必要があります。(既存の) アクセスポイントが使用されるか、アドホックワイヤレスネットワークを作成します <sup>[3]</sup> 。
 
-Once the network is configured and connectivity is established between the testing machine and the mobile device, several other steps need to be done.
+ネットワークが構成され、テストマシンとモバイルデバイスとの間に接続が確立されたら、いくつかの他の手順を実行する必要があります。
 
-* The proxy in the network settings of the Android device need to be configured properly to point to the interception proxy in use<sup>[1]</sup>.
-* The CA certificate of the interception proxy need to be added to the trusted certificates in the certificate storage <sup>[2]</sup> of the Android device. Due to different versions of Android and modifications of Android OEMs to the settings menu, the location of the menu to store a CA might differ.
+* Android デバイスのネットワーク設定のプロキシは、使用する傍受プロキシを指すように正しく設定する必要があります <sup>[1]</sup> 。
+* 傍受プロキシの CA 証明書は Android デバイスの証明書ストレージ <sup>[2]</sup> の信頼できる証明書に追加する必要があります。さまざまなバージョンの Android と、Android OEM の設定メニューの変更のため、CA を格納するためのメニューの場所は異なる可能性があります。
 
-After finishing these steps and starting the app, the requests should show up in the interception proxy.
+これらの手順を完了してアプリを起動すると、リクエストが傍受プロキシに表示されます。
 
 
 ##### Rooting Your Device
