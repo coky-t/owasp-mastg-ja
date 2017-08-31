@@ -39,19 +39,19 @@
 ###### ルート化のリスク
 
 セキュリティテスト担当者として、モバイルデバイスのルート化を望むかもしれません。一部のテストは非ルート化デバイスで実行できますが、一部はルート化したものを必要とします。しかし、ルート化は簡単なプロセスではなく、高度な知識を要するという事実に注意が必要です。ルート化にはリスクがあり、進める前に三つの主要な影響を明らかにする必要があります。
-* 通常はデバイスの保証を無効にします (何らかの措置をとる前に製造者のポリシーを必ず確認します) 。
+* 通常はデバイスの保証を無効にします (何らかの措置をとる前に製造業者のポリシーを必ず確認します) 。
 * デバイスを「文鎮化」する可能性があります。例えば、操作不能かつ使用不可にします。
 * 組込まれているエクスプロイト対策がしばしば削除されるため、セキュリティリスクが増加します。
 
 **デバイスをルート化することは最終的にあなた自身の判断であり、OWASP はいかなる損害に対しても一切の責任を負わないことを理解する必要があります。確信が持てない場合には、ルート化プロセスを開始する前に必ず専門家のアドバイスを求めます。**
 
-###### What Mobiles Can Be Rooted?
+###### どのモバイルがルート化できるのか
 
-Virtually, any Android mobile can be rooted. Commercial versions of Android OS, at the kernel level evolutions of Linux OS, are optimized for the mobile world. Here some features are removed or disabled, such as the possibility for a non-privileged user to become the 'root' user (who has elevated privileges). Rooting a phone means adding the feature to become the root user, e.g. technically speaking adding a standard Linux executable called 'su' used for switching users.
+実質的には、どの Android モバイルでもルート化できます。商用バージョンの Android OSは、Linux OS のカーネルレベルの進化で、モバイルの世界に最適化されています。ここではいくつかの機能が削除または無効にされています。特権を持たないユーザーが (特権を持つ) 'root' ユーザーになる可能性などです。電話機のルート化はルートユーザーになる機能を追加することを意味します。例えば、技術的にはユーザーを切り替えるために使用される 'su' と呼ばれる標準の Linux 実行可能ファイルを追加するという話です。
 
-The first step in rooting a mobile is to unlock its boot loader. The procedure depends on each manufacturer. However, for practical reasons, rooting some mobiles is more popular than rooting others, particularly when it comes to security testing: devices created by Google (and manufactured by other companies like Samsung, LG and Motorola) are among the most popular, particularly because they are widely used by developers. The device warranty is not nullified when the boot loader is unlocked and Google provides many tools to support the root itself to work with rooted devices. A curated list of guide on rooting devices from all major brands can be found in xda forums<sup>[21]</sup>.
+モバイルをルート化する最初の手順はブートローダーをアンロックすることです。手続きは各製造業者により異なります。しかし、実用的な理由から、特にセキュリティテストに関しては、一部のモバイルのルート化は他のルート化よりも人気があります。Google 製 (および Samsung, LG, Motorola などの他社製) のデバイスは、特に開発者に広く使用されているため、最も人気があります。ブートローダーがアンロックされ、ルート化デバイスを使用するために Google がルート自体をサポートする多くのツールを提供している場合、デバイスの保証は無効になりません。すべての主要なブランドのデバイスのルート化に関するガイドの精選された一覧は xda フォーラムにあります <sup>[21]</sup> 。
 
-See also "Android Platform Overview" for further details.
+詳細については「Android プラットフォーム概要」も参照ください。
 
 ##### Restrictions When Using a Non-Rooted Device
 
