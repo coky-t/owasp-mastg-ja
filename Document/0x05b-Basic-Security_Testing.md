@@ -16,9 +16,9 @@
 
 いずれにしても、以下の項目についてモバイルアプリと議論する必要があり、実装されたセキュリティコントロールを調整して、テスト作業を最大限に活用できるかどうかを判断する必要があります。
 
-##### OS Versions
+##### OS バージョン
 
-Before starting to test any application, it is important to have all the required hardware and software. This does not only mean that you must have a configured machine ready to run auditing tools, but also that you have the correct version of Android OS installed on the testing device. Therefore, it is always recommended to ask if the application runs only on specific versions of Android OS.
+アプリケーションのテストを開始する前に、必要なハードウェアとソフトウェアをすべて用意することが重要です。これは検査ツールを実行する準備が整ったマシンを用意するだけでなく、正しいバージョンの Android OS がテストデバイスにインストールされていることも意味します。したがって、アプリケーションが特定のバージョンの Android OS でのみ動作するかどうかを尋ねることを常に推奨します。
 
 #### Testing on a Real Device
 
