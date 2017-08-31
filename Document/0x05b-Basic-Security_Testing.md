@@ -53,11 +53,11 @@
 
 詳細については「Android プラットフォーム概要」も参照ください。
 
-##### Restrictions When Using a Non-Rooted Device
+##### 非ルート化デバイスを使用する場合の制限事項
 
-For testing of an Android app a rooted device is the foundation for a tester to be able to execute all available test cases. In case a non-rooted device need to be used, it is still possible to execute several test cases to the app.
+Android アプリをテストするために、ルート化デバイスはテスト担当者がすべての利用可能なテストケースを実行できるようにするための基礎となります。非ルート化デバイスを使用する必要がある場合、依然としてアプリのいくつかのテストケースを実行することは可能です。
 
-Nevertheless, this highly depends on the restrictions and settings made in the app. For example if backups are allowed, a backup of the data directory of the app can be extracted. This allows detailed analysis of leakage of sensitive data when using the app. Also if SSL Pinning is not used a dynamic analysis can also be executed on a non-rooted device.  
+それでも、これはアプリでの制限や設定に大きく依存します。例えば、バックアップが許可されている場合、アプリのデータディレクトリのバックアップを抽出できます。これにより、アプリを使用するときに機密データの漏洩を詳細に分析できます。また、SSL ピンニングが使用されていない場合、非ルート化デバイスで動的解析を実行することもできます。
 
 #### Testing on the Emulator
 
