@@ -34,16 +34,16 @@
 これらの手順を完了してアプリを起動すると、リクエストが傍受プロキシに表示されます。
 
 
-##### Rooting Your Device
+##### デバイスのルート化
 
-###### Risks of Rooting
+###### ルート化のリスク
 
-As a security tester, you may want to root your mobile device: while some tests can be performed on a non-rooted mobile, some do require a rooted one. However, you need to be aware of the fact that rooting is not an easy process and requires advanced knowledge. Rooting is risky, and three main consequences need to be clarified before you may proceed: rooting
-* usually voids the device guarantee (always check the manufacturer policy before taking any action),
-* may "brick" the device, e.g. render it inoperable and unusable.
-* brings additional security risks as built-in exploit mitigations are often removed.
+セキュリティテスト担当者として、モバイルデバイスのルート化を望むかもしれません。一部のテストは非ルート化デバイスで実行できますが、一部はルート化したものを必要とします。しかし、ルート化は簡単なプロセスではなく、高度な知識を要するという事実に注意が必要です。ルート化にはリスクがあり、進める前に三つの主要な影響を明らかにする必要があります。
+* 通常はデバイスの保証を無効にします (何らかの措置をとる前に製造者のポリシーを必ず確認します) 。
+* デバイスを「文鎮化」する可能性があります。例えば、操作不能かつ使用不可にします。
+* 組込まれているエクスプロイト対策がしばしば削除されるため、セキュリティリスクが増加します。
 
-**You need to understand that rooting your device is ultimately YOUR own decision and that OWASP shall in no way be held responsible for any damage. In case you feel unsure, always seek expert advice before starting the rooting process.**
+**デバイスをルート化することは最終的にあなた自身の判断であり、OWASP はいかなる損害に対しても一切の責任を負わないことを理解する必要があります。確信が持てない場合には、ルート化プロセスを開始する前に必ず専門家のアドバイスを求めます。**
 
 ###### What Mobiles Can Be Rooted?
 
