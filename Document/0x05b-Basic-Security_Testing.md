@@ -1,20 +1,20 @@
 ## セキュリティテスト入門 (Android)
 
-### テスト環境の設定
+### テスト環境のセットアップ
 
-テスト環境を設定する場合、これは困難な作業になる可能性があります。例えば、クライアントの敷地内でオンサイトでテストする場合、作成できる接続の制限 (ポートがブロックされているなど) により、エンタープライズアクセスポイントを使用する際に制限があるため、アプリの動的解析を開始することがより困難になります。ルート化された電話は企業ポリシーによりエンタープライズネットワーク内で許可されないこともあります。また、アプリ内で実装されるルート検出やその他の対策は、最終的にアプリをテストできるようにするために、余計な作業につながる可能性があります。いずれにしても、Android 評価を担当するテストチームはアプリ開発者や運用チームと協力して、作業するテスト環境として最適なソリューションを見つける必要があります。
+テスト環境をセットアップする場合、これは困難な作業になる可能性があります。例えば、クライアントの敷地内でオンサイトでテストする場合、作成できる接続の制限 (ポートがブロックされているなど) により、エンタープライズアクセスポイントを使用する際に制限があるため、アプリの動的解析を開始することがより困難になります。ルート化された電話は企業ポリシーによりエンタープライズネットワーク内で許可されないこともあります。また、アプリ内で実装されるルート検出やその他の対策は、最終的にアプリをテストできるようにするために、余計な作業につながる可能性があります。いずれにしても、Android 評価を担当するテストチームはアプリ開発者や運用チームと協力して、作業するテスト環境として最適なソリューションを見つける必要があります。
 
 このセクションでは Android アプリのテスト方法に関するさまざまな手法の概要を説明し、その制限についても説明します。上記の理由により、テスト環境に適したものを選択するために、すべての可能なテスト手法について注意する必要があります。また、プロジェクトの全員が同じ考えを持つようにするため、制限を明示します。
 
-#### Preparation
+#### 準備
 
-Security testing involves many invasive tasks such as monitoring and manipulating the network traffic between the mobile app and its remote endpoints, inspecting the app's data files, and instrumenting API calls. Security controls like SSL Pinning and root detection might can impede these tasks and slow down the testing dramatically.
+セキュリティテストには、モバイルアプリとそのリモートエンドポイント間のネットワークトラフィックの監視や操作、アプリのデータファイルの検査、API コールの計装など、多くの侵入的な作業が含まれます。SSL ピンニングやルート検出などのセキュリティコントロールはこれらの作業を妨げ、テストを大幅に遅くする可能性があります。
 
-During the preparation phase it should be discussed with the company developing the mobile app, to provide two versions of the app. One app should be built as release to check if the implemented controls like SSL Pinning are working properly or can be easily bypassed. The same app should also be provided as debug build that deactivates certain security controls. Through this approach all scenarios and test cases can be tested in the most efficient way.
+準備フェーズでは、そのモバイルアプリを開発している会社と二つのバージョンのアプリを提供することについて話し合う必要があります。ひとつのアプリはリリースとしてビルドし、SSL ピンニングなどの実装されたコントロールが適切に動作しているかや容易にバイパスできるかを確認する必要があります。また、同じアプリはデバッグビルドとして提供され、特定のセキュリティコントロールを無効化する必要があります。このアプローチにより、すべてのシナリオとテストケースを最も効率的な方法でテストできます。
 
-This approach needs of course to align with the scope of the engagement and if it's a black box or white box test, see section "Static Analysis" above for further information. For a white box test, requesting for a production and debug build will help to go through all test cases and give a clear statement of the security maturity of the app. For a black box test it might be already the intention of the client to see what can be done in a certain amount of time with the production app and how effective the implemented security controls are.
+このアプローチでは取り決めの範囲に合わせる必要があります。ブラックボックステストやホワイトボックステストの場合、詳細については前述の「静的解析」セクションを参照ください。ホワイトボックステストでは、プロダクションとデバッグビルドをリクエストすると、すべてのテストケースを通して、アプリのセキュリティ成熟度を明確に説明するのみ役立ちます。ブラックボックステストでは、プロダクションアプリで一定時間内に何ができるかや、実装されたセキュリティコントロールがどのくらい効果的であるかを見ることがクライアントの意図である可能性があります。
 
-Either way, the following items should be discussed with the company developing the mobile app and it should be decided if the implemented security controls can be adjusted to get the best out of the testing exercise.  
+いずれにしても、以下の項目についてモバイルアプリと議論する必要があり、実装されたセキュリティコントロールを調整して、テスト作業を最大限に活用できるかどうかを判断する必要があります。
 
 ##### OS Versions
 
