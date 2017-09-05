@@ -59,14 +59,14 @@ Android アプリをテストするために、ルート化デバイスはテス
 
 それでも、これはアプリでの制限や設定に大きく依存します。例えば、バックアップが許可されている場合、アプリのデータディレクトリのバックアップを抽出できます。これにより、アプリを使用するときに機密データの漏洩を詳細に分析できます。また、SSL ピンニングが使用されていない場合、非ルート化デバイスで動的解析を実行することもできます。
 
-#### Testing on the Emulator
+#### エミュレータでのテスト
 
-All of the above steps to prepare a hardware testing device do also apply if an emulator is used<sup>[4]</sup>. For dynamic testing several tools or VMs are available that can be used to test an app within an emulator environment:
+ハードウェアテストデバイスを準備する上述のすべての手順は、エミュレータが使用される場合にも適用されます <sup>[4]</sup> 。動的テストの場合、エミュレータ環境内でアプリをテストするために使用できるいくつかのツールや VM があります。
 
 * AppUse
 * MobSF
 
-It is also possible to simply create an AVD and use this for testing.
+単に AVD を作成して、これをテストに使用することもできます。
 
 ##### Setting Up a Web Proxy on Virtual Device
 
