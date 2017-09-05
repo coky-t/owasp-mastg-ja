@@ -107,15 +107,15 @@ $ adb push cacert.cer /sdcard/
 
 証明書のインストールを確認するメッセージが表示されるはずです (まだデバイスの PIN を設定していない場合、設定するよう求められます) 。
 
-##### Connecting to an Android Virtual Device (AVD) as Root
+##### Android 仮想デバイス (AVD) にルートとして接続する
 
-An Android Virtual Device (AVD) can be created by using the AVD manager, which is available within Android Studio<sup>[5]</sup>. The AVD manager can also be started separately from the command line by using the `android` command in the tools directory of the Android SDK:
+Android 仮想デバイス (AVD) は Android Studio で利用可能な AVD manager を使用して作成できます <sup>[5]</sup> 。AVD manager は Android SDK の tools ディレクトリにある `android` コマンドを使用して、コマンドラインから個別に起動することもできます。
 
 ```bash
 $ ./android avd
 ```
 
-Once the emulator is up and running a root connection can be established by using `adb`.
+エミュレータが起動して実行されると、`adb` を使用してルート接続を確立できます。
 
 ```bash
 $ adb root
@@ -124,7 +124,7 @@ root@generic_x86:/ $ id
 uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats) context=u:r:su:s0
 ```
 
-Rooting of an emulator is therefore not needed as root access can be granted through `adb`.
+`adb` を通してルートアクセスが許可されるため、エミュレータのルート化は必要ありません。
 
 ##### Restrictions When Testing on an Emulator
 
