@@ -133,9 +133,9 @@ uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdca
 それでも、GPS <sup>[6]</sup> や SMS <sup>[7]</sup> など、いくつかのハードウェア特性をエミュレートしています。
 
 
-#### Potential Obstacles
+#### 潜在的な障壁
 
-For the following security controls that might be implemented into the app you are about to test, it should be discussed with the project team if it is possible to provide a debug build. A debug build has several benefits when provided during a (white box) test, as it allows a more comprehensive analysis.
+テストしようとしているアプリに実装される可能性のある以下のセキュリティコントロールについて、デバッグビルドを提供できるかどうかプロジェクトチームと協議する必要があります。(ホワイトボックス) テストの中で提供される場合、より包括的な解析できるため、デバッグビルドにはいくつかの利点があります。
 
 ##### SSL Pinning
 
