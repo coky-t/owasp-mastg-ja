@@ -126,11 +126,11 @@ uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdca
 
 `adb` を通してルートアクセスが許可されるため、エミュレータのルート化は必要ありません。
 
-##### Restrictions When Testing on an Emulator
+##### エミュレータ上でテストする際の制限事項
 
-There are several downsides when using an emulator. You might not be able to test an app properly in an emulator, if it's relying on the usage of a specific mobile network, or uses NFC or Bluetooth. Testing within an emulator is usually also slower in nature and might lead to issues on its own.
+エミュレータを使用する場合、いくつかの不都合な点があります。特定のモバイルネットワークの使用に依存する場合や、NFC や Bluetooth を使用する場合は、エミュレータでアプリを正しくテストできない可能性があります。エミュレータ内でのテストは通常本質的に遅く、独自の問題につながる可能性があります。
 
-Nevertheless several hardware characteristics can be emulated, like GPS<sup>[6]</sup> or SMS<sup>[7]</sup> and many more.
+それでも、GPS <sup>[6]</sup> や SMS <sup>[7]</sup> など、いくつかのハードウェア特性をエミュレートしています。
 
 
 #### Potential Obstacles
