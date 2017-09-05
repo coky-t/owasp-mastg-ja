@@ -68,27 +68,27 @@ Android アプリをテストするために、ルート化デバイスはテス
 
 単に AVD を作成して、これをテストに使用することもできます。
 
-##### Setting Up a Web Proxy on Virtual Device
+##### 仮想デバイスでの Web プロキシのセットアップ
 
-To set up a HTTP proxy on the emulator follow the following procedure, which works on the Android emulator shipping with Android Studio 2.x:
+エミュレータで HTTP プロキシをセットアップするには、Android Studio 2.x に付属の Android エミュレータで動作する以下の手順に従います。
 
-1. Set up your proxy to listen on localhost. Reverse-forward the proxy port from the emulator to the host, e.g.:
+1. localhost で listen するようにプロキシをセットアップします。プロキシポートをエミュレータからホストへリバースフォワードします。以下に例を示します。
 
 ```bash
 $ adb reverse tcp:8080 tcp:8080
 ```
 
-2. Configure the HTTP proxy in the access point settings of the device:
-- Open the Settings Menu
-- Tap on "Wireless & Networks" -> "Cellular Networks" or "Mobile Networks"
-- Open "Access Point Names"
-- Open the existing APN (e.g. "T-Mobile US")
-- Enter "127.0.0.1" in the "Proxy" field and your proxy port in the "Port" field (e.g. "8080")
-- Open the top-right menu and tap "save"
+2. デバイスのアクセスポイント設定で HTTP プロキシを設定します。
+- Settings メニューを開く
+- "Wireless & Networks" -> "Cellular Networks" または "Mobile Networks" をタップする
+- "Access Point Names" を開く
+- 既存の APN ("T-Mobile US" など) を開く
+- "Proxy" フィールドに "127.0.0.1" を入力し、"Port" フィールドにプロキシポートを入力する ("8080" など)
+- 右上のメニューを開き "save" をタップする
 
 <img width=300px src="Images/Chapters/0x05b/emulator-proxy.jpg"/>
 
-HTTP and HTTPS requests should now be routed over the proxy on the host machine. Try toggling airplane mode off and on if it doesn't work.
+HTTP および HTTPS リクエストはホストマシン上のプロキシ経由でルーティングされるようになりました。もし動作しない場合には、機内モードをオフおよびオンに切り替えてみます。
 
 ##### Installing a CA Certificate on the Virtual Device
 
