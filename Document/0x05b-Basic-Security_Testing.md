@@ -137,19 +137,19 @@ uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdca
 
 テストしようとしているアプリに実装される可能性のある以下のセキュリティコントロールについて、デバッグビルドを提供できるかどうかプロジェクトチームと協議する必要があります。(ホワイトボックス) テストの中で提供される場合、より包括的な解析できるため、デバッグビルドにはいくつかの利点があります。
 
-##### SSL Pinning
+##### SSL ピンニング
 
-SSL Pinning is a mechanism to make dynamic analysis harder. Certificates provided by an interception proxy to enable a Man-in-the-middle position are declined and the app will not make any requests. To be able to efficiently test during a white box test, a debug build with deactivated SSL Pinning should be provided.
+SSL ピンニングは動的解析を難しくするメカニズムです。中間者ポジションを有効にするために傍受プロキシにより提供された証明書は却下され、アプリはリクエストしません。ホワイトボックステストの中で効率的にテストできるようにするには、SSL ピンニングを無効化したデバッグビルドを提供する必要があります。
 
-For a black box test, there are several ways to bypass SSL Pinning, for example SSLUnpinning<sup>[11]</sup> or Android-SSL-TrustKiller<sup>[12]</sup>. Therefore bypassing can be done within seconds, but only if the app uses the API functions that are covered for these tools. If the app is using a different framework or library to implement SSL Pinning that is not implemented yet in those tools, the patching and deactivation of SSL Pinning needs to be done manually and can become time consuming.
+ブラックボックステストでは、SSLUnpinning <sup>[11]</sup> や Android-SSL-TrustKiller <sup>[12]</sup> など SSL ピンニングをバイパスする方法がいくつかあります。バイパスは数秒でできるため、これらのツールで扱う API 機能をアプリが使用する場合にのみ使用可能です。これらのツールでまだ実装されていない SSL ピンニングを実装するため、アプリが異なるフレームワークやライブラリを使用している場合は、SSL ピンニングのパッチ適用および非アクティブ化を手作業で行う必要があり、時間がかかる可能性があります。
 
-To manually deactivate SSL Pinning there are two ways:
-* Dynamical Patching while running the App, by using Frida<sup>[9] [13]</sup> or ADBI<sup>[10]</sup>
-* Disassembling the APK, identify the SSL Pinning logic in smali code, patch it and reassemble the APK<sup>[7] [22]</sup>
+SSL ピンニングを手動で非アクティブ化するには、二つの方法があります。
+* アプリ実行中の動的パッチ適用、Frida <sup>[9] [13]</sup> や ADBI<sup>[10]</sup> を使用します
+* APK を逆アセンブリし、smali コードの SSL ピンニングロジックを特定し、パッチを適用して APK を再アセンブルします <sup>[7] [22]</sup>
 
-Once successful, the prerequisites for a dynamic analysis are met and the apps communication can be investigated.
+成功すると、動的解析の前提条件が満たされ、アプリの通信を調査できます。
 
-See also test case "Testing Custom Certificate Stores and SSL Pinning" for further details.
+詳細についてはテストケース「カスタム証明書ストアと SSL ピンニングのテスト」も参照ください。
 
 ##### Root Detection
 
