@@ -90,22 +90,22 @@ $ adb reverse tcp:8080 tcp:8080
 
 HTTP および HTTPS リクエストはホストマシン上のプロキシ経由でルーティングされるようになりました。もし動作しない場合には、機内モードをオフおよびオンに切り替えてみます。
 
-##### Installing a CA Certificate on the Virtual Device
+##### 仮想デバイスへの CA 証明書のインストール
 
-An easy way to install a CA certificate is pushing the cert to the device and adding it to the certificate store via Security Settings. For example, you can install the PortSwigger (Burp) CA certificate as follows:
+CA 証明書をインストールする簡単な方法は、デバイスに証明書をプッシュし、セキュリティ設定で証明書ストアに証明書を追加することです。例えば、以下のように PortSwigger (Burp) CA 証明書をインストールできます。
 
-1. Start Burp and navigate to http://burp/ using a web browser on the host, and download cacert.der by clicking the "CA Certificate" button.
-2. Change the file extension from .der to .cer
-3. Push the file to the emulator:
+1. Burp を起動し、ホスト上のウェブブラウザを使用して http://burp/ に移動し、"CA Certificate" ボタンをクリックして cacert.der をダウンロードします。
+2. ファイル拡張子を .der から .cer に変更します。
+3. ファイルをエミュレータにプッシュします。
 
 ```bash
 $ adb push cacert.cer /sdcard/
 ```
 
-4. Navigate to "Settings" -> "Security" -> "Install from SD Card"
-5. Scroll down and tap on "cacert.cer"
+4. "Settings" -> "Security" -> "Install from SD Card" に移動します
+5. 下にスクロールし、"cacert.cer" をタップします
 
-You should now be prompted to confirm installation of the certificate (you'll also be asked to set a device PIN if you haven't already).
+証明書のインストールを確認するメッセージが表示されるはずです (まだデバイスの PIN を設定していない場合、設定するよう求められます) 。
 
 ##### Connecting to an Android Virtual Device (AVD) as Root
 
