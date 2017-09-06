@@ -151,11 +151,11 @@ SSL ピンニングを手動で非アクティブ化するには、二つの方�
 
 詳細についてはテストケース「カスタム証明書ストアと SSL ピンニングのテスト」も参照ください。
 
-##### Root Detection
+##### ルート検出
 
-Root detection can be implemented using pre-made libraries like RootBeer<sup>[14]</sup> or custom checks. An extensive list of root detection methods is presented in the "Testing Anti-Reversing Defenses on Android" chapter.
+ルート検出は RootBeer <sup>[14]</sup> などの既成のライブラリやカスタムチェックなどを使用して実装できます。ルート検出手法の広範囲にわたるリストは「アンチリバース防御のテスト (Android)」の章に示されています。
 
-In a typical mobile app security build, you'll usually want to test a debug build with root detection disabled. If such a build is not available for testing, root detection can be disabled using a variety of methods which will be introduced later in this book.
+典型的なモバイルアプリのセキュリティテストでは、一般的にルート検出を無効にしたデバッグビルドをテストします。そのようなビルドがテストで利用できない場合、ルート検出は本書で後述するさまざまな方法を使用して無効にできます。
 
 ### Testing Methods
 
