@@ -172,16 +172,16 @@ SSL ピンニングを手動で非アクティブ化するには、二つの方�
 
 静的解析は **ホワイトボックス** と **ブラックボックス** の二つのカテゴリに分類できます。前者はソースコードが利用可能である場合で、後者はコンパイルされたアプリケーションやライブラリのみがある場合です。それぞれのカテゴリの詳細について説明します。
 
-##### Static Analysis with Source Code ("White-Box")
+##### ソースコードありでの静的解析 ("ホワイトボックス")
 
-**White box testing** an app is the act of testing an app with the source code available. To accomplish the source code testing, you will want to have a setup similar to the developer. You will need a testing environment on your machine with the Android SDK and an IDE installed. It is also recommended to have access either to a physical device or an emulator, so you can debug the app.
+アプリの **ホワイトボックステスト** は利用可能なソースコードでアプリをテストする行為です。ソースコードのテストを行うには、開発者と同様のセットアップをすることが望まれます。Android SDK と IDE がインストールされたマシン上にテスト環境が必要です。また、物理デバイスまたはエミュレータにアクセスして、アプリをデバッグできるようにすることをお勧めします。
 
-Once you have the setup ready and the source code indexed by an IDE (Android Studio is recommended since it is the current IDE of choice by Google), you can start debugging and searching for interesting parts of code.
-Begin by testing each [Android Component](0x05a-Platform-Overview.md#app-components). Check whether they are exported and the enforcing permissions that are in place. Android Lint<sup>[15]</sup> can help in the identification of such problems. Any Android component manipulating sensitive data (contacts, location, images, etc.) should be investigated carefully.
+セットアップが完了し、ソースコードが IDE (Android Studio が推奨されています、これは Google が現在選択している IDE です) にインデックスされると、関心のある部分のコードのデバッグおよび検索を始められます。
+それぞれの [Android コンポーネント](0x05a-Platform-Overview.md#アプリコンポーネント) をテストすることからはじめます。それらがエクスポートされているかどうか、および所定のパーミッションを施行していることを確認します。Android Lint <sup>[15]</sup> がそのような問題の特定に役立ちます。機密データ (連絡先、位置情報、画像など) を操作するすべての Android コンポーネントを慎重に調査する必要があります。
 
-Proceed on to testing the libraries the application has embedded: some libraries contain known vulnerabilities and you should check for that. Some of the question you may want to answer are: what libraries are the app using? Which version of the libraries are being used? Do they have any known vulnerability?
+アプリケーションに組み込まれているライブラリのテストに進みます。一部のライブラリには既知の脆弱性があり、それを確認する必要があります。回答すべき質問は次のとおりです。アプリが使用しているライブラリはなんですか？どのバージョンのライブラリを使用していますか？それらには既知の脆弱性はありますか？
 
-Since you have the source code in hand, you can check for cryptographic mistakes in the implementation. Look for hard coded keys and implementation errors related to cryptography functions. Devknox<sup>[16]</sup> can help checking most common cryptographic mistakes since it is embedded to the IDE.
+手元にソースコードがあるため、実装での暗号の間違いを確認できます。ハードコードされた鍵や暗号化機能に関連する実装エラーを探します。Devknox <sup>[16]</sup> は IDE に組み込まれているため、最も一般的な暗号の間違いを確認するのに役立ちます。
 
 ##### Static Analysis without Source Code ("Black-Box")
 
