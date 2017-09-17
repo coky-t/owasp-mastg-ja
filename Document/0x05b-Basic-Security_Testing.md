@@ -332,9 +332,9 @@ mwrlabs.urls
 
 ```
 
-###### Installing Modules
+###### モジュールのインストール
 
-You can install modules using the `module` command:
+`module` コマンドを使用してモジュールをインストールします。
 
 ```
 dz> module install mwrlabs.tools.setup.sqlite3
@@ -342,8 +342,8 @@ Processing mwrlabs.tools.setup.sqlite3... Already Installed.
 Successfully installed 1 modules, 0 already installed
 ```
 
-This will install any module that matches your query. Newly installed modules are dynamically loaded into the
-console and are available for immediate use.
+これによりクエリに一致したモジュールがインストールされます。
+新しくインストールされたモジュールはコンソールに動的にロードされ、すぐに使用できます。
 
 #### Firebase/Google Cloud Messaging (FCM/GCM)
 
