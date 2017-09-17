@@ -215,11 +215,11 @@ Android リバースエンジニアリングのトピックに関する詳細や
 * Androbugs<sup>[19]</sup>
 * JAADAS<sup>[20]</sup>
 
-#### Dynamic Analysis
+#### 動的解析
 
-Compared to static analysis, dynamic analysis is applied while executing the mobile app. The test cases can range from investigating the file system and changes made to it on the mobile device to monitoring the communication with the endpoint while using the app.
+静的解析と比較して、動的解析はモバイルアプリの実行中に適用されます。テストケースは、モバイルデバイスのファイルシステムとその変更を調べることから、アプリ使用中のエンドポイントとの通信を監視することまでさまざまです。
 
-When we talk about dynamic analysis of applications that rely on the HTTP(S) protocol, several tools can be used to support the dynamic analysis. The most important tools are so called interception proxies, like OWASP ZAP or Burp Suite Professional to name the most famous ones. An interception proxy allows the tester to have a Man-in-the-middle position in order to read and/or modify all requests made from the app and responses coming from the endpoint for testing Authorization, Session Management and so on.
+HTTP(S) プロトコルに依存するアプリケーションの動的解析について言及するとき、いくつかのツールを使用して、動的解析をサポートできます。もっとも重要なツールは傍受プロキシと呼ばれ、もっとも有名なものとして OWASP ZAP や Burp Suite Professional などがあります。傍受プロキシはテスト担当者に中間者のポジションをあたえ、認証やセッション管理などをテストするために、アプリから作られたすべてのリクエストとエンドポイントから返されたレスポンスを読み取りもしくは変更することができます。
 
 #### Drozer
 
