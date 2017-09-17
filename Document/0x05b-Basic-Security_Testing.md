@@ -223,7 +223,7 @@ HTTP(S) プロトコルに依存するアプリケーションの動的解析に
 
 #### Drozer
 
-Drozer<sup>[25]</sup> is an Android security assessment framework that allows you to search for security vulnerabilities in apps and devices by assuming the role of a third party app interacting with the other application's IPC endpoints and the underlying OS. The following section documents the steps necessary to install and begin using Drozer.
+Drozer<sup>[25]</sup> は Android セキュリティ評価フレームワークであり、他のアプリケーションの IPC エンドポイントや基盤となる OS と相互作用するサードパーティアプリの役割を前提として、アプリやデバイスのセキュリティ脆弱性を探します。以下のセクションでは Drozer をインストールおよび使用するために必要な手順について説明します。
 
 ##### Installing Drozer
 
