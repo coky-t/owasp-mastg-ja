@@ -306,10 +306,10 @@ dz>
 Drozer は Android プラットフォームのさまざまな側面やいくつかのリモートエクスプロイトを調査するためのモジュールを提供します。
 Drozer の機能を拡張するには、追加のモジュールをダウンロードおよびインストールします。
 
-###### Finding Modules
+###### モジュールの検索
 
-The official Drozer module repository is hosted alongside the main project on Github. This is automatically set
-up in your copy of Drozer. You can search for modules using the `module` command:
+公式の Drozer モジュールリポジトリは Github のメインプロジェクトとともにホストされています。これは Drozer のコピーに自動的にセットアップされます。
+`module` コマンドを使用してモジュールを検索できます。
 
 ```bash
 dz> module search tool
@@ -318,7 +318,7 @@ metall0id.tools.setup.nmap
 mwrlabs.tools.setup.sqlite3
 ```
 
-For more information about a module, pass the `–d` option to view the module's description:
+モジュールについての詳細は、`–d` オプションをつけてモジュールの説明を表示します。
 
 ```
 dz> module  search url -d
