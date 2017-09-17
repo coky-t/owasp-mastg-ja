@@ -301,10 +301,10 @@ selecting f75640f67144d9a3 (unknown sdk 4.1.1)
 dz>
 ```
 
-##### Using Modules
+##### モジュールの使用
 
-Out of the box, Drozer provides modules to investigate various aspects of the Android platform, and a few
-remote exploits. You can extend Drozer's functionality by downloading and installing additional modules.
+Drozer は Android プラットフォームのさまざまな側面やいくつかのリモートエクスプロイトを調査するためのモジュールを提供します。
+Drozer の機能を拡張するには、追加のモジュールをダウンロードおよびインストールします。
 
 ###### Finding Modules
 
