@@ -225,9 +225,9 @@ HTTP(S) プロトコルに依存するアプリケーションの動的解析に
 
 Drozer<sup>[25]</sup> は Android セキュリティ評価フレームワークであり、他のアプリケーションの IPC エンドポイントや基盤となる OS と相互作用するサードパーティアプリの役割を前提として、アプリやデバイスのセキュリティ脆弱性を探します。以下のセクションでは Drozer をインストールおよび使用するために必要な手順について説明します。
 
-##### Installing Drozer
+##### Drozer のインストール
 
-###### Building from Source
+###### ソースからビルドする
 
 ```
 git clone https://github.com/mwrlabs/drozer/
@@ -238,13 +238,13 @@ python setup.py build
 sudo env "PYTHONPATH=$PYTHONPATH:$(pwd)/src" python setup.py install
 ```
 
-###### Installing .egg
+###### .egg のインストール
 
 ```
 sudo easy_install drozer-2.x.x-py2.7.egg
 ```
 
-###### Building for Debian/Ubuntu
+###### Debian/Ubuntu でのビルド
 
 ```
 sudo apt-get install python-stdeb fakeroot
@@ -256,21 +256,21 @@ python setup.py --command-packages=stdeb.command bdist_deb
 
 ```
 
-###### Installing .deb (Debian/Ubuntu)
+###### .deb のインストール (Debian/Ubuntu)
 
 ```
 sudo dpkg -i deb_dist/drozer-2.x.x.deb
 ```
 
-###### Installing on Arch Linux
+###### Arch Linux でのインストール
 
 `yaourt -S drozer`
 
-##### Installing the Agent
+##### Agent のインストール
 
-Drozer can be installed using Android Debug Bridge (adb).
+Drozer は Android Debug Bridge (adb) を使用してインストールできます。
 
-Download the latest Drozer Agent [here](https://github.com/mwrlabs/drozer/releases/).
+最新の Drozer Agent を [ここ](https://github.com/mwrlabs/drozer/releases/) からダウンロードします。
 
 `$ adb install drozer-agent-2.x.x.apk`
 
