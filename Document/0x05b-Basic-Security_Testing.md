@@ -183,11 +183,11 @@ SSL ピンニングを手動で非アクティブ化するには、二つの方�
 
 手元にソースコードがあるため、実装での暗号の間違いを確認できます。ハードコードされた鍵や暗号化機能に関連する実装エラーを探します。Devknox <sup>[16]</sup> は IDE に組み込まれているため、最も一般的な暗号の間違いを確認するのに役立ちます。
 
-##### Static Analysis without Source Code ("Black-Box")
+##### ソースコードなしでの静的解析 ("ブラックボックス")
 
-During **Black box testing** you will not have access to the source code in its original form. Usually, you will have the application package in hand (in Android .apk format<sup>[17]</sup>), which can be installed on an Android device or reverse engineered with the goal to retrieve parts of the source code.
+**ブラックボックステスト**では、オリジナルの形式のソースコードにアクセスしません。通常、あなたは (Android .apk 形式 <sup>[17]</sup> の) アプリケーションパッケージを手にしており、Android デバイスにインストールすることや、ソースコードの一部を取得する目的でリバースエンジニアリングすることも可能です。
 
-An easy way on the CLI to retrieve the source code of an APK is through <code>apkx</code>, which also packages <code>dex2jar</code> and CFR and automates the extracting, conversion and decompilation steps. Install it as follows:
+CLI で APK のソースコードを取得する簡単な方法は <code>apkx</code> を通すことです。<code>dex2jar</code> と CFR をパッケージ化しており、抽出、変換、逆コンパイルの手順を自動化します。以下のようにインストールします。
 
 ```
 $ git clone https://github.com/b-mueller/apkx
@@ -195,7 +195,7 @@ $ cd apkx
 $ sudo ./install.sh
 ```
 
-This should copy <code>apkx</code> to <code>/usr/local/bin</code>. Run it on the APK that need to be tested:
+これは <code>apkx</code> を <code>/usr/local/bin</code> にコピーします。テストする必要のある APK でそれを実行します。
 
 ```bash
 $ apkx UnCrackable-Level1.apk
@@ -205,15 +205,15 @@ dex2jar UnCrackable-Level1/classes.dex -> UnCrackable-Level1/classes.jar
 Decompiling to UnCrackable-Level1/src (cfr)
 ```
 
-If the application is based solely on Java and does not have any native library (code written in C/C++), the reverse engineering process is relatively easy and recovers almost the entire source code. Nevertheless, if the code is obfuscated, this process might become very time consuming and might not be productive. The same applies for applications that contain a native library. They can still be reverse engineered but require low level knowledge and the process is not automated.
+アプリケーションは Java のみをベースにしており、ネイティブライブラリ (C/C++ で書かれたコード) を持たない場合、リバースエンジニアリングプロセスは比較的簡単で、ほとんどすべてのソースコードを復元します。しかしながら、コードが難読化されている場合、このプロセスは非常に時間がかかり、生産的ではなくなる可能性があります。同じことがネイティブライブラリを含むアプリケーションにも当てはまります。それらは依然としてリバースエンジニアリングできますが、低レベルの知識を必要とし、プロセスは自動化されません。
 
-More details and tools about the Android reverse engineering topic can be found at [Tampering and Reverse Engineering on Android](0x05b-Reverse-Engineering-and-Tampering.md) section.
+Android リバースエンジニアリングのトピックに関する詳細やツールは[改竄とリバースエンジニアリング (Android)](0x05c-Reverse-Engineering-and-Tampering.md) セクションにあります。
 
-Besides reverse engineering, there is a handful of automated tools that perform security analysis on the APK itself searching for vulnerabilities.
-Some of these tools are:
-* QARK<sup>[18]</sup>,
-* Androbugs<sup>[19]</sup> and
-* JAADAS<sup>[20]</sup>.
+リバースエンジニアリングのほかにも、脆弱性を検索するために APK のセキュリティ解析を実行する自動ツールがいくつかあります。
+これらのツールの一部は以下の通りです。
+* QARK<sup>[18]</sup>
+* Androbugs<sup>[19]</sup>
+* JAADAS<sup>[20]</sup>
 
 #### Dynamic Analysis
 
