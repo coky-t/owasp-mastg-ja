@@ -347,13 +347,13 @@ Successfully installed 1 modules, 0 already installed
 
 #### Firebase/Google Cloud Messaging (FCM/GCM)
 
-Firebase Cloud Messaging (FCM) is the successor of Google Cloud Messaging (GCM) and is a free service offered by Google and allows to send messages between an application server and client apps. The server and client app are communicating via the FCM/GCM connection server that is handling the downstream and upstream messages.
+Firebase Cloud Messaging (FCM) は Google Cloud Messaging (GCM) の後継であり、Google により提供されるフリーのサービスで、アプリケーションサーバーとクライアントアプリの間でメッセージを送信できます。サーバーとクライアントアプリは、ダウンストリームとアップストリームのメッセージを処理している FCM/GCM 接続サーバーを介して通信しています。
 
 ![Architectural Overview](Images/Chapters/0x05b/FCM-notifications-overview.png)
 
-Downstream messages are sent from the application server to the client app (push notifications); upstream messages are sent from the client app to the server.
+ダウンストリームメッセージはアプリケーションサーバーからクライアントアプリに送信されます (プッシュ通知) 。アップストリームメッセージはクライアントアプリからサーバーに送信されます。
 
-FCM is available for Android and also for iOS and Chrome. FCM provides two connection server protocols at the moment: HTTP and XMPP and there are several differences in the implementation, as described in the official documentation<sup>[24]</sup>. The following example demonstrates how to intercept both protocols.
+FCM は Android と iOS と Chrome で利用できます。FCM は現時点で二つの接続サーバープロトコルを提供しています。HTTP と XMPP があり、実装にはいくつかの違いがあります。公式ドキュメント <sup>[24]</sup> に記述があります。以下の例は両方のプロトコルを傍受する方法を示しています。
 
 ##### Preparation
 
