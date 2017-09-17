@@ -274,27 +274,27 @@ Drozer は Android Debug Bridge (adb) を使用してインストールできま
 
 `$ adb install drozer-agent-2.x.x.apk`
 
-##### Starting a Session
+##### セッションの開始
 
-You should now have the Drozer console installed on your PC, and the Agent running on your test device. Now, you need to connect the two and you’re ready to start exploring.
+これで、Drozer コンソールが PC にインストールされ、Agent がテストデバイスで実行されるはずです。ここで、この二つを接続する必要があり、探索を開始する準備を整えます。
 
-We will use the server embedded in the Drozer Agent to do this.
+Drozer Agent に組み込まれたサーバーを使用してこれを行います。
 
-If using the Android emulator, you need to set up a suitable port forward so that your PC can connect to a TCP socket opened by the Agent inside the emulator, or on the device. By default, drozer uses port 31415:
+Android エミュレータを使用する場合、適切なポートフォワードをセットアップし、PC がエミュレータ内やデバイス上の Agent により開いている TCP ソケットに接続できるようにします。デフォルトでは、drozer はポート 31415 を使用します。
 
 `$ adb forward tcp:31415 tcp:31415`
 
-Now, launch the Agent, select the “Embedded Server” option and tap “Enable” to start the server. You should see a notification that the server has started.
+ここで、Agent を実行し、"Embedded Server" オプションを選択し、"Enable" をタップしてサーバーを起動します。サーバーが起動したという通知が表示されます。
 
-Then, on your PC, connect using the drozer Console:
+次に、PC上で、drozer コンソールを使用して接続します。
 
 `$ drozer console connect`
 
-If using a real device, the IP address of the device on the network must be specified:
+実デバイスを使用する場合、ネットワーク上のデバイスの IP アドレスを指定する必要があります。
 
 `$ drozer console connect --server 192.168.0.10`
 
-You should be presented with a Drozer command prompt:
+Drozer コマンドプロンプトが表示されます。
 
 ```
 selecting f75640f67144d9a3 (unknown sdk 4.1.1)  
