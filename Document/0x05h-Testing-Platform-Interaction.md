@@ -49,19 +49,19 @@ _最小限の権限の原則_ に準拠したカスタムパーミッション�
 <uses-permission android:name=“com.example.myapp.permission.START_MAIN_ACTIVITY”/>
 ```
 
-#### Static Analysis
+#### 静的解析
 
-**Android Permissions**
+**Android パーミッション**
 
-Permissions should be checked if they are really needed within the App. For example in order for an Activity to load a web page into a WebView the `INTERNET` permission in the Android Manifest file is needed.
+パーミッションがアプリ内で本当に必要かどうかチェックする必要があります。例えば、アクティビティがウェブページを WebView にロードするには、Android マニフェストファイルに `INTERNET` パーミッションが必要です。
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-It is always recommended to run through the permissions with the developer together to identify the intention of every permission set and remove those that are not needed.
+すべてのパーミッションセットのインテントを識別し、必要のないものを削除するには、開発者と共にパーミッションを調べることを常にお勧めします。
 
-Alternatively, Android Asset Packaging tool can be used to examine permissions.
+また、Android Asset Packaging ツールを使用して、パーミッションを調べることもできます。
 
 ```bash
 $ aapt d permissions com.owasp.mstg.myapp
@@ -71,9 +71,9 @@ uses-permission: android.permission.SYSTEM_ALERT_WINDOW
 uses-permission: android.permission.INTERNAL_SYSTEM_WINDOW
 ```
 
-**Custom Permissions**
+**カスタムパーミッション**
 
-Apart from enforcing custom permissions via application manifest file, it can also be enforced programmatically. This is not recommended as this can lead to permission leaking and perform an unauthorized operation. This can be verified by inspecting whether if all defined custom permissions were enforced in the android manifest file.
+アプリケーションマニフェストファイルを使用してカスタムパーミッションを適用するのではなく、プログラムで適用することもできます。これはパーミッションのリークを引き起こし、認証されない操作を実行する可能性があるため、お勧めしません。これは定義されたすべてのカスタムパーミッションが Android マニフェストファイルに適用されているかどうかを調べることにより検証できます。
 
 ```java
 int canProcess = checkCallingOrSelfPermission(“com.example.perm.READ_INCOMING_MSG”);
