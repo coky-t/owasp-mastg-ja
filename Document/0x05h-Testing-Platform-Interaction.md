@@ -1,19 +1,19 @@
 ## プラットフォームインタラクションのテスト (Android)
 
-### Testing App Permissions
+### アプリパーミッションのテスト
 
-#### Overview
+#### 概要
 
-Android assigns every installed app with a distinct system identity (Linux user ID and group ID). Because each Android app operates in a process sandbox, apps must explicitly request access to resources and data outside their sandbox. They request this access by declaring the permissions they need to use certain system data and features. Depending on how sensitive or critical the data or feature is, Android system will grant the permission automatically or ask the user to approve the request.
+Androi はインストールされたすべてのアプリに異なるシステム識別子 (Linux ユーザー ID とグループ ID) を割り当てます。各 Android アプリはプロセスサンドボックス内で動作するため、アプリはサンドボックス外のリソースやデータへのアクセスを明示的に要求する必要があります。特定のシステムデータや機能を使用するために必要なパーミッションを宣言することにより、このアクセスを要求します。データや機能の機密性や重要性に応じて、Android システムは自動的にパーミッションを与えたり、ユーザーに要求を承認するよう求めます。
 
-Android permissions are classified in four different categories based on the protection level it offers.
+Android のパーミッションは提供する保護レベルに基づいて四つの異なるカテゴリに分類されます。
 
-* **Normal**: This permission gives apps access to isolated application-level features, with minimal risk to other apps, the user or the system. It is granted during the installation of the App. If no protection level is specified, normal is the default value. Example: `android.permission.INTERNET`
-* **Dangerous**: This permission usually gives the app control over user data or control over the device that impacts the user. This type of permission may not be granted at installation time, leaving it to the user to decide whether the app should have the permission or not. Example: `android.permission.RECORD_AUDIO`
-* **Signature**: This permission is granted only if the requesting app was signed with the same certificate as the app that declared the permission. If the signature matches, the permission is automatically granted. Example: `android.permission.ACCESS_MOCK_LOCATION`
-* **SystemOrSignature**: Permission only granted to applications embedded in the system image or that were signed using the same certificate as the application that declared the permission. Example: `android.permission.ACCESS_DOWNLOAD_MANAGER`
+* **Normal**: このパーミッションは、他のアプリ、ユーザー、システムへのリスクを最小限に抑えながら、アプリが独立したアプリケーションレベルの機能にアクセスできるようにします。これはアプリのインストール時に付与されます。保護レベルが指定されていない場合、normal がデフォルト値です。例： `android.permission.INTERNET`
+* **Dangerous**: このパーミッションはアプリにユーザーデータの制御やデバイスの制御を与え、ユーザーに影響を与えます。このタイプのパーミッションはインストール時には付与されないかもしれません。アプリにパーミッションを与えるかどうかをユーザーに委ねます。例： `android.permission.RECORD_AUDIO`
+* **Signature**: このパーミッションは、要求しているアプリがパーミッションを宣言したアプリと同じ証明書で署名されている場合にのみ付与されます。署名が一致する場合、パーミッションは自動的に付与されます。例： `android.permission.ACCESS_MOCK_LOCATION`
+* **SystemOrSignature**: このパーミッションはシステムイメージに組み込まれたアプリケーション、もしくはそのパーミッションを宣言したアプリケーションと同じ証明書を使用して署名されたアプリケーションにのみ付与されます。例： `android.permission.ACCESS_DOWNLOAD_MANAGER`
 
-A full list of all Android Permissions can be found in the developer documentation<sup>[1]</sup>.
+すべての Android パーミッションの完全なリストは、開発者ドキュメント <sup>[1]</sup> にあります。
 
 **Custom Permissions**
 
