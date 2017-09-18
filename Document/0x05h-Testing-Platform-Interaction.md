@@ -15,18 +15,18 @@ Android のパーミッションは提供する保護レベルに基づいて四
 
 すべての Android パーミッションの完全なリストは、開発者ドキュメント <sup>[1]</sup> にあります。
 
-**Custom Permissions**
+**カスタムパーミッション**
 
-Android allow apps to expose their services/components to other apps and custom permissions are required to restrict which app can access the exposed component. Custom permission can be defined in `AndroidManifest.xml`, by creating a permission tag with two mandatory attributes:
-* `android:name` and
-* `android:protectionLevel`.
+Android ではアプリのサービスやコンポーネントを他のアプリに公開できます。公開されているコンポーネントにアクセスできるアプリを制限するには、カスタムパーミッションが必要です。カスタムパーミッションは `AndroidManifest.xml` で定義でき、二つの必須の属性を持つ permission タグを作成します。
+* `android:name`
+* `android:protectionLevel`
 
-It is crucial to create custom permission that adhere to the _Principle of Least Privilege_: permission should be defined explicitly for its purpose with meaningful and accurate label and description.
+_最小限の権限の原則_ に準拠したカスタムパーミッションを作成することは重要です。パーミッションはその目的のために意味のある正確なラベルと説明で明示的に定義する必要があります。
 
-Below is an example of a custom permission called `START_MAIN_ACTIVITY` that is required when launching the `TEST_ACTIVITY` Activity.
+以下は `TEST_ACTIVITY` アクティビティを起動する際に必要となる `START_MAIN_ACTIVITY` というカスタムパーミッションの例です。
 
-The first code block defines the new permission which is self-explanatory. The label tag is a summary of the permission and description is a more detailed description of the summary. The protection level can be set based on the types of permission it is granting.
-Once you have defined your permission, it can be enforced on the component by specifying it in the application’s manifest. In our example, the second block is the component that we are going to restrict with the permission we created. It can be enforced by adding the `android:permission` attributes.
+最初のコードブロックは自明である新しいパーミッションを定義しています。label タグはパーミッションの要約であり、description は要約より詳細な説明です。protection level は付与しているパーミッションの種類に基づいて設定できます。
+パーミッションを定義したら、アプリケーションのマニフェストでそれを指定することにより、コンポーネントに適用できます。この例では、二つ目のブロックが作成したパーミッションで制限するコンポーネントです。これは `android:permission` 属性を加えることで適用できます。
 
 ```xml
 <permission android:name="com.example.myapp.permission.START_MAIN_ACTIVITY"
@@ -43,7 +43,7 @@ Once you have defined your permission, it can be enforced on the component by sp
 </activity>
 ```
 
-Now that the new permission `START_MAIN_ACTIVTY` is created, apps can request it using the `uses-permission` tag in the `AndroidManifest.xml` file. Any application can now launch the `TEST_ACTIVITY` if it is granted with the custom permission `START_MAIN_ACTIVITY`.
+新しいパーミッション `START_MAIN_ACTIVTY` が作成されたので、アプリは `AndroidManifest.xml` ファイルで `uses-permission` タグを使用して、それを要求できます。カスタムパーミッション `START_MAIN_ACTIVITY` を付与された場合、任意のアプリケーションが `TEST_ACTIVITY` を起動できます。Any application can now launch the `TEST_ACTIVITY` if it is granted with the custom permission `START_MAIN_ACTIVITY`.
 
 ```xml
 <uses-permission android:name=“com.example.myapp.permission.START_MAIN_ACTIVITY”/>
