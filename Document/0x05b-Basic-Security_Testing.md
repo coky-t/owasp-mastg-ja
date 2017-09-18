@@ -355,18 +355,18 @@ Firebase Cloud Messaging (FCM) は Google Cloud Messaging (GCM) の後継であ�
 
 FCM は Android と iOS と Chrome で利用できます。FCM は現時点で二つの接続サーバープロトコルを提供しています。HTTP と XMPP があり、実装にはいくつかの違いがあります。公式ドキュメント <sup>[24]</sup> に記述があります。以下の例は両方のプロトコルを傍受する方法を示しています。
 
-##### Preparation
+##### 準備
 
-For a full dynamic analysis of an Android app FCM should be intercepted. To be able to intercept the messages several steps should be considered for preparation.
+Android アプリの完全な動的解析を行うには、FCM を傍受する必要があります。そのメッセージを傍受するには、準備のためにいくつかの手順を検討する必要があります。
 
-* Install the CA certificate of your interception proxy into your Android phone<sup>[2]</sup>.
-* A Man-in-the-middle attack should be executed so all traffic from the mobile device is redirected to your testing machine. This can be done by using a tool like ettercap<sup>[24]</sup>. It can be installed by using brew on Mac OS X.
+* 傍受プロキシの CA 証明書を Android フォンにインストールします <sup>[2]</sup> 。
+* 中間者攻撃を実行して、モバイルデバイスからのすべてのトラフィックがテストマシンにリダイレクトされるようにします。これには ettercap <sup>[24]</sup> などのツールを使用して行います。Mac OS X の brew を使用してインストールできます。
 
 ```bash
 $ brew install ettercap
 ```
 
-Ettercap can also be installed through `apt-get` on Debian based linux distributions.
+Ettercap は Debian ベースの Linux ディストリビューションでは `apt-get` を使用してインストールできます。
 
 ```bash
 sudo apt-get install zlib1g zlib1g-dev
@@ -374,13 +374,13 @@ sudo apt-get install build-essential
 sudo apt-get install ettercap
 ```
 
-FCM can use two different protocols to communicate with the Google backend, either XMPP or HTTP.
+FCM は二つの異なるプロトコル XMPP または HTTP を使用して、Google バックエンドと通信します。
 
 **HTTP**
 
-The ports used by FCM for HTTP are 5228, 5229, and 5230. Typically only 5228 is used, but sometimes also 5229 or 5230 is used.
+FCM で HTTP 用に使用されるポートは 5228, 5229, 5230 です。通常、5228 のみが使用されますが、時には 5229 や 5230 が使用されることもあります。
 
-* Configure a local port forwarding on your machine for the ports used by FCM. The following example can be used on Mac OS X<sup>[23]</sup>:
+* FCM で使用されるポート用にマシン上のローカルポートフォワーディングを設定します。以下の例は Mac OS X で使用できます <sup>[23]</sup> 。
 
 ```bash
 $ echo "
@@ -390,13 +390,13 @@ rdr pass inet proto tcp from any to any port 5239 -> 127.0.0.1 port 8080
 " | sudo pfctl -ef -
 ```
 
-* The interception proxy need to listen to the port specified in the port forwarding rule above, which is 8080.
+* 傍受プロキシは上述のポートフォワーディングで指定されたポート (8080) を listen する必要があります。
 
 **XMPP**
 
-The ports used by FCM over XMPP are 5235 (Production) and 5236 (Testing)<sup>[26]</sup>.
+FCM が XMPP で使用するポートは 5235 (Production) と 5236 (Testing) です <sup>[26]</sup> 。
 
-* Configure a local port forwarding on your machine for the ports used by FCM. The following example can be used on Mac OS X<sup>[23]</sup>:
+* FCM で使用されるポート用にマシン上のローカルポートフォワーディングを設定します。以下の例は Mac OS X で使用できます <sup>[23]</sup> 。
 
 ```bash
 $ echo "
@@ -405,7 +405,7 @@ rdr pass inet proto tcp from any to any port 5236 -> 127.0.0.1 port 8080
 " | sudo pfctl -ef -
 ```
 
-* The interception proxy need to listen to the port specified in the port forwarding rule above, which is 8080.
+* 傍受プロキシは上述のポートフォワーディングで指定されたポート (8080) を listen する必要があります。
 
 ##### Intercepting Messages
 
