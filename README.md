@@ -21,7 +21,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 ### Android テストガイド
 
 - [プラットフォーム概要](Document/0x05a-Platform-Overview.md)
-- [Android セキュリティテスト入門] <!-- (Document/0x05b-Basic-Security_Testing.md) -->
+- [Android セキュリティテスト入門](Document/0x05b-Basic-Security_Testing.md)
 - [データストレージのテスト (Android)] <!-- (Document/0x05d-Testing-Data-Storage.md) -->
 - [暗号化のテスト (Android アプリ)](Document/0x05e-Testing-Cryptography.md)
 - [ローカル認証のテスト (Android アプリ)](Document/0x05f-Testing-Local-Authentication.md)
