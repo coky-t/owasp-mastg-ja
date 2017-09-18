@@ -81,9 +81,9 @@ if (canProcess != PERMISSION_GRANTED)
 throw new SecurityException();
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-Permissions of applications installed on a device can be retrieved using the Android security assessment framework Drozer. The following extract demonstrates how to examine the permissions used by an application, in addition to the the custom permissions defined by the app:
+デバイスにインストールされているアプリケーションのパーミッションは Android セキュリティ評価フレームワーク Drozer を使用して取得できます。以下の抜粋はアプリケーションで使用されるパーミッションに加えてアプリで呈されたカスタムパーミッションを調べる方法を示しています。
 
 ```bash
 dz> run app.package.info  -a com.android.mms.service
@@ -109,38 +109,38 @@ Package: com.android.mms.service
   - None
 ```
 
-When Android applications expose IPC components to other applications, they can define permissions to limit access to the component to certain applications. To communicate with a component protected by a `normal` or `dangerous` permission, Drozer can be rebuilt to contain the required permission:
+Android アプリケーションが IPC コンポーネントを他のアプリケーションに公開する場合、特定のアプリケーションに対するコンポーネントにアクセスを制限するパーミッションを定義できます。`normal` または `dangerous` パーミッションで保護されたコンポーネントと通信するために、Drozer は必要なパーミッションを含むように再ビルドできます。
 
 ```
 $ drozer agent build  --permission android.permission.REQUIRED_PERMISSION
 ```
 
-Note that this method cannot be used for `signature` level permissions, as Drozer would need to be signed by the same certificate as the target application.
+この手法は `signature` レベルのパーミッションには使用できないことに注意します。Drozer をターゲットアプリケーションと同じ証明書で署名する必要があるためです。
 
-#### Remediation
+#### 改善方法
 
-Only permissions that are needed within the app should be requested in the Android Manifest file and all other permissions should be removed.
+Android マニフェストファイルではアプリ内で必要となるパーミッションのみを要求し、他のパーミッションはすべて削除すべきです。
 
-Developers should take care to secure sensitive IPC components with the `signature` protection level, which will only allow applications signed with the same certificate to access the component.
+開発者は `signature` 保護レベルの機密性の高い IPC コンポーネントをセキュアにするよう注意する必要があります。同じ証明書で署名されたアプリケーションのみコンポーネントにアクセスできるようにします。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
 ##### OWASP MASVS
-* V6.1: "The app only requires the minimum set of permissions necessary."
+* V6.1: "アプリは必要となる最低限の権限のみを要求している。"
 
 ##### CWE
 * CWE-250 - Execution with Unnecessary Privileges
 
-##### Info
+##### その他
 * [1] Android Permissions - https://developer.android.com/guide/topics/permissions/requesting.html
 * [2] Custom Permissions - https://developer.android.com/guide/topics/permissions/defining.html
 * [3] An In-Depth Introduction to the Android Permission Model - https://www.owasp.org/images/c/ca/ASDC12-An_InDepth_Introduction_to_the_Android_Permissions_Modeland_How_to_Secure_MultiComponent_Applications.pdf
 * [4] Android Permissions - https://developer.android.com/reference/android/Manifest.permission.html#ACCESS_LOCATION_EXTRA_COMMANDS
 
-##### Tools
+##### ツール
 * AAPT - http://elinux.org/Android_aapt
 * Drozer - https://github.com/mwrlabs/drozer
 
