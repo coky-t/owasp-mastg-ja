@@ -407,31 +407,31 @@ rdr pass inet proto tcp from any to any port 5236 -> 127.0.0.1 port 8080
 
 * 傍受プロキシは上述のポートフォワーディングで指定されたポート (8080) を listen する必要があります。
 
-##### Intercepting Messages
+##### メッセージの傍受
 
-Your testing machine and the Android device need to be in the same wireless network. Start ettercap with the following command and replace the IP addresses with the one of the Android device and the network gateway in the wireless network.
+テストマシンと Android デバイスは同じワイヤレスネットワークに存在する必要があります。以下のコマンドで ettercap を起動し、IP アドレスを Android デバイスとワイヤレスネットワークのネットワークゲートウェイのいずれかに置き換えます。
 
 ```bash
 $ ettercap -T -i eth0 -M arp:remote /192.168.0.1// /192.168.0.105//
 ```
 
-Start using the app and trigger a function that uses FCM. You should see HTTP messages showing up in your interception proxy.
+アプリの使用を開始し、FCM を使用する機能をトリガーします。傍受プロキシに HTTP メッセージが表示されるはずです。
 
 ![Intercepted Messages](Images/Chapters/0x05b/FCM_Intercept.png)
 
-Interception proxies like Burp or OWASP ZAP will not show this traffic, as they are not capable of decoding it properly by default. There are two plugins available for Burp, which are Burp-non-HTTP-Extension<sup>[28]<sup> and Mitm-relay<sup>[27]<sup> that leverages Burp to visualize XMPP traffic.
+Burp や OWASP ZAP などの傍受プロキシは、デフォルトでは正しくデコードできないため、このトラフィックを表示しません。Burp には Burp-non-HTTP-Extension <sup>[28]<sup> と Mitm-relay <sup>[27]<sup> という Burp 用の二つのプラグインがあり、Burp を利用して XMPP トラフィックを視覚化します。
 
-As an alternative to a Mitm attack executed on your machine, a Wifi Access Point (AP) or router can also be used instead. The setup would become a little bit more complicated, as port forwarding needs to be configured on the AP or router and need to point to your interception proxy that need to listen on the external interface of your machine. For this test setup tools like ettercap are not needed anymore.
+マシン上で実行される中間者攻撃の代わりとして、Wifi アクセスポイント (AP) やルーターを代わりに使用することもできます。セットアップは少し複雑になります。ポートフォワーディングは AP またはルーター上で設定する必要があり、マシンの外部インタフェースで listen する必要がある傍受プロキシを指す必要があります。このテストでは ettercap などのツールはもう必要ありません。
 
-Tools like Wireshark can be used to monitor and record the traffic for further investigation either locally on your machine or through a span port, if the router or Wifi AP offers this functionality.
-
-
-#### Reverse Engineering
-
-There are many reason to reverse engineer an application: to understand application security logic, to identify application secrets and so on. More details on reverse engineering Android applications are covered in the next chapter [Tampering and Reverse Engineering on Android](0x05b-Reverse-Engineering-and-Tampering.md).
+ルーターや Wifi AP がこの機能を提供している場合、Wireshark などのツールを使用して、マシンのローカルに、またはスパンポート経由で、詳細な調査のためにトラフィックを監視および記録できます。
 
 
-### References
+#### リバースエンジニアリング
+
+アプリケーションをリバースエンジニアリングする理由はたくさんあります。アプリケーションのセキュリティロジックを理解したり、アプリケーションの秘密を特定するなどです。Android アプリケーションのリバースエンジニアリングの詳細については、次の章 [改竄とリバースエンジニアリング (Android)](0x05c-Reverse-Engineering-and-Tampering.md) で説明します。
+
+
+### 参考情報
 
 - [1] Configuring an Android Device to Work With Burp - https://support.portswigger.net/customer/portal/articles/1841101-Mobile%20Set-up_Android%20Device.html
 - [2] Installing Burp's CA Certificate in an Android Device - https://support.portswigger.net/customer/portal/articles/1841102-installing-burp-s-ca-certificate-in-an-android-device
