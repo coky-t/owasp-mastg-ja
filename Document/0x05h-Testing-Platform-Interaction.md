@@ -249,13 +249,13 @@ N/A
 
 
 
-### Testing For Sensitive Functionality Exposure Through IPC
+### IPC による機密性の高い機能の開示のテスト
 
-#### Overview
+#### 概要
 
 -- TODO [Provide a general description of the issue.] --
 
-#### Static Analysis
+#### 静的解析
 
 -- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
 
@@ -263,9 +263,9 @@ N/A
 
 -- TODO [Add content for "Testing For Sensitive Functionality Exposure Through IPC" with source code] --
 
-#### Dynamic Analysis
+#### 動的解析
 
-IPC components can be enumerated using Drozer. To list all exported IPC components, the module `app.package.attacksurface` should be used:
+IPC コンポーネントは Drozer を使用して列挙できます。エクスポートされたすべての IPC コンポーネントを一覧表示するには、モジュール `app.package.attacksurface` を使用する必要があります。
 
 ```
 dz> run app.package.attacksurface com.mwr.example.sieve
@@ -277,9 +277,9 @@ Attack Surface:
     is debuggable
 ```
 
-##### Activities
+##### アクティビティ
 
-To list activities exported by an application the module `app.activity.info` should be used. Specify the target package with `-a` or leave blank to target all apps on the device:
+アプリケーションによりエクスポートされたアクティビティを一覧表示するには、モジュール `app.activity.info` を使用する必要があります。`-a` でターゲットパッケージを指定するか、ブランクのままにしてデバイス上のすべてのアプリケーションを対象にします。
 
 ```
 dz> run app.activity.info -a com.mwr.example.sieve
@@ -292,13 +292,13 @@ Package: com.mwr.example.sieve
     Permission: null  
 ```
 
-By enumerating activities in the vulnerable password manager "Sieve"<sup>[1]</sup>, the activity `com.mwr.example.sieve.PWList` is found to be exported with no required permissions. It is possible to use the module `app.activity.start` to launch this activity.
+脆弱なパスワードマネージャ "Sieve" <sup>[1]</sup> のアクティビティを列挙することにより、アクティビティ `com.mwr.example.sieve.PWList` は必要なパーミッションなしでエクスポートされていることがわかります。このアクティビティを起動するには、モジュール `app.activity.start` を使用できます。
 
 ```
 dz> run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.PWList
 ```
 
-Since the activity was called directly, the login form protecting the password manager was bypassed, and the data contained within the password manager could be accessed.
+アクティビティが直接呼び出されたため、パスワードマネージャを保護するログインフォームはバイパスされ、パスワードマネージャに含まれるデータにアクセスすることができます。
 
 ##### Services
 
