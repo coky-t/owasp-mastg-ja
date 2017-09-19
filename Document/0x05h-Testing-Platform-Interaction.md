@@ -145,13 +145,13 @@ Android マニフェストファイルではアプリ内で必要となるパー
 * Drozer - https://github.com/mwrlabs/drozer
 
 
-### Testing Input Validation and Sanitization
+### 入力の妥当性確認とサニタイズのテスト
 
-#### Overview
+#### 概要
 
 -- TODO [Provide a general description of the issue.] --
 
-#### Static Analysis
+#### 静的解析
 
 -- TODO [Describe how to assess this given either the source code or installer package (APK/IPA/etc.), but without running the app. Tailor this to the general situation (e.g., in some situations, having the decompiled classes is just as good as having the original source, in others it might make a bigger difference). If required, include a subsection about how to test with or without the original sources.] --
 
@@ -159,54 +159,54 @@ Android マニフェストファイルではアプリ内で必要となるパー
 
 -- TODO [Develop content for "Testing Input Validation and Sanitization" with source code] --
 
-#### Dynamic Analysis
+#### 動的解析
 
 -- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
-#### Remediation
+#### 改善方法
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue.] --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V6.2: "All inputs from external sources and the user are validated and if necessary sanitized. This includes data received via the UI, IPC mechanisms such as intents, custom URLs, and network sources."
+* V6.2: "外部ソースおよびユーザーからの入力がすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
 
 ##### CWE
 * CWE-20 - Improper Input Validation
 
-##### Info
+##### その他
 * [1] xyz
 
-##### Tools
+##### ツール
 * Enjarify - https://github.com/google/enjarify
 
 
-### Testing Custom URL Schemes
+### カスタム URL スキームのテスト
 
-#### Overview
+#### 概要
 
-Both Android and iOS allow inter-app communication through the use of custom URL schemes. These custom URLs allow other applications to perform specific actions within the application hosting the custom URL scheme. Much like a standard web URL that might start with `https://`, custom URIs can begin with any scheme prefix and usually define an action to take within the application and parameters for that action.
+Android と iOS の両者はカスタム URL スキームを使用してアプリ間通信が可能です。これらのカスタム URL により、他のアプリケーションはカスタム URL スキームをホストするアプリケーション内で特定のアクションを実行できます。`https://` で始まる標準のウェブ URL と同様に、カスタム URI は任意のスキーム接頭辞で始まり、一般的にアプリケーション内で実行するアクションとそのアクションのパラメータを定義します。
 
-As a contrived example, consider: `sms://compose/to=your.boss@company.com&message=I%20QUIT!&sendImmediately=true`. Using something like this embedded as a link on a web page, when clicked by a victim on their mobile device, calling the custom URI with maliciously crafted parameters might trigger an SMS to be sent by the vulnerable SMS application with attacker defined content.
+事例として、`sms://compose/to=your.boss@company.com&message=I%20QUIT!&sendImmediately=true` を考えます。このようなものをリンクとしてウェブページに埋め込み、モバイルデバイス上で被害者がクリックした場合、悪意を持って作成されたパラメータでカスタム URI を呼び出し、攻撃者が定義したコンテンツを持つ脆弱な SMS アプリケーションにより SMS が送信される可能性があります。
 
-For any application, each of these custom URL schemes needs to be enumerated, and the actions they perform need to be tested.
+どのアプリケーションでも、これらのカスタム URL スキームのそれぞれを列挙する必要があり、それらが実行するアクションをテストする必要があります。
 
-#### Static Analysis
+#### 静的解析
 
-It should be investigated if custom URL schemes are defined. This can be done in the AndroidManifest file inside of an intent-filter element<sup>[1]</sup>.
+カスタム URL スキームが定義されているかどうかを調査する必要があります。これは AndroidManifest ファイル内の intent-filter 要素でできます <sup>[1]</sup> 。
 
 ```xml
 <data android:scheme="myapp" android:host="path" />
 ```
-The example above is specifying a new URL called `myapp://`.
+上記の例では `myapp://` という新しい URL を指定しています。
 
-#### Dynamic Analysis
+#### 動的解析
 
-To enumerate URL schemes within an application that can be called by a web browser, the Drozer module `scanner.activity.browsable` should be used:
+ウェブブラウザで呼び出すことができるアプリケーション内の URL スキームを列挙するには、Drozer モジュール `scanner.activity.browsable` を使用する必要があります。
 
 ```
 dz> run scanner.activity.browsable -a com.google.android.apps.messaging
@@ -218,7 +218,7 @@ Package: com.google.android.apps.messaging
     com.google.android.apps.messaging.ui.conversation.LaunchConversationActivity
 ```
 
-Custom URL schemes can be called using the Drozer module `app.activity.start`:
+カスタム URL スキームは Drozer モジュール `app.activity.start` を使用して呼び出すことができます。
 
 ```
 dz> run app.activity.start  --action android.intent.action.VIEW --data-uri "sms://0123456789"
@@ -226,25 +226,25 @@ dz> run app.activity.start  --action android.intent.action.VIEW --data-uri "sms:
 
 -- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
-#### Remediation
+#### 改善方法
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue.] --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
 ##### OWASP MASVS
-* V6.3: "The app does not export sensitive functionality via custom URL schemes, unless these mechanisms are properly protected."
+* V6.3: "アプリはメカニズムが適切に保護されていない限り、カスタムURLスキームを介して機密な機能をエクスポートしていない。"
 
 ##### CWE
 N/A
 
-##### Info
+##### その他
 - [1] Custom URL scheme - https://developer.android.com/guide/components/intents-filters.html#DataTest
 
-##### Tools
+##### ツール
 * Drozer - https://github.com/mwrlabs/drozer
 
 
