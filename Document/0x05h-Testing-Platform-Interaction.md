@@ -450,11 +450,11 @@ Extra: newpass=12345 (java.lang.String)
 * Drozer - https://github.com/mwrlabs/drozer
 
 
-### Testing JavaScript Execution in WebViews
+### WebView での JavaScript 実行のテスト
 
-#### Overview
+#### 概要
 
-In Web applications, JavaScript can be injected in many ways by leveraging reflected, stored or DOM based Cross-Site Scripting (XSS). Mobile Apps are executed in a sandboxed environment and when implemented natively do not possess this attack vector. Nevertheless, WebViews can be part of a native App to allow viewing of web pages. Every App has it's own cache for WebViews and doesn't share it with the native Browser or other Apps. WebViews in Android are using the WebKit rendering engine to display web pages but are stripped down to a minimum of functions, as for example no address bar is available. If the WebView is implemented too lax and allows the usage of JavaScript it can be used to to attack the App and gain access to it's data.
+ウェブアプリケーションでは、さまざまな方法で JavaScript を注入できます。反射型、格納型(蓄積型)、DOM ベースのクロスサイトスクリプティング (XSS) を利用します。モバイルアプリはサンドボックス環境で実行され、ネイティブに実装された場合この攻撃経路は存在しません。ですが、WebView はネイティブアプリの一部として、ウェブページを表示できます。すべてのアプリには WebView 用の個別のキャッシュがあり、ネイティブブラウザや他のアプリとは共有しません。Android の WebView は WebKit レンダリングエンジンを使用してウェブページを表示していますが、アドレスバーが利用できないなど、最低限の機能に抑えられています。WebView が不適切に実装され JavaScript の使用が許可されている場合、それを使用してアプリを攻撃し、そのデータにアクセスすることが可能です。
 
 #### Static Analysis
 
