@@ -410,11 +410,11 @@ dz>  run app.broadcast.send --action theBroadcast --extra string phonenumber 071
 Updated Password from: SecretPassword@ to: 12345
 ```
 
-###### Sniffing Intents
+###### インテントの傍受
 
-If an Android application broadcasts intents without setting a required permission or specifying the destination package, the intents are susceptible to monitoring by any application on the device.
+Android アプリケーションが必要なパーミッションの設定をせずに、または受け側のパッケージを指定せずにインテントをブロードキャストする場合、そのインテントはデバイス上の任意のアプリケーションにより傍受される可能性があります。
 
-To register a broadcast receiver to sniff intents, the Drozer module `app.broadcast.sniff` should be used, specifying the action to monitor with the `--action` parameter:
+ブロードキャストレシーバを登録してインテントを傍受するには、Drozer モジュール `app.broadcast.sniff` を使用する必要があります。`--action` パラメータで傍受するアクションを指定します。
 
 ```
 dz> run app.broadcast.sniff  --action theBroadcast
@@ -427,26 +427,26 @@ Extra: phonenumber=07123456789 (java.lang.String)
 Extra: newpass=12345 (java.lang.String)
 ```
 
-#### Remediation
+#### 改善方法
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue.] --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
 
 ##### OWASP MASVS
-- V6.4: "The app does not export sensitive functionality through IPC facilities, unless these mechanisms are properly protected."
+- V6.4: "アプリはメカニズムが適切に保護されていない限り、IPC機構を通じて機密な機能をエクスポートしていない。"
 
 ##### CWE
 -- TODO [Add links and titles for CWE related to the "Testing For Sensitive Functionality Exposure Through IPC" topic] --
 
-##### Info
+##### その他
 - [1] Sieve: Vulnerable Password Manager - https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk
 - [2] Android Insecure Bank V2 - https://github.com/dineshshetty/Android-InsecureBankv2
 
-##### Tools
+##### ツール
 * Drozer - https://github.com/mwrlabs/drozer
 
 
