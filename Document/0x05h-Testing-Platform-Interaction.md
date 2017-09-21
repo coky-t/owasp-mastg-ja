@@ -475,20 +475,20 @@ webview.getSettings().setJavaScriptEnabled(true);
 これにより WebView は JavaScript を解釈して、そのコマンドを実行できます。
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-A Dynamic Analysis depends on different surrounding conditions, as there are different possibilities to inject JavaScript into a WebView of an App:
-* Stored Cross-Site Scripting (XSS) vulnerability in an endpoint, where the exploit will be sent to the WebView of the Mobile App when navigating to the vulnerable function.
-* Man-in-the-middle (MITM) position by an attacker where he is able to tamper the response by injecting JavaScript.
-* Malware tampering local files that are loaded by the WebView.
+動的解析はさまざまな周囲の条件に依存します。アプリの WebView に JavaScript を注入するさまざまな可能性があるためです。
+* エンドポイントの格納型(蓄積型)クロスサイトスクリプティング(XSS)、脆弱な機能に移動する際にエクスプロイトがモバイルアプリの WebView に送信されます。
+* 中間者 (MITM) ポジション、攻撃者がレスポンスを改竄して JavaScript を注入する可能性があります。
+* マルウェア、WebView によりロードされローカルファイルを改竄します。
 
-In order to address these attack vectors, the outcome of the following checks should be verified:
-* All functions offered by the endpoint need to be free of stored XSS<sup>[4]</sup>.
-* The HTTPS communication need to be implemented according to best practices to avoid MITM attacks. This means:
-  * whole communication is encrypted via TLS (see OMTG-NET-001),
-  * the certificate is checked properly (see OMTG-NET-002) and/or
-  * the certificate is even pinned (see OMTG-NET-004)
-* Only files within the App data directory should be rendered in a WebView (see OMTG-ENV-007).
+これらの攻撃ベクトルに対処するには、以下のチェック結果を検証する必要があります。
+* エンドポイントにより提供されるすべての機能が格納型(蓄積型) XSS <sup>[4]</sup> からフリーである必要があります。
+* HTTPS 通信はベストプラクティスに従って実装され、MITM 攻撃を避ける必要があります。これは以下を意味します。
+  * 通信全体が TLS 経由で暗号化されている (OMTG-NET-001 参照)
+  * 証明書は適切にチェックされている (OMTG-NET-002 参照)
+  * 証明書はさらにピンニングされている (OMTG-NET-004 参照)
+* アプリデータディレクトリ内のファイルのみが WebView でレンダリングされている必要があります (OMTG-ENV-007 参照) 。
 
 #### Remediation
 
