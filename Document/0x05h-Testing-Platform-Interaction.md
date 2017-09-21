@@ -4,7 +4,7 @@
 
 #### 概要
 
-Androi はインストールされたすべてのアプリに異なるシステム識別子 (Linux ユーザー ID とグループ ID) を割り当てます。各 Android アプリはプロセスサンドボックス内で動作するため、アプリはサンドボックス外のリソースやデータへのアクセスを明示的に要求する必要があります。特定のシステムデータや機能を使用するために必要なパーミッションを宣言することにより、このアクセスを要求します。データや機能の機密性や重要性に応じて、Android システムは自動的にパーミッションを与えたり、ユーザーに要求を承認するよう求めます。
+Android はインストールされたすべてのアプリに異なるシステム識別子 (Linux ユーザー ID とグループ ID) を割り当てます。各 Android アプリはプロセスサンドボックス内で動作するため、アプリはサンドボックス外のリソースやデータへのアクセスを明示的に要求する必要があります。特定のシステムデータや機能を使用するために必要なパーミッションを宣言することにより、このアクセスを要求します。データや機能の機密性や重要性に応じて、Android システムは自動的にパーミッションを与えたり、ユーザーに要求を承認するよう求めます。
 
 Android のパーミッションは提供する保護レベルに基づいて四つの異なるカテゴリに分類されます。
 
@@ -518,18 +518,18 @@ Android 4.4 (API レベル 19) より古いプラットフォームを実行し�
 - [4] Stored Cross-Site Scripting - https://www.owasp.org/index.php/Testing_for_Stored_Cross_site_scripting_(OTG-INPVAL-002)
 
 
-### Testing WebView Protocol Handlers
+### WebView プロトコルハンドラのテスト
 
-#### Overview
+#### 概要
 
-Several schemas are available by default in an URI on Android and can be triggered within a WebView<sup>[3]</sup>, e.g:
+いくつかのスキーマがデフォルトで Android の URI に利用可能であり、WebView 内でトリガできます <sup>[3]</sup> 。
 
 * http(s):
 * file:
 * tel:
 * geo:
 
-When using them in a link the App can be triggered for example to access a local file when using `file:///storage/emulated/0/private.xml`. This can be exploited by an attacker if he is able to inject JavaScript into the Webview to access local resources via the file schema.
+それらをリンクで使用する場合、アプリはトリガできます。例えば、`file:///storage/emulated/0/private.xml` を使用して、ローカルファイルにアクセスできます。WebView に JavaScript を注入して、ファイルスキーマを介してローカルリソースにアクセスできる場合、これは攻撃者により悪用される可能性があります。
 
 -- TODO [Further develop content on "Testing WebView Protocol Handlers"] --
 
