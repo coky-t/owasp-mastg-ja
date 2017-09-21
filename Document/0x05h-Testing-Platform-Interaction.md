@@ -490,28 +490,28 @@ webview.getSettings().setJavaScriptEnabled(true);
   * 証明書はさらにピンニングされている (OMTG-NET-004 参照)
 * アプリデータディレクトリ内のファイルのみが WebView でレンダリングされている必要があります (OMTG-ENV-007 参照) 。
 
-#### Remediation
+#### 改善方法
 
-JavaScript is disabled by default in a WebView and if not needed shouldn't be enabled. This reduces the attack surface and potential threats to the App. If JavaScript is needed it should be ensured:
-* that the communication relies consistently on HTTPS (see also OMTG-NET-001) to protect the HTML and JavaScript from tampering while in transit.
-* that JavaScript and HTML is only loaded locally from within the App data directory or from trusted web servers.
+JavaScript はデフォルトで無効にされており、必要でない場合には有効にしてはいけません。これにより攻撃領域とアプリの潜在的な脅威を減らします。JavaScript が必要とされる場合には、以下を保証する必要があります。
+* 通信は一貫して HTTPS に依存 (OMTG-NET-001 も参照) し、HTML と JavaScript を通信時の攻撃から保護すること。
+* JavaScript と HTML はアプリデータディレクトリ内から、または信頼できるウェブサーバーからのみローカルにロードされること。
 
-The cache of the WebView should also be cleared in order to remove all JavaScript and locally stored data, by using `clearCache()`<sup>[2]</sup> when closing the App.
+WebView のキャッシュをクリアして、JavaScript とローカルに格納されたデータのすべてを削除します。アプリ終了時に `clearCache()` <sup>[2]</sup> を使用します。
 
-Devices running platforms older than Android 4.4 (API level 19) use a version of Webkit that has a number of security issues. As a workaround, if your app is running on these devices, it must confirm that WebView objects display only trusted content<sup>[3]</sup>.
+Android 4.4 (API レベル 19) より古いプラットフォームを実行しているデバイスでは、セキュリティ上の問題が多くあるバージョンの Webkit を使用しています。回避策として、アプリがこれらのデバイスで動作している場合、WebView オブジェクトは信頼できるコンテンツのみ表示することを確認する必要があります <sup>[3]</sup> 。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.5: "JavaScript is disabled in WebViews unless explicitly required."
+- V6.5: "明示的に必要でない限りWebViewでJavaScriptが無効にされている。"
 
 ##### CWE
 - CWE-79 - Improper Neutralization of Input During Web Page Generation https://cwe.mitre.org/data/definitions/79.html
 
-##### Info
+##### その他
 - [1] setJavaScriptEnabled in WebViews  - https://developer.android.com/reference/android/webkit/WebSettings.html#setJavaScriptEnabled(boolean)
 - [2] clearCache() in WebViews - https://developer.android.com/reference/android/webkit/WebView.html#clearCache(boolean)
 - [3] WebView Best Practices - https://developer.android.com/training/articles/security-tips.html#WebView
