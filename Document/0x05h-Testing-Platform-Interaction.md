@@ -456,9 +456,9 @@ Extra: newpass=12345 (java.lang.String)
 
 ウェブアプリケーションでは、さまざまな方法で JavaScript を注入できます。反射型、格納型(蓄積型)、DOM ベースのクロスサイトスクリプティング (XSS) を利用します。モバイルアプリはサンドボックス環境で実行され、ネイティブに実装された場合この攻撃経路は存在しません。ですが、WebView はネイティブアプリの一部として、ウェブページを表示できます。すべてのアプリには WebView 用の個別のキャッシュがあり、ネイティブブラウザや他のアプリとは共有しません。Android の WebView は WebKit レンダリングエンジンを使用してウェブページを表示していますが、アドレスバーが利用できないなど、最低限の機能に抑えられています。WebView が不適切に実装され JavaScript の使用が許可されている場合、それを使用してアプリを攻撃し、そのデータにアクセスすることが可能です。
 
-#### Static Analysis
+#### 静的解析
 
-To create and use a WebView, an instance of the class WebView need to be created.
+WebView を作成および使用するには、クラス WebView のインスタンスを作成する必要があります。
 
 ```Java
 WebView webview = new WebView(this);
@@ -466,13 +466,13 @@ setContentView(webview);
 webview.loadUrl("http://slashdot.org/");
 ```
 
-Different settings can be applied to the WebView of which one is able to activate and deactivate JavaScript. By default JavaScript is disabled in a WebView, so it need to be explicitly enabled. Look for the method `setJavaScriptEnabled` to check if JavaScript is activated.
+個別の設定を WebView に適用して、JavaScript を有効または無効にできます。デフォルトでは、JavaScript は WebView では無効であるため、明示的に有効にする必要があります。メソッド `setJavaScriptEnabled` を探して、JavaScript が有効になっているかどうかを確認します。
 
 ```Java
 webview.getSettings().setJavaScriptEnabled(true);
 ```
 
-This allows the WebView to interpret JavaScript and execute it's command.
+これにより WebView は JavaScript を解釈して、そのコマンドを実行できます。
 
 
 #### Dynamic Analysis
