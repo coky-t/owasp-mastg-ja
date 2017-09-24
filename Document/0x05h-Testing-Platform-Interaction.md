@@ -588,24 +588,24 @@ N/A
 
 
 
-### Testing for Local File Inclusion in WebViews
+### WebView でのローカルファイルのインクルードのテスト
 
-#### Overview
+#### 概要
 
-WebViews can load content remotely, but can also load it locally from the App data directory or external storage. If the content is loaded locally it should not be possible by the user to influence the filename or path where the file is loaded from or should be able to edit the loaded file.
+WebView はコンテンツをリモートからロードできますが、アプリデータディレクトリや外部ストレージからローカルにロードすることもできます。コンテンツがローカルにロードされる場合、ファイルがロードされるファイル名やパスにユーザーが影響を与えてはいけません。さもなくば、ロードされるファイルを編集できることになります。
 
 -- TODO [Further develop content on the overview for "Testing for Local File Inclusion in WebViews"] --
 
-#### Static Analysis
+#### 静的解析
 
-Check the source code for the usage of WebViews. If a WebView instance can be identified check if local files are loaded through the method `loadURL()`<sup>[1]</sup>.
+WebView の使用方法についてソースコードを確認します。WebView インスタンスが特定できる場合、ローカルファイルがメソッド `loadURL()` <sup>[1]</sup> によりロードされているか確認します。
 
 ```Java
 WebView webview = new WebView(this);
 webView.loadUrl("file:///android_asset/filename.html");
 ```
 
-It needs to be verified where the HTML file is loaded from. For example if it's loaded from the external storage the file is read and writable by everybody and considered a bad practice.
+どこから HTML ファイルがロードされているかを検証する必要があります。例えば、外部ストレージからロードされる場合、ファイルは誰でも読み書き可能であり、バッドプラクティスと考えられます。
 
 ```java
 webview.loadUrl("file:///" +
@@ -613,30 +613,30 @@ Environment.getExternalStorageDirectory().getPath() +
 "filename.html");
 ```
 
-The URL specified in `loadURL()` should be checked, if any dynamic parameters are used that can be manipulated, which may lead to local file inclusion.
+`loadURL()` で指定された URL は、操作が可能な動的パラメータが使用されているかどうかをチェックすべきであり、ローカルファイルがインクルードされている可能性があります。
 
-#### Dynamic Analysis
+#### 動的解析
 
 -- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
-#### Remediation
+#### 改善方法
 
-Create a white-list that defines the web pages and it's protocols (HTTP or HTTPS) that are allowed to be loaded locally and remotely. Loading web pages from the external storage should be avoided as they are read and writable for all users in Android. Instead they should be placed in the assets directory of the App.
+ローカルおよびリモートでロードすることができるウェブページとそのプロトコル (HTTP または HTTPS) を定義するホワイトリストを作成します。外部ストレージからウェブページをロードすることは、Android のすべてのユーザーが読み書きできるため、避けるべきです。代わりに、それらはアプリのアセットディレクトリに配置すべきです。
 
-Create checksums of the local HTML/JavaScript files and check it during start up of the App. Minify JavaScript files in order to make it harder to read them.
+ローカル HTML/JavaScript ファイルのチェックサムを作成し、アプリの起動時に確認します。JavaScript ファイルを圧縮して、それらを読みにくくします。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.7: "The app does not load user-supplied local resources into WebViews."
+- V6.7: "アプリは WebView にユーザー提供のローカルリソースをロードしていない。"
 
 ##### CWE
 N/A
 
-##### Info
+##### その他
 - [1] loadURL() in WebView - https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)
 
 
