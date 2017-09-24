@@ -533,29 +533,29 @@ Android 4.4 (API レベル 19) より古いプラットフォームを実行し�
 
 -- TODO [Further develop content on "Testing WebView Protocol Handlers"] --
 
-#### Static Analysis
+#### 静的解析
 
-The following methods are available for WebViews to control access to different resources<sup>[4]</sup>:
+以下のメソッドが WebView に利用でき、さまざまなリソースへのアクセスを制御できます <sup>[4]</sup> 。
 
-* `setAllowContentAccess()`: Content URL access allows WebView to load content from a content provider installed in the system. The default is enabled.
-* `setAllowFileAccess()`: Enables or disables file access within WebView. File access is enabled by default.
-* `setAllowFileAccessFromFileURLs()`: Sets whether JavaScript running in the context of a file scheme URL should be allowed to access content from other file scheme URLs. The default value is true for API level _ICE_CREAM_SANDWICH_MR1_ and below, and false for API level _JELLY_BEAN_ and above.
-* `setAllowUniversalAccessFromFileURLs()`: Sets whether JavaScript running in the context of a file scheme URL should be allowed to access content from any origin. The default value is true for API level ICE_CREAM_SANDWICH_MR1 and below, and false for API level JELLY_BEAN and above.
+* `setAllowContentAccess()`: コンテンツ URL アクセスにより WebView はシステムにインストールされたコンテンツプロバイダからコンテンツをロードできます。デフォルトは有効です。
+* `setAllowFileAccess()`: WebView 内でのファイルアクセスを有効または無効にします。ファイルアクセスはデフォルトで有効です。
+* `setAllowFileAccessFromFileURLs()`: ファイルスキーム URL のコンテキストで実行されている JavaScript が他のファイルスキーム URL のコンテンツにアクセスできるようにするかどうかを設定します。デフォルト値は API レベル _ICE_CREAM_SANDWICH_MR1_ およびそれ以下では true 、API レベル _JELLY_BEAN_ およびそれ以上では false です。
+* `setAllowUniversalAccessFromFileURLs()`: ファイルスキーム URL のコンテキストで実行されている JavaScript が任意のオリジンのコンテンツにアクセスできるようにするかどうかを設定します。デフォルト値は API レベル ICE_CREAM_SANDWICH_MR1 およびそれ以下では true 、API レベル JELLY_BEAN およびそれ以上では false です。
 
-If one or all of the methods above can be identified and they are activated it should be verified if it is really needed for the App to work properly.
+上記のメソッドのひとつまたはすべてを特定でき、それらが有効になっている場合には、アプリが適切に機能するために本当に必要かどうかを検証する必要があります。
 
-#### Dynamic Analysis
+#### 動的解析
 
-While using the App look for ways to trigger phone calls or accessing files from the file system to identify usage of protocol handlers.
+アプリを使用する中で、電話を呼び出す方法や、ファイルシステムからファイルにアクセスする方法を探し、プロトコルハンドラの使用方法を特定します。
 
 -- TODO [Further develop content on dynamic analysis for "Testing WebView Protocol Handlers" ] --
 
-#### Remediation
+#### 改善方法
 
-Set the following best practices in order to deactivate protocol handlers, if applicable<sup>[2]</sup>:
+適用可能である場合、以下のベストプラクティスを設定し、プロトコルハンドラを無効にします <sup>[2]</sup> 。
 
 ```java
-//Should an attacker somehow find themselves in a position to inject script into a WebView, then they could exploit the opportunity to access local resources. This can be somewhat prevented by disabling local file system access. It is enabled by default. The Android WebSettings class can be used to disable local file system access via the public method setAllowFileAccess.
+//攻撃者が何らかの形で WebView にスクリプトを注入する位置にいる場合、その機会を悪用してローカルリソースにアクセスする可能性があります。これはローカルファイルシステムへのアクセスを無効にすることにより幾分防止できます。これはデフォルトで有効です。Android WebSettings クラスを使用して、パブリックメソッド setAllowFileAccess を介してローカルファイルシステムへのアクセスを無効にできます。
 webView.getSettings().setAllowFileAccess(false);
 
 webView.getSettings().setAllowFileAccessFromFileURLs(false);
@@ -565,22 +565,22 @@ webView.getSettings().setAllowUniversalAccessFromFileURLs(false);
 webView.getSettings().setAllowContentAccess(false);
 ```
 
-Access to files in the file system can be enabled and disabled for a WebView with `setAllowFileAccess()`. File access is enabled by default and should be deactivated if not needed. Note that this enables or disables file system access only. Assets and resources are still accessible using `file:///android_asset` and `file:///android_res`<sup>[1]</sup>.
+ファイルシステム内のファイルへのアクセスは WebView に対して `setAllowFileAccess()` を使用して有効または無効にできます。ファイルアクセスはデフォルトで有効であり、必要がない場合には無効にすべきです。これによりファイルシステムアクセスのみが有効または無効になることに注意します。アセットおよびリソースは依然として `file:///android_asset` および `file:///android_res` を使用してアクセスできます <sup>[1]</sup> 。
 
 -- TODO [How to disable tel and geo schema?] --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.6: "WebViews are configured to allow only the minimum set of protocol handlers required (ideally, only https is supported). Potentially dangerous handlers, such as file, tel and app-id, are disabled."
+- V6.6: "WebViewは最低限必要なプロトコルハンドラのセットのみを許可するよう構成されている（理想的には、httpsのみがサポートされている）。file, tel, app-id などの潜在的に危険なハンドラは無効にされている。"
 
 ##### CWE
 N/A
 
-##### Info
+##### その他
 - [1] File Access in WebView - https://developer.android.com/reference/android/webkit/WebSettings.html#setAllowFileAccess%28boolean%29
 - [2] WebView best practices - https://github.com/nowsecure/secure-mobile-development/blob/master/en/android/webview-best-practices.md#remediation
 - [3] Intent List - https://developer.android.com/guide/appendix/g-app-intents.html
