@@ -827,13 +827,13 @@ N/A
 
 
 
-### Testing Root Detection
+### ルート検出のテスト
 
-#### Overview
+#### 概要
 
-Checking the integrity of the environment where the app is running is getting more and more common on the Android platform. Due to the usage of rooted devices several fundamental security mechanisms of Android are deactivated or can easily be bypassed by any app. Apps that process sensitive information or have built in largely intellectual property (IP), like gaming apps, might want to avoid to run on a rooted phone to protect data or their IP.
+アプリが実行されている環境の完全性を確認することは Android プラットフォームでますます一般的になっています。ルート化されたデバイスの使用により、Android のいくつかの基本的なセキュリティメカニズムが無効になるか、どのアプリでも簡単に回避することができます。機密情報を処理したり、ゲームアプリなど、知的財産 (IP) を大量に使用しているアプリでは、データやその IP を保護するためにルート化フォンでの実行を避けたいでしょう。
 
-Keep in mind that root detection is not protecting an app from attackers, but can slow down an attacker dramatically and higher the bar for successful local attacks. Root detection should be considered as part of a broad security-in-depth strategy, to be more resilient against attackers and make analysis harder.
+ルート検出は攻撃者からアプリを保護するものではありませんが、攻撃者を劇的に減速させ、ローカル攻撃が成功するバーを引き上げることを心に留めておきます。ルート検出は幅広い多層セキュリティ戦略の一環として考慮すべきであり、攻撃者に対してより耐性があり、解析をより困難にします。
 
 #### Static Analysis
 
