@@ -785,44 +785,44 @@ var result = window.Android.returnString();
 
 
 
-### Testing Object (De-)Serialization
+### オブジェクト(逆)シリアライゼーションのテスト
 
-#### Overview
+#### 概要
 
-An object and it's data can be represented as a sequence of bytes. In Java, this is possible using object serialization. Serialization is not secure by default and is just a binary format or representation that can be used to store data locally as .ser file. It is possible to sign and encrypt serialized data but, if the source code is available, this is always reversible.  
+オブジェクトとそのデータはバイト列として表現できます。Java では、これはオブジェクトシリアライゼーションを使用することで可能です。シリアライゼーションはデフォルトでセキュアではなく、単なるバイナリ形式、または .ser ファイルとしてローカルにデータを格納するために使用できる表現形式です。シリアライズされたデータを署名および暗号化することは可能ですが、ソースコードが利用可能である場合、これは常に元に戻せます。
 
-#### Static Analysis
+#### 静的解析
 
-Search the source code for the following keywords:
+ソースコードで以下のキーワードを検索します。
 
 * `import java.io.Serializable`
 * `implements Serializable`
 
-Check if serialized data is stored temporarily or permanently within the app's data directory or external storage and if it contains sensitive data.
+シリアライズ化されたデータが一時的または永続的にアプリのデータディレクトリや外部ストレージに格納されているかどうか、それには機密データが含まれているかどうかを確認します。
 
 **https://www.securecoding.cert.org/confluence/display/java/SER04-J.+Do+not+allow+serialization+and+deserialization+to+bypass+the+security+manager**
 
 
-#### Dynamic Analysis
+#### 動的解析
 
 -- TODO [Create content for dynamic analysis of "Testing Object (De-)Serialization" ] --
 
-#### Remediation
+#### 改善方法
 
 -- TODO [Describe the best practices that developers should follow to prevent this issue "Testing Object (De-)Serialization".] --
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-* V6.9: "Object serialization, if any, is implemented using safe serialization APIs."
+* V6.9: "オブジェクトシリアライズ化は、可能であれば、安全なシリアライズ化APIを使用して実装されている。"
 
 ##### CWE
 N/A
 
-##### Info
+##### その他
 * [1] Update Security Provider - https://developer.android.com/training/articles/security-gms-provider.html
 
 
