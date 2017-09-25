@@ -670,13 +670,13 @@ API レベル 17 で、この脆弱性が修正され、JavaScript 用の Java �
 Android 4.2 以前の Android バージョンをターゲットとしているアプリは、`addJavascriptInterface()` で特定された欠陥に対して依然として脆弱であり、細心の注意を払って使用する必要があります。したがって、このメソッドを必要とする場合にはいくつかのベストプラクティスを適用する必要があります。
 
 
-#### Static Analysis
+#### 静的解析
 
 **shouldOverrideUrlLoading**
 
-It needs to be verified if and how the method `shouldOverrideUrlLoading()` is used and if it's possible for an attacker to inject malicious JavaScript.
+メソッド `shouldOverrideUrlLoading()` が使用されているかどうか、および攻撃者が悪意のある JavaScript を注入することが可能であるかどうかを検証する必要があります。
 
-The following example illustrates how the method can be used.
+以下の例はメソッドの使用方法を示したものです。
 
 ```Java
 @Override
@@ -687,7 +687,7 @@ public boolean shouldOverrideUrlLoading (WebView view, WebResourceRequest reques
 }
 ```
 
-If an attacker has access to the JavaScript code, for example through stored XSS or MITM, he can directly trigger native functions if the exposed Java methods are implemented in an insecure way.
+攻撃者が例えば、格納型(蓄積型) XSS や MITM などを介して、 JavaScript コードにアクセスできる際には、公開された Java メソッドがセキュアではない方法で実装されている場合にネイティブ関数を直接トリガできます。
 
 ```javascript
 window.location = http://example.com/method?parameter=value
@@ -695,9 +695,9 @@ window.location = http://example.com/method?parameter=value
 
 **addJavascriptInterface**
 
-It need to be verified if and how the method `addJavascriptInterface()` is used and if it's possible for an attacker to inject malicious JavaScript.
+メソッド `addJavascriptInterface()` が使用されているかどうか、および攻撃者が悪意のある JavaScript を注入することが可能であるかどうかを検証する必要があります。
 
-The following example shows how `addJavascriptInterface` is used in a WebView to bridge a Java Object to JavaScript:
+以下の例は、`addJavascriptInterface` を WebView で使用して、Java オブジェクトを JavaScript にブリッジする方法を示しています。
 
 ```Java
 WebView webview = new WebView(this);
@@ -711,7 +711,7 @@ myWebView.loadURL("http://example.com/file.html");
 setContentView(myWebView);
 ```
 
-In Android API level 17 and above, a special annotation is used to explicitly allow the access from JavaScript to a Java method.
+Android API レベル 17 以上では、特別なアノテーションを使用して明示的に JavaScript から Java メソッドにアクセスを許可します。
 
 
 ```Java
@@ -737,27 +737,27 @@ public class MSTG_ENV_008_JS_Interface {
 }
 ```
 
-If the annotation `@JavascriptInterface` is used, this method can be called from JavaScript. If the App is targeting API level < 17, all methods of the Java Object are exposed to JavaScript and can be called.
+アノテーション `@JavascriptInterface` が使用されている場合、このメソッドは JavaScript から呼び出すことが可能です。アプリが API レベル < 17 をターゲットとする場合、すべての Java オブジェクトのメソッドは JavaScript に公開され、呼び出すことが可能です。
 
-In JavaScript the method `returnString()` can now be called and the return value can be stored in the parameter `result`.
+JavaScript ではメソッド `returnString()` を呼び出すことができ、戻り値はパラメータ `result` に格納されます。
 
 ```Javascript
 var result = window.Android.returnString();
 ```
 
-If an attacker has access to the JavaScript code, for example through stored XSS or MITM, he can directly call the exposed Java methods in order to exploit them.
+攻撃者が例えば、格納型(蓄積型) XSS や MITM などを介して、 JavaScript コードにアクセスできる際には、直接公開された Java メソッドを呼び出して、悪用できます。
 
-#### Dynamic Analysis
+#### 動的解析
 
 -- TODO [Describe how to test for this issue by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
 
-#### Remediation
+#### 改善方法
 
-If `shouldOverrideUrlLoading()` is needed, it should be verified how the input is processed and if it's possible to execute native functions through malicious JavaScript.
+`shouldOverrideUrlLoading()` が必要である場合、どのように入力が処理され、悪意のある JavaScript を介してネイティブ関数を実行することが可能であるかどうかを検証する必要があります。
 
-If `addJavascriptInterface()` is needed, only JavaScript provided with the APK should be allowed to call it but no JavaScript loaded from remote endpoints.
+`addJavascriptInterface()` が必要である場合、APK で提供される JavaScript だけが呼び出せるべきであり、リモートエンドポイントからロードされた JavaScript は不可にすべきです。
 
-Another compliant solution is to define the API level to 17 (JELLY_BEAN_MR1) and above in the manifest file of the App. For these API levels, only public methods that are annotated with `JavascriptInterface` can be accessed from JavaScript<sup>[1]</sup>.
+別の素直な解決策はアプリのマニフェストファイルに API レベル 17 (JELLY_BEAN_MR1) 以上を定義することです。これらの API レベルでは、`JavascriptInterface` でアノテーションされたパブリックメソッドだけが JavaScript からアクセスできます <sup>[1]</sup> 。
 
 ```xml
 <uses-sdk android:minSdkVersion="17" />
@@ -766,18 +766,18 @@ Another compliant solution is to define the API level to 17 (JELLY_BEAN_MR1) and
 </manifest>
 ```
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M7 - Client Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+* M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 ##### OWASP MASVS
-- V6.8: "If Java objects are exposed in a WebView, verify that the WebView only renders JavaScript contained within the app package."
+- V6.8: "JavaオブジェクトがWebViewで公開されている場合、WebViewはアプリパッケージ内に含まれるJavaScriptのみをレンダリングしている。"
 
 ##### CWE
 * CWE-502 - Deserialization of Untrusted Data
 
-##### Info
+##### その他
 - [1] DRD13 addJavascriptInterface()  - https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=129859614
 - [2] WebView addJavascriptInterface Remote Code Execution - https://labs.mwrinfosecurity.com/blog/webview-addjavascriptinterface-remote-code-execution/
 - [3] Method shouldOverrideUrlLoading() - https://developer.android.com/reference/android/webkit/WebViewClient.html#shouldOverrideUrlLoading(android.webkit.WebView,%20java.lang.String)
