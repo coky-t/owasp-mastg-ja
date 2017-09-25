@@ -641,33 +641,33 @@ N/A
 
 
 
-### Testing Whether Java Objects Are Exposed Through WebViews
+### Java オブジェクトが WebView を介して公開されているかのテスト
 
-#### Overview
+#### 概要
 
-Android offers two different ways that enables JavaScript executed in a WebView to call and use native functions within an Android App:
+Android は WebView 内で実行される JavaScript が Android アプリ内でネイティブ関数を呼び出しおよび使用できる二つの方法を提供しています。
 
 * `shouldOverrideUrlLoading()`<sup>[4]</sup>
 * `addJavascriptInterface()`<sup>[5]</sup>
 
 **shouldOverrideUrlLoading**
 
-This method gives the host application a chance to take over the control when a new URL is about to be loaded in the current WebView.  The method `shouldOverrideUrlLoading()` is available with two different method signatures:
+このメソッドは、新しい URL が現在の WebView にロードされる直前に、ホストアプリケーションにコントロールを引き継ぐことができます。メソッド `shouldOverrideUrlLoading()` は二つの異なるメソッドシグネチャで利用できます。
 
 * `boolean shouldOverrideUrlLoading` (WebView view, String url)
-  * This method was deprecated in API level 24.
+  * このメソッドは API レベル 24 で非推奨になりました。
 * `boolean shouldOverrideUrlLoading` (WebView view, WebResourceRequest request)
-  * This method was added in API level 24
+  * このメソッドは API レベル 24 で追加されました。
 
 **addJavascriptInterface**
 
-The `addJavascriptInterface()` method allows to expose Java Objects to WebViews. When using this method in an Android App it is possible for JavaScript code in a WebView to invoke native methods of the Android App.
+`addJavascriptInterface()` メソッドは Java オブジェクトを WebView に公開することを可能にします。このメソッドを Android アプリで使用する場合、WebView の JavaScript コードで Android アプリのネイティブメソッドを呼び出すことが可能です。
 
-Before Android 4.2 JELLY_BEAN (API Level 17) a vulnerability was discovered in the implementation of `addJavascriptInterface()`, by using reflection that leads to remote code execution when injecting malicious JavaScript in a WebView<sup>[2]</sup>.
+Android 4.2 JELLY_BEAN (API レベル 17) 以前で `addJavascriptInterface()` の実装に脆弱性が見つかりました。WebView に悪意のある JavaScript を注入する際にリモートコード実行につながるリフレクションを使用するものです <sup>[2]</sup> 。
 
-With API Level 17 this vulnerability was fixed and the access granted to methods of a Java Object for JavaScript was changed. When using `addJavascriptInterface()`, methods of a Java Object are only accessible for JavaScript when the annotation `@JavascriptInterface` is explicitly added. Before API Level 17 all methods of the Java Object were accessible by default.
+API レベル 17 で、この脆弱性が修正され、JavaScript 用の Java オブジェクトのメソッドに付与されたアクセスが変更されました。`addJavascriptInterface()` を使用する際は、アノテーション `@JavascriptInterface` を明示的に追加した場合にのみ、Java オブジェクトのメソッドは JavaScript でアクセスできます。API レベル 17 以前では、Java オブジェクトのすべてのメソッドがデフォルトでアクセス可能です。
 
-An App that is targeting an Android version before Android 4.2 is still vulnerable to the identified flaw in `addJavascriptInterface()` and should only be used with extreme care. Therefore several best practices should be applied in case this method is needed.
+Android 4.2 以前の Android バージョンをターゲットとしているアプリは、`addJavascriptInterface()` で特定された欠陥に対して依然として脆弱であり、細心の注意を払って使用する必要があります。したがって、このメソッドを必要とする場合にはいくつかのベストプラクティスを適用する必要があります。
 
 
 #### Static Analysis
