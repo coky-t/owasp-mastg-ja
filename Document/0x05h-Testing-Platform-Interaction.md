@@ -865,38 +865,38 @@ dependencies {
 * 利用可能なコマンドをチェックします。`su` を実行した後にルートになることが可能であるかどうかなど。
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-A debug build with deactivated root detection should be provided in a white box test to be able to apply all test cases to the app.
+ホワイトボックステストでは、ルート検出を無効化したデバッグビルドを提供し、アプリのすべてのテストケースを適用できるようにします。
 
-In case of a black box test, an implemented root detection can be challenging if for example the app is immediately terminated because of a rooted phone. Ideally, a rooted phone is used for black box testing and might also be needed to disable SSL Pinning. To deactivate SSL Pinning and allow the usage of an interception proxy, the root detection needs to be defeated first in that case. Identifying the implemented root detection logic without source code in a dynamic scan can be fairly hard.
+ブラックボックステストの場合、ルート化フォンによりアプリがすぐに終了するなど、実装されたルート検出は困難となることがあります。理想的には、ルート化フォンをブラックボックステストに使用する際、SSL ピンニングを無効にする必要がある可能性があります。SSL ピンニングを無効化して傍受プロキシの使用を許可するには、その場合ルート検出をはじめに無効にする必要があります。実装されたルート検出ロジックをソースコードなしに動的スキャンで特定することはかなり困難となります。
 
-By using the Xposed module `RootCloak` it is possible to run apps that detect root without disabling root. Nevertheless, if a root detection mechanism is used within the app that is not covered in RootCloak, this mechanism needs to be identified and added to RootCloak in order to disable it.
+Xposed モジュール `RootCloak` を使用することにより、ルートを無効にすることなくルートを検出するアプリを実行できます。ですが、ルート検出メカニズムが RootCloak でカバーされていないアプリで使用されている場合、このメカニズムを識別し、RootCloak に追加して無効にする必要があります。
 
-Other options are dynamically patching the app with Friday or repackaging the app. This can be as easy as deleting the function in the smali code and repackage it, but can become difficult if several different checks are part of the root detection mechanism. Dynamically patching the app can also become difficult if countermeasures are implemented that prevent runtime manipulation/tampering.
+他の選択肢としては金曜日にアプリを動的にパッチしたり、アプリを再パッケージしたりします。これは smali コードの関数を削除して再パッケージするのと同じくらい簡単ですが、いくつかの異なるチェックがルート検出メカニズムの一部である場合、困難になる可能性があります。ランタイム操作、改竄を防ぐ対策が実装されている場合、アプリの動的パッチも難しくなります。
 
-Otherwise it should be switched to a non-rooted device in order to use the testing time wisely and to execute all other test cases that can be applied on a non-rooted setup. This is of course only possible if the SSL Pinning can be deactivated for example in smali and repackaging the app.
+あるいは、非ルート化デバイスに切り替えて、テスト時間を賢く使用し、非ルート化設定で適用できる他のすべてのテストケースを実行します。これはもちろん、たとえば smali で SSL ピンニングを無効にしてアプリを再パッケージするなどの場合にのみ可能です。
 
-#### Remediation
+#### 改善方法
 
-To implement root detection within an Android app, libraries can be used like `RootBeer`<sup>[1]</sup>. The root detection should either trigger a warning to the user after start, to remind him that the device is rooted and that the user can only proceed on his own risk. Alternatively, the app can terminate itself in case a rooted environment is detected. This decision is depending on the business requirements and the risk appetite of the stakeholders.
+Android アプリ内でルート検出を実装するには、`RootBeer` <sup>[1]</sup> などのライブラリを使用します。ルート検出では、起動後にユーザーに警告を表示し、デバイスがルート化されていること、およびユーザーが自己のリスクとしてのみ進めることを通知します。また、ルート化環境が検出された場合にアプリを終了することもできます。この判断はビジネス要件とステークホルダのリスク選好に依存します。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M8 - Code Tampering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M8-Code_Tampering
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M8 - コード改竄 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M8-Code_Tampering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
-- V6.10: "The app detects whether it is being executed on a rooted or jailbroken device. Depending on the business requirement, users are warned, or the app is terminated if the device is rooted or jailbroken."
+- V6.10: "アプリはルート化デバイスや脱獄デバイスで実行されているかどうかを検出している。ビジネス要件に応じて、デバイスがルート化もしくは脱獄されている場合に、ユーザーに警告している、もしくはアプリが終了している。"
 
 ##### CWE
 N/A
 
-##### Info
+##### その他
 - [1] RootBeer - https://github.com/scottyab/rootbeer
 
-##### Tools
+##### ツール
 
 * RootCloak - http://repo.xposed.info/module/com.devadvance.rootcloak2
