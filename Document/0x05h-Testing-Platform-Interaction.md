@@ -835,11 +835,11 @@ N/A
 
 ルート検出は攻撃者からアプリを保護するものではありませんが、攻撃者を劇的に減速させ、ローカル攻撃が成功するバーを引き上げることを心に留めておきます。ルート検出は幅広い多層セキュリティ戦略の一環として考慮すべきであり、攻撃者に対してより耐性があり、解析をより困難にします。
 
-#### Static Analysis
+#### 静的解析
 
-Root detection can either be implemented by leveraging existing root detection libraries, such as `Rootbeer`<sup>[1]</sup>, or by implementing manually checks.
+ルート検出は `Rootbeer` <sup>[1]</sup> などの既存のルート検出ライブラリを活用して、または手動でチェックを実装することにより実装できます。
 
-Check the source code for the string `rootbeer` and also the `gradle` file, if a dependency is defined for Rootbeer:
+ソースコードで文字列 `rootbeer` を、また、`gradle` ファイルも Rootbeer の依存関係が定義されているかどうかを確認します。
 
 ```java
 dependencies {
@@ -847,7 +847,7 @@ dependencies {
 }
 ```
 
-If this library is used, code like the following might be used for root detection.
+このライブラリを使用している場合、以下のようなコードがルート検出に使用されている可能性があります。
 
 ```java
         RootBeer rootBeer = new RootBeer(context);
@@ -858,11 +858,11 @@ If this library is used, code like the following might be used for root detectio
         }
 ```
 
-If the root detection is implemented from scratch, the following should be checked to identify functions that contain the root detection logic. The following checks are the most common ones for root detection:
-* Checking for settings/files that are available on a rooted device, like verifying the BUILD properties for test-keys in the parameter `android.os.build.tags`.
-* Checking permissions of certain directories that should be read-only on a non-rooted device, but are read/write on a rooted device.
-* Checking for installed Apps that allow or support rooting of a device, like verifying the presence of _Superuser.apk_.
-* Checking available commands, like is it possible to execute `su` and being root afterwards.
+ルート検出が一から実装されている場合、以下を確認してルート検出ロジックを含む関数を特定します。ルート検出には以下のチェックが最も一般的なものです。
+* ルート化デバイスで利用可能な設定、ファイルをチェックします。BUILD プロパティのパラメータ `android.os.build.tags` で test-keys を確認するなど。
+* 特定のディレクトリのパーミッションをチェックします。非ルート化デバイスでは読み取り専用ですが、ルート化デバイスでは読み書き可であるもの。
+* インストールされているアプリをチェックします。デバイスのルート化を許可またはサポートするもの。_Superuser.apk_ の存在を確認するなど。
+* 利用可能なコマンドをチェックします。`su` を実行した後にルートになることが可能であるかどうかなど。
 
 
 #### Dynamic Analysis
