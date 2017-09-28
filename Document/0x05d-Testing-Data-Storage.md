@@ -4,24 +4,24 @@
 
 「機密データ」はそれぞれ特定のアプリのコンテキストで識別する必要があることに注意します。データの分類については「テストプロセスと技法」の章で詳しく説明しています。
 
-### Testing for Sensitive Data in Local Storage
+### 機密データのテスト (ローカルストレージ)
 
-#### Overview
+#### 概要
 
-Common wisdom suggest to save as little sensitive data as possible on permanent local storage. However, in most practical scenarios, a least some types user-related data need to be stored. For example, asking the user to enter a highly complex password every time the app is started isn't a great idea from a usability perspective. As a result, most apps must locally cache some kind of session token. Other types of sensitive data, such as personally identifiable information, might also be saved if the particular scenario calls for it.
+通念として、永続的なローカルストレージには可能な限り機密データを保存しないことを推奨しています。しかし、ほとんどの実際のシナリオでは、少なくともいくつかのタイプのユーザー関連データを格納する必要があります。例えば、アプリを起動するごとに非常に複雑なパスワードを入力するようにユーザーに依頼することは、ユーザビリティの観点からよい考えとはいえません。その結果、ほとんどのアプリではある種のセッショントークンをローカルにキャッシュする必要があります。個人識別情報などの他の種類の機密データも、特定のシナリオで必要とされる場合には保存されることもあります。
 
-A vulnerability occurs when sensitive data is not properly protected by an app when persistently storing it. The app might be able to store it in different places, for example locally on the device or on an external SD card. When trying to exploit these kind of issues, consider that there might be a lot of information processed and stored in different locations. It is important to identify at the beginning what kind of information is processed by the mobile application and keyed in by the user and what might be interesting and valuable for an attacker (e.g. passwords, credit card information, PII).
+機密データがアプリにより適切に保護されていない場合に永続的にそれを格納すると脆弱性が発生します。デバイスのローカルや外部 SD カードなどのさまざまな場所にアプリは機密データを格納する可能性があります。この種の問題を悪用しようとする場合には、さまざまな場所に処理および格納された多くの情報がある可能性を考慮します。重要なのは、どのような種類の情報がそのモバイルアプリケーションにより処理されユーザーにより入力されるか、また、何が攻撃者にとって興味深く価値のあるものであるか (パスワード、クレジットカード情報、PII など) を最初から特定することです。
 
-Consequences for disclosing sensitive information can be various, like disclosure of encryption keys that can be used by an attacker to decrypt information. More generally speaking an attacker might be able to identify this information to use it as a basis for other attacks like social engineering (when PII is disclosed), session hijacking (if session information or a token is disclosed) or gather information from apps that have a payment option in order to attack and abuse it.
+機密情報を開示することによる結果はさまざまです。例えば暗号鍵の開示は攻撃者により使用され情報を解読されます。より一般的に言えば、攻撃者はこの情報を特定して、他の攻撃の基礎として使用できます。例えば、ソーシャルエンジニアリング (PII が開示されている場合) 、セッションハイジャック (セッション情報やトークンが開示されている場合) があります。また、支払オプションを持つアプリから情報を収集して、それを攻撃および悪用することもあります。
 
-Storing data<sup>[1]</sup> is essential for many mobile applications, for example in order to keep track of user settings or data a user has keyed in that needs to be stored locally or offline. Data can be stored persistently in various ways. The following list shows those mechanisms that are available on the Android platform:
+データの格納 <sup>[1]</sup> は多くのモバイルアプリケーションで不可欠です。例えば、ユーザー設定やユーザーが入力したデータを記録するために、ローカルやオフラインで保存する必要があります。データはさまざまな方法で永続的に格納されます。以下のリストは Android プラットフォームで利用可能なこれらのメカニズムを示しています。
 
 * Shared Preferences
-* Internal Storage  
-* External Storage  
-* SQLite Databases  
+* 内部ストレージ
+* 外部ストレージ
+* SQLite データベース
 
-The following snippets of code demonstrate bad practices that disclose sensitive information, but also show the different storage mechanisms on Android in detail.
+以下のコードスニペットは機密情報を開示するバッドプラクティスを示していますが、Android のさまざまなストレージメカニズムも詳細に示しています。
 
 ##### Shared Preferences
 
