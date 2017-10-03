@@ -25,7 +25,7 @@
 
 ##### Shared Preferences
 
-SharedPreferences<sup>[2]</sup> is a common approach to store Key/ Value pairs persistently in the filesystem by using an XML structure. Within an Activity the following code might be used to store sensitive information like a username and a password:
+SharedPreferences <sup>[2]</sup> は XML 構造を使用してキー/値のペアをファイルシステムに永続的に格納する一般的なアプローチです。アクティビティ内では、以下のコードを使用してユーザー名やパスワードなどの機密情報を格納できます。
 
 ```java
 SharedPreferences sharedPref = getSharedPreferences("key", MODE_WORLD_READABLE);
@@ -35,9 +35,9 @@ editor.putString("password", "supersecret");
 editor.commit();
 ```
 
-Once the activity is called, the file key.xml is created with the provided data. This code is violating several best practices.
+アクティビティが呼ばれると、ファイル key.xml が提供されたデータで作成されます。このコードはいくつかのベストプラクティスに違反しています。
 
-* The username and password is stored in clear text in `/data/data/<PackageName>/shared_prefs/key.xml`
+* ユーザー名とパスワードが平文で `/data/data/<PackageName>/shared_prefs/key.xml` に格納されています
 
 ```xml
 <?xml version='1.0' encoding='utf-8' standalone='yes' ?>
@@ -47,14 +47,14 @@ Once the activity is called, the file key.xml is created with the provided data.
 </map>
 ```
 
-* `MODE_WORLD_READABLE` allows all applications to access and read the content of `key.xml`
+* `MODE_WORLD_READABLE` はすべてのアプリケーションが `key.xml` のコンテンツにアクセスおよび読むことを許可します
 
 ```bash
 root@hermes:/data/data/sg.vp.owasp_mobile.myfirstapp/shared_prefs # ls -la
 -rw-rw-r-- u0_a118 u0_a118    170 2016-04-23 16:51 key.xml
 ```
 
-> Please note that `MODE_WORLD_READABLE` and `MODE_WORLD_WRITEABLE` were deprecated in API 17. Although this may not affect newer devices, applications compiled with android:targetSdkVersion set prior to 17 may still be affected, if they run on OS prior to Android 4.2 (`JELLY_BEAN_MR1`).
+> `MODE_WORLD_READABLE` および `MODE_WORLD_WRITEABLE` は API 17 で廃止されたことに注意してください。これは新しいデバイスには影響しませんが、Android 4.2 (`JELLY_BEAN_MR1`) より前の OS で動作する場合、android:targetSdkVersion が 17 より前の設定でコンパイルされたアプリケーションは依然として影響を受ける可能性があります。
 
 
 ##### SQLite Database (Unencrypted)
