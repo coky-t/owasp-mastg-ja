@@ -57,10 +57,10 @@ root@hermes:/data/data/sg.vp.owasp_mobile.myfirstapp/shared_prefs # ls -la
 > `MODE_WORLD_READABLE` および `MODE_WORLD_WRITEABLE` は API 17 で廃止されたことに注意してください。これは新しいデバイスには影響しませんが、Android 4.2 (`JELLY_BEAN_MR1`) より前の OS で動作する場合、android:targetSdkVersion が 17 より前の設定でコンパイルされたアプリケーションは依然として影響を受ける可能性があります。
 
 
-##### SQLite Database (Unencrypted)
+##### SQLite データベース (暗号化なし)
 
-SQLite is a SQL database that stores data to a `.db` file. The Android SDK comes with built in support for SQLite databases. The main package to manage the databases is `android.database.sqlite`.
-Within an Activity the following code might be used to store sensitive information like a username and a password:
+SQLite は `.db` ファイルにデータを格納する SQL データベースです。Android SDK には SQLite データベースのサポートが組み込まれています。データベースを管理する主なパッケージは `android.database.sqlite` です。
+アクティビティ内では、以下のコードを使用してユーザー名やパスワードなどの機密情報を格納できます。
 
 ```java
 SQLiteDatabase notSoSecure = openOrCreateDatabase("privateNotSoSecure",MODE_PRIVATE,null);
@@ -69,14 +69,14 @@ notSoSecure.execSQL("INSERT INTO Accounts VALUES('admin','AdminPass');");
 notSoSecure.close();
 ```
 
-Once the activity is called, the database file `privateNotSoSecure` is created with the provided data and is stored in clear text in `/data/data/<PackageName>/databases/privateNotSoSecure`.
+アクティビティが呼び出されると、データベースファイル `privateNotSoSecure` が提供されたデータで作成され、`/data/data/<PackageName>/databases/privateNotSoSecure` に平文で格納されます。
 
-There might be several files available in the databases directory, besides the SQLite database.
+databases ディレクトリには SQLite データベースのほかにいくつかのファイルがある可能性があります。
 
-* Journal files: These are temporary files used to implement atomic commit and rollback capabilities in SQLite<sup>[3]</sup>.
-* Lock files: The lock files are part of the locking and journaling mechanism designed to improve concurrency in SQLite and to reduce the writer starvation problem<sup>[4]</sup>.
+* ジャーナルファイル: これらは SQLite のアトミックコミットとロールバック機能を実装するために使用される一時ファイルです <sup>[3]</sup> 。
+* ロックファイル: ロックファイルは SQLite の同時並行性を向上させ、writer starvation 問題を低減するために設計されたロックとジャーナルのメカニズムの一部です <sup>[4]</sup> 。
 
-Unencrypted SQLite databases should not be used to store sensitive information.
+暗号化なしの SQLite データベースを機密情報の格納に使用すべきではありません。
 
 ##### SQLite Databases (Encrypted)
 
