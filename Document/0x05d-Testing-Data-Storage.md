@@ -78,9 +78,9 @@ databases ディレクトリには SQLite データベースのほかにいく�
 
 暗号化なしの SQLite データベースを機密情報の格納に使用すべきではありません。
 
-##### SQLite Databases (Encrypted)
+##### SQLite データベース (暗号化あり)
 
-By using the library SQLCipher<sup>[5]</sup> SQLite databases can be encrypted, by providing a password.
+ライブラリ SQLCipher <sup>[5]</sup> を使用すると、パスワードを提供することで SQLite データベースが暗号化できます。
 
 ```java
 SQLiteDatabase secureDB = SQLiteDatabase.openOrCreateDatabase(database, "password123", null);
@@ -90,11 +90,11 @@ secureDB.close();
 
 ```
 
-If encrypted SQLite databases are used, check if the password is hardcoded in the source, stored in shared preferences or hidden somewhere else in the code or file system.
-A secure approach to retrieve the key, instead of storing it locally could be to either:
+暗号化ありの SQLite データベースを使用する場合、パスワードがソースにハードコードされているかどうか、shared preferences に格納されているか、コードやファイルシステムのどこかに隠されているかどうかを確認します。
+キーを取得するセキュアなアプローチは、ローカルに格納するのではなく、次のいずれかになります。
 
-* Ask the user every time for a PIN or password to decrypt the database, once the app is opened (weak password or PIN is prone to Brute Force Attacks), or
-* Store the key on the server and make it accessible via a Web Service (then the app can only be used when the device is online)
+* アプリを開く際、毎回ユーザーに PIN やパスワードを問い合わせ、データベースを復号します (弱いパスワードや PIN はブルートフォース攻撃を受けやすくなります)
+* サーバーにキーを格納し、Web サービス経由でアクセス可能にします (アプリはデバイスがオンラインの場合のみ使用できます)
 
 ##### Internal Storage
 
