@@ -118,11 +118,11 @@ try {
 
 クラス `FileInputStream` を検索して、どのファイルがアプリ内で読み込まれているかもチェックすべきです。内部ストレージメカニズムの一部にはキャッシュストレージもあります。一時的にデータをキャッシュするために、`getCacheDir()` などの関数を使用する可能性があります。
 
-##### External Storage
+##### 外部ストレージ
 
-Every Android-compatible device supports a shared external storage<sup>[7]</sup> that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage.
-Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.
-Within an Activity the following code might be used to store sensitive information in the file `password.txt` persistently to the external storage:
+すべての Android 互換デバイスは共有外部ストレージ <sup>[7]</sup> をサポートしており、ファイルを保存するために使用できます。これはリムーバブルストレージメディア (SD カードなど) や内部 (非リムーバブル) ストレージがあります。
+外部ストレージに保存されたファイルは world-readable であり、ユーザーが変更できます。USB マスストレージを有効にすると、コンピュータ上にファイルを転送できます。
+アクティビティ内では、以下のコードを使用して、ファイル `password.txt` の機密情報を外部ストレージに永続的に格納できます。
 
 ```java
 File file = new File (Environment.getExternalFilesDir(), "password.txt");
@@ -133,9 +133,9 @@ FileOutputStream fos;
     fos.close();
 ```
 
-Once the activity is called, the file is created with the provided data and the data is stored in clear text in the external storage.
+アクティビティが呼び出されると、提供されたデータでファイルが作成され、データは平文で外部ストレージに格納されます。
 
-It’s also worth to know that files stored outside the application folder (`data/data/<packagename>/`) will not be deleted when the user uninstall the application.
+アプリケーションフォルダ (`data/data/<packagename>/`) の外に格納されたファイルは、ユーザーがアプリケーションをアンインストールしたときに削除されないことも知っておく価値があります。
 
 ##### KeyChain
 
