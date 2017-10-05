@@ -96,10 +96,10 @@ secureDB.close();
 * アプリを開く際、毎回ユーザーに PIN やパスワードを問い合わせ、データベースを復号します (弱いパスワードや PIN はブルートフォース攻撃を受けやすくなります)
 * サーバーにキーを格納し、Web サービス経由でアクセス可能にします (アプリはデバイスがオンラインの場合のみ使用できます)
 
-##### Internal Storage
+##### 内部ストレージ
 
-Files can be saved directly on the internal storage<sup>[6]</sup> of the device. By default, files saved to the internal storage are private to your application and other applications cannot access them. When the user uninstalls your application, these files are removed.
-Within an Activity the following code might be used to store sensitive information in the variable test persistently to the internal storage:
+ファイルはデバイスの内部ストレージ <sup>[6]</sup> に直接保存できます。デフォルトでは、内部ストレージに保存されたファイルはアプリケーション専用であり、他のアプリケーションはアクセスできません。ユーザーがアプリケーションをアンインストールすると、これらのファイルは削除されます。
+アクティビティ内で、以下のコードを使用して、変数 test の機密情報を内部ストレージに永続的に格納できます。
 
 ```java
 FileOutputStream fos = null;
@@ -114,9 +114,9 @@ try {
 }
 ```
 
-The file mode needs to be checked to make sure that only the app itself has access to the file by using `MODE_PRIVATE`. Other modes like `MODE_WORLD_READABLE` (deprecated) and  `MODE_WORLD_WRITEABLE` (deprecated) are more lax and can pose a security risk.
+ファイルモードをチェックする必要があります。`MODE_PRIVATE` を使用して、そのアプリ自身のみがファイルにアクセスできることを確認します。`MODE_WORLD_READABLE` (非推奨) や  `MODE_WORLD_WRITEABLE` (非推奨) などの他のモードはとても緩く、セキュリティリスクを引き起こす可能性があります。
 
-It should also be checked what files are read within the app by searching for the class `FileInputStream`. Part of the internal storage mechanisms is also the cache storage. To cache data temporarily, functions like `getCacheDir()` can be used.
+クラス `FileInputStream` を検索して、どのファイルがアプリ内で読み込まれているかもチェックすべきです。内部ストレージメカニズムの一部にはキャッシュストレージもあります。一時的にデータをキャッシュするために、`getCacheDir()` などの関数を使用する可能性があります。
 
 ##### External Storage
 
