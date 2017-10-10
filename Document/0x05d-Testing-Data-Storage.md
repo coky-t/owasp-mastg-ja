@@ -139,7 +139,7 @@ FileOutputStream fos;
 
 ##### KeyChain
 
-The KeyChain class <sup>[10]</sup> is used to store and retrieve *system-wide* private keys and their corresponding certificates (chain). The user will be prompted to set a lock screen pin or password to protect the credential storage if it hasn’t been set, if something gets imported into the KeyChain the first time. Please note that the keychain is system-wide: so every application can access the materials stored in the KeyChain.
+KeyChain クラス <sup>[10]</sup> は *システムワイドの* 秘密鍵とそれに関連する証明書 (チェーン) を格納および取得するために使用されます。ユーザーは、初めて KeyChain に何かがインポートされた際に、ロック画面の PIN やパスワードが設定されていない場合、資格情報ストレージを保護するためにそれらを設定するように求められます。キーチェーンはシステムワイドであることに注意します。つまり、すべてのアプリケーションが KeyChain に格納されているマテリアルにアクセスできます。
 
 ##### KeyStore (AndroidKeyStore)
 
