@@ -157,11 +157,11 @@ Android KeyStore により提供されるセキュリティのレベルはその
 
 ソフトウェアのみの実装では、鍵はユーザーごとの暗号マスターキー <sup>[16]</sup> で暗号化されます。その場合、攻撃者はルート化デバイスのフォルダ <code>/data/misc/keystore/</code> のすべての鍵にアクセスできます。マスターキーはユーザー自身のロック画面 PIN やパスワードを使用して生成されるため、Android KeyStore はデバイスがロックされているときには利用できません <sup>[9]</sup> 。
 
-##### Older Java-KeyStore
-Older Android versions do not have a KeyStore, but do have the KeyStore interface from JCA (Java Cryptography Architecture). One can use various KeyStores that implement this interface and provide secrecy and integrity protection to the keys stored in the keystore implementation. The impelemntations all rely on the fact that a file is stored on the filesystem, which then protects its contents by a password. For this, we recommend to use the BounceyCastle KeyStore (BKS). 
-You can create one by using the `KeyStore.getInstance("BKS", "BC");`, where "BKS" is the keystore name (BounceycastleKeyStore) and "BC" is the provider (BounceyCastle). Alternatively you can use SpongeyCastle as a wrapper and initialize the keystore: `KeyStore.getInstance("BKS", "SC");`.
+##### 古い Java-KeyStore
+古い Android バージョンには KeyStore はありませんが、JCA (Java Cryptography Architecture) の KeyStore インタフェースを備えています。このインタフェースを実装するさまざまな KeyStore を使用して、キーストア実装に格納される鍵の機密性と完全性の保護を提供できます。その実装はすべてファイルシステムに格納されたファイルであるという事実に依存するため、パスワードによりその内容を保護しています。このため、BounceyCastle KeyStore (BKS) の使用をお勧めします。
+`KeyStore.getInstance("BKS", "BC");` を使用してそれを作成できます。"BKS" はキーストア名 (BounceycastleKeyStore) であり、"BC" はプロバイダ (BounceyCastle) です。代わりに SpongeyCastle をラッパーとして使用し、キーストアを初期化することもできます: `KeyStore.getInstance("BKS", "SC");` 。
 
-Please be aware that not all KeyStores offer proper protection to the keys stored in the keystore files.
+すべての KeyStore がキーストアファイルに格納された鍵の適切な保護を提供するわけではないことに気をつけます。
 
 
 
