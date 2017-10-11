@@ -165,30 +165,30 @@ Android KeyStore により提供されるセキュリティのレベルはその
 
 
 
-#### Static Analysis
+#### 静的解析
 
-##### Local Storage
+##### ローカルストレージ
 
-As already pointed out, there are several ways to store information within Android. Several checks should therefore be applied to the source code to identify the storage mechanisms used within the Android app and whether or not sensitive data is processed insecurely.
+既に示したように、Android 内に情報を格納するにはいくつかの方法があります。従って、いくつかのチェックをソースコードに適用して、Android アプリ内で使用されるストレージメカニズムを特定し、機密データが非セキュアにしょりされていないかどうかを確認します。
 
-* Check `AndroidManifest.xml` for permissions to read from or write to external storage, like `uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"`
-* Check the source code for functions and API calls that are used for storing data:
-  * Open the Java Files in an IDE or text editor of your choice or use grep on the command line to search for:
-    * file permissions like:
-      * `MODE_WORLD_READABLE` or `MODE_WORLD_WRITABLE`. IPC files should not be created with permissions of `MODE_WORLD_READABLE` or `MODE_WORLD_WRITABLE` unless it is required as any app would be able to read or write the file even though it may be stored in the app private data directory.
-    * Classes and functions like:
-      * `SharedPreferences` Class (Storage of key-value pairs)
-      * `FileOutPutStream` Class (Using Internal or External Storage)
-      * `getExternal*` functions (Using External Storage)
-      * `getWritableDatabase` function (return a SQLiteDatabase for writing)
-      * `getReadableDatabase` function (return a SQLiteDatabase for reading)
-      * `getCacheDir` and `getExternalCacheDirs` function (Using cached files)
+* 外部ストレージの読み書きのためのパーミッションについて `AndroidManifest.xml` をチェックする。`uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"` など。
+* データの格納に使用される関数および API 呼び出しについてソースコードをチェックする。
+  * 任意の IDE やテキストエディタで Java ファイルを開くか、コマンドラインで grep を使用して検索する。
+    * ファイルパーミッション
+      * `MODE_WORLD_READABLE` や `MODE_WORLD_WRITABLE` 。IPC ファイルはアプリのプライベートデータディレクトリに格納されていても、任意のアプリがそのファイルを読み書きする必要がなければ、`MODE_WORLD_READABLE` や `MODE_WORLD_WRITABLE` のパーミッションで作成するべきではありません。
+    * クラスおよび関数
+      * `SharedPreferences` クラス (キーバリューペアのストレージ)
+      * `FileOutPutStream` クラス (内部または外部ストレージの使用)
+      * `getExternal*` 関数 (外部ストレージの使用)
+      * `getWritableDatabase` 関数 (書き込み用の SQLiteDatabase を戻す)
+      * `getReadableDatabase` 関数 (読み取り用の SQLiteDatabase を戻す)
+      * `getCacheDir` および `getExternalCacheDirs` 関数 (キャッシュファイルの使用)
 
-Encryption operations should rely on solid and tested functions provided by the SDK. The following describes different “bad practices” that should be checked with the source code:
+暗号化操作は SDK により提供される実証済み機能に依存すべきです。以下では、ソースコードでチェックする必要があるさまざまな「バッドプラクティス」について説明します。
 
-* Check if simple bit operations are used, like XOR or Bit flipping to “encrypt” sensitive information like credentials or private keys that are stored locally. This should be avoided as the data can easily be recovered.
-* Check if keys are created or used without taking advantage of the Android onboard features like the Android KeyStore<sup>[8]</sup>.
-* Check if keys are disclosed.
+* 単純なビット操作が使用されているかどうかを確認します。XOR やビットフリップなどでローカルに格納される資格情報や秘密鍵などの機密情報を「暗号化」します。これはデータを容易に復元できるため避けるべきです。
+* Android KeyStore <sup>[8]</sup> などの Android オンボード機能を利用せずに鍵を生成または使用されているかどうかを確認します。
+* 鍵が開示されているかどうかを確認します。
 
 ###### Typical Misuse: Hardcoded Cryptographic Keys
 
