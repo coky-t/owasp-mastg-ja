@@ -255,13 +255,13 @@ buildTypes {
 
 * shared preferences, 通常は /data/data/package_name/shared_prefs にあります
 
-##### KeyChain and Android KeyStore
+##### KeyChain および Android KeyStore
 
-When going through the source code it should be analyzed if native mechanisms that are offered by Android are applied to the identified sensitive information. Sensitive information must not be stored in clear text but should be encrypted. If sensitive information needs to be stored on the device itself, several API calls are available to protect the data on the Android device by using the **KeyChain<sup>[10]</sup>** and **Android Keystore<sup>[8]</sup>**. The following controls should therefore be used:
+ソースコードを調べる際は、Android により提供されるネイティブメカニズムが識別された機密情報に適用されているかどうかを解析する必要があります。機密情報は平文で格納してはいけません。暗号化する必要があります。機密情報をデバイス自体に格納する必要がある場合には、いくつかの API 呼び出しを利用できます。**KeyChain <sup>[10]</sup>** や **Android Keystore <sup>[8]</sup>** を使用して Android デバイス上のデータを保護します。従って、以下のコントロールを使用する必要があります。
 
-* Check if a key pair is created within the app by looking for the class `KeyPairGenerator`.
-* Check that the application is using the Android KeyStore and Cipher mechanisms to securely store encrypted information on the device. Look for the pattern `import java.security.KeyStore`, `import javax.crypto.Cipher`, `import java.security.SecureRandom` and corresponding usages.
-* The `store(OutputStream stream, char[] password)` function can be used to store the KeyStore to disk with a specified password. Check that the password provided is not hardcoded and is defined by user input as this should only be known to the user. Look for the pattern `.store(`.
+* クラス `KeyPairGenerator` を探して、アプリ内で鍵ペアが作成されているかどうかを確認します。
+* アプリケーションが Android KeyStore や Cipher メカニズムを使用して、暗号化された情報をデバイス上にセキュアに格納していることを確認します。パターン `import java.security.KeyStore`, `import javax.crypto.Cipher`, `import java.security.SecureRandom` および対応する使用法を探します。
+* `store(OutputStream stream, char[] password)` 関数を使用して、指定されたパスワードでディスクに KeyStore を格納できます。提供されるパスワードはハードコードされておらず、ユーザー入力により定義され、ユーザーだけが知っているものであることを確認します。パターン `.store(` を探します。
 
 #### Dynamic Analysis
 
