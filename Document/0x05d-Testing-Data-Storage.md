@@ -190,21 +190,21 @@ Android KeyStore により提供されるセキュリティのレベルはその
 * Android KeyStore <sup>[8]</sup> などの Android オンボード機能を利用せずに鍵を生成または使用されているかどうかを確認します。
 * 鍵が開示されているかどうかを確認します。
 
-###### Typical Misuse: Hardcoded Cryptographic Keys
+###### よくある間違い: ハードコードされた暗号鍵
 
-The use of a hard-coded or world-readable cryptographic key significantly increases the possibility that encrypted data may be recovered. Once it is obtained by an attacker, the task to decrypt the sensitive data becomes trivial, and the initial idea to protect confidentiality fails.
+ハードコードされた暗号鍵や誰にでも読み取り可能な暗号鍵を使用すると、暗号化されたデータを復元される可能性が大幅に高まります。攻撃者がそれを取得すると、機密データを復号する作業は簡単になり、機密性を保護するという当初の考えは失敗します。
 
-When using symmetric cryptography, the key needs to be stored within the device and it is just a matter of time and effort from the attacker to identify it.
+対称暗号を使用する場合、鍵はデバイス内に格納する必要があり、攻撃者がそれを特定するのは時間と労力だけの問題です。
 
-Consider the following scenario: An application is reading and writing to an encrypted database but the decryption is done based on a hardcoded key:
+次のシナリオを考えます。あるアプリケーションは暗号化されたデータベースを読み書きしますが、復号化はハードコードされた鍵に基づいて行われます。
 
 ```Java
 this.db = localUserSecretStore.getWritableDatabase("SuperPassword123");
 ```
 
-Since the key is the same for all App installations it is trivial to obtain it. The advantages of having sensitive data encrypted are gone, and there is effectively no benefit in using encryption in this way. Similarly, look for hardcoded API keys / private keys and other valuable pieces. Encoded/encrypted keys is just another attempt to make it harder but not impossible to get the crown jewels.
+鍵はすべてのアプリインストールで同じであるため、取得することは簡単です。機密データを暗号化する利点は無くなり、このような方法で暗号化を使用することで得られるものは実際にはありません。同様に、ハードコードされた API 鍵や秘密鍵およびその他の価値のある部品を探します。エンコードや暗号化された鍵はさらなる試みであり、王冠の宝石を手に入れることは困難ですが不可能ではありません。
 
-Let's consider this piece of code:
+このコードを考えて見ましょう。
 
 ```Java
 //A more complicated effort to store the XOR'ed halves of a key (instead of the key itself)
@@ -213,7 +213,7 @@ private static final String[] myCompositeKey = new String[]{
 };
 ```
 
-Algorithm to decode the original key in this case might look like this<sup>[1]</sup>:
+このケースでの元の鍵を解読するためのアルゴリズムは以下のようになります <sup>[1]</sup> 。
 
 ```Java
 public void useXorStringHiding(String myHiddenMessage) {
@@ -228,10 +228,10 @@ public void useXorStringHiding(String myHiddenMessage) {
 }
 ```
 
-Verify common places where secrets are usually hidden:
-* resources (typically at res/values/strings.xml)
+秘密が通常隠されている一般的な場所を確認します。
+* resources (通常は res/values/strings.xml にあります)
 
-Example:
+例:
 ```xml
 <resources>
     <string name="app_name">SuperApp</string>
@@ -241,9 +241,9 @@ Example:
   </resources>
 ```
 
-* build configs, such as in local.properties or gradle.properties
+* build configs, local.properties や gradle.properties などにあります
 
-Example:
+例:
 ```
 buildTypes {
   debug {
@@ -253,7 +253,7 @@ buildTypes {
 }
 ```
 
-* shared preferences, typically at /data/data/package_name/shared_prefs
+* shared preferences, 通常は /data/data/package_name/shared_prefs にあります
 
 ##### KeyChain and Android KeyStore
 
