@@ -263,14 +263,14 @@ buildTypes {
 * アプリケーションが Android KeyStore や Cipher メカニズムを使用して、暗号化された情報をデバイス上にセキュアに格納していることを確認します。パターン `import java.security.KeyStore`, `import javax.crypto.Cipher`, `import java.security.SecureRandom` および対応する使用法を探します。
 * `store(OutputStream stream, char[] password)` 関数を使用して、指定されたパスワードでディスクに KeyStore を格納できます。提供されるパスワードはハードコードされておらず、ユーザー入力により定義され、ユーザーだけが知っているものであることを確認します。パターン `.store(` を探します。
 
-#### Dynamic Analysis
+#### 動的解析
 
-Install and use the app as it is intended and execute all functions at least once. Data can be generated when entered by the user, sent by the endpoint or it is already shipped within the app when installing it. Afterwards check the following items:
+アプリをインストールして、それが意図したとおりに使用します。すべての機能を少なくとも一回は実行します。データが生成されるのは、ユーザーが入力したとき、エンドポイントにより送信されたとき、またはインストール時にアプリ内にすでに同梱されています。それから以下の項目を確認します。
 
-* Check the files that are shipped with the mobile application once installed in `/data/data/<package_name>/` in order to identify development, backup or simply old files that shouldn’t be in a production release.
-* Check if SQLite databases are available and if they contain sensitive information (usernames, passwords, keys etc.). SQLite databases are stored in `/data/data/<package_name>/databases`.
-* Check Shared Preferences that are stored as XML files in the shared_prefs directory of the app for sensitive information, which is in `/data/data/<package_nam>/shared_prefs`.
-* Check the file system permissions of the files in `/data/data/<package_name>`. Only the user and group created when installing the app (e.g. u0_a82) should have the user rights read, write, execute (rwx). Others should have no permissions to files, but may have the executable flag to directories.
+* `/data/data/<package_name>/` にインストールされたモバイルアプリケーションに同梱されているファイルを確認し、製品リリースにはないはずの開発、バックアップ、または単に古いファイルを特定します。
+* SQLite データベースが利用可能であるかどうか、およびそれらに機密情報 (ユーザー名、パスワード、鍵など) が含まれているかどうかを確認します。SQLite データベースは `/data/data/<package_name>/databases` に格納されます。
+* 機密情報について、アプリの shared_prefs ディレクトリに XML ファイルとして格納されている Shared Preferences を確認します。`/data/data/<package_nam>/shared_prefs` にあります。
+* `/data/data/<package_name>` にあるファイルのファイルシステム権限を確認します。アプリをインストールした際に作成されるユーザーおよびグループ (u0_a82 など) のみがユーザー権限の読み取り、書き込み、実行 (rwx) を持つ必要があります。他の人はファイルへの権限を持たないはずですが、ディレクトリに対して実行可能フラグを持つ可能性があります。
 
 #### Remediation
 
