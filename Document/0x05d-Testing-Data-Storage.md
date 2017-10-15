@@ -272,34 +272,34 @@ buildTypes {
 * 機密情報について、アプリの shared_prefs ディレクトリに XML ファイルとして格納されている Shared Preferences を確認します。`/data/data/<package_nam>/shared_prefs` にあります。
 * `/data/data/<package_name>` にあるファイルのファイルシステム権限を確認します。アプリをインストールした際に作成されるユーザーおよびグループ (u0_a82 など) のみがユーザー権限の読み取り、書き込み、実行 (rwx) を持つ必要があります。他の人はファイルへの権限を持たないはずですが、ディレクトリに対して実行可能フラグを持つ可能性があります。
 
-#### Remediation
+#### 改善方法
 
-The credo for saving data can be summarized quite easily: Public data should be available for everybody, but sensitive and private data needs to be protected or even better not get stored on the devise in the first place.
+データを保存する際の約束事は次のように非常に簡単に要約できます。パブリックデータは誰でも利用可能とすべきですが、機密およびプライベートのデータは保護する必要がありますし、そもそもデバイスに格納しないほうがさらに良いです。
 
-If sensitive information (credentials, keys, PII, etc.) is needed locally on the device several best practices are offered by Android that should be used to store data securely instead of reinventing the wheel or leaving data unencrypted on the device.
+機密情報 (資格情報、鍵、PII など) はデバイス上でローカルに必要である場合、セキュアにデータを格納するために使用されるベストプラクティスは Android により提供されます。そうでなければ、車輪を再発明するか、デバイスに暗号化されていないデータをが残ります。
 
-The following is a list of best practice used for secure storage of certificates and keys and sensitive data in general:
+以下は、証明書、鍵、機密データのセキュアストレージに一般的に使用されるベストプラクティスのリストです。
 
-* Encryption or decryption functions that were self implemented need to be avoided. Instead use Android implementations such as Cipher<sup>[11]</sup>, SecureRandom<sup>[12]</sup> and KeyGenerator<sup>[13]</sup>.   
-* Username and password should not be stored on the device. Instead, perform initial authentication using the username and password supplied by the user, and then use a short-lived, service-specific authorization token (session token). If possible, use the AccountManager<sup>[14]</sup> class to invoke a cloud-based service and do not store passwords on the device.
-* Usage of `MODE_WORLD_WRITEABLE` or `MODE_WORLD_READABLE` should generally be avoided for files. If data needs to be shared with other applications, a content provider should be considered. A content provider offers read and write permissions to other apps and can make dynamic permission grants on a case-by-case basis.
-* The usage of Shared Preferences or other mechanisms that are not able to protect data should be avoided to store sensitive information. SharedPreferences are insecure and not encrypted by default. Secure-preferences<sup>[15]</sup> can be used to encrypt the values stored within Shared Preferences, but the Android Keystore should be the first option to store data securely.
-* Do not use the external storage for sensitive data. By default, files saved to the internal storage are private to your application and other applications cannot access them (nor can the user). When the user uninstalls your application, these files are also removed.
-* To provide additional protection for sensitive data, you might choose to encrypt local files using a key that is not directly accessible to the application. For example, a key can be placed in a KeyStore and protected with a user password that is not stored on the device. While this does not protect data from a root compromise that can monitor the user inputting the password, it can provide protection for a lost device without file system encryption.
-* Set variables that use sensitive information to null once finished.
-* Use immutable objects for sensitive data so it cannot be changed.
-* As a security in depth measure code obfuscation should also be applied to the app, to make reverse engineering harder for attackers.
+* 自己実装された暗号化または復号化機能は避ける必要があります。代わりに Cipher <sup>[11]</sup>, SecureRandom <sup>[12]</sup>, KeyGenerator <sup>[13]</sup> などの Android 実装を使用します。
+* ユーザー名とパスワードはデバイスに格納すべきではありません。代わりに、ユーザーが入力したユーザー名とパスワードを使用して初期認証を行い、短期間でサービス固有の認証トークン (セッショントークン) を使用します。可能であれば、AccountManager <sup>[14]</sup> クラスを使用してクラウドベースサービスを呼び出し、デバイスにパスワードを格納しません。
+* ファイルに対して `MODE_WORLD_WRITEABLE` または `MODE_WORLD_READABLE` の使用は通常避けるべきです。他のアプリケーションとデータを共有する必要がある場合には、コンテンツプロバイダを検討すべきです。コンテンツプロバイダは他のアプリに読み取りおよび書き込みパーミッションを提供し、ケースバイケースベースで動的にパーミッションを割り当てることができます。
+* データを保護できない Shared Preferences またはその他のメカニズムの使用は機密情報を格納するには避けるべきです。SharedPreferences はセキュアではなく、デフォルトで暗号化されません。Secure-preferences <sup>[15]</sup> は Shared Preferences 内に格納される値を暗号化するために使用できますが、セキュアにデータを格納するための最初の選択肢は Android Keystore です。
+* 機密データ用に外部ストレージを使用してはいけません。デフォルトでは、内部ストレージに保存されるファイルはあなたのアプリケーションのプライベートであり、他のアプリケーションはそれらにアクセスできません (そのユーザーもアクセスできません) 。ユーザーがアプリケーションをアンインストールすると、これらのファイルも削除されます。
+* 機密データを更に保護するために、アプリケーションが直接アクセスできない鍵を使用してローカルファイルを暗号化することを選択できます。例えば、鍵を KeyStore に配置し、デバイスに格納されていないユーザーパスワードで保護できます。これはユーザーがパスワードを入力することを監視するルートの侵害からデータを保護するものではありませんが、ファイルシステムの暗号化なしに紛失したデバイスの保護を提供できます。
+* 機密情報を使用し終えた変数に null を設定します。
+* 機密データに immutable オブジェクトを使用することで、変更できなくなります。
+* セキュリティの多層対策として、コードの難読化もアプリに適用し、攻撃者のリバースエンジニアリングを困難にします。
 
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-* M2 - Insecure Data Storage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M2 - 安全でないデータストレージ - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
 
 ##### OWASP MASVS
 
-* V2.1: "System credential storage facilities are used appropriately to store sensitive data, such as user credentials or cryptographic keys."
+* V2.1: "ユーザー資格情報や暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
 
 ##### CWE
 * CWE-311 - Missing Encryption of Sensitive Data
@@ -307,7 +307,7 @@ The following is a list of best practice used for secure storage of certificates
 * CWE-522 - Insufficiently Protected Credentials
 * CWE-922 - Insecure Storage of Sensitive Information
 
-##### Info
+##### その他
 
 [1] Security Tips for Storing Data - http://developer.android.com/training/articles/security-tips.html#StoringData
 [2] SharedPreferences - http://developer.android.com/reference/android/content/SharedPreferences.html
@@ -327,7 +327,7 @@ The following is a list of best practice used for secure storage of certificates
 [16] Nikolay Elenvok - Credential storage enhancements in Android 4.3 - https://nelenkov.blogspot.sg/2013/08/credential-storage-enhancements-android-43.html
 
 
-##### Tools
+##### ツール
 
 * Enjarify - https://github.com/google/enjarify
 * JADX - https://github.com/skylot/jadx
