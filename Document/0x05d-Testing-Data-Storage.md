@@ -337,15 +337,15 @@ buildTypes {
 
 
 
-### Testing for Sensitive Data in Logs
+### 機密データのテスト (ログ)
 
-#### Overview
+#### 概要
 
-There are many legit reasons to create log files on a mobile device, for example to keep track of crashes or errors or simply for usage statistics. Log files can be stored locally when being offline and being sent to the endpoint once being online again. However, logging sensitive data such as usernames or session IDs might expose the data to attackers or malicious applications and violates the confidentiality of the data.
-Log files can be created in various ways and the following list shows the mechanisms that are available on Android:
+モバイルデバイス上にログファイルを作成する正当な理由は数多くあります。例えば、クラッシュやエラーを追跡したり、単に使用統計を記録したりするなどです。ログファイルはオフライン時にはローカルに格納され、再びオンラインになるとエンドポイントに送信されます。しかし、ユーザー名やセッション ID などの機密情報をログ出力すると、攻撃者や悪意のあるアプリケーションにデータを公開され、データの機密性を失う可能性があります。
+ログファイルはさまざまな方法で作成できます。以下のリストは Android で利用可能なメカニズムを示しています。
 
-* Log Class<sup>[1]</sup>
-* Logger Class        
+* Log クラス <sup>[1]</sup>
+* Logger クラス
 * System.out/System.err.print
 
 #### Static Analysis
