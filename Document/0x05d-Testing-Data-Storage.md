@@ -348,18 +348,18 @@ buildTypes {
 * Logger クラス
 * System.out/System.err.print
 
-#### Static Analysis
+#### 静的解析
 
-Several checks should be applied to the source code to identify the logging mechanisms used within the Android app. This allows to identify if sensitive data is processed insecurely.
-The source code should be checked for logging mechanisms used within the Android App, by searching for the following:
+ソースコードにいくつかのチェックを適用して、Android アプリ内で使用されているログ出力メカニズムを特定する必要があります。これは機密データが非セキュアに処理されているかどうかを特定します。
+ソースコードはAndroid アプリ内で使用されているログ出力メカニズムをチェックする必要があります。以下のものを検索します。
 
-1. Functions and classes like:
+1. 関数及びクラス
   * `android.util.Log`
   * `Log.d` | `Log.e` | `Log.i` | `Log.v` | `Log.w` | `Log.wtf`
   * `Logger`
   * `System.out.print` | `System.err.print`
 
-2. Keywords and system output to identify non-standard log mechanisms like:
+2. 非標準のログメカニズムを特定するためのキーワードとシステム出力
   * logfile
   * logging
   * logs
