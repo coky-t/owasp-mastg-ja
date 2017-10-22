@@ -379,9 +379,9 @@ buildTypes {
 $ adb logcat > logcat.log
 ```
 
-#### Remediation
+#### 改善方法
 
-Ensure that a centralized logging class and mechanism is used and that logging statements are removed from the production release, as logs may be interrogated or readable by other applications. Tools like `ProGuard`, which is already included in Android Studio can be used to strip out logging portions in the code when preparing the production release. For example, to remove logging calls implemented with the class `android.util.Log`, simply add the following option in the _proguard-project.txt_ configuration file of ProGuard:
+一元的なログ出力クラスとメカニズムが使用され、プロダクションリリースからログ出力ステートメントが削除されていることを確認します。ログは他のアプリケーションにより傍受や読み取りが可能です。Android Studio に既に含まれている `ProGuard` などのツールを使用して、プロダクションリリースを準備する際にコード内のログ出力部分を取り除くことができます。例えば、クラス `android.util.Log` で実行されたログ出力呼び出しを削除するには、ProGuard の _proguard-project.txt_ 設定ファイルに以下のオプションを追加するだけです。
 
 ```java
 -assumenosideeffects class android.util.Log
@@ -396,25 +396,25 @@ public static int wtf(...);
 }
 ```
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-* M2 - Insecure Data Storage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M2 - 安全でないデータストレージ - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
 
 ##### OWASP MASVS
-* V2.2: "No sensitive data is written to application logs."
+* V2.2: "機密データがアプリケーションログに書き込まれていない。"
 
 ##### CWE
 * CWE-117: Improper Output Neutralization for Logs
 * CWE-532: Information Exposure Through Log Files
 * CWE-534: Information Exposure Through Debug Log Files
 
-##### Info
+##### その他
 * [1] Overview of Class Log - http://developer.android.com/reference/android/util/Log.html
 * [2] Debugging Logs with LogCat - http://developer.android.com/tools/debugging/debugging-log.html
 
-##### Tools
+##### ツール
 * ProGuard - http://proguard.sourceforge.net/
 * LogCat - http://developer.android.com/tools/help/logcat.html
 
