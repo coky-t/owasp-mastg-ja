@@ -419,17 +419,17 @@ public static int wtf(...);
 * LogCat - http://developer.android.com/tools/help/logcat.html
 
 
-### Testing Whether Sensitive Data is Sent to Third Parties
+### 機密データが第三者に送信されているかどうかのテスト
 
-#### Overview
+#### 概要
 
-Different 3rd party services are available that can be embedded into the app to implement different features. These features can vary from tracker services to monitor the user behavior within the app, selling banner advertisements or to create a better user experience. Interacting with these services abstracts the complexity and neediness to implement the functionality on its own and to reinvent the wheel.
+アプリに組み込むことでさまざまな機能を実装できるさまざまなサードパーティサービスが利用できます。これらの機能はトラッカーサービスやアプリ内のユーザー行動の監視、販売バナー広告、より良いユーザーエクスペリエンスの作成などさまざまです。これらのサービスとのやり取りは、機能の独自実装や車輪の再発明といった複雑さと必要性を抽象化します。
 
-The downside is that a developer doesn’t know in detail what code is executed via 3rd party libraries and therefore giving up visibility. Consequently it should be ensured that not more information as needed is sent to the service and that no sensitive information is disclosed.
+欠点は、サードパーティライブラリを介してどのようなコードが実行されているかを開発者が詳細に把握せず、したがって可視性をあきらめることです。そのため、必要以上の情報がサービスに送信されていないこと、および機密情報が開示されていないことを確認する必要があります。
 
-3rd party services are mostly implemented in two ways:
-* By using a standalone library, like a Jar in an Android project that is getting included into the APK.
-* By using a full SDK.
+サードパーティサービスは主に二つの方法で実装されます。
+* スタンドアローンのライブラリを使用する。Android プロジェクトの Jar など。APK に組み込まれる。
+* フル SDK を使用する。
 
 #### Static Analysis
 
