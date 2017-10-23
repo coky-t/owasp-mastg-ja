@@ -431,13 +431,13 @@ public static int wtf(...);
 * スタンドアローンのライブラリを使用する。Android プロジェクトの Jar など。APK に組み込まれる。
 * フル SDK を使用する。
 
-#### Static Analysis
+#### 静的解析
 
-Some 3rd party libraries can be automatically integrated into the app through a wizard within the IDE. The permissions set in the `AndroidManifest.xml`  when installing a library through an IDE wizard should be reviewed. Especially permissions to access `SMS (READ_SMS)`, contacts (`READ_CONTACTS`) or the location (`ACCESS_FINE_LOCATION`) should be challenged if they are really needed to make the library work at a bare minimum, see also `Testing App Permissions`. When talking to developers it should be shared to them that it’s actually necessary to have a look at the differences on the project source code before and after the library was installed through the IDE and what changes have been made to the code base.
+一部のサードパーティライブラリは IDE 内のウィザードを使用してアプリに自動的に統合できます。IDE ウィザードを使用してライブラリをインストールする場合には、`AndroidManifest.xml` に設定されたパーミッションを確認する必要があります。特に、SMS (`READ_SMS`), 連絡先 (`READ_CONTACTS`), 位置情報 (`ACCESS_FINE_LOCATION`) にアクセスするためのパーミッションは、ライブラリが真に最小限で機能するために本当に必要であるかどうか、説明を求めるべきです。「アプリパーミッションのテスト」も参照します。開発者と話す際には、IDE を使用してライブラリをインストールする前と後でプロジェクトソースコードの相違点を確認し、コードベースにどのような変更が加えられたかを確認する必要があります。
 
-The same thing applies when adding a library or SDK manually. The source code should be checked for API calls or functions provided by the 3rd party library or SDK. The applied code changes should be reviewed and it should be checked if available security best practices of the library and SDK are applied and used.
+ライブラリまたは SDK を手動で追加する場合にも同じことが適用されます。サードパーティライブラリや SDK により提供される API 呼び出しや関数についてソースコードをチェックする必要があります。適用されるコード変更をレビューし、ライブラリや SDK の利用可能なセキュリティベストプラクティスが適用および使用されているかどうかをチェックする必要があります。
 
-The libraries loaded into the project should be reviewed in order to identify with the developers if they are needed and also if they are out of date and contain known vulnerabilities.
+プロジェクトにロードされたライブラリをレビューし、開発者と共にそれらが必要であるかと確認します。また、古くなり既知の脆弱性を含むかどうかも確認します。
 
 #### Dynamic Analysis
 
