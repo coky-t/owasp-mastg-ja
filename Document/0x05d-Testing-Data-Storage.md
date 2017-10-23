@@ -439,10 +439,9 @@ public static int wtf(...);
 
 プロジェクトにロードされたライブラリをレビューし、開発者と共にそれらが必要であるかと確認します。また、古くなり既知の脆弱性を含むかどうかも確認します。
 
-#### Dynamic Analysis
+#### 動的解析
 
-All requests made to external services should be analyzed if any sensitive information is embedded into them.
-Dynamic analysis can be performed by launching a Man-in-the-middle (MITM) attack using _Burp Proxy_<sup>[1]</sup> or _OWASP ZAP_, to intercept the traffic exchanged between client and server. Once we are able to route the traffic to the interception proxy, we can try to sniff the traffic from the app to the server and vice versa. When using the app all requests that are not going directly to the server where the main function is hosted should be checked, if any sensitive information is sent to a 3rd party. This could be for example PII (Personal Identifiable Information) in a tracker or ad service.
+外部サービスに対するすべてのリクエストについて、機密情報が埋め込まれているかどうかを解析する必要があります。動的解析は中間者 (MITM) 攻撃を開始することにより実行できます。_Burp Proxy_ <sup>[1]</sup> や _OWASP ZAP_ を使用し、クライアントとサーバーとの間で交換されるトラフィックを傍受します。傍受プロキシにトラフィックをルーティングできるようになると、アプリからサーバーへおよびその反対のトラフィックを盗聴することができます。アプリを使用する場合には、メイン機能がホストされているサーバーに直接接続されていないすべてのリクエストについて、機密情報がサードパーティに送信されているかどうかを確認する必要があります。これには例えば、トラッカーや広告サービスでの PII (個人識別情報) があります。
 
 #### Remediation
 
