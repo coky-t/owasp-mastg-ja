@@ -514,31 +514,31 @@ android:inputType="textNoSuggestions"
 [1] No suggestions for text - https://developer.android.com/reference/android/text/InputType.html#TYPE_TEXT_FLAG_NO_SUGGESTIONS
 
 
-### Testing for Sensitive Data in the Clipboard
+### 機密データのテスト (クリップボード)
 
-#### Overview
+#### 概要
 
-When keying in data into input fields, the clipboard<sup>[1]</sup> can be used to copy data in. The clipboard is accessible systemwide and therefore shared between the apps. This feature can be misused by malicious apps in order to get sensitive data.
+入力フィールドにデータを入力する際に、clipboard <sup>[1]</sup> を使用してデータをコピーできます。クリップボードはシステム全体でアクセスできるため、アプリ間で共有されます。この機能を悪用して、悪意のあるアプリが機密データを取得できる可能性があります。
 
 
-#### Static Analysis
+#### 静的解析
 
-Input fields that are asking for sensitive information need to be identified and afterwards be investigated if any countermeasures are in place to mitigate the clipboard of showing up. See the remediation section for code snippets that could be applied.
+機密情報を要求する入力フィールドを特定し、クリップボードの表示を抑制するための対策が適切にされているかどうかを調査する必要があります。適用可能なコードスニペットについては改善方法のセクションを参照ください。
 
-#### Dynamic Analysis
+#### 動的解析
 
-Start the app and click into the input fields that ask for sensitive data. When it is possible to get the menu to copy/paste data the functionality is not disabled for this input field.
+アプリを起動し、機密データを要求する入力フィールドをクリックします。データをコピー、ペーストするためのメニューを取得可能である場合、この入力フィールドに対して機能は無効ではありません。
 
-To extract the data stored in the clipboard, the Drozer module `post.capture.clipboard` can be used:
+クリップボードに格納されたデータを抽出するには、Drozer モジュール `post.capture.clipboard` を使用できます。
 
 ```
 dz> run post.capture.clipboard
 [*] Clipboard value: ClipData.Item { T:Secretmessage }
 ```
 
-#### Remediation
+#### 改善方法
 
-A general best practice is overwriting different functions in the input field to disable the clipboard specifically for it.
+一般的なベストプラクティスは入力フィールドのさまざまな機能を上書きして、クリップボードを明確に無効にすることです。
 
 ```Java
 EditText  etxt = (EditText) findViewById(R.id.editText1);
@@ -561,28 +561,28 @@ etxt.setCustomSelectionActionModeCallback(new Callback() {
         });
 ```
 
-Also `longclickable` should be deactivated for the input field.
+また、入力フィールドに対して `longclickable` を無効にする必要があります。
 
 ```xml
 android:longClickable="false"
 ```
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### OWASP MASVS
-- V2.5: "The clipboard is deactivated on text fields that may contain sensitive data."
+- V2.5: "機密データを含む可能性があるテキストフィールドでは、クリップボードが無効化されている。"
 
 ##### CWE
 * CWE-200 - Information Exposure
 
-##### Info
+##### その他
 [1] Copy and Paste in Android - https://developer.android.com/guide/topics/text/copy-paste.html
 
-##### Tools
+##### ツール
 * Drozer - https://labs.mwrinfosecurity.com/tools/drozer/
 
 
