@@ -469,15 +469,15 @@ public static int wtf(...);
 * OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 
 
-### Testing Whether the Keyboard Cache Is Disabled for Text Input Fields
+### テキスト入力フィールドでキーボードキャッシュが無効かどうかのテスト
 
-#### Overview
+#### 概要
 
-When keying in data into input fields, the software keyboard automatically suggests what data the user might want to key in. This feature can be very useful in messaging apps to write text messages more efficiently. For input fields that are asking for sensitive information like credit card data the keyboard cache might disclose sensitive information already when the input field is selected. This feature should therefore be disabled for input fields that are asking for sensitive information.
+入力フィールドにデータを入力すると、ソフトウェアキーボードはユーザーがキー入力したいデータを自動的に提示します。この機能はメッセージングアプリで非常に役に立ち、テキストメッセージを非常に効率的に書くことができます。クレジットカードデータなどの機密情報を要求する入力フィールドでは、その入力フィールドが選択された際にキーボードキャッシュが既存の機密情報を開示する可能性があります。したがって、機密情報を要求する入力フィールドではこの機能を無効にする必要があります。
 
-#### Static Analysis
+#### 静的解析
 
-In the layout definition of an activity, TextViews can be defined that have XML attributes. When the XML attribute `android:inputType` is set with the constant `textNoSuggestions` the keyboard cache is not shown if the input field is selected. Only the keyboard is shown and the user needs to type everything manually and nothing is suggested to him.
+アクティビティのレイアウト定義では、XML 属性を持つ TextView を定義できます。XML 属性 `android:inputType` に定数 `textNoSuggestions` を設定すると、その入力フィールドを選択した際にキーボードキャッシュは表示されません。キーボードだけが表示され、ユーザーは手動ですべてを入力する必要があり、何も提示されません。
 
 ```xml
    <EditText
@@ -486,31 +486,31 @@ In the layout definition of an activity, TextViews can be defined that have XML 
 ```
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-Start the app and click into the input fields that ask for sensitive data. If strings are suggested the keyboard cache is not disabled for this input field.
+アプリを起動し、機密データを要求する入力フィールドをクリックします。文字列が提示される場合、この入力フィールドでキーボードキャッシュは無効ではありません。
 
-#### Remediation
+#### 改善方法
 
-All input fields that ask for sensitive information, should implement the following XML attribute to disable the keyboard suggestions<sup>[1]</sup>:
+機密情報を要求するすべての入力フィールドでは、以下の XML 属性を実装し、キーボードの提示を無効にする必要があります <sup>[1]</sup> 。
 
 ```xml
 android:inputType="textNoSuggestions"
 ```
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-* M2 - Insecure Data Storage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M2 - 安全でないデータストレージ - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
 
 ##### OWASP MASVS
-- V2.4: "The keyboard cache is disabled on text inputs that process sensitive data."
+- V2.4: "機密データを処理するテキスト入力では、キーボードキャッシュが無効にされている。"
 
 ##### CWE
 - CWE-524 - Information Exposure Through Caching
 
-##### Info
+##### その他
 [1] No suggestions for text - https://developer.android.com/reference/android/text/InputType.html#TYPE_TEXT_FLAG_NO_SUGGESTIONS
 
 
