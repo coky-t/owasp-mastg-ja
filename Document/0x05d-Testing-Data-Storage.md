@@ -443,28 +443,28 @@ public static int wtf(...);
 
 外部サービスに対するすべてのリクエストについて、機密情報が埋め込まれているかどうかを解析する必要があります。動的解析は中間者 (MITM) 攻撃を開始することにより実行できます。_Burp Proxy_ <sup>[1]</sup> や _OWASP ZAP_ を使用し、クライアントとサーバーとの間で交換されるトラフィックを傍受します。傍受プロキシにトラフィックをルーティングできるようになると、アプリからサーバーへおよびその反対のトラフィックを盗聴することができます。アプリを使用する場合には、メイン機能がホストされているサーバーに直接接続されていないすべてのリクエストについて、機密情報がサードパーティに送信されているかどうかを確認する必要があります。これには例えば、トラッカーや広告サービスでの PII (個人識別情報) があります。
 
-#### Remediation
+#### 改善方法
 
-All data that is sent to 3rd Party services should be anonymized, so no PII data is available. Also all other data, like IDs in an application that can be mapped to a user account or session should not be sent to a third party.  
-`AndroidManifest.xml` should only contain the permissions that are absolutely needed to work properly and as intended.
+サードパーティサービスに送信されるすべてのデータは匿名化されるべきです。そのため PII データは利用できません。また、ユーザーアカウントやセッションにマップできるアプリケーションの ID などの他のすべてのデータをサードパーティに送信すべきではありません。
+`AndroidManifest.xml` には正しく動作するために必要なパーミッションだけを含む必要があります。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-* M2 - Insecure Data Storage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
+* M1 - 不適切なプラットフォームの利用 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+* M2 - 安全でないデータストレージ - https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
 
 ##### OWASP MASVS
-- V2.3: "No sensitive data is shared with third parties unless it is a necessary part of the architecture."
+- V2.3: "機密データはアーキテクチャに必要な部分でない限りサードパーティと共有されていない。"
 
 ##### CWE
 - CWE-359 - Exposure of Private Information ('Privacy Violation')
 
-##### Info
+##### その他
 [1] Configure Burp with Android - https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp
 [2] Bulletproof Android, Godfrey Nolan - Chapter 7, Third-Party Library Integration
 
-##### Tools
+##### ツール
 * Burp Suite Professional - https://portswigger.net/burp/
 * OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 
