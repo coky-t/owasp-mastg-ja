@@ -587,19 +587,19 @@ android:longClickable="false"
 
 
 
-### Testing Whether Sensitive Data Is Exposed via IPC Mechanisms
+### 機密データがIPCメカニズムを介して開示されているかどうかのテスト
 
-#### Overview
+#### 概要
 
-During development of a mobile application, traditional techniques for IPC might be applied like usage of shared files or network sockets. As mobile application platforms implement their own system functionality for IPC, these mechanisms should be applied as they are much more mature than traditional techniques. Using IPC mechanisms with no security in mind may cause the application to leak or expose sensitive data.
+モバイルアプリケーションの開発では、共有ファイルやネットワークソケットの使用など IPC に関する従来の技術が適用される可能性があります。モバイルアプリケーションプラットフォームは IPC について独自のシステム機能を実装しているため、旧来の技術よりもはるかに成熟しているこれらのメカニズムを適用すべきです。セキュリティを考慮せずに IPC メカニズムを使用すると、アプリケーションは機密データの漏洩や開示を引き起こす可能性があります。
 
-The following is a list of Android IPC Mechanisms that may expose sensitive data:
-* Binders<sup>[1]</sup>
-* Services<sup>[2]</sup>
-  * Bound Services<sup>[9]</sup>
-  * AIDL<sup>[10]</sup>
-* Intents<sup>[3]</sup>
-* Content Providers<sup>[4]</sup>
+以下は機密データを開示する可能性のある Android IPC メカニズムのリストです。
+* Binders <sup>[1]</sup>
+* Services <sup>[2]</sup>
+  * Bound Services <sup>[9]</sup>
+  * AIDL <sup>[10]</sup>
+* Intents <sup>[3]</sup>
+* Content Providers <sup>[4]</sup>
 
 #### Static Analysis
 
