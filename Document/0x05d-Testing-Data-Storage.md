@@ -678,11 +678,11 @@ private void vulnerableBroadcastFunction() {
   this.sendBroadcast(VulnIntent);
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-##### Testing Content Providers
+##### コンテンツプロバイダのテスト
 
-To begin dynamic analysis of an application's content providers, you should first enumerate the attack surface. This can be achieved using the Drozer module `app.provider.info`:
+アプリケーションのコンテンツプロバイダの動的解析を開始するには、まずアタックサーフェイスを列挙する必要があります。これを実現するためには Drozer モジュール `app.provider.info` を使用します。
 
 ```
 dz> run app.provider.info -a com.mwr.example.sieve
@@ -706,9 +706,9 @@ dz> run app.provider.info -a com.mwr.example.sieve
   Grant Uri Permissions: False
 ```
 
-In the example, two content providers are exported, each not requiring any permission to interact with them, except for the `/Keys` path in the `DBContentProvider`. Using this information you can reconstruct part of the content URIs to access the `DBContentProvider`, because it is known that they must begin with `content://`. However, the full content provider URI is not currently known.
+この例では、二つのコンテンツプロバイダがエクスポートされ、`DBContentProvider` の `/Keys` を除いて、それらとやり取りするためのパーミッションを必要としません。この情報を使用すると、コンテンツ URI の一部を再構築して `DBContentProvider` にアクセスできます。`content://` ではじめる必要があることが知られているためです。しかし、完全なコンテンツプロバイダ URI は現在知られていません。
 
-To identify content provider URIs within the application, Drozer's `scanner.provider.finduris` module should be used. This utilizes various techniques to guess paths and determine a list of accessible content URIs:
+アプリケーション内のコンテンツプロバイダ URI を特定するには、Drozer の `scanner.provider.finduris` モジュールを使用する必要があります。これはさまざまな技法を利用してパスを推測し、アクセス可能なコンテンツ URI の一覧を決定します。
 
 ```
 dz> run scanner.provider.finduris -a com.mwr.example.sieve
@@ -723,7 +723,7 @@ content://com.mwr.example.sieve.DBContentProvider/Passwords
 content://com.mwr.example.sieve.DBContentProvider/Passwords/
 ```
 
-Now that you have a list of accessible content providers, the next step is to attempt to extract data from each provider, which can be achieved using the `app.provider.query` module:
+アクセス可能なコンテンツプロバイダの一覧を入手しました。次のステップはそれぞれのプロバイダからデータの抽出を試みることです。実現には `app.provider.query` モジュールを使用します。
 
 ```
 dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --vertical
@@ -736,9 +736,9 @@ encoded)
 email: incognitoguy50@gmail.com
 ```
 
-In addition to querying data, Drozer can be used to update, insert and delete records from a vulnerable content provider:
+データのクエリに加えて、Drozer では脆弱なコンテンツプロバイダからレコードの更新、挿入、削除にも使用できます。
 
-* Insert record
+* レコードの挿入
 
 ```
 dz> run app.provider.insert content://com.vulnerable.im/messages
@@ -747,7 +747,7 @@ dz> run app.provider.insert content://com.vulnerable.im/messages
                 --integer _id 7
 ```
 
-* Update record
+* レコードの更新
 
 ```
 dz> run app.provider.update content://settings/secure
@@ -756,7 +756,7 @@ dz> run app.provider.update content://settings/secure
                 --integer value 0
 ```
 
-* Delete record
+* レコードの削除
 
 ```
 dz> run app.provider.delete content://settings/secure
