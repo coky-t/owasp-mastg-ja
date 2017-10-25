@@ -616,9 +616,9 @@ android:longClickable="false"
 
 IPC メカニズムの一覧を特定したら、ソースコードをレビューして、使用時に機密データが漏洩しているかどうかを検出します。例えば、_ContentProviders_ を使用してデータベース情報にアクセスできます。サービスがプローブされてデータを返すかどうかを調べます。また、BroadcastReceiver と Broadcast インテントはプローブや盗聴された場合に機密情報を漏洩する可能性があります。
 
-**Vulnerable ContentProvider**
+**脆弱な ContentProvider**
 
-An example of a vulnerable _ContentProvider_:
+脆弱な _ContentProvider_ の例:
 (and SQL injection **-- TODO [Refer to any input validation test in the project] --**
 
 ```xml
@@ -628,7 +628,8 @@ An example of a vulnerable _ContentProvider_:
 </provider>
 ```
 
-As can be seen in the `AndroidManifest.xml` above, the application exports the content provider. In the `CredentialProvider.java` file the `query` function need to be inspected to detect if any sensitive information is leaked:
+上述の `AndroidManifest.xml` にあるように、アプリケーションはコンテンツプロバイダをエクスポートしています。
+`CredentialProvider.java` ファイルでは `query` 関数を検査して、機密情報を漏洩しているかどうかを検出する必要があります。
 
 ```java
 public Cursor query(Uri uri, String[] projection, String selection,
@@ -657,13 +658,13 @@ public Cursor query(Uri uri, String[] projection, String selection,
 	}
 ```
 
-The query statement would return all credentials when accessing `content://com.owaspomtg.vulnapp.provider.CredentialProvider/CREDENTIALS`.
+`content://com.owaspomtg.vulnapp.provider.CredentialProvider/CREDENTIALS` にアクセスすると、query ステートメントはすべての資格情報を返します。
 
 
-* Vulnerable Broadcast
-Search in the source code for strings like `sendBroadcast`, `sendOrderedBroadcast`, `sendStickyBroadcast` and verify that the application doesn't send any sensitive data.
+* 脆弱な Broadcast
+`sendBroadcast`, `sendOrderedBroadcast`, `sendStickyBroadcast` などの文字列でソースコードを検索し、アプリケーションが機密データを送信していない確認します。
 
-An example of a vulnerable broadcast is the following:
+脆弱なブロードキャストの例は以下のとおりです。
 
 ```java
 private void vulnerableBroadcastFunction() {
