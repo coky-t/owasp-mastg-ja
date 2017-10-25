@@ -601,20 +601,20 @@ android:longClickable="false"
 * Intents <sup>[3]</sup>
 * Content Providers <sup>[4]</sup>
 
-#### Static Analysis
+#### 静的解析
 
-The first step is to look into the `AndroidManifest.xml` in order to detect and identify IPC mechanisms exposed by the app. You will want to identify elements such as:
+最初のステップは `AndroidManifest.xml` を調べて、アプリにより開示されている IPC メカニズムを検出及び特定することです。以下のような要素を特定したいと思うでしょう。
 
 * `<intent-filter>`<sup>[5]</sup>
 * `<service>`<sup>[6]</sup>
 * `<provider>`<sup>[7]</sup>
 * `<receiver>`<sup>[8]</sup>
 
-Except for the `<intent-filter>` element, check if the previous elements contain the following attributes:
+`<intent-filter>` 要素を除いて、前述の要素に以下の属性が含まれているかどうか確認します。
 * `android:exported`
 * `android:permission`
 
-Once you identify a list of IPC mechanisms, review the source code in order to detect if they leak any sensitive data when used. For example, _ContentProviders_ can be used to access database information, while services can be probed to see if they return data. Also BroadcastReceiver and Broadcast intents can leak sensitive information if probed or sniffed.
+IPC メカニズムの一覧を特定したら、ソースコードをレビューして、使用時に機密データが漏洩しているかどうかを検出します。例えば、_ContentProviders_ を使用してデータベース情報にアクセスできます。サービスがプローブされてデータを返すかどうかを調べます。また、BroadcastReceiver と Broadcast インテントはプローブや盗聴された場合に機密情報を漏洩する可能性があります。
 
 **Vulnerable ContentProvider**
 
