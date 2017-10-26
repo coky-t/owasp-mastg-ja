@@ -810,16 +810,16 @@ Injection in Selection:
   content://com.mwr.example.sieve.DBContentProvider/Passwords/
 ```
 
-##### File System Based Content Providers
+##### ファイルシステムベースのコンテンツプロバイダ
 
-A content provider can provide access to the underlying file system. This allows apps to share files, where the Android sandbox would otherwise prevent it. The Drozer modules `app.provider.read` and `app.provider.download` can be used to read or download files from exported file based content providers. These content providers can be susceptible to directory traversal vulnerabilities, making it possible to read otherwise protected files within the target application's sandbox.
+コンテンツプロバイダは基礎となるファイルシステムへのアクセスを提供できます。これによりアプリはファイルを共有できます。Android サンドボックスはそれを抑制してないでしょう。Drozer モジュール `app.provider.read` および `app.provider.download` を使用して、エクスポートされたファイルベースのコンテンツプロバイダからファイルを読み取りまたはダウンロードできます。これらのコンテンツプロバイダはディレクトリトラバーサルの脆弱性を受けやすく、ターゲットアプリケーションのサンドボックス内の保護されていないファイルを読み取ることが可能となります。
 
 ```
 dz> run app.provider.download content://com.vulnerable.app.FileProvider/../../../../../../../../data/data/com.vulnerable.app/database.db /home/user/database.db
 Written 24488 bytes
 ```
 
-To automate the process of finding content providers susceptible to directory traversal, the `scanner.provider.traversal` module should be used:
+ディレクトリトラバーサルの影響を受けやすいコンテンツプロバイダを見つけるプロセスを自動化するには、`scanner.provider.traversal` モジュールを使用する必要があります。
 
 ```
 dz> run scanner.provider.traversal -a com.mwr.example.sieve
@@ -829,7 +829,7 @@ Vulnerable Providers:
   content://com.mwr.example.sieve.FileBackupProvider
 ```
 
-Note that `adb` can also be used to query content providers on a device:
+注釈：`adb` を使用して、デバイスのコンテンツプロバイダを照会することもできます。
 
 ```bash
 $ adb shell content query --uri content://com.owaspomtg.vulnapp.provider.CredentialProvider/credentials
@@ -838,35 +838,35 @@ Row: 1 id=2, username=test, password=test
 ...
 ```
 
-##### Vulnerable Broadcasts
+##### 脆弱なブロードキャスト
 
-To sniff intents install and run the application on a device (actual device or emulated device) and use tools like Drozer or Intent Sniffer to capture intents and broadcast messages.
+インテントを盗聴するには、デバイス (実際のデバイスまたはエミュレートされたデバイス) にアプリケーションをインストールおよび実行し、Drozer や Intent Sniffer などのツールを使用してインテントやブロードキャストメッセージをキャプチャします。
 
-#### Remediation
+#### 改善方法
 
-For an _activity_, _broadcast_ and _service_ the permission of the caller can be checked either by code or in the manifest.
+_activity_, _broadcast_, _service_ に対して呼出元のパーミッションはコードまたはマニフェストで確認できます。
 
-If not strictly required, be sure that your IPC does not have the `android:exported="true"` value in the `AndroidManifest.xml` file, as otherwise this allows all other apps on Android to communicate and invoke it.
+完全に要求されていない場合には、IPC が `AndroidManifest.xml` ファイルに `android:exported="true"` の値を持たないことを確認します。そうしないと、Android 上の他のすべてのアプリが通信および呼び出すことができてしまいます。
 
-If the _intent_ is only broadcast/received in the same application, `LocalBroadcastManager` can be used so that, by design, other apps cannot receive the broadcast message. This reduces the risk of leaking sensitive information. `LocalBroadcastManager.sendBroadcast().
-BroadcastReceivers` should make use of the `android:permission` attribute, as otherwise any other application can invoke them. `Context.sendBroadcast(intent, receiverPermission);` can be used to specify permissions a receiver needs to be able to read the broadcast<sup>[11]</sup>.
-You can also set an explicit application package name that limits the components this Intent will resolve to. If left to the default value of null, all components in all applications will considered. If non-null, the Intent can only match the components in the given application package.
+_intent_ が同じアプリケーションでのみブロードキャストおよび受信される場合には、`LocalBroadcastManager` を使用できます。他のアプリがブロードキャストメッセージを受信できないように設計されています。これにより機密情報が漏洩するリスクを低減します。
+`LocalBroadcastManager.sendBroadcast().BroadcastReceivers` は `android:permission` 属性を使用する必要があります。そうしないと、他のアプリケーションがそれらを呼び出すことができてしまいます。`Context.sendBroadcast(intent, receiverPermission);` を使用して、レシーバーが必要とするバーミッションを指定し、ブロードキャストを読むことができます <sup>[11]</sup> 。
+明示的なアプリケーションパッケージ名を設定して、このインテントが解決するコンポーネントを制限できます。デフォルト値の null のままにすると、すべてのアプリケーションのすべてのコンポーネントを考慮します。null ではない場合、インテントは指定されたアプリケーションパッケージ内のコンポーネントにのみマッチします。
 
-If your IPC is intended to be accessible to other applications, you can apply a security policy by using the `<permission>` element and set a proper `android:protectionLevel`. When using `android:permission` in a service declaration, other applications will need to declare a corresponding `<uses-permission>` element in their own manifest to be able to start, stop, or bind to the service.
+IPC が他のアプリケーションからアクセスできるようにするには、`<permission>` 要素を使用してセキュリティポリシーを適用し、適切な `android:protectionLevel` を設定します。サービスの宣言で `android:permission` を使用する場合、他のアプリケーションはマニフェストに対応する `<uses-permission>` を宣言する必要があり、それによりサービスの開始、停止、またはバインドできるようになります。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### OWASP MASVS
-- V2.6: "No sensitive data is exposed via IPC mechanisms."
+- V2.6: "機密データがIPCメカニズムを介して公開されていない。"
 
 ##### CWE
 - CWE-634 - Weaknesses that Affect System Processes
 
-##### Info
+##### その他
 [1] IPCBinder - https://developer.android.com/reference/android/os/Binder.html
 [2] IPCServices - https://developer.android.com/guide/components/services.html
 [3] IPCIntent - https://developer.android.com/reference/android/content/Intent.html
@@ -879,7 +879,7 @@ If your IPC is intended to be accessible to other applications, you can apply a 
 [10] AIDL - https://developer.android.com/guide/components/aidl.html
 [11] SendBroadcast - https://developer.android.com/reference/android/content/Context.html#sendBroadcast(android.content.Intent)
 
-##### Tools
+##### ツール
 * Drozer - https://labs.mwrinfosecurity.com/tools/drozer/
 * IntentSniffer - https://www.nccgroup.trust/us/about-us/resources/intent-sniffer/
 
