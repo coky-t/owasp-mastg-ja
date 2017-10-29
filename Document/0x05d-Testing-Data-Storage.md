@@ -884,39 +884,39 @@ IPC が他のアプリケーションからアクセスできるようにする�
 * IntentSniffer - https://www.nccgroup.trust/us/about-us/resources/intent-sniffer/
 
 
-### Testing for Sensitive Data Disclosure Through the User Interface
+### ユーザーインタフェース経由の機密データ漏洩のテスト
 
-#### Overview
+#### 概要
 
-In many apps users need to key in different kind of data to for example register an account or execute payment. Sensitive data could be exposed if the app is not masking it properly and showing data in clear text.
+多くのアプリでは、例えば、アカウントを登録したり、支払いを実行するために、ユーザーはさまざまな種類のデータをキー入力する必要があります。アプリが適切にマスクしない場合や平文でデータを表示する場合に、機密データが開示される可能性があります。
 
-Masking of sensitive data within an activity of an app should be enforced to prevent disclosure and mitigate for example shoulder surfing.
+アプリのアクティビティ内の機密データをマスクすることは、漏洩防止やショルダハックなどの軽減のために実施する必要があります。
 
-#### Static Analysis
+#### 静的解析
 
-To verify if the application is masking sensitive information that is keyed in by the user, check for the following attribute in the definition of EditText:
+アプリケーションがユーザーによりキー入力される機密情報をマスクしているかどうかを検証するには、EditText の定義の以下の属性をチェックします。
 
 ```
 android:inputType="textPassword"
 ```
 
-#### Dynamic Analysis
+#### 動的解析
 
-To analyze if the application leaks any sensitive information to the user interface, run the application and identify parts of the app that either shows information or asks for information to be keyed in.
+アプリケーションが機密情報をユーザーインタフェースに漏洩しているかどうかを解析するには、アプリケーションを実行して、情報を表示しているか情報をキー入力するよう求めている、アプリの部分を特定します。
 
-If the information is masked, e.g. by replacing characters in the text field through asterisks the app is not leaking data to the user interface.
+例えば、テキストフィールドの文字をアスタリスクに置き換えることなどにより、情報がマスクされている場合、アプリはユーザーインタフェースにデータを漏洩していません。
 
-#### Remediation
+#### 改善方法
 
-In order to prevent leaking of passwords or pins, sensitive information should be masked in the user interface. The attribute `android:inputType="textPassword"` should therefore be used for EditText fields.
+パスワードや PIN の漏洩を防ぐには、機密情報をユーザーインタフェース内でマスクする必要があります。したがって、EditText フィールドでは 属性 `android:inputType="textPassword"` を使用する必要があります。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 * M4 - Unintended Data Leakage
 
 ##### OWASP MASVS
-- V2.7: "No sensitive data, such as passwords and pins, is exposed through the user interface."
+- V2.7: "パスワードやピンなどの機密データは、ユーザーインタフェースを介して公開されていない。"
 
 ##### CWE
 - CWE-200 - Information Exposure
