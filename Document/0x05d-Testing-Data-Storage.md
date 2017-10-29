@@ -922,25 +922,25 @@ android:inputType="textPassword"
 - CWE-200 - Information Exposure
 
 
-### Testing for Sensitive Data in Backups
+### 機密データのテスト (バックアップ)
 
-#### Overview
+#### 概要
 
-Like other modern mobile operating systems Android offers auto-backup features. The backups usually include copies of the data and settings of all apps installed on the the device. An obvious concern is whether sensitive user data stored by the app might unintentionally leak to those data backups.
+他の現代的なモバイルオペレーティングシステムと同様に、Android は自動バックアップ機能を備えています。バックアップは通常、デバイスにインストールされているすべてのアプリのデータと設定のコピーが含まれます。明白な懸念として、アプリにより格納された機密のユーザーデータが意図せずこれらのデータバックアップに漏洩する可能性があるかどうかがあります。
 
-Given its diverse ecosystem, Android has a lot of backup options to account for.
+多様なエコシステムを考えると、Android には構成される多くのバックアップオプションがあります。
 
-- Stock Android has built-in USB backup facilities. A full data backup, or a backup of a particular app's data directory, can be obtained using the <code>abd backup</code> command when USB debugging is enabled.
+- 一般的な Android には USB バックアップ機能が組み込まれています。フルデータバックアップ、または特定のアプリのデータディレクトリのバックアップを取得できます。USB デバッグを有効にして、<code>abd backup</code> コマンドを使用します。
 
-- Google also provides a "Back Up My Data" feature that backs up all app data to Google's servers.
+- Google は "Back Up My Data" 機能も提供しています。すべてのアプリデータを Google のサーバーにバックアップします。
 
-- Multiple Backup APIs are available to app developers:
+- アプリ開発者は複数の Backup API を利用できます。
 
-  - Key/ Value Backup (Backup API or Android Backup Service) uploads selected data to the Android Backup Service.
+  - キー・バリューバックアップ (Backup API または Android バックアップサービス) は選択したデータを Android バックアップサービスにアップロードします。
 
-  - Auto Backup for Apps: With Android 6.0 (>= API level 23), Google added the "Auto Backup for Apps feature". This feature automatically syncs up to 25MB of app data to the user's Google Drive account.
+  - アプリの自動バックアップ: Android 6.0 (>= API レベル 23) では、Google は「アプリの自動バックアップ機能」を追加しました。この機能は最大25MBのアプリデータを Google Drive アカウントに自動的に同期します。
 
-- OEMs may add additional options. For example, HTC devices have a "HTC Backup" option that, when activated, performs daily backups to the cloud.
+- OEM は追加のオプションを追加することがあります。例えば、HTC デバイスには "HTC Backup" オプションがあり、これをアクティブにすると、クラウドへのデイリーバックアップが実行されます。
 
 -- [TODO - recommended approach] --
 
