@@ -960,33 +960,33 @@ android:allowBackup="true"
 
 その値が **true** に設定されている場合、アプリが何かしらの機密データを保存しているかどうかを調査し、テストケース「機密データのテスト (ローカルストレージ)」をチェックします。
 
-##### Cloud
-Regardless of using either key/ value or auto backup, it needs to be identified:
-* what files are sent to the cloud (e.g. SharedPreferences),
-* if the files contain sensitive information,
-* if sensitive information is protected through encryption before sending it to the cloud.
+##### クラウド
+キー・バリューまたは自動バックアップのどちらを使用しているかに関わらず、以下を特定する必要があります。
+* どのファイルがクラウドに送信されるか (SharedPreferences など)
+* ファイルに機密情報が含まれているかどうか
+* 機密情報はクラウドに送信される前に暗号化により保護されているかどうか
 
-**Auto Backup**
-Auto Backup is configured through the boolean attribute `android:allowBackup` within the application's manifest file. If not explicitly set, applications targeting Android 6.0 (API Level 23) or higher enable Auto Backup by default<sup>[10]</sup>. The attribute `android:fullBackupOnly` can also be used to activate auto backup when implementing a backup agent, but this is only available from Android 6.0 onwards. Other Android versions will be using key/ value backup instead.
+**自動バックアップ**
+自動バックアップはアプリケーションのマニフェストファイル内でブール属性 `android:allowBackup` により設定されます。明示的に設定されていない場合、Android 6.0 (API レベル 23) 以上を対象とするアプリケーションではデフォルトで自動バックアップが有効になります <sup>[10]</sup> 。属性 `android:fullBackupOnly` を使用して、バックアップエージェントを実装する際に自動バックアップを有効にすることもできますが、Android 6.0 以降でのみ利用できます。他の Android バージョンではキー・バリューバックアップが代わりに使用されます。
 
 ```xml
 android:fullBackupOnly
 ```
 
-Auto backup includes almost all of the app files and stores them in the Google Drive account of the user, limited to 25MB per app. Only the most recent backup is stored, the previous backup is deleted.
+自動バックアップにはアプリのほとんどすべてのファイルが含まれ、ユーザーの Google Drive アカウントに格納されます。アプリごとに 25MB に制限されています。最新のバックアップのみが格納され、以前のバックアップは削除されます。
 
-**Key/ Value Backup**
-To enable key/ value backup the backup agent needs to be defined in the manifest file. Look in `AndroidManifest.xml` for the following attribute:
+**キー・バリューバックアップ**
+キー・バリューバックアップを有効にするには、バックアップエージェントをマニフェストファイルで定義する必要があります。`AndroidManifest.xml` 内で以下の属性を探します。
 
 ```xml
 android:backupAgent
 ```
 
-To implement the key/ value backup, either one of the following classes needs to be extended:
+キー・バリューバックアップを実装するには、以下のクラスのいずれかを拡張する必要があります。
 * BackupAgent
 * BackupAgentHelper
 
-Look for these classes within the source code to check for implementations of key/ value backup.
+ソースコード内でこれらのクラスを探して、キー・バリューバックアップの実装を確認します。
 
 
 #### Dynamic Analysis
