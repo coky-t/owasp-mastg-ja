@@ -944,21 +944,21 @@ android:inputType="textPassword"
 
 -- [TODO - recommended approach] --
 
-#### Static Analysis
+#### 静的解析
 
-##### Local
+##### ローカル
 
-In order to backup all your application data Android provides an attribute called `allowBackup`<sup>[1]</sup>. This attribute is set within the `AndroidManifest.xml` file. If the value of this attribute is set to **true**, then the device allows users to backup the application using Android Debug Bridge (ADB) - `$ adb backup`.
+すべてのアプリケーションデータをバックアップするために、Android は `allowBackup` <sup>[1]</sup> という属性を提供しています。この属性は `AndroidManifest.xml` ファイル内で設定されます。この属性の値が **true** に設定されている場合、デバイスはユーザーがアプリケーションをバックアップできます。Android Debug Bridge (ADB) - `$ adb backup` を使用します。
 
-> Note: If the device was encrypted, then the backup files will be encrypted as well.
+> 注: デバイスが暗号化されている場合、バックアップファイルも暗号化されます。
 
-Check the `AndroidManifest.xml` file for the following flag:
+以下のフラグについて `AndroidManifest.xml` ファイルを確認します。
 
 ```xml
 android:allowBackup="true"
 ```
 
-If the value is set to **true**, investigate whether the app saves any kind of sensitive data, check the test case "Testing for Sensitive Data in Local Storage".
+その値が **true** に設定されている場合、アプリが何かしらの機密データを保存しているかどうかを調査し、テストケース「機密データのテスト (ローカルストレージ)」をチェックします。
 
 ##### Cloud
 Regardless of using either key/ value or auto backup, it needs to be identified:
