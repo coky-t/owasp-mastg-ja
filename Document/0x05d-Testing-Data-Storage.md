@@ -989,28 +989,28 @@ android:backupAgent
 ソースコード内でこれらのクラスを探して、キー・バリューバックアップの実装を確認します。
 
 
-#### Dynamic Analysis
+#### 動的解析
 
-After executing all available functions when using the app, attempt to make a backup using `adb`. If successful, inspect the backup archive for sensitive data. Open a terminal and run the following command:
+アプリを使用する際に利用可能なすべての機能を実行した後、`adb` を使用してバックアップの作成を試みます。成功した場合には、バックアップアーカイブで機密データを調べます。ターミナルを開き、以下のコマンドを実行します。
 
 ```bash
 $ adb backup -apk -nosystem packageNameOfTheDesiredAPK
 ```
 
-Approve the backup from your device by selecting the _Back up my data_ option. After the backup process is finished, you will have a _.ab_ file in your current working directory.
-Run the following command to convert the .ab file into a .tar file.
+_Back up my data_ オプションを選択して、デバイスからバックアップを承認します。バックアッププロセスが終了した後、現在の作業ディレクトリに _.ab_ ファイルが作成されます。
+以下のコマンドを実行し、.ab ファイルを .tar ファイルに変換します。
 
 ```bash
 $ dd if=mybackup.ab bs=24 skip=1|openssl zlib -d > mybackup.tar
 ```
 
-Alternatively, use the _Android Backup Extractor_ for this task. For the tool to work, you also have to download the Oracle JCE Unlimited Strength Jurisdiction Policy Files for JRE7<sup>[6]</sup> or JRE8<sup>[7]</sup>, and place them in the JRE lib/security folder. Run the following command to convert the tar file:
+あるいは、この作業に _Android Backup Extractor_ を使用します。このツールが機能するためには、JRE7 用または JRE8 用の Oracle JCE Unlimited Strength Jurisdiction ポリシーファイル <sup>[6]</sup> <sup>[7]</sup> をダウンロードし、JRE の lib/security フォルダに配置する必要があります。以下のコマンドを実行して、tar ファイルに変換します。
 
 ```bash
 java -jar android-backup-extractor-20160710-bin/abe.jar unpack backup.ab
 ```
 
-Extract the tar file into your current working directory to perform your analysis for sensitive data.
+現在の作業ディレクトリに tar ファイルを抽出して、機密データの解析を実行します。
 
 ```bash
 $ tar xvf mybackup.tar
