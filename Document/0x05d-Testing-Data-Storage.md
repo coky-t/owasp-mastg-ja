@@ -1057,25 +1057,25 @@ $ tar xvf mybackup.tar
 
 
 
-### Testing for Sensitive Information in Auto-Generated Screenshots
+### 機密情報のテスト (自動生成されるスクリーンショット)
 
-#### Overview
+#### 概要
 
-Manufacturers want to provide device users an aesthetically pleasing effect when an application is entered or exited, hence they introduced the concept of saving a screenshot when the application goes into the background. This feature could potentially pose a security risk for an application. Sensitive data could be exposed if a user deliberately takes a screenshot of the application while sensitive data is displayed, or in the case of a malicious application running on the device, that is able to continuously capture the screen. This information is written to local storage, from which it may be recovered either by a rogue application on a rooted device, or by someone who steals the device.
+製造者はアプリケーションが起動や終了した際デバイスユーザーに美しく快適な効果を提供したいため、アプリケーションがバックグラウンドになるときにスクリーンショットを保存するという概念を導入しました。この機能によりアプリケーションに潜在的にセキュリティリスクが発生する可能性があります。機密データが表示されているときユーザーが意図的にアプリケーションのスクリーンショットを撮る場合、または悪意のあるアプリケーションがデバイス上で動作していて断続的に画面をキャプチャできる場合に、機密データは開示される可能性があります。この情報はローカルストレージに書き込まれます。ルート化されたデバイス上での悪意のあるアプリケーションや、デバイスを盗む何者かによりその情報を復元される可能性があります。
 
-For example, capturing a screenshot of a banking application running on the device may reveal information about the user account, his credit, transactions and so on.
+例えば、デバイス上で動作している銀行アプリケーションのスクリーンショットをキャプチャすると、ユーザーアカウント、預金残高、取引明細などに関する情報が写し出される可能性があります。
 
-#### Static Analysis
+#### 静的解析
 
-In Android, when the app goes into background a screenshot of the current activity is taken and is used to give a pleasing effect when the app is next entered. However, this would leak sensitive information that is present within the app.
+Android では、アプリがバックグラウンドにいくとき、現在のアクティビティのスクリーンショットが撮影され、次にアプリに遷移したときに快適な効果をもたらすために使用されます。しかし、これはアプリ内に存在する機密情報を漏洩するでしょう。
 
-To verify if the application may expose sensitive information via task switcher, detect if the `FLAG_SECURE`<sup>[1]</sup> option is set. You should be able to find something similar to the following code snippet.
+アプリケーションがタスクスイッチャーを介して機密情報を開示するかどうかを検証するには、`FLAG_SECURE` <sup>[1]</sup> オプションが設定されているかどうかを検出します。以下のコードスニペットのようなものを見つけることができるはずです。
 
 ```Java
 LayoutParams.FLAG_SECURE
 ```
 
-If not, the application is vulnerable to screen capturing.
+見つからない場合、アプリケーションはスクリーンキャプチャに対して脆弱です。
 
 #### Dynamic Analysis
 
