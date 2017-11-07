@@ -1077,18 +1077,18 @@ LayoutParams.FLAG_SECURE
 
 見つからない場合、アプリケーションはスクリーンキャプチャに対して脆弱です。
 
-#### Dynamic Analysis
+#### 動的解析
 
-During black-box testing, open any screen within the app that contains sensitive information and click on the home button so that the app goes into background. Now press the task-switcher button, to see the snapshot. As shown below, if `FLAG_SECURE` is set (image on the right), the snapshot is empty, while if the `FLAG_SECURE` is not set (image on the left), information within the activity are shown:
+ブラックボックステストの中で、機密情報を含むアプリ内の任意の画面を開き、ホームボタンをクリックして、アプリがバックグラウンドにいきます。次にタスクスイッチャーボタンを押して、スナップショットを表示します。以下に示すように、`FLAG_SECURE` が設定されている場合 (右側の画像) 、スナップショットは空ですが、`FLAG_SECURE` が設定されていない場合 (左側の画像) 、アクティビティに情報が表示されます。
 
 | `FLAG_SECURE` not set  | `FLAG_SECURE` set  |
 |---|---|
 | ![OMTG_DATAST_010_1_FLAG_SECURE](Images/Chapters/0x05d/1.png)   |  ![OMTG_DATAST_010_2_FLAG_SECURE](Images/Chapters/0x05d/2.png) |
 
 
-#### Remediation
+#### 改善方法
 
-To prevent users or malicious applications from accessing information from backgrounded applications use the `FLAG_SECURE` as shown below:
+ユーザーや悪意のあるアプリケーションがバックグラウンドのアプリケーションからの情報にアクセスすることを防ぐには、以下に示すように `FLAG_SECURE` を使用します。
 
 ```Java
 getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
@@ -1097,23 +1097,23 @@ getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
 setContentView(R.layout.activity_main);
 ```
 
-Moreover, the following suggestions can also be implemented to enhance your application security posture:
-* Quit the app entirely when backgrounded. This will destroy any retained GUI screens.
-* Nullify the data on a GUI screen before leaving the screen or logging out.
+さらに、以下の提案を実装して、アプリケーションセキュリティ態勢を強化することもできます。
+* バックグラウンドではアプリを完全に終了します。これにより保持されている GUI 画面が破棄されます。
+* 画面を離れる前、またはログアウトする前に GUI 画面のデータを無効にします。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### OWASP MASVS
-- V2.9: "The app removes sensitive data from views when backgrounded."
+- V2.9: "バックグラウンド時にアプリはビューから機密データを削除している。"
 
 ##### CWE
 * CWE-200 - Information Exposure
 
-##### Info
+##### その他
 [1] FLAG_SECURE - https://developer.android.com/reference/android/view/Display.html#FLAG_SECURE
 
 
