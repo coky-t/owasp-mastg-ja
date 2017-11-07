@@ -1126,18 +1126,18 @@ setContentView(R.layout.activity_main);
 アプリケーションのメモリを調査できるようにするには、最初にメモリダンプを作成するか、メモリをリアルタイム更新で閲覧する必要があります。特定の機能がアプリケーション内で実行されている場合、アプリケーションはメモリに特定の情報を格納するだけであるため、これも既に問題です。。メモリの調査はもちろんアプリケーションのあらゆる段階でランダムに実行できますが、メモリの解析を行う前に、モバイルアプリケーションは何をしているのか、どのような機能を提供しているのかをまず理解し、(デコンパイルされた) ソースコードを深く研究することもより有益です。
 データの復号化など、機密性の高い機能を特定したら、メモリダンプの調査が有益な場合があります。鍵や復号化された情報自体などの機密データを特定します。
 
-#### Static Analysis
+#### 静的解析
 
-First, you need to identify which sensitive information is stored in memory. Then there are a few checks that must be executed:
+まず、どの機密情報がメモリに格納されているかを特定する必要があります。次に、実行する必要があるチェックがいくつかあります。
 
-- Verify that no sensitive information is stored in an immutable structure. Immutable structures are not really overwritten in the heap, even after nullification or changing them. Instead, by changing the immutable structure, a copy is created on the heap. `BigInteger` and `String` are two of the most used examples when storing secrets in memory. 
-- Verify that, when mutable structures are used, such as `byte[]` and `char[]` that all copies of the structure are cleared. 
+- 機密情報がイミュータブルな構造体に格納されていないことを確認します。イミュータブルな構造体は無効化や変更後でも実際にはヒープ上で上書きされません。代わりに、イミュータブルな構造体を変更すると、ヒープ上にコピーが作られます。`BigInteger` と `String` はメモリに機密を格納する際に最もよく使われる例の二つです。
+- ミュータブルな構造体を使用する場合、`byte[]` や `char[]` など構造体のコピーがすべてクリアされることを確認します。
 
 
-**NOTICE**: Destroying a key (e.g. `SecretKey secretKey = new SecretKeySpec("key".getBytes(), "AES"); secret.destroy();`) does *not* work, nor nullifying the backing byte-array from `secretKey.getEncoded()` as the SecretKeySpec based key returns a copy of the backing byte-array.
-Therefore the developer should, in case of not using the `AndroidKeyStore` make sure that the key is wrapped and properly protected (see remediation for more details).
-Understand that an RSA keypair is based on `BigInteger` as well and therefore reside in memory after first use outside of the `AndroidKeyStore`.
-Lastly, some of the ciphers do not properly clean up their byte-arrays, for instance: the AES `Cipher` in `BounceyCastle` does not always clean up its latest working key.
+**注意**: 鍵を破壊すること (`SecretKey secretKey = new SecretKeySpec("key".getBytes(), "AES"); secret.destroy();` など) は機能 *しません* 。SecretKeySpec ベースの鍵として `secretKey.getEncoded()` からバックしたバイト配列を無効化すると、バックしたバイト配列のコピーを返します。
+したがって開発者は、`AndroidKeyStore` を使用しない場合、鍵がラップされ、適切に保護されていることを確認する必要があります (詳細は改善方法を参照) 。
+RSA 鍵ペアは `BigInteger` に基づいていることを理解します。`AndroidKeyStore` の外で最初に使用した後にメモリに残ります。
+最後に、一部の暗号はバイト配列を適切にクリーンアップしないものがあります。例えば、`BounceyCastle` の AES `Cipher` は必ずしも最新の作業鍵をクリーンアップするとは限りません。
 
 #### Dynamic Analysis
 
