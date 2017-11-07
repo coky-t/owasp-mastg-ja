@@ -1117,14 +1117,14 @@ setContentView(R.layout.activity_main);
 [1] FLAG_SECURE - https://developer.android.com/reference/android/view/Display.html#FLAG_SECURE
 
 
-### Testing for Sensitive Data in Memory
+### 機密データのテスト (メモリ)
 
-#### Overview
+#### 概要
 
-Analyzing the memory can help to identify the root cause of different problems, like for example why an application is crashing, but can also be used to identify sensitive data. This section describes how to check for sensitive data and disclosure of data in general within the process memory.
+メモリを解析することで、アプリケーションがクラッシュした理由など、さまざまな問題の根本原因を特定できますが、機密データの特定にも使用できます。このセクションではプロセスメモリ内の機密データと一般的なデータの開示を確認する方法について説明します。
 
-To be able to investigate the memory of an application a memory dump needs to be created first or the memory needs to be viewed with real-time updates. This is also already the problem, as the application only stores certain information in memory if certain functions are triggered within the application. Memory investigation can of course be executed randomly in every stage of the application, but it is much more beneficial to understand first what the mobile application is doing and what kind of functionalities it offers and also make a deep dive into the (decompiled) source code before making any memory analysis.
-Once sensitive functions are identified, like decryption of data, the investigation of a memory dump might be beneficial in order to identify sensitive data like a key or the decrypted information itself.
+アプリケーションのメモリを調査できるようにするには、最初にメモリダンプを作成するか、メモリをリアルタイム更新で閲覧する必要があります。特定の機能がアプリケーション内で実行されている場合、アプリケーションはメモリに特定の情報を格納するだけであるため、これも既に問題です。。メモリの調査はもちろんアプリケーションのあらゆる段階でランダムに実行できますが、メモリの解析を行う前に、モバイルアプリケーションは何をしているのか、どのような機能を提供しているのかをまず理解し、(デコンパイルされた) ソースコードを深く研究することもより有益です。
+データの復号化など、機密性の高い機能を特定したら、メモリダンプの調査が有益な場合があります。鍵や復号化された情報自体などの機密データを特定します。
 
 #### Static Analysis
 
