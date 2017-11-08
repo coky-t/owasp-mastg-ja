@@ -1169,10 +1169,10 @@ _.hprof_ ファイルの潜在的な機密データをすばやく発見する�
 * セッション ID
 * OS とのやり取り、例：ファイルの内容を読むなど
 
-#### Remediation
+#### 改善方法
 
-In Java, no immutable structures should be used to carry secrets (E.g. `String`, `BigInteger`). Nullifying them will not be effective: the Garbage collector might collect them, but they might remain in the JVMs heap for a longer period of time. 
-Rather use byte-arrays (`byte[]`) or char-arrays (`char[]`) which are cleaned after the operations are done:
+Java では、イミュータブルな構造体を使用して、秘密を運ぶべきではありません (`String`, `BigInteger` など) 。それらを無効化することは効果的ではありません。ガベージコレクタはそれらを収集するかもしれませんが、JVM のヒープに長期間留まる可能性があります。
+むしろ、操作が完了した後に消去されるバイト配列 (`byte[]`) または文字配列 (`char[]`) を使用します。
 
 
 ```java
@@ -1189,9 +1189,9 @@ try{
 }
 ```
 
-Keys should be handled by the `AndroidKeyStore` or the `SecretKey` class needs to be adjusted. For a better implementation of the `SecretKey` one can use the `ErasableSecretKey` class below. This class consists of two parts: 
-- A wrapperclass, called `ErasableSecretKey` which takes care of building up the internal key, adding a clean method and a static convinience method. You can call the `getKey()` on a `ErasableSecretKey` to get the actual key.
-- An internal `InternalKey` class which implements `javax.crypto.SecretKey, Destroyable`, so you can actually destroy it and it will behave as a SecretKey from JCE. The destroyable implementation first sets nullbytes to the internal key and then it will put null as a reference to the byte[] representing the actual key. As you can see the `InternalKey` does not provide a copy of its internal byte[] representation, instead it gives the actual version. This will make sure that you will no longer have copies of the key in many parts of your application memory.
+鍵は `AndroidKeyStore` により処理されるべきです。あるいは `SecretKey` クラスを調整する必要があります。`SecretKey` のより良い実装のために、以下の `ErasableSecretKey` クラスを使用できます。このクラスは二つの部分で構成されています。
+- `ErasableSecretKey` と呼ばれるラッパークラス。内部鍵の構築、クリーンメソッドと静的コンビニエンスメソッドの追加を管理します。`ErasableSecretKey` の `getKey()` を呼び出すことで、実際の鍵を取得できます。
+- 内部の `InternalKey` クラス。`javax.crypto.SecretKey, Destroyable` を実装する。実際にそれを破壊することができ、JCE から SecretKey として動作します。破壊可能な実装は、最初にヌルバイトを内部鍵に設定し、次に実際の鍵を表す byte[] への参照として null を設定します。`InternalKey` は内部の byte[] 表現のコピーを提供しないことがわかります。代わりに実際のバージョンを示します。これによりアプリケーションメモリの多くの部分に鍵のコピーを持つことがなくなることを確認します。
 
 
 ```java
@@ -1284,22 +1284,22 @@ public class ErasableSecretKey implements Serializable {
 
 ```
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage
-* M2 - Insecure Data Storage
+* M1 - 不適切なプラットフォームの利用
+* M2 - 安全でないデータストレージ
 
 ##### OWASP MASVS
-* V2.10: "The app does not hold sensitive data in memory longer than necessary, and memory is cleared explicitly after use."
+* V2.10: "アプリは必要以上に長くメモリ内に機密データを保持せず、使用後は明示的にメモリがクリアされている。"
 
 ##### CWE
 * CWE-316 - Cleartext Storage of Sensitive Information in Memory
 
-##### Info
+##### その他
 * Securely stores sensitive data in RAM - https://www.nowsecure.com/resources/secure-mobile-development/coding-practices/securely-store-sensitive-data-in-ram/
 
-##### Tools
+##### ツール
 * Memory Monitor - http://developer.android.com/tools/debugging/debugging-memory.html#ViewHeap
 * Eclipse’s MAT (Memory Analyzer Tool) standalone - https://eclipse.org/mat/downloads.php
 * Memory Analyzer which is part of Eclipse - https://www.eclipse.org/downloads/
