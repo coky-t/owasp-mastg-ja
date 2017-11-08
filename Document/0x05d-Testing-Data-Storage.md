@@ -1139,35 +1139,35 @@ setContentView(R.layout.activity_main);
 RSA 鍵ペアは `BigInteger` に基づいていることを理解します。`AndroidKeyStore` の外で最初に使用した後にメモリに残ります。
 最後に、一部の暗号はバイト配列を適切にクリーンアップしないものがあります。例えば、`BounceyCastle` の AES `Cipher` は必ずしも最新の作業鍵をクリーンアップするとは限りません。
 
-#### Dynamic Analysis
+#### 動的解析
 
-To analyse the memory of an app in Android Studio, the app must be **debuggable**.
-See the instructions in XXX (-- TODO [Link to repackage and sign] --) on how to repackage and sign an Android app to enable debugging for an app, if not already done. Also adb integration need to be activated in Android Studio in “_Tools/Android/Enable ADB Integration_” in order to take a memory dump.
+Android Studio でアプリのメモリを解析するには、アプリを **debuggable** にする必要があります。
+まだされていない場合、アプリをデバッグ可能にするために Android アプリを再パッケージおよび署名する方法については、XXX (-- TODO [Link to repackage and sign] --) の手順を参照します。また、メモリダンプを取るためには、Android Studio の "_Tools/Android/Enable ADB Integration_" で adb 統合を有効にする必要があります。
 
-For rudimentary analysis Android Studio built-in tools can be used. Android Studio includes tools in the “_Android Monitor_” tab to investigate the memory. Select the device and app you want to analyse in the "_Android Monitor_" tab and click on "_Dump Java Heap_" and a _.hprof_ file will be created.
+基本的な解析のために Android Studio の組込みツールを使用できます。Android Studio には "_Android Monitor_" タブにメモリを調べるためのツールが含まれています。"_Android Monitor_" タブでデバイスと解析したいアプリを選択し "_Dump Java Heap_" をクリックすると _.hprof_ ファイルが作成されます。
 
 ![Create Heap Dump](Images/Chapters/0x05d/Dump_Java_Heap.png)
 
-In the new tab that shows the _.hprof_ file, the Package Tree View should be selected. Afterwards the package name of the app can be used to navigate to the instances of classes that were saved in the memory dump.
+_.hprof_ ファイルを表示する新しいタブで、Package Tree View を選択する必要があります。その後、アプリのパッケージ名を使用して、メモリダンプに保存されたクラスのインスタンスにナビゲートできます。
 
 ![Create Heap Dump](Images/Chapters/0x05d/Package_Tree_View.png)
 
-For deeper analysis of the memory dump Eclipse Memory Analyser (MAT) should be used. The _.hprof_ file will be stored in the directory "captures", relative to the project path open within Android Studio.
+メモリダンプをより深く解析するには、Eclipse Memory Analyser (MAT) を使用する必要があります。_.hprof_ ファイルは、Android Studio 内に開いているプロジェクトパスを基準にして、ディレクトリ "captures" に格納されます。
 
-Before the _.hprof_ file can be opened in MAT it needs to be converted. The tool _hprof-conf_ can be found in the Android SDK in the directory platform-tools.
+_.hprof_ ファイルを MAT で開く前に、変換する必要があります。ツール _hprof-conf_ は Android SDK のディレクトリ platform-tools にあります。
 
 ```bash
 ./hprof-conv file.hprof file-converted.hprof
 ```
 
-By using MAT, more functions are available like usage of the Object Query Language (OQL). OQL is an SQL-like language that can be used to make queries in the memory dump. Analysis should be done on the dominator tree as only this contains the variables/memory of static classes.
+MAT を使用することにより、Object Query Language (OQL) の使用法にあるように、より多くの機能を利用できます。OQL は SQL ライクな言語であり、メモリダンプのクエリを実行するために使用できます。解析はドミネーターツリー上で行う必要があります。これにのみ静的クラスの変数やメモリが含まれています。
 
-To quickly discover potential sensitive data in the _.hprof_ file, it is also useful to run the `string` command against it. When doing a memory analysis, check for sensitive information like:
-* Password and/or Username
-* Decrypted information
-* User or session related information
-* Session ID
-* Interaction with OS, e.g. reading file content
+_.hprof_ ファイルの潜在的な機密データをすばやく発見するには、それに対して `string` コマンドを実行すると便利です。メモリ解析を行うときには、以下のような機密情報を調べます。
+* パスワードやユーザー名
+* 復号化された情報
+* ユーザーまたはセッションに関連する情報
+* セッション ID
+* OS とのやり取り、例：ファイルの内容を読むなど
 
 #### Remediation
 
