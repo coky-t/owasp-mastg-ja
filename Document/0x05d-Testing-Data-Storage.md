@@ -1307,42 +1307,42 @@ public class ErasableSecretKey implements Serializable {
 * LiME - https://github.com/504ensicsLabs/LiME
 
 
-### Testing the Device-Access-Security Policy
+### デバイスアクセスセキュリティポリシーのテスト
 
-#### Overview
+#### 概要
 
-Apps that are processing or querying sensitive information should ensure that they are running in a trusted and secure environment. In order to be able to achieve this, the app can enforce the following local checks on the device:
+機密情報を処理または照会するアプリは、信頼できるセキュアな環境で実行されていることを確認する必要があります。これを実現するために、アプリはデバイス上で以下のローカルチェックを実行できます。
 
-* PIN or password set to unlock the device
-* Usage of a minimum Android OS version
-* Detection of activated USB Debugging
-* Detection of encrypted device
-* Detection of rooted device (see also "Testing Root Detection")
+* デバイスのアンロックするために設定された PIN やパスワード
+* Android OS の最小バージョンの使用
+* アクティブな USB デバッグの検出
+* 暗号化されたデバイスの検出
+* ルート化デバイスの検出 (「ルート検出のテスト」も参照)
 
-#### Static Analysis
+#### 静的解析
 
-In order to be able to test the device-access-security policy that is enforced by the app, a written copy of the policy needs to be provided. The policy should define what checks are available and how they are enforced. For example one check could require that the app only runs on Android Marshmallow (Android 6.0) or higher and the app is closing itself if the app is running on an Android version < 6.0.
+アプリにより強制されるデバイスアクセスセキュリティポリシーをテストできるようにするには、ポリシーの書面によるコピーを提供する必要があります。ポリシーではどのようなチェックが利用可能であり、どのように実施されているかを定義する必要があります。例えば、あるチェックでアプリが Android Marshmallow (Android 6.0) 以上でのみ動作し、アプリが Android バージョン < 6.0 で実行されている場合、アプリは自身を終了することを要求します。
 
-The functions within the code that implement the policy need to be identified and checked if they can be bypassed.
+ポリシーを実装するコード内の関数をバイパスできるかどうかを特定および確認する必要があります。
 
-#### Dynamic Analysis
+#### 動的解析
 
-The dynamic analysis depends on the checks that are enforced by app and their expected behavior and need to be checked if they can be bypassed.
+動的解析はアプリにより実行されるチェックと期待される動作に依存し、バイパスできるかどうかをチェックする必要があります。
 
-#### Remediation
+#### 改善方法
 
-Different checks on the Android device can be implemented by querying different system preferences from _Settings.Secure_<sup>[1]</sup>. The _Device Administration API_<sup>[2]</sup> offers different mechanisms to create security aware applications, that are able to enforce password policies or encryption of the device.
+Android デバイス上のさまざまなチェックは _Settings.Secure_ <sup>[1]</sup> からさまざまなシステム設定を照会することで実装できます。_Device Administration API_ <sup>[2]</sup> はセキュリティ対応アプリケーションを作成するためのさまざまなメカニズムを提供します。パスワードポリシーやデバイスの暗号化を実施できます。
 
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage
+* M1 - 不適切なプラットフォームの利用
 
 ##### OWASP MASVS
-* V2.11: "The app enforces a minimum device-access-security policy, such as requiring the user to set a device passcode."
+* V2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
-##### Info
+##### その他
 * [1] Settings.Secure - https://developer.android.com/reference/android/provider/Settings.Secure.html
 * [2] Device Administration API - https://developer.android.com/guide/topics/admin/device-admin.html
 
