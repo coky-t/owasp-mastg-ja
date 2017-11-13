@@ -1,14 +1,15 @@
 ## 改竄とリバースエンジニアリング (Android)
 
-Its openness makes Android a favorable environment for reverse engineers. However, dealing with both Java and native code can make things more complicated at times. In the following chapter, we'll look at some peculiarities of Android reversing and OS-specific tools as processes.
+そのオープン性により Android はリバースエンジニアにとって好都合な環境になっています。しかし、Java とネイティブコードの両方を扱うと、時には物事がより複雑になることがあります。以下の章では、Android のリバースのいくつかの特質と OS 固有のツールをプロセスとしてみていきます。
 
-In comparison to "the other" mobile OS, Android offers some big advantages to reverse engineers. Because Android is open source, you can study the source code of the Android Open Source Project (AOSP), modify the OS and its standard tools in any way you want. Even on standard retail devices, it is easily possible to do things like activating developer mode and sideloading apps without jumping through many hoops. From the powerful tools shipping with the SDK, to the wide range of available reverse engineering tools, there's a lot of niceties to make your life easier.
+「その他の」モバイル OS と比較して、Android はリバースエンジニアにとって大きな利点を提供します。
+Android はオープンソースであるため、Android Open Source Project (AOSP) のソースコードを勉強し、OS や標準ツールをあなたが望む任意の方法で変更することができます。一般に販売されているデバイスでも、開発者モードの有効化やアプリのサイドローディングなどの操作を多くの手間をかける必要なく簡単に実行できます。SDK にある強力なツールから、幅広く利用可能なリバースエンジニアリングツールに至るまで、あなたの人生を楽にしてくれる多くの常識があります。
 
-However, there's also a few Android-specific challenges. For example, you'll need to deal with both Java bytecode and native code. Java Native Interface (JNI) is sometimes used on purpose to confuse reverse engineers. Developers sometimes use the native layer to "hide" data and functionality, or may structure their apps such that execution frequently jumps between the two layers. This can complicate things for reverse engineers (to be fair, there might also be legitimate reasons for using JNI, such as improving performance or supporting legacy code).
+しかし、Android 固有の課題もいくつかあります。例えば、Java バイトコードとネイティブコードの両方を処理する必要があるかもしれません。Java Native Interface (JNI) はリバースエンジニアを混乱させる目的のために使用されることがあります。開発者はデータや機能を「隠す」ためにネイティブレイヤを使用することや、実行が二つのレイヤを頻繁にジャンプするようにアプリを構築することがあります。これはリバースエンジニアにとって複雑なものになります (公平を期すると、パフォーマンスの向上やレガシーコードのサポートなど、JNI を使用する正当な理由があるかもしれません) 。
 
-You'll need a working knowledge about both the Java-based Android environment and the Linux OS and Kernel that forms the basis of Android - or better yet, know all these components inside out. Plus, they need the right toolset to deal with both native code and bytecode running inside the Java virtual machine.
+Java ベースの Android 環境と Android の基盤を形成する Linux OS および Kernel の両方についての実践的な知識が必要です。さらに、Java 仮想マシン内で実行されるネイティブコードとバイトコードの両方に対処するための適切なツールセットが必要です。
 
-Note that in the following sections we'll use the OWASP Mobile Testing Guide Crackmes <sup>[1]</sup> as examples for demonstrating various reverse engineering techniques, so expect partial and full spoilers. We encourage you to have a crack at the challenges yourself before reading on!
+以下のセクションでは、さまざまなリバースエンジニアリング技法を実演するための例として OWASP Mobile Testing Guide Crackmes <sup>[1]</sup> を使用することに注意します。部分的および完全なスポイラーを期待します。読む前にあなた自身でクラックに挑戦してみることをお勧めします。
 
 ### 必要なもの
 
