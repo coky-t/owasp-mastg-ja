@@ -1347,34 +1347,34 @@ Android デバイス上のさまざまなチェックは _Settings.Secure_ <sup>
 * [2] Device Administration API - https://developer.android.com/guide/topics/admin/device-admin.html
 
 
-### Verifying User Education Controls
+### ユーザー教育コントロールの検証
 
-#### Overview
+#### 概要
 
-Educating users is a crucial part in the usage of mobile apps. Even though many security controls are already in place, they might be circumvented or misused through the users.
+ユーザーを教育することはモバイルアプリの使用における重要な要素です。多くのセキュリティコントロールがすでに導入されていますが、ユーザーは迂回や誤用の可能性があります。
 
-The following list shows potential warnings or advises for a user when opening the app the first time and using it:
-* Showing a list of what kind of data is stored locally and remotely. This can also be a link to an external resource as the information might be quite extensive.
-* If a new user account is created within the app it should show the user if the password provided is considered secure and applies to the  password policy.
-* If the user is installing the app on a rooted device a warning should be shown that this is dangerous and deactivates security controls at OS level and is more likely to be prone to malware. See also "Testing Root Detection" for more details.
-* If a user installed the app on an outdated Android version a warning should be shown. See also "Testing the Device-Access-Security Policy" for more details.
+以下のリストは、アプリを最初に開いて使用する際のユーザーに対する潜在的な警告や助言を示しています。
+* どのような種類のデータがローカル及びリモートに格納されているかの一覧を表示します。これは情報が非常に広範である可能性があるため外部リソースへのリンクとなることもあります。
+* 新しいユーザーアカウントがアプリ内に作成された場合、提供されたパスワードがセキュアでありパスワードポリシーに沿っているかどうかをユーザーに表示する必要があります。
+* ユーザーがルート化デバイスにアプリをインストールしている場合、これは危険であり、OS レベルのセキュリティコントロールを無効にし、マルウェアに感染しやすいという警告を表示する必要があります。詳細は「ルート検出のテスト」も参照ください。
+* ユーザーがアプリを古い Android バージョンにインストールした場合、警告を表示する必要があります。詳細は「デバイスアクセスセキュリティポリシーのテスト」も参照ください。
 
-#### Static Analysis
+#### 静的解析
 
-A list of implemented education controls should be provided. The controls should be verified in the code if they are implemented properly and according to best practices.
+実装されている教育コントロールのリストを提供する必要があります。コントロールは適切に実装されベストプラクティスに沿っているかどうかを、コード内で検証する必要があります。
 
-#### Dynamic Analysis
+#### 動的解析
 
-After installing the app and also while using it, it should be checked if any warnings are shown to the user, that have an educational purpose and are aligned with the defined education controls.
+アプリをインストールした後および使用中に、教育目的を持ち定義された教育コントロールに沿った警告がユーザーに示されているかどうかをチェックする必要があります。
 
-#### Remediation
+#### 改善方法
 
-Warnings should be implemented that address the key points listed in the overview section.
+概要セクションに記載されているキーポイントに対処する警告を実装する必要があります。
 
-#### References
+#### 参考情報
 
 ##### OWASP Mobile Top 10 2016
-* M1 - Improper Platform Usage
+* M1 - 不適切なプラットフォームの利用
 
 ##### OWASP MASVS
-- V2.12: "The app educates the user about the types of personally identifiable information processed, as well as security best practices the user should follow in using the app."
+- V2.12: "アプリは処理される個人識別情報の種類、およびユーザーがアプリを使用する際に従うべきセキュリティのベストプラクティスについて通知している。"
