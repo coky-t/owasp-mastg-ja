@@ -13,15 +13,15 @@ Java ベースの Android 環境と Android の基盤を形成する Linux OS �
 
 ### 必要なもの
 
-At the very least, you'll need Android Studio <sup>[2]</sup>, which comes with the Android SDK, platform tools and emulator, as well as a manager app for managing the various SDK versions and framework components. With Android Studio, you also get an SDK Manager app that lets you install the Android SDK tools and manage SDKs for various API levels, as well as the emulator and an AVD Manager application to create emulator images. Make sure that the following is installed on your system:
+少なくとも、Android Studio <sup>[2]</sup> が必要です。Android SDK、プラットフォームツールとエミュレータ、さまざまな SDK バージョンとフレームワークコンポーネントを管理するマネージャアプリが付属しています。Android Studio を使用すると、SDK Manager アプリも利用できます。Android SDK ツールをインストールしたり、さまざまな API レベルの SDK を管理したり、エミュレーターや、エミュレータイメージを作成する AVD Manager アプリケーションも利用できます。以下がシステムにインストールされていることを確認します。
 
-- The newest SDK Tools and SDK Platform-Tools packages. These packages include the Android Debugging Bridge (ADB) client as well as other tools that interface with the Android platform. In general, these tools are backward-compatible, so you need only one version of those installed.
+- 最新の SDK ツールと SDK プラットフォームツールパッケージ。これらのパッケージは Android Debugging Bridge (ADB) クライアントと、Android プラットフォームとインタフェースする他のツールが含まれています。一般に、これらのツールは後方互換性があるため、インストールされているバージョンがひとつだけ必要です。
 
-- The Android NDK. This is the Native Development Kit that contains prebuilt toolchains for cross-compiling native code for different architectures.
+- Android NDK。これは Native Development Kit で、さまざまなアーキテクチャのネイティブコードをクロスコンパイルするためのプレビルドツールチェーンが組み込まれています。
 
-In addition to the SDK and NDK, you'll also something to make Java bytecode more human-friendly. Fortunately, Java decompilers generally deal well with Android bytecode. Popular free decompilers include JD <sup>[3]</sup>, Jad <sup>[4]</sup>, Proycon <sup>[5]</sup> and CFR <sup>[6]</sup>. For convenience, we have packed some of these decompilers into our <code>apkx</code> wrapper script <sup>[7]</sup>. This script completely automates the process of extracting Java code from release APK files and makes it easy to experiment with different backends (we'll also use it in some of the examples below).
+SDK および NDK に加えて、Java バイトコードをより人に優しいものにするためのものもあります。幸運なことに、Java デコンパイラは一般的に Android バイトコードをよく扱います。有名なフリーのデコンパイラには JD <sup>[3]</sup>, Jad <sup>[4]</sup>, Proycon <sup>[5]</sup>, CFR <sup>[6]</sup> があります。都合により、これらのデコンパイラのいくつかを <code>apkx</code> ラッパースクリプトにパックしました <sup>[7]</sup> 。このスクリプトはリリース APK から Java コードを抽出するプロセスを完全に自動化し、さまざまなバックエンドで簡単に試すことができます (以下のいくつかの例でも使用します) 。
 
-Other than that, it's really a matter of preference and budget. A ton of free and commercial disassemblers, decompilers, and frameworks with different strengths and weaknesses exist - we'll cover some of them below.
+それ以外は、本当に好みと予算の問題です。さまざまな長所と短所をもつ、数多くのフリーおよび商用の逆アセンブラ、デコンパイラ、フレームワークが存在します。以下でいくつかを紹介します。
 
 #### Setting up the Android SDK
 
