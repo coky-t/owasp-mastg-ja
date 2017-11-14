@@ -50,11 +50,11 @@ MacOS:
 
 注意: Linux では、独自の SDK の場所を選択する必要があります。一般的な場所は <code>/opt</code>, <code>/srv</code>, <code>/usr/local</code> です。
 
-#### Setting up the Android NDK
+#### Android NDK のセットアップ
 
-The Android NDK contains prebuilt versions of the native compiler and toolchain. Traditionally, both the GCC and Clang compilers were supported, but active support for GCC ended with revision 14 of the NDK. What's the right version to use depends on both the device architecture and host OS. The prebuilt toolchains are located in the <code>toolchains</code>directory of the NDK, which contains one subdirectory per architecture.
+Android NDK にはネイティブコンパイラとツールチェーンのビルド済みのバージョンが含まれています。伝統的に、GCC と Clang コンパイラの両方がサポートされていましたが、GCC に対する積極的なサポートは NDK のリビジョン 14 で終了しました。使用する正しいバージョンはデバイスアーキテクチャとホスト OS の両方に依存します。ビルド済みのツールチェーンは NDK の <code>toolchains</code> ディレクトリにあります。アーキテクチャごとにひとつのサブディレクトリが含まれています。
 
-|Architecture | Toolchain name|
+| アーキテクチャ | ツールチェーン名 |
 |------------ | --------------|
 |ARM-based|arm-linux-androideabi-&lt;gcc-version&gt;|
 |x86-based|x86-&lt;gcc-version&gt;|
@@ -63,18 +63,18 @@ The Android NDK contains prebuilt versions of the native compiler and toolchain.
 |X86-64-based|x86_64-&lt;gcc-version&gt;|
 |MIPS64-based|mips64el-linux-android-&lt;gcc-version&gt;|
 
-In addition to the picking the right architecture, you need to specify the correct sysroot for the native API level you want to target. The sysroot is a directory that contains the system headers and libraries for your target. Available native APIs vary by Android API level. Possible sysroots for respective Android API levels reside under <code>$NDK/platforms/</code>, each API-level directory contains subdirectories for the various CPUs and architectures. 
+正しいアーキテクチャを選ぶことに加えて、ターゲットとするネイティブ API レベルの正しい sysroot を指定する必要があります。sysroot はターゲットのシステムヘッダとライブラリを含むディレクトリです。利用可能なネイティブ API は Android API レベルにより異なります。それぞれの Android API レベルの可能な sysroot は <code>$NDK/platforms/</code> にあり、各 API レベルのディレクトリにはさまざまな CPU とアーキテクチャのサブディレクトリが含まれています。
 
-One possibility to set up the build system is exporting the compiler path and necessary flags as environment variables. To make things easier however, the NDK allows you to create a so-called standalone toolchain - a "temporary" toolchain that incorporates the required settings.
+ビルドシステムをセットアップするひとつの可能性は、コンパイラパスと必要なフラグを環境変数としてエクスポートすることです。しかし、物事を簡単にするために、NDK ではいわゆるスタンドアローンツールチェーンを作成できます。つまり、必要な設定を盛り込んだ「一時的な」ツールチェーンです。
 
-To set up a standalone toolchain, download the latest stable version of the NDK <sup>[8]</sup>. Extract the ZIP file, change into the NDK root directory and run the following command:
+スタンドアローンツールチェーンをセットアップするには、NDK の最新の安定版をダウンロードします <sup>[8]</sup> 。ZIP ファイルを展開し、NDK ルートディレクトリに移動して、以下のコマンドを実行します。
 
 
 ```bash
 $ ./build/tools/make_standalone_toolchain.py --arch arm --api 24 --install-dir /tmp/android-7-toolchain
 ```
 
-This creates a standalone toolchain for Android 7.0 in the directory <code>/tmp/android-7-toolchain</code>. For convenience, you can export an environment variable that points to your toolchain directory - we'll be using this in the examples later. Run the following command, or add it to your <code>.bash_profile</code> or other startup script.
+これにより、ディレクトリ <code>/tmp/android-7-toolchain</code> に Android 7.0 のスタンドアローンツールチェーンが作成されます。都合により、あなたのツールチェーンディレクトリを指す環境変数をエクスポートできます。これについては後の例で使用します。以下のコマンドを実行するか、<code>.bash_profile</code> または他の起動スクリプトに追加します。
 
 ```bash
 $  export TOOLCHAIN=/tmp/android-7-toolchain
