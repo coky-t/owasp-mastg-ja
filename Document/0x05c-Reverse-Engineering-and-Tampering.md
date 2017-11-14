@@ -23,9 +23,9 @@ SDK および NDK に加えて、Java バイトコードをより人に優しい
 
 それ以外は、本当に好みと予算の問題です。さまざまな長所と短所をもつ、数多くのフリーおよび商用の逆アセンブラ、デコンパイラ、フレームワークが存在します。以下でいくつかを紹介します。
 
-#### Setting up the Android SDK
+#### Android SDK のセットアップ
 
-Local Android SDK installations are managed through Android Studio. Create an empty project in Android Studio and select "Tools->Android->SDK Manager" to open the SDK Manager GUI. The "SDK Platforms" tab lets you install SDKs for multiple API levels. Recent API levels are:
+ローカル Android SDK のインストールは Android Studio を通じて管理されます。Android Studio で空のプロジェクトを作成し、"Tools->Android->SDK Manager" を選択して SDK Manager GUI を開きます。"SDK Platforms" タブで複数の API レベルの SDK をインストールできます。最近の API レベルは以下のとおりです。
 
 - API 21: Android 5.0
 - API 22: Android 5.1
@@ -36,7 +36,7 @@ Local Android SDK installations are managed through Android Studio. Create an em
 
 <img src="Images/Chapters/0x05c/sdk_manager.jpg" width="500px"/>
 
-Depending on your OS, installed SDKs are found at the following location:
+OS によって、インストールされた SDK は以下の場所にあります。
 
 ```
 Windows:
@@ -48,7 +48,7 @@ MacOS:
 /Users/<username>/Library/Android/sdk
 ```
 
-Note: On Linux, you'll need pick your own SDK location. Common locations are <code>/opt</code>, <code>/srv</code>, and <code>/usr/local</code>.
+注意: Linux では、独自の SDK の場所を選択する必要があります。一般的な場所は <code>/opt</code>, <code>/srv</code>, <code>/usr/local</code> です。
 
 #### Setting up the Android NDK
 
