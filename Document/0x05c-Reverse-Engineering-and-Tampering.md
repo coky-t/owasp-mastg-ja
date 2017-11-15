@@ -94,7 +94,7 @@ APKTool <sup>[12]</sup> は一般的なフリーツールです。APK アーカ�
 
 #### 商用ツール
 
-Even though it is possible to work with a completely free setup, you might want to consider investing in commercial tools. The main advantage of these tools is convenience: They come with a nice GUI, lots of automation, and end user support. If you earn your daily bread as a reverse engineer, this will save you a lot of time.
+完全にフリーの設定で作業することは可能ですが、商用ツールへの投資を検討することもできます。これらのツールの主な利点は利便性です。素晴らしい GUI 、多くの自動化、エンドユーザーサポートが付いています。あなたがリバースエンジニアを日々の糧とするのであれば、これは多くの手間が省けます。
 
 ##### JEB
 
