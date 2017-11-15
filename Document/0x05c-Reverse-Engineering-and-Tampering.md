@@ -98,7 +98,7 @@ APKTool <sup>[12]</sup> は一般的なフリーツールです。APK アーカ�
 
 ##### JEB
 
-JEB <sup>[15]</sup>, a commercial decompiler, packs all the functionality needed for static and dynamic analysis of Android apps into an all-in-one package, is reasonably reliable and you get quick support. It has a built-in debugger, which allows for an efficient workflow – setting breakpoints directly in the decompiled (and annotated sources) is invaluable, especially when dealing with ProGuard-obfuscated bytecode. Of course convenience like this doesn’t come cheap - and since version 2.0 JEB has changed from a traditional licensing model to a subscription-based one, so you'll need to pay a monthly fee to use it.
+JEB <sup>[15]</sup> は商用の逆コンパイラです。Android アプリの静的および動的解析に必要な機能をすべてパックしたオールインワンパッケージであり、それなりに信頼でき、迅速なサポートが得られます。これには組込みのデバッガがあり、効率的なワークフローが可能です。特に ProGuard により難読化されたバイトコードを扱う場合には、逆コンパイルされたもの (および注釈つきソース) に直接ブレークポイントを設定することは非常に有益です。もちろん、このような便利なものは安くありません。バージョン 2.0 以降、JEB は従来のライセンスモデルからサブスクリプションベースのものに変更されています。そのため、使用には月額料金を支払う必要があります。
 
 ##### IDA Pro
 
