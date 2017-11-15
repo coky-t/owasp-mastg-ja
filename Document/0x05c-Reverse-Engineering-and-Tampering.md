@@ -82,15 +82,15 @@ $  export TOOLCHAIN=/tmp/android-7-toolchain
 
 ### フリーのリバースエンジニアリング環境の構築
 
-With a little effort you can build a reasonable GUI-powered reverse engineering environment for free. 
+少しの労力で、リーズナブルな GUI 搭載のリバースエンジニアリング環境をフリーで構築できます。
 
-For navigating the decompiled sources we recommend using IntelliJ <sup>[9]</sup>, a relatively light-weight IDE that works great for browsing code and allows for basic on-device debugging of the decompiled apps. However, if you prefer something that's clunky, slow and complicated to use, Eclipse <sup>[10]</sup> is the right IDE for you (note: This piece of advice is based on the author's personal bias).
+逆コンパイルされたソースをナビゲートするには、IntelliJ <sup>[9]</sup> の使用をお勧めします。比較的軽量な IDE はコードを閲覧するのに最適であり、逆コンパイルされたアプリの基本的なオンデバイスデバッグが可能です。しかし、あなたが重く、遅く、複雑なものを好むのであれば、Eclipse <sup>[10]</sup> があなたにとって正しい IDE です (注：このアドバイスは執筆者の個人的な偏見に基づいています) 。
 
-If you don’t mind looking at Smali instead of Java code, you can use the smalidea plugin for IntelliJ for debugging on the device <sup>[11]</sup>. Smalidea supports single-stepping through the bytecode, identifier renaming and watches for non-named registers, which makes it much more powerful than a JD + IntelliJ setup.
+Java コードの代わりに Smali を見てもかまわない場合、IntelliJ の smalidea プラグインを使用してデバイスをデバッグできます <sup>[11]</sup> 。Smalidea はバイトコードのシングルステップ実行、識別子の名前変更、名前なしレジスタの監視をサポートしているため、JD + IntelliJ の設定よりもはるかに強力です。
 
-APKTool <sup>[12]</sup> is a popular free tool that can extract and disassemble resources directly from the APK archive and disassemble Java bytecode to Smali format (Smali/Baksmali is an assembler/disassembler for the Dex format. It's also icelandic for "Assembler/Disassembler"). APKTool allows you to reassemble the package, which is useful for patching and applying changes to the Manifest.
+APKTool <sup>[12]</sup> は一般的なフリーツールです。APK アーカイブから直接リソースを抽出および逆アセンブルし、Java バイトコードを Smali 形式に逆アセンブルできます (Smali/Backsmali は DEX 形式に対するアセンブラ/逆アセンブラです。「アセンブラ/逆アセンブラ」のアイスランド語でもあります) 。APKTool を使用してパッケージを再アセンブルできます。パッチ化および Manifest への変更の適用に便利です。
 
-More elaborate tasks such as program analysis and automated de-obfuscation can be achieved with open source reverse engineering frameworks such as Radare2 <sup>[13]</sup> and Angr <sup>[14]</sup>. You'll find usage examples for many of these free tools and frameworks throughout the guide.
+プログラム解析や自動化された逆難読化などのより緻密なタスクは Radare2 <sup>[13]</sup> や Angr <sup>[14]</sup> などのオープンソースリバースエンジニアリングフレームワークで達成できます。このガイドではこれらのフリーツールやフレームワークの多くの使用例を紹介します。
 
 #### 商用ツール
 
