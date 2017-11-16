@@ -102,7 +102,7 @@ JEB <sup>[15]</sup> は商用の逆コンパイラです。Android アプリの�
 
 ##### IDA Pro
 
-IDA Pro <sup>[16]</sup> understands ARM, MIPS and of course Intel ELF binaries, plus it can deal with Java bytecode. It also comes with debuggers for both Java applications and native processes. With its capable disassembler and powerful scripting and extension capabilities, IDA Pro works great for static analysis of native programs and libraries. However, the static analysis facilities it offers for Java code are somewhat basic – you get the Smali disassembly but not much more. There’s no navigating the package and class structure, and some things (such as renaming classes) can’t be done which can make working with more complex Java apps a bit tedious.
+IDA Pro <sup>[16]</sup> は ARM, MIPS, そしてもちろん Intel の ELF バイナリを理解し、Java バイトコードも処理できます。Java アプリケーションとネイティブプロセスの両方のデバッガも付属しています。有能な逆アセンブラと強力なスクリプティングと拡張機能を備えているため、IDA Pro はネイティブプログラムやライブラリの静的解析に最適です。しかし、Java コード用に提供されている静的解析機能は若干基本的なものです。Smali 逆アセンブリが得られるに過ぎません。パッケージやクラス構造をナビゲートすることはできません。一部のこと (クラスの名前変更など) はできません。より複雑な Java アプリでの作業は少し面倒になります。
 
 ### リバースエンジニアリング
 
