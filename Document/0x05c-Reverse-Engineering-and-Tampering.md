@@ -106,7 +106,7 @@ IDA Pro <sup>[16]</sup> は ARM, MIPS, そしてもちろん Intel の ELF バ�
 
 ### リバースエンジニアリング
 
-Reverse engineering is the process of taking an app apart to find out how it works. You can do this by examining the compiled app (static analysis), observing the app during runtime (dynamic analysis), or a combination of both. 
+リバースエンジニアリングはアプリがどのように動作するか調べるためにアプリを分解するプロセスです。コンパイルされたアプリを調査したり (静的解析) 、実行中にアプリを観察したり (動的解析) 、その両方を組み合わせたりすることで、これを行うことができます。
 
 #### Java コードの静的解析
 
