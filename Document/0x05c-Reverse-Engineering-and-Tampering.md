@@ -110,7 +110,7 @@ IDA Pro <sup>[16]</sup> は ARM, MIPS, そしてもちろん Intel の ELF バ�
 
 #### Java コードの静的解析
 
-Unless some nasty, tool-breaking anti-decompilation tricks have been applied, Java bytecode can be converted back into source code without too many problems. We'll be using UnCrackable App for Android Level 1 in the following examples, so download it if you haven't already. First, let's install the app on a device or emulator and run it to see what the crackme is about.
+一部の厄介な、ツール回避のアンチデコンパイルトリックが適用されていない限り、Java バイトコードはそれほどの問題もなくソースコードに逆変換できます。UnCrackable App for Android Level 1 を以下の例で使用しますので、まだダウンロードしていない場合はダウンロードします。まず、デバイスかエミュレータにアプリをインストールします。実行して crackme についての内容を確認します。
 
 ```
 $ wget https://github.com/OWASP/owasp-mstg/raw/master/Crackmes/Android/Level_01/UnCrackable-Level1.apk
@@ -121,9 +121,9 @@ $ adb install UnCrackable-Level1.apk
 <img src="Images/Chapters/0x05c/crackme-2.jpg" width="350px"/>
 
 
-Seems like we're expected to find some kind of secret code!
+なんらかの秘密のコードが見つかることを期待しています。
 
-Most likely, we're looking for a secret string stored somewhere inside the app, so the next logical step is to take a look inside. First, unzip the APK file and have a look at the content.
+おそらく、アプリ内のどこかに格納された秘密の文字列を探しています。そのため、次の論理的なステップは内部を見て回ることです。まず、APK ファイルを展開して内容を確認します。
 
 ```
 $ unzip UnCrackable-Level1.apk -d UnCrackable-Level1
@@ -144,11 +144,11 @@ Archive:  UnCrackable-Level1.apk
 
 ```
 
-In the standard case, all the Java bytecode and data related to the app is contained in a file named <code>classes.dex</code> in the app root directory. This file adheres to the Dalvik Executable Format (DEX), an Android-specific way of packaging Java programs. Most Java decompilers expect plain class files or JARs as input, so you need to convert the classes.dex file into a JAR first. This can be done using <code>dex2jar</code> or <code>enjarify</code>.
+基本的には、アプリに関連するすべての Java バイトコードとデータはアプリのルートディレクトリの <code>classes.dex</code> という名前のファイルに含まれています。このファイルは Dalvik Executable Format (DEX) に準拠しています。これは Java プログラムをパッケージ化する Android 固有の方法です。ほとんどの Java 逆コンパイラはプレーンクラスのファイルまたは JAR が入力として使用されるため、はじめに classes.dex ファイルを JAR に変換する必要があります。これは <code>dex2jar</code> または <code>enjarify</code> を使用して行うことができます。
 
-Once you have a JAR file, you can use any number of free decompilers to produce Java code. In this example, we'll use CFR as our decompiler of choice. CFR is under active development, and brand-new releases are made available regularly on the author's website <sup>[6]</sup>. Conveniently, CFR has been released under a MIT license, which means that it can be used freely for any purposes, even though its source code is not currently available.
+JAR ファイルを作成したら、数多くあるフリーの逆コンパイラを使用して Java コードを作成できます。この例では、CFR を逆コンパイラとして選択して使用します。CFR は積極的に開発されており、新作のリリースは作成者のウェブサイトで定期的に公開されています <sup>[6]</sup> 。都合の良いことに、CFR は MIT ライセンスの下でリリースされています。つまり、ソースコードは現在入手できませんが、目的に応じて自由に使用できます。
 
-The easiest way to run CFR is through <code>apkx</code>, which also packages <code>dex2jar</code> and automates the extracting, conversion and decompilation steps. Install it as follows:
+CFR を実行する最も簡単な方法は <code>apkx</code> を介することです。これは <code>dex2jar</code> をパッケージ化し、抽出、変換、逆コンパイルの手順を自動化します。以下のようにインストールします。
 
 ```
 $ git clone https://github.com/b-mueller/apkx
