@@ -156,7 +156,7 @@ $ cd apkx
 $ sudo ./install.sh
 ```
 
-This should copy <code>apkx</code> to <code>/usr/local/bin</code>. Run it on <code>UnCrackable-Level1.apk</code>:
+これは <code>apkx</code> を <code>/usr/local/bin</code> にコピーする必要があります。<code>UnCrackable-Level1.apk</code> で実行します。
 
 ```bash
 $ apkx UnCrackable-Level1.apk
@@ -166,39 +166,39 @@ dex2jar UnCrackable-Level1/classes.dex -> UnCrackable-Level1/classes.jar
 Decompiling to UnCrackable-Level1/src (cfr)
 ```
 
-You should now find the decompiled sources in the directory <code>Uncrackable-Level1/src</code>. To view the sources, a simple text editor (preferably with syntax highlighting) is fine, but loading the code into a Java IDE makes navigation easier. Let's import the code into IntelliJ, which also gets us on-device debugging functionality as a bonus.
+逆コンパイルされたソースはディレクトリ <code>Uncrackable-Level1/src</code> にあります。ソースを閲覧するには、シンプルなテキストエディタ (できれば構文を強調表示するもの) でもよいのですが、Java IDE にコードをロードするとナビゲーションが簡単になります。IntelliJ にコードをインポートしてみましょう。ボーナスとしてデバイス上でのデバッグ機能を得られます。
 
-Open IntelliJ and select "Android" as the project type in the left tab of the "New Project" dialog. Enter "Uncrackable1" as the application name and "vantagepoint.sg" as the company name. This results in the package name "sg.vantagepoint.uncrackable1", which matches the original package name. Using a matching package name is important if you want to attach the debugger to the running app later on, as Intellij uses the package name to identify the correct process.
+IntelliJ を開き、"New Project" ダイアログの左のタブでプロジェクトタイプとして "Android" を選択します。アプリケーション名として "Uncrackable1"、会社名として "vantagepoint.sg" と入力します。これによりパッケージ名 "sg.vantagepoint.uncrackable1" となり、元のパッケージ名と一致します。一致するパッケージ名を使用することが重要です。後で実行中のアプリにデバッガをアタッチする場合に、IntelliJ はパッケージ名を使用して正しいプロセスを識別するためです。
 
 <img src="Images/Chapters/0x05c/intellij_new_project.jpg" width="650px" />
 
-In the next dialog, pick any API number - we don't want to actually compile the project, so it really doesn't matter. Click "next" and choose "Add no Activity", then click "finish".
+次のダイアログでは、任意の API 番号を選択します。そのプロジェクトを実際にコンパイルしたいわけではないので、実際には問題ではありません。"next" をクリックし "Add no Activity" を選択してから "finish" をクリックします。
 
-Once the project is created, expand the "1: Project" view on the left and navigate to the folder <code>app/src/main/java</code>. Right-click and delete the default package "sg.vantagepoint.uncrackable1" created by IntelliJ.
+プロジェクトが作成されたら、左側の "1: Project" ビューを展開し、フォルダ <code>app/src/main/java</code> に移動します。IntelliJ により作成されたデフォルトパッケージ "sg.vantagepoint.uncrackable1" を右クリックして削除します。
 
 <img src="Images/Chapters/0x05c/delete_package.jpg" width="400px"/>
 
-Now, open the <code>Uncrackable-Level1/src</code> directory in a file browser and drag the <code>sg</code> directory into the now empty <code>Java</code> folder in the IntelliJ project view (hold the "alt" key to copy the folder instead of moving it).
+ここで、ファイルブラウザで <code>Uncrackable-Level1/src</code> ディレクトリを開き、<code>sg</code> ディレクトリを IntelliJ プロジェクトビューの現時点で空の <code>Java</code> フォルダにドラッグします (フォルダを移動する代わりにコピーするには "alt" キーを押します) 。
 
 <img src="Images/Chapters/0x05c/drag_code.jpg" width="700px" />
 
-You'll end up with a structure that resembles the original Android Studio project from which the app was built.
+アプリがビルドされた元の Android Studio プロジェクトに類似の構造にたどり着きます。
 
 <img src="Images/Chapters/0x05c/final_structure.jpg" width="400px"/>
 
-As soon as IntelliJ is done indexing the code, you can browse it just like any normal Java project. Note that many of the decompiled packages, classes and methods have weird one-letter names... this is because the bytecode has been "minified" with ProGuard at build time. This is a a basic type of obfuscation that makes the bytecode a bit more difficult to read, but with a fairly simple app like this one it won't cause you much of a headache - however, when analyzing a more complex app, it can get quite annoying.
+IntelliJ がコードのインデックスを作成すると、通常の Java プロジェクトと同様にブラウズできます。逆コンパイルされたパッケージ、クラス、メソッドの多くは奇妙な一文字の名前を持つことに注意します。これはビルド時に ProGuard で "minified" されたためです。これはバイトコードを読みにくくする難読化の基本的なものですが、このようなかなり単純なアプリでは頭を悩ませることはありません。しかし、複雑なアプリを解析する際には、かなり迷惑になることがあります。
 
-A good practice to follow when analyzing obfuscated code is to annotate names of classes, methods and other identifiers as you go along. Open the <code>MainActivity</code> class in the package <code>sg.vantagepoint.a</code>. The method <code>verify</code> is what's called when you tap on the "verify" button. This method passes the user input to a static method called <code>a.a</code>, which returns a boolean value. It seems plausible that <code>a.a</code> is responsible for verifying whether the text entered by the user is valid or not, so we'll start refactoring the code to reflect this.
+難読化されたコードを解析する際のグッドプラクティスは、確認のためにクラス、メソッド、その他の識別子の名前に注釈をつけることです。パッケージ <code>sg.vantagepoint.a</code> の <code>MainActivity</code> クラスを開きます。メソッド <code>verify</code> は "verify" ボタンをタップすると呼び出されるものです。このメソッドはユーザー入力をブール値を戻す <code>a.a</code> という静的メソッドに渡します。<code>a.a</code> はユーザーにより入力されたテキストが有効であるかどうかを検証することを担っていると思われるため、コードをリファクタリングしてこれを反映します。
 
 ![User Input Check](Images/Chapters/0x05c/check_input.jpg)
 
-Right-click the class name - the first <code>a</code> in <code>a.a</code> - and select Refactor->Rename from the drop-down menu (or press Shift-F6). Change the class name to something that makes more sense given what you know about the class so far. For example, you could call it "Validator" (you can always revise the name later as you learn more about the class). <code>a.a</code> now becomes <code>Validator.a</code>. Follow the same procedure to rename the static method <code>a</code> to <code>check_input</code>.
+クラス名 (<code>a.a</code> の最初の <code>a</code>) を右クリックし、ドロップダウンメニューから Refactor->Rename を選択します (または Shift-F6 を押します) 。これまでにそのクラスについて判ったことを考慮して、クラス名をより意味のあるものに変更します。例えば、"Validator" とします (後でクラスについてより詳しく知ったとき、その名前をいつでも変更できます) 。ここで <code>a.a</code> は <code>Validator.a</code> になります。同じ手順に従って、静的メソッド <code>a</code> の名前を <code>check_input</code> に変更します。
 
 ![Refactored class and method names](Images/Chapters/0x05c/refactored.jpg)
 
-Congratulations - you just learned the fundamentals of static analysis! It is all about theorizing, annotating, and gradually revising theories about the analyzed program, until you understand it completely - or at least, well enough for whatever you want to achieve.
+おめでとう。あなたは静的解析の基礎を学びました。解析されたプログラムについて理論化、注釈付け、および段階的に理論を改訂することがすべてです。あなたが完全にそれを理解するか、少なくとも十分に達成したと思うまで行います。
 
-Next, ctrl+click (or command+click on Mac) on the <code>check_input</code> method. This takes you to the method definition. The decompiled method looks as follows:
+次に、<code>check_input</code> メソッドで ctrl+クリック (Mac では command+クリック) します。メソッド定義に移動します。逆コンパイルされたメソッドは以下のようになります。
 
 ```java
     public static boolean check_input(String string) {
@@ -218,7 +218,7 @@ Next, ctrl+click (or command+click on Mac) on the <code>check_input</code> metho
     }
 ```
 
-So, we have a base64-encoded String that's passed to a function named <code>a</code> in the package <code>sg.vantagepoint.a.a</code> (again everything is called <code>a</code>) along with something that looks suspiciously like a hex-encoded encryption key (16 hex bytes = 128bit, a common key length). What exactly does this particular <code>a</code> do? Ctrl-click it to find out.
+そして、パッケージ <code>sg.vantagepoint.a.a</code> の <code>a</code> という名前の関数に渡される base64 エンコードされた String があります (ここでもすべてが <code>a</code> と呼ばれます) 。また、16進数にエンコードされた暗号化鍵のようなものがあります (16 hex bytes = 128bit, 共通鍵の長さ) 。この特定の <code>a</code> は正確には何をするでしょうか。Ctrl を押しながらクリックして調べます。
 
 ```java
 public class a {
@@ -231,9 +231,9 @@ public class a {
 }
 ```
 
-Now we are getting somewhere: It's simply standard AES-ECB. Looks like the base64 string stored in <code>arrby1</code> in <code>check_input</code> is a ciphertext, which is decrypted using 128bit AES, and then compared to the user input. As a bonus task, try to decrypt the extracted ciphertext and get the secret value!
+ここで大体出来上がりです。それは単に標準の AES-ECB です。<code>check_input</code> の <code>arrby1</code> に格納されている base64 文字列は、128bit AES を使用して復号された暗号文であり、ユーザー入力と比較されているようです。ボーナスタスクとして、抽出された暗号文を復号し、秘密の値を取得してみましょう。
 
-An alternative (and faster) way of getting the decrypted string is by adding a bit of dynamic analysis into the mix - we'll revisit UnCrackable Level 1 later to show how to do this, so don't delete the project yet!
+復号された文字列を取得する別の (そしてより速い) 方法は動的解析を少しミックスすることです。UnCrackable Level 1 を後ほど再考して、これを行う方法を示しますので、まだプロジェクトを削除しないでください。
 
 #### ネイティブコードの静的解析
 
