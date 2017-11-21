@@ -237,22 +237,22 @@ public class a {
 
 #### ネイティブコードの静的解析
 
-Dalvik and ART both support the Java Native Interface (JNI), which defines defines a way for Java code to interact with native code written in C/C++. Just like on other Linux-based operating systes, native code is packaged into ELF dynamic libraries ("*.so"), which are then loaded by the Android app during runtime using the <code>System.load</code> method.
+Dalvik と ART はどちらも Java Native Interface (JNI) をサポートしています。JNI は Java コードが C/C++ で書かれたネイティブコードとやりとりする方法を定義します。他の Linux ベースのオペレーティングシステムと同様に、ネイティブコードは ELF ダイナミックライブラリ ("*.so") にパッケージ化され、実行時に <code>System.load</code> メソッドを使用して Android アプリによりロードされます。
 
-Android JNI functions consist of native code compiled into Linux ELF libraries. It's pretty much standard Linux fare. However, instead of relying on widely used C libraries such as glibc, Android binaries are built against a custom libc named Bionic <sup>[17]</sup>. Bionic adds support for important Android-specific services such as system properties and logging, and is not fully POSIX-compatible.
+Android JNI 関数は Linux ELF ライブラリにコンパイルされたネイティブコードで構成されています。それは Linux でほぼ標準のものです。但し、glibc などの広く使われている C ライブラリに依存する代わりに、Bionic <sup>[17]</sup> という名前のカスタム libc に対して Android バイナリがビルドされます。Bionic はシステムプロパティやロギングなどの重要な Android 固有のサービスのサポートを追加します。完全な POSIX 互換ではありません。
 
-Download HelloWorld-JNI.apk from the OWASP MSTG repository and, optionally, install and run it on your emulator or Android device.
+OWASP MSTG リポジトリから HelloWorld-JNI.apk をダウンロードし、必要に応じて、エミュレーターまたは Android デバイスにインストールして実行します。
 
 ```bash
 $ wget HelloWord-JNI.apk
 $ adb install HelloWord-JNI.apk
 ```
 
-This app is not exactly spectacular: All it does is show a label with the text "Hello from C++". In fact, this is the default app Android generates when you create a new project with C/C++ support - enough however to show the basic principles of how JNI calls work.
+このアプリにまったく華々しさはありません。テキスト "Hello from C++" のラベルが表示されることがすべてです。実のところ、これは C/C++ サポートありで新しいプロジェクトを作成したときに Android Studio が生成するデフォルトアプリですが、JNI の呼び出し方法の基本的な原則を示すには十分です。
 
 <img src="Images/Chapters/0x05c/helloworld.jpg" width="300px" />
 
-Decompile the APK with <code>apkx</code>. This extract the source code into the <code>HelloWorld/src</code> directory.
+<code>apkx</code> で APK を逆コンパイルします。これはソースコードを <code>HelloWorld/src</code> ディレクトリに抽出します。
 
 ```bash
 $ wget https://github.com/OWASP/owasp-mstg/blob/master/OMTG-Files/03_Examples/01_Android/01_HelloWorld-JNI/HelloWord-JNI.apk
@@ -262,7 +262,7 @@ Converting: classes.dex -> classes.jar (dex2jar)
 dex2jar HelloWord-JNI/classes.dex -> HelloWord-JNI/classes.jar
 ```
 
-The MainActivity is found in the file <code>MainActivity.java</code>. The "Hello World" text view is populated in the <code>onCreate()</code> method:
+MainActivity はファイル <code>MainActivity.java</code> にあります。"Hello World" テキストビューは <code>onCreate()</code> メソッドで設定されています。
 
 ```java
 public class MainActivity
@@ -284,7 +284,7 @@ extends AppCompatActivity {
 }
 ```
 
-Note the declaration of <code>public native String stringFromJNI</code> at the bottom. The <code>native</code> keyword informs the Java compiler that the implementation for this method is provided in a native language. The corresponding function is resolved during runtime. Of course, this only works if a native library is loaded that exports a global symbol with the expected signature. This signature is composed of the package name, class name and method name. In our case for example, this means that the programmer must have implemented the following C or C++ function:
+下部にある <code>public native String stringFromJNI</code> の宣言に注目します。<code>native</code> キーワードはこのメソッドの実装がネイティブ言語で提供されていることを Java コンパイラに通知します。対応する関数は実行時に解決します。もちろん、これは期待されるシグネチャを持つグローバルシンボルをエクスポートするネイティブライブラリがロードされる場合にのみ機能します。このシグネチャはパッケージ名、クラス名、メソッド名で構成されます。この例の場合には、これはプログラマが以下の C または C++ 関数を実装する必要があることを意味します。
 
 ```c
 JNIEXPORT jstring JNICALL Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI(JNIEnv *env, jobject)
