@@ -290,54 +290,54 @@ extends AppCompatActivity {
 JNIEXPORT jstring JNICALL Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI(JNIEnv *env, jobject)
 ```
 
-So where is the native implementation of this function? If you look into the <code>lib</code> directory of the APK archive, you'll see a total of eight subdirectories named after different processor architectures. Each of this directories contains a version of the native library <code>libnative-lib.so</code>, compiled for the processor architecture in question. When <code>System.loadLibrary</code> is called, the loader selects the correct version based on what device the app is running on.
+では、この関数のネイティブ実装はどこにあるのでしょうか。APK アーカイブの <code>lib</code> ディレクトリを調べると、さまざまなプロセッサアーキテクチャの名前が付けられた合計8つのサブディレクトリが見つかります。これらの各ディレクトリには問いのプロセッサアーキテクチャ向けにコンパイルされたバージョンのネイティブライブラリ <code>libnative-lib.so</code> が含まれています。<code>System.loadLibrary</code> が呼び出されると、ローダーはアプリが実行されているデバイスに基づいて正しいバージョンを選択します。
 
 <img src="Images/Chapters/0x05c/archs.jpg" width="300px" />
 
-Following the naming convention mentioned above, we can expect the library to export a symbol named <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code>. On Linux systems, you can retrieve the list of symbols using <code>readelf</code> (included in GNU binutils) or <code>nm</code>. On Mac OS, the same can be achieved with the <code>greadelf</code> tool, which you can install via Macports or Homebrew. The following example uses <code>greadelf</code>:
+上記の命名規則に従い、ライブラリは <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code> という名前のシンボルをエクスポートすることが期待できます。Linux システムでは、<code>readelf</code> (GNU binutils に含まれる) または <code>nm</code> を使用してシンボルの一覧を取得できます。Mac OS では、Macports や Homebrew 経由でインストールできる <code>greadelf</code> ツールで同じことができます。以下の例では <code>greadelf</code> を使用しています。
 
 ```
 $ greadelf -W -s libnative-lib.so | grep Java
      3: 00004e49   112 FUNC    GLOBAL DEFAULT   11 Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI
 ```
 
-This is the native function that gets eventually executed when the <code>stringFromJNI</code> native method is called.
+これは <code>stringFromJNI</code> ネイティブメソッドが呼び出されたときに最終的に実行されるネイティブ関数です。
 
-To disassemble the code, you can load <code>libnative-lib.so</code> into any disassembler that understands ELF binaries (i.e. every disassembler in existence). If the app ships with binaries for different architectures, you can theoretically pick the architecture you're most familiar with, as long as the disassembler knows how to deal with it. Each version is compiled from the same source and implements exactly the same functionality. However, if you're planning to debug the library on a live device later, it's usually wise to pick an ARM build.
+コードを逆アセンブルするには、ELF バイナリを理解する逆アセンブラ (つまり、存在するすべての逆アセンブラ) に <code>libnative-lib.so</code> をロードします。アプリが異なるアーキテクチャのバイナリを同梱している場合には、逆アセンブラがその対処方法を知っている限り、最もよく知られているアーキテクチャを理論的に選択できます。各バージョンは同じソースからコンパイルされ、まったく同じ機能を実装します。なお、後で実デバイスでライブラリをデバッグする予定である場合には、通常は ARM ビルドを選択することをお勧めします。
 
-To support both older and newer ARM processors, Android apps ship with multple ARM builds compiled for different Application Binary Interface (ABI) versions. The ABI defines how the application's machine code is supposed to interact with the system at runtime. The following ABIs are supported:
+新旧両方の ARM プロセッサをサポートするために、Android アプリはさまざまな Application Binary Interface (ABI) バージョン用にコンパイルされた複数の ARM ビルドを同梱します。ABI はアプリケーションのマシンコードが実行時にシステムとやりとりする方法を定義します。以下の ABI がサポートされています。
 
-- armeabi: ABI is for ARM-based CPUs that support at least the ARMv5TE instruction set.
-- armeabi-v7a: This ABI extends armeabi to include several CPU instruction set extensions.
-- arm64-v8a: ABI for ARMv8-based CPUs that support AArch64, the new 64-bit ARM architecture.
+- armeabi: ABI は少なくとも ARMv5TE 命令セットをサポートする ARM ベースの CPU 用です。
+- armeabi-v7a: この ABI は armeabi を拡張して、いくつかの CPI 命令セット拡張を含みます。
+- arm64-v8a: 新しい 64 ビット ARM アーキテクチャである AArch64 をサポートする ARMv8 ベースの CPU 用 ABI です。
 
-Most disassemblers will be able to deal with any of those architectures. Below, we'll be viewing the <code>armeabi-v7a</code> version in IDA Pro. It is located in <code>lib/armeabi-v7a/libnative-lib.so</code>. If you don't own an IDA Pro license, you can do the same thing with demo or evaluation version available on the Hex-Rays website <sup>[13]</sup>.
+ほとんどの逆アセンブラはこれらのアーキテクチャのいずれにも対処できます。以下では、IDA Pro で <code>armeabi-v7a</code> バージョンを表示しています。これは <code>lib/armeabi-v7a/libnative-lib.so</code> にあります。IDA Pro のライセンスを所有していない場合、Hex-Rays のウェブサイト <sup>[13]</sup> で入手可能なデモ版や評価版でも同じことができます。
 
-Open the file in IDA Pro. In the "Load new file" dialog, choose "ELF for ARM (Shared Object)" as the file type (IDA should detect this automatically), and "ARM Little-Endian" as the processor type.
+IDA Pro でファイルを開きます。"Load new file" ダイアログで、ファイルタイプとして "ELF for ARM (Shared Object)" を (IDA はこれを自動的に検出します) 、プロセッサタイプとして "ARM Little-Endian" を選択します。
 
 <img src="Images/Chapters/0x05c/IDA_open_file.jpg" width="700px" />
 
-Once the file is open, click into the "Functions" window on the left and press <code>Alt+t</code> to open the search dialog. Enter "java" and hit enter. This should highlight the <code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code> function. Double-click it to jump to its address in the disassembly Window. "Ida View-A" should now show the disassembly of the function.
+ファイルが開いたら、左側の "Functions" ウィンドウをクリックし、<code>Alt+t</code> を押して検索ダイアログを開きます。"java" を入力して Enter キーを押します。<code>Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI</code> 関数がハイライトされているはずです。それをダブルクリックすると、逆アセンブリウィンドウのそのアドレスにジャンプします。"Ida View-A" にその関数の逆アセンブリが表示されるはずです。
 
 <img src="Images/Chapters/0x05c/helloworld_stringfromjni.jpg" width="700px" />
 
-Not a lot of code there, but let's analyze it. The first thing we need to know is that the first argument passed to every JNI is a JNI interface pointer. An interface pointer is a pointer to a pointer. This pointer points to a function table - an array of even more pointers, each of which points to a JNI interface function (is your head spinning yet?). The function table is initalized by the Java VM, and allows the native function to interact with the Java environment.
+コードは多くはありませんが、解析してみましょう。最初に知る必要があるのは、すべての JNI に渡される第一引数が JNI インタフェースポインタであることです。インタフェースポインタはポインタへのポインタです。このポインタは関数テーブルを指します。さらに多くのポインタの配列です。それぞれ JNI インタフェース関数を指しています (頭が混乱しますか？) 。関数テーブルは Java VM により初期化され、ネイティブ関数が Java 環境とやりとりできるようにします。
 
 <img src="Images/Chapters/0x05c/JNI_interface.png" width="700px" />
 
-With that in mind, let's have a look at each line of assembly code.
+これを念頭に置いて、アセンブリコードの各行を見てみましょう。
 
 ```
 LDR  R2, [R0]
 ```
 
-Remember - the first argument (located in R0) is a pointer to the JNI function table pointer. The <code>LDR</code> instruction loads this function table pointer into R2.
+思い出してください。第一引数 (R0 にあります) は JNI 関数テーブルポインタへのポインタです。<code>LDR</code> 命令はこの関数テーブルポインタを R2 にロードします。
 
 ```
 LDR  R1, =aHelloFromC
 ```
 
-This instruction loads the pc-relative offset of the string "Hello from C++" into R1. Note that this string is located directly after the end of the function block at offset 0xe84. The addressing relative to the program counter allows the code to run independent of its position in memory.
+この命令は文字列 "Hello from C++" の PC 相対オフセットを R1 にロードします。この文字列はオフセット 0xe84 の関数ブロックの終わりの直後に配置されています。プログラムカウンタに相対するアドレッシングにより、コードはメモリ内の位置とは無関係に実行できます。
 
 ```
 LDR.W  R2, [R2, #0x29C]
