@@ -365,9 +365,9 @@ BX   R2
 
 #### デバッグとトレース
 
-So far, we've been using static analysis techniques without ever running our target apps. In the real world - especially when reversing more complex apps or malware - you'll find that pure static analysis is very difficult. Observing and manipulating an app during runtime makes it much, much easier to decipher its behavior. Next, we'll have a look at dynamic analysis methods that help you do just that.
+これまで、ターゲットアプリを実行することなく静的解析技法を使用してきました。実世界では、特に複雑なアプリやマルウェアをリバースする際には、純粋な静的解析では非常に難しいことがわかります。実行中にアプリを観察し操作することで、その動作をより簡単に解読できます。次に、これを行うのに役立つ動的解析手法を見ていきます。
 
-Android apps support two different types of debugging: Java-runtime-level debugging using Java Debug Wire Protocol (JDWP) and Linux/Unix-style ptrace-based debugging on the native layer, both of which are valuable for reverse engineers.
+Android アプリは二つの異なるタイプのデバッグをサポートします。Java Debug Wire Protocol (JDWP) を使用する Java ランタイムレベルのデバッグと、ネイティブレイヤー上の Linux/Unix スタイルの ptrace ベースのデバッグで、両方ともリバースエンジニアにとって有益なものです。
 
 ##### Activating Developer Options
 
