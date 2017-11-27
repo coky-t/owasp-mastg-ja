@@ -343,25 +343,25 @@ LDR  R1, =aHelloFromC
 LDR.W  R2, [R2, #0x29C]
 ```
 
-This instruction loads the function pointer from offset 0x29C into the JNI function pointer table into R2. This happens to be the <code>NewStringUTF</code> function. You can look the list of function pointers in jni.h, which is included in the Android NDK. The function prototype looks as follows:
+この命令はオフセット 0x29C から関数ポインタを R2 の JNI 関数ポインタテーブルにロードします。これは <code>NewStringUTF</code> 関数になります。Android NDK に含まれている jni.h に関数ポインタの一覧があります。関数プロトタイプは以下のようになります。
 
 ```
 jstring     (*NewStringUTF)(JNIEnv*, const char*);
 ```
 
-The function expects two arguments: The JNIEnv pointer (already in R0) and a String pointer. Next, the current value of PC is added to R1, resulting in the absolute address of the static string "Hello from C++" (PC + offset).
+この関数は二つの引数を必要とします。JNIEnv ポインタ (すでに R0 にあります) と文字列ポインタです。次に、PC の現在値に R1 を加えられ、静的文字列 "Hello from C++" の絶対アドレスになります (PC + オフセット) 。
 
 ```
 ADD  R1, PC
 ```
 
-Finally, the program executes a branch instruction to the NewStringUTF function pointer loaded into R2:
+最後に、プログラムは R2 にロードされた NewStringUTF 関数ポインタへの分岐命令を実行します。
 
 ```
 BX   R2
 ```
 
-When this function returns, R0 contains a pointer to the newly constructed UTF string. This is the final return value, so R0 is left unchanged and the function ends.
+この関数が返るとき、R0 には新たに構築された UTF 文字列へのポインタが格納されています。これは最終的な戻り値なので、R0 は変更されず、関数は終了します。
 
 #### デバッグとトレース
 
