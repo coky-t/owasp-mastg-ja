@@ -375,11 +375,11 @@ Android 4.2 以降、「開発者オプション」サブメニューはデフ�
 
 ##### リリースアプリのデバッグ
 
-Dalvik and ART support the Java Debug Wire Protocol (JDWP), a protocol used for communication between the debugger and the Java virtual machine (VM) which it debugs. JDWP is a standard debugging protocol that is supported by all command line tools and Java IDEs, including JDB, JEB, IntelliJ and Eclipse. Android's implementation of JDWP also includes hooks for supporting extra features implemented by the Dalvik Debug Monitor Server (DDMS).
+Dalvik および ART は Java Debug Wire Protocol (JDWP) をサポートしています。これはデバッガとデバッグする Java 仮想マシン (VM) との間の通信に使用されるプロトコルです。JDWP は、JDB, JEB, IntelliJ, Eclipse などすべてのコマンドラインツールと Java IDE でサポートされている標準のデバッグプロトコルです。Android の JDWP の実装には Dalvik Debug Monitor Server (DDMS) によって実装された拡張機能をサポートするためのフックも含まれています。
 
-Using a JDWP debugger allows you to step through Java code, set breakpoints on Java methods, and inspect and modify local and instance variables. You'll be using a JDWP debugger most of the time when debugging "normal" Android apps that don't do a lot of calls into native libraries.
+JDWP デバッガを使用すると、Java コードのステップ実行、Java メソッドへのブレークポイント設定、ローカルおよびインスタンス変数の検査および変更が可能です。JDWP デバッガは、ネイティブライブラリの呼び出しをほとんどしない「通常」の Android アプリをデバッグする際に使用します。
 
-In the following section, we'll show how to solve UnCrackable App for Android Level 1 using JDB only. Note that this is not an *efficient* way to solve this crackme - you can do it much faster using Frida and other methods, which we'll introduce later in the guide. It serves however well an an introduction to the capabilities of the Java debugger.
+以下のセクションでは、JDB のみを使用して UnCrackable App for Android Level 1 を解決する方法を示します。これはこの crackme を解決するための *効率的* な方法ではないことに注意します。後ほどガイドで紹介する Frida や他の方法を使用するともっと速くできます。しかし、Java デバッガの機能の紹介としては十分果たしています。
 
 ###### Repackaging
 
