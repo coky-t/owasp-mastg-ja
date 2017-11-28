@@ -369,9 +369,9 @@ BX   R2
 
 Android アプリは二つの異なるタイプのデバッグをサポートします。Java Debug Wire Protocol (JDWP) を使用する Java ランタイムレベルのデバッグと、ネイティブレイヤー上の Linux/Unix スタイルの ptrace ベースのデバッグで、両方ともリバースエンジニアにとって有益なものです。
 
-##### Activating Developer Options
+##### 開発者オプションの有効化
 
-Since Android 4.2, the "Developer options" submenu is hidden by default in the Settings app. To activate it, you need to tap the "Build number" section of the "About phone" view 7 times. Note that the location of the build number field can vary slightly on different devices - for example, on LG Phones, it is found under "About phone > Software information" instead. Once you have done this, "Developer options" will be shown at bottom of the Settings menu. Once developer options are activated, debugging can be enabled with the "USB debugging" switch.
+Android 4.2 以降、「開発者オプション」サブメニューはデフォルトでは設定アプリに表示されません。それを有効にするには、"About phone" ビューの "Build number" セクションを7回タップする必要があります。ビルド番号フィールドの位置はデバイスによって異なる場合があることに注意します。例えば、LG Phone の場合、"About phone > Software information" にあります。これを済ませると、「開発者オプション」は設定メニューの下部に表示されます。開発者オプションが有効になると、「USB デバッグ」スイッチでデバッグを有効にできます。
 
 ##### リリースアプリのデバッグ
 
