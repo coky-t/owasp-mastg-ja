@@ -381,11 +381,11 @@ JDWP デバッガを使用すると、Java コードのステップ実行、Java
 
 以下のセクションでは、JDB のみを使用して UnCrackable App for Android Level 1 を解決する方法を示します。これはこの crackme を解決するための *効率的* な方法ではないことに注意します。後ほどガイドで紹介する Frida や他の方法を使用するともっと速くできます。しかし、Java デバッガの機能の紹介としては十分果たしています。
 
-###### Repackaging
+###### 再パッケージ化
 
-Every debugger-enabled process runs an extra thread for handling JDWP protocol packets.  this thread is started only for apps that have the <code>android:debuggable="true"</code> tag set in their Manifest file's <code>&lt;application&gt;</code> element. This is typically the configuration on Android devices shipped to end users.
+すべてのデバッガ対応プロセスは JDWP プロトコルパケットを処理するための拡張スレッドを実行します。このスレッドはマニフェストファイルの <code>&lt;application&gt;</code> 要素に <code>android:debuggable="true"</code> が設定されているアプリでのみ開始されます。これは一般的にエンドユーザーに出荷される Android デバイスの設定です。
 
-When reverse engineering apps, you'll often only have access to the release build of the target app. Release builds are not meant to be debugged - after all, that's what *debug builds* are for. If the system property <code>ro.debuggable</code> set to "0", Android disallows both JDWP and native debugging of release builds, and although this is easy to bypass, you'll still likely encounter some limitations, such as a lack of line breakpoints. Nevertheless, even an imperfect debugger is still an invaluable tool - being able to inspect the runtime state of a program makes it *a lot* easier to understand what's going on.
+リバースエンジニアリングアプリを使用する際、ターゲットアプリのリリースビルドにのみアクセスできることがよくあります。リリースビルドはデバッグを目的としたものではありません。結局のところ、それは *デバッグビルド* が意図するものです。システムプロパティ <code>ro.debuggable</code> が "0" に設定されている場合、Android はリリースビルドの JDWP とネイティブデバッグの両方を禁止しています。これはバイパスが容易ですが、行のブレークポイントがないなど、まだいくつかの制限に遭遇するでしょう。それでも、不完全なデバッガでさえ非常に貴重なツールです。プログラムの実行時状態を検査できるため、何が起こっているのかを理解することが *とても* 容易になります。
 
 To "convert" a release build release into a debuggable build, you need to modify a flag in the app's Manifest file. This modification breaks the code signature, so you'll also have to re-sign the the altered APK archive.
 
