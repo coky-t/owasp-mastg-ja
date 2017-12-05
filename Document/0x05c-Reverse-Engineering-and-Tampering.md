@@ -387,11 +387,11 @@ JDWP デバッガを使用すると、Java コードのステップ実行、Java
 
 リバースエンジニアリングアプリを使用する際、ターゲットアプリのリリースビルドにのみアクセスできることがよくあります。リリースビルドはデバッグを目的としたものではありません。結局のところ、それは *デバッグビルド* が意図するものです。システムプロパティ <code>ro.debuggable</code> が "0" に設定されている場合、Android はリリースビルドの JDWP とネイティブデバッグの両方を禁止しています。これはバイパスが容易ですが、行のブレークポイントがないなど、まだいくつかの制限に遭遇するでしょう。それでも、不完全なデバッガでさえ非常に貴重なツールです。プログラムの実行時状態を検査できるため、何が起こっているのかを理解することが *とても* 容易になります。
 
-To "convert" a release build release into a debuggable build, you need to modify a flag in the app's Manifest file. This modification breaks the code signature, so you'll also have to re-sign the the altered APK archive.
+リリースビルドリリースをデバッグ可能なビルドに「変換」するには、アプリのマニフェストファイルのフラグを変更する必要があります。この変更によりコード署名が壊れるため、変更された APK アーカイブにも再署名する必要があります。
 
-To do this, you first need a code signing certificate. If you have built a project in Android Studio before, the IDE has already created a debug keystore and certificate in <code>$HOME/.android/debug.keystore</code>. The default password for this keystore is "android" and the key is named "androiddebugkey".
+これを行うには、まずコード署名証明書が必要です。以前に Android Studio でプロジェクトをビルドしていた場合、IDE はすでにデバッグキーストアと証明書を <code>$HOME/.android/debug.keystore</code> に作成しています。このキーストアのデフォルトパスワードは "android" で、鍵は "androiddebugkey" という名前です。
 
-The Java standard distibution includes <code>keytool</code> for managing keystores and certificates. You can create your own signing certificate and key and add it to the debug keystore as follows:
+Java 標準のディストリビューションにはキーストアと証明書を管理するための <code>keytool</code> が含まれています。独自の署名証明書と鍵を作成し、以下のようにデバッグキーストアに追加できます。
 
 ```
 $ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
