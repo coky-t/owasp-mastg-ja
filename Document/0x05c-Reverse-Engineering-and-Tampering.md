@@ -397,21 +397,21 @@ Java 標準のディストリビューションにはキーストアと証明書
 $ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
 ```
 
-With a certificate available, you can now repackage the app using the following steps. Note that the Android Studio build tools directory must be in path for this to work - it is located at <code>[SDK-Path]/build-tools/[version]</code>. The <code>zipalign</code> and <code>apksigner</code> tools are found in this directory. Repackage UnCrackable-Level1.apk as follows:
+証明書が利用可能になったので、以下の手順でアプリを再パッケージできます。Android Studio のビルドツールディレクトリは <code>[SDK-Path]/build-tools/[version]</code> にあります。<code>zipalign</code> と <code>apksigner</code> ツールがこのディレクトリにあります。UnCrackable-Level1.apk を以下のように再パッケージします。
 
-1. Use apktool to unpack the app and decode AndroidManifest.xml:
+1. apktool を使用してアプリをアンパックし、AndroidManifest.xml をデコードします。
 
 ```bash
 $ apktool d --no-src UnCrackable-Level1.apk
 ```
 
-2. Add android:debuggable = “true” to the manifest using a text editor:
+2. テキストエディタを使用してマニフェストに android:debuggable = "true" を追加します。
 
 ```xml
 <application android:allowBackup="true" android:debuggable="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.xxx.xxx.xxx" android:theme="@style/AppTheme">
 ```
 
-3. Repackage and sign the APK.
+3. APK を再パッケージして署名します。
 
 ```bash
 $ cd UnCrackable-Level1
@@ -421,14 +421,14 @@ $ cd ..
 $ apksigner sign --ks  ~/.android/debug.keystore --ks-key-alias signkey UnCrackable-Repackaged.apk
 ```
 
-Note: If you experience JRE compatibility issues with <code>apksigner</code>, you can use <code>jarsigner</code> instead. Note that in this case, <code>zipalign</code> is called *after* signing.
+注意：<code>apksigner</code> で JRE の互換性の問題が発生した場合は、代わりに <code>jarsigner</code> を使用できます。この場合、署名 *後* に <code>zipalign</code> を呼び出すことに注意します。
 
 ```bash
 $ jarsigner -verbose -keystore ~/.android/debug.keystore UnCrackable-Repackaged.apk signkey
 $ zipalign -v 4 dist/UnCrackable-Level1.apk ../UnCrackable-Repackaged.apk
 ```
 
-4. Reinstall the app:
+4. アプリを再インストールします。
 
 ```bash
 $ adb install UnCrackable-Repackaged.apk
