@@ -434,19 +434,19 @@ $ zipalign -v 4 dist/UnCrackable-Level1.apk ../UnCrackable-Repackaged.apk
 $ adb install UnCrackable-Repackaged.apk
 ```
 
-##### The 'Wait For Debugger' Feature
+##### 「デバッガを待機」機能
 
-UnCrackable App is not stupid: It notices that it has been run in debuggable mode and reacts by shutting down. A modal dialog is shown immediately and the crackme terminates once you tap the OK button.
+UnCrackable アプリは愚かではありません。デバッグ可能モードで実行されていることに気付き、シャットダウンに反応します。すぐにモーダルダイアログが表示され、OK ボタンをタップすると crackme が終了します。
 
-Fortunately, Android's Developer options contain the useful "Wait for Debugger" feature, which allows you to automatically suspend a selected app doing startup until a JDWP debugger connects. By using this feature, you can connect the debugger before the detection mechanism runs, and trace, debug and deactivate that mechanism. It's really an unfair advantage, but on the other hand, reverse engineers never play fair!
+幸いなことに、Android の開発者オプションには便利な「デバッガを待機」機能があり、JDWP デバッガが接続されるまで、起動している選択されたアプリを自動的に中断できます。この機能を使用すると、検出メカニズムが実行される前にデバッガを接続し、そのメカニズムをトレース、デバッグ、非アクティブ化を行うことができます。これは本当にアンフェアな利点ですが、一方で、リバースエンジニアはフェアにプレーする必要はありません。
 
 <img src="Images/Chapters/0x05c/debugger_detection.jpg" width="350px" />
 
-In the Developer Settings, pick <code>Uncrackable1</code> as the debugging application and activate the "Wait for Debugger" switch.
+開発者設定で、デバッグするアプリケーションとして <code>Uncrackable1</code> を選択し、「デバッガを待機」スイッチをアクティブにします。
 
 <img src="Images/Chapters/0x05c/developer-options.jpg" width="350px" />
 
-Note: Even with <code>ro.debuggable</code> set to 1 in <code>default.prop</code>, an app won't show up in the "debug app" list unless the <code>android:debuggable</code> flag is set to <code>true</code> in the Manifest.
+注意：<code>default.prop</code> で <code>ro.debuggable</code> を 1 に設定しても、マニフェストで <code>android:debuggable</code> フラグが <code>true</code> に設定されるまで、アプリは「デバッグアプリを選択」リストに現れません。
 
 ##### The Android Debug Bridge
 
