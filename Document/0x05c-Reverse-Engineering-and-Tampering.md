@@ -448,9 +448,9 @@ UnCrackable アプリは愚かではありません。デバッグ可能モー�
 
 注意：<code>default.prop</code> で <code>ro.debuggable</code> を 1 に設定しても、マニフェストで <code>android:debuggable</code> フラグが <code>true</code> に設定されるまで、アプリは「デバッグアプリを選択」リストに現れません。
 
-##### The Android Debug Bridge
+##### Android Debug Bridge
 
-The <code>adb</code> command line tool, which ships with the Android SDK, bridges the gap between your local development environment and a connected Android device. Commonly you'll debug apps on the emulator or on a device connected via USB. Use the <code>adb devices</code> command to list the currently connected devices.
+Android SDK に付属の <code>adb</code> コマンドラインツールはローカル開発環境と接続されている Android デバイスとの橋渡しをします。通常、エミュレータや USB 経由で接続されたデバイスでアプリをデバッグします。<code>adb devices</code> コマンドを使用して、現在接続されているデバイスを一覧表示します。
 
 ```bash
 $ adb devices
@@ -458,7 +458,7 @@ List of devices attached
 090c285c0b97f748  device
 ```
 
-The <code>adb jdwp</code> command lists the process ids of all debuggable processes running on the connected device (i.e., processes hosting a JDWP transport). With the <code>adb forward</code> command, you can open a listening socket on your host machine and forward TCP connections to this socket to the JDWP transport of a chosen process.
+<code>adb jdwp</code> コマンドは接続されたデバイス上で実行されているすべてのデバッグ可能なプロセス (つまり、JDWP トランスポートをホストしているプロセス) のプロセス ID を一覧表示します。<code>adb forward</code> コマンドを使用すると、ホストマシン上にリスニングソケットを開き、選択したプロセスの JDWP トランスポートにこのソケットの TCP 接続を転送できます。
 
 ```bash
 $ adb jdwp
@@ -466,7 +466,7 @@ $ adb jdwp
 $ adb forward tcp:7777 jdwp:12167
 ```
 
-We're now ready to attach JDB. Attaching the debugger however causes the app to resume, which is something we don't want. Rather, we'd like to keep it suspended so we can do some exploration first. To prevent the process from resuming, we pipe the <code>suspend</code> command into jdb:
+これで JDB をアタッチする準備ができました。デバッガをアタッチすると、アプリが再開しますが、これは我々が望むものではありません。むしろ、最初にいくつかの調査を行えるように、中断しておきたい。プロセスが再開しないように、<code>suspend</code> コマンドを jdb にパイプします。
 
 ```bash
 $ { echo "suspend"; cat; } | jdb -attach localhost:7777
@@ -476,19 +476,19 @@ Initializing jdb ...
 >
 ```
 
-We are now attached to the suspended process and ready to go ahead with jdb commands. Entering <code>?</code> prints the complete list of. Unfortunately, the Android VM doesn't support all available JDWP features. For example, the <code>redefine</code> command, which would let us redefine the code for a class - a potentially very useful feature - is not supported. Another important restriction is that line breakpoints won't work, because the release bytecode doesn't contain line information. Method breakpoints do work however. Useful commands that work include:
+中断したプロセスにアタッチされ、jdb コマンドを実行する準備ができました。<code>?</code> を入力すると、コマンドの完全なリストが表示されます。残念ながら、Android VM は利用可能なすべての JDWP 機能をサポートしてはいません。例えば、クラスのコードを再定義する <code>redefine</code> コマンドは、潜在的に非常に有用な機能ですが、サポートされていません。もうひとつの重要な制約は、行ブレークポイントが機能しないことです。これはリリースのバイトコードには行情報が含まれていないためです。しかし、メソッドブレークポイントは機能します。有用なコマンドには以下のものがあります。
 
-- classes: List all loaded classes
-- class / method / fields <class id>: Print details about a class and list its method and fields
-- locals: print local variables in current stack frame
-- print / dump <expr>: print information about an object
-- stop in <method>: set a method breakpoint
-- clear <method>: remove a method breakpoint
-- set <lvalue> = <expr>:  assign new value to field/variable/array element
+- classes: ロードされたすべてのクラスを一覧表示します
+- class / method / fields <class id>: クラスに関する情報を出力し、そのメソッドおよびフィールドを一覧表示します
+- locals: 現在のスタックフレームのローカル変数を表示します
+- print / dump <expr>: オブジェクトに関する情報を出力します
+- stop in <method>: メソッドブレークポイントを設定します
+- clear <method>: メソッドブレークポイントを削除します
+- set <lvalue> = <expr>:  フィールド、変数、配列要素に新しい値を代入します
 
-Let's revisit the decompiled code of UnCrackable App Level 1 and think about possible solutions. A good approach would be to suspend the app at a state where the secret string is stored in a variable in plain text so we can retrieve it. Unfortunately, we won't get that far unless we deal with the root / tampering detection first.
+逆コンパイルされた UnCrackable App Level 1 のコードをもう一度見て、可能な解決策について考えてみます。良いアプローチは秘密の文字列が変数に平文で格納された状態でアプリを一時停止し、それを取得することです。残念ながら、まずルート／改竄検出を処理しない限り、それは得られません。
 
-By reviewing the code, we can gather that the method <code>sg.vantagepoint.uncrackable1.MainActivity.a</code> is responsible for displaying the "This in unacceptable..." message box. This method hooks the "OK" button to a class that implements the <code>OnClickListener</code> interface. The <code>onClick</code> event handler on the "OK" button is what actually terminates the app. To prevent the user from simply cancelling the dialog, the <code>setCancelable</code> method is called.
+コードをレビューすることで、メソッド <code>sg.vantagepoint.uncrackable1.MainActivity.a</code> が "This in unacceptable..." メッセージボックスを表示する責任があることを取得します。このメソッドは "OK" ボタンを <code>OnClickListener</code> インタフェースを実装するクラスにフックします。"OK" ボタンの <code>onClick</code> イベントハンドラは実際にアプリを終了させるものです。ユーザーがダイアログを単にキャンセルすることを防ぐために、<code>setCancelable</code> メソッドが呼び出されます。
 
 ```java
   private void a(final String title) {
@@ -501,10 +501,10 @@ By reviewing the code, we can gather that the method <code>sg.vantagepoint.uncra
     }
 ```
 
-We can bypass this with a little runtime tampering. With the app still suspended, set a method breakpoint on <code>android.app.Dialog.setCancelable</code> and resume the app.
+少しのランタイム改竄でこれを回避できます。アプリがまだ停止した状態で、<code>android.app.Dialog.setCancelable</code> にメソッドブレークポイントを設定してアプリを再開します。
 
 ```
-> stop in android.app.Dialog.setCancelable                        
+> stop in android.app.Dialog.setCancelable
 Set breakpoint android.app.Dialog.setCancelable
 > resume
 All threads resumed.
@@ -513,7 +513,7 @@ Breakpoint hit: "thread=main", android.app.Dialog.setCancelable(), line=1,110 bc
 main[1]
 ```
 
-The app is now suspended at the first instruction of the <code>setCancelable</code> method. You can print the arguments passed to <code>setCancelable</code> using the <code>locals</code> command (note that the arguments are incorrectly shown under "local variables").
+アプリは <code>setCancelable</code> メソッドの最初の命令で一時停止されます。<code>locals</code> コマンドを使用して <code>setCancelable</code> に渡される引数を出力できます (引数は "local variables" に誤って表示されることに注意します) 。
 
 ```
 main[1] locals
