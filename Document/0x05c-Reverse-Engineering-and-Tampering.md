@@ -522,7 +522,7 @@ Local variables:
 flag = true
 ```
 
-In this case, <code>setCancelable(true)</code> was called, so this can't be the call we're looking for. Resume the process using the <code>resume</code> command.
+この場合、<code>setCancelable(true)</code> が呼び出されるため、これは私たちが探している呼び出しには当てはまりません。<code>resume</code> コマンドを使用してプロセスを再開します。
 
 ```
 main[1] resume
@@ -531,7 +531,7 @@ main[1] locals
 flag = false
 ```
 
-We've now hit a call to <code>setCancelable</code> with the argument <code>false</code>. Set the variable to <code>true</code> with the <code>set</code> command and resume.
+引数 <code>false</code> での <code>setCancelable</code> の呼び出しにヒットしました。<code>set</code> コマンドで変数に <code>true</code> を設定し、再開します。
 
 ```
 main[1] set flag = true
@@ -539,9 +539,9 @@ main[1] set flag = true
 main[1] resume
 ```
 
-Repeat this process, setting <code>flag</code> to <code>true</code> each time the breakpoint is hit, until the alert box is finally displayed (the breakpoint will hit 5 or 6 times). The alert box should now be cancelable! Tap anywhere next to the box and it will close without terminating the app.
+このプロセスを繰り返します。アラートボックスが最終的に表示されるまで、ブレークポイントにヒットするたびに <code>flag</code> に <code>true</code> を設定します (ブレークポイントは 5 ～ 6 回ヒットします) 。アラートボックスがキャンセルできるようになりました。ボックスの隣の任意の場所をタップすると、アプリを終了することなく閉じます。
 
-Now that the anti-tampering is out of the way we're ready to extract the secret string! In the "static analysis" section, we saw that the string is decrypted using AES, and then compared with the string entered into the messagebox. The method <code>equals</code> of the <code>java.lang.String</code> class is used to compare the input string with the secret. Set a method breakpoint on <code>java.lang.String.equals</code>, enter any text into the edit field, and tap the "verify" button. Once the breakpoint hits, you can read the method argument with the using the <code>locals</code> command.
+ここでは改竄防止は秘密の文字列を抽出する準備の妨げにはなりません。「静的解析」セクションでは、文字列は AES を使用して解読され、次にメッセージボックスに入力された文字列と比較されることがわかりました。<code>java.lang.String</code> クラスのメソッド <code>equals</code> は入力文字列と秘密の文字列を比較するために使用されます。<code>java.lang.String.equals</code> にメソッドブレークポイントを設定し、エディットフィールドにテキストを入力して、"verify" ボタンをタップします。ブレークポイントがヒットしたら、<code>locals</code> コマンドを使用してメソッド引数を読むことができます。
 
 ```
 > stop in java.lang.String.equals
@@ -564,7 +564,7 @@ other = "I want to believe"
 main[1] cont     
 ```
 
-This is the plaintext string we are looking for!
+これが探していた平文の文字列です。
 
 ###### IDEを使用したデバッグ
 
