@@ -568,7 +568,7 @@ main[1] cont
 
 ###### IDEを使用したデバッグ
 
-A pretty neat trick is setting up a project in an IDE with the decompiled sources, which allows you to set method breakpoints directly in the source code. In most cases, you should be able single-step through the app, and inspect the state of variables through the GUI. The experience won't be perfect - it's not the original source code after all, so you can't set line breakpoints and sometimes things will simply not work correctly. Then again, reversing code is never easy, and being able to efficiently navigate and debug plain old Java code is a pretty convenient way of doing it, so it's usually worth giving it a shot. A similar method has been described in the NetSPI blog <sup>[18]</sup>.
+とてもきれいなやり方は逆コンパイルされたソースで IDE のプロジェクトを設定することです。ソースコードに直接メソッドブレークポイントを設定できます。ほとんどの場合、アプリをシングルステップ実行し、GUI を介して変数の状態を調べることができます。これは完全ではありません。結局のところ、オリジナルのソースコードではないため、行ブレークポイントは設定できませんし、時には何かが正常に動作しないこともあります。また、コードをリバースすることは決して容易ではありませんが、普通の使い古された Java コードを効率的にナビゲートおよびデバッグできることは非常に便利な方法ですので、通常これを実行する価値があります。同様の方法が NetSPI blog <sup>[18]</sup> に掲載されています。
 
 In order to debug an app from the decompiled source code, you should first create your Android project and copy the decompiled java sources into the source folder as described above at "Statically Analyzing Java Code" part. Set the debug app (in this tutorial it is Uncrackable1) and make sure you turned on "Wait For Deugger" switch from "Developer Options".
 
