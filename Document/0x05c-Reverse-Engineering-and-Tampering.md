@@ -570,23 +570,23 @@ main[1] cont
 
 とてもきれいなやり方は逆コンパイルされたソースで IDE のプロジェクトを設定することです。ソースコードに直接メソッドブレークポイントを設定できます。ほとんどの場合、アプリをシングルステップ実行し、GUI を介して変数の状態を調べることができます。これは完全ではありません。結局のところ、オリジナルのソースコードではないため、行ブレークポイントは設定できませんし、時には何かが正常に動作しないこともあります。また、コードをリバースすることは決して容易ではありませんが、普通の使い古された Java コードを効率的にナビゲートおよびデバッグできることは非常に便利な方法ですので、通常これを実行する価値があります。同様の方法が NetSPI blog <sup>[18]</sup> に掲載されています。
 
-In order to debug an app from the decompiled source code, you should first create your Android project and copy the decompiled java sources into the source folder as described above at "Statically Analyzing Java Code" part. Set the debug app (in this tutorial it is Uncrackable1) and make sure you turned on "Wait For Deugger" switch from "Developer Options".
+逆コンパイルされたソースコードからアプリをデバッグするには、上記の "Statically Analyzing Java Code" の部分で説明されているように、まず Android プロジェクトを作成し、逆コンパイルされた Java ソースをソースフォルダにコピーする必要があります。デバッグアプリ (このチュートリアルでは Uncrackable1 ) を設定し、「開発者オプション」から「デバッガを待機」スイッチをオンにしたことを確認します。
 
-Once you tap the Uncrackable app icon from the launcher, it will get suspended in "wait for a debugger" mode.
+ランチャーから Uncrackable アプリアイコンをタップすると、「デバッガを待機」モードで一時停止します。
 
 <img src="Images/Chapters/0x05c/waitfordebugger.png" width="350px" />
 
-Now you can set breakpoints and attach to the Uncrackable1 app process using the "Attach Debugger" button on the toolbar.
+ここで、ブレークポイントの設定と、ツールバーの "Attach Debugger" ボタンを使用して、Uncrackable1 アプリプロセスにアタッチできます。
 
 <img src="Images/Chapters/0x05c/set_breakpoint_and_attach_debugger.png" width="700px" />
 
-Note that only method breakpoints work when debugging an app from decompiled sources. Once a method breakpoint is hit, you will get the chance to single step throughout the method execution. 
+逆コンパイルされたソースからアプリをデバッグするときは、メソッドブレークポイントだけが動作することに注意します。メソッドブレークポイントがヒットすると、メソッドの実行中にシングルステップで実行できます。
 
 <img src="Images/Chapters/0x05c/Choose_Process.png" width="300px" />
 
-After you choose the Uncrackable1 application from the list, the debugger will attach to the app process and you will hit the breakpoint that was set on the <code>onCreate()</code> method. Uncrackable1 app triggers anti-debugging and anti-tampering controls within the <code>onCreate()</code> method. That's why it is a good idea to set a breakpoint on the <code>onCreate()</code> method just before the anti-tampering and anti-debugging checks performed.
+リストから Uncrackable1 アプリケーションを選択すると、デバッガはアプリプロセスにアタッチし、<code>onCreate()</code> メソッドに設定されたブレークポイントにヒットします。Uncrackable1 アプリは <code>onCreate()</code> メソッド内でアンチデバッグおよび改竄防止コントロールをトリガーします。そのため、改竄防止およびアンチデバッグのチェックが行われる直前の <code>onCreate()</code> メソッドにブレークポイントを設定することをお勧めします。
 
-Next, we will single-step through the <code>onCreate()</code> method by clicking the "Force Step Into" button on the Debugger view. The "Force Step Into" option allows you to debug the Android framework functions and core Java classes that are normally ignored by debuggers. 
+次に、デバッガビューで "Force Step Into" ボタンをクリックして、<code>onCreate()</code> メソッドをシングルステップ実行します。"Force Step Into" オプションは、通常ではデバッガにより無視される、Android フレームワーク関数とコア Java クラスをデバッグできます。
 
 <img src="Images/Chapters/0x05c/Force_Step_Into.png" width="700px" />
 
