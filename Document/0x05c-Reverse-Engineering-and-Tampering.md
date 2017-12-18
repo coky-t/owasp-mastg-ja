@@ -590,47 +590,47 @@ main[1] cont
 
 <img src="Images/Chapters/0x05c/Force_Step_Into.png" width="700px" />
 
-Once you "Force Step Into", the debugger will stop at the beginning of the next method which is the <code>a()</code> method of class <code>sg.vantagepoint.a.c</code>.
+"Force Step Into" を実行すると、デバッガはクラス <code>sg.vantagepoint.a.c</code> の <code>a()</code> メソッドである次のメソッドの先頭で停止します。
 
 <img src="Images/Chapters/0x05c/fucntion_a_of_class_sg_vantagepoint_a.png" width="700px" />
 
-This method searches for "su" binary within well known directories. Since we are running the app on a rooted device/emulator we need to defeat this check by manipulating variables and/or function return values. 
+このメソッドは well known ディレクトリ内の "su" バイナリを検索します。私たちはルート化されたデバイスやエミュレータでアプリを実行しているため、変数や関数の戻り値を操作してこのチェックを無効にする必要があります。
 
 <img src="Images/Chapters/0x05c/variables.png" width="700px" />
 
-You can see the directory names inside the "Variables" window by stepping into the <code>a()</code> method and stepping through the method by clicking "Step Over" button in the Debugger view.
+<code>a()</code> メソッドにステップインすることにより、"Variables" ウィンドウ内にディレクトリ名を見ることができます。また、デバッガビューで "Step Over" することによりメソッドを通過します。
 
 <img src="Images/Chapters/0x05c/step_over.png" width="700px" />
 
-Step into the <code>System.getenv</code> method call y using the "Force Step Into" functionality.
+"Force Step Into" 機能を使用して、y を呼び出す <code>System.getenv</code> メソッドにステップインします。
 
-After you get the colon seperated directory names, the debugger cursor will return back to the beginning of <code>a()</code> method; not to the next executable line. This is just because we are working on the decompiled code insted of the original source code. So it is crucial for the analyst to follow the code flow while debugging decompiled applications. Othervise, it might get complicated to identify which line will be executed next.
+コロンで区切られたディレクトリ名を取得した後、デバッガカーソルは <code>a()</code> メソッドの先頭に戻ります。次の実行可能行ではありません。これはオリジナルのソースコードの代わりに逆コンパイルされたコードで作業しているためです。したがって、解析者は逆コンパイルされたアプリケーションをデバッグする際にコードフローに従うことが重要です。さもなくば、次に実行される行を特定することが困難になる可能性があります。
 
-If you don't want to debug core Java and Android classes, you can step out of the function by clicking "Step Out" button in the Debugger view. It might be a good approach to "Force Step Into" once you reach the decompiled sources and "Step Out" of the core Java and Android classes. This will help you to speed up your debugging while keeping eye on the return values of the core class functions.
+もしあなたがコアの Java や Android クラスをデバッグしたいと思わない場合は、デバッガビューの "Step Out" をクリックすることにより関数をステップアウトできます。逆コンパイルされたソースに到達したら "Force Step Into" し、コアな Java や Android クラスで "Step Out" することは良いアプローチかもしれません。これはコアクラス関数の戻り値に注目することでデバッグを高速化するのに役立ちます。
 
 <img src="Images/Chapters/0x05c/step_out.png" width="700px" />
 
-After it gets the directory names, <code>a()</code> method will search for the existence of the </code>su</code> binary within these directories. In order to defeat this control, you can modify the directory names (parent) or file name (child) at cycle which would otherwise detect the <code>su</code> binary on your device. You can modify the variable content by pressing F2 or Right-Click and "Set Value".
+ディレクトリ名を取得した後、<code>a()</code> メソッドはこれらのディレクトリ内で </code>su</code> バイナリの存在を検索します。このコントロールを無効にするには、デバイス上で <code>su</code> バイナリを検出するサイクルで、ディレクトリ名 (parent) またはファイル名 (child) を変更します。F2 を押すか、右クリックして "Set Value" で変数の内容を変更します。
 
 <img src="Images/Chapters/0x05c/set_value.png" width="700px" />
 
 <img src="Images/Chapters/0x05c/modified_binary_name.png" width="700px" />
 
-Once you modify the binary name or the directory name, <code>File.exists</code> should return <code>false</code>.
+バイナリ名またはディレクトリ名を変更すると、<code>File.exists</code> は <code>false</code> を返します。
 
 <img src="Images/Chapters/0x05c/file_exists_false.png" width="700px" />
 
-This defeats the first root detection control of Uncrackable App Level 1. The remaining anti-tampering and anti-debugging controls can be defeated in similar ways to finally reach secret string verification functionality. 
+これは Uncrackable App Level 1 の最初のルート検出コントロールを無効にします。残りの改竄防止およびアンチデバッグコントロールは同様の方法で無効にし、最終的に秘密の文字列検証機能に到達します。
 
 <img src="Images/Chapters/0x05c/anti_debug_anti_tamper_defeated.png" width="350px" />
 
 <img src="Images/Chapters/0x05c/MainActivity_verify.png" width="700px" />
 
-The secret code is verified by the method <code>a()</code> of class <code>sg.vantagepoint.uncrackable1.a</code>. Set a breakpoint on method <code>a()</code> and "Force Step Into" when you hit the breakpoint. Then, single-step until you reach the call to <code>String.equals</code>. This is where user supplied input is compared with the secret string. 
+秘密のコードはクラス <code>sg.vantagepoint.uncrackable1.a</code> のメソッド <code>a()</code> により検証されます。メソッド <code>a()</code> にブレークポイントを設定し、ブレークポイントにヒットしたら "Force Step Into" します。次に、<code>String.equals</code> の呼び出しに到達するまでシングルステップ実行します。これはユーザーが提供した入力と秘密の文字列を比較する箇所です。
 
 <img src="Images/Chapters/0x05c/sg_vantagepoint_uncrackable1_a_function_a.png" width="700px" />
 
-You can see the secret string in the "Variables" view at the time you reach the <code>String.equals</code> method call.
+<code>String.equals</code> メソッド呼び出しに到達した時点で、"Variables" ビューに秘密の文字列が表示されます。
 
 <img src="Images/Chapters/0x05c/secret_code.png" width="700px" />
 
