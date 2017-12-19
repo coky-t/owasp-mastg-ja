@@ -638,7 +638,7 @@ main[1] cont
 
 ##### ネイティブコードのデバッグ
 
-Native code on Android is packed into ELF shared libraries and runs just like any other native Linux program. Consequently, you can debug them using standard tools, including GDB and the built-in native debuggers of IDEs such as IDA Pro and JEB, as long as they support the processor architecture of the device (most devices are based on ARM chipsets, so this is usually not an issue).
+Android のネイティブコードは ELF 共有ライブラリにパックされ、他のネイティブ Linux プログラムと同様に動作します。したがって、標準ツールを使用してデバッグできます。GDB や IDE のビルトインネイティブデバッガ、IDA Pro や JEB などがあります。デバイスのプロセッサアーキテクチャをサポートしているものに限定されます (ほとんどのデバイスは ARM チップセットをベースとしているため、通常は問題ありません) 。
 
 We'll now set up our JNI demo app, HelloWorld-JNI.apk, for debugging. It's the same APK you downloaded in "Statically Analyzing Native Code". Use <code>adb install</code> to install it on your device or on an emulator.
 
