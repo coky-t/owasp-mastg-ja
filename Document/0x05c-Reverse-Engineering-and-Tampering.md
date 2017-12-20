@@ -640,19 +640,19 @@ main[1] cont
 
 Android のネイティブコードは ELF 共有ライブラリにパックされ、他のネイティブ Linux プログラムと同様に動作します。したがって、標準ツールを使用してデバッグできます。GDB や IDE のビルトインネイティブデバッガ、IDA Pro や JEB などがあります。デバイスのプロセッサアーキテクチャをサポートしているものに限定されます (ほとんどのデバイスは ARM チップセットをベースとしているため、通常は問題ありません) 。
 
-We'll now set up our JNI demo app, HelloWorld-JNI.apk, for debugging. It's the same APK you downloaded in "Statically Analyzing Native Code". Use <code>adb install</code> to install it on your device or on an emulator.
+デバッグを行うために JNI デモアプリ HelloWorld-JNI.apk をセットアップします。「ネイティブコードの静的解析」でダウンロードした APK と同じです。<code>adb install</code> を使用して、デバイスまたはエミュレータにインストールします。
 
 ```bash
 $ adb install HelloWorld-JNI.apk
 ```
 
-If you followed the instructions at the start of this chapter, you should already have the Android NDK. It contains prebuilt versions of gdbserver for various architectures. Copy the <code>gdbserver binary</code> to your device:
+この章の最初の手順に従っている場合には、すでに Android NDK があるはずです。さまざまなアーキテクチャ用にプレビルドされたバージョンの gdbserver が含まれています。<code>gdbserver binary</code> をデバイスにコピーします。
 
 ```bash
 $ adb push $NDK/prebuilt/android-arm/gdbserver/gdbserver /data/local/tmp
 ```
 
-The <code>gdbserver --attach&lt;comm&gt; &lt;pid&gt;</code> command causes gdbserver to attach to the running process and bind to the IP address and port specified in <code>comm</code>, which in our case is a <code>HOST:PORT</code> descriptor. Start HelloWorld-JNI on the device, then connect to the device and determine the PID of the HelloWorld process. Then, switch to the root user and attach <code>gdbserver</code> as follows.
+<code>gdbserver --attach&lt;comm&gt; &lt;pid&gt;</code> コマンドは gdbserver を実行中のプロセスにアタッチし、<code>comm</code> で指定された IP アドレスとポートにバインドします。この場合、<code>HOST:PORT</code> 記述子です。デバイスの HelloWorld-JNI を起動し、デバイスに接続して HelloWorld プロセスの PID を決定します。次に、root ユーザーに切り替えて、<code>gdbserver</code> を以下のようにアタッチします。
 
 ```bash
 $ adb shell
@@ -664,13 +664,13 @@ Attached; pid = 12690
 Listening on port 1234
 ```
 
-The process is now suspended, and <code>gdbserver</code> listening for debugging clients on port <code>1234</code>. With the device connected via USB, you can forward this port to a local port on the host using the <code>abd forward</code> command:
+プロセスは現在一時停止しており、<code>gdbserver</code> はクライアントをデバッグするためにポート <code>1234</code> で listen しています。デバイスが USB 経由で接続されている場合は、<code>adb forward</code> コマンドを使用して、このポートをホストのローカルポートに転送できます。
 
 ```bash
 $ adb forward tcp:1234 tcp:1234
 ```
 
-We'll now use the prebuilt version of <code>gdb</code> contained in the NDK toolchain (if you haven't already, follow the instructions above to install it). 
+NDK ツールチェーンに含まれているプレビルドバージョンの <code>gdb</code> を使用します (まだであれば、上述の手順に従ってインストールします) 。
 
 ```
 $ $TOOLCHAIN/bin/gdb libnative-lib.so
@@ -682,9 +682,9 @@ Remote debugging using :1234
 0xb6e0f124 in ?? ()
 ```
 
-We have successfully attached to the process! The only problem is that at this point, we're already too late to debug the JNI function <code>StringFromJNI()</code> as it only runs once at startup. We can again solve this problem by activating the "Wait for Debugger" option. Go to "Developer Options" -> "Select debug app" and pick HelloWorldJNI, then activate the "Wait for debugger" switch. Then, terminate and re-launch the app. It should be suspended automatically.
+プロセスへのアタッチに成功しました。唯一の問題は、JNI 関数 <code>StringFromJNI()</code> をデバッグするにはこの時点では遅すぎることです。この関数は起動時に一度しか実行されないためです。この問題を解決するには「デバッガの待機」オプションを有効にします。「開発者オプション」->「デバッグアプリの選択」に行き、HelloWorldJNI を選択してから、「デバッガの待機」スイッチを有効にします。その後、アプリを終了および再起動します。自動的に一時停止します。
 
-Our objective is to set a breakpoint at the start of the native function <code>Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()</code> before resuming the app. Unfortunately, this isn't possible at this early point in execution because <code>libnative-lib.so</code> isn't yet mapped into process memory - it is loaded dynamically during runtime. To get this working, we'll first use JDB to gently control the process into the state we need.
+目的はアプリを再開する前にネイティブ関数 <code>Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()</code> の最初にブレークポイントを設定することです。残念ながら、実行でのこの早い時点ではこれはできません。<code>libnative-lib.so</code> はまだプロセスメモリにマップされていないためです。これは実行時に動的にロードされます。これを実現するために、まず JDB を使用して、プロセスを必要な状態に穏やかに制御します。
 
 First, we resume execution of the Java VM by attaching JDB. We don't want the process to resume immediately though, so we pipe the <code>suspend</code> command into JDB as follows:
 
