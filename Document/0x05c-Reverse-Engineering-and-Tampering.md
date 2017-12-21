@@ -686,7 +686,7 @@ Remote debugging using :1234
 
 目的はアプリを再開する前にネイティブ関数 <code>Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()</code> の最初にブレークポイントを設定することです。残念ながら、実行でのこの早い時点ではこれはできません。<code>libnative-lib.so</code> はまだプロセスメモリにマップされていないためです。これは実行時に動的にロードされます。これを実現するために、まず JDB を使用して、プロセスを必要な状態に穏やかに制御します。
 
-First, we resume execution of the Java VM by attaching JDB. We don't want the process to resume immediately though, so we pipe the <code>suspend</code> command into JDB as follows:
+まず、JDB をアタッチすることにより Java VM の実行を再開します。しかし、プロセスをすぐに再開したいわけではないため、以下のように <code>suspend</code> コマンドを JDB にパイプします。
 
 ```bash
 $ adb jdwp
@@ -695,7 +695,7 @@ $ adb forward tcp:7777 jdwp:14342
 $ { echo "suspend"; cat; } | jdb -attach localhost:7777
 ```
 
-Next, we want to suspend the process at the point the Java runtime loads <code>libnative-lib.so</code>. In JDB, set a breakpoint on the <code>java.lang.System.loadLibrary()</code> method and resume the process. After the breakpoint has been hit, execute the <code>step up</code> command, which will resume the process until <code>loadLibrary()</code>returns. At this point, <code>libnative-lib.so</code> has been loaded.
+次に、Java ランタイムが <code>libnative-lib.so</code> をロードする時点でプロセスを一時停止します。JDB で <code>java.lang.System.loadLibrary()</code> メソッドにブレークポイントを設定し、プロセスを再開します。ブレークポイントにヒットした後、<code>step up</code> コマンドを実行します。これにより <code>loadLibrary()</code> が返るまでプロセスが再開します。この時点で、<code>libnative-lib.so</code> がロードされています。
 
 > stop in java.lang.System.loadLibrary
 > resume
@@ -709,7 +709,7 @@ Step completed: "thread=main", sg.vantagepoint.helloworldjni.MainActivity.<clini
 main[1]
 ```
 
-Execute <code>gdbserver</code> to attach to the suspended app. This will have the effect that the app is "double-suspended" by both the Java VM and the Linux kernel.
+<code>gdbserver</code> を実行して一時停止しているアプリにアタッチします。これにより Java VM と Linuxx カーネルの両方によりアプリが "double-suspended" するという効果があります。
 
 
 ```bash
