@@ -723,7 +723,7 @@ Remote debugging using :1234
 0xb6de83b8 in ?? ()
 ```
 
-Execute the <code>resume</code> command in JDB to resume execution of the Java runtime (we're done using JDB, so you can also detach it at this point). You can start exploring the process with GDB. The <code>info sharedlibrary</code> command displays the loaded libraries, which should include <code>libnative-lib.so</code>. The <code>info functions</code> command retrieves a list of all known functions. The JNI function <code>java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()</code> should be listed as a non-debugging symbol. Set a breakpoint at the address of that function and resume the process.
+JDB で <code>resume</code> コマンドを実行して Java ランタイムの実行を再開します (JDB を使用していますが、この時点でデタッチすることもできます) 。GDB でプロセスを探索することができます。<code>info sharedlibrary</code> コマンドはロードされたライブラリを表示します。それには <code>libnative-lib.so</code> が含まれています。<code>info functions</code> コマンドはすべての既知の関数のリストを取得します。JNI 関数 <code>java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI()</code> は非デバッグシンボルとしてリストされている必要があります。関数のアドレスにブレークポイントを設定し、プロセスを再開します。
 
 ```bash
 (gdb) info sharedlibrary
@@ -742,7 +742,7 @@ Breakpoint 1 at 0xa3522e78
 (gdb) cont
 ```
 
-Your breakpoint should be hit when the first instruction of the JNI function is executed. You can now display a disassembly of the function using the <code>disassemble</code> command.
+JNI 関数の最初の命令が実行されたときにブレークポイントがヒットします。<code>disassemble</code> コマンドを使用して、関数の逆アセンブリを表示できます。
 
 ```
 Breakpoint 1, 0xa3522e78 in Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI() from libnative-lib.so
@@ -758,7 +758,7 @@ Dump of assembler code for function Java_sg_vantagepoint_helloworldjni_MainActiv
 End of assembler dump.
 ```
 
-From here on, you can single-step through the program, print the contents of registers and memory, or tamper with them, to explore the inner workings of the JNI function (which, in this case, simply returns a string). Use the <code>help</code> command to get more information on debugging, running and examining data.
+ここから、プログラムをシングルステップ実行して、レジスタやメモリの内容を表示したり、それらを改竄して、JNI 関数の内部動作を調べます (このケースでは、単に文字列を返します) 。<code>help</code> コマンドを使用して、デバッグ、実行、およびデータの検査に関する詳細情報を取得します。
 
 ##### 実行トレース
 
