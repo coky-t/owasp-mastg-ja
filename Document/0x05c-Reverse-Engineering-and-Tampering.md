@@ -762,7 +762,7 @@ End of assembler dump.
 
 ##### 実行トレース
 
-Besides being useful for debugging, the JDB command line tool also offers basic execution tracing functionality. To trace an app right from the start we can pause the app using the Android "Wait for Debugger" feature or a <code>kill –STOP</code> command and attach JDB to set a deferred method breakpoint on an initialization method of our choice. Once the breakpoint hits, we activate method tracing with the <code>trace go methods</code> command and resume execution. JDB will dump all method entries and exits from that point on.
+デバッグに役立つだけでなく、JDB コマンドラインツールは基本的な実行トレース機能も提供します。アプリを最初から正しくトレースするには、Android の「デバッガを待機」機能または <code>kill –STOP</code> コマンドを使用してアプリを一時停止し、JDB をアタッチして、私たちが選択する初期化メソッドに遅延メソッドブレークポイントを設定します。このブレークポイントがヒットすると、<code>trace go methods</code> コマンドでメソッドトレースをアクティブにし、実行を再開します。JDB はすべてのメソッドのエントリをダンプして、その場所から出ます。
 
 ```bash
 $ adb forward tcp:7777 jdwp:7288
@@ -784,7 +784,7 @@ main[1] resume
 Method entered: All threads resumed.
 ```
 
-The Dalvik Debug Monitor Server (DDMS) a GUI tool included with Android Studio. At first glance it might not look like much, but make no mistake: Its Java method tracer is one of the most awesome tools you can have in your arsenal, and is indispensable for analyzing obfuscated bytecode.
+Dalvik Debug Monitor Server (DDMS) は Android Studio に付属する GUI ツールです。一見するとそれはらしくありませんが、間違えてはいけません。その Java メソッドトレーサーはあなたの武器として持つことができる最も素晴らしいツールのひとつであり、難読化されたバイトコードの解読には不可欠です。
 
 Using DDMS is a bit confusing however: It can be launched in several ways, and different trace viewers will be launched depending on how the trace was obtained. There’s a standalone tool called "Traceview" as well as a built-in viewer in Android Studio, both of which offer different ways of navigating the trace. You’ll usually want to use the viewer built into Android studio which gives you a nice, zoom-able hierarchical timeline of all method calls. The standalone tool however is also useful, as it has a profile panel that shows the time spent in each method, as well as the parents and children of each method.
 
