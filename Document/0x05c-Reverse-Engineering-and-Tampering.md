@@ -786,15 +786,15 @@ Method entered: All threads resumed.
 
 Dalvik Debug Monitor Server (DDMS) は Android Studio に付属する GUI ツールです。一見するとそれはらしくありませんが、間違えてはいけません。その Java メソッドトレーサーはあなたの武器として持つことができる最も素晴らしいツールのひとつであり、難読化されたバイトコードの解読には不可欠です。
 
-Using DDMS is a bit confusing however: It can be launched in several ways, and different trace viewers will be launched depending on how the trace was obtained. There’s a standalone tool called "Traceview" as well as a built-in viewer in Android Studio, both of which offer different ways of navigating the trace. You’ll usually want to use the viewer built into Android studio which gives you a nice, zoom-able hierarchical timeline of all method calls. The standalone tool however is also useful, as it has a profile panel that shows the time spent in each method, as well as the parents and children of each method.
+しかし、DDMS を使用するのはちょっと混乱します。これはいくつかの方法でき、トレースの取得方法に応じて異なるトレースビューアが起動されます。Android Studio には "Traceview" と呼ばれるスタンドアロンのツールとビルトインのビューアがあり、両方ともトレースをナビゲートするさまざまな方法があります。通常 Android Studio にビルトインされたビューアを使用したいと思うでしょう。すべてのメソッド呼び出しの素晴らしく、ズーム可能な階層的なタイムラインを与えます。しかし、スタンドアロンツールも便利です。それはプロファイルパネルを持っていて、各メソッドの消費時間だけでなく、各メソッドの親と子も表示します。
 
-To record an execution trace in Android studio, open the "Android" tab at the bottom of the GUI. Select the target process in the list and the click the little “stop watch” button on the left. This starts the recording. Once you are done, click the same button to stop the recording. The integrated trace view will open showing the recorded trace. You can scroll and zoom the timeline view using the mouse or trackpad.
+Android Studio で実行トレースを記録するには、GUI の下部にある "Android" タブを開きます。リスト内の対象プロセスを選択し、左の小さな「ストップウォッチ」ボタンをクリックします。これで記録を開始します。完了したら、同じボタンをクリックして記録を停止します。統合されたトレースビューが開き、記録されたトレースが表示されます。マウスやトラックパッドを使用してタイムラインビューをスクロールおよびズームできます。
 
-Alternatively, execution traces can also be recorded in the standalone Android Device Monitor. The Device Monitor can be started from within Android Studo (Tools -> Android -> Android Device Monitor) or from the shell with the <code>ddms</code> command.
+また、実行トレースはスタンドアロンの Android Device Monitor で記録することもできます。Device Monitor は Android Studio 内から起動する (Tools -> Android -> Android Device Monitor) ことも、<code>ddms</code> コマンドでシェルから起動することもできます。
 
-To start recording tracing information, select the target process in the "Devices" tab and click the “Start Method Profiling” button. Click the stop button to stop recording, after which the Traceview tool will open showing the recorded trace. An interesting feature of the standalone tool is the "profile" panel on the bottom, which shows an overview of the time spent in each method, as well as each method’s parents and children. Clicking any of the methods in the profile panel highlights the selected method in the timeline panel.
+トレース情報の記録を開始するには、"Devices" タブで対象のプロセスを選択して "Start Method Profiling" ボタンをクリックします。記録を停止するには停止ボタンをクリックします。その後、Traceview ツールを開き、記録されたトレースを表示します。スタンドアロンツールの主要な機能は下部の "profile" パネルです。各メソッドの消費時間の概要、および各メソッドの親と子を表示します。profile パネルで任意のメソッドをクリックすると、タイムラインパネルで選択したメソッドが強調表示されます。
 
-As an aside, DDMS also offers convenient heap dump button that will dump the Java heap of a process to a <code>.hprof</code> file. More information on Traceview can be found in the Android Studio user guide.
+また、DDMS は便利なヒープダンプボタンを提供します。これはプロセスの Java ヒープを <code>.hprof</code> ファイルにダンプします。Traceview の詳細については Android Studio user guide を参照ください。
 
 ###### システムコールのトレース
 
