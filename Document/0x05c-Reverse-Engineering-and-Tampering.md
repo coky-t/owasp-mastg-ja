@@ -810,9 +810,9 @@ $ while true; do pid=$(pgrep 'target_process' | head -1); if [[ -n "$pid" ]]; th
 
 ###### Ftrace
 
-Ftrace is a tracing utility built directly into the Linux kernel. On a rooted device, ftrace can be used to trace kernel system calls in a more transparent way than is possible with strace, which relies on the ptrace system call to attach to the target process.
+ftrace は Linux カーネルに直接組み込まれたトレースユーティリティです。ルート化デバイスでは、ftrace を使用して、strace で可能なよりも透過的な方法でカーネルシステムコールをトレースできます。strace は ptrace システムコールに依存して、対象プロセスにアタッチします。
 
-Conveniently, ftrace functionality is found in the stock Android kernel on both Lollipop and Marshmallow. It can be enabled with the following command:
+便利なことに、ftrace の機能は Lollipop と Marshmallow の両方で出荷された Android カーネルにあります。以下のコマンドで有効にできます。
 
 ```bash
 $ echo 1 > /proc/sys/kernel/ftrace_enabled
