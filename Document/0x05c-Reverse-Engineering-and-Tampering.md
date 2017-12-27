@@ -798,11 +798,11 @@ Android Studio で実行トレースを記録するには、GUI の下部にあ�
 
 ###### システムコールのトレース
 
-Moving down a level in the OS hierarchy, we arrive at privileged functions that require the powers of the Linux kernel. These functions are available to normal processes via the system call interface. Instrumenting and intercepting calls into the kernel is an effective method to get a rough idea of what a user process is doing, and is often the most efficient way to deactivate low-level tampering defenses.
+OS 階層のレベルを下がると、Linux カーネルの能力を必要とする特権的な機能に到達します。これらの機能はシステムコールインタフェースを介して通常のプロセスで利用できます。カーネルへの呼び出しの計装と傍受はユーザープロセスが何をしているかを大まかに知る有効な方法であり、低レベルの改竄防御を無効にする最も効率的な方法です。
 
-Strace is a standard Linux utility that is used to monitor interaction between processes and the kernel. The utility is not included with Android by default, but can be easily built from source using the Android NDK. This gives us a very convenient way of monitoring system calls of a process. Strace however depends on the <code>ptrace()</code> system call to attach to the target process, so it only works up to the point that anti-debugging measures kick in.
+strace は標準的な Linux ユーティリティで、プロセスとカーネルの間の相互作用を監視するために使用されます。このユーティリティはデフォルトで Android に含まれていませんが、Android NDK を使用してソースから簡単にビルドできます。これによりプロセスのシステムコールを監視する非常に便利な方法が得られます。しかし、strace は対象プロセスにアタッチする <code>ptrace()</code> システムコールに依存しているため、アンチデバッグ対策が開始されるところまでのみ動作します。
 
-As a side note, if the Android "stop application at startup: feature is unavailable we can use a shell script to make sure that strace attached immediately once the process is launched (not an elegant solution but it works):
+補足として、その Android が「起動時にアプリケーションを停止する」機能が利用できない場合、シェルスクリプトを使用して、プロセスが実行された直後に strace がアタッチするようにできます (上品な解決策ではありませんが動作はします) 。
 
 ```bash
 $ while true; do pid=$(pgrep 'target_process' | head -1); if [[ -n "$pid" ]]; then strace -s 2000 - e “!read” -ff -p "$pid"; break; fi; done
