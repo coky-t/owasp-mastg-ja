@@ -818,11 +818,11 @@ ftrace は Linux カーネルに直接組み込まれたトレースユーティ
 $ echo 1 > /proc/sys/kernel/ftrace_enabled
 ```
 
-The <code>/sys/kernel/debug/tracing</code> directory holds all control and output files and related to ftrace. The following files are found in this directory:
+<code>/sys/kernel/debug/tracing</code> ディレクトリは ftrace に関連するすべてのコントロールと出力ファイルを保持しています。このディレクトリには以下のファイルがあります。
 
-- available_tracers: This file lists the available tracers compiled into the kernel.
-- current_tracer: This file is used to set or display the current tracer.
-- tracing_on: Echo 1 into this file to allow/start update of the ring buffer. Echoing 0 will prevent further writes into the ring buffer.
+- available_tracers: このファイルはカーネル内にコンパイルされている利用可能なトレーサーをリストします。
+- current_tracer: このファイルは現在のトレーサーを設定または表示するために使用されます。
+- tracing_on: このファイルに 1 をエコーして、リングバッファの更新を許可・開始します。0 をエコーすると、リングバッファにそれ以上の書き込みを抑制します。
 
 ###### KProbes
 
