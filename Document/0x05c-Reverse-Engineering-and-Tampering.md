@@ -826,11 +826,11 @@ $ echo 1 > /proc/sys/kernel/ftrace_enabled
 
 ###### KProbes
 
-The KProbes interface provides us with an even more powerful way to instrument the kernel: It allows us to insert probes into (almost) arbitrary code addresses within kernel memory. Kprobes work by inserting a breakpoint instruction at the specified address. Once the breakpoint is hit, control passes to the Kprobes system, which then executes the handler function(s) defined by the user as well as the original instruction. Besides being great for function tracing, KProbes can be used to implement rootkit-like functionality such as file hiding.
+KProbes インタフェースはカーネルを計装するためのさらに強力な方法を提供します。カーネルメモリ内の (ほぼ) 任意のコードアドレスにプローブを挿入することができます。KProbes は指定されたアドレスにブレークポイント命令を挿入することによって動作します。ブレークポイントがヒットすると、コントロールは KProbes システムに渡され、元の命令と同様にユーザーにより定義されたハンドラ関数が実行されます。関数トレースに最適であるほか、KProbes はファイル隠蔽などのルートキット風機能を実装するために使用できます。
 
-Jprobes and Kretprobes are additional probe types based on Kprobes that allow hooking of function entries and exits.
+Jprobes と Kretprobes は KProbes をベースにした追加のプローブタイプであり、関数のエントリと終了をフックできます。
 
-Unfortunately, the stock Android kernel comes without loadable module support, which is a problem given that Kprobes are usually deployed as kernel modules. Another issue is that the Android kernel is compiled with strict memory protection which prevents patching some parts of Kernel memory. Using Elfmaster’s system call hooking method <sup>[16]</code> results in a Kernel panic on default Lolllipop and Marshmallow due to sys_call_table being non-writable. We can however use Kprobes on a sandbox by compiling our own, more lenient Kernel (more on this later).
+残念ながら、出荷された Android カーネルはロード可能モジュールのサポートなしで提供されます。これは KProbes が通常カーネルモジュールとして配置されるため問題です。別の問題は、Android カーネルが厳しいメモリ保護でコンパイルされることです。これはカーネルメモリの一部にパッチを当てることを防止します。Elfmaster のシステムコールフック手法 <sup>[16]</code> を使用すると、デフォルトの Lollipop と Marshmallow は sys_call_table が書き込み不可であるためカーネルパニックになります。しかし、私たちは独自のより穏やかなカーネルをコンパイルすることによりサンドボックス上で KProbes を使用できます (詳細は後述) 。
 
 ##### エミュレーションベースの解析
 
