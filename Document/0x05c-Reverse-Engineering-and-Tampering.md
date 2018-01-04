@@ -856,16 +856,16 @@ DroidScope は実際の Android デバイスのさまざまなコンテキスト
 
 ###### PANDA
 
-PANDA <sup>[21]</sup> is another QEMU-based dynamic analysis platform. Similar to DroidScope, PANDA can be extended by registering callbacks that are triggered upon certain QEMU events. The twist PANDA adds is its record/replay feature. This allows for an iterative workflow: The reverse engineer records an execution trace of some the target app (or some part of it) and then replays it over and over again, refining his analysis plugins with each iteration.
+PANDA <sup>[21]</sup> はもうひとつの QEMU ベースの動的解析プラットフォームです。DroidScope と同様に、PANDA は特定の QEMU イベントでトリガーされるコールバックを登録することで拡張できます。PANDA には記録/再生機能が追加されています。これにより反復的なワークフローが可能になります。リバースエンジニアはあるターゲットアプリ (またはその一部) の実行トレースを記録し、それを何度も繰り返し再生して、各反復での解析プラグインを洗練します。
 
-PANDA comes with some pre-made plugins, such as a stringsearch tool and a syscall tracer. Most importantly, it also supports Android guests and some of the DroidScope code has even been ported over. Building and running PANDA for Android (“PANDROID”) is relatively straightforward. To test it, clone Moiyx’s git repository and build PANDA as follows:
+PANDA は文字列検索ツールやシステムコールトレーサなど、既製のプラグインが付属しています。最も重要なことは、Android ゲストもサポートしており、DroidScope コードの一部がすでに移植されていることです。PANDA for Android ("PANDROID") のビルドと実行は比較的簡単です。これをテストするには、Moiyx の git リポジトリをクローンし、以下のように PANDA をビルドします。
 
 ~~~
 $ cd qemu
 $ ./configure --target-list=arm-softmmu --enable-android $ makee
 ~~~
 
-As of this writing, Android versions up to 4.4.1 run fine in PANDROID, but anything newer than that won’t boot. Also, the Java level introspection code only works on the specific Dalvik runtime of Android 2.3. Anyways, older versions of Android seem to run much faster in the emulator, so if you plan on using PANDA sticking with Gingerbread is probably best. For more information, check out the extensive documentation in the PANDA git repo.
+この執筆時点では、Android バージョン 4.4.1 までが PANDROID で正常に動作しますが、これより新しいものは起動しません。また、Java レベルのイントロスペクションコードは Android 2.3 の特定の Dalvik ランタイムでのみ動作します。とにかく、古いバージョンの Android はエミュレータ上でより高速に動作しているようですので、PANDA を使用することを計画しているのであれば、Gingerbread に固着しておくのがおそらく最適です。詳細については、PANDA git repo の豊富な毒めんとを参照ください。
 
 ##### VxStripper
 
