@@ -848,11 +848,11 @@ PANDA や DroidScope などの動的解析フレームワークは QEMU 上に�
 
 ###### DroidScope
 
-DroidScope - an extension to the DECAF dynamic analysis framework <sup>[20]</sup> - is a malware analysis engine based on QEMU. It adds instrumentation on several levels, making it possible to fully reconstruct the semantics on the hardware, Linux and Java level.
+DroidScope - DECAF 動的解析フレームワークの拡張 <sup>[20]</sup> - は QEMU をベースとしたマルウェア解析エンジンです。いくつかのレベルでの計装を追加します。ハードウェア、Linux、Java レベルでセマンティクスを完全に再構築できます。
 
-DroidScope exports instrumentation APIs that mirror the different context levels (hardware, OS and Java) of a real Android device. Analysis tools can use these APIs to query or set information and register callbacks for various events. For example, a plugin can register callbacks for native instruction start and end, memory reads and writes, register reads and writes, system calls or Java method calls.
+DroidScope は実際の Android デバイスのさまざまなコンテキストレベル (ハードウェア、OS、Java) を反映する計装 API をエクスポートします。解析ツールはこれらの API を使用して、情報を照会または設定し、さまざまなイベントのコールバックを登録できます。例えば、プラグインはネイティブ命令の開始と終了、メモリの読み書き、レジスタの読み書き、システムコールや Java メソッドコールに対してコールバックを登録できます。
 
-All of this makes it possible to build tracers that are practically transparent to the target application (as long as we can hide the fact it is running in an emulator). One limitation is that DroidScope is compatible with the Dalvik VM only.
+これによりターゲットアプリケーションに事実上透過であるトレーサーを作成することができます (エミュレータで実行されていることを隠すことができる限りにおいて) 。制限としては DroidScope が Dalvik VM とのみ互換性があることです。
 
 ###### PANDA
 
