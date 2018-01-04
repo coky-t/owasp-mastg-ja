@@ -842,9 +842,9 @@ Android エミュレータは QEMU のフォークであるため、モニタリ
 $ emulator -show-kernel -avd Nexus_4_API_19 -snapshot default-boot -no-snapshot-save -qemu -d in_asm,cpu 2>/tmp/qemu.log
 ```
 
-Unfortunately, it is not possible to generate a complete guest instruction trace with QEMU, because code blocks are written to the log only at the time they are translated – not when they’re taken from the cache. For example, if a block is repeatedly executed in a loop, only the first iteration will be printed to the log. There’s no way to disable TB caching in QEMU (save for hacking the source code). Even so, the functionality is sufficient for basic tasks, such as reconstructing the disassembly of a natively executed cryptographic algorithm.
+残念ながら、QEMU で完全なゲスト命令トレースを生成することはできません。コードブロックは変換されたときにのみログに書き込まれるためです。キャッシュから取得されたときではありません。例えば、ブロックがループで繰り返し実行される場合、最初の反復のみがログに出力されます。QEMU で TB キャッシュを無効にする方法はありません (ソースコードをハックして保存します) 。それでも、ネイティブに実行される暗号アルゴリズムの逆アセンブリを再構築するなど、基本的なタスクには機能は十分です。
 
-Dynamic analysis frameworks, such as PANDA and DroidScope, build on QEMU to provide more complete tracing functionality. PANDA/PANDROID is your best if you’re going for a CPU-trace based analysis, as it allows you to easily record and replay a full trace, and is relatively easy to set up if you follow the build instructions for Ubuntu.
+PANDA や DroidScope などの動的解析フレームワークは QEMU 上に構築され、より完全なトレース機能を提供します。PANDA/PANDROID は CPU トレースベースの解析を行う場合には最適です。完全なトレースを簡単に記録および再生できますし、Ubuntu のビルド手順に従えば比較的簡単にセットアップできます。
 
 ###### DroidScope
 
