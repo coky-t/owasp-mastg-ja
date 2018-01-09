@@ -869,7 +869,7 @@ $ ./configure --target-list=arm-softmmu --enable-android $ makee
 
 ##### VxStripper
 
-Another very useful tool built on QEMU is VxStripper by Sébastien Josse <sup>[22]</sup>. VXStripper is specifically designed for de-obfuscating binaries. By instrumenting QEMU's dynamic binary translation mechanisms, it dynamically extracts an intermediate representation of a binary. It then applies simplifications to the extracted intermediate representation, and recompiles the simplified binary using LLVM. This is a very powerful way of normalizing obfuscated programs. See Sébastien's paper <sup>[23]</sup> for more information.
+QEMU で構築されたもうひとつの有用なツールは Sébastien Josse の VxStripper <sup>[22]</sup> です。VXStripper はバイナリを逆難読化するために特別に設計されています。QEMU の動的バイナリ変換メカニズムを計装することにより、バイナリの中間表現を動的に抽出します。抽出された中間表現に簡略化を適用し、LLVM を使用して簡略化されたバイナリを再コンパイルします。これは難読化されたプログラムを正規化する非常に強力な方法です。詳細については Sébastien の論文 <sup>[23]</sup> を参照ください。
 
 ### 改竄と実行時計装
 
