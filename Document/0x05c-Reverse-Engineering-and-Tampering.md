@@ -877,12 +877,12 @@ QEMU で構築されたもうひとつの有用なツールは Sébastien Josse 
 
 #### パッチ適用と再パッケージ化
 
-Making small changes to the app Manifest or bytecode is often the quickest way to fix small annoyances that prevent you from testing or reverse engineering an app. On Android, two issues in particular pop up regularly:
+アプリのマニフェストやバイトコードに小さな変更を加えることは、アプリのテストやリバースエンジニアリングを妨げる小さな困りごとを修正する最も簡単な方法です。Android では、特に二つの問題が定期的に持ち上がります。
 
-1. You can't attach a debugger to the app because the android:debuggable flag is not set to true in the Manifest;
-2. You cannot intercept HTTPS traffic with a proxy because the app empoys SSL pinning.
+1. Manifest で android:debuggable フラグが true に設定されていないため、デバッガがアプリにアタッチできない。
+2. アプリが SSL ピンニングを使用しているため、プロキシで HTTPS トラフィックを傍受できない。
 
-In most cases, both issues can be fixed by making minor changes and re-packaging and re-signing the app (the exception are apps that run additional integrity checks beyond default Android code signing - in theses cases, you also have to patch out those additional checks as well).
+ほとんどの場合、いずれの問題も軽微な変更とアプリの再パッケージおよび再署名により解決できます (例外として、デフォルトの Android コード署名以外に追加の整合性チェックを実行するアプリがあります。この場合には、追加のチェックにも同様にパッチを当てる必要があります) 。
 
 ##### 事例: SSL ピンニングの無効化
 
