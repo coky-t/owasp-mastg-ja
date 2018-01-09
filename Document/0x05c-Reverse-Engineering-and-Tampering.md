@@ -873,7 +873,7 @@ QEMU で構築されたもうひとつの有用なツールは Sébastien Josse 
 
 ### 改竄と実行時計装
 
-First, we'll look at some simple ways of modifying and instrumenting mobile apps. *Tampering* means making patches or runtime changes to the app to affect its behavior - usually in a way that's to our advantage. For example, it could be desirable to deactivate SSL pinning or deactivate binary protections that hinder the testing process. *Runtime Instrumentation* encompasses adding hooks and runtime patches to observe the app's behavior. In mobile app-sec however, the term is used rather loosely to refer to all kinds runtime manipulation, including overriding methods to change behavior.
+まず、モバイルアプリの改変および計装の簡単な方法をいくつか見ていきます。*改竄* とは、アプリにパッチやランタイムの変更を加えて、通常私たちの利益となる方法で、その動作に影響を及ぼすことです。例えば、テストプロセスを阻む SSL ピンニングやバイナリ保護を無効にすることが望ましい場合があります。*実行時計装* は、フックおよびランタイムパッチを追加して、アプリの動作を観察することです。但し、モバイルアプリのセキュリティでは、この用語はメソッドをオーバーライドして動作を変更するなど、すべての種類のランタイム操作を参照するものとしてかなりゆるく使用されています。
 
 #### パッチ適用と再パッケージ化
 
