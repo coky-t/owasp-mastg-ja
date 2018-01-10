@@ -921,9 +921,9 @@ Smali ソースコードで証明書ピンニングチェックを見つける�
 
 #### Xposed で Java メソッドのフック
 
-Xposed is a "framework for modules that can change the behavior of the system and apps without touching any APKs" <sup>[24]</code>. Technically, it is an extended version of Zygote that exports APIs for running Java code when a new process is started. By running Java code in the context of the newly instantiated app, it is possible to resolve, hook and override Java methods belonging to the app. Xposed uses [reflection](https://docs.oracle.com/javase/tutorial/reflect/) to examine and modify the running app. Changes are applied in memory and persist only during the runtime of the process - no patches to the application files are made.
+Xposed は "APK に触れることなくシステムやアプリの動作を変更できるモジュールのフレームワーク" <sup>[24]</code> です。技術的には、新しいプロセスが開始されたときに Java コードを実行するための API をエクスポートする Zygote の拡張バージョンです。新しくインスタンス化されたアプリのコンテキストで Java コードを実行することにより、アプリに属する Java メソッドを解決、フック、オーバーライドすることが可能です。Xposed は [reflection](https://docs.oracle.com/javase/tutorial/reflect/) を使用して、実行中のアプリを調査および変更します。変更はメモリに適用され、プロセスの実行中にのみ維持されます。アプリケーションファイルへのパッチは作成されません。
 
-To use Xposed, you first need to install the Xposed framework on a rooted device. Modifications are then deployed in the form of separate apps ("modules") that can be toggled on and off in the Xposed GUI.
+Xposed を使用するには、まずルート化されたデバイスに Xposed フレームワークをインストールする必要があります。変更は個別のアプリ ("modules") の形式で展開され、Xposed GUI でオンとオフを切り替えることができます。
 
 ##### 事例: XPosedでのルート検出のバイパス
 
