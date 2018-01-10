@@ -886,19 +886,19 @@ QEMU で構築されたもうひとつの有用なツールは Sébastien Josse 
 
 ##### 事例: SSL ピンニングの無効化
 
-Certificate pinning is an issue for security testers who want to intercepts HTTPS communiction for legitimate reasons. To help with this problem, the bytecode can be patched to deactivate SSL pinning. To demonstrate how Certificate Pinning can be bypassed, we will walk through the necessary steps to bypass Certificate Pinning implemented in an example application.
+正当な理由で HTTPS 通信を傍受したいセキュリティテスターにとって、証明書ピンニングは問題です。この問題を解決するために、バイトコードにパッチを適用して、SSL ピンニングを無効にできます。証明書ピンニングをバイパスする方法を示すために、サンプルアプリケーションに実装された証明書ピンニングをバイパスするために必要な手順を実行します。
 
-The first step is to disassemble the APK with <code>apktool</code>:
+最初のステップでは <code>apktool</code> を使用して APK を逆アセンブルします。
 
 ```bash
 $ apktool d target_apk.apk
 ```
 
-You then need to locate the certificate pinning checks in the Smali source code. Searching the smali code for keywords such as “X509TrustManager” should point you in the right direction.
+Smali ソースコードで証明書ピンニングチェックを見つける必要があります。"X509TrustManager" などのキーワードで smali コードを検索することで、正しい方向に向かいます。
 
-In our example, a search for "X509TrustManager" returns one class that implements a custom Trustmanager. The derived class implements methods named <code>checkClientTrusted</code>, <code>checkServerTrusted</code> and <code>getAcceptedIssuers</code>.
+この例では、"X509TrustManager" を検索するとカスタムの Trustmanager を実装するクラスがひとつ返されます。この派生クラスは <code>checkClientTrusted</code>, <code>checkServerTrusted</code>, <code>getAcceptedIssuers</code> という名前のメソッドを実装します。
 
-Insert the <code>return-void</code> opcode was added to the first line of each of these methods to bypass execution. This causes each method to return immediately. return value. With this modification, no certificate checks are performed, and the application will accept all certificates.
+実行をバイパスするために、これらの各メソッドの最初の行に <code>return-void</code> オペコードを追加します。これにより各メソッドは直ちに戻ります。この変更により、証明書チェックは実行されず、アプリケーションはすべての証明書を受け入れます。
 
 ```smali
 .method public checkServerTrusted([LJava/security/cert/X509Certificate;Ljava/lang/String;)V
