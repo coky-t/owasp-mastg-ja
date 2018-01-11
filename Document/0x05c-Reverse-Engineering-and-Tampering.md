@@ -927,7 +927,7 @@ Xposed を使用するには、まずルート化されたデバイスに Xposed
 
 ##### 事例: XPosedでのルート検出のバイパス
 
-Let's assume you're testing an app that is stubbornly quitting on your rooted device. You decompile the app and find the following highly suspect method:
+ルート化されたデバイスで頑なに終了してしまうアプリをテストしていると仮定します。あなたはアプリを逆コンパイルし、次の非常に疑わしいメソッドを見つけました。
 
 ```java
 package com.example.a.b
@@ -952,9 +952,9 @@ public static boolean c() {
 }
 ```
 
-This method iterates through a list of directories, and returns "true" (device rooted) if the <code>su</code> binary is found in any of them. Checks like this are easy to deactivate - all you have to do is to replace the code with something that returns "false". Methok hooking using an Xposed module is one way to do this. 
+このメソッドはディレクトリのリストを繰り返し処理し、<code>su</code> バイナリがそれらのいずれかで見つかった場合に "true" (デバイスはルート化されている) を返します。このようなチェックは簡単に無効化できます。あなたがしなければならないことは、"false" を返すものでコードを置き換えることだけです。Xposed モジュールを使用したメソッドフックはこれを行う方法のひとつです。
 
-This method  <code>XposedHelpers.findAndHookMethodfindAndHookMethod</code> allows you to override existing class methods. From the decompiled code, we know that the method performing the check is called <code>c()</code> and located in the class <code>com.example.a.b</code>. An Xposed module that overrides the function to always return "false" looks as follows.
+このメソッド <code>XposedHelpers.findAndHookMethod</code> では既存のクラスメソッドをオーバーライドできます。逆コンパイルされたコードから、チェックを実行するメソッドは <code>c()</code> と呼ばれ、クラス <code>com.example.a.b</code> にあることがわかります。常に "false" を返すように関数をオーバーライドする Xposed モジュールは以下のようになります。
 
 ```java
 package com.awesome.pentestcompany;
@@ -984,7 +984,7 @@ public class DisableRootCheck implements IXposedHookLoadPackage {
 }
 ```
 
-Modules for Xposed are developed and deployed with Android Studio just like regular Android apps. For more details on writing compiling and installing Xposed modules, refer to the tutorial provided by its author, rovo89 <sup>[24]</sup>.
+Xposed 用のモジュールは通常の Android アプリと同じように Android Studio で開発およびデプロイされます。Xposed モジュールのコンパイルおよびインストールの詳細については、著者 rovo89 が提供するチュートリアルを参照ください <sup>[24]</sup> 。
 
 #### FRIDA で動的計装
 
