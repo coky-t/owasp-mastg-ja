@@ -988,9 +988,9 @@ Xposed 用のモジュールは通常の Android アプリと同じように And
 
 #### FRIDA で動的計装
 
-Frida "lets you inject snippets of JavaScript or your own library into native apps on Windows, macOS, Linux, iOS, Android, and QNX" <sup>[26]</sup>. While it was originally based on Google’s V8 Javascript runtime, since version 9 Frida now uses Duktape internally.
+Frida は "Windows, macOS, Linux, iOS, Android, QNX 上のネイティブアプリに JavaScript のスニペットや独自のライブラリを注入することができます" <sup>[26]</sup> 。もともと Google の V8 Javascript ランタイムをベースにしていましたが、バージョン 9 Frida では Duktape を内部的に使用しています。
 
-Code injection can be achieved in different ways. For example, Xposed makes some permanent modifications to the Android app loader that provide hooks to run your own code every time a new process is started. In contrast, Frida achieves code injection by writing code directly into process memory. The process is outlined in a bit more detail below.
+コードインジェクションはさまざまな方法で実現できます。例えば、Xposed は Android アプリローダーを永続的に改変し、新しいプロセスが開始されるたびに独自のコードを実行するフックを提供します。これとは対照的に、Frida は直接的にプロセスメモリにコードを書き込むことによりコードインジェクションを実現します。このプロセスの概要を以下にもう少し詳しく説明します。
 
 When you "attach" Frida to a running app, it uses ptrace to hijack a thread in a running process. This thread is used to allocate a chunk of memory and populate it with a mini-bootstrapper. The bootstrapper starts a fresh thread, connects to the Frida debugging server running on the device, and loads a dynamically generated library file containing the Frida agent and instrumentation code. The original, hijacked thread is restored to its original state and resumed, and execution of the process continues as usual.
 
