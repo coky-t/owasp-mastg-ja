@@ -992,23 +992,23 @@ Frida は "Windows, macOS, Linux, iOS, Android, QNX 上のネイティブアプ�
 
 コードインジェクションはさまざまな方法で実現できます。例えば、Xposed は Android アプリローダーを永続的に改変し、新しいプロセスが開始されるたびに独自のコードを実行するフックを提供します。これとは対照的に、Frida は直接的にプロセスメモリにコードを書き込むことによりコードインジェクションを実現します。このプロセスの概要を以下にもう少し詳しく説明します。
 
-When you "attach" Frida to a running app, it uses ptrace to hijack a thread in a running process. This thread is used to allocate a chunk of memory and populate it with a mini-bootstrapper. The bootstrapper starts a fresh thread, connects to the Frida debugging server running on the device, and loads a dynamically generated library file containing the Frida agent and instrumentation code. The original, hijacked thread is restored to its original state and resumed, and execution of the process continues as usual.
+Frida を実行中のアプリに "アタッチ" すると、ptrace を使用して実行中のプロセスのスレッドをハイジャックします。このスレッドはメモリのチャンクを割り当て、ミニブートストラップを埋め込むために使用されます。ブートストラップは新しいスレッドを開始し、デバイス上で実行中の Frida デバッグサーバーに接続し、Frida エージェントと計装コードを含む動的に生成されたライブラリファイルをロードします。元のハイジャックされたスレッドは元の状態に復元され、再開され、プロセスの実行は通常通りに継続されます。
 
-Frida injects a complete JavaScript runtime into the process, along with a powerful API that provides a wealth of useful functionality, including calling and hooking of native functions and injecting structured data into memory. It also supports interaction with the Android Java runtime, such as interacting with objects inside the VM.
+Frida は、ネイティブ関数の呼び出しおよびフック、構造化されたデータのメモリへの注入など、豊富で有用な機能を提供する強力な API に加えて、完全な JavaScript ランタイムをプロセスに注入します。また、VM 内のオブジェクトとのやりとりなど、Android Java ランタイムとのやりとりもサポートします。
 
 ![Frida](Images/Chapters/0x04/frida.png)
 
 *FRIDA Architecture, source: http://www.frida.re/docs/hacking/*
 
-Here are some more APIs FRIDA offers on Android:
+FRIDA が Android で提供する API のいくつかを紹介します。
 
-- Instantiate Java objects and call static and non-static class methods;
-- Replace Java method implementations;
-- Enumerate live instances of specific classes by scanning the Java heap (Dalvik only);
-- Scan process memory for occurrences of a string;
-- Intercept native function calls to run your own code at function entry and exit.
+- Java オブジェクトをインスタンス化し、静的および非静的クラスメソッドを呼び出します
+- Java メソッドの実装を置き換えます
+- Java ヒープをスキャンして特定のクラスのライブインスタンスを列挙します (Dalvik のみ)
+- 文字列の発生をプロセスメモリでスキャンします
+- ネイティブ関数呼び出しをインターセプトして、関数の入口と出口で独自のコードを実行します
 
-Some features unfortunately don’t work yet on current Android devices platforms. Most notably, the FRIDA Stalker - a code tracing engine based on dynamic recompilation - does not support ARM at the time of this writing (version 7.2.0). Also, support for ART has been included only recently, so the Dalvik runtime is still better supported.
+一部の機能は残念ながら現在の Android デバイスプラットフォーム上では動作しません。特に、FRIDA Stalker - 動的再コンパイルに基づくコードトレースエンジン - はこの執筆時 (バージョン 7.2.0) では ARM をサポートしていません。また、ART のサポートは最近になって含まれたため、Dalvik ランタイムはまだサポートされています。
 
 ##### Frida のインストール
 
