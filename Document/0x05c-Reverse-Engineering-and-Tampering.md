@@ -1012,13 +1012,13 @@ FRIDA が Android で提供する API のいくつかを紹介します。
 
 ##### Frida のインストール
 
-To install Frida locally, simply use Pypi:
+Frida をローカルにインストールするには、単に pip を使用します。
 
 ~~~
 $ sudo pip install frida
 ~~~
 
-Your Android device doesn't need to be rooted to get Frida running, but it's the easiest setup and we assume a rooted device here unless noted otherwise. Download the frida-server binary from the [Frida releases page](https://github.com/frida/frida/releases). Make sure that the server version (at least the major version number) matches the version of your local Frida installation. Usually, Pypi will install the latest version of Frida, but if you are not sure, you can check with the Frida command line tool:
+Frida を実行するために Android デバイスをルート化する必要はありませんが、それはセットアップが容易であり、特に断りがない限りここではルート化デバイスを想定しています。[Frida リリースページ](https://github.com/frida/frida/releases) から frida-server バイナリをロードします。サーバーバージョン (少なくともメジャーバージョン番号) がローカルにインストールした Frida のバージョンと一致することを確認します。通常、pip は最新バージョンの Frida をインストールしますが、わからない場合には、Frida コマンドラインツールで確認できます。
 
 ~~~
 $ frida --version
