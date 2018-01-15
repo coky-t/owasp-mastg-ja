@@ -1086,7 +1086,7 @@ Java.perform(function () {
 
 上のスクリプトは Java.perform を呼び出し、コードが Java VM のコンテキストで実行されるようにします。`Java.use` を介して `android.app.Activity` クラスのラッパーをインスタンス化し、`onResume` 関数を上書きします。新しい `onResume` 関数はコンソールに通知を出力し、アクティビティがアプリで再開されるたびに `this.onResume` を呼び出すことにより、元の `onResume` メソッドを呼び出します。
 
-Frida also lets you search for instantiated objects on the heap and work with them. The following script searches for instances of `android.view.View` objects and calls their `toString` method. The result is printed to the console:
+Frida はまたヒープ上のインスタンス化されたオブジェクトを検索し、それらで作業することもできます。以下のスクリプトは `android.view.View` オブジェクトのインスタンスを検索し、`toString` メソッドを呼び出します。結果はコンソールに出力されます。
 
 ~~~
 setImmediate(function() {
@@ -1104,7 +1104,7 @@ setImmediate(function() {
 });
 ~~~
 
-The output would look like this:
+出力は以下のようになります。
 
 ~~~
 [*] Starting script
@@ -1115,7 +1115,7 @@ The output would look like this:
 [*] Finished heap search
 ~~~
 
-Notice that you can also make use of Java's reflection capabilities. To list the public methods of the `android.view.View` class you could create a wrapper for this class in Frida and call `getMethods()` from its `class` property:
+Java リフレクション機能を使用することもできます。android.view.View` クラスの public メソッドを表示するには、Frida でこのクラスのラッパーを作成し、`class` プロパティから `getMethods()` を呼び出します。
 
 ~~~
 Java.perform(function () {
@@ -1127,7 +1127,7 @@ Java.perform(function () {
 });
 ~~~
 
-Besides loading scripts via `frida CLI`, Frida also provides Python, C, NodeJS, Swift and various other bindings.
+`frida CLI` を介してスクリプトをロードするだけでなく、Frida は Python, C, NodeJS, Swift などのさまざまなバインディングも提供しています。
 
 ##### Solving the OWASP Uncrackable Crackme Level1 with Frida
 
