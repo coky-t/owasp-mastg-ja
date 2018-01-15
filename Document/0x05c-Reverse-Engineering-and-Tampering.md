@@ -1129,16 +1129,16 @@ Java.perform(function () {
 
 `frida CLI` を介してスクリプトをロードするだけでなく、Frida は Python, C, NodeJS, Swift などのさまざまなバインディングも提供しています。
 
-##### Solving the OWASP Uncrackable Crackme Level1 with Frida
+##### Frida による OWASP Uncrackable Crackme Level1 の解決
 
-Frida gives you the possibility to solve the OWASP UnCrackable Crackme Level 1 easily. We have already seen that we can hook method calls with Frida above.
+Frida は OWASP UnCrackable Crackme Level 1 を簡単に解決する可能性を与えます。上記では Frida でメソッド呼び出しをフックできることをすでに見てきました。
 
-When you start the App on an emulator or a rooted device, you find that the app presents a dialog box and exits as soon as you press "Ok" because it detected root:
+エミュレータまたはルート化デバイス上でそのアプリを起動すると、ルートを検出するため、アプリはダイアログボックスを表示し、"Ok" を押すとすぐに終了します。
 
 ![Crackme Root Detected Dialog](Images/Chapters/0x05c/crackme-frida-1.png)
 
-Let us see how we can prevent this.
-The decompiled main method (using CFR decompiler) looks like this:
+これを防ぐ方法を見てみます。
+逆コンパイルされた main メソッド (CFR 逆コンパイラを使用) は以下のようになります。
 
 ```
 package sg.vantagepoint.uncrackable1;
