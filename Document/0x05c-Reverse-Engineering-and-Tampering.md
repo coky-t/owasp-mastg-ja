@@ -1026,7 +1026,7 @@ $ frida --version
 $ wget https://github.com/frida/frida/releases/download/9.1.10/frida-server-9.1.10-android-arm.xz
 ~~~
 
-Copy frida-server to the device and run it:
+frida-server をデバイスにコピーして実行します。
 
 ~~~
 $ adb push frida-server /data/local/tmp/
@@ -1034,7 +1034,7 @@ $ adb shell "chmod 755 /data/local/tmp/frida-server"
 $ adb shell "su -c /data/local/tmp/frida-server &"
 ~~~
 
-With frida-server running, you should now be able to get a list of running processes with the following command:
+frida-server が実行しているため、以下のコマンドで実行中のプロセスのリストを取得できます。
 
 ~~~
 $ frida-ps -U
@@ -1050,29 +1050,29 @@ $ frida-ps -U
 (...)
 ~~~
 
-The `-U` option lets Frida search for USB devices or emulators.
+`-U` オプションは Frida に USB デバイスやエミュレータを検索させます。
 
-To trace specific (low level) library calls, you can use the `frida-trace` command line tool:
+特定の (低レベルの) ライブラリ呼び出しをトレースするには、`frida-trace` コマンドラインツールを使用します。
 
 ~~~
 frida-trace -i "open" -U com.android.chrome
 ~~~
 
-This generates a little javascript in `__handlers__/libc.so/open.js` that Frida injects into the process and that traces all calls to the `open` function in `libc.so`. You can modify the generated script according to your needs, making use of Fridas [Javascript API](https://www.frida.re/docs/javascript-api/).
+`__handlers__/libc.so/open.js` に少しの javascript を生成します。これは Frida がプロセスに注入し、`libc.so` の `open` 関数へのすべての呼び出しをトレースするものです。Fridas [Javascript API](https://www.frida.re/docs/javascript-api/) を使用して、必要に応じて生成されたスクリプトを変更できます。
 
-To work with Frida interactively, you can use `frida CLI` which hooks into a process and gives you a command line interface to Frida's API.
+Frida を対話的に操作するには、`frida CLI` を使用できます。プロセスにフックし、Frida の API に対するコマンドラインインタフェースを提供します。
 
 ~~~
 frida -U com.android.chrome
 ~~~
 
-You can also use frida CLI to load scripts via the `-l` option, e.g to load `myscript.js`:
+frida CLI を使用して、`-l` オプションを介してスクリプトをロードします。例えば、`myscript.js` をロードします。
 
 ~~~
 frida -U -l myscript.js com.android.chrome
 ~~~
 
-Frida also provides a Java API which is especially helpful for dealing with Android apps. It lets you work with Java classes and objects directly. This is a script to overwrite the "onResume" function of an Activity class:
+Frida はまた、Android アプリを扱うのに特に役立つ Java API を提供しています。Java クラスとオブジェクトを直接的に操作することができます。これは Activity クラスの "onResume" 関数を上書きするスクリプトです。
 
 ~~~
 Java.perform(function () {
@@ -1084,7 +1084,7 @@ Java.perform(function () {
 });
 ~~~
 
-The script above calls Java.perform to make sure that our code gets executed in the context of the Java VM. It instantiates a wrapper for the `android.app.Activity` class via `Java.use` and overwrites the `onResume` function. The new `onResume` function outputs a notice to the console and calls the original `onResume` method by invoking `this.onResume` every time an activity is resumed in the the app.
+上のスクリプトは Java.perform を呼び出し、コードが Java VM のコンテキストで実行されるようにします。`Java.use` を介して `android.app.Activity` クラスのラッパーをインスタンス化し、`onResume` 関数を上書きします。新しい `onResume` 関数はコンソールに通知を出力し、アクティビティがアプリで再開されるたびに `this.onResume` を呼び出すことにより、元の `onResume` メソッドを呼び出します。
 
 Frida also lets you search for instantiated objects on the heap and work with them. The following script searches for instances of `android.view.View` objects and calls their `toString` method. The result is printed to the console:
 
