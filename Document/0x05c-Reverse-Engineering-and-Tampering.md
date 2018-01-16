@@ -1012,13 +1012,13 @@ FRIDA が Android で提供する API のいくつかを紹介します。
 
 ##### Frida のインストール
 
-Frida をローカルにインストールするには、単に pip を使用します。
+Frida をローカルにインストールするには、単に PyPI を使用します。
 
 ~~~
 $ sudo pip install frida
 ~~~
 
-Frida を実行するために Android デバイスをルート化する必要はありませんが、それはセットアップが容易であり、特に断りがない限りここではルート化デバイスを想定しています。[Frida リリースページ](https://github.com/frida/frida/releases) から frida-server バイナリをロードします。サーバーバージョン (少なくともメジャーバージョン番号) がローカルにインストールした Frida のバージョンと一致することを確認します。通常、pip は最新バージョンの Frida をインストールしますが、わからない場合には、Frida コマンドラインツールで確認できます。
+Frida を実行するために Android デバイスをルート化する必要はありませんが、それはセットアップが容易であり、特に断りがない限りここではルート化デバイスを想定しています。[Frida リリースページ](https://github.com/frida/frida/releases) から frida-server バイナリをロードします。サーバーバージョン (少なくともメジャーバージョン番号) がローカルにインストールした Frida のバージョンと一致することを確認します。通常、PyPI は最新バージョンの Frida をインストールしますが、わからない場合には、Frida コマンドラインツールで確認できます。
 
 ~~~
 $ frida --version
@@ -1192,9 +1192,9 @@ extends Activity {
 }
 ```
 
-Notice the `Root detected` message in the `onCreate` method and the various methods called in the the `if`-statement before which perform the actual root checks. Also note the `This is unacceptable...` message from the first method of the class, `private void a`. Obviously, this is where the dialog box gets displayed. There is a `alertDialog.onClickListener` callback set in the `setButton` method call which is responsible for closing the application via `System.exit(0)` after successful root detection. Using Frida, we can prevent the app from exiting by hooking the callback.
+`onCreate` メソッドの `Root detected` メッセージと、実際のルートチェックを実行する前の `if` ステートメントで呼び出されるさまざまなメソッドに注目します。クラスの最初のメソッド `private void a` の `This is unacceptable...` メッセージにも注意します。明らかに、これはダイアログボックスが表示される箇所です。`setButton` メソッド呼び出しに設定される `alertDialog.onClickListener` コールバックがあります。これはルート検出に成功した後に `System.exit(0)` を介してアプリケーションを終了する責任があります。Frida を使用すると、このコールバックをフックすることによりアプリが終了しないようにできます。
 
-The onClickListener implementation for the dialog button doesn't to much:
+ダイアログボタンの onClickListener 実装はそれほど多くはありません。
 
 ```
 package sg.vantagepoint.uncrackable1;
@@ -1215,7 +1215,7 @@ class b implements android.content.DialogInterface$OnClickListener {
 }
 ```
 
-It just exits the app. Now we intercept it using Frida to prevent the app from exiting after root detection:
+それは単にアプリを終了します。今度は Frida を使用してそれを傍受し、ルート検出後にアプリが終了しないようにします。
 
 ```
 setImmediate(function() { //prevent timeout
@@ -1233,9 +1233,9 @@ setImmediate(function() { //prevent timeout
 })
 ```
 
-We wrap our code in a setImmediate function to prevent timeouts (you may or may not need this), then call Java.perform to make use of Frida’s methods for dealing with Java. Afterwards we retreive a wrapper for the class that implements the `OnClickListener` interface and overwrite its `onClick` method. Unlike the original, our new version of `onClick` just writes some console output and *does not exit the app*. If we inject our version of this method via Frida, the app should not exit anymore when we click the `OK` button of the dialog.
+コードを setImmediate 関数にラップして (あなたがこれを必要かどうかはわかりませんが) タイムアウトを防いでから、Java.perform を呼び出して Java を処理するための Frida メソッドを使用します。その後、`OnClickListener` インタフェースを実装し、`onClick` メソッドを上書きするクラスのラッパーを取得します。オリジナルとは異なり、新しいバージョンの `onClick` はいくつかのコンソール出力を書き出し、 *アプリを終了しません* 。Frida を介してこのメソッドの私たちのバージョンを注入すると、ダイアログの `OK` ボタンをクリックしてもアプリはもはや終了することはありません。
 
-Save the above script as `uncrackable1.js` and load it:
+上記のスクリプトを `uncrackable1.js` として保存し、それをロードします。
 
 ```
 frida -U -l uncrackable1.js sg.vantagepoint.uncrackable1
