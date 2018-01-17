@@ -1241,11 +1241,11 @@ setImmediate(function() { //prevent timeout
 frida -U -l uncrackable1.js sg.vantagepoint.uncrackable1
 ```
 
-After you see the `onClickHandler modified` message, you can safely press the OK button in the app. The app does not exit anymore.
+`onClickHandler modified` メッセージが表示されたら、アプリの OK ボタンを安全に押すことができます。アプリはもう終了しません。
 
-We can now try to input a "secret string". But where do we get it?
+私たちは今 "secret string" を入力しようとすることができます。しかし、どこで手に入れられるでしょうか。
 
-Looking at the class `sg.vantagepoint.uncrackable1.a` you can see the encrypted string to which our input gets compared:
+クラス `sg.vantagepoint.uncrackable1.a` を見ると、入力と比較される暗号化された文字列を見ることができます。
 
 ```
 package sg.vantagepoint.uncrackable1;
@@ -1280,10 +1280,10 @@ public class a {
 }
 ```
 
-Notice the string.equals comparison at the end of the a method and the creation of the string `arrby2` in the `try` block above. `arrby2` is the return value of the function `sg.vantagepoint.a.a.a`. The `string.equals` comparison compares our input to `arrby2`. So what we are after is the return value of `sg.vantagepoint.a.a.a.`
+メソッドの最後にある string.equals の比較と、上の `try` ブロックにある文字列 `arrby2` の作成に注目します。`arrby2` は関数 `sg.vantagepoint.a.a.a` の戻り値です。`string.equals` の比較は私たちの入力を `arrby2` と比較します。そのため、私たちが求めているものは `sg.vantagepoint.a.a.a.` の戻り値です。
 
-Instead of reversing the decryption routines to reconstruct the secret key, we can simply ignore all the decryption logic in the app and hook the `sg.vantagepoint.a.a.a` function to catch its return value.
-Here is the complete script that prevents the exiting on root and intercepts the decryption of the secret string:
+復号化ルーチンをリバースして共通鍵を再構築する代わりに、単にアプリの復号化ロジックをすべて無視し、`sg.vantagepoint.a.a.a` 関数をフックして戻り値をキャッチします。
+ルートでの終了を防ぎ、secret string の復号化を傍受する完全なスクリプトを以下に示します。
 
 ```
 setImmediate(function() {
@@ -1317,7 +1317,7 @@ setImmediate(function() {
 });
 ```
 
-After running the script in Frida and seeing the `[*] sg.vantagepoint.a.a.a modified` message in the console, enter a random value for "secret string" and press verify. You should get an output similar to this:
+Frida でスクリプトを実行し、コンソールに `[*] sg.vantagepoint.a.a.a modified` メッセージが表示された後、"secret string" にランダムな値を入力して verify を押します。以下のような出力が得られます。
 
 ```
 michael@sixtyseven:~/Development/frida$ frida -U -l uncrackable1.js sg.vantagepoint.uncrackable1
@@ -1337,11 +1337,11 @@ michael@sixtyseven:~/Development/frida$ frida -U -l uncrackable1.js sg.vantagepo
 [*] onClick called.
 [*] Decrypted: I want to believe
 ```
-The hooked function outputted our decrypted string. Without having to dive too deep into the application code and its decryption routines, we were able to extract the secret string successfully.
+フックされて関数は復号化された文字列を出力しました。アプリケーションコードとその復号化ルーチンを深く掘り下げることなく、secret string をうまく抽出できました。
 
-We've now covered the basics of static/dynamic analysis on Android. Of course, the only way to *really* learn it is hands-on experience: Start by building your own projects in Android Studio and observing how your code gets translated to bytecode and native code, and have a shot at our cracking challenges.
+ここまで Android での静的/動的解析の基礎について説明しました。もちろん、*実際に* それを学ぶ唯一の方法はハンズオンの体験です。Android Studio で独自のプロジェクトをビルドし、コードがバイトコードやネイティブコードにどのように変換されるかを観察することを始め、クラッキングの課題に挑戦します。
 
-In the remaining sections, we'll introduce a few advanced subjects including kernel modules and dynamic execution.
+残りのセクションでは、カーネルモジュールや動的実行などの高度なテーマをいくつか紹介します。
 
 ### バイナリ解析フレームワーク
 
