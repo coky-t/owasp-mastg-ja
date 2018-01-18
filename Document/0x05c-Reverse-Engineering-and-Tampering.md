@@ -1366,13 +1366,13 @@ angr に関する非常に包括的なドキュメントが Gitbook に用意さ
 <a name="symbolicexec"></a>
 #### シンボリック実行
 
-Symbolic execution allows you to determine the conditions necessary to reach a specific target. It does this by translating the program’s semantics into a logical formula, whereby some variables are represented as symbols with specific constraints. By resolving the constraints, you can find out the conditions necessary so that some branch of the program gets executed.
+シンボリック実行は特定のターゲットに到達するために必要な条件を判断できます。これはプログラムのセマンティクスを論理式に変換することにより行います。これにより一部の変数は特定の制約を持つシンボルとして表現されます。制約を解決することにより、プログラムのある分岐が実行されるように必要な条件を見つけることができます。
 
-Amongst other things, this is useful in cases where we need to find the right inputs for reaching a certain block of code. In the following example, we'll use Angr to solve a simple Android crackme in an automated fashion. The crackme takes the form of a native ELF binary that can be downloaded here:
+とりわけ、これはあるコードブロックに到達するための正しい入力を見つける必要がある場合に便利です。以下の例では、Angr を使用して単純な Android crackme を自動化された方法で解決します。crackme はネイティブ ELF バイナリの形式を取り、ここからダウンロードできます。
 
 https://github.com/angr/angr-doc/tree/master/examples/android_arm_license_validation
 
-Running the executable on any Android device should give you the following output.
+任意の Android デバイスで実行可能ファイルを実行すると、以下の出力が得られます。
 
 ```bash
 $ adb push validate /data/local/tmp
@@ -1384,13 +1384,13 @@ $ adb shell /data/local/tmp/validate 12345
 Incorrect serial (wrong format).
 ```
 
-So far, so good, but we really know nothing about how a valid license key might look like. Where do we start? Let's fire up IDA Pro to get a first good look at what is happening.
+今のところ順調ですが、有効なライセンスキーがどのようになりそうかについてはまったく何も分かりません。どこかわ始めますか。IDA Pro を起動して、まず何が起こっているかを見るのが良いでしょう。
 
 ![Disassembly of function main.](Images/Chapters/0x05c/license-check-1.jpg)
 
-The main function is located at address 0x1874 in the disassembly (note that this is a PIE-enabled binary, and IDA Pro chooses 0x0 as the image base address). Function names have been stripped, but luckily we can see some references to debugging strings: It appears that the input string is base32-decoded (call to sub_1340). At the beginning of main, there's also a length check at loc_1898 that verifies that the length of the input string is exactly 16. So we're looking for a 16 character base32-encoded string! The decoded input is then passed to the function sub_1760, which verifies the validity of the license key.
+main 関数は逆アセンブリのアドレス 0x1874 にあります (これは PIE が有効なバイナリであり、IDA Pro は image ベースアドレスとして 0x0 を選択することに注意します) 。関数名は取り除かれていますが、幸いなことにデバッグ文字列への参照がいくつかあります。入力文字列は base32 でデコードされているようです (sub_1340 への呼び出し) 。main の冒頭には loc_1898 で長さチェックもあります。入力文字列の長さが正確に 16 であることを確認します。したがって、私たちは 16 文字の base32 でエンコードされた文字列を探しています。デコードされた入力は次に関数 sub_1760 に渡され、ライセンスキーの有効性を検証します。
 
-The 16-character base32 input string decodes to 10 bytes, so we know that the validation function expects a 10 byte binary string. Next, we have a look at the core validation function at 0x1760:
+16 文字の base32 入力文字列は 10 バイトにデコードされるため、検証関数は 10 バイトバイナリ文字列を期待することがわかります。次に、0x1760 のコア検証関数を見ていきます。
 
 ```assembly_x68
 .text:00001760 ; =============== S U B R O U T I N E =======================================
