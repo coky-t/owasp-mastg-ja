@@ -1345,9 +1345,9 @@ michael@sixtyseven:~/Development/frida$ frida -U -l uncrackable1.js sg.vantagepo
 
 ### バイナリ解析フレームワーク
 
-Binary analysis frameworks provide you powerful ways of automating tasks that would be almost impossible to complete manually. In the section, we'll have a look at the Angr framework, a python framework for analyzing binaries that is useful for both static and dynamic symbolic ("concolic") analysis. Angr operates on the VEX intermediate language, and comes with a loader for ELF/ARM binaries, so it is perfect for dealing with native Android binaries.
+バイナリ解析フレームワークは手動で完了することがほとんど不可能なタスクを自動化する強力な方法を提供します。このセクションでは Angr フレームワークを見ていきます。静的および動的シンボリック ("concolic") 解析の両方に役立つバイナリを解析するための python フレームワークです。Angr は VEX 中間言語で動作し、ELF/ARM バイナリ用のローダーが付属しているため、ネイティブ Android バイナリを扱うのに最適です。
 
-Our target program is a simple license key validation program. Granted, you won't usually find a license key validator like this in the wild, but it should be useful enough to demonstrate the basics of static/symbolic analysis of native code. You can use the same techniques on Android apps that ship with obfuscated native libraries (in fact, obfuscated code is often put into native libraries, precisely to make de-obfuscation more difficult).
+ターゲットプログラムは単純なライセンスキー検証プログラムです。確かに、通常このようなライセンスキー検証器は出回っているものには見つかりませんが、ネイティブコードの静的/シンボリック解析の基礎を実演するのに十分役立ちます。難読化されたネイティブライブラリを同梱する Android あぷりでも同じ技法を使用できます (実際、難読化されたコードはしばしばネイティブライブラリに入れられ、まさに逆難読化をより困難にします) 。
 
 #### Angr のインストール
 
