@@ -1351,15 +1351,15 @@ michael@sixtyseven:~/Development/frida$ frida -U -l uncrackable1.js sg.vantagepo
 
 #### Angr のインストール
 
-Angr is written in Python 2 and available from PyPI. It is easy to install on \*nix operating systems and Mac OS using pip:
+Angr は Python 2 で書かれていて、PyPI から入手できます。pip を使用して \*nix オペレーティングシステムや Mac OS にインストールするのは簡単です。
 
 ```
 $ pip install angr
 ```
 
-It is recommended to create a dedicated virtual environment with Virtualenv as some of its dependencies contain forked versions Z3 and PyVEX that overwrite the original versions (you may skip this step if you don't use these libraries for anything else - on the other hand, using Virtualenv is generally a good idea).
+Virtualenv で専用の仮想環境を作成することをお勧めします。依存関係の一部には元のバージョンを上書きしたフォークされたバージョン Z3 と PyVEX が含まれています (これらのライブラリを他の用途に使用しない場合にはこの手順をスキップしてかまいません - そうでなければ、Virtualenv を使用することは一般的には良い考えです) 。
 
-Quite comprehensive documentation for angr is available on Gitbooks, including an installation guide, tutorials and usage examples [5]. A complete API reference is also available [6].
+angr に関する非常に包括的なドキュメントが Gitbook に用意されています。インストールガイド、チュートリアル、使用例などがあります [5] 。完全な API リファレンスも利用可能です [6] 。
 
 #### 逆アセンブラバックエンドの使用
 
