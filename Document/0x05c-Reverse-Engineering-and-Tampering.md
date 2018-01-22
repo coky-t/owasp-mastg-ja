@@ -1560,7 +1560,7 @@ JQAE6ACMABNAAIIA
 
 #### RAMDisk のカスタマイズ
 
-The initramfs is a small CPIO archive stored inside the boot image. It contains a few files that are required at boot time before the actual root file system is mounted. On Android, the initramfs stays mounted indefinitely, and it contains an important configuration file named default.prop that defines some basic system properties. By making some changes to this file, we can make the Android environment a bit more reverse-engineering-friendly. For our purposes, the most important settings in default.prop are <code>ro.debuggable</code> and <code>ro.secure</code>.
+initramfs はブートイメージの中に格納された小さな CPIO アーカイブです。実際のルートファイルシステムがマウントされる前に、ブート時に必要なファイルがいくつか含まれています。Android では、initramfs は無期限にマウントされたままであり、いくつかの基本的なシステムプロパティを定義する default.prop という名前の重要な構成ファイルが含まれます。このファイルをいくつか変更することにより、Android 環境をもう少しリバースエンジニアリングに適したものにできます。私たちの目的として、default.prop の最も重要な設定は <code>ro.debuggable</code> と <code>ro.secure</code> です。
 
 ```bash
 $ cat /default.prop                                         
@@ -1585,15 +1585,15 @@ dalvik.vm.image-dex2oat-Xmx=64m
 ro.dalvik.vm.native.bridge=0
 ```
 
-Setting ro.debuggable to 1 causes all apps running on the system to be debuggable (i.e., the debugger thread runs in every process), independent of the android:debuggable attribute in the app’s Manifest. Setting ro.secure to 0 causes adbd to be run as root.
-To modify initrd on any Android device, back up the original boot image using TWRP, or simply dump it with a command like:
+ro.debuggable を 1 に設定すると、システム上で実行しているすべてのアプリがデバッグ可能になります (すなわち、すべてのプロセスでデバッガスレッドが実行されます) 。アプリのマニフェストの android:debuggable 属性には依存しません。ro.secure を 0 に設定すると adbd を root として実行されます。
+任意の Android デバイス上で initrd を変更するには、TWRP を使用して元のブートイメージをバックアップするか、単に以下のようなコマンドでダンプします。
 
 ```bash
 $ adb shell cat /dev/mtd/mtd0 >/mnt/sdcard/boot.img
 $ adb pull /mnt/sdcard/boot.img /tmp/boot.img
 ```
 
-Use the abootimg tool as described in Krzysztof Adamski’s how-to to extract the contents of the boot image:
+Krzysztof Adamski のハウツーで説明されているように、abootimg ツールを使用して、ブートイメージの内容を抽出します。
 
 ```bash
 $ mkdir boot
@@ -1604,7 +1604,7 @@ $ cd initrd
 $ cat ../initrd.img | gunzip | cpio -vid
 ```
 
-Take note of the boot parameters written to bootimg.cfg – you will need to these parameters later when booting your new kernel and ramdisk.
+bootimg.cfg に書かれているブートパラメータを書き留めておきます。後で新しいカーネルとラムディスクをブートするときに、これらのパラメータが必要になります。
 
 ```bash
 $ ~/Desktop/abootimg/boot$ cat bootimg.cfg
@@ -1618,7 +1618,7 @@ name =
 cmdline = console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=2 msm_watchdog_v2.enable=1
 ```
 
-Modify default.prop and package your new ramdisk:
+default.prop を修正し、新しいラムディスクをパッケージ化します。
 
 ```bash
 $ cd initrd
