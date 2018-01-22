@@ -1490,17 +1490,17 @@ main 関数は逆アセンブリのアドレス 0x1874 にあります (これ�
 .text:00001868 ; End of function sub_1760
 ```
 
-We can see a loop with some XOR-magic happening at loc_1784, which supposedly decodes the input string. Starting from loc_17DC, we see a series of comparisons of the decoded values with values obtained from further sub-function calls. Even though this doesn't look like highly sophisticated stuff, we'd still need to do some more analysis to completely reverse this check and generate a license key that passes it. But now comes the twist: By using dynamic symbolic execution, we can construct a valid key automatically! The symbolic execution engine can map a path between the first instruction of the license check (0x1760) and the code printing the "Product activation passed" message (0x1840) and determine the constraints on each byte of the input string. The solver engine then finds an input that satisfies those constraints: The valid license key.
+loc_1784 に何らかの XOR マジックが行われているループがあります。おそらく入力文字列をデコードします。loc_17DC には、デコードされた値とそれ以降のサブ関数呼び出しから取得された値との一連の比較があります。これは高度に洗練されたものではありませんが、このチェックを完全にリバースし、それに渡すライセンスキーを生成するにはさらに何らかの解析を行う必要があります。しかし、ここで工夫をします。動的シンボリック実行を使用することにより、有効なキーを自動的に構築できます。シンボリック実行はライセンスチェックの最初の命令 (0x1760) と "Product activation passed" メッセージを表示するコード (0x1840) との間のパスをマップし、入力文字列の各バイトの制約を決定します。ソルバーエンジンこれらの制約を満たす入力：有効なライセンスキーを探します。
 
-We need to provide several inputs to the symbolic execution engine:
+シンボリック実行エンジンにはいくつかの入力を提供する必要があります。
 
-- The address to start execution from. We initialize the state with the first instruction of the serial validation function. This makes the task significantly easier (and in this case, almost instant) to solve, as we avoid symbolically executing the Base32 implementation.
+- 実行を開始するアドレス。シリアル検証関数の最初の命令で状態を初期化します。これにより、Base32 の実装をシンボリックに実行することを避けるため、タスクをかなり簡単に (そしてこの場合はほとんど瞬時に) 解決します。
 
-- The address of the code block we want execution to reach. In this case, we want to find a path to the code responsible for printing the "Product activation passed" message. This block starts at 0x1840.
+- 実行を到達したいコードブロックのアドレス。この場合には、"Product activation passed" メッセージを出力する要因となるコードへのパスを探すことを望みます。このブロックは 0x1840 から開始します。
 
-- Addresses we don't want to reach. In this case, we're not interesting in any path that arrives at the block of code printing the "Incorrect serial" message, at 0x1854.
+- 到達して欲しくないアドレス。この場合には、0x1854 の "Incorrect serial" メッセージを表示するコードのブロックに至るパスには興味がありません。
 
-Note that Angr loader will load the PIE executable with a base address of 0x400000, so we have to add this to the addresses above. The solution looks as follows.
+Angr ローダーはベースアドレスが 0x400000 の PIE 実行可能ファイルをロードするため、これを上記のアドレスに追加する必要があることに注意します。解は以下のようになります。
 
 ```python
 #!/usr/bin/python
@@ -1544,9 +1544,9 @@ solution = found.state.se.any_str(found.state.memory.load(concrete_addr,10))
 print base64.b32encode(solution)
 ```
 
-Note the last part of the program where the final input string is obtained - it appears if we were simply reading the solution from memory. We are however reading from symbolic memory - neither the string nor the pointer to it actually exist! What's really happening is that the solver is computing possible concrete values that could be found at that program state, would we observer the actual program run to that point.
+最終的な入力文字列が得られるプログラムの最後の部分に注意します。単純にメモリから解を読み取っていた場合に表示されます。しかしシンボリックメモリから読み取っています。文字列もポインタも実際には存在しません。実際に何が起こっているかというと、ソルバーがそのプログラムの状態で見つかる可能性のある具体的な値を計算しているということです。その時点まで実際のプログラムの実行を観察します。
 
-Running this script should return the following:
+このスクリプトを実行すると、以下を返します。
 
 ```
 (angr) $ python solve.py
