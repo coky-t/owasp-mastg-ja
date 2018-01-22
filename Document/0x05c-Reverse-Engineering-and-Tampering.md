@@ -1556,7 +1556,7 @@ JQAE6ACMABNAAIIA
 
 ### リバースエンジニアリング向けに Android のカスタマイズ
 
-Working on real device has advantages especially for interactive, debugger-supported static / dynamic analysis. For one, it is simply faster to work on a real device. Also, being run on a real device gives the target app less reason to be suspicious and misbehave. By instrumenting the live environment at strategic points, we can obtain useful tracing functionality and manipulate the environment to help us bypass any anti-tampering defenses the app might implement.
+実デバイスでの作業は特にインタラクティブな、デバッガでサポートされる静的/動的解析において強みがあります。ひとつは、実デバイスでの作業が単純に高速であることです。また、実デバイスで実行することはターゲットアプリに疑いや誤動作となる理由をより少なくします。ライブ環境を戦略的ポイントで計装することにより、有用なトレース機能を取得し、環境を操作して、アプリが実装している可能性のある耐タンパ性防御をバイパスすることができます。
 
 #### RAMDisk のカスタマイズ
 
