@@ -1627,7 +1627,7 @@ $ find . | cpio --create --format='newc' | gzip > ../myinitd.img
 
 #### Android カーネルのカスタマイズ
 
-The Android kernel is a powerful ally to the reverse engineer. While regular Android apps are hopelessly restricted and sandboxed, you - the reverser - can customize and alter the behavior of the operating system and kernel any way you wish. This gives you a really unfair advantage, because most integrity checks and anti-tampering features ultimately rely on services performed by the kernel. Deploying a kernel that abuses this trust, and unabashedly lies about itself and the environment, goes a long way in defeating most reversing defenses that malware authors (or normal developers) can throw at you.
+Android カーネルはリバースエンジニアにとって強力な味方です。通常の Android アプリは絶えず制限されサンドボックス化されていますが、リバースする人はオペレーティングシステムとカーネルの動作を自由にカスタマイズおよび変更できます。これはあなたに本当に不当な優位性を与えます。なぜならほとんどの完全性チェックと改竄防止機能は最終的にカーネルにより実行されるサービスに依存するためです。この信頼を悪用するカーネルを配備し、自らとその環境について臆面もなくうそをつくことは、マルウェア作者 (または通常の開発者) があなたに投げることができるほとんどのリバース防御を破るのに大いに役立ちます。
 
 Android apps have several ways of interacting with the OS environment. The standard way is through the APIs of the Android Application Framework. On the lowest level however, many important functions, such as allocating memory and accessing files, are translated into perfectly old-school Linux system calls. In ARM Linux, system calls are invoked via the SVC instruction which triggers a software interrupt. This interrupt calls the vector_swi() kernel function, which then uses the system call number as an offset into a table of function pointers (a.k.a. sys_call_table on Android).
 
