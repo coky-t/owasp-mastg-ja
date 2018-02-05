@@ -1633,11 +1633,11 @@ Android アプリはいくつかの方法で OS 環境とやり取りします�
 
 システムコールを傍受する最も簡単な方法は、カーネルメモリに独自のコードを注入し、システムコールテーブルの元の関数を上書きして実行をリダイレクトすることです。残念ながら、現在出荷されている Android カーネルはメモリ制限を強制し、これが動作することを妨げます。具体的には、出荷された Lollipop と Marshmallow カーネルは CONFIG_STRICT_MEMORY_RWX オプションを有効にしてビルドされています。これにより読み取り専用としてマークされたカーネルメモリ領域に書き込むことができなくなります。つまり、カーネルコードやシステムコールテーブルにパッチを当てようとすると、セグメンテーションフォルトが発生して再起動します。これを回避する方法は独自のカーネルをビルドすることです。この保護を無効にして、その他多くの便利なカスタマイズを行い、リバースエンジニアリングを容易にします。習慣的に Android アプリをリバースしているのであれば、独自のリバースエンジニアリングサンドボックスをビルドすることは非常に簡単です。
 
-For hacking purposes, I recommend using an AOSP-supported device. Google’s Nexus smartphones and tablets are the most logical candidates – kernels and system components built from the AOSP run on them without issues. Alternatively, Sony’s Xperia series is also known for its openness. To build the AOSP kernel you need a toolchain (set of programs to cross-compile the sources) as well as the appropriate version of the kernel sources. Follow Google's instructions to identify the correct git repo and branch for a given device and Android version.
+ハッキングの目的において、AOSP 対応のデバイスを使用することをお勧めします。Google の Nexus スマートフォンとタブレットは最も合理的な候補で、AOSP からビルドされたカーネルやシステムコンポーネントが問題なく実行されます。また、ソニーの Xperia シリーズもオープンであると知られています。AOSP カーネルをビルドするには、ツールチェーン (ソースをクロスコンパイルするためのプログラムセット) と適切なバージョンのカーネルソースが必要です。Google の説明に従って、特定のデバイスおよび Android バージョンの正しい git リポジトリとブランチを確認します。
 
 https://source.android.com/source/building-kernels.html#id-version
 
-For example, to get kernel sources for Lollipop that are compatible with the Nexus 5, you need to clone the "msm" repo and check out one the "android-msm-hammerhead" branch (hammerhead is the codenam” of the Nexus 5, and yes, finding the right branch is a confusing process). Once the sources are downloaded, create the default kernel config with the command make hammerhead_defconfig (or whatever_defconfig, depending on your target device).
+例えば、Nexus 5 と互換性のある Lollipop のカーネルソースを取得するには、"msm" リポジトリをクローンし、"android-msm-hammerhead" ブランチをチェックアウトします (hammerhead は Nexus 5 のコードネームです。そう、正しいブランチを見つけることは紛らわしいプロセスなのです) 。ソースをダウンロードしたら、hammerhead_defconfig (もしくはターゲットデバイスに応じた 何とか_defconfig) コマンドを使用して、デフォルトのカーネル設定を作成します。
 
 ```bash
 $ git clone https://android.googlesource.com/kernel/msm.git
@@ -1649,7 +1649,7 @@ $ make hammerhead_defconfig
 $ vim .config
 ```
 
-I recommend using the following settings to enable the most important tracing facilities, add loadable module support, and open up kernel memory for patching.
+以下の設定を使用して、最も重要なトレース機能を有効にし、ロード可能なモジュールのサポートを追加し、パッチを適用するためのカーネルメモリを開くことをお勧めします。
 
 ```
 CONFIG_MODULES=Y
@@ -1667,7 +1667,7 @@ CONFIG_FTRACE=Y
 CONFIG KDB=Y
 ```
 
-Once you are finished editing save the .config file and build the kernel.
+編集が終わったら、.config ファイルを保存し、カーネルをビルドします。
 
 ```bash
 $ export ARCH=arm
@@ -1676,15 +1676,15 @@ $ export CROSS_COMPILE=/path_to_your_ndk/arm-eabi-4.8/bin/arm-eabi-
 $ make
 ```
 
-Once you are finished editing save the .config file. Optionally, you can now create a standalone toolchain for cross-compiling the kernel and later tasks. To create a toolchain for Android Nougat, run make-standalone-toolchain.sh from the Android NDK package as follows:
+編集が終わったら .config ファイルを保存します。オプションとして、カーネルと以降のタスクをクロスコンパイルするためのスタンドアロンのツールチェーンを作成できるようになりました。Android Nougat 用のツールチェーンを作成するには、Android NDK パッケージの make-standalone-toolchain.sh を以下のように実行します。
 
 ```bash
 $ cd android-ndk-rXXX
 $ build/tools/make-standalone-toolchain.sh --arch=arm --platform=android-24 --install-dir=/tmp/my-android-toolchain
 ```
 
-Set the CROSS_COMPILE environment variable to point to your NDK directory and run "make" to build
-the kernel.
+CROSS_COMPILE 環境変数を NDK ディレクトリを指すように設定し、"make" を実行してカーネルをビルドします。
+
 
 ```bash
 $ export CROSS_COMPILE=/tmp/my-android-toolchain/bin/arm-eabi-
