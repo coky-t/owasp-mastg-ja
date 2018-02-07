@@ -1738,11 +1738,11 @@ $ fastboot boot zImage-dtb initrd.img --base 0 --kernel-offset 0x8000 --ramdisk-
 
 #### カーネルモジュールを使用したシステムコールフック
 
-System call hooking allows us to attack any anti-reversing defenses that depend on functionality provided by the kernel. With our custom kernel in place, we can now use a LKM to load additional code into the kernel. We also have access to the /dev/kmem interface, which we can use to patch kernel memory on-the-fly. This is a classical Linux rootkit technique and has been described for Android by Dong-Hoon You [1].
+システムコールのフックにより、カーネルが提供する機能に依存するアンチリバース防御を攻撃することができます。カスタムカーネルを使用して、LKM を使用してカーネルに追加のコードをロードすることができます。/dev/kmem インタフェースにもアクセスできます。カーネルメモリをオンザフライでパッチを当てるために使用できます。これは伝統的な Linux ルートキットのテクニックであり、Dong-Hoon You [1] により Android 向けに記述されました。
 
 <img src="Images/Chapters/0x05c/syscall_hooking.jpg" width="700px"/>
 
-The first piece of information we need is the address of sys_call_table. Fortunately, it is exported as a symbol in the Android kernel (iOS reversers are not so lucky). We can look up the address in the /proc/kallsyms file:
+必要な情報の最初の部分は sys_call_table のアドレスです。幸いなことに、Android カーネルのシンボルとしてエクスポートされています (iOS のリバースをする人は幸運ではありません) 。/proc/kallsyms ファイルでそのアドレスを調べることができます。
 
 ```bash
 $ adb shell "su -c echo 0 > /proc/sys/kernel/kptr_restrict"
@@ -1750,7 +1750,7 @@ $ adb shell cat /proc/kallsyms | grep sys_call_table
 c000f984 T sys_call_table
 ```
 
-This is the only memory address we need for writing our kernel module - everything else can be calculated using offsets taken from the Kernel headers (hopefully you didn't delete them yet?).
+これはカーネルモジュールを書くために必要な唯一のメモリアドレスです。他のものはカーネルヘッダから取得したオフセットを使用して計算できます (願わくば、まだそれらが削除されていないとよいのですが) 。
 
 ##### 事例: ファイル隠蔽
 
