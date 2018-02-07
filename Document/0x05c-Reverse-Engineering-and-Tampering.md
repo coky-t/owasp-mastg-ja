@@ -1693,7 +1693,7 @@ $ make
 
 #### カスタム環境のブート
 
-Before booting into the new Kernel, make a copy of the original boot image from your device. Look up the location of the boot partition as follows:
+新しいカーネルをブートする前に、デバイスからオリジナルのブートイメージのコピーを作成します。以下のようにブートパーティションの場所を探します。
 
 ```bash
 root@hammerhead:/dev # ls -al /dev/block/platform/msm_sdcc.1/by-name/         
@@ -1705,34 +1705,34 @@ lrwxrwxrwx root     root              1970-08-30 22:31 boot -> /dev/block/mmcblk
 lrwxrwxrwx root     root              1970-08-30 22:31 userdata -> /dev/block/mmcblk0p28
 ```
 
-Then, dump the whole thing into a file:
+それから、その全体をひとつのファイルにダンプします。
 
 ```bash
 $ adb shell "su -c dd if=/dev/block/mmcblk0p19 of=/data/local/tmp/boot.img"
 $ adb pull /data/local/tmp/boot.img
 ```
 
-Next, extract the ramdisk as well as some information about the structure of the boot image. There are various tools that can do this - I used Gilles Grandou's abootimg tool. Install the tool and run the following command on your boot image:
+次に、ブートイメージの構造に関する情報と ramdisk を抽出します。これを行うためのさまざまなツールがあります。私は Gilles Grandou の abootimg ツールを使用しました。ツールをインストールし、ブートイメージに以下のコマンドを実行します。
 
 ```bash
 $ abootimg -x boot.img
 ```
 
-This should create the files bootimg.cfg, initrd.img and zImage (your original kernel) in the local directory.
+これによりローカルディレクトリに bootimg.cfg, initrd.img, zImage (オリジナルのカーネル) というファイルが作成されます。
 
-You can now use fastboot to test the new kernel. The "fastboot boot" command allows you to run the kernel without actually flashing it (once you’re sure everything works, you can make the changes permanent with fastboot flash - but you don't have to). Restart the device in fastboot mode with the following command:
+fastboot を使用して新しいカーネルをテストできるようになりました。"fastboot boot" コマンドを使用すると、実際にフラッシュすることなくカーネルを実行できます (すべてが動くことを確認したら、fastboot flash で永続的に変更することができますが、そうする必要はありません) 。以下のコマンドでデバイスを fastboot モードに再起動します。
 
 ```bash
 $ adb reboot bootloader
 ```
 
-Then, use the "fastboot boot" command to boot Android with the new kernel. In addition to the newly built kernel and the original ramdisk, specify the kernel offset, ramdisk offset, tags offset and commandline (use the values listed in your previously extracted bootimg.cfg).
+そして、"fastboot boot" コマンドを使用して、新しいカーネルで Android を起動します。新しくビルドされたカーネルとオリジナルの ramdisk に加えて、kernel offset, ramdisk offset, tags offset, commandline (前に解凍した bootimg.cfg にリストされている値を使用) を指定します。
 
 ```bash
 $ fastboot boot zImage-dtb initrd.img --base 0 --kernel-offset 0x8000 --ramdisk-offset 0x2900000 --tags-offset 0x2700000 -c "console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=2 msm_watchdog_v2.enable=1"
 ```
 
-The system should now boot normally. To quickly verify that the correct kernel is running, navigate to Settings->About phone and check the “kernel version” field.
+システムは正常に起動するはずです。正しいカーネルが実行されていることをすばやく確認するには、設定 -> バージョン情報 に移動し、「カーネルバージョン」フィールドを確認します。
 
 <img src="Images/Chapters/0x05c/custom_kernel.jpg" width="350px" />
 
