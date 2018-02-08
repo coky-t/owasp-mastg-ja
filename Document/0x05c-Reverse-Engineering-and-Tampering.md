@@ -1764,7 +1764,7 @@ ABCD
 
 ついにカーネルモジュールを書くときがやってきました。ファイルを隠すには、ファイルを開く (または存在を確認する) ために使用されるシステムコールのひとつをフックする必要があります。実際にはそれらは多くあります。open, openat, access, accessat, facessat, stat, fstat など。ここでは、openat システムコールだけをフックします。これは "/bin/cat" プログラムがファイルにアクセスするときに使用されるシステムコールですので、デモンストレーションには十分役立ちます。
 
-You can find the function prototypes for all system calls in the kernel header file arch/arm/include/asm/unistd.h. Create a file called kernel_hook.c with the following code:
+すべてのシステムコールの関数プロトタイプはカーネルヘッダファイル arch/arm/include/asm/unistd.h にあります。以下のコードを使用して kernel_hook.c というファイルを作成します。
 
 ```c
 #include <linux/kernel.h>
@@ -1806,7 +1806,7 @@ return 0;
 }
 ```
 
-To build the kernel module, you need the kernel sources and a working toolchain - since you already built a complete kernel before, you are all set. Create a Makefile with the following content:
+カーネルモジュールをビルドするには、カーネルソースと作業用のツールチェーンが必要です。前もって完全なカーネルをビルドしているので、すべて設定されています。以下の内容で Makefile を作成します。
 
 ```make
 KERNEL=[YOUR KERNEL PATH]
@@ -1821,7 +1821,7 @@ clean:
         make -C $(KERNEL) M=$(shell pwd) clean
 ```
 
-Run "make" to compile the code – this should create the file kernel_hook.ko. Copy the kernel_hook.ko file to the device and load it with the insmod command. Verify with the lsmod command that the module has been loaded successfully.
+"make" を実行してコードをコンパイルします。これでファイル kernel_hook.ko が作成されます。kernel_hook.ko ファイルをデバイスにコピーし、insmod コマンドでそれをロードします。lsmod コマンドでそのモジュールがロードに成功したことを確認します。
 
 ```bash
 $ make
@@ -1833,7 +1833,7 @@ $ adb shell lsmod
 kernel_hook 1160 0 [permanent], Live 0xbf000000 (PO)
 ```
 
-Now, we’ll access /dev/kmem to overwrite the original function pointer in sys_call_table with the address of our newly injected function (this could have been done directly in the kernel module as well, but using /dev/kmem gives us an easy way to toggle our hooks on and off). I have adapted the code from Dong-Hoon You’s Phrack article <code>[19]</code> for this purpose - however, I used the file interface instead of mmap(), as I found the latter to cause kernel panics for some reason. Create a file called kmem_util.c with the following code:
+今度は /dev/kmem にアクセスして、sys_call_table のオリジナルの関数ポインタを新しく注入する関数のアドレスで上書きします (これはカーネルモジュールで直接行うこともできますが、/dev/kmem を使用することでより簡単にフックのオンとオフを切り替えることができます) 。この目的のために Dong-Hoon You's Phrack の記事 <code>[19]</code> を修正しました。mmap() の代わりにファイルインタフェースを使用したのは、何らかの理由でカーネルパニックを引き起こすことが判ったためです。以下のコードを使用して kmem_util.c というファイルを作成します。
 
 ```c
 #include <stdio.h>
