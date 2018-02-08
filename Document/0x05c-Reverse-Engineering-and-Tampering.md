@@ -1754,15 +1754,15 @@ c000f984 T sys_call_table
 
 ##### 事例: ファイル隠蔽
 
-In this howto, we're going to use a Kernel module to hide a file. Let's create a file on the device so we can hide it later:
+このハウツーでは、カーネルモジュールを使用してファイルを隠します。デバイス上にファイルを作成し、それを後で隠すことができます。
 
 ```bash
 $ adb shell "su -c echo ABCD > /data/local/tmp/nowyouseeme"             
 $ adb shell cat /data/local/tmp/nowyouseeme
 ABCD
-```bash
+```
 
-Finally it's time to write the kernel module. For file hiding purposes, we'll need to hook one of the system calls used to open (or check for the existence of) files. Actually, there many of those - open, openat, access, accessat, facessat, stat, fstat, and more. For now, we'll only hook the openat system call - this is the syscall used by the "/bin/cat" program when accessing a file, so it should be servicable enough for a demonstration.
+ついにカーネルモジュールを書くときがやってきました。ファイルを隠すには、ファイルを開く (または存在を確認する) ために使用されるシステムコールのひとつをフックする必要があります。実際にはそれらは多くあります。open, openat, access, accessat, facessat, stat, fstat など。ここでは、openat システムコールだけをフックします。これは "/bin/cat" プログラムがファイルにアクセスするときに使用されるシステムコールですので、デモンストレーションには十分役立ちます。
 
 You can find the function prototypes for all system calls in the kernel header file arch/arm/include/asm/unistd.h. Create a file called kernel_hook.c with the following code:
 
