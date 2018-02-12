@@ -28,7 +28,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [ネットワーク通信のテスト (Android アプリ)](Document/0x05g-Testing-Network-Communication.md)
 - [プラットフォームインタラクションのテスト (Android)](Document/0x05h-Testing-Platform-Interaction.md)
 - [コード品質とビルド設定のテスト (Android アプリ)](Document/0x05i-Testing-Code-Quality-and-Build-Settings.md)
-- [改竄とリバースエンジニアリング (Android)] <!-- (Document/0x05c-Reverse-Engineering-and-Tampering.md) -->
+- [改竄とリバースエンジニアリング (Android)](Document/0x05c-Reverse-Engineering-and-Tampering.md)
 - [アンチリバース防御のテスト (Android)] <!-- (Document/0x05j-Testing-Resiliency-Against-Reverse-Engineering.md) -->
 
 ### iOS テストガイド
