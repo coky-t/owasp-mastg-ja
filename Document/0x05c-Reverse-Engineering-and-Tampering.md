@@ -1891,7 +1891,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-Build kmem_util.c using the prebuilt toolchain and copy it to the device. Note that from Android Lollipop, all executables must be compiled with PIE support:
+あらかじめビルドされたツールチェーンを使用して kmem_util.c をビルドし、デバイスにコピーします。Android Lollipop から、すべての実行形式を PIE サポートでコンパイルする必要があることに注意します。
 
 ```bash
 $ /tmp/my-android-toolchain/bin/arm-linux-androideabi-gcc -pie -fpie -o kmem_util kmem_util.c
@@ -1899,27 +1899,27 @@ $ adb push kmem_util /data/local/tmp/
 $ adb shell chmod 755 /data/local/tmp/kmem_util
 ```
 
-Before we start messing with kernel memory we still need to know the correct offset into the system call table. The openat system call is defined in unistd.h which is found in the kernel sources:
+カーネルメモリに手を出す前に、まずシステムコールテーブルへの正しいオフセットを知る必要があります。openat システムコールはカーネルソースにある unistd.h で定義されています。
 
 ```bash
 $ grep -r "__NR_openat" arch/arm/include/asm/unistd.h
 \#define __NR_openat            (__NR_SYSCALL_BASE+322)
 ```
 
-The final piece of the puzzle is the address of our replacement-openat. Again, we can get this address from /proc/kallsyms.
+パズルの最後のピースは取り替えられた openat のアドレスです。ここでも /proc/kallsyms からこのアドレスを取得できます。
 
 ```bash
 $ adb shell cat /proc/kallsyms | grep new_openat
 bf000000 t new_openat    [kernel_hook]
 ```
 
-Now we have everything we need to overwrite the sys_call_table entry. The syntax for kmem_util is:
+これで sys_call_table エントリを上書きするために必要となるものがすべて得られました。kmem_util の構文は以下のとおりです。
 
 ```bash
 ./kmem_util <syscall_table_base_address> <offset> <func_addr>
 ```
 
-The following command patches the openat system call table to point to our new function.
+以下のコマンドは openat システムコールテーブルが新しい関数を指すようにパッチします。
 
 ```bash
 $ adb shell su -c /data/local/tmp/kmem_util c000f984 322 bf000000
@@ -1928,16 +1928,16 @@ New value: bf000000
 ```
 
 
-Assuming that everything worked, /bin/cat should now be unable to "see" the file.
+すべてがうまくいったと仮定すると、/bin/cat はこのファイルを「見る」ことができなくなります。
 
 ```bash
 $ adb shell su -c cat /data/local/tmp/nowyouseeme
 tmp-mksh: cat: /data/local/tmp/nowyouseeme: No such file or directory
 ```
 
-Voilá! The file "nowyouseeme" is now somewhat hidden from the view of all usermode processes (note that there's a lot more you need to do to properly hide a file, including hooking stat(), access(), and other system calls, as well as hiding the file in directory listings).
+完成です。ファイル "nowyouseeme" はすべてのユーザーモードプロセスの視点から幾らか隠されています (ファイルを適切に隠すにはさらに多くのことが必要であることに注意します。stat(), access(), その他のシステムコールをフックし、ディレクトリリストのファイルを隠します) 。
 
-File hiding is of course only the tip of the iceberg: You can accomplish a whole lot of things, including bypassing many root detection measures, integrity checks, and anti-debugging tricks. You can find some additional examples in the "case studies" section in the Bernhard Mueller's Hacking Soft Tokens Paper <sup>[27]</sup>.
+ファイルの隠蔽はもちろん氷山の一角です。多くのルート検出手段、整合性チェック、アンチデバッグトリックを回避するなど、多くのことを達成できます。Bernhard Mueller's Hacking Soft Tokens Paper <sup>[27]</sup> の "case studies" セクションにいくつかの事例があります。
 
 ### 参考情報
 
