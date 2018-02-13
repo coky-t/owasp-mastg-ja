@@ -38,11 +38,11 @@ attestation result は以下のようになります。
 }
 ~~~
 
-###### Programmatic Detection
+###### プログラムによる検出
 
-**File existence checks**
+**ファイルの存在チェック**
 
-Perhaps the most widely used method is checking for files typically found on rooted devices, such as package files of common rooting apps and associated files and directories, such as:
+おそらく最も広く使用されている手法はルート化されたデバイスに通常見つかるファイルをチェックすることです。一般的なルート化アプリのパッケージファイルや関連するファイルおよびディレクトリなどがあります。
 
 ~~~
 /system/app/Superuser.apk
@@ -52,7 +52,7 @@ Perhaps the most widely used method is checking for files typically found on roo
 
 ~~~
 
-Detection code also often looks for binaries that are usually installed once a device is rooted. Examples include checking for the presence of busybox or attempting to open the *su* binary at different locations:
+検出コードはデバイスがルート化されたときに一般的にインストールされるバイナリも検索します。例として、busybox の存在チェックや、*su* バイナリを別の場所で開こうとしていることをチェックすることなどがあります。
 
 ~~~
 /system/xbin/busybox
@@ -64,7 +64,7 @@ Detection code also often looks for binaries that are usually installed once a d
 /data/local/xbin/su
 ~~~
 
-Alternatively, checking whether *su* is in PATH also works:
+代わりに、*su* が PATH にあるかどうかを確認することもできます。
 
 ~~~java
     public static boolean checkRoot(){
@@ -77,7 +77,7 @@ Alternatively, checking whether *su* is in PATH also works:
     }
 ~~~
 
-File checks can be easily implemented in both Java and native code. The following JNI example uses the <code>stat</code> system call to retrieve information about a file (example code adapted from rootinspector <sup>[9]</sup>), and returns <code>1</code> if the file exists.
+ファイルチェックは Java とネイティブコードの両方で簡単に実装できます。以下の JNI の例では、<code>stat</code> システムコールを使用してファイルに関する情報を取得します (rootinspector <sup>[9]</sup> から改変したコード例)。ファイルが存在する場合、<code>1</code> を返します。
 
 ```c
 jboolean Java_com_example_statfile(JNIEnv * env, jobject this, jstring filepath) {
