@@ -10,7 +10,7 @@ Android では、用語「ルート検出」をより広く定義し、カスタ
 
 ##### 共通ルート検出手法
 
-In the following section, we list some of the root detection methods you'll commonly encounter. You'll find some of those checks implemented in the crackme examples that accompany the OWASP Mobile Testing Guide <sup>[1]</sup>.
+以下のセクションでは、よく見かけるいくつかのルート検出手法を記します。OWASP Mobile Testing Guide に添付されている crackme サンプル <sup>[1]</sup> で実装されているチェックがいくつかあります。
 
 ###### SafetyNet
 
