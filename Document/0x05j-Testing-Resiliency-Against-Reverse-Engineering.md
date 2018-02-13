@@ -14,16 +14,16 @@ Android では、用語「ルート検出」をより広く定義し、カスタ
 
 ###### SafetyNet
 
-SafetyNet is an Android API that creates a profile of the device using software and hardware information. This profile is then compared against a list of white-listed device models that have passed Android compatibility testing. Google recommends using the feature as "an additional in-depth defense signal as part of an anti-abuse system" <sup>[2]</sup>.
+SafetyNet はソフトウェアとハードウェアの情報を使用してデバイスのプロファイルを作成する Android API です。このプロファイルは Android 互換性テストに合格したホワイトリスト化されたデバイスモデルのリストと比較されます。Google はこの機能を「不正使用防止システムの一環として付加的な多層防御シグナル」として使用することを推奨しています <sup>[2]</sup> 。
 
-What exactly SafetyNet does under the hood is not well documented, and may change at any time: When you call this API, the service downloads a binary package containing the device vaidation code from Google, which is then dynamically executed using reflection. An analysis by John Kozyrakis showed that the checks performed by SafetyNet also attempt to detect whether the device is rooted, although it is unclear how exactly this is determined <sup>[3]</sup>.
+SafetyNet が正確に中で何をしているかは十分に文書化されておらず、いつでも変更される可能性があります。この API を呼び出すと、サービスは Google はデバイス検証コードを含むバイナリパッケージをダウンロードし、リフレクションを使用して動的に実行されます。John Kozyrakis の分析によると、SafetyNet により実行された検査はデバイスがルート化されているかどうかを検出しようとしますが、これがどのくらい正しいかは不明確です <sup>[3]</sup> 。
 
-To use the API, an app may the SafetyNetApi.attest() method with returns a JWS message with the *Attestation Result*, and then check the following fields:
+この API を使用するには、アプリは the SafetyNetApi.attest() メソッドが *Attestation Result* の JWS メッセージを返し、それから以下のフィールドをチェックします。
 
-- ctsProfileMatch: Of "true", the device profile matches one of Google's listed devices that have passed  Android compatibility testing.
-- basicIntegrity: The device running the app likely wasn't tampered with.
+- ctsProfileMatch: "true" の場合、デバイスプロファイルは Android 互換性テストに合格した Google のリスト化されたデバイスのひとつと一致します。
+- basicIntegrity: アプリを実行しているデバイスはおそらく改竄されてはいません。
 
-The attestation result looks as follows.
+attestation result は以下のようになります。
 
 ~~~
 {
