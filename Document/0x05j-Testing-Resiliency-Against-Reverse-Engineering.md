@@ -4,9 +4,9 @@
 
 #### 概要
 
-In the context of anti-reversing, the goal of root detection is to make it a bit more difficult to run the app on a rooted device, which in turn impedes some tools and techniques reverse engineers like to use. As with most other defenses, root detection is not highly effective on its own, but having some root checks sprinkled throughout the app can improve the effectiveness of the overall anti-tampering scheme.
+アンチリバースの文脈では、ルート検出の目的はルート化されたデバイス上でアプリを実行することをもう少し難しくすることで、その後、リバースエンジニアが使用したいツールやテクニックを妨げます。他のほとんどの防御と同様に、ルート検出はそれ自体に高い効果はありませんが、いくつかのルートチェックをアプリにちりばめることで改竄対策スキーム全体の有効性が向上します。
 
-On Android, we define the term "root detection" a bit more broadly to include detection of custom ROMs, i.e. verifying whether the device is a stock Android build or a custom build.
+Android では、用語「ルート検出」をより広く定義し、カスタム ROM の検出などを含みます。例えば、デバイスが製品版の Android ビルドであるか、もしくはカスタムビルドであるかを確認します。
 
 ##### 共通ルート検出手法
 
