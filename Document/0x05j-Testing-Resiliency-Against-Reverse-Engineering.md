@@ -160,17 +160,17 @@ for (int i = 1; ; i = 0)
 
 Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。出荷版の Android ビルドでは、OTA アップデートに Google の公開証明書を使用します <sup>[4]</sup> 。
 
-##### Bypassing Root Detection
+##### ルート検出のバイパス
 
-Run execution traces using JDB, DDMS, strace and/or Kernel modules to find out what the app is doing - you'll usually see all kinds of suspect interactions with the operating system, such as opening *su* for reading or obtaining a list of processes. These interactions are surefire signs of root detection. Identify and deactivate the root detection mechanisms one-by-one. If you're performing a black-box resilience assessment, disabling the root detection mechanisms is your first step.
+JDB, DDMS, strace やカーネルモジュールを使用して実行トレースを実行し、アプリが何をしているかを調べます。通常はオペレーティングシステムとのすべての種類の疑わしいやり取りを表示します。*su* の読み込みやプロセスリストの取得などがあります。これらのやり取りはルート検出の確実な兆候です。ルート検出メカニズムを一つ一つ特定し非アクティブにします。ブラックボックスの耐性評価を実行している場合は、ルート化検出メカニズムを無効にすることが最初のステップです。
 
-You can use a number of techniques to bypass these checks, most of which were introduced in the "Reverse Engineering and Tampering" chapter:
+多くのテクニックを使用してこれらのチェックをバイパスできます。これらのほとんどは「リバースエンジニアリングと改竄」の章で紹介されています。
 
-1. Renaming binaries. For example, in some cases simply renaming the "su" binary to something else is enough to defeat root detection (try not to break your enviroment though!).
-2. Unmounting /proc to prevent reading of process lists etc. Sometimes, proc being unavailable is enough to bypass such checks.
-2. Using Frida or Xposed to hook APIs on the Java and native layers. By doing this, you can hide files and processes, hide the actual content of files, or return all kinds of bogus values the app requests;
-3. Hooking low-level APIs using Kernel modules.
-4. Patching the app to remove the checks.
+1. バイナリの名前を変更する。例えば、場合によっては単に "su" バイナリの名前を変更するだけで、ルート検出を無効にできます (あなたの環境を壊さないようにします) 。
+2. /proc をアンマウントして、プロセスリストの詠み込みなどを防止する。往々にして、proc が利用できないだけでそのようなチェックを無効にできます。
+3. Frida や Xposed を使用して、Java やネイティブレイヤーに API をフックする。これを行うことにより、ファイルやプロセスを隠したり、ファイルの実際の内容を隠したり、アプリが要求するすべての種類の偽の値を返したりできます。
+4. カーネルモジュールを使用して、低レベル API をフックする。
+5. アプリにパッチを当て、チェックを削除する。
 
 #### Effectiveness Assessment
 
