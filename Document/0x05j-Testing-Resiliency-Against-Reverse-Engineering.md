@@ -140,9 +140,9 @@ com.zachspong.temprootremovejb
 com.ramdroid.appquarantine
 ~~~
 
-**Checking for writable partitions and system directories**
+**書き込み可能なパーティションとシステムディレクトリの確認**
 
-Unusual permissions on system directories can indicate a customized or rooted device. While under normal circumstances, the system and data directories are always mounted as read-only, you'll sometimes find them mounted as read-write when the device is rooted. This can be tested for by checking whether these filesystems have been mounted with the "rw" flag, or attempting to create a file in these directories
+sysytem ディレクトリに対する普通とは異なるアクセス許可は、カスタマイズまたはルート化されたデバイスを示します。通常の状況下では、system および data ディレクトリは常に読み取り専用でマウントされていますが、デバイスがルート化されていると読み書き可能でマウントされることがあります。これはこれらのファイルシステムが "rw" フラグでマウントされているかどうかをチェックすることでテストできます。もしくはこれらのディレクトリにファイルを作成してみます。
 
 **Checking for custom Android builds**
 
