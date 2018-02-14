@@ -127,9 +127,9 @@ Supersu は最も人気のあるルート化ツールであり、<code>daemonsu<
     }
 ```
 
-**Checking installed app packages**
+**インストール済みのアプリパッケージの確認**
 
-The Android package manager can be used to obtain a list of installed packages. The following package names belong to popular rooting tools:
+Android パッケージマネージャを使用するとインストールされているパッケージのリストを取得できます。以下のパッケージ名は一般的なルート化ツールに属します。
 
 ~~~
 com.thirdparty.superuser
