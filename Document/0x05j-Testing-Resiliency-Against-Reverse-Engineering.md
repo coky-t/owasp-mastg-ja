@@ -101,9 +101,9 @@ jboolean Java_com_example_statfile(JNIEnv * env, jobject this, jstring filepath)
 
 <code>su</code> が存在するかどうかを判断する別の方法は、<code>Runtime.getRuntime.exec()</code> で実行を試みることです。<code>su</code> が PATH にない場合、IOException がスローされます。同じ方法を使用して、ルート化されたデバイス上によく見つかる他のプログラムを確認することができます。busybox や一般的にそれを指すシンボリックリンクなどがあります。
 
-**Checking running processes**
+**実行中のプロセスの確認**
 
-Supersu - by far the most popular rooting tool - runs an authentication daemon named <code>daemonsu</code>, so the presence of this process is another sign of a rooted device. Running processes can be enumerated through <code>ActivityManager.getRunningAppProcesses()</code> and <code>manager.getRunningServices()</code> APIs, the <code>ps</code> command, or walking through the <code>/proc</code> directory. As an example, this is implemented the following way in rootinspector <sup>[9]</sup>:
+Supersu は最も人気のあるルート化ツールであり、<code>daemonsu</code> という名前の認証デーモンを実行します。そのため、このプロセスが存在することはルート化されたデバイスのもうひとつの兆候です。実行中のプロセスは <code>ActivityManager.getRunningAppProcesses()</code> および <code>manager.getRunningServices()</code> API、<code>ps</code> コマンドで列挙でき、<code>/proc</code> ディレクトリで閲覧できます。例として、rootinspector <sup>[9]</sup> では以下のように実装されています。
 
 ```java
     public boolean checkRunningProcesses() {
