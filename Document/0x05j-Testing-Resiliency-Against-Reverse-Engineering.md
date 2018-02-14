@@ -144,9 +144,9 @@ com.ramdroid.appquarantine
 
 sysytem ディレクトリに対する普通とは異なるアクセス許可は、カスタマイズまたはルート化されたデバイスを示します。通常の状況下では、system および data ディレクトリは常に読み取り専用でマウントされていますが、デバイスがルート化されていると読み書き可能でマウントされることがあります。これはこれらのファイルシステムが "rw" フラグでマウントされているかどうかをチェックすることでテストできます。もしくはこれらのディレクトリにファイルを作成してみます。
 
-**Checking for custom Android builds**
+**カスタム Android ビルドの確認**
 
-Besides checking whether the device is rooted, it is also helpful to check for signs of test builds and custom ROMs. One method of doing this is checking whether the BUILD tag contains test-keys, which normally indicates a custom Android image <sup>[5]</sup>. This can be checked as follows <sup>[6]</sup>:
+デバイスがルート化されているかどうかを確認するだけでなく、テストビルドやカスタム ROM の兆候を確認することも役に立ちます。これを行う方法のひとつは、BUILD タグに test-keys が含まれているかどうかを確認することです。これは一般的にカスタム Android イメージを示します <sup>[5]</sup> 。これは以下のように確認できます <sup>[6]</sup> 。
 
 ~~~
 private boolean isTestKeyBuild()
@@ -158,7 +158,7 @@ for (int i = 1; ; i = 0)
 }
 ~~~
 
-Missing Google Over-The-Air (OTA) certificates are another sign of a custom ROM, as on stock Android builds, OTA updates use Google's public certificates <sup>[4]</sup>.
+Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。出荷版の Android ビルドでは、OTA アップデートに Google の公開証明書を使用します <sup>[4]</sup> 。
 
 ##### Bypassing Root Detection
 
