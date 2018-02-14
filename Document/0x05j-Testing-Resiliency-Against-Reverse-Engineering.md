@@ -97,9 +97,9 @@ jboolean Java_com_example_statfile(JNIEnv * env, jobject this, jstring filepath)
 }
 ```
 
-**Executing su and other commands**
+**su および他のコマンドの実行**
 
-Another way of determining whether <code>su</code> exists is attempting to execute it through <code>Runtime.getRuntime.exec()</code>. This will throw an IOException if <code>su</code> is not in PATH. The same method can be used to check for other programs often found on rooted devices, such as busybox or the symbolic links that typically point to it.
+<code>su</code> が存在するかどうかを判断する別の方法は、<code>Runtime.getRuntime.exec()</code> で実行を試みることです。<code>su</code> が PATH にない場合、IOException がスローされます。同じ方法を使用して、ルート化されたデバイス上によく見つかる他のプログラムを確認することができます。busybox や一般的にそれを指すシンボリックリンクなどがあります。
 
 **Checking running processes**
 
