@@ -172,37 +172,37 @@ JDB, DDMS, strace やカーネルモジュールを使用して実行トレー�
 4. カーネルモジュールを使用して、低レベル API をフックする。
 5. アプリにパッチを当て、チェックを削除する。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-Check for the presence of root detection mechanisms and apply the following criteria:
+ルート検出メカニズムが存在するかどうかを確認し、以下の基準を適用します。
 
-- Multiple detection methods are scattered throughout the app (as opposed to putting everything into a single method);
-- The root detection mechanisms operate on multiple API layers (Java APIs, native library functions, Assembler / system calls);
-- The mechanisms show some level of originality (vs. copy/paste from StackOverflow or other sources);
+- 複数の検出手法がアプリ全体に分散されている (ひとつの手法にすべてを任せてはいない)
+- ルート検出メカニズムは複数の API レイヤ (Java API、ネイティブライブラリ関数、アセンブラ/システムコール) で動作する
+- そのメカニズムはある程度の独創性を示している (StackOverflow や他のソースからコピー＆ペーストしたものではない)
 
-Develop bypass methods for the root detection mechanisms and answer the following questions:
+ルート検出メカニズムのバイパス手法を開発し、以下の質問に答えます。
 
-- Is it possible to easily bypass the mechanisms using standard tools such as RootCloak?
-- Is some amount of static/dynamic analysis necessary to handle the root detection?
-- Did you need to write custom code?
-- How long did it take you to successfully bypass it?
-- What is your subjective assessment of difficulty?
+- RootCloak などの標準ツールを使用してそのメカニズムを簡単にバイパスできますか？
+- ルート検出を処理するにはある程度の静的/動的解析が必要ですか？
+- カスタムコードを書く必要はありましたか？
+- それをうまくバイパスするにはどれくらいの時間がかかりましたか？
+- 難易度の主観的評価はいくつですか？
 
-For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+より詳細な評価を行うには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
 
 #### 改善方法
 
-If root detection is missing or too easily bypassed, make suggestions in line with the effectiveness criteria listed above. This may include adding more detection mechansims, or better integrating existing mechanisms with other defenses.
+ルート検出が欠落しているか、または非常に簡単にバイパスされてしまう場合は、上記の有効性基準に沿って提案を作成します。これには、より多くの検出メカニズムを追加すること、または既存のメカニズムを他の防御とより良く統合することが含まれます。
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
-- V8.3: "The app implements two or more functionally independent methods of root detection and responds to the presence of a rooted device either by alerting the user or terminating the app."
+- V8.3: "アプリは二つ以上の機能的に依存しないルート検出方式を実装しており、ユーザーに警告するかアプリを終了することでルート化デバイスの存在に応答している。"
 
 ##### CWE
 
