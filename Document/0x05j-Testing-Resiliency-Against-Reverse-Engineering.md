@@ -227,11 +227,11 @@ N/A
 
 #### 概要
 
-Debugging is a highly effective way of analyzing the runtime behaviour of an app. It allows the reverse engineer to step through the code, stop execution of the app at arbitrary point, inspect the state of variables, read and modify memory, and a lot more.
+デバッグはアプリのランタイム動作を解析する非常に効果的な方法です。これはリバースエンジニアがコードをステップ実行し、任意の箇所でアプリの実行を停止し、変数の状態を検査し、メモリを読み取りおよび変更し、さらに多くのことを可能にします。
 
-As mentioned in the "Reverse Engineering and Tampering" chapter, we have to deal with two different debugging protocols on Android: One could debug on the Java level using JDWP, or on the native layer using a ptrace-based debugger. Consequently, a good anti-debugging scheme needs to implement defenses against both debugger types.
+「リバースエンジニアリングと改竄」の章で述べたように、Android では二つの異なるデバッグプロトコルを扱う必要があります。JDWP を使用した Java レベルと、ptrace ベースのデバッガを使用したネイティブレイヤーのデバッグが可能です。したがって、優れたアンチデバッグスキームでは両方のデバッガタイプに対して防御を実装する必要があります。
 
-Anti-debugging features can be preventive or reactive. As the name implies, preventive anti-debugging tricks prevent the debugger from attaching in the first place, while reactive tricks attempt to detect whether a debugger is present and react to it in some way (e.g. terminating the app, or triggering some kind of hidden behaviour). The "more-is-better" rule applies: To maximize effectiveness, defenders combine multiple methods of prevention and detection that operate on different API layers and are distributed throughout the app.
+アンチデバッグ機能は予防型または反応型にできます。この名前が示すように、予防型アンチデバッグトリックはまず第一にデバッガがアタッチすることを防ぎます。反応型トリックはデバッガが存在するかどうかを検出し、何らかの方法でそれに反応させようと試みます (アプリの終了やなんらかの隠された動作のトリガなど) 。「多ければ多いほど良い」ルールが適用されます。効果を最大限にするため、防御側では、さまざまな API レイヤーで動作しアプリ全体に分散されている、複数の予防と検出の手法を組み合わせます。
 
 ##### Anti-JDWP-Debugging Examples
 
