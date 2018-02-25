@@ -237,9 +237,9 @@ N/A
 
 「リバースエンジニアリングと改竄」の章では、デバッガと Java 仮想マシンとの間の通信に使用されるプロトコルである JDWP について説明しました。また、Manifest ファイルにパッチを当てて任意のアプリを容易にデバッグ可能にできることや、ro.debuggable システムプロパティを変更することであらゆるアプリをデバッグ可能にできることがわかりました。開発者が JDWP デバッガを検出ないし無効にするために行ういくつかのことを見てみます。
 
-###### Checking Debuggable Flag in ApplicationInfo
+###### ApplicationInfo のデバッグ可能フラグの確認
 
-We have encountered the <code>android:debuggable</code> attribute a few times already. This flag in the app Manifest determines whether the JDWP thread is started for the app. Its value can be determined programmatically using the app's ApplicationInfo object. If the flag is set, this is an indication that the Manifest has been tampered with to enable debugging.
+すでに何度か <code>android:debuggable</code> 属性が出てきました。アプリマニフェストのこのフラグは JDWP スレッドがアプリに対して起動されるかどうかを決定します。その値はアプリの ApplicationInfo オブジェクトを使用してプログラムで決定できます。このフラグが設定されている場合、これはマニフェストが改竄されてデバッグ可能になっていることを示します。
 
 ```java
     public static boolean isDebuggable(Context context){
@@ -250,7 +250,7 @@ We have encountered the <code>android:debuggable</code> attribute a few times al
 ```
 ###### isDebuggerConnected
 
-The Android Debug system class offers a static method for checking whether a debugger is currently connected. The method simply returns a boolean value.
+Android Debug システムクラスはデバッガが現在接続されているかどうかをチェックする静的メソッドを提供します。このメソッドは単にブール値を返します。
 
 ```
     public static boolean detectDebugger() {
@@ -258,7 +258,7 @@ The Android Debug system class offers a static method for checking whether a deb
     }
 ```
 
-The same API can be called from native code by accessing the DvmGlobals global structure.
+同じ API をネイティブコードから呼ぶことが可能です。DvmGlobals グローバル構造体にアクセスします。
 
 ```
 JNIEXPORT jboolean JNICALL Java_com_test_debugging_DebuggerConnectedJNI(JNIenv * env, jobject obj) {
@@ -268,9 +268,9 @@ JNIEXPORT jboolean JNICALL Java_com_test_debugging_DebuggerConnectedJNI(JNIenv *
 }
 ```
 
-###### Timer Checks
+###### タイマーチェック
 
-The <code>Debug.threadCpuTimeNanos</code> indicates the amount of time that the current thread has spent executing code. As debugging slows down execution of the process, The difference in execution time can be used to make an educated guess on whether a debugger is attached [2].
+<code>Debug.threadCpuTimeNanos</code> は現在のスレッドがコードの実行に費やした時間量を示します。デバッグはプロセスの実行を遅くするため、実行時間の違いを利用して、デバッガがアタッチされているかどうかを推測することができます [2] 。
 
 ```
 static boolean detect_threadCpuTimeNanos(){
