@@ -289,9 +289,9 @@ static boolean detect_threadCpuTimeNanos(){
   }
 ```
 
-###### Messing With JDWP-related Data Structures
+###### JDWP 関連のデータ構造への干渉
 
-In Dalvik, the global virtual machine state is accessible through the DvmGlobals structure. The global variable gDvm holds a pointer to this structure. DvmGlobals contains various variables and pointers important for JDWP debugging that can be tampered with.
+Dalvik では、グローバル仮想マシンの状態は DvmGlobals 構造体を介してアクセス可能です。グローバル変数 gDvm はこの構造体へのポイントを保持します。DvmGlobals には JDWP デバッグに重要なさまざまな変数やポインタが含まれており、改竄可能です。
 
 ```c
 struct DvmGlobals {
@@ -317,7 +317,7 @@ struct DvmGlobals {
 };
 ```
 
-For example, setting the gDvm.methDalvikDdmcServer_dispatch function pointer to NULL crashed the JDWP thread<sup>[2]</sup>:
+例えば、gDvm.methDalvikDdmcServer_dispatch 関数ポインタに NULL を設定すると JDWP スレッドがクラッシュします <sup>[2]</sup> 。
 
 ```c
 JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
@@ -325,9 +325,9 @@ JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
 }
 ```
 
-Debugging can be disabled using similar techniques in ART, even though the gDvm variable is not available. The ART runtime exports some of the vtables of JDWP-related classes as global symbols (in C++, vtables are tables that hold pointers to class methods). This includes the vtables of the classes include JdwpSocketState and JdwpAdbState - these two handle JDWP connections via network sockets and ADB, respectively. The behaviour of the debugging runtime can be manipulatedB ny overwriting the method pointers in those vtables.
+gDvm 変数が利用できない場合でも、ART で同様の技法を使用してデバッグを無効にできます。ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、vtable はクラスメソッドのポインタを保持するテーブルです) 。これには JdwpSocketState と JdwpAdbState を含むクラスの vtable を含んでいます。これら二つはネットワークソケットと ADB を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作はこれらの vtable のメソッドポインタを上書きすることにより操作できます。
 
-One possible way of doing this is overwriting the address of "jdwpAdbState::ProcessIncoming()" with the address of "JdwpAdbState::Shutdown()". This will cause the debugger to disconnect immediately [3].
+これを行うための方法のひとつは "jdwpAdbState::ProcessIncoming()" のアドレスを "JdwpAdbState::Shutdown()" のアドレスで上書きすることです。これによりデバッガは直ちに切断されます [3] 。
 
 ```c
 #include <jni.h>
