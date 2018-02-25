@@ -391,15 +391,15 @@ JNIEXPORT void JNICALL Java_sg_vantagepoint_jdwptest_MainActivity_JDWPfun(
 }
 ```
 
-##### Anti-Native-Debugging Examples
+##### アンチネイティブデバッグの例
 
-Most Anti-JDWP tricks (safe for maybe timer-based checks) won't catch classical, ptrace-based debuggers, so separate defenses are needed to defend against this type of debugging. Many "traditional" Linux anti-debugging tricks are employed here.
+ほとんどのアンチ JDWP トリックは (おそらくタイマーベースのチェックは安全だが) 旧来の ptrace ベースのデバッガをキャッチしないため、この種のデバッグを防ぐには別の防御が必要です。多くの「従来の」Linux アンチデバッグトリックがここでは採用されています。
 
-###### Checking TracerPid
+###### TracerPid のチェック
 
-When the <code>ptrace</code> system call is used to attach to a process, the "TracerPid" field in the status file of the debugged process shows the PID of the attaching process. The default value of "TracerPid" is "0" (no other process attached). Consequently, finding anything else than "0" in that field is a sign of debugging or other ptrace-shenanigans.
+プロセスへのアタッチに <code>ptrace</code> システムコールを使用すると、デバッグされたプロセスのステータスファイルの "TracerPid" フィールドにアタッチプロセスの PID が表示されます。"TracerPid" のデフォルト値は "0" (他のプロセスはアタッチしていない) です。したがって、そのフィールドに "0" 以外のものを見つけることは、デバッガやその他の ptrace のいたずらの兆候です。
 
-The following implementation is taken from Tim Strazzere's Anti-Emulator project <sup>[3]</sup>.
+以下の実装は Tim Strazzere's Anti-Emulator project <sup>[3]</sup> から得ました。
 
 ```
     public static boolean hasTracerPid() throws IOException {
