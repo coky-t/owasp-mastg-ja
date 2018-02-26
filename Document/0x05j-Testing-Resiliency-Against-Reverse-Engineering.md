@@ -428,11 +428,11 @@ JNIEXPORT void JNICALL Java_sg_vantagepoint_jdwptest_MainActivity_JDWPfun(
     }
 ```
 
-**Ptrace variations***
+**Ptraceのバリエーション***
 
-On Linux, the <code>ptrace()</code> system call is used to observe and control the execution of another process (the "tracee"), and examine and change the tracee's memory and registers [5]. It is the primary means of implementing breakpoint debugging and system call tracing. Many anti-debugging tricks make use of <code>ptrace</code> in one way or another, often exploiting the fact that only one debugger can attach to a process at any one time.
+Linux では、<code>ptrace()</code> システムコールは別のプロセス ("tracee") の実行を監視および制御し、tracee のメモリとレジスタを調査および変更するために使用されます [5] 。それはブレークポイントデバッグとシステムコールトレースを実装する主な手段です。多くのアンチデバッグトリックは何かについえ <code>ptrace</code> を使用します。一度にプロセスにアタッチできるのはひとつのデバッガだけであるという事実をよく利用します。
 
-As a simple example, one could prevent debugging of a process by forking a child process and attaching it to the parent as a debugger, using code along the following lines:
+簡単な例として、以下のようなコードを使用して、子プロセスをフォークし、それをデバッガとして親プロセスにアタッチすることで、プロセスのデバッグを防ぐことができます。
 
 ```
 void fork_and_attach()
