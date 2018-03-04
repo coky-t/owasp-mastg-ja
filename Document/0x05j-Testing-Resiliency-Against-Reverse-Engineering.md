@@ -454,7 +454,7 @@ void fork_and_attach()
 }
 ```
 
-With the child attached, any further attempts to attach to the parent would fail. We can verify this by compiling the code into a JNI function and packing it into an app we run on the device.
+子がアタッチされると、何かしらがさらに親に接続しようとする試みは失敗します。これを確認するには、JNI 関数のコードをコンパイルし、デバイス上で実行するアプリにパックします。
 
 ```bash
 root@android:/ # ps | grep -i anti
@@ -462,7 +462,7 @@ u0_a151   18190 201   1535844 54908 ffffffff b6e0f124 S sg.vantagepoint.antidebu
 u0_a151   18224 18190 1495180 35824 c019a3ac b6e0ee5c S sg.vantagepoint.antidebug
 ```
 
-Attempting to attach to the parent process with gdbserver now fails with an error.
+親プロセスに gdbserver でアタッチしようとすると、エラーで失敗します。
 
 ```bash
 root@android:/ # ./gdbserver --attach localhost:12345 18190
@@ -471,11 +471,11 @@ Cannot attach to lwp 18190: Operation not permitted (1)
 Exiting
 ```
 
-This is however easily bypassed by killing the child and "freeing" the parent from being traced. In practice, you'll therefore usually find more elaborate schemes that involve multiple processes and threads, as well as some form of monitoring to impede tampering. Common methods include:
+しかしこれは、子を殺し、追跡から親を「解放」することにより、容易に回避されます。実際には、通常、複数のプロセスやスレッド、さらには改ざんを防ぐための監視など、より緻密なスキームがあります。一般的な方法は以下のとおりです。
 
-- Forking multiple processes that trace one another;
-- Keeping track of running processes to make sure the children stay alive;
-- Monitoring values in the /proc filesystem, such as TracerPID in /proc/pid/status.
+- 互いに追跡する複数のプロセスをフォークします。
+- 子が生存し続けていることを確認するために実行中のプロセスを追跡し続けます。
+- /proc/pid/status の TracerPID など /proc ファイルシステムの値を監視します。
 
 Let's look at a simple improvement we can make to the above method. After the initial <code>fork()</code>, we launch an extra thread in the parent that continually monitors the status of the child. Depending on whether the app has been built in debug or release mode (according to the <code>android:debuggable</code> flag in the Manifest), the child process is expected to behave in one of the following ways:
 
