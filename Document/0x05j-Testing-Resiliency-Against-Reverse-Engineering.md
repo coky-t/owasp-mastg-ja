@@ -471,18 +471,18 @@ Cannot attach to lwp 18190: Operation not permitted (1)
 Exiting
 ```
 
-しかしこれは、子を殺し、追跡から親を「解放」することにより、容易に回避されます。実際には、通常、複数のプロセスやスレッド、さらには改ざんを防ぐための監視など、より緻密なスキームがあります。一般的な方法は以下のとおりです。
+しかしこれは、子を終了し、追跡から親を「解放」することにより、容易に回避されます。実際には、通常、複数のプロセスやスレッド、さらには改ざんを防ぐための監視など、より緻密なスキームがあります。一般的な方法は以下のとおりです。
 
 - 互いに追跡する複数のプロセスをフォークします。
 - 子が生存し続けていることを確認するために実行中のプロセスを追跡し続けます。
 - /proc/pid/status の TracerPID など /proc ファイルシステムの値を監視します。
 
-Let's look at a simple improvement we can make to the above method. After the initial <code>fork()</code>, we launch an extra thread in the parent that continually monitors the status of the child. Depending on whether the app has been built in debug or release mode (according to the <code>android:debuggable</code> flag in the Manifest), the child process is expected to behave in one of the following ways:
+上記の方法を簡単に改良してみます。初期の <code>fork()</code> の後、子のステータスを継続的に監視する親の追加スレッドを実行します。アプリがデバッグモードとリリースモードのいずれでビルドされたか (マニフェストの <code>android:debuggable</code> による) に従って、子プロセスは以下のいずれかの方法で動作することが期待されます。
 
-1. In release mode, the call to ptrace fails and the child crashes immediately with a segmentation fault (exit code 11).
-2. In debug mode, the call to ptrace works and the child is expected to run indefinitely. As a consequence, a call to waitpid(child_pid) should never return - if it does, something is fishy and we kill the whole process group.
+1. リリースモードでは、ptrace への呼び出しは失敗し、子はセグメンテーションフォルト (exit code 11) で直ちにクラッシュします。
+2. デバッグモードでは、ptrace への呼び出しは機能し、子は無期限に実行されます。結果として、waitpid(child_pid) への呼び出しは決して戻らないでしょう。もし戻るのであれば、何かが怪しく、私たちはプロセスグループ全体を終了します。
 
-The complete code implementing this as a JNI function is below:
+これを JNI 関数として実装する完全なコードは以下のとおりです。
 
 ```c
 #include <jni.h>
@@ -550,7 +550,7 @@ Java_sg_vantagepoint_antidebug_MainActivity_antidebug(
 }
 ```
 
-Again, we pack this into an Android app to see if it works. Just as before, two processes show up when running the debug build of the app.
+再び、これを Android アプリにパックして、それが機能するかどうかを確認します。前と同様に、アプリのデバッグビルドを実行すると、二つのプロセスが表示されます。
 
 ```bash
 root@android:/ # ps | grep -i anti-debug
@@ -558,7 +558,7 @@ u0_a152   20267 201   1552508 56796 ffffffff b6e0f124 S sg.vantagepoint.anti-deb
 u0_a152   20301 20267 1495192 33980 c019a3ac b6e0ee5c S sg.vantagepoint.anti-debug
 ```
 
-However, if we now terminate the child process, the parent exits as well:
+但し、子プロセスを終了すると、親プロセスも終了します。
 
 ```bash
 root@android:/ # kill -9 20301
@@ -569,7 +569,7 @@ Cannot attach to lwp 20267: No such file or directory (2)
 Exiting
 ```
 
-To bypass this, it's necessary to modify the behavior of the app slightly (the easiest is to patch the call to _exit with NOPs, or hooking the function _exit in libc.so). At this point, we have entered the proverbial "arms race": It is always possible to implement more inticate forms of this defense, and there's always some ways to bypass it.
+これを回避するには、アプリの動作を少し修正する必要があります (最も簡単なのは _exit への呼び出しを NOP でパッチするか、libc.so の関数 _exit をフックすることです) 。現時点では、よく知られた「軍拡競争」に入ります。この防御をより複雑な形で実現することは常に可能であり、それを回避する方法は常にあります。
 
 ##### Bypassing Debugger Detection
 
