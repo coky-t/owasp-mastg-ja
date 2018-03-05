@@ -571,13 +571,13 @@ Exiting
 
 これを回避するには、アプリの動作を少し修正する必要があります (最も簡単なのは _exit への呼び出しを NOP でパッチするか、libc.so の関数 _exit をフックすることです) 。現時点では、よく知られた「軍拡競争」に入ります。この防御をより複雑な形で実現することは常に可能であり、それを回避する方法は常にあります。
 
-##### Bypassing Debugger Detection
+##### デバッガ検出のバイパス
 
-As usual, there is no generic way of bypassing anti-debugging: It depends on the particular mechanism(s) used to prevent or detect debugging, as well as other defenses in the overall protection scheme. For example, if there are no integrity checks, or you have already deactivated them, patching the app might be the easiest way. In other cases, using a hooking framework or kernel modules might be preferable.
+例によって、アンチデバッグを回避する一般的な方法はありません。これはデバッグを防止または検出するために使用される特定のメカニズムや、全体的な保護スキームのその他の防御に依存します。例えば、整合性チェックがない場合、またはすでに無効化している場合には、アプリにパッチを当てるのが最も簡単な方法です。他の場合には、フックフレームワークやカーネルモジュールを使用するほうが望ましいかもしれません。
 
-1. Patching out the anti-debugging functionality. Disable the unwanted behaviour by simply overwriting it with NOP instructions. Note that more complex patches might be required if the anti-debugging mechanism is well thought-out.
-2. Using Frida or Xposed to hook APIs on the Java and native layers. Manipulate the return values of functions such as isDebuggable and isDebuggerConnected to hide the debugger.
-3. Change the environment. Android is an open enviroment. If nothing else works, you can modify the operating system to subvert the assumptions the developers made when designing the anti-debugging tricks.
+1. アンチデバッグ機能をパッチアウトします。単純に NOP 命令で上書きすることで不要な動作を無効にします。アンチデバッグメカニズムが十分に検討されている場合には、より複雑なパッチが必要になることに注意します。
+2. FridaまたはXposedを使用して、Java およびネイティブレイヤの API をフックします。isDebuggable や isDebuggerConnected などの関数の戻り値を操作し、デバッガを隠蔽します。
+3. 環境を変更します。Android はオープンな環境です。それ以外の何も機能しないのであれば、オペレーティングシステムを変更して、アンチデバッグトリックを設計する際に開発者が行った想定を覆すことができます。
 
 ###### Bypass Example: UnCrackable App for Android Level 2
 
