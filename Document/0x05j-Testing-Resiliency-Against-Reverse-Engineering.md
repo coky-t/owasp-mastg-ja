@@ -579,11 +579,12 @@ Exiting
 2. FridaまたはXposedを使用して、Java およびネイティブレイヤの API をフックします。isDebuggable や isDebuggerConnected などの関数の戻り値を操作し、デバッガを隠蔽します。
 3. 環境を変更します。Android はオープンな環境です。それ以外の何も機能しないのであれば、オペレーティングシステムを変更して、アンチデバッグトリックを設計する際に開発者が行った想定を覆すことができます。
 
-###### Bypass Example: UnCrackable App for Android Level 2
+###### バイパスの例: UnCrackable App for Android Level 2
 
-When dealing with obfuscated apps, you'll often find that developers purposely "hide away" data and functionality in native libraries. You'll find an example for this in level 2 of the "UnCrackable App for Android'.
+難読化されたアプリを扱う場合、開発者はネイティブライブラリのデータや機能を意図的に「隠す」ことがよくあります。"UnCrackable App for Android" のレベル2にこの例があります。
 
-At first glance, the code looks similar to the prior challenge. A class called "CodeCheck" is responsible for verifying the code entered by the user. The actual check appears to happen in the method "bar()", which is declared as a *native* method.
+一見すると、コードは以前のチャレンジと似ています。
+"CodeCheck" と呼ばれるクラスはユーザーが入力したコードの検証を担当します。実際のチェックはメソッド "bar()" で行われているようです。これは *native* メソッドとして宣言されています。
 
 -- TODO [Example for Bypassing Debugger Detection] --
 
