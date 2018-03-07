@@ -609,27 +609,27 @@ public class CodeCheck {
     }
 ```
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-Check for the presence of anti-debugging mechanisms and apply the following criteria:
+アンチデバッグメカニズムの有無を確認し、以下の基準を適用します。
 
-- Attaching JDB and ptrace based debuggers either fails, or causes the app to terminate or malfunction
-- Multiple detection methods are scattered throughout the app (as opposed to putting everything into a single method or function);
-- The anti-debugging defenses operate on multiple API layers (Java, native library functions, Assembler / system calls);
-- The mechanisms show some level of originality (vs. copy/paste from StackOverflow or other sources);
+- JDB および ptrace ベースのデバッガはアタッチに失敗するか、アプリを終了または機能を停止する
+- 複数の検出手法がアプリ全体に分散されている (すべてを単一のメソッドや関数につぎ込んではいない)
+- アンチデバッグ防御は複数の API レイヤ (Java、ネイティブライブラリ関数、アセンブラ/システムコール) で動作する
+- メカニズムはある程度の独創性を示す (StackOverflow や他のソースからのコピー/ペーストではない)
 
-Work on bypassing the anti-debugging defenses and answer the following questions:
+アンチデバッグ防御のバイパスに取り組み、以下の問いに答えます。
 
-- Can the mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
-- How difficult is it to identify the anti-debugging code using static and dynamic analysis?
-- Did you need to write custom code to disable the defenses? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
+- 静的および動的解析を使用してアンチデバッグコードを特定することはどの程度困難か？
+- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
+- 難易度の主観的評価は何か？
 
-For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+より詳細な評価を行うには「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
 
 #### 改善方法
 
-If anti-debugging is missing or too easily bypassed, make suggestions in line with the effectiveness criteria listed above. This may include adding more detection mechansims, or better integrating existing mechanisms with other defenses.
+アンチデバッグが欠落しているか、非常に簡単にバイパスされる場合、上記の有効性基準に沿って提案します。これにはより多くの検出メカニズムの追加や、さらに既存のメカニズムと他の防御の統合を含みます。
 
 #### 参考情報
 
