@@ -642,10 +642,10 @@ public class CodeCheck {
 ### ファイル整合性監視のテスト
 
 #### 概要
-There are two file-integrity related topics:
+ファイル整合性に関連するトピックは二つあります。
 
- 1. _The application-source related integrity checks:_ In the "Tampering and Reverse Engineering" chapter, we discussed Android's APK code signature check. We also saw that determined reverse engineers can easily bypass this check by re-packaging and re-signing an app. To make this process more involved, a protection scheme can be augmented with CRC checks on the app bytecode and native libraries as well as important data files. These checks can be implemented both on the Java and native layer. The idea is to have additional controls in place so that the only runs correctly in its unmodified state, even if the code signature is valid.
- 2. _The file storage related integrity checks:_ When files are stored by the application using the SD-card or public storage, or when key-value pairs are stored in the `SharedPreferences`, then their integrity should be protected.
+ 1. _アプリケーションソース関連の整合性チェック_ 「改竄とリバースエンジニアリング」の章では、Android の APK コード署名チェックについて説明しました。また、リバースエンジニアがアプリを再パッケージおよび再署名することで、このチェックを簡単に回避できることも説明しました。このプロセスをより複雑にするために、アプリのバイトコードやネイティブライブラリ、重要なデータファイルの CRC チェックを使用して、保護スキームを拡張できます。これらのチェックは Java とネイティブの両方のレイヤで実装できます。この考えは、コード署名が有効であっても、変更されていない状態でのみ正しく実行されるように、追加のコントロールを用意することです。
+ 2. _ファイルストレージ関連の整合性チェック_ ファイルがアプリケーションにより SD カードまたはパブリックストレージに格納される場合、またはキー・バリューペアが `SharedPreferences` に格納される場合、それらの整合性は保護される必要があります。
 
 ##### Sample Implementation - application-source
 
