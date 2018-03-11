@@ -647,15 +647,15 @@ public class CodeCheck {
  1. _アプリケーションソース関連の整合性チェック_ 「改竄とリバースエンジニアリング」の章では、Android の APK コード署名チェックについて説明しました。また、リバースエンジニアがアプリを再パッケージおよび再署名することで、このチェックを簡単に回避できることも説明しました。このプロセスをより複雑にするために、アプリのバイトコードやネイティブライブラリ、重要なデータファイルの CRC チェックを使用して、保護スキームを拡張できます。これらのチェックは Java とネイティブの両方のレイヤで実装できます。この考えは、コード署名が有効であっても、変更されていない状態でのみ正しく実行されるように、追加のコントロールを用意することです。
  2. _ファイルストレージ関連の整合性チェック_ ファイルがアプリケーションにより SD カードまたはパブリックストレージに格納される場合、またはキー・バリューペアが `SharedPreferences` に格納される場合、それらの整合性は保護される必要があります。
 
-##### Sample Implementation - application-source
+##### サンプル実装 - アプリケーションソース
 
-Integrity checks often calculate a checksum or hash over selected files. Files that are commonly protected include:
+整合性チェックでは選択したファイルに対してチェックサムやハッシュを計算することがよくあります。一般的に保護されているファイルは以下のとおりです。
 
 - AndroidManifest.xml
-- Class files *.dex
-- Native libraries (*.so)
+- クラスファイル *.dex
+- ネイティブライブラリ (*.so)
 
-The following sample implementation from the Android Cracking Blog <sup>[1]</sup> calculates a CRC over classes.dex and compares is with the expected value.
+Android Cracking Blog <sup>[1]</sup> の以下のサンプル実装では classes.dex に対して CRC を計算し、期待値と比較します。
 
 
 ```java
