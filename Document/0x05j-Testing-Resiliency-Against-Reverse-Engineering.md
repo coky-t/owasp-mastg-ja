@@ -678,11 +678,11 @@ private void crcTest() throws IOException {
  }
 }
 ```
-##### Sample Implementation - Storage
+##### サンプル実装 - ストレージ
 
-When providing integrity on the storage itself. You can either create an HMAC over a given key-value pair as for the Android `SharedPreferences` or you can create an HMAC over a complete file provided by the filesystem.
-When using an HMAC, you can either use a bouncy castle implementation to HMAC the given content or the AndroidKeyStore and then verify the HMAC later on: There are a few steps to take care of.
-In case of the need for encryption. Please make sure that you encrypt and then HMAC as described in [2].
+ストレージ自体に整合性を提供する場合。Android の `SharedPreferences` のようにキー・バリューペアを介して HMAC を作成することも、ファイルシステムが提供する完全なファイルに対して HMAC を作成することもできます。
+HMAC を使用する場合、bouncy castle 実装を使用して指定されたコンテンツまたは AndroidKeyStore を HMAC にして、後でその HMAC を検証します。処理をするにはいくつかのステップがあります。
+暗号化が必要な場合。[2] で説明されているように暗号化してから HMAC することを確認してください。
 
 When generating an HMAC with BouncyCastle:
 
