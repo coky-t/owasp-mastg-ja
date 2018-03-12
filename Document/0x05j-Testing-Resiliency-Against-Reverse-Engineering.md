@@ -799,12 +799,12 @@ public enum HMACWrapper {
 *アプリケーションソースの完全性チェックの場合*
 変更されていない状態でデバイス上でアプリを実行し、すべてが機能することを確認します。次に、アプリパッケージに含まれている classes.dex とすべての .so ライブラリに簡単なパッチを適用します。「セキュリティテスト入門」の章で説明されているようにアプリを再パッケージおよび再署名し、実行します。アプリは変更を検出して、何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したり、アプリを終了したりする必要があります。防御をバイパスするように作業し、以下の質問に答えます。
 
-- Can the mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
-- How difficult is it to identify the anti-debugging code using static and dynamic analysis?
-- Did you need to write custom code to disable the defenses? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
+- 静的および動的解析を使用してアンチデバッグコードを特定することはどの程度困難か？
+- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
+- 難易度の主観的評価は何か？
 
-For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+より詳細な評価を行うには「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
 
 *For the storage integrity checks*
 A similar approach holds here, but now answer the following questions:
