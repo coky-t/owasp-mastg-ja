@@ -781,18 +781,18 @@ public enum HMACWrapper {
 
 ##### ファイル整合性監査のバイパス
 
-*When trying to bypass the application-source integrity checks* 
+*アプリケーションソースの整合性チェックをバイパスしようとする場合*
 
-1. Patch out the anti-debugging functionality. Disable the unwanted behaviour by simply overwriting the respective bytecode or native code it with NOP instructions.
-2. Use Frida or Xposed to hook APIs to hook file system APIs on the Java and native layers. Return a handle to the original file instead of the modified file.
-3. Use Kernel module to intercept file-related system calls. When the process attempts to open the modified file, return a file descriptor for the unmodified version of the file instead.
+1. アンチデバッグ機能にパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
+2. Frida または Xposed を使用して Java およびネイティブレイヤ上のファイルシステム API をフックします。改変されたファイルの代わりに元のファイルへのハンドルを返します。
+3. カーネルモジュールを使用して、ファイル関連システムコールを傍受します。プロセスが改変されたファイルを開こうとすると、代わりに改変されていないバージョンのファイルのファイル記述子が返ります。
 
-Refer to the "Tampering and Reverse Engineering section" for examples of patching, code injection and kernel modules.
+パッチ、コードインジェクション、カーネルモジュールの例については、「改竄とリバースエンジニアリング」のセクションを参照ください。
 
-*When trying to bypass the storage integrity checks*
+*ストレージの整合性チェックをバイパスしようとする場合*
 
-1. Retrieve the data from the device, as described at the secion for device binding.
-2. Alter the data retrieved and then put it back in the storage
+1. デバイスバインディングのセクションで記載されているように、デバイスからデータを取得します。
+2. 取得されたデータを変更し、ストレージに戻します。
 
 #### Effectiveness Assessment
 
