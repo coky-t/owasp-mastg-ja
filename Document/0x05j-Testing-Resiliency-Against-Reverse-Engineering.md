@@ -794,10 +794,10 @@ public enum HMACWrapper {
 1. デバイスバインディングのセクションで記載されているように、デバイスからデータを取得します。
 2. 取得されたデータを変更し、ストレージに戻します。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-*For the application source integrity checks*
-Run the app on the device in an unmodified state and make sure that everything works. Then, apply simple patches to the classes.dex and any .so libraries contained in the app package. Re-package and re-sign the app as described in the chapter "Basic Security Testing" and run it. The app should detect the modification and respond in some way. At the very least, the app should alert the user and/or terminate the app. Work on bypassing the defenses and answer the following questions:
+*アプリケーションソースの完全性チェックの場合*
+変更されていない状態でデバイス上でアプリを実行し、すべてが機能することを確認します。次に、アプリパッケージに含まれている classes.dex とすべての .so ライブラリに簡単なパッチを適用します。「セキュリティテスト入門」の章で説明されているようにアプリを再パッケージおよび再署名し、実行します。アプリは変更を検出して、何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したり、アプリを終了したりする必要があります。防御をバイパスするように作業し、以下の質問に答えます。
 
 - Can the mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
 - How difficult is it to identify the anti-debugging code using static and dynamic analysis?
