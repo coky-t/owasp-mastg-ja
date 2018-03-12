@@ -684,24 +684,24 @@ private void crcTest() throws IOException {
 HMAC を使用する場合、bouncy castle 実装を使用して指定されたコンテンツまたは AndroidKeyStore を HMAC にして、後でその HMAC を検証します。処理をするにはいくつかのステップがあります。
 暗号化が必要な場合。[2] で説明されているように暗号化してから HMAC することを確認してください。
 
-When generating an HMAC with BouncyCastle:
+BouncyCastle で HMAC を生成する場合:
 
-1. Make sure BounceyCastle or SpongeyCastle are registered as a security provider.
-2. Initialize the HMAC with a key, which can be stored in a keystore.
-3. Get the bytearray of the content that needs an HMAC.
-4. Call `doFinal` on the HMAC with the bytecode.
-5. Append the HMAC to the bytearray of step 3.
-6. Store the result of step 5.
+1. BounceyCastle または SpongeyCastle がセキュリティプロバイダとして登録されていることを確認します。
+2. HMAC をキーで初期化します。キーはキーストアに格納します。
+3. HMAC を必要とするコンテンツのバイト配列を取得します。
+4. HMAC とバイトコードで `doFinal` を呼び出します。
+5. 手順3のバイト配列に HMAC を追加します。
+6. 手順5の結果を格納します。
 
-When verifying the HMAC with BouncyCastle:
+BouncyCastle で HMAC を検証する場合:
 
-1. Make sure BounceyCastle or SpongeyCastle are registered as a security provider.
-2. Extract the message and the hmacbytes as separate arrays.
-3. Repeat step 1-4 of generating an hmac on the data.
-4. Now compare the extracted hamcbytes to the result of step 3.
+1. BounceyCastle または SpongeyCastle がセキュリティプロバイダとして登録されていることを確認します。
+2. メッセージと hmacbytes を個別の配列として抽出します。
+3. データに対して hmac を生成する手順1-4を繰り返します。
+4. ここで抽出された hmacbytes を手順3の結果と比較します。
 
-When generating the HMAC based on the Android keystore, then it is best to only do this for Android 6 and higher. In that case you generate the key for hmacking as described in [3].
-A convinient HMAC implementation without the `AndroidKeyStore` can be found below:
+Android キーストアに基づいて HMAC を生成する場合、Android 6 以降でのみこれを行うことが最適です。その場合、[3] で説明されているように hmac のためのキーを生成します。
+`AndroidKeyStore` なしでの便利な HMAC 実装を以下に示します。
 
 ```java
 public enum HMACWrapper {
@@ -777,7 +777,7 @@ public enum HMACWrapper {
 
 ```
 
-Another way of providing integrity, is by signing the obtained byte-array. Please check [3] on how to generate a signature. Do not forget to add the signature to the original byte-array.
+整合性を提供する他の方法には、取得されるバイト配列への署名があります。署名の生成方法については [3] を確認してください。署名を元のバイト配列に追加することを忘れないでください。
 
 ##### ファイル整合性監査のバイパス
 
