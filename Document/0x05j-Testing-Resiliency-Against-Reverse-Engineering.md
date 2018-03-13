@@ -837,11 +837,11 @@ public enum HMACWrapper {
 
 #### 概要
 
-Reverse engineers use a lot of tools, frameworks and apps to aid the reversing process, many of which you have encountered in this guide. Consequently, the presence of such tools on the device may indicate that the user is either attempting to reverse engineer the app, or is at least putting themselves as increased risk by installing such tools.
+リバースエンジニアは多くのツール、フレームワーク、アプリを使用し、このガイドで遭遇した多くのリバースプロセスを支援します。結果として、デバイス上にそのようなツールが存在することは、ユーザーがアプリをリバースエンジニアリング使用としているか、少なくともそのようなツールをインストールすることによるリスクが増大していることを示している可能性があります。
 
-##### Detection Methods
+##### 検出手法
 
-Popular reverse engineering tools, if installed in an unmodified form, can be detected by looking for associated application packages, files, processes, or other tool-specific modifications and artefacts. In the following examples, we'll show how different ways of detecting the frida instrumentation framework which is used extensively in this guide. Other tools, such as Substrate and Xposed, can be detected using similar means. Note that DBI/injection/hooking tools can often also be detected implicitly through runtime integrity checks, which are discussed separately below.
+一般的なリバースエンジニアリングツールは、変更されていない形式でインストールされている場合、関連するアプリケーションパッケージ、ファイル、プロセス、またはその他のツール固有の修正やアーティファクトを探すことにより検出できます。以下の例では、このガイドで広く使用されている frida 計装フレームワークを検出するさまざまな方法を示します。Substrate や Xposed などの他のツールは同様の手段を使用して検出できます。DBI/インジェクション/フックツールはランタイムの完全性チェックによって暗黙的に検出されることもあります。以下で個別に説明します。
 
 ###### Example: Ways of Detecting Frida
 
