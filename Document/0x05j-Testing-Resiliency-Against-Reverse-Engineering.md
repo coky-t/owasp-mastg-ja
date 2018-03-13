@@ -806,22 +806,22 @@ public enum HMACWrapper {
 
 より詳細な評価を行うには「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
 
-*For the storage integrity checks*
-A similar approach holds here, but now answer the following questions:
-- Can the mechanisms be bypassed using trivial methods (e.g. changing the contents of a file or a key-value)?
-- How difficult is it to obtain the HMAC key or the asymmetric private key?
-- Did you need to write custom code to disable the defenses? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+*ストレージの完全性チェックの場合*
+同様のアプローチをここで考え、以下の質問に答えます。
+- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、ファイルまたはキー・バリューの内容を変更するなど)
+- HMAC 鍵や非対称秘密鍵を取得することはどの程度困難か？
+- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
+- 難易度の主観的評価は何か？
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
--- V8.3: "The app detects, and responds to, tampering with executable files and critical data".
+-- V8.3: "アプリは実行ファイルや重要なデータの改竄を検出し応答している。"
 
 ##### CWE
 
