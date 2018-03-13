@@ -843,9 +843,9 @@ public enum HMACWrapper {
 
 一般的なリバースエンジニアリングツールは、変更されていない形式でインストールされている場合、関連するアプリケーションパッケージ、ファイル、プロセス、またはその他のツール固有の修正やアーティファクトを探すことにより検出できます。以下の例では、このガイドで広く使用されている frida 計装フレームワークを検出するさまざまな方法を示します。Substrate や Xposed などの他のツールは同様の手段を使用して検出できます。DBI/インジェクション/フックツールはランタイムの完全性チェックによって暗黙的に検出されることもあります。以下で個別に説明します。
 
-###### Example: Ways of Detecting Frida
+###### 例: Frida を検出する方法
 
-An obvious method for detecting frida and similar frameworks is to check the environment for related artefacts, such as package files, binaries, libraries, processes, temporary files, and others. As an example, I'll home in on fridaserver, the daemon responsible for exposing frida over TCP. One could use a Java method that iterates through the list of running processes to check whether fridaserver is running:
+frida や類似のフレームワークを検出する明白な方法は、パッケージファイル、バイナリ、ライブラリ、プロセス、一時ファイルなどの関連するアーティファクトの環境をチェックすることです。一例として、fridaserver について考えます。これは TCP を介して frida を公開するデーモンです。fridaserver が動作しているかどうかを確認するために実行中のプロセスリストをたどる Java メソッドを使用できます。
 
 ```c
 public boolean checkRunningProcesses() {
@@ -869,9 +869,9 @@ public boolean checkRunningProcesses() {
 }
 ```
 
-This works if frida is run in its default configuration. Perhaps it's also enough to stump some script kiddies doing their first little baby steps in reverse engineering. It can however be easily bypassed by renaming the fridaserver binary to "lol" or other names, so we should maybe find a better method.
+これは frida がデフォルト設定で動作している場合に機能します。おそらくリバースエンジニアリングの最初のほんの小さな一歩を行う一部のスクリプトキディを困惑させるには十分です。しかし、fridaserver バイナリの名前を "lol" や別の名前に変更することで簡単にバイパスできるので、もっと良い方法を見つけるべきです。
 
-By default, fridaserver binds to TCP port 27047, so checking whether this port is open is another idea. In native code, this could look as follows:
+デフォルトでは、fridaserver は TCP ポート 27047 にバインドするので、このポートが開いているかどうかを確認することもひとつの考えです。ネイティブコードでは、以下のようになります。
 
 ```c
 boolean is_frida_server_listening() {
@@ -891,7 +891,7 @@ boolean is_frida_server_listening() {
 }   
 ```
 
-Again, this detects fridaserver in its default mode, but the listening port can be changed easily via command line argument, so bypassing this is a little bit too trivial. The situation can be improved by pulling an nmap -sV. fridaserver uses the D-Bus protocol to communicate, so we send a D-Bus AUTH message to every open port and check for an answer, hoping for fridaserver to reveal itself.
+この場合も、デフォルトモードの fridaserver を検出しますが、リスニングポートはコマンドライン引数で簡単に変更できるため、これをバイパスすることは非常に簡単です。この状況は nmap -sV をプルすることで改善できます。fridaserver は D-Bus プロトコルを使用して通信するため、開いているすべてのポートに D-Bus AUTH メッセージを送信し、答えをチェックします。fridaserver の期待は自身を公開することです。
 
 ```c
 /*
