@@ -927,9 +927,9 @@ for(i = 0 ; i <= 65535 ; i++) {
 }
 ```
 
-We now have a pretty robust method of detecting fridaserver, but there's still some glaring issues. Most importantly, frida offers alternative modes of operations that don't require fridaserver! How do we detect those?
+私たちは fridaserver を検出する非常に安定した手法を持っていますが、目立った問題がいくつかあります。最も重要なこととして、frida は fridaserver を必要としない代替の操作モードを提供しています。それらをどのように検出しますか。
 
-The common theme in all of frida's modes is code injection, so we can expect to have frida-related libraries mapped into memory whenever frida is used. The straightforward way to detect those is walking through the list of loaded libraries and checking for suspicious ones:
+frida のすべてのモードでの共通のテーマはコードインジェクションです。したがって、frida が使用されるときはいつでも、frida 関連のライブラリがメモリにマップされていることが期待できます。それらを検出する簡単な方法は、ロードされているライブラリのリストを調べて、疑わしいものをチェックすることです。
 
 ```c
 char line[512];
@@ -952,10 +952,9 @@ if (fp) {
 }
 ```
 
-This detects any libraries containing "frida" in the name. On its surface this works, but there's some major issues:
+これは名前に "frida" を含むライブラリを検出します。表面上ではこれは機能しますが、いくつかの大きな問題があります。
 
-- Remember how it wasn't a good idea to rely on fridaserver being called fridaserver? The same applies here - with some small modifications to frida, the frida agent libraries could simply be renamed.
-- Detection relies on standard library calls such as fopen() and strstr(). Essentially, we're attempting to detect frida using functions that can be easily hooked with - you guessed it - frida. Obviously this isn't a very solid strategy.
+- fridaserver と呼ばれる fridaserver に頼るのは良い考えではなかったことを覚えていますか。同じことがここに当てはまります。frida に小さな変更を加えることで、frida エージェントライブラリは簡単に名前を変更できます。- 検出は fopen() や strstr() などの標準ライブラリコールに依存します。本質的には、あなたが察するように frida で簡単にフックできる関数を使用して frida を検出しようとしています。明らかにこれはあまり強固な戦略ではありません。
 
 Issue number one can be addressed by implementing a classic-virus-scanner-like strategy, scanning memory for the presence of "gadgets" found in frida's libraries. I chose the string "LIBFRIDA" which appears to be present in all versions of frida-gadget and frida-agent. Using the following code, we iterate through the memory mappings listed in /proc/self/maps, and search for the string in every executable section. Note that I ommitted the more boring functions for the sake of brevity, but you can find them on GitHub.
 
