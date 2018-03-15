@@ -956,7 +956,7 @@ if (fp) {
 
 - fridaserver と呼ばれる fridaserver に頼るのは良い考えではなかったことを覚えていますか。同じことがここに当てはまります。frida に小さな変更を加えることで、frida エージェントライブラリは簡単に名前を変更できます。- 検出は fopen() や strstr() などの標準ライブラリコールに依存します。本質的には、あなたが察するように frida で簡単にフックできる関数を使用して frida を検出しようとしています。明らかにこれはあまり強固な戦略ではありません。
 
-Issue number one can be addressed by implementing a classic-virus-scanner-like strategy, scanning memory for the presence of "gadgets" found in frida's libraries. I chose the string "LIBFRIDA" which appears to be present in all versions of frida-gadget and frida-agent. Using the following code, we iterate through the memory mappings listed in /proc/self/maps, and search for the string in every executable section. Note that I ommitted the more boring functions for the sake of brevity, but you can find them on GitHub.
+課題番号一は古典的なウイルススキャナ風の戦略を実装することで対応できます。frida のライブラリにある「ガジェット」が存在するかどうかメモリをスキャンします。私はすべてのバージョンの frida-gadget と frida-agent に存在すると思われる文字列 "LIBFRIDA" を選択しました。以下のコードを使用して、/proc/self/maps にリストされているメモリマッピングを繰り返し、各実行可能セクション内の文字列を検索します。簡潔にするために瑣末な機能は除外していることに注意します。それらは GitHub にあります。
 
 ```c
 static char keyword[] = "LIBFRIDA";
@@ -993,7 +993,7 @@ void scan() {
 }
 ```
 
-Note the use of my_openat() etc. instead of the normal libc library functions. These are custom implementations that do the same as their Bionic libc counterparts: They set up the arguments for the respective system call and execute the swi instruction (see below). Doing this removes the reliance on public APIs, thus making it less susceptible to the typical libc hooks. The complete implementation is found in syscall.S. The following is an assembler implementation of my_openat().
+通常の libc ライブラリ関数の代わりに my_openat() などを使用することに注意します。これらは Bionic libc と同様に機能するカスタム実装です。それぞれのシステムコールの引数を設定し、swi 命令を実行します (下記参照) 。これによりパブリック API の依存がなくなり、典型的な libc フックの影響を受けにくくなります。完全な実装は syscall.S にあります。以下は my_openat() のアセンブラ実装です。
 
 ```
 #include "bionic_asm.h"
@@ -1018,9 +1018,9 @@ my_openat:
     .size my_openat, .-my_openat;
 ```
 
-This is a bit more effective as overall, and is difficult to bypass with frida only, especially with some obuscation added. Even so, there are of course many ways of bypassing this as well. Patching and system call hooking come to mind. Remember, the reverse engineer always wins!
+これは全体としては多少効果的ですが、frida でのみバイパスすることは困難です。特にいくつかの難読化が加えられた場合には。それでも、これをバイパスする方法は多くあります。パッチ適用とシステムコールのフックが思い浮かびます。覚えておいて。リバースエンジニアは常に勝利することを。
 
-To experiment with the detection methods above, you can download and build the Android Studio Project. The app should generate entries like the following when frida is injected.
+上記の検出方法を試すには、Android Studio Project をダウンロードしてビルドします。frida が注入されると、アプリは以下のようなエントリを生成します。
 
 ##### Bypassing Detection of Reverse Engineering Tools
 
