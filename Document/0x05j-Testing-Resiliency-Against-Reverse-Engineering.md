@@ -576,7 +576,7 @@ Exiting
 例によって、アンチデバッグを回避する一般的な方法はありません。これはデバッグを防止または検出するために使用される特定のメカニズムや、全体的な保護スキームのその他の防御に依存します。例えば、整合性チェックがない場合、またはすでに無効化している場合には、アプリにパッチを当てるのが最も簡単な方法です。他の場合には、フックフレームワークやカーネルモジュールを使用するほうが望ましいかもしれません。
 
 1. アンチデバッグ機能をパッチアウトします。単純に NOP 命令で上書きすることで不要な動作を無効にします。アンチデバッグメカニズムが十分に検討されている場合には、より複雑なパッチが必要になることに注意します。
-2. FridaまたはXposedを使用して、Java およびネイティブレイヤの API をフックします。isDebuggable や isDebuggerConnected などの関数の戻り値を操作し、デバッガを隠蔽します。
+2. Frida または Xposedを使用して、Java およびネイティブレイヤの API をフックします。isDebuggable や isDebuggerConnected などの関数の戻り値を操作し、デバッガを隠蔽します。
 3. 環境を変更します。Android はオープンな環境です。それ以外の何も機能しないのであれば、オペレーティングシステムを変更して、アンチデバッグトリックを設計する際に開発者が行った想定を覆すことができます。
 
 ###### バイパスの例: UnCrackable App for Android Level 2
@@ -1022,17 +1022,17 @@ my_openat:
 
 上記の検出方法を試すには、Android Studio Project をダウンロードしてビルドします。frida が注入されると、アプリは以下のようなエントリを生成します。
 
-##### Bypassing Detection of Reverse Engineering Tools
+##### リバースエンジニアリングツールの検出のバイパス
 
-1. Patch out the anti-debugging functionality. Disable the unwanted behaviour by simply overwriting the respective bytecode or native code it with NOP instructions.
-2. Use Frida or Xposed to hook APIs to hook file system APIs on the Java and native layers. Return a handle to the original file instead of the modified file.
-3. Use Kernel module to intercept file-related system calls. When the process attempts to open the modified file, return a file descriptor for the unmodified version of the file instead.
+1. アンチデバッグ機能にパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
+2. Frida または Xposed を使用して Java およびネイティブレイヤ上のファイルシステム API をフックします。改変されたファイルの代わりに元のファイルへのハンドルを返します。
+3. カーネルモジュールを使用して、ファイル関連システムコールを傍受します。プロセスが改変されたファイルを開こうとすると、代わりに改変されていないバージョンのファイルのファイル記述子が返ります。
 
-Refer to the "Tampering and Reverse Engineering section" for examples of patching, code injection and kernel modules.
+パッチ、コードインジェクション、カーネルモジュールの例については、「改竄とリバースエンジニアリング」のセクションを参照ください。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-Launch the app systematically with various apps and frameworks installed. Include at least the following:
+さまざまなアプリやフレームワークをインストールして、アプリを体系的に起動します。少なくとも以下のもので行います。
 
 - Substrate for Android
 - Xposed
@@ -1042,24 +1042,24 @@ Launch the app systematically with various apps and frameworks installed. Includ
 - RootCloak
 - Android SSL Trust Killer
 
-The app should respond in some way to the presence of any of those tools. At the very least, the app should alert the user and/or terminate the app. Work on bypassing the defenses and answer the following questions:
+アプリはこれらのツールの存在を検出して、何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したり、アプリを終了したりする必要があります。防御をバイパスするように作業し、以下の質問に答えます。
 
-- Can the mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
-- How difficult is it to identify the anti-debugging code using static and dynamic analysis?
-- Did you need to write custom code to disable the defenses? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
+- 静的および動的解析を使用してアンチデバッグコードを特定することはどの程度困難か？
+- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
+- 難易度の主観的評価は何か？
 
-For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+より詳細な評価を行いには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
-- V8.4: "The app detects the presence of widely used reverse engineering tools, such as code injection tools, hooking frameworks and debugging servers."
+- V8.4: "アプリはコードインジェクションツール、フッキングフレームワーク、デバッグサーバーなど広く使用されているリバースエンジニアリングツールの存在を検出している。"
 
 ##### CWE
 
