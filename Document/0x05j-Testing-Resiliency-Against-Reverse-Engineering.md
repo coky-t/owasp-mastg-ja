@@ -1126,35 +1126,35 @@ TelephonyManager.getVoiceMailNumber()                   15552175049             
 
 Xposed や Frida などのフッキングフレームワークはこの API をフックして誤ったデータを提供する可能性があることに注意します。
 
-#### Bypassing Emulator Detection
+#### エミュレータ検出のバイパス
 
-1. Patch out the emulator detection functionality. Disable the unwanted behaviour by simply overwriting the respective bytecode or native code with NOP instructions.
-2. Use Frida or Xposed to hook APIs to hook file system APIs on the Java and native layers. Return innocent looking values (preferably taken from a real device) instead of the tell-tale emulator values. For example, you can override the <code>TelephonyManager.getDeviceID()</code> method to return an IMEI value.
+1. エミュレータ検出機能にパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
+2. Frida または Xposed を使用して Java およびネイティブレイヤ上のファイルシステム API をフックします。エミュレータを示す値の代わりに (できれば実デバイスから取得した) 無害に見える値を返します。例えば、<code>TelephonyManager.getDeviceID()</code> をオーバーライドして IMEI 値を返します。
 
-Refer to the "Tampering and Reverse Engineering section" for examples of patching, code injection and kernel modules.
+パッチ、コードインジェクション、カーネルモジュールについては「改竄とリバースエンジニアリング」セクションを参照します。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-Install and run the app in the emulator. The app should detect this and terminate, or refuse to run the functionality that is meant to be protected. 
+エミュレータにアプリをインストールして実行します。アプリはこれを検出して終了するか、保護されている機能を実行することを拒否する必要があります。
 
-Work on bypassing the defenses and answer the following questions:
+防御をバイパスするように作業し、以下の質問に答えます。
 
-- How difficult is it to identify the emulator detection code using static and dynamic analysis?
-- Can the detection mechanisms be bypassed using trivial methods (e.g. hooking a single API function)?
-- Did you need to write custom code to disable the anti-emulation feature(s)? How much time did you need to invest?
-- What is your subjective assessment of difficulty?
+- 静的および動的解析を使用してエミュレータ検出コードを特定することはどの程度困難か？
+- 単純な手法を使用して検出メカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
+- アンチエミュレータ機能を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
+- 難易度の主観的評価は何か？
 
-For a more detailed assessment, apply the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+より詳細な評価を行いには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
-- V8.5: "The app detects, and response to, being run in an emulator using any method."
+- V8.5: "アプリは任意の方法を使用してエミュレータ内で動作しているかどうかを検出し応答している。"
 
 ##### CWE
 
