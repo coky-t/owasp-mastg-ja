@@ -1077,11 +1077,11 @@ N/A
 
 #### 概要
 
-In the context of anti-reversing, the goal of emulator detection is to make it a bit more difficult to run the app on a emulated device, which in turn impedes some tools and techniques reverse engineers like to use. This forces the reverse engineer to defeat the emulator checks or utilize the physical device. This provides a barrier to entry for large scale device analysis.
+アンチリバースの文脈では、エミュレータ検出の目的はエミュレートされたデバイスでのアプリの実行をもう少し難しくすることです。これはリバースエンジニアが使用したいツールやテクニックを次々に妨げます。これによりリバースエンジニアはエミュレータチェックを無効にしたり物理デバイスを使用したりします。これは大規模なデバイス解析のためのエントリに障壁を提供します。
 
-#### Emulator Detection Examples
+#### エミュレータ検出の例
 
-There are several indicators that indicate the device in question is being emulated. While all of these API calls could be hooked, this provides a modest first line of defense.
+問題のデバイスがエミュレートされていることを示すいくつかのインジケータがあります。これらの API コールのすべてがフックされている可能性がありますが、これは控えめな第一線の防御を提供します。
 
 The first set of indicaters stem from the build.prop file
 
@@ -1105,9 +1105,9 @@ Build.TAGS          test-keys       emulator
 Build.USER          android-build   emulator
 ```
 
-It should be noted that the build.prop file can be edited on a rooted android device, or modified when compiling AOSP from source.  Either of these techniques would bypass the static string checks above.
+build.prop ファイルはルート化された android デバイスで変更することや、ソースから AOSP をコンパイルする際に変更できることに注意する必要があります。これらの技法はいずれも上記の静的文字列チェックをバイパスします。
 
-The next set of static indicators utilize the Telephony manager. All android emulators have fixed values that this API can query.
+以下の静的インジケータセットは Telephony マネージャを使用します。すべての android エミュレータはこの API が照会できる固定値を持っています。
 
 ```
 API                                                     Value                   Meaning
@@ -1124,7 +1124,7 @@ TelephonyManager.getSubscriberId()                      310260000000000         
 TelephonyManager.getVoiceMailNumber()                   15552175049             emulator
 ```
 
-Keep in mind that a hooking framework such as Xposed or Frida could hook this API to provide false data.
+Xposed や Frida などのフッキングフレームワークはこの API をフックして誤ったデータを提供する可能性があることに注意します。
 
 #### Bypassing Emulator Detection
 
