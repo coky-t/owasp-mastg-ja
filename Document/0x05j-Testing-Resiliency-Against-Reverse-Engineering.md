@@ -1172,12 +1172,12 @@ N/A
 
 #### 概要
 
-Controls in this category verify the integrity of the app's own memory space, with the goal of protecting against memory patches applied during runtime. This includes unwanted changes to binary code or bytecode, functions pointer tables, and important data structures, as well as rogue code loaded into process memory. Intergrity can be verified either by:
+このカテゴリのコントロールはアプリ自身のメモリ空間の整合性を検証することです。実行時に適用されるメモリパッチから保護することを目的とします。これにはバイナリコードやバイトコード、関数ポインタテーブル、重要なデータ構造、プロセスメモリにロードされる不正なコードなどの望まれない変更が含まれます。整合性は以下のいずれかにより検証できます。
 
-1. Comparing the contents of memory, or a checksum over the contents, with known good values;
-2. Searching memory for signatures of unwanted modifications.
+1. メモリの内容、または内容のチェックサムを既知の正しい値と比較する
+2. 望まれない改変のシグネチャがないかメモリを検索する
 
-There is some overlap with the category "detecting reverse engineering tools and frameworks", and in fact we already demonstrated the signature-based approach in that chapter, when we showed how to search for frida-related strings in process memory. Below are a few more examples for different kinds of integrity monitoring.
+カテゴリ「リバースエンジニアリングツールとフレームワークの検出」と一部重複があります。また、実際、その章でシグネチャベースのアプローチをすでに説明しました。プロセスメモリ内の frida 関連文字列を検索する方法を示しています。以下にさまざまな種類の整合性監視についていくつかの例を示します。
 
 ##### Runtime Integrity Check Examples
 
