@@ -1179,11 +1179,11 @@ N/A
 
 カテゴリ「リバースエンジニアリングツールとフレームワークの検出」と一部重複があります。また、実際、その章でシグネチャベースのアプローチをすでに説明しました。プロセスメモリ内の frida 関連文字列を検索する方法を示しています。以下にさまざまな種類の整合性監視についていくつかの例を示します。
 
-##### Runtime Integrity Check Examples
+##### 実行時整合性チェックの例
 
-**Detecting tampering with the Java Runtime**
+**Java ランタイムによる改竄検出**
 
-Detection code from the dead && end blog <sup>[3]</sup>.
+dead && end blog <sup>[3]</sup> のコード検出。
 
 ```java
 try {
@@ -1215,11 +1215,11 @@ catch(Exception e) {
 }
 ```
 
-**Detecting Native Hooks**
+**ネイティブフックの検出**
 
-With ELF binaries, native function hooks can be installed by either overwriting function pointers in memory (e.g. GOT or PLT hooking), or patching parts of the function code itself (inline hooking). Checking the integrity of the respective memory regions is one technique to detect this kind of hooks.
+ELF バイナリでは、メモリ内の関数ポインタを上書きする (GOT や PLT フックなど) か、関数コード自体の一部にパッチを当てる (インラインフック) ことにより、ネイティブ関数フックをインストールできます。それぞれのメモリ領域の整合性をチェックすることが、この種のフックを検出する技法のひとつです。
 
-The Global Offset Table (GOT) is used to resolve library functions. During runtime, the dynamic linker patches this table with the absolute addresses of global symbols. *GOT hooks* overwrite the stored function addresses and redirect legitimate function calls to adversary-controlled code. This type of hook can be detected by enumerating the process memory map and verifying that each GOT entry points into a legitimately loaded library.
+グローバルオフセットテーブル (GOT) はライブラリ関数を解決するために使用されます。実行時に、動的リンカがこのテーブルにグローバルシンボルの絶対アドレスでパッチします。*GOT フック* は格納されている関数アドレスを上書きし、正当な関数呼び出しを攻撃者が制御するコードにリダイレクトします。このタイプのフックは、プロセスメモリマップを列挙し、各 GOT エントリポイントが正当にロードされたライブラリを指すことを確認することにより検出できます。
 
 In contrast to GNU <code>ld</code>, which resolves symbol addresses only once they are needed for the first time (lazy binding), the Android linker resolves all external function and writes the respective GOT entries immediately when a library is loaded (immediate binding). One can therefore expect all GOT entries to point valid memory locations within the code sections of their respective libraries during runtime. GOT hook detection methods usually walk the GOT and verify that this is indeed the case.
 
