@@ -1221,9 +1221,9 @@ ELF バイナリでは、メモリ内の関数ポインタを上書きする (GO
 
 グローバルオフセットテーブル (GOT) はライブラリ関数を解決するために使用されます。実行時に、動的リンカがこのテーブルにグローバルシンボルの絶対アドレスでパッチします。*GOT フック* は格納されている関数アドレスを上書きし、正当な関数呼び出しを攻撃者が制御するコードにリダイレクトします。このタイプのフックは、プロセスメモリマップを列挙し、各 GOT エントリポイントが正当にロードされたライブラリを指すことを確認することにより検出できます。
 
-In contrast to GNU <code>ld</code>, which resolves symbol addresses only once they are needed for the first time (lazy binding), the Android linker resolves all external function and writes the respective GOT entries immediately when a library is loaded (immediate binding). One can therefore expect all GOT entries to point valid memory locations within the code sections of their respective libraries during runtime. GOT hook detection methods usually walk the GOT and verify that this is indeed the case.
+GNU <code>ld</code> はシンボルアドレスを初回に必要とされる一度だけ解決します (遅延バインディング)。対照的に、Android リンカはライブラリがロードされるとすべての外部関数を解決し、即座にそれぞれの GOT エントリを書き込みます (即時バインディング) 。したがって、すべての GOT エントリが実行時にそれぞれのライブラリのコードセクション内の有効なメモリ位置を指すことを期待できます。GOT フック検出手法は通常 GOT を見歩き、実際にそうであることを確認します。
 
-*Inline hooks* work by overwriting a few instructions at the beginning or end of the function code. During runtime, this so-called trampoline redirects execution to the injected code. Inline hooks can be detected by inspecting the prologues and epilogues of library functions for suspect instructions, such as far jumps to locations outside the library.
+*インラインフック* は関数コードの最初または最後にいくつかの命令を上書きして動作します。実行時に、このいわゆるトランポリンが注入されたコードに実行をリダイレクトします。インラインフックは、ライブラリ関数のプロローグとエピローグを調べることで、ライブラリ外の場所への far jump などの疑わしい命令を検出できます。
 
 #### Bypass and Effectiveness Assessment
 
