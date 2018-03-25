@@ -1225,9 +1225,9 @@ GNU <code>ld</code> はシンボルアドレスを初回に必要とされる一
 
 *インラインフック* は関数コードの最初または最後にいくつかの命令を上書きして動作します。実行時に、このいわゆるトランポリンが注入されたコードに実行をリダイレクトします。インラインフックは、ライブラリ関数のプロローグとエピローグを調べることで、ライブラリ外の場所への far jump などの疑わしい命令を検出できます。
 
-#### Bypass and Effectiveness Assessment
+#### バイパスと有効性の評価
 
-Make sure that all file-based detection of reverse engineering tools is disabled. Then, inject code using Xposed, Frida and Substrate, and attempt to install native hooks and Java method hooks. The app should detect the "hostile" code in its memory and respond accordingly. For a more detailed assessment, identify and bypass the detection mechanisms employed and use the criteria listed under "Assessing Programmatic Defenses" in the "Assessing Software Protection Schemes" chapter.
+リバースエンジニアリングツールのすべてのファイルベースの検出が無効化されていることを確認します。次に、Xposed, Frida, Substrate を使用してコードを注入し、ネイティブフックと Java メソッドフックのインストールを試みます。アプリはメモリ内の「敵意のある」コードを検出し、それに応じて対応する必要があります。より詳細な評価を行うには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を使用して、使用されている検出メカニズムの特定および回避を行います。
 
 Work on bypassing the checks using the following techniques:
 
