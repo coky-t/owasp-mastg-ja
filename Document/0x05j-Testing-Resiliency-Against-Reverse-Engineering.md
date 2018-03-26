@@ -1229,14 +1229,14 @@ GNU <code>ld</code> はシンボルアドレスを初回に必要とされる一
 
 リバースエンジニアリングツールのすべてのファイルベースの検出が無効化されていることを確認します。次に、Xposed, Frida, Substrate を使用してコードを注入し、ネイティブフックと Java メソッドフックのインストールを試みます。アプリはメモリ内の「敵意のある」コードを検出し、それに応じて対応する必要があります。より詳細な評価を行うには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を使用して、使用されている検出メカニズムの特定および回避を行います。
 
-Work on bypassing the checks using the following techniques:
+以下の技法を使用してチェックのバイパスを手がけます。
 
-1. Patch out the integrity checks. Disable the unwanted behaviour by overwriting the respective bytecode or native code with NOP instructions.
-2. Use Frida or Xposed to hook APIs to hook the APIs used for detection and return fake values. 
+1. 整合性チェックにパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
+2. Frida または Xposed を使用して検出に使用される API をフックし、偽の値を返します。
 
-Refer to the "Tampering and Reverse Engineering section" for examples of patching, code injection and kernel modules.
+パッチ、コードインジェクション、カーネルモジュールについては「改竄とリバースエンジニアリング」セクションを参照します。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
 
 
@@ -1244,7 +1244,7 @@ Refer to the "Tampering and Reverse Engineering section" for examples of patchin
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
