@@ -1270,20 +1270,20 @@ GNU <code>ld</code> はシンボルアドレスを初回に必要とされる一
 
 #### 概要
 
-The goal of device binding is to impede an attacker when he tries to copy an app and its state from device A to device B and continue the execution of the app on device B. When device A has been deemend trusted, it might have more privileges than device B, which should not change when an app is copied from device A to device B.
+デバイス結合の目的は、アプリとその状態をデバイス A からデバイス B にコピーし、デバイス B でアプリの実行を継続しようとする、攻撃者を妨害することです。デバイス A が信頼できるとみなされた場合、デバイス B よりも多くの権限を持つ可能性があります。アプリがデバイス A からデバイス B にコピーされたときに変更してはいけません。
 
-#### Static Analysis
+#### 静的解析
 
-In the past, Android developers often relied on the Secure ANDROID_ID (SSAID) and MAC addresses. However, the behavior of the SSAID has changed since Android O and the behavior of MAC addresses have changed in Android N <sup>[1]</sup>. Google has set a new set of recommendations in their SDK documentation regarding identifiers as well <sup>[2]</sup>.
-When the source-code is available, then there are a few codes you can look for, such as:
-- The presence of unique identifiers that no longer work in the future
-  - `Build.SERIAL` without the presence of `Build.getSerial()`
-  - `htc.camera.sensor.front_SN` for HTC devices
+以前は、Android 開発者はセキュアな ANDROID_ID (SSAID) と MAC アドレスにしばしば依存していました。しかし、SSAID の動作は Android O で変更され、MAC アドレスの動作は Android N で変更されました <sup>[1]</sup> 。また、Google は識別子に関する SDK ドキュメントに新しい推奨事項を設定しました <sup>[2]</sup> 。
+ソースコードが利用可能である場合、以下のようないくつかのコードを見つけることができます。
+- 将来には機能しない固有の識別子の存在
+  - `Build.getSerial()` の存在なしでの `Build.SERIAL`
+  - HTC デバイス向けの `htc.camera.sensor.front_SN`
   - `persist.service.bdroid.bdadd`
-  - `Settings.Secure.bluetooth_address`, unless the system permission LOCAL_MAC_ADDRESS is enabled in the manifest.
+  - `Settings.Secure.bluetooth_address`, マニフェストでシステムパーミッション LOCAL_MAC_ADDRESS が有効である場合を除く
 
-- The presence of using the ANDROID_ID only as an identifier. This will influence the possible binding quality over time given older devices.
-- The absence of both InstanceID, the `Build.SERIAL` and the IMEI.
+- 識別子として ANDROID_ID のみを使用すること。これは古いデバイスを使用する場合、バインディング品質に影響を与える可能性があります。
+- InstanceID, `Build.SERIAL`, IMEI はいずれも存在しないこと。
 
 ```java
   TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -1291,31 +1291,31 @@ When the source-code is available, then there are a few codes you can look for, 
 ```
 
 
-Furthermore, to reassure that the identifiers can be used, the AndroidManifest.xml needs to be checked in case of using the IMEI and the Build.Serial. It should contain the following permission: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`.
+さらに、識別子が使用できることを保証するために、IMEI および Build.Serial を使用する場合には AndroidManifest.xml をチェックする必要があります。次のパーミッションが含まれている必要があります: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`
 
-#### Dynamic Analysis
+#### 動的解析
 
-There are a few ways to test the application binding:
+アプリケーションバインディングをテストする方法はいくつかあります。
 
-##### Dynamic Analysis using an Emulator
+##### エミュレータを使用した動的解析
 
-1. Run the application on an Emulator
-2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3. Retrieve the data from the Emulator This has a few steps:
-- ssh to your simulator using ADB shell
-- run-as <your app-id (which is the package as described in the AndroidManifest.xml)>
-- chmod 777 the contents of cache and shared-preferences
-- exit the current user
-- copy the contents of /dat/data/<your appid>/cache & shared-preferences to the sdcard
-- use ADB or the DDMS to pull the contents
-4. Install the application on another Emulator
-5. Overwrite the data from step 3 in the data folder of the application.
-- copy the contents of step 3 to the sdcard of the second emulator.
-- ssh to your simulator using ADB shell
-- run-as <your app-id (which is the pacakge as described in the AndroidManifest.xml)>
-- chmod 777 the folders cache and shared-preferences
-- copy the older contents of the sdcard to /dat/data/<your appid>/cache & shared-preferences
-6. Can you continue in an authenticated state? If so, then binding might not be working properly.
+1. エミュレータ上でアプリケーションを実行します。
+2. アプリケーションのインスタンスの信頼を高めることができることを確認します (認証など) 。
+3. エミュレータからデータを取得します。これにはいくつかのステップがあります。
+- ADB shell を使用してシミュレータに ssh します
+- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
+- cache と shared-preferences のコンテンツを chmod 777 します
+- カレントユーザーを exit します
+- /dat/data/<your appid>/cache および shared-preferences のコンテンツを SD カードに copy します
+- ADB または DDMS を使用してコンテンツを pull します
+4. 別のエミュレータにそのアプリケーションをインストールします
+5. アプリケーションの data フォルダに step 3 のデータを上書きします
+- 二つ目のエミュレータの SD カードに step 3 のコンテンツをコピーします
+- ADB shell を使用してシミュレータに ssh します
+- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
+- フォルダ cache と shared-preferences を chmod 777 します
+- SD カードの古いコンテンツを /dat/data/<your appid>/cache および shared-preferences に copy します
+6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
 
 ##### Google InstanceID
 
