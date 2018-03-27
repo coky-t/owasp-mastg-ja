@@ -1385,40 +1385,40 @@ iid とトークンをサーバーに送信する際、サーバーを Instance 
 Firebase にも InstanceID のサポートがあります <sup>[4]</sup> 。
 -- TODO [SHOULD WE ADD THE SERVER CODE HERE TOO TO EXPLAIN HOW TOKENS CAN BE USED TO EVALUATE?] --
 
-##### IMEI & Serial
+##### IMEI とシリアル
 
-Please note that Google recommends against using these identifiers unless there is a high risk involved with the application in general.
+一般的にアプリケーションに関わるリスクが高くはない場合に、Google はこれらの識別子の使用を推奨しています。
 
-For pre-Android O devices, you can request the serial as follows:
+Android O 以前のデバイスの場合、以下のようにシリアルを要求できます。
 
 ```java
    String serial = android.os.Build.SERIAL;
 ```
 
-From Android O onwards, you can request the device its serial as follows:
+Android O 以降では、以下のようにデバイスのシリアルを要求できます。
 
-1. Set the permission in your Android Manifest:
+1. Android Manifest にパーミッションを設定します。
 ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 ```
-2. Request the permission at runtime to the user: See https://developer.android.com/training/permissions/requesting.html for more details.
-3. Get the serial:
+2. 実行時にユーザーへのパーミッションを要求します。詳細については https://developer.android.com/training/permissions/requesting.html を参照します。
+3. シリアルを取得します。
 
 ```java
   String serial = android.os.Build.getSerial();
 ```
 
-Retrieving the IMEI in Android works as follows:
+Android での IMEI の取得は以下のように動作します。
 
-1. Set the required permission in your Android Manifest:
+1. Android Manifest に必要なパーミッションを設定します。
 ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 ```
 
-2. If on Android M or higher: request the permission at runtime to the user: See https://developer.android.com/training/permissions/requesting.html for more details.
+2. Android M 以上の場合、実行時にユーザーへのパーミッションを要求します。詳細については https://developer.android.com/training/permissions/requesting.html を参照します。
 
-3. Get the IMEI:
+3. IMEI を取得します。
 ```java
   TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
   String IMEI = tm.getDeviceId();
@@ -1426,7 +1426,7 @@ Retrieving the IMEI in Android works as follows:
 
 ##### SSAID
 
-Please note that Google recommends against using these identifiers unless there is a high risk involved with the application in general. you can retrieve the SSAID as follows:
+一般にアプリケーションに関わるリスクが高くはない場合に、Google はこれらの識別子の使用を推奨しています。以下のようにして SSAID を取得できます。
 
 ```java
   String SSAID = Settings.Secure.ANDROID_ID;
