@@ -1431,26 +1431,26 @@ Android での IMEI の取得は以下のように動作します。
 ```java
   String SSAID = Settings.Secure.ANDROID_ID;
 ```
-#### Effectiveness Assessment
+#### 有効性評価
 
-When the source-code is available, then there are a few codes you can look for, such as:
-- The presence of unique identifiers that no longer work in the future
-  - `Build.SERIAL` without the presence of `Build.getSerial()`
-  - `htc.camera.sensor.front_SN` for HTC devices
+ソースコードが利用可能である場合、以下のようないくつかのコードを見つけることができます。
+- 将来には機能しない固有の識別子の存在
+  - `Build.getSerial()` の存在なしでの `Build.SERIAL`
+  - HTC デバイス向けの `htc.camera.sensor.front_SN`
   - `persist.service.bdroid.bdadd`
-  - `Settings.Secure.bluetooth_address`, unless the system permission LOCAL_MAC_ADDRESS is enabled in the manifest.
+  - `Settings.Secure.bluetooth_address`, マニフェストでシステムパーミッション LOCAL_MAC_ADDRESS が有効である場合を除く
 
-- The presence of using the ANDROID_ID only as an identifier. This will influence the possible binding quality over time given older devices.
-- The absence of both InstanceID, the `Build.SERIAL` and the IMEI.
+- 識別子として ANDROID_ID のみを使用すること。これは古いデバイスを使用する場合、バインディング品質に影響を与える可能性があります。
+- InstanceID, `Build.SERIAL`, IMEI はいずれも存在しないこと。
 
 ```java
   TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
   String IMEI = tm.getDeviceId();
 ```
 
-Furthermore, to reassure that the identifiers can be used, the AndroidManifest.xml needs to be checked in case of using the IMEI and the Build.Serial. It should contain the following permission: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`.
+さらに、識別子が使用できることを保証するために、IMEI および Build.Serial を使用する場合には AndroidManifest.xml をチェックする必要があります。次のパーミッションが含まれている必要があります: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`
 
-There are a few ways to test device binding dynamically:
+デバイスバインディングを動的にテストする方法はいくつかあります。
 
 ##### Using an Emulator
 
