@@ -1319,11 +1319,11 @@ GNU <code>ld</code> はシンボルアドレスを初回に必要とされる一
 
 ##### Google InstanceID
 
-Google InstanceID <sup>[5]</sup> uses tokens to authenticate the application instance running on the device. The moment the application has been reset, uninstalled, etc., the instanceID is reset, meaning that you have a new "instance" of the app.
-You need to take the following steps into account for instanceID:
-0. Configure your instanceID at your Google Developer Console for the given application. This includes managing the PROJECT_ID.
+Google InstanceID <sup>[5]</sup> はトークンを使用して、デバイスで実行中のアプリケーションインスタンスを認証します。アプリケーションがリセット、アンインストールなどが行われた瞬間、instanceID はリセットされます。つまり、アプリの新しい "instance" を持つことを意味します。
+instanceID のアカウントには以下のステップを行う必要があります。
+0. 指定のアプリケーション用に Google Developer Console で instanceID を構成します。これには PROJECT_ID の管理も含まれます。
 
-1. Setup Google play services. In your build.gradle, add:
+1. Google play サービスを設定します。build.gradle に以下を追加します。
 ```groovy
   apply plugin: 'com.android.application'
     ...
@@ -1332,13 +1332,13 @@ You need to take the following steps into account for instanceID:
         compile 'com.google.android.gms:play-services-gcm:10.2.4'
     }
 ```
-2. Get an instanceID
+2. instanceID を取得します。
 ```java
   String iid = InstanceID.getInstance(context).getId();
   //now submit this iid to your server.
 ```
 
-3. Generate a token
+3. トークンを生成します。
 ```java
 String authorizedEntity = PROJECT_ID; // Project id from Google Developer Console
 String scope = "GCM"; // e.g. communicating using GCM, but you can use any
@@ -1347,8 +1347,8 @@ String scope = "GCM"; // e.g. communicating using GCM, but you can use any
 String token = InstanceID.getInstance(context).getToken(authorizedEntity,scope);
 //now submit this token to the server.
 ```
-4. Make sure that you can handle callbacks from instanceID in case of invalid device information, security issues, etc.
-For this you have to extend the `InstanceIDListenerService` and handle the callbacks there:
+4. 無効なデバイス情報、セキュリティ問題などの場合に instanceID からのコールバックを処理できることを確認します。
+このためには `InstanceIDListenerService` を拡張し、そこでコールバックを処理する必要があります。
 
 ```java
 public class MyInstanceIDService extends InstanceIDListenerService {
@@ -1371,7 +1371,7 @@ public class MyInstanceIDService extends InstanceIDListenerService {
 };
 
 ```
-Lastly register the service in your AndroidManifest:
+最後に AndroidManifest にサービスを登録します。
 ```xml
 <service android:name=".MyInstanceIDService" android:exported="false">
   <intent-filter>
@@ -1380,9 +1380,9 @@ Lastly register the service in your AndroidManifest:
 </service>
 ```
 
-When you submit the iid and the tokens to your server as well, you can use that server together with the Instance ID Cloud Service to validate the tokens and the iid. When the iid or token seems invalid, then you can trigger a safeguard procedure (e.g. inform server on possible copying, possible security issues, etc. or removing the data from the app and ask for a re-registration).
+iid とトークンをサーバーに送信する際、サーバーを Instance ID Cloud Service とともに使用して、トークンと iid を検証できます。iid もしくはトークンが無効であると思われる場合、セーフガードの手順 (例えば、コピーの可能性、セキュリティ問題の可能性などをサーバーに通知する、またはアプリからデータを削除して再登録を求めるなど) を実行できます。
 
-Please note that Firebase has support for InstanceID as well <sup>[4]</sup>.
+Firebase にも InstanceID のサポートがあります <sup>[4]</sup> 。
 -- TODO [SHOULD WE ADD THE SERVER CODE HERE TOO TO EXPLAIN HOW TOKENS CAN BE USED TO EVALUATE?] --
 
 ##### IMEI & Serial
