@@ -1083,7 +1083,7 @@ N/A
 
 問題のデバイスがエミュレートされていることを示すいくつかのインジケータがあります。これらの API コールのすべてがフックされている可能性がありますが、これは控えめな第一線の防御を提供します。
 
-The first set of indicaters stem from the build.prop file
+最初のインジケータセットは build.prop ファイルからのものです。
 
 ```
 API Method          Value           Meaning
@@ -1452,25 +1452,25 @@ Android での IMEI の取得は以下のように動作します。
 
 デバイスバインディングを動的にテストする方法はいくつかあります。
 
-##### Using an Emulator
+##### エミュレータを使用する場合
 
-1. Run the application on an Emulator
-2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3. Retrieve the data from the Emulator This has a few steps:
-- ssh to your simulator using ADB shell
-- run-as <your app-id (which is the package as described in the AndroidManifest.xml)>
-- chmod 777 the contents of cache and shared-preferences
-- exit the current user
-- copy the contents of /dat/data/<your appid>/cache & shared-preferences to the sdcard
-- use ADB or the DDMS to pull the contents
-4. Install the application on another Emulator
-5. Overwrite the data from step 3 in the data folder of the application.
-- copy the contents of step 3 to the sdcard of the second emulator.
-- ssh to your simulator using ADB shell
-- run-as <your app-id (which is the pacakge as described in the AndroidManifest.xml)>
-- chmod 777 the folders cache and shared-preferences
-- copy the older contents of the sdcard to /dat/data/<your appid>/cache & shared-preferences
-6. Can you continue in an authenticated state? If so, then binding might not be working properly.
+1. エミュレータ上でアプリケーションを実行します。
+2. アプリケーションのインスタンスの信頼を高めることができることを確認します (認証など) 。
+3. エミュレータからデータを取得します。これにはいくつかのステップがあります。
+- ADB shell を使用してシミュレータに ssh します
+- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
+- cache と shared-preferences のコンテンツを chmod 777 します
+- カレントユーザーを exit します
+- /dat/data/<your appid>/cache および shared-preferences のコンテンツを SD カードに copy します
+- ADB または DDMS を使用してコンテンツを pull します
+4. 別のエミュレータにそのアプリケーションをインストールします
+5. アプリケーションの data フォルダに step 3 のデータを上書きします
+- 二つ目のエミュレータの SD カードに step 3 のコンテンツをコピーします
+- ADB shell を使用してシミュレータに ssh します
+- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
+- フォルダ cache と shared-preferences を chmod 777 します
+- SD カードの古いコンテンツを /dat/data/<your appid>/cache および shared-preferences に copy します
+6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
 
 ##### Using two different rooted devices.
 
