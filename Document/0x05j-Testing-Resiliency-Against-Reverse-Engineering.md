@@ -1472,14 +1472,14 @@ Android での IMEI の取得は以下のように動作します。
 - SD カードの古いコンテンツを /dat/data/<your appid>/cache および shared-preferences に copy します
 6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
 
-##### Using two different rooted devices.
+##### 二つの個別のルート化デバイスを使用する場合
 
-1. Run the application on your rooted device
-2. Make sure you can raise the trust in the instance of the application (e.g. authenticate)
-3. Retrieve the data from the first rooted device
-4. Install the application on the second rooted device
-5. Overwrite the data from step 3 in the data folder of the application.
-6. Can you continue in an authenticated state? If so, then binding might not be working properly.
+1. ルート化デバイス上でアプリケーションを実行します。
+2. アプリケーションのインスタンスの信頼を高めることができることを確認します (認証など) 。
+3. 一つ目のルート化デバイスからデータを取得します。
+4. 二つ目のルート化デバイス上にアプリケーションをインストールします。
+5. アプリケーションの data フォルダに step 3 のデータを上書きします。
+6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
 
 #### Remediation
 
