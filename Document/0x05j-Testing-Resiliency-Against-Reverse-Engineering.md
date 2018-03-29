@@ -1481,27 +1481,27 @@ Android での IMEI の取得は以下のように動作します。
 5. アプリケーションの data フォルダに step 3 のデータを上書きします。
 6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
 
-#### Remediation
+#### 改善方法
 
-The behavior of the SSAID has changed since Android O and the behavior of MAC addresses have changed in Android N <code>[1]</code>. Google has set a new set of recommendations in their SDK documentation regarding identifiers as well <code>[2]</code>. Because of this new behavior, we recommend developers to no relie on the SSAID alone, as the identifier has become less stable. For instance: The SSAID might change upon a factory reset or when the app is reinstalled after the upgrade to Android O. Please note that there are amounts of devices which have the same ANDROID_ID and/or have an ANDROID_ID that can be overriden.
-Next, the Build.Serial was often used. Now, apps targetting Android O will get "UNKNOWN" when they request the Build.Serial.
-Before we describe the usable identifiers, let's quickly discuss how they can be used for binding. There are 3 methods which allow for device binding:
+SSAID の動作は Android O で変更され、MAC アドレスの動作は Android N で変更されました <sup>[1]</sup> 。また、Google は識別子に関する SDK ドキュメントに新しい推奨事項を設定しました <sup>[2]</sup> 。この新しい動作のため、開発者は SSAID だけに依存しないことをお勧めします。その識別子は安定ではありません。例えば、Android へのアップグレード後に、工場出荷のリセットやアプリの再インストールの際に、SSAID が変更される可能性があります。同じ ANDROID_ID やオーバーライドできる ANDROID_ID を持つデバイスが多くあることに注意します。
+また、Build.Serial がよく使われていました。ここで、Android O をターゲットとするアプリが Build.Serial をリクエストすると "UNKNOWN" を取得します。
+使用可能な識別子について述べる前に、バインディングを使用する方法について簡単に論じます。デバイスバインディングを可能にする3つの方法があります。
 
-- augment the credentials used for authentication with device identifiers. This can only make sense if the application needs to re-authenticate itself and/or the user frequently.
-- obfuscate the data stored on the device using device-identifiers as keys for encryption methods. This can help in binding to a device when a lot of offline work is done by the app or when access to APIs depends on access-tokens stored by the application.
-- Use a token based device authentication (InstanceID) to reassure that the same instance of the app is used.
+- デバイス識別子での認証に使用される資格情報を増やします。これはアプリケーションが自分自身やユーザーを頻繁に再認証する必要がある場合にのみ意味を成します。
+- デバイス識別子を暗号化方式の鍵として使用して、デバイスに格納されているデータを暗号化します。これは、アプリにより多くのオフライン作業が行われるとき、または API へのアクセスがアプリケーションにより格納されたアクセストークンに依存するときに、デバイスへのバインディングに役立ちます。
+- トークンベースのデバイス認証 (InstanceID) を使用して、アプリの同じインスタンスが使用されていることを再確認します。
 
-The following 3 identifiers can be possibly used.
+以下の3つの識別子を使用できます。
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
-- V8.10: "The app implements a 'device binding' functionality using a device fingerprint derived from multiple properties unique to the device."
+- V8.10: "アプリはデバイスに固有の複数のプロパティから由来したデバイスフィンガープリントを使用して「デバイス結合」機能を実装している。"
 
 ##### CWE
 
@@ -1516,8 +1516,8 @@ N/A
 
 ##### ツール
 
-* ADB & DDMS
-* Android Emulator or 2 rooted devices.
+* ADB および DDMS
+* Android エミュレータまたは2つのルート化デバイス
 
 ### 難読化のテスト
 
