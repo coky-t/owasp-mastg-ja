@@ -1523,31 +1523,31 @@ N/A
 
 #### 概要
 
-Obfuscation is the process of transforming code and data to make it more difficult to comprehend. It is an integral part of every software protection scheme. What's important to understand is that obfuscation isn't something that can be simply turned on or off. Rather, there's a whole lot of different ways in which a program, or part of it, can be made incomprehensible, and it can be done to different grades.
+難読化はコードとデータを変換して理解しにくくするためのプロセスです。これはすべてのソフトウェア保護スキームに不可欠なものです。重要なことは、難読化が単にオンまたはオフにできるものではないということを理解することです。むしろ、プログラムやその一部を理解できなくし、異なるグレードにできる方法はたくさんあります。
 
-In this test case, we describe a few basic obfuscation techniques that are commonly used on Android. For a more detailed discussion of obfuscation, refer to the "Assessing Software Protection Schemes" chapter.
+このテストケースでは、Android で一般的に使用されるいくつかの基本的な難読化技法について説明します。難読化の詳細については、「ソフトウェア保護スキームの評価」の章を参照ください。
 
-#### Effectiveness Assessment
+#### 有効性評価
 
-Attempt to decompile the bytecode and disassemble any included libary files, and make a reasonable effort to perform static analysis. At the very least, you should not be able to easily discern the app's core functionality (i.e., the functionality meant to be obfuscated). Verify that: 
+バイトコードを逆コンパイルし、インクルードされたライブラリファイルを逆アセンブルし、静的解析を実行するために妥当な努力をします。少なくとも、アプリのコア機能を簡単に識別できてはいけません (つまり、その機能が難読化されていることを意味します) 。それを検証します。
 
-- Meaningful identifiers such as class names, method names and variable names have been discarded;
-- String resources and strings in binaries are encrypted;
-- Code and data related to the protected functionality is encrypted, packed, or otherwise concealed.
+- クラス名、メソッド名、変数名などの意味のある識別子が破棄されている
+- 文字列リソースとバイナリ内の文字列が暗号化されている
+- 保護された機能に関連するコードとデータが暗号化、パック、または隠蔽されている
 
-For a more detailed assessment, you need to have a detailed understanding of the threats defended against and the obfuscation methods used. Refer to the "Assessing Obfuscation" section of the  "Assessing Software Protection Schemes" chapter for more information.
+より詳細な評価には、防御される脅威と使用される難読化手法の詳細な理解が必要です。詳細については「ソフトウェア保護スキームの評価」の章の「難読化の評価」のセクションを参照ください。
 
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-* M9 - Reverse Engineering - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
 
 ##### OWASP MASVS
 
-- V8.8: "All executable files and libraries belonging to the app are either encrypted on the file level and/or important code and data segments inside the executables are encrypted or packed. Trivial static analysis does not reveal important code or data."
-- v8.9: "Obfuscating transformations and functional defenses are interdependent and well-integrated throughout the app."
-- V8.12: "If the architecture requires sensitive computations be performed on the client-side, these computations are isolated from the operating system by using a hardware-based SE or TEE. Alternatively, the computations are protected using obfuscation. Considering current published research, the obfuscation type and parameters are sufficient to cause significant manual effort to reverse engineers seeking to comprehend the sensitive portions of the code and/or data."
+- V8.8: "アプリに属するすべての実行可能ファイルとライブラリはファイルレベルで暗号化されているか、実行形式内の重要なコードやデータセグメントが暗号化またはパック化されている。単純な静的解析では重要なコードやデータは明らかにならない。"
+- v8.9: "難読化変換および機能的防御が相互に依存し、アプリ全体で十分に統合されている。"
+- V8.12: "クライアント側で機密性の高い計算を実行するアーキテクチャが必要である場合、これらの計算はハードウェアベースのSEもしくはTEEを使用してオペレーティングシステムから分離している。あるいは、計算は難読化して保護されている。現在公表されている研究を考慮し、難読化タイプおよびパラメータはコードやデータの機密部分を理解しようとするリバースエンジニアに手作業で多くの努力を払う必要が十分にあること。"
 
 ##### CWE
 
