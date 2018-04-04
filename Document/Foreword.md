@@ -1,17 +1,23 @@
 # 序文
 
-**squirrel (noun plural): Any arboreal sciurine rodent of the genus Sciurus, such as S. vulgaris (red squirrel) or S. carolinensis (grey squirrel), having a bushy tail and feeding on nuts, seeds, etc.**
+---
+
+**OWASPモバイルセキュリティテストガイドの開発途中版へようこそ。既存のコンテンツを自由に探検してください。ただし、まだ不完全であり、随時変更される可能性があります。ご意見やご提案がある場合、または寄稿したい場合、GitHub に issue を作成するか Slack で ping してください。手順については README を参照してください。**
+
+https://www.github.com/OWASP/owasp-mstg/
 
 ---
 
-Mobile app security is a thing. As of this writing however, there is no widely accepted list of security best practices for mobile apps. Thus, on a beautiful summer day, a group of ~7 young men, a woman, and approximately three squirrels met in a Woburn Forest villa. So far, nothing unusual. But little did you know, within the next five days, they'd redefine not only mobile application security, but the very fundamentals of bookwriting itself!
+**squirrel (名詞 複数形): 齧歯目リス科リス属。樹上性。キタリスやトウブハイイロリスなど。毛の豊かな尾を持ち、ナッツや種子などを食べる。**
 
-Or maybe not. But at the very least, the Mobile Security Testing Guide (MSTG) is an unusual security book. It doesn't have a single author. Instead, it is an open, agile, crowd-sourced effort, made of the contributions of dozens of authors and reviewers from all over the world. 
+---
 
-With the MSTG, we aim to create those best practices, along with a comprehensive set of security test cases to verify them. The best practices and test cases are packaged into beginner friendly, complete and practical guide to mobile app security testing and reverse engineering.
+すばらしい夏の日に、七人くらいの若い男性、一人の女性、それとおそらく三匹のリスたちがウォーバーンフォレストの別荘で出会いました。ここまでは珍しいことではありません。あなたはほとんど知らないでしょうが、その後五日間で、彼らはモバイルアプリケーションセキュリティだけでなく、執筆する本自体の本質的な要旨も再定義することになります。(意外にも、そのイベントは、往年、偉大なるアランチューリングの住居と職場であったブレッチリーパークの近くで行われました。)
 
-This is an early preview edition of the MSTG that contains an acceptable, but far from perfect, version of the Android portions of the guide. We made it because we wanted our OWASP Summit working session to have a tangible result (and because OWASP asked us to do it). The final version of the guide, which will cover a wide range of Android, iOS, and OS-independent topics, is scheduled for release in the first quarter of 2018.
+やり過ぎかもしれません。しかし、少なくとも、彼らは一風変わったセキュリティ本の概念実証を生み出しました。モバイルセキュリティテストガイド (MSTG) は世界中の数多くの執筆者と査読者の貢献から成る、オープンでアジャイルでクラウドソースを基盤とした取り組みです。
 
-Our wholehearted thanks go to everyone who contributed to this project. We'd also like to thank the OWASP Foundation for bringing all of us together, and organizing and sponsoring this fantastic event. 
+これは通常のセキュリティ本ではないため、この序文では今時のモバイルデバイスの重要性を示す印象的な事実やデータを掲載していません。また、モバイルアプリケーションセキュリティがどのように破られるか、なぜこのような本がそんなに必要とされるのかを説明しませんし、本を可能とするために欠かせない妻や友人への執筆者の謝辞もありません。
+
+けれども読者のみなさんにはメッセージがあります。OWASP モバイルセキュリティテストガイドの最初のルールは次のとおりです。OWASP モバイルセキュリティテストガイドだけに従ってはいけません。モバイルアプリケーションセキュリティを真に卓越するには、モバイルオペレーションシステム、コーディング、ネットワークセキュリティ、暗号化などの多くのことを深く理解している必要があります。その多くは本書で簡単に触れることができます。セキュリティテストを止めてはいけません。独自のアプリを作成し、独自のカーネルをコンパイルし、モバイルマルウェアを解剖し、物事がどのように動くかを学びます。そしてあなたが新しいことを学び続けるとき、あなた自身が MSTG に貢献することを検討してください。彼らは言います。「プルリクエストしよう」。
 
 <img src="Images/summit-team.jpg" width="800px"/>
