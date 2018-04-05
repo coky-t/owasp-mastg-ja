@@ -1,7 +1,0 @@
-{ 
-  "root" : "./Document",
-
-  "structure": { 
-    "readme": "Foreword.md"
-  } 
-}
