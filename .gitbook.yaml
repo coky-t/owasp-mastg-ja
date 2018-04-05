@@ -1,12 +1,12 @@
 # Root directory to locate the content
 # Default is the root directory of the repository.
-root: ./
+root: ./Document
 
 # Files to use as SUMMARY/README.
 # (Relative to <root> directory)
 structure:
-  readme: README.md
-  summary: Document/SUMMARY.md
+  readme: Foreword.md
+  summary: SUMMARY.md
 
 # Redirect urls to specific files (relative to the <root> directory)
 redirects:
