@@ -1,22 +1,15 @@
-## 暗号化のテスト (iOS アプリ)
+## iOS の暗号化 API
 
-### 暗号化標準アルゴリズムの構成の検証
+「モバイルアプリの暗号化のテスト」の章では、一般的な暗号化のベストプラクティスを紹介し、モバイルアプリで暗号化が正しく使用されない場合に起こりうる典型的な欠陥について説明しました。この章では、iOS で利用可能な暗号化 API について詳しく説明します。ソースコードでそれらの API の使用方法を特定する方法とその設定を判断する方法を示します。コードをレビューする際は、使用されている暗号化パラメータとこのガイドからリンクされている現行のベストプラクティスを必ず確認してください。
 
-#### 概要
+### iOS の暗号化 API
 
-Apple は最も一般的に使用される暗号アルゴリズムの実装でのライブラリを提供しています。Apple の Cryptographic Services Guide <sup>[1]</sup> が参考になります。標準ライブラリを使用して暗号プリミティブを初期化および使用する方法に関する広範囲なドキュメントが含まれています。これはソースコード解析を実行する場合にも便利です。
-動的テストでは、暗号操作を実行する際に最も頻繁に使用される CommonCryptor などのネイティブ C API がより便利です。ソースコードは Apple Open Source リポジトリ <sup>[2]</sup> で部分的に利用可能です。
+Apple は最も一般的に使用される暗号化アルゴリズムの実装でのライブラリを提供しています。[Apple's Cryptographic Services Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/GeneralPurposeCrypto/GeneralPurposeCrypto.html "Apple Cryptographic Services Guide") が参考になります。標準ライブラリを使用して暗号化プリミティブを初期化および使用する方法に関する広範囲なドキュメントがあり、ソースコード解析を実行する際にも役立ちます。
 
-#### 静的解析
+iOS のコードは通常 `CommonCryptor.h` で定義された既定の定数を参照します (例えば、`kCCAlgorithmDES`) 。ソースコードを検索してこれらの定数が使用されているかどうかを検出できます。iOS 上の定数は数値であることに注意し、`CCCrypt` 関数に送られるアルゴリズム定数値が既知のセキュアではないまたは推奨されていないアルゴリズムであるかどうかを必ず確認してください。
 
-静的解析の主な目的は以下を確認することです。
+アプリが Apple により提供されている標準暗号化実装を使用している場合、最も簡単な方法は `CCCrypt`, `CCCryptorCreate` などの `CommonCryptor` から関数への呼び出しをチェックすることです。[ソースコード](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h "CommonCryptor.h") にすべての関数のシグネチャがあります。例えば、`CCCryptorCreate` は以下のシグネチャを持っています。
 
-* 暗号アルゴリズムは最新のものであり業界標準に準拠している。これには古いブロック暗号(DESなど)、ストリーム暗号(RC4など)、ハッシュ関数(MD5など)、Dual_EC_DRBG などの破られた乱数生成器などが(NIST認定されているものも)あります。これらはすべて安全でないとマークされ、使用すべきではなく、アプリケーションやサーバーから削除される必要があります。
-* 鍵長は業界標準に準拠しており、十分な時間の保護を提供している。ムーアの法則を考慮した、さまざまな鍵長や保護機能のオンライン比較はオンライン <sup>[3]</sup> を参照ください。
-* 暗号パラメータは合理的な範囲で明確に定義されている。これには次を含みますが、これに限定されません。暗号ソルト(ハッシュ関数出力と少なくとも同じ長さである必要がある)、パスワード導出関数および反復カウントの合理的な選択(PBKDF2, scrypt, bcrypt など)、IV がランダムかつユニークである、目的に沿ったブロック暗号化モード(特定の場合を除いて ECB を使用すべきではないなど)、鍵管理が適切に行われている(3DES は3つの独立した鍵を持つなど)、など。
-
-アプリが Apple により提供される標準的な暗号実装を使用している場合、最も簡単な方法はアプリケーションを逆コンパイルし、`CCCrypt`, `CCCryptorCreate` などの `CommonCryptor` から関数への呼び出しををチェックすることです。ソースコード <sup>[4]</sup> にはすべての関数の署名が含まれています。
-例えば、`CCCryptorCreate` は以下のシグネチャを持っています。
 ```
 CCCryptorStatus CCCryptorCreate(
 	CCOperation op,             /* kCCEncrypt, etc. */
@@ -28,65 +21,26 @@ CCCryptorStatus CCCryptorCreate(
 	CCCryptorRef *cryptorRef);  /* RETURNED */
 ```
 
-すべての `enum` 型を比較して、どのアルゴリズム、パディング、鍵マテリアルが使用されているかを理解することができます。(悪い)パスワードが直接入力された場合や、鍵生成機能(PBKDF2など)から入力された場合は、鍵マテリアルに注意します。
-明らかに、アプリケーションが使用している可能性がある他の非標準のライブラリ(`openssl`など)がある場合、それらもチェックします。
+すべての `enum` 型を比較することで、どのアルゴリズム、パディング、鍵マテリアルが使用されているか理解できます。鍵マテリアルに注意します。パスワードから直接来ていますか (それはいけません)、それとも鍵導出関数 (PBKDF2 など) から来ていますか。明らかに、アプリケーションが使用している可能性のある他の非標準ライブラリ (例えば `openssl`) があれば、それらもチェックします。
 
-#### 動的解析
+iOS のコードは通常 `CommonCryptor.h` で定義された既定の定数を参照します (例えば、`kCCAlgorithmDES`) 。ソースコードを検索してこれらの定数が使用されているかどうかを検出できます。iOS 上の定数は数値であることに注意します。`CCCrypt` 関数に送られるアルゴリズム定数値が既知のセキュアではないまたは推奨されていないアルゴリズムであるかどうかを必ず確認してください。iOS での暗号化の使用は [モバイルアプリの暗号化](0x04g-Testing-Cryptography.md) の章で説明されているのと同じベストプラクティスに従う必要があります。
 
--- TODO [Describe how to test for this issue "Verifying the Configuration of Cryptographic Standard Algorithms" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+### iOS での乱数生成
 
-#### 改善方法
+Apple は暗号論的にセキュアな乱数を生成する [Randomization Services](https://developer.apple.com/reference/security/randomization_services "Randomization Services") アプリケーションプログラミングインタフェース (API) を開発者に提供しています。
 
--- TODO [Describe the best practices that developers should follow to prevent this issue "Verifying the Configuration of Cryptographic Standard Algorithms".] --
+Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値生成を実行します。これは `/dev/random` デバイスファイルのラッパー関数であり、0 から 255 までの暗号論的にセキュアな擬似乱数値を提供し、連結を実行します。
 
-#### 参考情報
+すべての乱数値がこの API を使用して生成されていることを確認します。開発者が別のものを使用すべき理由はありません。
 
-##### OWASP Mobile Top 10 2016
-* M5 - 不十分な暗号化 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
-
-##### OWASP MASVS
-* V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
-* V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
-
-##### CWE
--- TODO [Add relevant CWE for "Verifying the Configuration of Cryptographic Standard Algorithms"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-
-* [1] Apple Cryptographic Services Guide - https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/GeneralPurposeCrypto/GeneralPurposeCrypto.html
-* [2] Apple Open Source - https://opensource.apple.com
-* [3] Keylength comparison - https://www.keylength.com/
-* [4] CommonCryptoer.h - https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h
-
-##### ツール
-
--- TODO [Add links to relevant tools for "Verifying the Configuration of Cryptographic Standard Algorithms"] --
-* Enjarify - https://github.com/google/enjarify
-
-
-### 乱数生成器のテスト
-
-#### 概要
-
-決定的デバイスで真の乱数を生成することは基本的に不可能です。擬似乱数生成器 (RNG) は擬似乱数ストリームを生成することでこれを補います。擬似乱数ストリームはランダムに生成されたように *見えます* 。生成される数の品質は使用されるアルゴリズムのタイプにより異なります。*暗号論的にセキュアな* RNG は統計的ランダム性テストに合格し、予測攻撃に対して耐性があります。
-
-モバイル SDK は十分な人工的ランダム性を持つ数を生成する RNG アルゴリズムの標準実装を提供します。
-
-#### 静的解析
-
-Apple は暗号論的にセキュアな乱数を生成する Randomization Services アプリケーションプログラミングインタフェース (API) を開発者に提供します <sup>[1]</sup> 。
-
-Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値生成を実行します。これは <code>/dev/random</code> デバイスファイルのラッパー関数で、0 から 255 までの暗号論的にセキュアな乱数値および乱数列を提供します <sup>[2]</sup> 。
-
-Swift では、`SecRandomCopyBytes` API は以下のように定義されています <sup>[3]</sup> 。
+Swift では [`SecRandomCopyBytes` API](https://developer.apple.com/reference/security/1399291-secrandomcopybytes "SecRandomCopyBytes (Swift)") が以下のように定義されています。
 ```
-func SecRandomCopyBytes(_ rnd: SecRandomRef?, 
-                      _ count: Int, 
+func SecRandomCopyBytes(_ rnd: SecRandomRef?,
+                      _ count: Int,
                       _ bytes: UnsafeMutablePointer<UInt8>) -> Int32
 ```
 
-Objective-C では以下のようになります <sup>[4]</sup> 。
+[Objective-C version](https://developer.apple.com/reference/security/1399291-secrandomcopybytes?language=objc "SecRandomCopyBytes (Objective-C)") は以下のとおりです。
 ```
 int SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
 ```
@@ -96,35 +50,16 @@ int SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
 int result = SecRandomCopyBytes(kSecRandomDefault, 16, randomBytes);
 ```
 
-#### 動的解析
+### 参考情報
 
--- TODO [Describe how to test for this issue "Testing Random Number Generation" by running and interacting with the app. This can include everything from simply monitoring network traffic or aspects of the app’s behavior to code injection, debugging, instrumentation, etc.] --
+#### OWASP Mobile Top 10 2016
+- M5 - 不十分な暗号化 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M5-Insufficient_Cryptography.html
 
--- TODO [Can probably write about generating multiple values via the random number generation and compare them to analyse the entropy] --
+#### OWASP MASVS
+- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
+- V3.4: "アプリはセキュリティ上の目的で広く廃止対象と考えられる暗号プロトコルやアルゴリズムを使用していない。"
+- V3.6: "すべての乱数値は、十分に安全な乱数生成器を用いて生成している。"
 
-#### 改善方法
-
-この問題を解決するために推奨される改善方法は、乱数生成の目的には常に Randomization Services API を使用することです。
-カスタムの暗号アルゴリズムや標準を実装することは避けます。また、暗号機能には暗号論的に強力な乱数のみを供給します。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-* M5 - 不十分な暗号化 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
-
-##### OWASP MASVS
-* V3.6: "すべての乱数値は、十分に安全な乱数生成器を用いて生成している。"
-
-##### CWE
+#### CWE
 - CWE-337 - Predictable Seed in PRNG
 - CWE-338 - Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)
-
-##### その他
-- [1] Randomization Services - https://developer.apple.com/reference/security/randomization_services
-- [2] Generating Random Numbers - https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/RandomNumberGenerationAPIs/RandomNumberGenerationAPIs.html
-- [3] SecRandomCopyBytes (Swift) - https://developer.apple.com/reference/security/1399291-secrandomcopybytes
-- [4] SecRandomCopyBytes (Objective-C) - https://developer.apple.com/reference/security/1399291-secrandomcopybytes?language=objc
-
-##### ツール
--- TODO [Add links to relavant tools for "Testing Random Number Generation"] --
-* Enjarify - https://github.com/google/enjarify
