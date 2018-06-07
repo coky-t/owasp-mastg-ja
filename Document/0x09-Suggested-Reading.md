@@ -1,11 +1,5 @@
 ## 推薦図書
 
-<!--
-### 基礎知識
-
--- TODO [Add suggested reading on Basic Knowledge ] --
--->
-
 ### モバイルアプリセキュリティ
 
 #### Android
@@ -18,7 +12,7 @@
 
 - Charlie Miller, Dionysus Blazakis, Dino Dai Zovi, Stefan Esser, Vincenzo Iozzo, Ralf-Philipp Weinmann (2012) *iOS Hacker's Handbook*. Wiley. 参照先: http://www.wiley.com/WileyCDA/WileyTitle/productCd-1118204123.html
 - David Thiel (2016) *iOS Application Security, The Definitive Guide for Hackers and Developers*. no starch press. 参照先: https://www.nostarch.com/iossecurity
-- Jonathan Levin (2013), *Mac OS X and iOS Internals*, Wiley. 参照先: http://newosxbook.com/index.php
+- Jonathan Levin (2017), *Mac OS X and iOS Internals*, Wiley. 参照先: http://newosxbook.com/index.php
 
 #### その他
 
