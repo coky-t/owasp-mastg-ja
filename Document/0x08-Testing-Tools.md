@@ -17,7 +17,6 @@
 
 - [Checkmarx](https://www.checkmarx.com/technology/static-code-analysis-sca/) - 静的ソースコードスキャナであり、Android および iOS 用のソースコードもスキャンします。
 - [Fortify](https://saas.hpe.com/en-us/software/fortify-on-demand/mobile-security) - 静的ソースコードスキャナであり、Android および iOS 用のソースコードもスキャンします。
-- [Acccenture](https://digitalsecurity.accenture.com) - 静的ソースコードスキャナであり、Android および iOS 用のソースコードもスキャンします。
 - [Veracode](https://www.veracode.com/products/binary-static-analysis-sast "Veracode Static Analysis") - iOS および Android バイナリの静的解析。
 
 ### オールインワンモバイルセキュリティフレームワーク
@@ -135,3 +134,4 @@
 - [Android Studio](https://developer.android.com/studio/index.html) - Android Studio は Google の Android オペレーティングシステム向けの公式の統合開発環境 (IDE) です。JetBrains の IntelliJ IDEA で構築されており、特に Android 開発向けに設計されています。
 - [IntelliJ](https://www.jetbrains.com/idea/download/) - IntelliJ IDEA はコンピュータソフトウェアを開発するための Java 統合開発環境 (IDE) です。
 - [Eclipse](https://eclipse.org/) - Eclipse はコンピュータプログラミングに使用される統合開発環境 (IDE) であり、最も広く使用されている Java IDE です。
+- [Xcode](https://developer.apple.com/xcode/) - Xcode は iOS, watchOS, tvOS, macOS 用のアプリを作成するための macOS 専用の統合開発環境 (IDE) です。
