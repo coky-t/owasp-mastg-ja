@@ -201,19 +201,6 @@ public static void main (String args[]) {
 
 攻撃者はどのタイプの脆弱な疑似乱数生成器 (PRNG) が使用されているかを知ることで、[Java Random で行われたように](http://franklinta.com/2014/08/31/predicting-the-next-math-random-in-java/ "Predicting the next Math.random() in Java") 、以前に観測された値に基づいて次の乱数値を生成する概念実証を書くことは簡単です。非常に脆弱なカスタム乱数生成器の場合にはパターンを統計的に観測することが可能かもしれません。推奨される方法はとにかく APK を逆コンパイルしてアルゴリズムを検査することです (静的解析を参照してください) 。
 
-#### 参考情報
-
-- [#nelenkov] - N. Elenkov, Android Security Internals, No Starch Press, 2014, Chapter 5.
-
-##### OWASP MASVS
-- V3.6: "すべての乱数値は、十分に安全な乱数生成器を用いて生成している。"
-
-##### OWASP Mobile Top 10 2016
-- M5 - 不十分な暗号化
-
-##### CWE
-- CWE-330: Use of Insufficiently Random Values
-
 
 ### 鍵管理のテスト
 
@@ -284,6 +271,8 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 
 ### 参考情報
 
+- [#nelenkov] - N. Elenkov, Android Security Internals, No Starch Press, 2014, Chapter 5.
+
 ##### OWASP Mobile Top 10
 
 - M5 - 不十分な暗号化
@@ -299,3 +288,4 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 
 - CWE-321: Use of Hard-coded Cryptographic Key
 - CWE-326: Inadequate Encryption Strength
+- CWE-330: Use of Insufficiently Random Values
