@@ -23,6 +23,7 @@
 傍受プロキシを使用することによる動的解析は、標準ライブラリがアプリで使用され、すべての通信が HTTP 経由で行われる場合には簡単です。しかしこれが動作しないいくつかのケースがあります。
 
 - システムプロキシ設定を無視する [Xamarin](https://www.xamarin.com/platform "Xamarin") などのモバイルアプリケーション開発プラットフォームが使用されている場合。
+- モバイルアプリケーションがシステムプロキシが使用されているかどうかを確認し、プロキシを介してリクエストを送信することを拒否する場合。
 - Android の GCM/FCM などのプッシュ通信を傍受したい場合。
 - XMPP や他の非 HTTP プロトコルが使用されている場合。
 
@@ -104,7 +105,7 @@ Privileges dropped to EUID 65534 EGID 65534...
 
 Scanning for merged targets (2 hosts)...
 
-* |==================================================>| 100.00 %
+* |=========================================>| 100.00 %
 
 2 hosts added to the hosts list...
 
@@ -154,13 +155,13 @@ Xamarin は Visual Studio と C# をプログラミング言語として使用�
 
 Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリは電話のローカルプロキシ設定を使用しないためです。これを解決する方法は二つあります。
 
-1. [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate()` または `Main()` に以下のコードを追加してアプリを再作成します。
+- [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate()` または `Main()` に以下のコードを追加してアプリを再作成します。
 
 ```
 WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
 ```
 
-2. ettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
+- ettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
 
 ```bash
 $ echo "
