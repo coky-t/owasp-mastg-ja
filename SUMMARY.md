@@ -7,6 +7,7 @@
 - [モバイルセキュリティテストガイドの序文](Document/0x03-Overview.md)
 - [モバイルアプリの分類](Document/0x04a-Mobile-App-Taxonomy.md)
 - [モバイルアプリのセキュリティテスト](Document/0x04b-Mobile-App-Security-Testing.md)
+- [改竄とリバースエンジニアリング](Document/0x04c-Tampering-and-Reverse-Engineering.md)
 
 ### 総合モバイルアプリテストガイド
 
