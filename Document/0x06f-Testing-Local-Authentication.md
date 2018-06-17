@@ -15,13 +15,13 @@ iOS での指紋認証は *Touch ID* として知られています。指紋 ID 
 
 ##### ローカル認証フレームワーク
 
-ローカル認証フレームワークはユーザーからのパスフレーズまたは TouchID 認証を要求する機能を提供します。開発者は `LAContext` クラスの関数 `evaluatePolicy` を利用して、認証プロンプトを表示および利用できます。
+ローカル認証フレームワークはユーザーからのパスフレーズまたは Touch ID 認証を要求する機能を提供します。開発者は `LAContext` クラスの関数 `evaluatePolicy` を利用して、認証プロンプトを表示および利用できます。
 
 二つの利用可能なポリシーでは受け入れ可能な認証形式を定義します。
 
-- `deviceOwnerAuthentication`(Swift) または `LAPolicyDeviceOwnerAuthentication`(Objective-C): 利用可能な場合、ユーザーは TouchID 認証を実行するよう促されます。TouchID が有効ではない場合には、デバイスパスコードを代わりに要求されます。デバイスパスコードが有効ではない場合、ポリシー評価は失敗します。
+- `deviceOwnerAuthentication`(Swift) または `LAPolicyDeviceOwnerAuthentication`(Objective-C): 利用可能な場合、ユーザーは Touch ID 認証を実行するよう促されます。Touch ID が有効ではない場合には、デバイスパスコードを代わりに要求されます。デバイスパスコードが有効ではない場合、ポリシー評価は失敗します。
 
-- `deviceOwnerAuthenticationWithBiometrics` (Swift) または `LAPolicyDeviceOwnerAuthenticationWithBiometrics`(Objective-C): 認証はユーザーが TouchID を促される生体認証に制限されます。
+- `deviceOwnerAuthenticationWithBiometrics` (Swift) または `LAPolicyDeviceOwnerAuthenticationWithBiometrics`(Objective-C): 認証はユーザーが Touch ID を促される生体認証に制限されます。
 
 `evaluatePolicy` 関数はユーザーが認証に成功したかどうかを示すブール値を返します。
 
@@ -43,7 +43,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 	// ユーザーが正常に認証された。適切な処理を講じる。
 }
 ```
-*ローカル認証フレームワークを使用した Swift での TouchID 認証 (Apple の公式コードサンプル)*
+*ローカル認証フレームワークを使用した Swift での Touch ID 認証 (Apple の公式コードサンプル)*
 
 ##### ローカル認証にキーチェーンサービスを使用する
 
@@ -201,12 +201,12 @@ $ otool -L <AppName>.app/<AppName>
 - サブメニュー "Select Target Apps" に入ります
 - ターゲットアプリを有効にします
 - アプリを閉じて再度起動します
-- TouchID プロンプトが表示されたら "cancel" をクリックします
-- TouchID を必要とせずにアプリケーションフローが継続する場合、そのバイパスは機能しています。
+- Touch ID プロンプトが表示されたら "cancel" をクリックします
+- Touch ID を必要とせずにアプリケーションフローが継続する場合、そのバイパスは機能しています。
 
 Needle を使用している場合には、"hooking/frida/script_touch-id-bypass" モジュールを実行してプロンプトに従います。これによりアプリケーションを開始して `evaluatePolicy` 関数を計装します。Touch ID で認証が求められた場合、cancel をタップします。アプリケーションフローが継続する場合、Touch ID のバイパスに成功しています。frida の代わりに cycript を使用する同様のモジュール (hooking/cycript/cycript_touchid) も Needle で利用できます。
 
-あるいは、[objection to bypass TouchID](https://github.com/sensepost/objection/wiki/Understanding-the-TouchID-Bypass "Understanding the TouchID Bypass") (これは非脱獄済みデバイス上でも機能します) を使用したり、アプリにパッチを当てたり、Cycript や同様のツールを使用してプロセスを計装することもできます。
+あるいは、[objection to bypass Touch ID](https://github.com/sensepost/objection/wiki/Understanding-the-TouchID-Bypass "Understanding the TouchID Bypass") (これは非脱獄済みデバイス上でも機能します) を使用したり、アプリにパッチを当てたり、Cycript や同様のツールを使用してプロセスを計装することもできます。
 
 Needle を使用して iOS プラットフォームの非セキュアな生体認証をバイパスできます。Needle は frida を利用して、`LocalAuthentication.framework` API を使用して開発されたログインフォームをバイパスします。以下のモジュールを使用して、非セキュアな生体認証をテストできます。
 
