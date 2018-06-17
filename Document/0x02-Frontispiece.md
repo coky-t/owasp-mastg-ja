@@ -9,7 +9,7 @@ OWASP は多くの著者、レビュー担当者、編集者がこのガイド�
 ## 著作権とライセンス
 
 ![license](Images/license.jpg)
-Copyright © 2017 The OWASP Foundation. 本書は [クリエイティブコモンズ 表示 - 継承 4.0 国際 ライセンス](https://creativecommons.org/licenses/by-sa/4.0/deed.ja) に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
+Copyright © 2018 The OWASP Foundation. 本書は [クリエイティブコモンズ 表示 - 継承 4.0 国際 ライセンス](https://creativecommons.org/licenses/by-sa/4.0/deed.ja) に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
 
 ## 謝辞
 
@@ -23,7 +23,7 @@ Bernhard はあらゆる種類のシステムをハックする才能を持つ�
 
 #### Sven Schleier
 
-Sven は経験豊かなペネトレーションテスト技術者であり、ウェブアプリケーション、iOS アプリ、Android アプリのセキュアな SDLC の実装を専門とするセキュリティアーキテクトです。彼は OWASP モバイルセキュリティテストガイドのプロジェクトリーダーであり、OWASP Mobile Hacking Playground の製作者です。Sven はウェブとモバイルアプリのセキュリティテストに関するハンズオンワークショップで、フリーでコミュニティのサポートもしています。
+Sven は経験豊かなウェブおよびモバイルのペネトレーションテスト技術者であり、歴史上有名な Flash アプリケーションから MEAN スタック上に構築されたプログレッシブアプリまでのすべてを評価しています。彼はセキュリティエンジニアでもあり、SDLC の中でエンドツーエンドで多くのプロジェクトをサポートし「セキュリティを構築」しています。彼はローカルおよびインターナショナルの会議やカンファレンスで講演し、ウェブアプリケーションやモバイルアプリのセキュリティに関するハンズオンワークショップを行っています。
 
 ### 共同執筆者
 
@@ -55,7 +55,7 @@ Jeroen は Xebia の IT セキュリティ専門のフルスタック開発者�
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Jin Kung Ong, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpa, Daniel Ramirez Martin, Claudio André, Enrico Verzegnassi, Yogesh Sharma, Dominique Righetto, Raul Siles, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Carlos Holguera, David Fern, Pishu Mahtani, Anuruddha E.
+Jin Kung Ong, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Daniel Ramirez Martin, Claudio André, Enrico Verzegnassi, Yogesh Sharma, Dominique Righetto, Raul Siles, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Carlos Holguera, David Fern, Pishu Mahtani, Anuruddha E.
 
 ### レビュー担当者
 
