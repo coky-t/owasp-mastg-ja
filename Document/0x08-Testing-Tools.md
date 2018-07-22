@@ -4,14 +4,10 @@
 
 ### モバイルアプリケーションセキュリティテストディストリビューション
 
-- [Appie](https://manifestsecurity.com/appie) - Android Pentesting Portable Integrated Environment. Android ペネトレーションテスト用のポータブルソフトウェアパッケージで、既存の仮想マシンに代わるものです。
-- [Android Tamer](https://androidtamer.com/) - Android Tamer は Android セキュリティ専門家向けの Debian ベースの仮想／ライブプラットフォームです。
-- [AppUse](https://appsec-labs.com/AppUse/) - AppUse は AppSec Labs により開発された VM (仮想マシン) です。
 - [Androl4b](https://github.com/sh4hin/Androl4b) - Android アプリケーションの評価、リバースエンジニアリング、マルウェア解析のための仮想マシンです。
-- [Mobisec](http://sourceforge.net/projects/mobisec/) - モバイルセキュリティテストのライブ環境です。
+- [Android Tamer](https://androidtamer.com/) - Android Tamer は Android セキュリティ専門家向けの Debian ベースの仮想／ライブプラットフォームです。
+- [AppUse](https://appsec-labs.com/AppUse/) - AppUse は AppSec Labs により開発された仮想マシンです。
 - [Santoku](https://santoku-linux.com/) - Santoku は OS であり、スタンドアロンのオペレーティングシステムとして VM の外部で実行できます。
-- [Vezir Project](https://github.com/oguzhantopgul/Vezir-Project) - モバイルアプリケーションのペネトレーションテストおよびマルウェア解析の環境です。
-- [Nathan](https://github.com/mseclab/nathan) - Nathan は AOSP Android エミュレータであり、モバイルセキュリティ評価を実行するためにカスタマイズされています。
 
 ### 静的ソースコード解析
 
@@ -21,10 +17,10 @@
 
 ### オールインワンモバイルセキュリティフレームワーク
 
+- [Appmon](https://github.com/dpnishant/appmon/) - AppMon はネイティブ macOS, iOS, android アプリのシステム API コールを監視および改竄するための自動化フレームワークです。
 - [Mobile Security Framework - MobSF](https://github.com/ajinabraham/Mobile-Security-Framework-MobSF) - Mobile Security Framework は静的解析および動的解析を実行できるインテリジェントでオールインワンのオープンソースモバイルアプリケーション (Android/iOS) 自動ペネトレーションテストフレームワークです。
 - [Needle](https://github.com/mwrlabs/needle) - Needle はオープンソースのモジュラーフレームワークであり、バイナリ解析、静的コード解析、Cycript や Frida フッキングを使用した実行時操作などの iOS アプリのセキュリティ評価実施のプロセスを効率化します。
-- [Appmon](https://github.com/dpnishant/appmon/) - AppMon はネイティブ macOS, iOS, android アプリのシステム API コールを監視および改竄するための自動化フレームワークです。
-- [objection](https://github.com/sensepost/objection) - objection は iOS および android の両方に対応し、脱獄やルート化デバイスを必要としない実行時モバイルセキュリティ評価フレームワークです。
+- [objection](https://github.com/sensepost/objection) - objection は iOS および android の両方に対応し、Frida を使用することにより、脱獄やルート化デバイスを必要としない実行時モバイルセキュリティ評価フレームワークです。
 
 
 ### Android 用ツール
