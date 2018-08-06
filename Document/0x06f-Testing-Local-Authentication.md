@@ -2,6 +2,8 @@
 
 ローカル認証では、アプリはデバイス上でローカルに保存された資格情報に対してユーザーを認証します。言い換えると、ユーザーはローカルデータを参照することにより検証される PIN、パスワード、指紋を提供することで、アプリや機能の何かしらの内部層を「アンロック」します。一般的に、これはユーザーがより便利にリモートサービスでの既存のセッションを再開するため、またはある重要な機能を保護するためのステップアップ認証の手段として行われます。
 
+モバイルアプリの認証アーキテクチャの章で前述しているように、テスト技術者はローカル認証が常にリモートエンドポイントで実行されることや暗号プリミティブに基づいている必要があることに注意します。認証プロセスからデータが返らない場合、攻撃者は簡単にローカル認証をバイパスできます。
+
 ### ローカル認証のテスト
 
 iOS にはアプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication) では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html) を利用することが可能であり (および推奨され) ます。
@@ -12,6 +14,8 @@ iOS での指紋認証は *Touch ID* として知られています。指紋 ID 
 
 - `LocalAuthentication.framework` は上位レベルの API であり、Touch ID 経由でユーザーを認証するために使用できます。アプリは登録された指紋に関連付けられたデータにアクセスすることはできません。認証が成功したかどうかだけが通知されます。
 - `Security.framework` は下位レベルの API であり、[Keychain Services](https://developer.apple.com/documentation/security/keychain_services "Keychain Services") にアクセスします。アプリが生体認証である機密データを保護する必要がある場合、アクセス制御はシステムレベルで管理され、簡単にはバイパスできないため、これはセキュアな選択肢です。`Security.framework` には C API がありますが、いくつかの [オープンソースラッパーを利用](https://www.raywenderlich.com/147308/secure-ios-user-data-keychain-touch-id "How To Secure iOS User Data: The Keychain and Touch ID") して、キーチェーンへのアクセスを NSUserDefaults のように簡単に行えます。`Security.framework` は `LocalAuthentication.framework` の基礎にあります。Apple は可能であれば上位レベル API をデフォルトとすることを推奨しています。
+
+`LocalAuthentication.framework` または `Security.framework` のいずれかを使用すると、ブール値を返すだけで処理を続けるデータがないため、攻撃者がバイパスできるコントロールになることに注意します。詳細については [Don't touch me that way, by David Lidner et al](https://www.youtube.com/watch?v=XhXIHVGCFFM) を参照してください。
 
 ##### ローカル認証フレームワーク
 
@@ -56,6 +60,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 **Swift**
 
 ```swift
+
 // 1. 認証設定を表す AccessControl オブジェクトを作成する
 
 var error: Unmanaged<CFError>?
@@ -90,30 +95,33 @@ if status == noErr {
 
 **Objective-C**
 
-```objective-c
-// 1. 認証設定を表す AccessControl オブジェクトを作成する
-CFErrorRef *err = nil;
+```objc
 
-SecAccessControlRef sacRef = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-	kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-	kSecAccessControlUserPresence,
-	err);
+	// 1. 認証設定を表す AccessControl オブジェクトを作成する
+	CFErrorRef *err = nil;
 
-// 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
-NSDictionary *query = @{ (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
-	(__bridge id)kSecAttrLabel: @"com.me.myapp.password",
-	(__bridge id)kSecAttrAccount: @"OWASP Account",
-	(__bridge id)kSecValueData: [@"test_strong_password" dataUsingEncoding:NSUTF8StringEncoding],
-	(__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacRef };
+	SecAccessControlRef sacRef = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+		kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+		kSecAccessControlUserPresence,
+		err);
 
-// 3. アイテムを保存する
-OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, nil);
+	// 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
+	NSDictionary* query = @{
+		(_ _bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+		(__bridge id)kSecAttrLabel: @"com.me.myapp.password",
+		(__bridge id)kSecAttrAccount: @"OWASP Account",
+		(__bridge id)kSecValueData: [@"test_strong_password" dataUsingEncoding:NSUTF8StringEncoding],
+		(__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacRef
+	};
 
-if (status == noErr) {
-	// 正常に保存された
-} else {
-	// 保存中にエラーが発生
-}
+	// 3. アイテムを保存する
+	OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, nil);
+
+	if (status == noErr) {
+		// 正常に保存された
+	} else {
+		// 保存中にエラーが発生
+	}
 ```
 
 これで保存したアイテムをキーチェーンからリクエストできます。キーチェーンサービスはユーザーに認証ダイアログを表示し、適切な指紋が提供されたかどうかに応じてデータまたは nil を返します。
@@ -145,7 +153,7 @@ if status == noErr {
 
 **Objective-C**
 
-```objective-c
+```objc
 // 1. クエリを定義する
 NSDictionary *query = @{(__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
     (__bridge id)kSecReturnData: @YES,
@@ -158,8 +166,8 @@ CFTypeRef queryResult = NULL;
 OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &queryResult);
 
 if (status == noErr){
-    NSData *resultData = ( __bridge_transfer NSData *)queryResult;
-    NSString *password = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
+    NSData* resultData = ( __bridge_transfer NSData* )queryResult;
+    NSString* password = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
     NSLog(@"%@", password);
 } else {
     NSLog(@"Something went wrong");
@@ -226,6 +234,7 @@ Needle を使用して iOS プラットフォームの非セキュアな生体�
 #### OWASP MASVS
 
 - V4.7: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
+- v2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
 #### CWE
 
