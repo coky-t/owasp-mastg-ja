@@ -1,6 +1,85 @@
 ## Android のローカル認証
 
 ローカル認証では、アプリはデバイス上でローカルに保存された資格情報に対してユーザーを認証します。言い換えると、ユーザーはローカルデータを参照することにより検証される PIN、パスワード、指紋を提供することで、アプリや機能の何かしらの内部層を「アンロック」します。一般的に、このプロセスはリモートサービスで既存のセッションを再開するためのユーザーの利便性を提供するような理由で、またはある重要な機能を保護するためのステップアップ認証の手段として呼び出されます。
+モバイルアプリの認証アーキテクチャの章で前述したように、少なくとも暗号プリミティブ (鍵をアンロックする認証手順など) で認証が行われることを再確認することが重要です。次に、認証がリモートエンドポイントで検証されることを推奨します。
+Android では、ローカル認証のために Android Runtime でサポートされている二つのメカニズムがあります。資格情報の確認フローと生体認証フローです。
+
+
+### 資格情報の確認のテスト
+
+#### 概要
+資格情報の確認フローは Android 6.0 以降で利用できます。ユーザーがロック画面の保護機能とともにアプリ固有のパスワードを入力する必要がないようにするために使用されます。代わりに、ユーザーが自分のデバイスに直近でログインしている場合には、資格情報の確認は `AndroidKeystore` から暗号マテリアルをアンロックするために使用できます。つまり、ユーザーが設定された制限時間 (`setUserAuthenticationValidityDurationSeconds`) 内に自分のデバイスをアンロックしたか、もしくは再度自分のデバイスをアンロックする必要があります。
+
+資格情報の確認のセキュリティはロック画面で設定されている保護と同程度の強度しかないことに注意します。これは単純な予測としてロック画面パターンがよく使用されることを意味しています。したがって、L2 のセキュリティコントロールを要求するアプリに資格情報の確認を使用することは推奨しません。
+
+#### 静的解析
+
+ロック画面が設定されていることを確認します。
+
+```java
+   KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+   if (!mKeyguardManager.isKeyguardSecure()) {
+            // Show a message that the user hasn't set up a lock screen.
+   }
+```
+
+- ロック画面で保護される鍵を作成します (ユーザーが直近 30 秒以内に自分のデバイスをアンロックしていることを確認するか、再度アンロックする必要があります) 。
+
+```java
+  try {
+        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+        keyStore.load(null);
+        KeyGenerator keyGenerator = KeyGenerator.getInstance(
+                KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+
+        // Set the alias of the entry in Android KeyStore where the key will appear
+        // and the constrains (purposes) in the constructor of the Builder
+        keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
+                KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                .setUserAuthenticationRequired(true)
+                        // Require that the user has unlocked in the last 30 seconds
+                .setUserAuthenticationValidityDurationSeconds(30)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                .build());
+        keyGenerator.generateKey();
+    } catch (NoSuchAlgorithmException | NoSuchProviderException
+            | InvalidAlgorithmParameterException | KeyStoreException
+            | CertificateException | IOException e) {
+        throw new RuntimeException("Failed to create a symmetric key", e);
+    }
+
+```
+
+- ロック画面をセットアップして確認します。
+```java
+  private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1; //used as a number to verify whether this is where the activity results from
+  Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
+        if (intent != null) {
+            startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
+        }
+```
+
+
+- ロック画面の後に鍵を使用します。
+```java
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
+            // Challenge completed, proceed with using cipher
+            if (resultCode == RESULT_OK) {
+                //use the key for the actual authentication flow
+            } else {
+                // The user canceled or didn’t complete the lock screen
+                // operation. Go to error/cancellation flow.
+            }
+        }
+    }
+
+```
+#### 動的解析
+アプリにパッチを当てるか、実行時計装を使用して、クライアントの指紋認証をバイパスします。例えば、Frida を使用して `onActivityResult` コールバックメソッドを直接コールすることで、ローカル認証フローを続行するために暗号マテリアル (セットアップ暗号など) を無視できるかどうかを確認できます。詳細については「Android の改竄とリバースエンジニアリング」の章を参照してください。
+
 
 ### 生体認証のテスト
 
@@ -22,6 +101,12 @@ Android `KeyGenerator` クラスと共に指紋 API を使用することで、�
 
 指紋認証を安全に実装するには以下のいくつかの簡単な原則に従い、最初にその認証の種類が利用可能かどうかを確認することを開始します。最も基本的なこととして、デバイスは Android 6.0 もしくはそれ以降 (API 23+) を実行する必要があります。他に四つの前提条件も確認する必要があります。
 
+- パーミッションは Android Manifest でリクエストされる必要があります。
+
+```xml
+	<uses-permission
+        android:name="android.permission.USE_FINGERPRINT" />
+```
 - 指紋ハードウェアが利用可能である必要があります。
 
 ```Java
@@ -34,7 +119,7 @@ Android `KeyGenerator` クラスと共に指紋 API を使用することで、�
 
 ```Java
 	 KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-	 keyguardManager.isKeyguardSecure();
+	 keyguardManager.isKeyguardSecure();  //note if this is not the case: ask the user to setup a protected lockscreen
 ```
 
 - 少なくとも一本の指が登録されている必要があります。
@@ -165,13 +250,15 @@ Android Nougat (API 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByB
 
 ### 参考情報
 
+
 #### OWASP Mobile Top 10 2016
 
 - M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M4-Insecure_Authentication.html
 
 #### OWASP MASVS
 
-- V4.7: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
+- V4.8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
+- v2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
 #### CWE
 
