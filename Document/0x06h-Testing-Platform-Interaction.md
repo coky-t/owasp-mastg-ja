@@ -99,7 +99,7 @@ WebView を実装する以下のコンポーネントの使い方に注意しま
 
 ベストプラクティスとして、明示的に必要とされない限り `WKWebView` の JavaScript を無効にします。以下のコードサンプルではサンプル設定を示しています。
 
-```objective-c
+```objc
 #import "ViewController.h"
 #import <WebKit/WebKit.h>
 @interface ViewController ()<WKNavigationDelegate,WKUIDelegate>
@@ -165,7 +165,7 @@ WebView はコンテンツをリモートで、およびアプリデータディ
 
 WebView を使用するソースコードを確認します。WebView インスタンスを特定できる場合、ローカルファイルがロードされているかどうかをチェックします (以下の例では "example_file.html") 。
 
-```objective-c
+```objc
 - (void)viewDidLoad
 {
     [super viewDidLoad];
