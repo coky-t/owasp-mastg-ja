@@ -169,6 +169,9 @@ D/NetworkSecurityConfig: Using Network Security Config from resource network_sec
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
+#### 静的解析
+ * /res/xml/ フォルダにある network_security_config.xml ファイルに \<pin\> エントリが存在するかどうかを確認するには、逆コンパイラ (Jadx など) や apktool を使用します。
+
 ##### TrustManager
 
 証明書ピンニングの実装には主に三つのステップがあります。
@@ -242,6 +245,92 @@ myWebView.setWebViewClient(new WebViewClient(){
 
 動的解析は好みの傍受プロキシを使用して MITM 攻撃を開始することで実行できます。これにより、クライアント (モバイルアプリケーション) とバックエンドサーバー間のトラフィックを監視できます。プロキシが HTTP リクエストおよびレスポンスを傍受できない場合、SSL ピンニングは正しく実装されています。
 
+### Network Security Configuration 設定のテスト
+
+#### 概要
+Network Security Configuration は Android 7 で導入され、カスタムトラストアンカーや証明書ピンニングなどのアプリのネットワークセキュリティ設定をカスタマイズできます。
+
+アプリが API レベル 24 以上をターゲットとし、バージョン 7 以降の Android デバイス上で実行している場合、デフォルトの Network Security Configuration を使用します。それはユーザーが提供する CA を信頼せず、ユーザーに悪意のある CA をインストールさせることによる MiTM 攻撃の可能性を減らします。
+
+この保護はカスタムの Network Security Configuration を使用することでバイパスできます。アプリはユーザーが提供する CA を信頼することを示すカスタムトラストアンカーを用います。
+
+#### 静的解析
+
+Network Security Configuration を解析して、どの設定が構成されているかを判断します。このファイルは apk 内の /res/xml/ フォルダに network_security_config.xml という名前で格納されています。
+
+<base-config> または <domain-config> にカスタムの <trust-anchors> が存在する場合、<certificates src="user"> を定義するアプリケーションは特定のドメインまたはすべてのドメインに対してユーザーが提供する CA を信頼します。以下に例を示します。
+    
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </base-config>
+    <domain-config>
+        <domain includeSubdomains="true">owasp.org</domain>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </domain-config>
+</network-security-config>
+```
+エントリの順位を理解することが重要です。\<domain-config\> エントリまたは親の \<domain-config\> に値が設定されていない場合、その構成は \<base-config\> をベースに行われます。また、最終的にこのエントリに定義されていない場合、デフォルト構成が使用されます。
+
+Android 9 (API レベル 28) 以上をターゲットとするアプリのデフォルト構成は以下のとおりです。
+
+```xml
+<base-config cleartextTrafficPermitted="false">
+    <trust-anchors>
+        <certificates src="system" />
+    </trust-anchors>
+</base-config>
+```
+
+Android 7.0 (API レベル 24) から Android 8.1 (API レベル 27) をターゲットとするアプリのデフォルト構成は以下のとおりです。
+
+```xml
+<base-config cleartextTrafficPermitted="true">
+    <trust-anchors>
+        <certificates src="system" />
+    </trust-anchors>
+</base-config>
+```
+
+Android 6.0 (API レベル 23) 以下をターゲットとするアプリのデフォルト構成は以下のとおりです。
+
+```xml
+<base-config cleartextTrafficPermitted="true">
+    <trust-anchors>
+        <certificates src="system" />
+        <certificates src="user" />
+    </trust-anchors>
+</base-config>
+```
+
+#### 動的解析
+
+プロキシルート CA (Burp Suite など) をデバイス上にインストールし、この特定のアプリが targetSDK を API レベル 24 以上に設定し、バージョン 7 以降の Android デバイスで実行するシナリオでは、通信を傍受することはできてはいけません。できる場合、これはこのメカニズムのバイパスがあることを意味します。
+
+
+### デフォルト Network Security Configuration のテスト
+
+#### 概要
+前のトピックで説明したように、API レベル 24 以上をターゲットとするアプリは、別途定義されない限り、ユーザーが提供する CA を信頼しないデフォルト Network Security Configuration を実装します。
+
+アプリはバージョン 7 以上の Android デバイス上で実行するが、24 未満の API レベルをターゲットとするシナリオでは、この機能を使用せず、依然としてユーザーが提供する CA を信頼します。
+
+#### 静的解析
+
+* 逆コンパイラ (Jadx など) を使用して、AndroidManifest.xml ファイルにある targetSDK を確認します。
+* apktool を使用してアプリをデコードし、出力フォルダの apktool.yml ファイルにある targetSDK を確認します。
+
+#### 動的解析
+
+プロキシルート CA (Burp Suite など) をデバイス上にインストールし、このアプリがバージョン 7 以降の Android デバイス上で実行し、カスタム Network Security Configuration を実装していないシナリオでは、アプリが証明書を正しく検証すると仮定すると、targetSDK は 24 未満の API レベルに設定されていることを示しています。
 
 ### セキュリティプロバイダのテスト
 
@@ -419,3 +508,7 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 - CWE-296 - Improper Following of a Certificate's Chain of Trust - https://cwe.mitre.org/data/definitions/296.html
 - CWE-297 - Improper Validation of Certificate with Host Mismatch - https://cwe.mitre.org/data/definitions/297.html
 - CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
+
+##### Android Developer Documentation
+
+- Network Security Config - https://developer.android.com/training/articles/security-config
