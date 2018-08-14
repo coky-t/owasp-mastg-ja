@@ -145,7 +145,7 @@ Network Security Configuration 機能を使用して [宣言型証明書](https:
     <domain-config>
         <!-- Use certificate pinning for OWASP website access including sub domains -->
         <domain includeSubdomains="true">owasp.org</domain>
-        <pin-set>
+        <pin-set expiration="2018/8/10">
             <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
             the Intermediate CA of the OWASP website server certificate -->
             <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
@@ -239,6 +239,51 @@ myWebView.setWebViewClient(new WebViewClient(){
 });
 ```
 
+##### Xamarin アプリケーション
+
+Xamarin で開発されたアプリケーションは一般的に ServicePointManager を使用してピンニングを実装します。
+
+通常、証明書をチェックする関数を作成し、ServerCertificateValidationCallback メソッドにブール値を返します。
+
+```c#
+[Activity(Label = "XamarinPinning", MainLauncher = true)]
+    public class MainActivity : Activity
+    {
+        // SupportedPublicKey - 公開鍵の16進数値
+        // GetPublicKeyString() メソッドを使用して、ピン留めしたい証明書の公開鍵を決定します。最初に ValidateServerCertificate 関数のデバッグコードのコメントを外して、ピン留めする値を決定します。
+        private const string SupportedPublicKey = "3082010A02820101009CD30CF05AE52E47B7725D3783B3686330EAD735261925E1BDBE35F170922FB7B84B4105ABA99E350858ECB12AC468870BA3E375E4E6F3A76271BA7981601FD7919A9FF3D0786771C8690E9591CFFEE699E9603C48CC7ECA4D7712249D471B5AEBB9EC1E37001C9CAC7BA705EACE4AEBBD41E53698B9CBFD6D3C9668DF232A42900C867467C87FA59AB8526114133F65E98287CBDBFA0E56F68689F3853F9786AFB0DC1AEF6B0D95167DC42BA065B299043675806BAC4AF31B9049782FA2964F2A20252904C674C0D031CD8F31389516BAA833B843F1B11FC3307FA27931133D2D36F8E3FCF2336AB93931C5AFC48D0D1D641633AAFA8429B6D40BC0D87DC3930203010001";
+
+        private static bool ValidateServerCertificate(
+                object sender,
+                X509Certificate certificate,
+                X509Chain chain,
+                SslPolicyErrors sslPolicyErrors
+            )
+        {
+            //Log.Debug("Xamarin Pinning",chain.ChainElements[X].Certificate.GetPublicKeyString());
+            //return true;
+            return SupportedPublicKey == chain.ChainElements[1].Certificate.GetPublicKeyString();
+        }
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += ValidateServerCertificate;
+            base.OnCreate(savedInstanceState);
+            SetContentView(Resource.Layout.Main);
+            TesteAsync("https://security.claudio.pt");
+  
+        }
+```
+
+この例では証明書チェーンの中間 CA をピンニングしています。HTTP レスポンスの出力はシステムログにあります。
+
+前述の例のサンプル Xamarin アプリは https://github.com/owasp-mstg/blob/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk?raw=true から入手できます。
+
+#### 静的解析
+
+APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用状況を確認します。
+
+
 詳細については、[OWASP certificate pinning guide](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android "OWASP Certificate Pinning for Android") を確認してください。
 
 #### 動的解析
@@ -250,9 +295,15 @@ myWebView.setWebViewClient(new WebViewClient(){
 #### 概要
 Network Security Configuration は Android 7 で導入され、カスタムトラストアンカーや証明書ピンニングなどのアプリのネットワークセキュリティ設定をカスタマイズできます。
 
+##### トラストアンカー
+
 アプリが API レベル 24 以上をターゲットとし、バージョン 7 以降の Android デバイス上で実行している場合、デフォルトの Network Security Configuration を使用します。それはユーザーが提供する CA を信頼せず、ユーザーに悪意のある CA をインストールさせることによる MiTM 攻撃の可能性を減らします。
 
 この保護はカスタムの Network Security Configuration を使用することでバイパスできます。アプリはユーザーが提供する CA を信頼することを示すカスタムトラストアンカーを用います。
+
+##### Pin-set 有効期限日付
+
+Pin-set には公開鍵ピンのセットが含まれています。各セットには有効期限日付を定義できます。有効期限日付に達した場合、ネットワーク通信は引き続き機能しますが、影響を受けるドメインでは証明書ピンニングが無効になります。
 
 #### 静的解析
 
@@ -270,11 +321,19 @@ Network Security Configuration を解析して、どの設定が構成されて�
         </trust-anchors>
     </base-config>
     <domain-config>
-        <domain includeSubdomains="true">owasp.org</domain>
+        <domain includeSubdomains="false">owasp.org</domain>
         <trust-anchors>
             <certificates src="system"/>
             <certificates src="user"/>
         </trust-anchors>
+        <pin-set expiration="2018/8/10">
+            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
+            the Intermediate CA of the OWASP website server certificate -->
+            <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
+            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
+            the Root CA of the OWASP website server certificate -->
+            <pin digest="SHA-256">Vjs8r4z+80wjNcr1YKepWQboSIRi63WsWXhIMN+eWys=</pin>
+        </pin-set>
     </domain-config>
 </network-security-config>
 ```
@@ -509,6 +568,11 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 - CWE-297 - Improper Validation of Certificate with Host Mismatch - https://cwe.mitre.org/data/definitions/297.html
 - CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
 
-##### Android Developer Documentation
+##### Android 開発者ドキュメント
 
 - Network Security Config - https://developer.android.com/training/articles/security-config
+
+##### Xamarin 証明書ピンニング
+
+- Certificate and Public Key Pinning with Xamarin - https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin
+- ServicePointManager - https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx
