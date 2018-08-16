@@ -49,7 +49,7 @@ URL スキームをファジングする間、ログを見て (Xcode では、`W
 Needle を使用してカスタム URL スキームをテストできます。URL スキームに対して手動ファジングを実行して入力妥当性検査とメモリ破損バグを特定できます。以下の Needle モジュールを使用してこれらの攻撃を実行する必要があります。
 
 ```
-[needle] > 
+[needle] >
 [needle] > use dynamic/ipc/open_uri
 [needle][open_uri] > show options
 
@@ -63,6 +63,70 @@ URI => "myapp://testpayload'"
 
 ```
 
+### WebView プロトコルハンドラのテスト
+
+#### 概要
+
+WebView で解釈されるいくつかのデフォルトスキーマが利用可能です。以下のスキーマは iOS 上の WebView 内で使用できます。
+
+-	http(s)://
+-	file://
+-	tel://
+
+WebView はエンドポイントからリモートコンテンツをロードできますが、アプリデータディレクトリからローカルコンテンツをロードすることもできます。ローカルコンテンツがロードされる場合、ユーザーはファイル名やファイルをロードするために使用されるパスに影響を与えられるべきではなく、ユーザーはロードされたファイルを編集できるべきではありません。
+
+#### 静的解析
+
+WebView の使用状況についてソースコードを確認します。以下の WebView 設定はリソースへのアクセスを制御します。
+
+- `allowFileAccessFromFileURLs`
+- `allowUniversalAccessFromFileURLs`
+- `allowingReadAccessToURL`
+
+WebView で `allowFileAccessFromFileURLs` を設定する例:
+
+Objective-C:
+```objc
+[webView.configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
+```
+
+Swift:
+```swift
+webView.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+```
+
+デフォルトでは WKWebView はファイルアクセスが無効です。上記のメソッドの一つ以上が有効化されている場合、アプリが正しく機能するためにそのメソッドが本当に必要かどうかを判断する必要があります。
+
+どの WebView クラスが使用されているかも確認してください。現在 WKWebView を使うべきであり、`UIWebView` は非推奨です。
+
+WebView インスタンスが特定できた場合、ローカルファイルが [`loadFileURL`](https://developer.apple.com/documentation/webkit/wkwebview/1414973-loadfileurl?language=objc "loadFileURL") メソッドでロードされているかどうかを調べます。
+
+Objective-C:
+```
+[self.wk_webview loadFileURL:url allowingReadAccessToURL:readAccessToURL];
+```
+
+Swift:
+```
+webview.loadFileURL(url, allowingReadAccessTo: bundle.resourceURL!)
+```
+
+`loadFileURL` で指定された URL は操作可能な動的パラメータについてチェックする必要があります。その操作はローカルファイルインクルージョンにつながる可能性があります。
+
+HTML ページで [tel:// スキーマの検出を無効にする](https://developer.apple.com/library/content/featuredarticles/iPhoneURLScheme_Reference/PhoneLinks/PhoneLinks.html "Phone Links on iOS") を選択すると、WebView で解釈されません。
+
+多層防御策として以下のベストプラクティスを使用します。
+- ロードを許可するローカルおよびリモートのウェブページとスキーマを定義するホワイトリストを作成します。
+- ローカル HTML/JavaScript ファイルのチェックサムを作成し、アプリケーション起動時に確認します。JavaScript ファイルを圧縮して、それらを読みにくくします。
+
+#### 動的解析
+
+プロトコルハンドラの使用を特定するには、アプリを使用する中でファイルシステムからファイルにアクセスする方法や電話をかける方法を探します。
+
+WebView 経由でローカルファイルをロードすることが可能な場合、このアプリはディレクトリトラバーサル攻撃に脆弱な可能性があります。これによりサンドボックス内のすべてのファイルにアクセス可能になり、(デバイスが脱獄されている場合) サンドボックスを脱出してファイルシステムにフルアクセスすることさえも可能になります。
+
+したがって、ファイルがロードされるファイル名やパスをユーザーが変更できるかどうか、ロードされたファイルを編集できないかどうかを確認する必要があります。
+
 ### iOS WebView のテスト
 
 #### 概要
@@ -73,11 +137,9 @@ iOS WebView はデフォルトで JavaScript の実行をサポートしてい�
 
 潜在的なスクリプトインジェクションのほかに、WebView の別の基本的なセキュリティ問題があります。iOS にパッケージ化された WebKit ライブラリは Safari ウェブブラウザのようにアウトオブバンドで更新されることはありません。したがって、新たに発見された WebKit の脆弱性は次の iOS アップデートまで悪用可能なまま残ります [#THIEL] 。
 
-WebView は、例えば tel などのさまざまな URL スキーマをサポートしています。HTML ページの [tel:// スキーマの検出を無効](https://developer.apple.com/library/content/featuredarticles/iPhoneURLScheme_Reference/PhoneLinks/PhoneLinks.html "Phone Links on iOS") にして WebView により解釈されないようにすることが可能です。
-
 #### 静的解析
 
-WebView を実装する以下のコンポーネントの使い方に注意します。
+WebView を実装する以下のクラスの使い方に注意します。
 
 - [UIWebView](https://developer.apple.com/reference/uikit/uiwebview "UIWebView reference documentation") (iOS バージョン 7.1.2 およびそれ以前)
 - [WKWebView](https://developer.apple.com/reference/webkit/wkwebview "WKWebView reference documentation") (iOS バージョン 8.0 およびそれ以降)
@@ -86,7 +148,9 @@ WebView を実装する以下のコンポーネントの使い方に注意しま
 `UIWebView` は非推奨であり使用すべきではありません。`WKWebView` または `SafariViewController` のいずれかが埋め込みウェブコンテンツに使用されていることを確認します。
 
 - `WKWebView` はアプリの機能を拡張したり、表示されるコンテンツを制御 (すなわち、ユーザーが任意の URL にナビゲートすることを予防) したり、カスタマイズしたりするための適切な選択です。
-- `SafariViewController` は一般的なウェブ閲覧エクスペリエンスを提供するために使用すべきです。`SafariViewController` は cookie と他のウェブサイトのデータを Safari と共有します。
+- `SafariViewController` は一般的なウェブ閲覧エクスペリエンスを提供するために使用すべきです。
+
+> `SafariViewController` は cookie と他のウェブサイトのデータを Safari と共有することに注意します。
 
 `WKWebView` には `UIWebView` よりもいくつかのセキュリティ上の利点があります。
 
@@ -94,6 +158,8 @@ WebView を実装する以下のコンポーネントの使い方に注意しま
 - `JavaScriptCanOpenWindowsAutomatically` を使用して JavaScript がポップアップなどの新しいウィンドウを開くことを防止できます。
 - `hasOnlySecureContent` プロパティを使用して WebView によりロードされたリソースが暗号化された接続を通じて取得されたことを検証できます。
 - WKWebView はアウトオブプロセスレンダリングを実装しているため、メモリ破損のバグがメインのアプリプロセスに影響を与えません。
+
+また、WKWebView は Nitro JavaScript エンジンを使用して、WebView を使用しているアプリのパフォーマンスを大幅に向上します [#THIEL] 。
 
 ##### JavaScript 設定
 
@@ -139,7 +205,7 @@ iOS 7 以降、JavaScriptCore フレームワークは WebKit JavaScript エン�
 
 JavaScript 実行環境は `JSContext` オブジェクトで表されます。WebView に関連付けられた `JSContext` にネイティブオブジェクトをマップするコードに注意します。Objective-C では、`UIWebView` に関連付けられた `JSContext` は以下のように取得されます。
 
-``objective-c
+``objc
 [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"]
 ``
 
@@ -183,14 +249,20 @@ WebView を使用するソースコードを確認します。WebView インス�
 
 `baseURL` で (ローカルファイルインクルージョンにつながる) 操作可能な動的パラメータを確認します。
 
+##### `hasOnlySecureContent`
+
+WKWebView では複合コンテンツや完全に HTTP 経由でロードされたコンテンツを検出することができます。`hasOnlySecureContent` メソッドを使用することにより HTTPS 経由のコンテンツだけを表示することが保証され、そうでない場合にはユーザーに警告が表示されます。例については [#THIEL] の 159 および 160 ページを参照してください。
+
 #### 動的解析
 
 攻撃をシミュレートするには、傍受プロキシを使用して WebView に独自の JavaScript をインジェクトします。JavaScript コンテキストに露出している可能性のあるローカルストレージやネイティブメソッドやプロパティにアクセスを試みます。
 
-現実のシナリオでは、永続的なバックエンドのクロスサイトスクリプティング脆弱性や中間者攻撃を介してのみ JavaScript をインジェクトできます。
-詳細については OWASP [XSS cheat sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting\)\_Prevention_Cheat_Sheet "XSS (Cross Site Scripting) Prevention Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html) や「ネットワーク通信のテスト」を参照してください。
+現実のシナリオでは、永続的なバックエンドのクロスサイトスクリプティング脆弱性や中間者攻撃を介してのみ JavaScript をインジェクトできます。詳細については OWASP [XSS cheat sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting\)\_Prevention_Cheat_Sheet "XSS (Cross Site Scripting) Prevention Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html) や「ネットワーク通信のテスト」を参照してください。
 
 ### 参考情報
+
+- [#THIEL] Thiel, David. iOS Application Security: The Definitive Guide for Hackers and Developers (Kindle Locations 3394-3399). No Starch Press. Kindle Edition.
+- Security Flaw with UIWebView - (https://medium.com/ios-os-x-development/security-flaw-with-uiwebview-95bbd8508e3c "Security Flaw with UIWebView")
 
 #### OWASP Mobile Top 10 2016
 
@@ -208,9 +280,6 @@ WebView を使用するソースコードを確認します。WebView インス�
 - CWE-79 - Improper Neutralization of Input During Web Page Generation https://cwe.mitre.org/data/definitions/79.html
 - CWE-939: Improper Authorization in Handler for Custom URL Scheme
 
-#### その他
-
-- [#THIEL] Thiel, David. iOS Application Security: The Definitive Guide for Hackers and Developers (Kindle Locations 3394-3399). No Starch Press. Kindle Edition.
-
 #### ツール
+
 - IDB - http://www.idbtool.com/
