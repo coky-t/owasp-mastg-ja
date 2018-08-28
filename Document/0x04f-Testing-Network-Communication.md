@@ -64,7 +64,7 @@ sudo apt-get install ettercap
 マシンにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。二つの最も一般的なネットワーク監視 (またはキャプチャ) ツールは以下のとおりです。
 
 - [Wireshark](https://www.wireshark.org "Wireshark") (CLI pendant: [tshark](https://www.wireshark.org/docs/man-pages/tshark.html "TShark")) 
-- [tcpdump](http://www.tcpdump.org/tcpdump_man.html "tcpdump")
+- [tcpdump](https://www.tcpdump.org/tcpdump_man.html "tcpdump")
 
 Wireshark は GUI を提供しており、コマンドラインに慣れていなくても簡単です。コマンドラインツールを探している場合には TShark または tcpdump のいずれかを使用する必要があります。これらのツールはすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。
 
@@ -295,7 +295,7 @@ Wireshark を使用して、キャプチャしたトラフィックを人間が�
 
 #### ツール
 
-- Tcpdump - http://www.androidtcpdump.com/
+- Tcpdump - https://www.androidtcpdump.com/
 - Wireshark - https://www.wireshark.org/
 - OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 - Burp Suite - https://portswigger.net/burp/
