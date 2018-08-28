@@ -23,7 +23,6 @@
 - [Needle](https://github.com/mwrlabs/needle) - Needle はオープンソースのモジュラーフレームワークであり、バイナリ解析、静的コード解析、Cycript や Frida フッキングを使用した実行時操作などの iOS アプリのセキュリティ評価実施のプロセスを効率化します。
 - [objection](https://github.com/sensepost/objection) - objection は iOS および android の両方に対応し、Frida を使用することにより、脱獄やルート化デバイスを必要としない実行時モバイルセキュリティ評価フレームワークです。
 
-
 ### Android 用ツール
 
 #### リバースエンジニアリングおよび静的解析
@@ -31,13 +30,13 @@
 - [Androguard](https://github.com/androguard/androguard) - Androguard は python ベースのツールで、android アプリの逆アセンブルや逆コンパイルに使用できます。
 - [Android Debug Bridge - adb](https://developer.android.com/studio/command-line/adb.html) - Android Debug Bridge (adb) はエミュレータインスタンスや接続された Android デバイスと通信するための多彩なコマンドラインツールです。
 - [APKInspector](https://github.com/honeynet/apkinspector/) - APKinspector は Android アプリケーションを解析するアナリスト向けの強力な GUI ツールです。
-- [APKTool](http://ibotpeaches.github.io/Apktool/) - サードパーティ製でクローズなバイナリ Android アプリをリバースエンジニアリングするためのツールです。リソースをほぼ元の形にデコードし、改変後に再構築することができます。
+- [APKTool](https://ibotpeaches.github.io/Apktool/) - サードパーティ製でクローズなバイナリ Android アプリをリバースエンジニアリングするためのツールです。リソースをほぼ元の形にデコードし、改変後に再構築することができます。
 - [android-classyshark](https://github.com/google/android-classyshark) - ClassyShark は Android 開発者向けのスタンドアロンのバイナリインスペクションツールです。
 - [Sign](https://github.com/appium/sign) - Sign.jar は自動的に Android テスト証明書で apk に署名します。
 - [Jadx](https://github.com/skylot/jadx) - Dex から Java への逆コンパイラです。Android Dex および Apk ファイルから Java ソースコードを生成するコマンドラインおよび GUI ツールです。
 - [Oat2dex](https://github.com/testwhat/SmaliEx) - .oat ファイルから .dex ファイルに変換するためのツールです。
 - [FindBugs](http://findbugs.sourceforge.net) - Java 用の静的解析ツールです。
-- [FindSecurityBugs](http://h3xstream.github.io/find-sec-bugs) - FindSecurityBugs は FindBugs の拡張機能であり、Java アプリケーション向けのセキュリティルールを含んでいます。
+- [FindSecurityBugs](https://find-sec-bugs.github.io) - FindSecurityBugs は FindBugs の拡張機能であり、Java アプリケーション向けのセキュリティルールを含んでいます。
 - [Qark](https://github.com/linkedin/qark) - このツールは Android アプリケーション脆弱性に関連するいくつかのセキュリティをソースコードかパッケージ化された APK のいずれかで検索するように設計されています。
 - [SUPER](https://github.com/SUPERAndroidAnalyzer/super) - SUPER は Windows, MacOS X, Linux で使用できるコマンドラインアプリケーションで、.apk ファイルを検索して脆弱性を探します。APK を展開し、脆弱性を検出するための一連のルールを適用することでこれを行います。
 - [AndroBugs](https://github.com/AndroBugs/AndroBugs_Framework) - AndroBugs フレームワークは開発者やハッカーが Android アプリケーションの潜在的なセキュリティ脆弱性を発見するのに役立つ効率的な Android 脆弱性スキャナです。Windows にインストールする必要はありません。
@@ -45,15 +44,15 @@
 - [ClassNameDeobfuscator](https://github.com/HamiltonianCycle/ClassNameDeobfuscator) - apktool により生成される .smali ファイルを解析して .source アノテーション行を抽出するシンプルなスクリプトです。
 - [Android backup extractor](https://github.com/nelenkov/android-backup-extractor) - adb backup (ICS 以降) で作成された Android バックアップを抽出および再パックするユーティリティです。主に AOSP の BackupManagerService.java をベースとしています。
 - [VisualCodeGrepper](https://sourceforge.net/projects/visualcodegrepp/) - Java などのいくつかのプログラミング言語向けの静的コード解析ツールです。
-- [ByteCodeViewer](http://bytecodeviewer.com/) - 五つの異なる Java 逆コンパイラ、二つのバイトコードエディタ、Java コンパイラ、プラグイン、検索。Class, JAR, Android APK などからのロードをサポートしています。
+- [ByteCodeViewer](https://bytecodeviewer.com/) - 五つの異なる Java 逆コンパイラ、二つのバイトコードエディタ、Java コンパイラ、プラグイン、検索。Class, JAR, Android APK などからのロードをサポートしています。
 
 #### 動的解析および実行時解析
 
 - [Cydia Substrate](http://www.cydiasubstrate.com) - Android 向けの Cydia Substrate を使用すると、開発者はターゲットプロセスのメモリにインジェクトされる Substrate extension で既存のソフトウェアを改造することができます。
-- [Xposed Framework](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053) - Xposed framework を使用すると、Android アプリケーションパッケージ (APK) の改変や再フラッシュを行わずに、実行時にシステムやアプリケーションのアスペクトや動作を変更できます。
+- [Xposed Framework](https://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053) - Xposed framework を使用すると、Android アプリケーションパッケージ (APK) の改変や再フラッシュを行わずに、実行時にシステムやアプリケーションのアスペクトや動作を変更できます。
 - [logcat-color](https://github.com/marshall/logcat-color) - Android SDK の adb logcat コマンドに代わるカラフルで高度な設定が可能なツールです。
 - [Inspeckage](https://github.com/ac-pm/Inspeckage) - Inspeckage は Android アプリケーションの動的解析を提供するために開発されたツールです。Android API の関数にフックを適用することで、Inspeckage は Android アプリケーションが実行時に何をしているのかを理解するのに役立ちます。
-- [Frida](http://www.frida.re) - このツールキットはクライアントサーバーモデルを使用して動作し、Android の上だけでなく iOS, Windows, Mac の上でも実行中のプロセスにインジェクトすることができます。
+- [Frida](https://www.frida.re) - このツールキットはクライアントサーバーモデルを使用して動作し、Android の上だけでなく iOS, Windows, Mac の上でも実行中のプロセスにインジェクトすることができます。
 - [Diff-GUI](https://github.com/antojoseph/diff-gui) - 利用可能なモジュールで計装を開始し、ネイティブでフックし、Frida を使用して JavaScript をインジェクトする Web フレームワークです。
 - [AndBug](https://github.com/swdunlop/AndBug) - AndBug は Android プラットフォーム Dalvik 仮想マシンを対象とするリバースエンジニアおよび開発者向けのデバッガです。
 - [Cydia Substrate: Introspy-Android](https://github.com/iSECPartners/Introspy-Android) - Android アプリケーションが実行時に何をしているかを理解し、潜在的なセキュリティ問題の特定を支援するブラックボックスツールです。
@@ -80,15 +79,15 @@
 
 #### リバースエンジニアリングおよび静的解析
 
-- [otool](http://www.unix.com/man-page/osx/1/otool/) - otool コマンドはオブジェクトファイルやライブラリの指定された箇所を表示します。
+- [otool](https://www.unix.com/man-page/osx/1/otool/) - otool コマンドはオブジェクトファイルやライブラリの指定された箇所を表示します。
 - [Clutch](http://cydia.radare.org/) - アプリケーションを解読し、バイナリや .ipa ファイルに指定された bundleID をダンプします。
 - [Dumpdecrypted](https://github.com/stefanesser/dumpdecrypted) - 暗号化された iPhone アプリケーションから復号された mach-o ファイルをメモリからディスクにダンプします。このツールはセキュリティ研究者が暗号化の中身を具体的に見ることができるようにするために必要となります。
 - [class-dump](http://stevenygard.com/projects/class-dump/) - Mach-O ファイルに格納されている Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。
 - [Flex2](http://cydia.saurik.com/package/com.fuyuchi.flex2/) - Flex はアプリを改変し動作を変更する力を与えます。
 - [Weak Classdump](https://github.com/limneos/weak_classdump) - 関数に渡されるクラスのヘッダファイルを生成する Cycript スクリプトです。classdump や dumpdecrypted ができない場合やバイナリが暗号化されている場合などにとても便利です。
 - [IDA Pro](https://www.hex-rays.com/products/ida/index.shtml) - IDA は Windows, Linux, Mac OS X でホストされているマルチプロセッサ逆アセンブラおよびデバッガであり、すべてを記述するのは難しいほどの多くの機能を提供しています。
-- [HopperApp](http://hopperapp.com/) - Hopper は OS X および Linux 用のリバースエンジニアリングツールで、32/64 ビット Intel Mac, Linux, Windows, iOS 実行可能ファイルを逆アセンブル、逆コンパイル、デバッグすることができます。
-- [Radare2](http://www.radare.org/) - Radare2 は Unix ライクなリバースエンジニアリングフレームワークおよびコマンドラインツールです。
+- [HopperApp](https://www.hopperapp.com/) - Hopper は OS X および Linux 用のリバースエンジニアリングツールで、32/64 ビット Intel Mac, Linux, Windows, iOS 実行可能ファイルを逆アセンブル、逆コンパイル、デバッグすることができます。
+- [Radare2](https://www.radare.org/r/) - Radare2 は Unix ライクなリバースエンジニアリングフレームワークおよびコマンドラインツールです。
 - [iRET](https://www.veracode.com/iret-ios-reverse-engineering-toolkit) - iOS Reverse Engineering Toolkit は iOS ペネトレーションテストに関連する多くの一般的なタスクを自動化するためのツールキットです。
 - [Plutil](https://www.theiphonewiki.com/wiki/Plutil) - plutil は .plist ファイルをバイナリバージョンと XML バージョンの間で変換できるプログラムです。
 
@@ -102,33 +101,33 @@
 - [gdb](http://cydia.radare.org/) - iOS アプリケーションの実行時解析を行うためのツールです。
 - [lldb](https://lldb.llvm.org/) - Apple の Xcode に付属する LLDB デバッガは iOS アプリケーションをデバッグするために使用されます。
 - [keychaindumper](http://cydia.radare.org/) - iOS デバイスが脱獄された場合に攻撃者が利用可能となるキーチェーンアイテムを確認するためのツールです。
-- [BinaryCookieReader](http://securitylearn.net/wp-content/uploads/tools/iOS/BinaryCookieReader.py) - バイナリ Cookies.binarycookies ファイルからすべてのクッキーをダンプするツールです。
+- [BinaryCookieReader](https://securitylearn.net/wp-content/uploads/tools/iOS/BinaryCookieReader.py) - バイナリ Cookies.binarycookies ファイルからすべてのクッキーをダンプするツールです。
 - [Burp Suite Mobile Assistant](https://portswigger.net/burp/help/mobile_testing_using_mobile_assistant.html) - 証明書ピンニングをバイパスし、アプリにインジェクトできるツールです。
 
 #### ルート検出および SSL ピンニングのバイパス
 
-- [SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2) - iOS および OS X アプリ内の SSL 証明書検証 (証明書ピンニングを含む) を無効にするブラックボックスツールです。
-- [iOS TrustMe](https://github.com/intrepidusgroup/trustme) - iOS デバイスの証明書の信頼チェックを無効にします。
-- [Xcon](http://apt.modmyi.com) - 脱獄検出をバイパスするためのツールです。
-- [tsProtector](http://cydia.saurik.com/package/kr.typostudio.tsprotector8) - 脱獄検出をバイパスするためのもうひとつのツールです。
+- [SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2 "SSL Kill Switch 2") - iOS および OS X アプリ内の SSL 証明書検証 (証明書ピンニングを含む) を無効にするブラックボックスツールです。
+- [iOS TrustMe](https://github.com/intrepidusgroup/trustme "iOS TrustMe") - iOS デバイスの証明書の信頼チェックを無効にします。
+- [Xcon](http://cydia.saurik.com/package/com.n00neimp0rtant.xcon/ "Xcon") - 脱獄検出をバイパスするためのツールです。
+- [tsProtector](http://cydia.saurik.com/package/kr.typostudio.tsprotector8 "tsProtector 8") - 脱獄検出をバイパスするためのもうひとつのツールです。
 
 ### ネットワーク傍受および監視用ツール
 
-- [Tcpdump](http://www.androidtcpdump.com) - コマンドラインパケットキャプチャユーティリティです。
-- [Wireshark](https://www.wireshark.org/download.html) - オープンソースのパケットアナライザです。
-- [Canape](http://www.contextis.com/services/research/canape/) - 任意のプロトコル用のネットワークテストツールです。
-- [Mallory](https://intrepidusgroup.com/insight/mallory/) - モバイルデバイスやアプリケーションのトラフィックを監視および操作するために使用する中間者攻撃 (MiTM) ツールです。
+- [Tcpdump](https://www.androidtcpdump.com "TCPDump") - コマンドラインパケットキャプチャユーティリティです。
+- [Wireshark](https://www.wireshark.org/download.html "WireShark") - オープンソースのパケットアナライザです。
+- [Canape](https://github.com/ctxis/canape "Canape") - 任意のプロトコル用のネットワークテストツールです。
+- [Mallory](https://intrepidusgroup.com/insight/mallory/ "Mallory") - モバイルデバイスやアプリケーションのトラフィックを監視および操作するために使用する中間者攻撃 (MiTM) ツールです。
 
 ### 傍受プロキシ
 
-- [Burp Suite](https://portswigger.net/burp/download.html) - Burp Suite はアプリケーションのセキュリティテストを実行するための統合プラットフォームです。
-- [OWASP ZAP](https://github.com/zaproxy/zaproxy) - OWASP Zed Attack Proxy (ZAP) はウェブアプリケーションやウェブサービスのセキュリティ脆弱性を自動的に発見するのに役立つフリーのセキュリティツールです。
-- [Fiddler](http://www.telerik.com/fiddler) - Fiddler は HTTP および HTTPS トラフィックをキャプチャしてユーザーが確認するためにログに記録できる HTTP デバッグプロキシサーバーアプリケーションです。また、Fiddler は送受信時のトラブルシューティングを行うために HTTP トラフィックの改変にも使用できます。
-- [Charles Proxy](http://www.charlesproxy.com) - 開発者がマシンとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。
+- [Burp Suite](https://portswigger.net/burp/download.html "Burp Suite") - Burp Suite はアプリケーションのセキュリティテストを実行するための統合プラットフォームです。
+- [OWASP ZAP](https://github.com/zaproxy/zaproxy "OWASP ZAP") - OWASP Zed Attack Proxy (ZAP) はウェブアプリケーションやウェブサービスのセキュリティ脆弱性を自動的に発見するのに役立つフリーのセキュリティツールです。
+- [Fiddler](https://www.telerik.com/fiddler "Fiddler") - Fiddler は HTTP および HTTPS トラフィックをキャプチャしてユーザーが確認するためにログに記録できる HTTP デバッグプロキシサーバーアプリケーションです。また、Fiddler は送受信時のトラブルシューティングを行うために HTTP トラフィックの改変にも使用できます。
+- [Charles Proxy](https://www.charlesproxy.com "Charles Proxy") - 開発者がマシンとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。
 
 ### IDE
 
-- [Android Studio](https://developer.android.com/studio/index.html) - Android Studio は Google の Android オペレーティングシステム向けの公式の統合開発環境 (IDE) です。JetBrains の IntelliJ IDEA で構築されており、特に Android 開発向けに設計されています。
-- [IntelliJ](https://www.jetbrains.com/idea/download/) - IntelliJ IDEA はコンピュータソフトウェアを開発するための Java 統合開発環境 (IDE) です。
-- [Eclipse](https://eclipse.org/) - Eclipse はコンピュータプログラミングに使用される統合開発環境 (IDE) であり、最も広く使用されている Java IDE です。
-- [Xcode](https://developer.apple.com/xcode/) - Xcode は iOS, watchOS, tvOS, macOS 用のアプリを作成するための macOS 専用の統合開発環境 (IDE) です。
+- [Android Studio](https://developer.android.com/studio/index.html "Android Studio") - Android Studio は Google の Android オペレーティングシステム向けの公式の統合開発環境 (IDE) です。JetBrains の IntelliJ IDEA で構築されており、特に Android 開発向けに設計されています。
+- [IntelliJ](https://www.jetbrains.com/idea/download/ "InteliJ") - IntelliJ IDEA はコンピュータソフトウェアを開発するための Java 統合開発環境 (IDE) です。
+- [Eclipse](https://eclipse.org/ "Eclipse") - Eclipse はコンピュータプログラミングに使用される統合開発環境 (IDE) であり、最も広く使用されている Java IDE です。
+- [Xcode](https://developer.apple.com/xcode/ "XCode") - Xcode は iOS, watchOS, tvOS, macOS 用のアプリを作成するための macOS 専用の統合開発環境 (IDE) です。
