@@ -169,8 +169,7 @@ D/NetworkSecurityConfig: Using Network Security Config from resource network_sec
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
-#### 静的解析
- * /res/xml/ フォルダにある network_security_config.xml ファイルに \<pin\> エントリが存在するかどうかを確認するには、逆コンパイラ (Jadx など) や apktool を使用します。
+逆コンパイラ (Jadx など) や apktool を使用することで、/res/xml/ フォルダにある network_security_config.xml ファイルに \<pin\> エントリが存在するかどうかを確認できます。
 
 ##### TrustManager
 
@@ -279,16 +278,50 @@ Xamarin で開発されたアプリケーションは一般的に ServicePointMa
 
 前述の例のサンプル Xamarin アプリは https://github.com/owasp-mstg/blob/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk?raw=true から入手できます。
 
-#### 静的解析
-
 APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用状況を確認します。
 
+##### Cordova アプリケーション
 
-詳細については、[OWASP certificate pinning guide](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android "OWASP Certificate Pinning for Android") を確認してください。
+Cordova ベースのハイブリッドアプリケーションはネイティブに証明書ピンニングをサポートしていないため、プラグインを使用してこれを達成します。もっとも一般的なものは PhoneGap SSL Certificate Checker です。
+
+###### PhoneGap SSL Certificate Checker
+
+check() メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
+
+```javascript
+  //Endpoint to verify against certiticate pinning.
+  var server = "https://www.owasp.org";
+  //SHA256 Fingerprint (Can be obtained via "openssl s_client -connect hostname:443 | openssl x509 -noout -fingerprint -sha256"
+  var fingerprint = "D8 EF 3C DF 7E F6 44 BA 04 EC D5 97 14 BB 00 4A 7A F5 26 63 53 87 4E 76 67 77 F0 F4 CC ED 67 B9";
+
+  window.plugins.sslCertificateChecker.check(
+          successCallback,
+          errorCallback,
+          server,
+          fingerprint);
+
+   function successCallback(message) {
+     alert(message);
+     // Message is always: CONNECTION_SECURE.
+     // Now do something with the trusted server.
+   }
+
+   function errorCallback(message) {
+     alert(message);
+     if (message === "CONNECTION_NOT_SECURE") {
+       // There is likely a man in the middle attack going on, be careful!
+     } else if (message.indexOf("CONNECTION_FAILED") >- 1) {
+       // There was no connection (yet). Internet may be down. Try again (a few times) after a little timeout.
+     }
+   }
+```
+APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/www フォルダに置かれます。'plugins' フォルダに使用するプラグインがあります。アプリケーションの Javascript コードでこのメソッドを検索して、その使用状況を確認する必要があります。
 
 #### 動的解析
 
 動的解析は好みの傍受プロキシを使用して MITM 攻撃を開始することで実行できます。これにより、クライアント (モバイルアプリケーション) とバックエンドサーバー間のトラフィックを監視できます。プロキシが HTTP リクエストおよびレスポンスを傍受できない場合、SSL ピンニングは正しく実装されています。
+
+詳細については、[OWASP certificate pinning guide](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android "OWASP Certificate Pinning for Android") を確認してください。
 
 ### Network Security Configuration 設定のテスト
 
@@ -576,3 +609,7 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 
 - Certificate and Public Key Pinning with Xamarin - https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin
 - ServicePointManager - https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx
+
+##### Cordova 証明書ピンニング
+
+PhoneGap SSL Certificate Checker plugin - https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin
