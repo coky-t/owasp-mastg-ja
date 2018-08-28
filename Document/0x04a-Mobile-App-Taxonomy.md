@@ -2,7 +2,7 @@
 
 ## モバイルアプリの分類
 
-用語「モバイルアプリ」はモバイルデバイス上で動作するように設計された自己完結型コンピュータプログラムを指します。今日、Android および iOS オペレーティングシステムは累積的に [モバイル OS 市場シェアの99%以上](http://www.idc.com/promo/smartphone-market-share/os) を占めています。さらに、モバイルインターネットの使用率は歴史上初めてデスクトップ使用率を上回り、モバイルブラウジングとアプリは [最も広く普及しているインターネット対応アプリケーション](http://www.idc.com/promo/smartphone-market-share/os) となっています。
+用語「モバイルアプリ」はモバイルデバイス上で動作するように設計された自己完結型コンピュータプログラムを指します。今日、Android および iOS オペレーティングシステムは累積的に [モバイル OS 市場シェアの99%以上](https://www.idc.com/promo/smartphone-market-share/os) を占めています。さらに、モバイルインターネットの使用率は歴史上初めてデスクトップ使用率を上回り、モバイルブラウジングとアプリは [最も広く普及しているインターネット対応アプリケーション](https://www.idc.com/promo/smartphone-market-share/os) となっています。
 
 > このガイドでは、一般的なモバイル OS 上で動作するあらゆる種類のアプリケーションを指す一般用語として用語「アプリ」を使用しています。
 
@@ -32,14 +32,14 @@ Android の *ネイティブアプリ* について議論する際にはいく�
 
 以下は *ハイブリッドアプリ* を開発するためのより一般的なフレームワークの非網羅的なリストです。
 
-- [Apache Cordova](https://cordova.apache.org/)
-- [Framework 7](http://framework7.io/)
-- [Ionic](https://ionicframework.com/)
-- [jQuery Mobile](https://jquerymobile.com/)
-- [Native Script](https://www.nativescript.org/)
-- [Onsen UI]( https://onsen.io/)
-- [React Native](http://www.reactnative.com/)
-- [Sencha Touch](https://www.sencha.com/products/touch/)
+- [Apache Cordova](https://cordova.apache.org/ "Apache Cordova")
+- [Framework 7](https://framework7.io/ "Framework 7")
+- [Ionic](https://ionicframework.com/ "Ionic")
+- [jQuery Mobile](https://jquerymobile.com/ "jQuery Mobile")
+- [Native Script](https://www.nativescript.org/ "Native Script")
+- [Onsen UI]( https://onsen.io/ "Onsen UI")
+- [React Native](https://www.reactnative.com/ "React Native")
+- [Sencha Touch](https://www.sencha.com/products/touch/ "Sencha Touch")
 
 
 ### プログレッシブウェブアプリ
