@@ -2,9 +2,9 @@
 
 ## OWASP モバイルセキュリティテストガイドについて
 
-OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs) [(日本語訳)](https://github.com/coky-t/owasp-masvs-ja) に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
+OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs "MASVS") [(日本語訳)](https://github.com/coky-t/owasp-masvs-ja) に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
 
-OWASP は多くの著者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/) に参加して MASVS や MSTG の議論に参加してください。[http://owasp.herokuapp.com/](http://owasp.herokuapp.com/) で Slack チャンネルにサインアップできます。
+OWASP は多くの著者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/ "OWASP Mobile Security Project Slack Channel") に参加して MASVS や MSTG の議論に参加してください。[https://owasp.herokuapp.com/](https://owasp.herokuapp.com/ "Slack channel sign up") で Slack チャンネルにサインアップできます。
 
 ## 著作権とライセンス
 
@@ -13,7 +13,7 @@ Copyright © 2018 The OWASP Foundation. 本書は [クリエイティブコモ�
 
 ## 謝辞
 
-**注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mstg/graphs/contributors) に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mstg/blob/master/README.md) を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
+**注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mstg/graphs/contributors "GitHub contribution statistics") に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mstg/blob/master/README.md "GitHub Repository README") を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
 
 ### 執筆者
 
