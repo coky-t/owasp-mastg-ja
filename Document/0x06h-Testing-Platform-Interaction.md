@@ -34,9 +34,9 @@ URL をコールする前に慎重に検証する必要があります。登録�
 
 アプリが登録したカスタム URL スキームを特定したら、Safari で URL を開き、そのアプリがどのように動作するか観察します。
 
-アプリが URL のパーツを構文解析する場合、入力ファジングを実行してメモリ破損のバグを検出できます。これには [IDB](http://www.idbtool.com/) を使用できます。
+アプリが URL のパーツを構文解析する場合、入力ファジングを実行してメモリ破損のバグを検出できます。これには [IDB](https://www.idbtool.com/) を使用できます。
 
-- IDB を起動し、デバイスに接続してターゲットアプリを選択します。詳細は [IDB documentation](http://www.idbtool.com/documentation/setup.html) を参照します。
+- IDB を起動し、デバイスに接続してターゲットアプリを選択します。詳細は [IDB documentation](https://www.idbtool.com/documentation/setup.html) を参照します。
 - `URL Handlers` セクションに移動します。`URL schemes` で `Refresh` をクリックすると、左側にはテスト対象アプリで定義されているすべてのカスタムスキームのリストがあります。これらのスキームをロードするには、右側にある `Open` をクリックします。ブランクの URI スキームを開く (例えば、`myURLscheme://` を開く) だけで、隠された機能 (例えば、デバッグウィンドウ) を発見してローカル認証をバイパスできます。
 - カスタム URI スキームがバグを含むかどうかを調べるには、それらを fuzz してみます。`URL Handlers` セクションで、`Fuzzer` タブに移動します。左側にデフォルト IDB ペイロードがリストされます。[FuzzDB](https://github.com/fuzzdb-project/fuzzdb) プロジェクトにはファジング辞書が用意されています。ペイロードリストが準備できたら、左下の `Fuzz Template` セクションに移動してテンプレートを定義します。`$@$` を使用してインジェクションポイントを定義します。以下に例を示します。
 
@@ -282,4 +282,4 @@ WKWebView では複合コンテンツや完全に HTTP 経由でロードされ�
 
 #### ツール
 
-- IDB - http://www.idbtool.com/
+- IDB - https://www.idbtool.com/
