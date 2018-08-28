@@ -116,7 +116,7 @@ Cipher Block Chaining (CBC) が ECB の代わりに使用されていること�
 
 暗号化されたデータを保存する場合には、Galois/Counter Mode (GCM) など、保存されたデータの完全性も保護するブロックモードを使用することをお勧めします。最後のものはそのアルゴリズムが各 TLSv1.2 実装に必須であるという副次の利点があり、すべての最新のプラットフォームで利用できます。
 
-効果的なブロックモードの詳細については、[NIST のブロックモード選択のガイドライン](http://csrc.nist.gov/groups/ST/toolkit/BCM/modes_development.html "NIST Modes Development, Proposed Modes") を参照してください。
+効果的なブロックモードの詳細については、[NIST のブロックモード選択のガイドライン](https://csrc.nist.gov/groups/ST/toolkit/BCM/modes_development.html "NIST Modes Development, Proposed Modes") を参照してください。
 
 ##### 予測可能な初期化ベクトル
 
