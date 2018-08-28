@@ -140,13 +140,14 @@ iOS 8 以降、アプリケーションがデバイスに格納される方法�
 
 #### インストールプロセス
 
-IPA パッケージを iOS デバイスにインストールするにはさまざまな方法があります。最も簡単な方法は Apple のデフォルトのメディアプレーヤーである iTunes です。iTunes は macOS および Windows 用が利用可能です。iTunes を使用すると、ユーザーは App Store からアプリケーションをダウンロードして iOS デバイスにインストールできます。[iTunes を使用して IPA ファイルをデバイスにインストールする](https://www.youtube.com/watch?v=nNn85Qvznug "How to install an app via iTunes") こともできます。
+IPA パッケージを iOS デバイスにインストールするにはさまざまな方法があります。最も簡単な方法は [Cydia Impactor](http://www.cydiaimpactor.com/ "Cydia Impactor") を使うことです。このツールはもともと iPhone を脱獄するために作成されたものですが、IPA パッケージに署名して iOS デバイスにインストールするように書き直されました。このツールは MacOS, Windows, Linux で利用でき、APK ファイルを Android デバイスにインストールすることもできます。 [ステップバイステップガイドとトラブルシューティングの手順はこちらにあります](https://yalujailbreak.net/how-to-use-cydia-impactor/ "How to use Cydia Impactor") 。
 
-Linux では、クロスプラットフォームのソフトウェアプロトコルライブラリである [libimobiledevice](http://www.libimobiledevice.org/ "libimobiledevice") と、iOS デバイスとネイティブに通信するためのツールセットを使用できます。ideviceinstaller を介して USB 接続経由でパッケージをインストールできます。接続は USB 多重化デーモン [usbmuxd](https://www.theiphonewiki.com/wiki/Usbmux "Usbmux") を使用して実装され、USB 経由での TCP トンネルを提供します。
+
+Linux では、代わりにクロスプラットフォームのソフトウェアプロトコルライブラリである [libimobiledevice](http://www.libimobiledevice.org/ "libimobiledevice") と、iOS デバイスとネイティブに通信するためのツールセットを使用できます。ideviceinstaller を介して USB 接続経由でパッケージをインストールできます。接続は USB 多重化デーモン [usbmuxd](https://www.theiphonewiki.com/wiki/Usbmux "Usbmux") を使用して実装され、USB 経由での TCP トンネルを提供します。
 
 iOS デバイスでは、実際のインストールプロセスは installd デーモンにより処理され、アプリケーションをアンパックおよびインストールします。アプリサービスを統合する、もしくは iOS デバイスにインストールされるには、すべてのアプリケーションは Apple が発行した証明書で署名されている必要があります。これはコード署名の検証が成功した後にのみアプリケーションがインストールされることを意味します。但し、脱獄済みの電話機では、Cydia ストアで利用できる [AppSync](http://repo.hackyouriphone.org/appsyncunified) でこのセキュリティ機能を回避できます。Cydia は代替アプリストアです。この代替アプリストアには脱獄によって提供されたルート権限を活用して高度な機能を実行する多くの有用なアプリケーションが含まれています。AppSync は偽の署名付き IPA パッケージのインストールを可能にするために installd にパッチをあてたものです。
 
-IPA は [ipainstaller](https://github.com/autopear/ipainstaller "IPA Installer") を使用してコマンドラインから直接インストールすることもできます。scp (secure copy) を使うなどして、IPA をデバイスにコピーした後、ipainstaller を IPA のファイル名と共に実行します。
+IPA は [ipainstaller](https://github.com/autopear/ipainstaller "IPA Installer") を使用してコマンドラインから直接インストールすることもできます。例えば scp 経由などで、ファイルをデバイスにコピーした後、ipainstaller を IPA のファイル名と共に実行します。
 
 ```bash
 $ ipainstaller App_name.ipa
