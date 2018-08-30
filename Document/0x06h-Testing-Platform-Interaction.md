@@ -4,7 +4,7 @@
 
 #### 概要
 
-Android の豊富なプロセス間通信 (IPC) 機能とは対照的に、iOS にはアプリ間の通信の選択肢がほとんどありません。実施、アプリが直接的に通信する方法はありません。代わりに、Apple は [二つのタイプの間接通信](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html) を提供しています。AirDrop によるファイル転送とカスタム URL スキームです。
+Android の豊富なプロセス間通信 (IPC) 機能とは対照的に、iOS にはアプリ間の通信の選択肢がほとんどありません。実施、アプリが直接的に通信する方法はありません。代わりに、Apple は [二つのタイプの間接通信](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html "Inter-App Communication") を提供しています。AirDrop によるファイル転送とカスタム URL スキームです。
 
 カスタム URL スキームを使用するとアプリはカスタムプロトコルを介して通信できます。アプリはスキームのサポートを宣言して、スキームを使用する着信 URL を処理する必要があります。URL スキームが登録されると、他のアプリはスキームを登録したアプリを開き、適切にフォーマットされた URL を作成して `openURL` メソッドで開くことでパラメータを渡すことができます。
 
@@ -257,7 +257,7 @@ WKWebView では複合コンテンツや完全に HTTP 経由でロードされ�
 
 攻撃をシミュレートするには、傍受プロキシを使用して WebView に独自の JavaScript をインジェクトします。JavaScript コンテキストに露出している可能性のあるローカルストレージやネイティブメソッドやプロパティにアクセスを試みます。
 
-現実のシナリオでは、永続的なバックエンドのクロスサイトスクリプティング脆弱性や中間者攻撃を介してのみ JavaScript をインジェクトできます。詳細については OWASP [XSS cheat sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting\)\_Prevention_Cheat_Sheet "XSS (Cross Site Scripting) Prevention Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html) や「ネットワーク通信のテスト」を参照してください。
+現実のシナリオでは、永続的なバックエンドのクロスサイトスクリプティング脆弱性や中間者攻撃を介してのみ JavaScript をインジェクトできます。詳細については OWASP [XSS cheat sheet](https://goo.gl/x1mMMj "XSS (Cross Site Scripting) Prevention Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html) や「ネットワーク通信のテスト」を参照してください。
 
 ### 参考情報
 
