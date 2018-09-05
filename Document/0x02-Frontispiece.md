@@ -25,6 +25,10 @@ Bernhard はあらゆる種類のシステムをハックする才能を持つ�
 
 Sven は経験豊かなウェブおよびモバイルのペネトレーションテスト技術者であり、歴史上有名な Flash アプリケーションからプログレッシブモバイルアプリまでのすべてを評価しています。彼はセキュリティエンジニアでもあり、SDLC の中でエンドツーエンドで多くのプロジェクトをサポートし「セキュリティを構築」しています。彼はローカルおよびインターナショナルの会議やカンファレンスで講演し、ウェブアプリケーションやモバイルアプリのセキュリティに関するハンズオンワークショップを行っています。
 
+#### Jeroen Willemsen
+
+Jeroen は Xebia の主要なセキュリティアーキテクトであり、モバイルセキュリティとリスク管理に対する情熱を持っています。彼はセキュリティコーチ、セキュリティエンジニアとして企業をサポートしておりフルスタックの開発者としてどんな仕事でもこなします。彼は、セキュリティ問題からプログラミングの課題まで、技術的な問題を議論するのが大好きです。
+
 ### 共同執筆者
 
 共同執筆者は一貫して質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 2,000 件の追加が記録されています。
@@ -33,10 +37,6 @@ Sven は経験豊かなウェブおよびモバイルのペネトレーション
 
 Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以上の経験を持つ情熱的なサイバーセキュリティおよびプライバシーの専門家です。彼のキャリアの中で、彼はソフトウェアとセキュリティの分野を進歩させることを目標に、さまざまなプロジェクトに余暇をささげていました。彼はさまざまな機関で定期的に指導しています。彼は CISSP, CCSP, CSSLP, CEH の資格を保持しています。
 
-#### Jeroen Willemsen
-
-Jeroen は Xebia の IT セキュリティ専門のフルスタック開発者であり、モバイルとリスク管理に情熱を持っています。技術課題を説明する愛に駆り立てられ、彼は学生を卒業する前に PHP の先生を始め、セキュリティ、リスク管理、プログラミングの問題を聞いて学びたいと思う人と議論しています。
-
 ### 主寄稿者
 
 主寄稿者は一貫して質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 500 件の追加が記録されています。
@@ -44,18 +44,21 @@ Jeroen は Xebia の IT セキュリティ専門のフルスタック開発者�
 - Pawel Rzepa
 - Francesco Stillavato
 - Andreas Happe
-- Alexander Anthuk
 - Henry Hoggard
+- Andreas Happe
+- Alexander Anthuk
 - Wen Bin Kong
 - Abdessamad Temmar
 - Bolot Kerimbaev
+- Cláudio André
 - Slawomir Kosowski
 
 ### 寄稿者
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Jin Kung Ong, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Jeroen Beckers, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Daniel Ramirez Martin, Claudio André, Enrico Verzegnassi, Yogesh Sharma, Dominique Righetto, Raul Siles, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Carlos Holguera, David Fern, Pishu Mahtani, Anuruddha E.
+Jin Kung Ong, Sjoerd Langkemper,
+Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Jeroen Beckers, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Daniel Ramirez Martin, Enrico Verzegnassi, Yogesh Sharma, Dominique Righetto, Raul Siles, Nick Epson, Kyle Benac, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Carlos Holguera, David Fern, Pishu Mahtani, Anuruddha E.
 
 ### レビュー担当者
 
