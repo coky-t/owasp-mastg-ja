@@ -4,7 +4,7 @@
 
 OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs "MASVS") [(日本語訳)](https://github.com/coky-t/owasp-masvs-ja) に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
 
-OWASP は多くの著者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/ "OWASP Mobile Security Project Slack Channel") に参加して MASVS や MSTG の議論に参加してください。[https://owasp.herokuapp.com/](https://owasp.herokuapp.com/ "Slack channel sign up") で Slack チャンネルにサインアップできます。
+OWASP は多くの著者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/ "OWASP Mobile Security Project Slack Channel") に参加して MASVS や MSTG の議論に参加してください。あなたは [この招待状](https://join.slack.com/t/owasp/shared_invite/enQtNDI5MzgxMDQ2MTAwLTEyNzIzYWQ2NDZiMGIwNmJhYzYxZDJiNTM0ZmZiZmJlY2EwZmMwYjAyNmJjNzQxNzMyMWY4OTk3ZTQ0MzFhMDY "Slack channel sign up") を使用して自分で Slack チャネルにサインアップできます。(招待状の有効期限が切れている場合は PR を開いてください。) 
 
 ## 著作権とライセンス
 
@@ -77,9 +77,7 @@ Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Jeroen
 
 ### その他
 
-他の多くの寄稿者が単一の単語や文章など (追加数が 50 件未満) の少量のコンテンツをコミットしています。寄稿者の完全なリストは GitHub にあります。
-
-https://github.com/OWASP/owasp-mstg/graphs/contributors
+他の多くの寄稿者が単一の単語や文章など (追加数が 50 件未満) の少量のコンテンツをコミットしています。寄稿者の完全なリストは [GitHub](https://github.com/OWASP/owasp-mstg/graphs/contributors Github "contributors") にあります。
 
 ### 旧版
 
