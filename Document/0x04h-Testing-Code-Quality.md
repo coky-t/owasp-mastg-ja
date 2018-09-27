@@ -1,22 +1,22 @@
-## Testing Code Quality
+## コード品質のテスト
 
-Mobile app developers use a wide variety of programming languages and frameworks. As such, common vulnerabilities such as SQL injection, buffer overflows, and cross-site scripting (XSS), may manifest in apps when neglecting secure programming practices.
+モバイルアプリ開発者はさまざまなプログラミング言語とフレームワークを使用しています。そのため、SQL インジェクション、バッファオーバーフロー、クロスサイトスクリプティング (XSS) などの一般的な脆弱性は、セキュアなプログラミングプラクティスを軽視した場合のアプリに現れることがあります。
 
-The same programming flaws may affect both Android and iOS apps to some degree, so we'll provide an overview of the most common vulnerability classes frequently in the general section of the guide. In later sections, we will cover OS-specific instances and exploit mitigation features.
+同じプログラミングの欠陥が Android と iOS の両方のアプリにある程度の影響を与える可能性があるため、最も一般的な脆弱性クラスの概要をこのガイドの一般セクションでたびたび説明します。後のセクションでは、OS 固有のインスタンスについて説明し、緩和機能を活用します。
 
-### Injection Flaws
+### インジェクションの欠陥
 
-An *injection flaw* describes a class of security vulnerability occurring when user input is inserted into back-end queries or commands. By injecting metacharacters, an attacker can execute malicious code that is inadvertently interpreted as part of the command or query. For example, by manipulating a SQL query, an attacker could retrieve arbitrary database records or manipulate the content of the back-end database.
+*インジェクションの欠陥* はユーザーの入力がバックエンドのクエリやコマンドに挿入されたときに発生するセキュリティ脆弱性のクラスを表します。メタ文字を注入することにより、攻撃者は誤ってコマンドやクエリの一部として解釈される悪質なコードを実行できます。例えば、SQL クエリを操作することにより、攻撃者は任意のデータベースレコードを取得したり、バックエンドデータベースの内容を操作する可能性があります。
 
-Vulnerabilities of this class are most prevalent in server-side web services. Exploitable instances also exist within mobile apps, but occurrences are less common, plus the attack surface is smaller.
+このクラスの脆弱性はサーバー側のウェブサービスで最も一般的です。悪用可能なインスタンスもモバイルアプリ内に存在しますが、発生頻度は少なく、攻撃領域も小さくなります。
 
-For example, while an app might query a local SQLite database, such databases usually do not store sensitive data (assuming the developer followed basic security practices). This makes SQL injection a non-viable attack vector. Nevertheless, exploitable injection vulnerabilities sometimes occur, meaning proper input validation is a necessary best practice for programmers.
+例えば、アプリはローカルの SQLite データベースをクエリすることがありますが、そのようなデータベースは通常、機密データを格納しません (開発者が基本的なセキュリティプラウティスに従うと仮定します) 。これにより SQL インジェクションは非実用的な攻撃ベクトルになります。それにもかかわらず、悪用可能なインジェクション脆弱性が発生することがあります。これは適切な入力検証がプログラマにとって必要なベストプラクティスであることを意味しています。
 
-#### SQL Injection
+#### SQL インジェクション
 
-A *SQL injection* attack involves integrating SQL commands into input data, mimicking the syntax of a predefined SQL command. A successful SQL injection attack allows the attacker to read or write to the database and possibly execute administrative commands, depending on the permissions granted by the server.
+*SQL インジェクション* 攻撃は入力データに SQL コマンドを統合し、定義済みの SQL コマンドを模倣します。SQL インジェクション攻撃が成功すると、攻撃者はデータベースの読み取りや書き込みが可能になり、サーバーに付与されたアクセス許可に応じて管理コマンドを実行される可能性があります。
 
-Apps on both Android and iOS use SQLite databases as a means to control and organize local data storage. Assume an Android app handles local user authentication by storing the user credentials in a local database (a poor programming practice we’ll overlook for the sake of this example). Upon login, the app queries the database to search for a record with the username and password entered by the user:
+Android と iOS のアプリは両方ともローカルデータストレージを制御及び整理する手段として SQLite データベースを使用します。Android アプリはローカルデータベースにユーザー資格情報を格納することにより、ローカルユーザー認証を処理すると仮定します (この例のための意図的な悪いプログラミングプラクティスです) 。ログインすると、アプリはデータベースをクエリし、ユーザーが入力したユーザー名とパスワードでレコードを検索します。
 
 ```java=
 SQLiteDatabase db;
@@ -28,7 +28,7 @@ Cursor c = db.rawQuery( sql, null );
 return c.getCount() != 0;
 ```
 
-Let's further assume an attacker enters the following values into the "username" and "password" fields:
+ここで攻撃者が "username" と "password" のフィールドに以下の値を入力したとします。
 
 
 ```sql
@@ -36,26 +36,26 @@ username = 1' or '1' = '1
 password = 1' or '1' = '1
 ```
 
-This results in the following query:
+これにより以下のクエリが生成されます。
 
 ```sql
 SELECT * FROM users WHERE username='1' OR '1' = '1' AND Password='1' OR '1' = '1'
 ```
 
-Because the condition `'1' = '1'` always evaluates as true, this query return all records in the database, causing the login function to return "true" even though no valid user account was entered.
+条件 `'1' = '1'` は常に true と評価されるため、このクエリはデータベース内のすべてのレコードを返し、有効なユーザーアカウントが入力されていなくてもログイン関数は "true" を返すようになります。
 
-Ostorlab exploited the sort parameter of Yahoo's weather mobile application with adb using this SQL injection payload.
+Ostorlab はこの SQL インジェクションペイロードを使用して、adb で Yahoo 天気モバイルアプリケーションのソートパラメータを悪用しました。
 
 ```
-> $ adb shell content query --uri content://com.yahoo.mobile.client.android.weather.provider.Weather/locations/ --sort '_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master/**/where/**/1=1\)'  
+$ adb shell content query --uri content://com.yahoo.mobile.client.android.weather.provider.Weather/locations/ --sort '_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master/**/where/**/1=1\)'  
 
 Row: 0 _id=1, woeid=2487956, isCurrentLocation=0, latitude=NULL, longitude=NULL, photoWoeid=NULL, city=NULL, state=NULL, stateAbbr=, country=NULL, countryAbbr=, timeZoneId=NULL, timeZoneAbbr=NULL, lastUpdatedTimeMillis=746034814, crc=1591594725
 
 ```
 
-The payload can be further simplified using the following `_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master\)`.
+ペイロードは次の `_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master\)` を使用することでさらに単純化できます。
 
-This SQL injection vulnerability did not expose any sensitive data that the user didn't already have access to. This example presents a way that adb can be used to test vulnerable content providers. Ostorlab takes this even further and creates a webpage instance of the SQLite query, then runs SQLmap to dump the tables.
+この SQL インジェクション脆弱性はユーザーがまだアクセスしていない機密データを開示してはいません。この例は adb を使用して脆弱なコンテンツプロバイダをテストする方法を示しています。Ostorlab はこれをさらに引き継ぎ、SQLite クエリのウェブページインスタンスを作成し、SQLmap を実行してテーブルをダンプします。
 
 ```python
 
@@ -87,13 +87,13 @@ if __name__=="__main__":
 
 ```
 
-One real-world instance of client-side SQL injection was discovered by Mark Woods within the "Qnotes" and "Qget" Android apps running on QNAP NAS storage appliances. These apps exported content providers vulnerable to SQL injection, allowing an attacker to retrieve the credentials for the NAS device. A detailed description of this issue can be found on the [Nettitude Blog](http://blog.nettitude.com/uk/qnap-android-dont-provide "Nettitude Blog - QNAP Android: Don't Over Provide").
+Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "Qnotes" および "Qget" Android アプリ内にクライアントサイドの SQL インジェクションのリアルワールドのインスタンスの一つを発見しました。これらのアプリは SQL インジェクションに脆弱なコンテンツプロバイダをエクスポートし、攻撃者が NAS デバイスの資格情報を取得できるようにしました。この問題の詳細な説明は [Nettitude Blog](https://blog.nettitude.com/uk/qnap-android-dont-provide "Nettitude Blog - QNAP Android: Don't Over Provide") にあります。
 
-#### XML Injection
+#### XML インジェクション
 
-In a *XML injection* attack, the attacker injects XML metacharacters to structurally alter XML content. This can be used to either compromise the logic of an XML-based application or service, as well as possibly allow an attacker to exploit the operation of the XML parser processing the content.
+*XML インジェクション* 攻撃では、攻撃者は XML メタキャラクタを注入して XML コンテンツを構造的に変更します。これは XML ベースのアプリケーションやサービスのロジックを侵害するために使用される可能性があり、攻撃者がコンテンツを処理する XML パーサーの操作を悪用する可能性もあります。
 
-A popular variant of this attack is [XML Entity Injection (XXE)](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing). Here, an attacker injects an external entity definition containing an URI into the input XML. During parsing, the XML parser expands the attacker-defined entity by accessing the resource specified by the URI. The integrity of the parsing application ultimately determines capabilities afforded to the attacker, where the malicious user could do any (or all) of the following: access local files, trigger HTTP requests to arbitrary hosts and ports, launch a [cross-site request forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) attack, and cause a denial-of-service condition. The OWASP web testing guide contains the [following example for XXE](https://www.owasp.org/index.php/Testing_for_XML_Injection_(OTG-INPVAL-008)):
+この攻撃の一般的な変種には [XML Entity Injection (XXE)](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing) があります。ここでは、攻撃者が URI を含む外部エンティティ定義を入力 XML に注入します。解析時に、XML パーサーは URI で指定されたリソースにアクセスして攻撃者が定義したエンティティを展開します。解析アプリケーションの完全性により最終的に攻撃者にもたらす能力を決定します。悪意のあるユーザーが次の一部 (または全て) を行う可能性があります。ローカルファイルにアクセスしたり、任意のホストおよびポートへの HTTP リクエストをトリガしたり、[クロスサイトリクエストフォージェリ (CSRF)](https://goo.gl/UknMCj "Cross-Site Request Forgery (CSRF)") 攻撃を実行したり、サービス拒否状態を引き起こしたりします。OWASP ウェブテストガイドには [XXE の以下の例](https://goo.gl/QGQkEX "Testing for XML Injection (OTG-INPVAL-008)") があります。
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -102,59 +102,59 @@ A popular variant of this attack is [XML Entity Injection (XXE)](https://www.owa
   <!ENTITY xxe SYSTEM "file:///dev/random" >]><foo>&xxe;</foo>
 ```
 
-In this example, the local file `/dev/random` is opened where an endless stream of bytes is returned, potentially causing a denial-of-service.
+この例では、ローカルファイル `/dev/random` が開かれ、無限のバイトストリームが返され、潜在的にサービス拒否を引き起こします。
 
-The current trend in app development focuses mostly on REST/JSON-based services as XML is becoming less common. However, in the rare cases where user-supplied or otherwise untrusted content is used to construct XML queries, it could be interpreted by local XML parsers, such as NSXMLParser on iOS. As such, said input should always be validated and meta-characters should be escaped.
+アプリ開発の現在の傾向では、ほとんどが REST/JSON ベースのサービスにフォーカスしており、XML はあまり一般的ではなくなっています。しかし、まれにユーザーが提供した、または信頼できないコンテンツが XML クエリを構築するために使用される場合、iOS の NSXMLParser などのローカル XML パーサーにより解釈される可能性があります。したがって、前記の入力は常に検証され、メタキャラクタはエスケープされる必要があります。
 
-#### Injection Attack Vectors
+#### インジェクション攻撃ベクトル
 
-The attack surface of mobile apps is quite different from typical web and network applications. Mobile apps don't often expose services on the network, and viable attack vectors on an app's user interface are rare. Injection attacks against an app are most likely to occur through inter-process communication (IPC) interfaces, where a malicious app attacks another app running on the device.
+モバイルアプリの攻撃領域は一般的なウェブアプリケーションやネットワークアプリケーションとは大きく異なります。モバイルアプリはネットワーク上でサービスを公開することはあまりなく、アプリのユーザーインタフェース上で実行可能な攻撃ベクトルはまれです。アプリに対するインジェクション攻撃はプロセス間通信 (IPC) インタフェースを介して発生することがほとんどです。悪意のあるアプリがデバイス上で実行されている別のアプリを攻撃します。
 
-Locating a potential vulnerability begins by either:
+潜在的な脆弱性を突きとめるには、以下を行います。
 
-- Identifying possible entry points for untrusted input then tracing from those locations to see if the destination contains potentially vulnerable functions.
-- Identifying known, dangerous library / API calls (e.g. SQL queries) and then checking whether unchecked input successfully interfaces with respective queries.
+- 信頼できない入力について可能性のあるエントリポイントを特定し、それらのロケーションからトレースを行い、デスティネーションに潜在的な脆弱性をもつ機能が含まれているかどうかを確認します。
+- 既知の危険なライブラリや API コール (SQL クエリなど) を特定し、チェックされていない入力がそれぞれのクエリとのインタフェースに成功するかどうかを確認します。
 
-During a manual security review, you should employ a combination of both techniques. In general, untrusted inputs enter mobile apps through the following channels:
+手動によるセキュリティレビューでは、両方の技法を組み合わせて使用する必要があります。一般に、信頼できない入力は以下のチャネルを通じてモバイルアプリに入ります。
 
-- IPC calls
-- Custom URL schemes
-- QR codes
-- Input files received via Bluetooth, NFC, or other means
-- Pasteboards
-- User interface
+- IPC コール
+- カスタム URL スキーム
+- QR コード
+- Bluetooth, NFC, またはその他の方法で受信した入力ファイル
+- ペーストボード
+- ユーザーインタフェース
 
-Verify that the following best practices have been followed:
+以下のベストプラクティスが実行されていることを確認します。
 
-- Untrusted inputs are type-checked and/or validated using a white-list of acceptable values.
-- Prepared statements with variable binding (i.e. parameterized queries) are used when performing database queries. If prepared statements are defined, user-supplied data and SQL code are automatically separated.
-- When parsing XML data, ensure the parser application is configured to reject resolution of external entities in order to prevent XXE attack.
+- 信頼できない入力をタイプチェックしたり、許容値のチェックリストを使用して検証します。
+- データベースクエリを実行する際に変数バイディングでのプリペアードステートメント (つまり、パラメータ化されたクエリ) を使用します。プリペアードステートメントが定義されている場合、ユーザー指定のデータと SQL コードは自動的に分離されます。
+- XML データを解析する場合、パーサーアプリケーションが XXE 攻撃を防ぐために外部エンティティの解決を拒否するように構成されていることを確認します。
 
-We will cover details related to input sources and potentially vulnerable APIs for each mobile OS in the OS-specific testing guides.
+OS 固有のテストガイドでは各モバイル OS の入力ソースや潜在的に脆弱な API に関する詳細について説明します。
 
-### Memory Corruption Bugs
+### メモリ破損バグ
 
-Memory corruption bugs are a popular mainstay with hackers. This class of bug results from a programming error that causes the program to access an unintended memory location. Under the right conditions, attackers can capitalize on this behavior to hijack the execution flow of the vulnerable program and execute arbitrary code. This kind of vulnerability occurs in a number of ways:
+メモリ破損バグはハッカーにとって一般的な頼みの綱です。このクラスのバグはプログラムが意図しないメモリ位置にアクセスするようなプログラミングエラーが原因です。適切な状況下では、攻撃者はこの動作を利用し、脆弱なプログラムの実行フローをハイジャックして任意のコードを実行できます。この種の脆弱性は様々な方法で発生します。
 
-- Buffer overflows: This describes a programming error where an app writes beyond an allocated memory range for a particular operation. An attacker can use this flaw to overwrite important control data located in adjacent memory, such as function pointers. Buffer overflows were formerly the most common type of memory corruption flaw, but have become less prevalent over the years due to a number of factors. Notably, awareness among developers of the risks in using unsafe C library functions is now a common best practice plus, catching buffer overflow bugs is relatively simple. However, it is still worth testing for such defects.
+- バッファオーバーフロー: これはアプリが特定の操作のために割り当てられたメモリ範囲を越えて書き込みを行うプログラミングエラーを表します。攻撃者はこの欠陥を使用して関数ポインタなど隣接するメモリにある重要な制御データを上書きできます。バッファオーバーフローは以前は最も一般的な種類のメモリ破損の欠陥でしたが、さまざまな要因により長年にわたり流行してはいません。特に、安全でない C ライブラリ関数を使用するリスクの開発者の意識は現在の一般的なベストプラクティスであり、バッファオーバーフローバグを捕捉することは比較的簡単です。しかし、そのような欠陥をテストする価値はまだあります。
 
-- Out-of-bounds-access: Buggy pointer arithmetic may cause a pointer or index to reference a position beyond the bounds of the intended memory structure (e.g. buffer or list). When an app attempts to write to an out-of-bounds address, a crash or unintended behavior occurs. If the attacker can control the target offset and manipulate the content written to some extent, [code execution exploit is likely possible](http://www.zerodayinitiative.com/advisories/ZDI-17-110/).
+- 境界外アクセス: バグのあるポインタ演算により、意図されたメモリ構造 (バッファやリストなど) の境界を超えた位置を参照するポインタやインデックスとなる可能性があります。アプリが境界外のアドレスに書き込もうとすると、クラッシュや意図しない動作が発生します。攻撃者がターゲットオフセットを制御し、コンテンツをある程度の範囲で書き込む操作ができる場合、[コード実行悪用の可能性があります](https://www.zerodayinitiative.com/advisories/ZDI-17-110/) 。
 
-- Dangling pointers: These occur when an object with an incoming reference to a memory location is deleted or deallocated, but the object pointer is not reset. If the program later uses the *dangling* pointer to call a virtual function of the already deallocated object, it is possible to hijack execution by overwriting the original vtable pointer. Alternatively, it is possible to read or write object variables or other memory structures referenced by a dangling pointer.
+- ダングリングポインタ: これらは、メモリ位置への参照を含むオブジェクトが削除または割り当て解除されますが、オブジェクトポインタがリセットされないときに発生します。プログラムがすでに割り当て解除されたオブジェクトの仮想関数をコールする *ダングリング* ポインタを後で使用する場合、元の vtable ポインタを上書きすることにより実行をハイジャックすることが可能です。あるいは、ダングリングポインタにより参照されるオブジェクト変数や他のメモリ構造を読み書きすることが可能です。
 
-- Use-after-free: This refers to a special case of dangling pointers referencing released (deallocated) memory. After a memory address is cleared, all pointers referencing the location become invalid, causing the memory manager to return the address to a pool of available memory. When this memory location is eventually re-allocated, accessing the original pointer will read or write the data contained in the newly allocated memory. This usually leads to data corruption and undefined behavior, but crafty attackers can set up the appropriate memory locations to leverage control of the instruction pointer.
+- Use After Free: これは解放 (割り当て解除) されたメモリを参照するダングリングポインタの特殊なケースを指します。メモリアドレスがクリアされると、その位置を参照するすべてのポインタは無効になり、メモリマネージャはそのアドレスを使用可能なメモリのプールに戻します。このメモリ位置が後に再割り当てされるとき、元のポインタにアクセスすると、新たに割り当てられたメモリに含まれるデータを読み書きします。これは通常、データ破損や未定義の動作につながりますが、巧妙な攻撃者は適切なメモリ位置を設定して命令ポインタの制御に利用できます。
 
-- Integer overflows: When the result of an arithmetic operation exceeds the maximum value for the integer type defined by the programmer, this results in the value "wrapping around" the maximum integer value, inevitably resulting in a small value being stored. Conversely, when the result of an arithmetic operation is smaller than the minimum value of the integer type, an *integer underflow* occurs where the result is larger than expected. Whether a particular integer overflow/underflow bug is exploitable depends on how the integer is used – for example, if the integer type were to represent the length of a buffer, this could create a buffer overflow vulnerability.
+- 整数オーバーフロー: 算術演算の結果がプログラマにより定義された整数型の最大値を超える場合、これは最大整数値を「ラップアラウンド」した値となり、必然的に小さい値が格納されます。逆に、算術演算の結果が整数型の最小値より小さい場合、結果が予想より大きくなる *整数アンダーフロー* が発生します。特定の整数オーバーフローやアンダーフローのバグが悪用可能かどうかは整数がどのように使用されるかで異なります。例えば、整数型がバッファの長さを表す場合、バッファオーバーフローの脆弱性が生じる可能性があります。
 
-- Format string vulnerabilities: When unchecked user input is passed to the format string parameter of the `printf()` family of C functions, attackers may inject format tokens such as ‘%c’ and ‘%n’ to access memory. Format string bugs are convenient to exploit due to their flexibility. Should a program output the result of the string formatting operation, the attacker can read and write to memory arbitrarily, thus bypassing protection features such as ASLR.
+- 書式文字列の脆弱性: チェックされていないユーザー入力が C 関数の `printf()` ファミリの書式文字列パラメータに渡されると、攻撃者は '%c' や '%n' などの書式トークンを注入してメモリにアクセスする可能性があります。書式文字列のバグはその柔軟性のため、悪用するのに便利です。プログラムが文字列書式操作の結果を出力すると、ASLR などの保護機能をバイパスして、攻撃者は任意のメモリに読み書きできます。
 
-The primary goal in exploiting memory corruption is usually to redirect program flow into a location where the attacker has placed assembled machine instructions referred to as *shellcode*. On iOS, the data execution prevention feature (as the name implies) prevents execution from memory defined as data segments. To bypass this protection, attackers leverage return-oriented programming (ROP). This process involves chaining together small, pre-existing code chunks ("gadgets") in the text segment where these gadgets may execute a function useful to the attacker or, call `mprotect` to change memory protection settings for the location where the attacker stored the *shellcode*.
+メモリ破損を悪用する主な目的は、通常、プログラマが *シェルコード* と呼ばれるアセンブルされた機械命令を配置した場所にプログラムフローをリダイレクトすることです。iOS では、データ実行防止機能は (名前が示すように) データセグメントとして定義されたメモリからの実行を防ぎます。この保護をバイパスするために、攻撃者はリターン指向プログラミング (ROP) を活用します。このプロセスではテキストセグメント内の小さな、既存のコードチャンク (「ガジェット」) を繋いで実行します。これらのガジェットは攻撃者にとって有用な機能を実行したり、攻撃者が格納した *シェルコード* の位置の `mprotect` と呼ばれるメモリ保護設定を変更する可能性があります。
 
-Android apps are, for the most part, implemented in Java which is inherently safe from memory corruption issues by design. However, native apps utilizing JNI libraries are susceptible to this kind of bug.
+Android アプリは大部分が Java で実装されています。これは設計上、本質的にメモリ破損問題から安全です。しかし、JNI ライブラリを利用するネイティブアプリはこの種のバグの影響を受ける可能性があります。
 
-#### Buffer and Integer Overflows
+#### バッファオーバーフローと整数オーバーフロー
 
-The following code snippet shows a simple example for a condition resulting in a buffer overflow vulnerability.
+以下のコードスニペットはバッファオーバーフロー脆弱性をもたらす状態の簡単な例を示しています。
 
 ```c
  void copyData(char *userId) {  
@@ -163,7 +163,7 @@ The following code snippet shows a simple example for a condition resulting in a
  }  
 ```
 
-To identify potential buffer overflows, look for uses of unsafe string functions (`strcpy`, `strcat`, other functions beginning with the “str” prefix, etc.) and potentially vulnerable programming constructs, such as copying user input into a limited-size buffer. The following should be considered red flags for unsafe string functions:
+潜在的なバッファオーバーフローを特定するには、限られたサイズのバッファにユーザー入力をコピーするなど、安全ではない文字列関数 (`strcpy`, `strcat`, その他の "str" 接頭辞で始まる関数など) や潜在的に脆弱なプログラミング構造の使用を探します。以下は安全でない文字列関数のため危険とみなすべきです。
 
     - `strcat`
     - `strcpy`
@@ -175,46 +175,46 @@ To identify potential buffer overflows, look for uses of unsafe string functions
     - `snprintf`
     - `gets`
 
-Also, look for instances of copy operations implemented as “for” or “while” loops and verify length checks are performed correctly.
+また、"for" や "while" ループとして実装されたコピー操作のインスタンスを探し、長さのチェックが正しく実行されていることを確認します。
 
-Verify that the following best practices have been followed:
+以下のベストプラクティスに従っていることを確認します。
 
-- When using integer variables for array indexing, buffer length calculations, or any other security-critical operation, verify that  unsigned integer types are used and perform precondition tests are performed to prevent the possibility of integer wrapping.
-- The app does not use unsafe string functions such as `strcpy`, most other functions beginning with the “str” prefix, `sprint`, `vsprintf`, `gets`, etc.;
-- If the app contains C++ code, ANSI C++ string classes are used;
-- iOS apps written in  Objective-C use NSString class. C apps on iOS should use CFString, the Core Foundation representation of a string.
-- No untrusted data is concatenated into format strings.
+- 配列インデックス、バッファ長計算、その他セキュリティ上重要な操作に整数変数を使用する場合には、符号なしの整数型が使用されていること、および整数ラッピングの可能性を防ぐために前提条件テストを実行していることを確認します。
+- アプリは `strcpy` や他の "str" 接頭辞で始まる安全でない文字列関数や, `sprint`, `vsprintf`, `gets` などを使用しません。
+- アプリに C++ コードを含む場合、ANSI C++ string クラスを使用します。
+- Objective-C で書かれた iOS アプリは NSString クラスを使用します。iOS 上の C アプリは、文字列の Core Foundation 表現である CFString を使用する必要があります。
+- 信用できないデータを書式文字列に連結しません。
 
-#### Static Analysis
+#### 静的解析
 
-Static code analysis of low-level code is a complex topic that could easily fill its own book. Automated tools such as [RATS](https://code.google.com/archive/p/rough-auditing-tool-for-security/downloads "RATS - Rough auditing tool for security") combined with limited manual inspection efforts are usually sufficient to identify low-hanging fruits. However, memory corruption conditions often stem from complex causes. For example, a use-after-free bug may actually be the result of an intricate, counter-intuitive race condition not immediately apparent. Bugs manifesting from deep instances of overlooked code deficiencies are generally discovered through dynamic analysis or by testers who invest time to gain a deep understanding of the program.
+低レベルコードの静的コード解析は、簡単に一冊の本を埋めることができる複雑なトピックです。[RATS](https://code.google.com/archive/p/rough-auditing-tool-for-security/downloads "RATS - Rough auditing tool for security") などの自動化ツールと限られた手作業によるインスペクションの労力の組み合わせが、通常、比較的簡単な問題を特定するには十分です。しかし、メモリ破損の状態はしばしば複雑な原因に起因します。例えば、Use After Free バグは実際に、入り組んで直感的ではない競合状態の結果かもしれません。見落とされたコードの欠陥の深刻な例から明らかなバグは、一般に動的解析やプログラウを深く理解することに時間を費やしたテスト技術者により発見されます。
 
-#### Dynamic Analysis
+#### 動的解析
 
-Memory corruption bugs are best discovered via input fuzzing: an automated black-box software testing technique in which malformed data is continually sent to an app to survey for potential vulnerability conditions. During this process, the application is monitored for malfunctions and crashes. Should a crash occur, the hope (at least for security testers) is that the conditions creating the crash reveal an exploitable security flaw.
+メモリ破損のバグは入力ファジングで最もよく見つかります。自動化されたブラックボックスソフトウェアテスト技法であり、不正なデータを継続的にアプリに送信して、潜在的な脆弱性の状態を調査します。このプロセスの間、アプリケーションは誤動作やクラッシュを監視されます。クラッシュが発生した場合、(少なくともセキュリティテスト技術者にとっての) 希望はクラッシュを引き起こす条件が悪用可能なセキュリティ上の欠陥を明らかにすることです。
 
-Fuzz testing techniques or scripts (often called "fuzzers") will typically generate multiple instances of structured input in a semi-correct fashion. Essentially, the values or arguments generated are at least partially accepted by the target application, yet also contain invalid elements, potentially triggering input processing flaws and unexpected program behaviors. A good fuzzer exposes a substantial amount of possible program execution paths (i.e. high coverage output). Inputs are either generated from scratch ("generation-based") or derived from mutating known, valid input data ("mutation-based").
+ファズテスト技法やスクリプト (しばしば「ファザー」と呼ばれる) は通常、構造化された入力の複数のインスタンスを完全には正しくない形式で生成します。基本的に、生成された値や引数は少なくとも部分的にターゲットアプリケーションにより受け入れられ、また無効な要素も含み、潜在的に入力処理上の欠陥や予期しないプログラム動作を引き起こします。よいファザーはかなりの量の可能なプログラム実行パス (すなわち、高いカバレッジ出力) をさらけ出します。入力はスクラッチで生成される (「生成ベース」) か、既知の有効な入力データの変異から導出 (「変異ベース」) します。
 
-For more information on fuzzing, refer to the [OWASP Fuzzing Guide](https://www.owasp.org/index.php/Fuzzing).
+ファジングの詳細については、[OWASP ファジングガイド](https://www.owasp.org/index.php/Fuzzing "OWASP Fuzzing Guide") を参照してください。
 
-### Cross-Site Scripting Flaws
+### クロスサイトスクリプティングの欠陥
 
-Cross-site scripting (XSS) issues allow attackers to inject client-side scripts into web pages viewed by users. This type of vulnerability is prevalent in web applications. When a user views the injected script in a browser, the attacker gains the ability to bypass the same origin policy, enabling a wide variety of exploits (e.g. stealing session cookies, logging key presses, performing arbitrary actions, etc.).
+クロスサイトスクリプティング (XSS) の問題により、攻撃者はクライアント側のスクリプトをユーザーが閲覧したウェブページに注入できます。この種の脆弱性はウェブアプリケーションによく見られます。ユーザーがブラウザに注入されたスクリプトを閲覧すると、攻撃者は同一生成元ポリシーをバイパスすることができ、さまざまな攻撃 (例えば、セッションクッキーの盗難、キー押下の記録、任意のアクションの実行など) を可能にします。
 
-In the context of *native apps*, XSS risks are far less prevalent for the simple reason these kinds of applications do not rely on a web browser. However, apps using WebView components, such as ‘UIWebView’ on iOS and ‘WebView’ on Android, are potentially vulnerable to such attacks.
+*ネイティブアプリ* のコンテキストでは、これらの種類のアプリケーションはウェブブラウザに依存していないという単純な理由により、XSS のリスクはあまりありません。但し、iOS の 'UIWebView' や Android の 'WebView' などの WebView コンポーネントを使用するアプリではこのような攻撃について潜在的に脆弱です。
 
-An older but well-known example is the [local XSS issue in the Skype app for iOS, first identified by Phil Purviance]( https://superevr.com/blog/2011/xss-in-skype-for-ios). The Skype app failed to properly encode the name of the message sender, allowing an attacker to inject malicious JavaScript to be executed when a user views the message. In his proof-of-concept, Phil showed how to exploit the issue and steal a user's address book.
+古いですがよく知られている例として [Phil Purviance により最初に特定された、iOS 向け Skype アプリのローカル XSS の問題]( https://superevr.com/blog/2011/xss-in-skype-for-ios) があります。Skype アプリがメッセージ送信者の名前を正しくエンコードできなかったため、攻撃者は悪意のある JavsScript を注入でき、ユーザーがメッセージを表示したときに実行される可能性があります。彼の概念実証で、Phil はこの問題を悪用してユーザーのアドレス帳を盗む方法を示しました。
 
-#### Static Analysis
+#### 静的解析
 
-Take a close look at any WebViews present and investigate for untrusted input rendered by the app.
+存在する WebView を注意深く見て、信頼できない入力についてアプリによる処理を調査します。
 
-XSS issues may exist if the URL opened by WebView is partially determined by user input. The following example is from an XSS issue in the [Zoho Web Service, reported by Linus Särud](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/).
+WebView で開かれる URL が部分的にユーザーの入力により決定される場合、XSS の問題が存在する可能性があります。以下の例は [Zoho Web Service, reported by Linus Särud](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/) の XSS の問題です。
 
 ```java
 webView.loadUrl("javascript:initialize(" + myNumber + ");");
 ```
-Another example of XSS issues determined by user input is public overriden methods.
+ユーザー入力により決定される XSS 問題のもう一つの例は public override メソッドです。
 
 ```java
 @Override
@@ -225,7 +225,7 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
 }
 ```
 
-Sergey Bobrov was able to take advantage of this in the following [HackerOne report](https://hackerone.com/reports/189793). Any input to the html parameter would be trusted in Quora's ActionBarContentActivity. Payloads were successful using adb, clipboarddata via ModalContentActivity, and Intents from 3rd party applications.
+Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。html パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
 
 - ADB
 ```bash
@@ -245,17 +245,17 @@ i.putExtra("html","XSS PoC <script>alert(123)</script>");
 startActivity(i);
 ```
 
-If WebView is used to display a remote website, the burden of escaping HTML shifts to the server side. If an XSS flaw exists on the web server, this can be used to execute script in the context of the WebView. As such, it is important to perform static analysis of the web application source code.
+WebView を使用してリモートウェブサイトを表示する場合、HTML をエスケープする負担はサーバ側に移ります。XSS の欠陥がウェブサーバーに存在する場合、これを使用して WebView のコンテキストでスクリプトを実行できます。したがって、ウェブアプリケーションソースコードの静的解析を実行することが重要です。
 
-Verify that the following best practices have been followed:
+以下のベストプラクティスに準じていることを確認します。
 
-- No untrusted data is rendered in HTML, JavaScript or other interpreted contexts unless it is absolutely necessary.
+- 絶対に必要でない限り、信頼できないデータを HTML, JavaScript, 他の解釈されるコンテキストで処理していません。
 
-- Appropriate encoding is applied to escape characters, such as HTML entity encoding. Note: escaping rules become complicated when HTML is nested within other code, for example, rendering a URL located inside a JavaScript block.
+- エスケープ文字には HTML エンティティエンコーディングなどの適切なエンコーディングが適用されています。注：エスケープのルールは HTML が他のコード内にネストされていると複雑になります。例えば、JavaScript ブロック内にある URL を処理するなどです。
 
-Consider how data will be rendered in a response. For example, if data is rendered in a HTML context, six control characters that must be escaped:
+レスポンスでのデータの処理方法を検討します。例えば、データが HTML コンテキストで処理される場合に、エスケープする必要がある六つの制御文字です。
 
-| Character  | Escaped      |
+| 文字 | エスケープ後 |
 | :-------------: |:-------------:|
 | & | &amp;amp;|
 | < | &amp;lt; |
@@ -265,23 +265,23 @@ Consider how data will be rendered in a response. For example, if data is render
 | / | &amp;#x2F;|
 
 
-For a comprehensive list of escaping rules and other prevention measures, refer to the [OWASP XSS Prevention Cheat Sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet "OWASP XSS Prevention Cheat Sheet").
+エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html "クロスサイトスクリプティング (XSS) 対策チートシート") を参照してください。
 
-#### Dynamic Analysis
+#### 動的解析
 
-XSS issues can be best detected using manual and/or automated input fuzzing, i.e. injecting HTML tags and special characters into all available input fields to verify the web application denies invalid inputs or escapes the HTML meta-characters in its output.
+XSS の問題は手動や自動の入力ファジングを使用すると最も良く検出できます。すなわち、利用可能なすべての入力フィールドに HTML タグや特殊文字を注入して、ウェブアプリケーションが無効な入力を拒否するか、その出力に HTML メタキャラクタをエスケープすることを確認します。
 
-A [reflected XSS attack](https://www.owasp.org/index.php/Testing_for_Reflected_Cross_site_scripting_(OTG-INPVAL-001)) refers to an exploit where malicious code is injected via a malicious link. To test for these attacks, automated input fuzzing is considered to be an effective method. For example, the [BURP Scanner](https://portswigger.net/burp/) is highly effective in identifying reflected XSS vulnerabilities. As always with automated analysis, ensure all input vectors are covered with a manual review of testing parameters.
+[反射型 XSS 攻撃](https://goo.gl/eqqiHV "Testing for Reflected Cross site scripting (OTG-INPVAL-001)") は悪意のあるコードが悪意のあるリンクを介して注入される攻撃を指します。これらの攻撃をテストするためには、自動化された入力ファジングが効果的な方法であると考えられています。例えば、[BURP Scanner](https://portswigger.net/burp/ "Burp Suite") は反射型 XSS 脆弱性の特定に非常に効果的です。自動解析の常として、すべての入力ベクトルがテストパラメータの手動レビューでカバーされていることを確認します。
 
-### References
+### 参考情報
 
 #### OWASP Mobile Top 10 2016
 
-- M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality - (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M7-Poor_Code_Quality.html
 
 #### OWASP MASVS
 
-- V6.2: "All inputs from external sources and the user are validated and if necessary sanitized. This includes data received via the UI, IPC mechanisms such as intents, custom URLs, and network sources."
+- V6.2: "外部ソースおよびユーザーからの入力がすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
 
 #### CWE
 
