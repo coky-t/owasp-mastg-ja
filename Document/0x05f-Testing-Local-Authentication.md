@@ -4,7 +4,6 @@
 モバイルアプリの認証アーキテクチャの章で前述したように、少なくとも暗号プリミティブ (鍵をアンロックする認証手順など) で認証が行われることを再確認することが重要です。次に、認証がリモートエンドポイントで検証されることを推奨します。
 Android では、ローカル認証のために Android Runtime でサポートされている二つのメカニズムがあります。資格情報の確認フローと生体認証フローです。
 
-
 ### 資格情報の確認のテスト
 
 #### 概要
@@ -264,3 +263,7 @@ Android Nougat (API 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByB
 
 - CWE-287 - Improper Authentication
 - CWE-604 - Use of Client-Side Authentication
+
+#### アプリパーミッションリクエスト
+
+- 実行時のパーミッション - https://developer.android.com/training/permissions/requesting
