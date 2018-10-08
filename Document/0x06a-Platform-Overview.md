@@ -1,6 +1,12 @@
 ## iOS プラットフォーム概要
 
-iOS は iPhone, iPad, iPod Touch などの Apple のモバイルデバイスに対応するモバイルオペレーティングシステムです。iOS の多くの機能を継承する Apple tvOS の基礎でもあります。
+iOS は iPhone, iPad, iPod Touch などの Apple のモバイルデバイスに対応するモバイルオペレーティングシステムです。iOS の多くの機能を継承する Apple tvOS の基礎でもあります。このセクションではアーキテクチャの観点から iOS プラットフォームを紹介します。以下の五つの主要分野について説明します。
+
+1. iOS セキュリティアーキテクチャ
+2. iOS アプリケーションの構造
+3. プロセス間通信 (IPC)
+4. iOS アプリケーションの公開
+5. iOS アプリケーション攻撃領域
 
 Apple のデスクトップオペレーティングシステム macOS (以前の OS X) と同様に、Apple により開発されたオープンソースの Unix オペレーティングシステムである Darwin をベースとしています。Darwin のカーネルは XNU ("X is Not Unix") であり、Mach と FreeBSD カーネルのコンポーネントを組み合わせたハイブリッドカーネルです。
 
@@ -175,3 +181,20 @@ iOS 開発者はパーミッションを直接設定することはできませ�
 - Bluetooth sharing
 - Media Library
 - Social media accounts
+
+### iOS アプリケーション攻撃領域
+
+iOS アプリケーション攻撃領域はそのアプリケーションのすべてのコンポーネントで構成されます。アプリをリリースおよびその機能をサポートするために必要なサポートマテリアルを含みます。iOS アプリケーションは以下により攻撃されます。
+- IPC 通信や URL スキームによる安全でない入力。以下を参照してください。
+  - [カスタム URL スキームのテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-custom-url-schemes "Testing Custom URL Schemes")
+- ユーザーによる入力フィールドへの安全でない入力。
+- ユーザーや WebView にロードされた安全でないコードによる WebView への安全でない入力。以下を参照してください。
+  HVG!!!
+  -  [iOS WebView のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-ios-webviews#testing-javascript-execution-in-webviews "Testing iOS webviews")
+- サーバーからの安全でないレスポンス、またはサーバーとモバイルアプリケーション間の中間者攻撃により危殆化したレスポンス。以下を参照してください。
+  - [ネットワーク通信のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication "Testing Network Communication")
+  - [iOS ネットワーク API](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md#ios-network-apis "iOS Network APIs")
+- 安全でない、または危殆化したストレージ。以下を参照してください。
+  - [iOS のデータストレージ](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md#data-storage-on-ios "Data Storage on iOS")
+- メソッドのフックやその他の攻撃を可能にする危殆化したランタイムや再パッケージ化したアプリ。以下を参照してください。
+  - [iOS アンチリバース防御](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#ios-anti-reversing-defenses "iOS Anti-Reversing Defenses")
