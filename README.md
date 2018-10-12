@@ -12,14 +12,15 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [モバイルセキュリティテストガイドの序文](Document/0x03-Overview.md)
 - [モバイルアプリの分類](Document/0x04a-Mobile-App-Taxonomy.md)
 - [モバイルアプリのセキュリティテスト](Document/0x04b-Mobile-App-Security-Testing.md)
-- [改竄とリバースエンジニアリング](Document/0x04c-Tampering-and-Reverse-Engineering.md)
 
 ### 総合テストガイド
 
-- [コード品質のテスト](Document/0x04h-Testing-Code-Quality.md)
-- [モバイルアプリの暗号化](Document/0x04g-Testing-Cryptography.md)
 - [モバイルアプリの認証アーキテクチャ](Document/0x04e-Testing-Authentication-and-Session-Management.md)
 - [ネットワーク通信のテスト](Document/0x04f-Testing-Network-Communication.md)
+- [モバイルアプリの暗号化](Document/0x04g-Testing-Cryptography.md)
+- [コード品質のテスト](Document/0x04h-Testing-Code-Quality.md)
+- [改竄とリバースエンジニアリング](Document/0x04c-Tampering-and-Reverse-Engineering.md)
+- [ユーザー教育のテスト](Document/0x04i-Testing-user-interaction.md)
 
 ### Android テストガイド
 
