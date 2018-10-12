@@ -43,9 +43,9 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 
 - Pawel Rzepa
 - Francesco Stillavato
-- Andreas Happe
 - Henry Hoggard
 - Andreas Happe
+- Kyle Benac
 - Alexander Anthuk
 - Wen Bin Kong
 - Abdessamad Temmar
@@ -58,7 +58,7 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
 Jin Kung Ong, Sjoerd Langkemper,
-Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Jeroen Beckers, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Daniel Ramirez Martin, Enrico Verzegnassi, Yogesh Sharma, Dominique Righetto, Raul Siles, Nick Epson, Kyle Benac, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Carlos Holguera, David Fern, Pishu Mahtani, Anuruddha E.
+Gerhard Wagner, Michael Helwig, Pece Milosev, Ryan Teoh, Denis Pilipchuk, Jeroen Beckers, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Daniel Ramirez Martin, Enrico Verzegnassi, Yogesh Sharma, Dominique Righetto, Raul Siles, Nick Epson, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Carlos Holguera, Vikas Gupta, David Fern, Pishu Mahtani, Anuruddha E.
 
 ### レビュー担当者
 
@@ -78,6 +78,15 @@ Gerhard Wagner, Michael Helwig, Pece Milosev, Denis Pilipchuk, Ryan Teoh, Jeroen
 ### その他
 
 他の多くの寄稿者が単一の単語や文章など (追加数が 50 件未満) の少量のコンテンツをコミットしています。寄稿者の完全なリストは [GitHub](https://github.com/OWASP/owasp-mstg/graphs/contributors Github "contributors") にあります。
+
+## スポンサー
+
+MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供したスポンサーに感謝します。彼らのスポンサーシップは MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。スポンサーシップパッケージは [OWASP Project Wiki](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide#tab=Sponsorship_Packages "OWASP Mobile Security Testing Guide Sponsorship Packages") に記載されています。
+
+### 名誉後援者
+
+[![NowSecure](Images/Sponsors/NowSecure_logo.png)](https://www.nowsecure.com/ "NowSecure")
+
 
 ### 旧版
 
