@@ -141,6 +141,6 @@ CBC モードでは最初の平文ブロックを初期化ベクトル (IV) を�
 
 ##### CWE
 
-- CWE-326: Inadequate Encryption Strength
-- CWE-327: Use of a Broken or Risky Cryptographic Algorithm
-- CWE-329: Not Using a Random IV with CBC Mode
+- CWE-326 - Inadequate Encryption Strength
+- CWE-327 - Use of a Broken or Risky Cryptographic Algorithm
+- CWE-329 - Not Using a Random IV with CBC Mode
