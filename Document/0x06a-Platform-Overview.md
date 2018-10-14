@@ -134,7 +134,7 @@ language.lproj フォルダはアプリケーションがサポートする言�
 
 #### iOS ファイルシステム上のアプリ構造
 
-iOS 8 以降、アプリケーションがデバイスに格納される方法が変更されました。それ以前では、アプリケーションは /var/mobile/applications/ にフォルダ内のフォルダにアンパックされました。アプリケーションは UUID (Universal Unique Identifier) 128ビット値によって識別されました。この番号はアプリケーション自体を格納するフォルダの名前でした。静的バンドルとアプリケーションデータフォルダは現在では別の場所に格納されています。これらのフォルダにはアプリケーションセキュリティアセスメント時に綿密に検討する必要がある情報が含まれています。
+iOS 8 以降、アプリケーションがデバイスに格納される方法が変更されました。それ以前では、アプリケーションは /var/mobile/applications/ にフォルダ内のフォルダにアンパックされました。iOS 10 以降、パスは `/private/var/containers/Bundle/Application/` に変更されていることに注意します。アプリケーションは UUID (Universal Unique Identifier) 128ビット値によって識別されました。この番号はアプリケーション自体を格納するフォルダの名前でした。静的バンドルとアプリケーションデータフォルダは現在では別の場所に格納されています。これらのフォルダにはアプリケーションセキュリティアセスメント時に綿密に検討する必要がある情報が含まれています。
 
 - `/var/mobile/Containers/Bundle/Application/[UUID]/Application.app` には前述の application.app データが含まれ、アプリケーションの ARM コンパイル済みバイナリだけでなく静的コンテンツも格納されます。このフォルダのコンテンツはコード署名の検証に使用されます。
 - `/var/mobile/Containers/Data/Application/[UUID]/Documents` にはユーザーが生成したすべてのデータが含まれます。アプリケーションエンドユーザーがこのデータの作成を開始します。
@@ -189,8 +189,8 @@ iOS アプリケーション攻撃領域はそのアプリケーションのす�
   - [カスタム URL スキームのテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-custom-url-schemes "Testing Custom URL Schemes")
 - ユーザーによる入力フィールドへの安全でない入力。
 - ユーザーや WebView にロードされた安全でないコードによる WebView への安全でない入力。以下を参照してください。
-  HVG!!!
-  -  [iOS WebView のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-ios-webviews#testing-javascript-execution-in-webviews "Testing iOS webviews")
+  -  [iOS WebView のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-ios-webviews "Testing iOS webviews")
+  - [ネイティブメソッドが WebView を通じて公開されているかどうかを判断する](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#determining-whether-native-methods-are-exposed-through-webviews "Determining Whether Native Methods Are Exposed Through WebViews")
 - サーバーからの安全でないレスポンス、またはサーバーとモバイルアプリケーション間の中間者攻撃により危殆化したレスポンス。以下を参照してください。
   - [ネットワーク通信のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication "Testing Network Communication")
   - [iOS ネットワーク API](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md#ios-network-apis "iOS Network APIs")
