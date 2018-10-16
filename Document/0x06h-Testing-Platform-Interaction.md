@@ -1,5 +1,86 @@
 ## iOS のプラットフォーム API
 
+### アプリパーミッションのテスト
+
+#### 概要
+iOS はすべてのモバイルアプリケーションを `mobile` ユーザーの下で実行させています。各アプリケーションは Trusted BSD の強制アクセスコントロールフレームワークにより施行されたポリシーを使用して、サンドボックス化および制限されています。これらのポリシーはプロファイルと呼ばれ、すべてのサードパーティアプリケーションは汎用サンドボックスプロファイル、コンテナパーミッションリストで使用します。詳細については [Apple 開発者ドキュメントのアーカイブ](https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/AppSandboxInDepth/AppSandboxInDepth.html "Apple Developer Documentation on Sandboxing") と [新しい Apple 開発者セキュリティドキュメント](https://developer.apple.com/documentation/security "Apple Developer Security Documentation") を参照してください。
+
+iOS では、アプリは以下のデータやリソースのいずれかにアクセスするためには、ユーザーにパーミッションを要求する必要があります。
+- Bluetooth ペリフェラル
+- カレンダーデータ
+- カメラ
+- 連絡先
+- ヘルス共有
+- ヘルス更新
+- ホームキット
+- ロケーション
+- マイク
+- モーション
+- 音楽とメディアライブラリ
+- 写真
+- リマインダ
+- Siri
+- 音声認識
+- テレビプロバイダ
+詳細については、[アーカイブの iOS のアプリプログラミングガイド](https://developer.apple.com/library/archive/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/ExpectedAppBehaviors/ExpectedAppBehaviors.html#//apple_ref/doc/uid/TP40007072-CH3-SW7 "Data and resources protected by system authorization settings") と記事 [Apple 開発者ドキュメントでのユーザーのプライバシーの保護](https://developer.apple.com/documentation/uikit/core_app/protecting_the_user_s_privacy "Protecting the User's Privacy") をご覧ください。
+Apple はユーザーのプライバシーの保護を促し、[パーミッションを求める方法について非常にクリアである](https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/requesting-permission/ "Requesting Permissions") とはいえ、アプリが非常に多くのパーミッションを要求するケースもまだあり得ます。
+
+パーミッションが要求されているリソースの次には、デバイスを実行するためにアプリ開発者が必要とする一連の機能があります。これらの機能 (`UIRequiredDeviceCapabilities`) は [Apple 開発者ドキュメント](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html#//apple_ref/doc/uid/TP40009252-SW1 "UIRequiredDeviceCapabilities") にリストされています。これらの機能は App Store および iTunes により使用され、互換性のあるデバイスのみがリストされます。これらの機能の多くはユーザーがパーミッションを提供する必要がありません。実際に利用可能な機能はアプリケーションに署名するために使用される開発者プロファイルの種類ごとに異なることに注意します。詳細については [Apple 開発者ドキュメント](https://developer.apple.com/support/app-capabilities/ "Advanced App Capabilities") を参照してください。
+
+#### 静的解析
+
+iOS 10 以降では、パーミッションを検査する必要がある領域は三つあります。
+- Info.plist ファイル
+- `<appname>.enttitlements` ファイル (<appname> はアプリケーションの名前)
+- ソースコード
+
+##### Info.plist
+Info.plist には保護されたデータやリソースにアクセスするためのパーミッションを要求する際にユーザーに提供するテキストが含まれています。[Apple ドキュメント](https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/requesting-permission/ "Requesting Permission") では特定のリソースにアクセスするためのパーミッションをユーザーに求めるべき方法を明確に説明しています。これらのガイドラインに従うと、Info.plist ファイル内のそれぞれすべてのエントリを評価して、そのパーミッションが意味をなすかどうかを確認することが比較的簡単になります。
+例えば、少なくとも以下のコンテンツを持つソリティアゲームの Info.plist がある場合。
+
+```xml
+<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+<string>Share your health data with us!</string>
+<key>NSCameraUsageDescription</key>
+<string>We want to access your camera</string>
+
+```
+通常のソリティアゲームはカメラやユーザーのヘルスレコードにアクセスする必要はないため疑う必要があります。
+iOS 10 以降では、これらの \*Description フィールドで説明を提供する必要があることに注意します。探したいさまざまなキーのより完全な概要については [Apple アプリプログラミングガイド](https://developer.apple.com/library/archive/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/ExpectedAppBehaviors/ExpectedAppBehaviors.html#//apple_ref/doc/uid/TP40007072-CH3-SW7 "Apple app programming guide") の table 1-2 を参照してください。
+
+##### Entitlements ファイル
+entitlements ファイルはどの機能が使用されるかを示します。これらの機能の中にはユーザーにより提供される追加のパーミッションが必要なくても、依然として他のアプリに情報を漏洩する可能性があります。例えば App Groups 機能を利用します。[Apple 開発者ドキュメント](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html "Handling Common Scenarios") および [App Groups Entitlement](https://developer.apple.com/documentation/foundation/com_apple_security_application-groups?changes=_5&language=objc "Appl Groups Entitlement") に記載されています。この機能により、IPC または共有ファイルコンテナを介して異なるアプリ間で情報を共有することができます。つまりデータをアプリ間で直接デバイス上で共有できることを意味します。app-group 機能を持つアプリケーションエンタイトルメントファイルの例を以下に示します。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.security.application-groups</key>
+  <!-- Note: this array contains all the capabilities registered for the app. -->
+  <array/>
+</dict>
+</plist>
+
+```
+
+この要件はあるアプリケーションから他に情報を「流出」させるために必ずしも必要ではないことに注意します。情報を共有するために、二つのアプリケーション間の仲介としてバックエンドを使用することもできます。
+
+##### ソースコード検査
+<appname>.entitlements ファイルと Info.plist ファイルをチェックした後、要求されたパーミッションと割り当てられた機能がどのように使用されるかを検証する必要があります。これには、ソースコードレビューで十分です。
+以下に注意を払います。
+- Info.plist ファイルのパーミッションの説明がプログラムの実装と一致するかどうか。
+- 機密情報が漏洩しないように、登録された機能が使用されているかどうか。
+
+Info.plist ファイルに permission-explanation-text を登録せずにパーミッションを必要とする機能を使用することを要求された場合、アプリはクラッシュする可能性があることに注意します。
+
+#### 動的解析
+解析プロセスにはさまざまなステップがあります。
+- embedded.mobileprovision ファイルと <appname>.entitlements をチェックし、含まれている機能を確認します。
+- Info.plist ファイルを取得し、説明を提供するパーミッションをチェックします。
+- アプリケーションを実行し、アプリケーションが他のアプリケーションやバックエンドと通信するかどうかをチェックします。パーミッションと機能を使用して取得した情報が悪意のある目的に使用されていないか、あるいは過度の活用や未活用ではないかをチェックします。
+
+
 ### カスタム URL スキームのテスト
 
 #### 概要
@@ -16,7 +97,7 @@ Android の豊富なプロセス間通信 (IPC) 機能とは対照的に、iOS �
 
 #### 静的解析
 
-カスタム URL スキームをテストするための最初のステップはアプリケーションがプロトコルハンドラを登録するかどうかを調べることです。この情報はアプリケーションサンドボックスフォルダのファイル `info.plist` にあります。登録済みのプロトコルハンドラを表示するには、Xcode でプロジェクトを開き、`Info` タブに行き、下記のスクリーンショットにある `URL Types` セクションを開きます。
+カスタム URL スキームをテストするための最初のステップはアプリケーションがプロトコルハンドラを登録するかどうかを調べることです。この情報はアプリケーションサンドボックスフォルダのファイル `Info.plist` にあります。登録済みのプロトコルハンドラを表示するには、Xcode でプロジェクトを開き、`Info` タブに行き、下記のスクリーンショットにある `URL Types` セクションを開きます。
 
 ![Document Overview](Images/Chapters/0x06h/URL_scheme.png)
 
@@ -127,15 +208,43 @@ WebView 経由でローカルファイルをロードすることが可能な場
 
 したがって、ファイルがロードされるファイル名やパスをユーザーが変更できるかどうか、ロードされたファイルを編集できないかどうかを確認する必要があります。
 
+
+
+### ネイティブメソッドが WebView を通じて公開されているかどうかを判断する
+
+#### 概要
+
+iOS バージョン 7.0 から、Apple は WebView の JavaScript ランタイムとネイティブの Swift や Objective-C オブジェクト間の通信を可能にする API を導入しました。これらの API を不用意に使用すると、重要な機能が攻撃者に晒され、(例えば、クロスサイトスクリプティング攻撃が成功することにより) WebView に悪意のあるスクリプトをインジェクトされる可能性があります。
+
+#### 静的解析
+
+`UIWebView` と `WKWebView` は両方とも WebView とネイティブアプリの間の通信手段を提供します。WebView JavaScript エンジンに公開されている重要なデータやネイティブ機能は WebView で実行している不正な JavaScript にもアクセスできます。
+
+iOS 7 以降、JavaScriptCore フレームワークは WebKit JavaScript エンジンに Objective-C ラッパーを提供しています。これにより Swift や Objective-C から JavaScript を実行できるほか、JavaScript ランタイムから Objective-C や Swift オブジェクトにアクセスできます。JavaScript 実行環境は `JSContext` オブジェクトで表されます。WebView に関連付けられた `JSContext` にネイティブオブジェクトをマップするコードを探し、どのような機能が公開されているかを解析します。例えば、機密データは WebView にアクセス可能で公開されていてはいけません。Objective-C では、`UIWebView` に関連付けられた `JSContext` は以下のように取得されます。
+
+```obj-c
+[webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"]
+```
+
+ネイティブコードと JavaScript が通信するには二つの基本的な方法があります。
+
+- **JSContext**: Objective-C ブロックや Swift ブロックが JSContext の識別子に割り当てられると、JavaScriptCore はそのブロックを JavaScript 関数で自動的にラップします。
+- **JSExport protocol**: JSExport 継承されたプロトコルで宣言されたプロパティ、インスタンスメソッド、クラスメソッドは JavaScript オブジェクトにマップされ、すべての JavaScript コードで利用できます。JavaScript 環境にあるオブジェクトの変更はネイティブ環境に反映されます。
+
+`JSExport` プロトコルで定義されたクラスメンバだけが JavaScript コードにアクセス可能となることに注意します。
+
+#### 動的解析
+
+アプリの動的解析ではアプリの使用中にロードされる HTML ファイルや JavaScript ファイルを示します。潜在的な攻撃領域の概要を知るためには、iOS アプリのすべての WebView を見つける必要があります。
+
+JSContext および JSExport の使用は静的解析を通じて特定されることが理想であり、また、WebView にどの機能が公開および表示されているかを識別すべきです。関数を悪用する手順は、JavaScript ペイロードを生成して、それをアプリが要求するファイルにイジェクトすることから始まります。インジェクションは中間者攻撃を介して達成できます。[#THIEL] 156 ページにある WebView に公開された脆弱な iOS アプリと機能の例を参照してください。
+
+
 ### iOS WebView のテスト
 
 #### 概要
 
-WebView はアプリ内ブラウザコンポーネントです。インタラクティブなウェブコンテンツを表示します。それらを使用してアプリのユーザーインタフェース内に直接ウェブコンテンツを埋め込むことができます。
-
-iOS WebView はデフォルトで JavaScript の実行をサポートしているため、スクリプトインジェクションやクロスサイトスクリプティング攻撃の影響を受ける可能性があります。iOS バージョン 7.0 から、Apple も WebView の JavaScript ランタイムとネイティブ Swift や Objective-C アプリとの間で通信を可能にする API を導入しました。これらの API を不用意に使用すると、重要な機能が攻撃者に晒され、WebView に悪意のあるスクリプトをインジェクトされ (例えば、クロスサイトスクリプティング攻撃が成功することにより) 管理される可能性があります。
-
-潜在的なスクリプトインジェクションのほかに、WebView の別の基本的なセキュリティ問題があります。iOS にパッケージ化された WebKit ライブラリは Safari ウェブブラウザのようにアウトオブバンドで更新されることはありません。したがって、新たに発見された WebKit の脆弱性は次の iOS アップデートまで悪用可能なまま残ります [#THIEL] 。
+WebView はインタラクティブなウェブコンテンツを表示するためのアプリ内ブラウザコンポーネントです。それらを使用してウェブコンテンツをアプリのユーザーインタフェースに直接埋め込むことができます。iOS WebView はデフォルトで JavaScript の実行をサポートしているため、スクリプトインジェクションやクロスサイトスクリプティング攻撃がそれらに影響を及ぼす可能性があります。
 
 #### 静的解析
 
@@ -194,25 +303,6 @@ WebView を実装する以下のクラスの使い方に注意します。
 ```
 
 `SafariViewController` では JavaScript は無効にできません。目標がアプリのユーザーインタフェースを拡張することである場合、これが `WKWebView` の使用を推奨する理由の一つです。
-
-##### ネイティブオブジェクトの露出
-
-`UIWebView` と `WKWebView` は両方とも WebView とネイティブアプリの間の通信手段を提供します。WebView JavaScript エンジンに公開されている重要なデータやネイティブ機能は WebView で実行している不正な JavaScript にもアクセスできます。
-
-###### UIWebView
-
-iOS 7 以降、JavaScriptCore フレームワークは WebKit JavaScript エンジンに Objective-C ラッパーを提供しています。これにより Swift や Objective-C から JavaScript を実行できるほか、JavaScript ランタイムから Objective-C や Swift オブジェクトにアクセスできます。
-
-JavaScript 実行環境は `JSContext` オブジェクトで表されます。WebView に関連付けられた `JSContext` にネイティブオブジェクトをマップするコードに注意します。Objective-C では、`UIWebView` に関連付けられた `JSContext` は以下のように取得されます。
-
-``objc
-[webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"]
-``
-
-- Objective-C ブロック。Objective-C ブロックが JSContext の識別子に割り当てられると、JavaScriptCore はそのブロックを JavaScript 関数で自動的にラップします。
-- JSExport プロトコル。JSExport 継承されたプロトコルで宣言されたプロパティ、インスタンスメソッド、クラスメソッドは JavaScript オブジェクトにマップされ、すべての JavaScript コードで利用できます。JavaScript 環境にあるオブジェクトの変更はネイティブ環境に反映されます。
-
-`JSExport` プロトコルで定義されたクラスメンバだけが JavaScript コードにアクセス可能となることに注意します。
 
 ###### WKWebView
 
@@ -278,7 +368,7 @@ WKWebView では複合コンテンツや完全に HTTP 経由でロードされ�
 #### CWE
 
 - CWE-79 - Improper Neutralization of Input During Web Page Generation https://cwe.mitre.org/data/definitions/79.html
-- CWE-939: Improper Authorization in Handler for Custom URL Scheme
+- CWE-939 - Improper Authorization in Handler for Custom URL Scheme
 
 #### ツール
 
