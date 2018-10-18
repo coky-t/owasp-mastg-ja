@@ -1,41 +1,41 @@
-## Testing User Education
-A lot has happened lately in terms of responsibilities that developers have to educate users on what they need to know.
-This has shifted especially with the introduction of the [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/ "GDPR") in Europe. Ever since then, it is best to educate users on what is happening with their private data and why.
-Additionally, it is a good practice to inform the user about how he can best use the application to ensure a secure processing of his information.
-Both items will be dealt with here. Please not that this is the MSTG project and not a legal handbook. Therefore, we will not cover the GDPR and other possibly relevant laws here.
+## ユーザー教育のテスト
+開発者がユーザーに知っておくべきことを教えなければならない責任の面で、最近多くのことが起こっています。
+これは特にヨーロッパの [一般データ保護規則 (GDPR)](https://gdpr-info.eu/ "GDPR") の導入に伴ってシフトしています。そのときから、プライベートなデータで何が起こっているのか、またその理由をユーザーに教えるのがベストです。
+さらに、情報のセキュアな処理を保証するためにアプリケーションをどのように利用するのが最善であるかについて、ユーザーに通知することがよいプラクティスです。
+両方の項目をここでは扱います。これは MSTG プロジェクトであり、法的な手引書ではないことをご了承ください。したがって、ここでは GDPR および他の関連する法律については扱いません。
 
 
-### Informing users on their private information
-When you need personal information from a user for your business process, the user needs to be informed on what you do with the data and why you need it. If there is a third party doing the actual processing of the data, you should inform the user about that too. Lastly, there are three processes you need to support:
-- The right to be forgotten: A user needs to be able to request the deletion of his data, and be explained how to do so.
-- The right to correct data: The user should be able to correct his personal information at any time, and be explained how to do so.
-- The right to access user data: The user should be able to request all information that the application has on him, and the user should be explained how to request this information.
+### ユーザーに個人情報を通知する
+ビジネスプロセスのためにユーザーから個人情報が必要となる場合には、データで何をするのか、なぜ必要なのかをユーザーに知らせる必要があります。データの実際の処理を行う第三者がいる場合には、それについてもユーザーに知らせる必要があります。最後に、サポートする必要がある三つのプロセスがあります。
+- 忘れられる権利: ユーザーは自分のデータの削除を要求することが可能であり、その方法を説明されている必要があります。
+- データを修正する権利: ユーザーはいつでも自分の個人情報を修正することが可能であり、その方法を説明されている必要があります。
+- ユーザーデータにアクセスする権利: ユーザーはアプリケーションが持つ自分のすべての情報を要求することが可能であり、ユーザーはこの情報を要求する方法を説明されている必要があります。
 
-Most of this can be covered in a privacy policy, but make sure that it is understandable by the user.
+これらのほとんどはプライバシーポリシーでカバーできますが、ユーザーが理解できるようにしてください。
 
-When additional data needs to be processed, you should ask the user for consent again. During that consent request it needs to be made clear how the user can revert from sharing the additional data. Similarly, when existing datasets of a user need to be linked, you should ask the user's consent about it.
+追加のデータを処理する必要がある場合には、ユーザーに再度同意を求める必要があります。この同意要求の中で、ユーザーが追加データの共有を元に戻す方法を明確にする必要があります。同様に、ユーザーの既存のデータセットをリンクする必要がある場合には、それについてユーザーの同意を求める必要があります。
 
 
-### Informing the user on the best security practices
-Here is a list of best practices where a user could be informed of:
-- Fingerprint usage: When an app uses a fingerprint for authentication and it provides access to high risk transactions/information, inform the user about the issues there can be when having multiple fingerprints of other people registered to the device as well.
-- Rooting/Jailbraking: When an app detects a rooted or jailbroken device, inform the user of the fact that certain high-risk actions will carry additional risk due to the jailbroken/rooted status of the device.
-- Specific credentials: When a user gets a recovery code, a password or a pin from the application (or sets one), instruct the user to never share this with anyone else and that only the app will request it.
-- Application distribution: In case of a high-risk application it is recommended to communicate what the official way of distributing the app is. Otherwise, users might use other channels in which they download a compromised version of the application.
+### ユーザーにベストなセキュリティプラクティスを通知する
+ユーザーに通知できるベストプラクティスのリストは以下の通りです。
+- 指紋の使用: アプリが認証に指紋を使用し、高いリスクの取引や情報へのアクセスを提供する場合には、デバイスに複数の他人の指紋を登録した際に生じる問題についてユーザーに知らせます。
+- ルート化および脱獄: アプリがルート化もしくは脱獄済みデバイスを検出する場合には、そのデバイスの脱獄やルート化の状態のために特定の高いリスクのアクションがさらにリスクを抱えることをユーザーに知らせます。
+- 特定の資格情報: ユーザーがリカバリーコード、パスワード、ピンをアプリケーションから取得 (あるいはいずれかを設定) する場合には、これを他人と決して共有してはならず、アプリだけがそれを要求することを教えます。
+- アプリケーションの配布: 高いリスクのアプリケーションの場合には、アプリを配布する公式な方法を伝えることを推奨します。そうしなければ、ユーザーは他のチャネルを使用して危険なバージョンのアプリケーションをダウンロードする可能性があります。
 
-### Other information you have to share (OSS information)
-Given copyright laws, you must make sure you inform the user on any third party libraries that are used in the app. For each third party library you should consult the license to see if certain information (such as copyright, modifications, original author, ...) should be presented to the user. For this, it is best to request legal advice from a specialist. An example can be found at [this blog post](https://www.bignerdranch.com/blog/open-source-licenses-and-android/ "Example on license overview"). Additionally, the website [TL;DR - Legal](https://tldrlegal.com/ "TL;DR - Legal") can help you in figuring out what is necessary for each license.
+### 共有する必要があるその他の情報 (OSS 情報)
+著作権法では、アプリで使用されているサードパーティライブラリについてユーザーに知らせる必要があります。各サードパーティライブラリについて、特定の情報 (著作権、改変、オリジナルの作者など) をユーザーに提示する必要があるかどうかを確認するために、ライセンスを参照する必要があります。これには、専門家に法的助言を求めるのがベストです。例として [このブログの投稿](https://www.bignerdranch.com/blog/open-source-licenses-and-android/ "Example on license overview") があります。さらに、ウェブサイト [TL;DR - Legal](https://tldrlegal.com/ "TL;DR - Legal") は各ライセンスに必要なものを把握するのに役立ちます。
 
-### References
+### 参考情報
 
 #### OWASP MASVS
 
-- V2.12: "The app educates the user about the types of personally identifiable information processed, as well as security best practices the user should follow in using the app."
+- V2.12: "アプリは処理される個人識別情報の種類をユーザーに通知しており、同様にユーザーがアプリを使用する際に従うべきセキュリティのベストプラクティスについて通知している。"
 
-#### Example for open source license mentioning
+#### オープンソースライセンス言及の例
 
 - https://www.bignerdranch.com/blog/open-source-licenses-and-android/
 
-#### Website to help with understanding licenses
+#### ライセンスの理解に役立つウェブサイト
 
 - https://tldrlegal.com/
