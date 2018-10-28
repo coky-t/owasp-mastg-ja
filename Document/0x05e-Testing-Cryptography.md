@@ -255,11 +255,11 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 - `java.security.*` および `javax.crypto.*` パッケージにあるその他のもの
 
 例として、ハードコードされた暗号鍵の使用の特定方法を示します。最初に ```Baksmali``` を使用して Smali バイトコードのコレクションに DEX バイトコードを逆アセンブルします。
-```Bash
+```shell
 $ baksmali d file.apk -o smali_output/
 ```
 Smali バイトコードファイルのコレクションがあるので、```SecretKeySpec``` クラスの使用法についてファイルを検索できます。今取得した Smali ソースコードを単に再帰的に grep することでこれを行います。Smali のクラス記述子は `L` で始まり `;` で終わることに注意してください。
-```Bash
+```shell
 $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 ```
 これは ```SecretKeySpec``` クラスを使用するすべてのクラスをハイライト表示します。ハイライトされたすべてのファイルを調べて、鍵マテリアルを渡すのに使用されているバイトはどれかをトレースします。下の図は出荷準備が完了したアプリケーションでこの評価を行った結果を示しています。読みやすくするため、DEX バイトコードから Java コードにリバースエンジニアしました。静的バイト配列 ```Encrypt.keyBytes``` にハードコードされ初期化された静的暗号鍵の使用がはっきりとわかります。
