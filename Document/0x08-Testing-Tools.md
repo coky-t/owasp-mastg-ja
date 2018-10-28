@@ -138,11 +138,11 @@
 
 #### Android
 - [DVHMA](https://github.com/logicalhacking/DVHMA "Damn Vulnerable Hybrid Mobile App") - 意図的に脆弱性を含んでいるハイブリッドモバイルアプリ (Android 向け) です。
-- [Crackmes](https://github.com/OWASP/owasp-mstg/tree/master/Crackmes "Crackmes and license check") - Android アプリケーションのハッキングスキルをテストするためのアプリケーションのセットです。
-- [OMTG Android app](https://github.com/OWASP/MSTG-Hacking-Playground) - このドキュメントで説明されているテストケースと同様の脆弱性を持つ脆弱な Android アプリケーションです。
+- [Crackmes](https://github.com/OWASP/owasp-mstg/tree/master/Crackmes "Crackmes and license check") - Android アプリのハッキングスキルをテストするためのアプリケーションのセットです。
+- [OMTG Android app](https://github.com/OWASP/MSTG-Hacking-Playground) - このドキュメントで説明されているテストケースと同様の脆弱性を持つ脆弱な Android アプリです。
 - [Digitalbank](https://github.com/CyberScions/Digitalbank "Android Digital Bank Vulnerable Mobile App") - 2015年に作られた脆弱なアプリで、古い Android プラットフォームで使用できます。注：執筆者はこれをテストしていません。
 - [DIVA Android](https://github.com/payatu/diva-android "Damn insecure and vulnerable App") - 意図的にセキュアではないように設計されたアプリで、2016年に更新されており、13のさまざまな課題を含んでいます。注：執筆者はこれをテストしていません。
-- [InsecureBankv2](https://github.com/dineshshetty/Android-InsecureBankv2 "Insecure Bank V2") - 脆弱な Android アプリケーションは "InsecureBankv2" と呼ばれ、セキュリティ愛好家や開発者がこの脆弱なアプリケーションをテストすることにより Android の危険性を知ることができます。2018年に更新され、25以上の脆弱性を含んでいます。
+- [InsecureBankv2](https://github.com/dineshshetty/Android-InsecureBankv2 "Insecure Bank V2") - セキュリティ愛好家や開発者がこの脆弱なアプリケーションをテストすることにより Android の危険性を知ることができます。2018年に更新され、多くの脆弱性を含んでいます。
 - [DodoVulnerableBank](https://github.com/CSPF-Founder/DodoVulnerableBank "Dodo Vulnerable Bank") - 2015年のセキュアではない Android アプリ。注：執筆者はこれをテストしていません。
 
 
@@ -151,5 +151,5 @@
 
 - [Crackmes](https://github.com/OWASP/owasp-mstg/tree/master/Crackmes "Crackmes and license check") - iOS アプリケーションのハッキングスキルをテストするアプリケーションのセットです。
 - [Myriam](https://github.com/GeoSn0w/Myriam "Myriam iOS Security App") - iOS セキュリティの課題を持つ脆弱な iOS アプリです。
-- [DVIA](https://github.com/prateek147/DVIA "Damn Vulnerable iOS App") - 脆弱な iOS アプリです。一連の脆弱性を持ち Objective-C で書かれています。追加のレッスンが [プロジェクトのウェブサイト](http://damnvulnerableiosapp.com/ "DVIA propject website") にあります。
-- [DVIA-V2](https://github.com/prateek147/DVIA-v2 "Damn Vulnerable iOS App v2") - 脆弱な iOS アプリです。Swift で書かれ、15以上の脆弱性があります。
+- [DVIA](https://github.com/prateek147/DVIA "Damn Vulnerable iOS App") - 脆弱な iOS アプリです。一連の脆弱性を持ち Objective-C で書かれています。追加のレッスンが [プロジェクトのウェブサイト](http://damnvulnerableiosapp.com/ "DVIA project website") にあります。
+- [DVIA-v2](https://github.com/prateek147/DVIA-v2 "Damn Vulnerable iOS App v2") - 脆弱な iOS アプリです。Swift で書かれ、15以上の脆弱性があります。
