@@ -129,6 +129,7 @@ Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "
 - 信頼できない入力をタイプチェックしたり、許容値のチェックリストを使用して検証します。
 - データベースクエリを実行する際に変数バイディングでのプリペアードステートメント (つまり、パラメータ化されたクエリ) を使用します。プリペアードステートメントが定義されている場合、ユーザー指定のデータと SQL コードは自動的に分離されます。
 - XML データを解析する場合、パーサーアプリケーションが XXE 攻撃を防ぐために外部エンティティの解決を拒否するように構成されていることを確認します。
+- X.509 形式の証明書データを使用する場合、セキュアなパーサーが使用されていることを確認します。例えばバージョン 1.6 以下の Bouncy Castle は安全でないリフレクションによりリモートコード実行を許します。
 
 OS 固有のテストガイドでは各モバイル OS の入力ソースや潜在的に脆弱な API に関する詳細について説明します。
 
@@ -211,10 +212,19 @@ Android アプリは大部分が Java で実装されています。これは設
 
 WebView で開かれる URL が部分的にユーザーの入力により決定される場合、XSS の問題が存在する可能性があります。以下の例は [Zoho Web Service, reported by Linus Särud](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/) の XSS の問題です。
 
+Java
+
 ```java
 webView.loadUrl("javascript:initialize(" + myNumber + ");");
 ```
+Kotlin
+
+```kotlin
+webView.loadUrl("javascript:initialize($myNumber);")
+```
 ユーザー入力により決定される XSS 問題のもう一つの例は public override メソッドです。
+
+Java
 
 ```java
 @Override
@@ -224,25 +234,45 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
   }
 }
 ```
+Kotlin
+
+```kotlin
+    fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        if (url.substring(0, 6).equals("yourscheme:", ignoreCase = true)) {
+            // parse the URL object and execute functions
+        }
+    }
+```
 
 Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。html パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
 
 - ADB
-```bash
+```shell
 adb shell
 am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
 ```
 - Clipboard Data
-```bash
+```shell
 am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
 ```
 - 3rd party Intent
+
+Java
 ```java
 Intent i = new Intent();
 i.setComponent(new ComponentName("com.quora.android","com.quora.android.ActionBarContentActivity"));
 i.putExtra("url","http://test/test");
 i.putExtra("html","XSS PoC <script>alert(123)</script>");
-startActivity(i);
+view.getContext().startActivity(i);
+```
+Kotlin
+
+```kotlin
+val i = Intent()
+i.component = ComponentName("com.quora.android", "com.quora.android.ActionBarContentActivity")
+i.putExtra("url", "http://test/test")
+i.putExtra("html", "XSS PoC <script>alert(123)</script>")
+view.context.startActivity(i)
 ```
 
 WebView を使用してリモートウェブサイトを表示する場合、HTML をエスケープする負担はサーバ側に移ります。XSS の欠陥がウェブサーバーに存在する場合、これを使用して WebView のコンテキストでスクリプトを実行できます。したがって、ウェブアプリケーションソースコードの静的解析を実行することが重要です。
