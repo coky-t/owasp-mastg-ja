@@ -155,7 +155,7 @@ iOS デバイスでは、実際のインストールプロセスは installd デ
 
 IPA は [ipainstaller](https://github.com/autopear/ipainstaller "IPA Installer") を使用してコマンドラインから直接インストールすることもできます。例えば scp 経由などで、ファイルをデバイスにコピーした後、ipainstaller を IPA のファイル名と共に実行します。
 
-```bash
+```shell
 $ ipainstaller App_name.ipa
 ```
 
@@ -184,17 +184,17 @@ iOS 開発者はパーミッションを直接設定することはできませ�
 
 ### iOS アプリケーション攻撃領域
 
-iOS アプリケーション攻撃領域はそのアプリケーションのすべてのコンポーネントで構成されます。アプリをリリースおよびその機能をサポートするために必要なサポートマテリアルを含みます。iOS アプリケーションは以下により攻撃されます。
-- IPC 通信や URL スキームによる安全でない入力。以下を参照してください。
+iOS アプリケーション攻撃領域はそのアプリケーションのすべてのコンポーネントで構成されます。アプリをリリースおよびその機能をサポートするために必要なサポートマテリアルを含みます。iOS アプリケーションは以下を行っていない場合、攻撃に対して脆弱である可能性があります。
+- IPC 通信や URL スキームによるすべての入力を検証します。以下を参照してください。
   - [カスタム URL スキームのテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-custom-url-schemes "Testing Custom URL Schemes")
-- ユーザーによる入力フィールドへの安全でない入力。
-- ユーザーや WebView にロードされた安全でないコードによる WebView への安全でない入力。以下を参照してください。
+- ユーザーによる入力フィールドへのすべての入力を検証します。
+- WebView 内にロードされるコンテンツを検証します。以下を参照してください。
   -  [iOS WebView のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-ios-webviews "Testing iOS webviews")
   - [ネイティブメソッドが WebView を通じて公開されているかどうかを判断する](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#determining-whether-native-methods-are-exposed-through-webviews "Determining Whether Native Methods Are Exposed Through WebViews")
-- サーバーからの安全でないレスポンス、またはサーバーとモバイルアプリケーション間の中間者攻撃により危殆化したレスポンス。以下を参照してください。
+- バックエンドサーバーとセキュアに通信しています。そうでなければサーバーとモバイルアプリケーションの間で中間者攻撃の影響を受けます。以下を参照してください。
   - [ネットワーク通信のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication "Testing Network Communication")
   - [iOS ネットワーク API](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md#ios-network-apis "iOS Network APIs")
-- 安全でない、または危殆化したストレージ。以下を参照してください。
+- すべてのローカルデータをセキュアに保存しています。そうでなければストレージから信頼できないデータをロードします。以下を参照してください。
   - [iOS のデータストレージ](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md#data-storage-on-ios "Data Storage on iOS")
-- メソッドのフックやその他の攻撃を可能にする危殆化したランタイムや再パッケージ化したアプリ。以下を参照してください。
+- 危殆化した環境、再パッケージ化あるいはその他のローカル攻撃から自身を保護しています。以下を参照してください。
   - [iOS アンチリバース防御](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#ios-anti-reversing-defenses "iOS Anti-Reversing Defenses")
