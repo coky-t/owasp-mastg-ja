@@ -47,13 +47,13 @@
 
 Ettercap はすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。中間者としての役割を果たすマシンにそれをインストールする必要があります。macOS では brew を使用してインストールできます。
 
-```bash
+```shell
 $ brew install ettercap
 ```
 
 Ettercap は Debian ベースの linux ディストリビューションで `apt-get` を使ってインストールすることもできます。
 
-```bash
+```shell
 sudo apt-get install zlib1g zlib1g-dev
 sudo apt-get install build-essential
 sudo apt-get install ettercap
@@ -79,13 +79,13 @@ Wireshark は GUI を提供しており、コマンドラインに慣れてい�
 
 以下のコマンドで ettercap を開始し、最初の IP アドレスをワイヤレスネットワークのネットワークゲートウェイに置き換え、二つ目のものをモバイルデバイスのものと置き換えます。
 
-```bash
+```shell
 $ sudo ettercap -T -i en0 -M arp:remote /192.168.0.1// /192.168.0.105//
 ```
 
 モバイルフォンでブラウザを起動して example.com に移動すると、以下のような出力が表示されます。
 
-```bash
+```shell
 ettercap 0.8.2 copyright 2001-2015 Ettercap Development Team
 
 Listening on:
@@ -163,7 +163,7 @@ WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
 
 - ettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
 
-```bash
+```shell
 $ echo "
 rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 " | sudo pfctl -ef -
@@ -244,15 +244,6 @@ rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension) や [mitm-relay](https://github.com/jrmdev/mitm_relay) などの Burp プラグインを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
 
 > 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。Vproxy などのツールを使用すると、すべての HTTP(S) トラフィックをマシンにリダイレクトし、暗号化されていないリクエストに対して盗聴や調査を行うことができます。
-
-- Tcpdump ですべてのネットワークトラフィックをキャプチャします。Burp や OWASP ZAP がプロトコルを認識しない場合 (XMPP など) にはこれを考慮します。以下のコマンドでライブキャプチャを開始できます。
-
-```bash
-adb shell "tcpdump -s 0 -w - | nc -l -p 1234"
-adb forward tcp:1234 tcp:1234
-```
-
-Wireshark を使用して、キャプチャしたトラフィックを人間が判読可能な形式で表示できます。どのプロトコルが使用されているか、そしてそれらは復号されているかを確認します。すべてのトラフィック (TCP および UDP) をキャプチャすることが重要ですので、テストされるアプリケーションのすべて機能を傍受した後に実行する必要があります。
 
 
 ### クリティカルな操作がセキュアな通信チャネルを使用することの確認
