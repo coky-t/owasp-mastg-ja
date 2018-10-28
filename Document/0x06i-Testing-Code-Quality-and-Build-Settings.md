@@ -153,7 +153,7 @@ Objective-C には二種類のエラーがあります。
 `NSException` はプログラミングエラーや低レベルエラー (0 による除算、配列の境界外アクセスなど) を処理するために使用されます。
 `NSException` は `raise` によりレイズされるか、または `@throw` でスローされます。catch されない場合、この例外は unhandled 例外ハンドラを呼び出し、ステートメントをログ出力します (ログ出力はプログラムを停止します) 。`@try`-`@catch` ブロックを使用している場合、`@catch` はその例外から回復できます。
 
-```obj-c
+```objc
  @try {
  	//do work here
  }
@@ -356,24 +356,6 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 
 ![alt tag](Images/Chapters/0x06i/idb.png)
 
-### 参考情報
-
-#### OWASP Mobile Top 10 2016
-
--	M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M7-Poor_Code_Quality.html
-
-#### OWASP MASVS
-
-- V7.1: "アプリは有効な証明書で署名およびプロビジョニングされている。その秘密鍵は適切に保護されている。"
-- V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
-- V7.6: "アプリは可能性のある例外をキャッチし処理している。"
-- V7.7: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
-- V7.9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
-
-#### ツール
-
-- idb - https://github.com/dmayer/idb
-- Codesign - https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/codesign.1.html
 
 ### サードパーティライブラリの脆弱性のチェック
 
@@ -480,24 +462,32 @@ otool -L <Executable>
 ./class-dump <Executable> -r
 ```
 
+### 参考情報
 
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
+#### OWASP Mobile Top 10 2016
 
 -	M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M7-Poor_Code_Quality.html
 
-##### OWASP MASVS
+#### OWASP MASVS
 
+- V7.1: "アプリは有効な証明書で署名およびプロビジョニングされている。その秘密鍵は適切に保護されている。"
+- V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
 - V7.5: "モバイルアプリで使用されるライブラリ、フレームワークなどのすべてのサードパーティコンポーネントを把握し、既知の脆弱性を確認している。"
+- V7.6: "アプリは可能性のある例外をキャッチし処理している。"
+- V7.7: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
+- V7.9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
 ##### CWE
+
 - CWE-937 - OWASP Top Ten 2013 Category A9 - Using Components with Known Vulnerabilities
 
-##### ツール
+#### ツール
+
 - [Carthage](https://github.com/carthage/carthage "Carthage")
 - [CocoaPods](https://CocoaPods.org "CocoaPods")
 - [OWASP Dependency Checker](https://jeremylong.github.io/DependencyCheck/"OWASP Dependency Checker")
 - [Sourceclear](https://sourceclear.com "Sourceclear")
 - [Class-dump](https://github.com/nygard/class-dump "Class-dump")
 - [RetireJS](https://retirejs.github.io/retire.js/ "Retire JS")
+- [idb](https://github.com/dmayer/idb)
+- [Codesign](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/codesign.1.html)
