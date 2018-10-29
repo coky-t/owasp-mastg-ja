@@ -1,6 +1,6 @@
 # 一覧
 
-
+- [Changelog](../CHANGELOG.md)
 - [扉](0x02-Frontispiece.md)
 
 ### 概要
