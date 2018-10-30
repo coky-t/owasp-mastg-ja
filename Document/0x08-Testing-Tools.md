@@ -58,6 +58,7 @@
 - [Cydia Substrate: Introspy-Android](https://github.com/iSECPartners/Introspy-Android) - Android アプリケーションが実行時に何をしているかを理解し、潜在的なセキュリティ問題の特定を支援するブラックボックスツールです。
 - [Drozer](https://www.mwrinfosecurity.com/products/drozer/) - Drozer はアプリの役割を想定し、Dalvik VM と他のアプリの IPC エンドポイントや基礎をなす OS とのやり取りを行うことで、アプリやデバイスのセキュリティ脆弱性を検索することができます。
 - [VirtualHook](https://github.com/rk700/VirtualHook) - VirtualHook は Android ART(>=5.0) のアプリケーション用のフッキングツールです。VirtualApp をベースにしており、フックを挿入するためにルート権限は必要ありません。
+- [NowSecure](https://nowsecure.com/) - Frida と Radare2 の作成者によりもたらされた Android と iOS モバイルアプリの自動の動的および静的解析で、ネットワーク中間者攻撃や API レベルのセキュリティ解析を含みます。
 
 #### ルート検出と証明書ピンニングのバイパス
 
@@ -103,6 +104,7 @@
 - [keychaindumper](http://cydia.radare.org/) - iOS デバイスが脱獄された場合に攻撃者が利用可能となるキーチェーンアイテムを確認するためのツールです。
 - [BinaryCookieReader](https://securitylearn.net/wp-content/uploads/tools/iOS/BinaryCookieReader.py) - バイナリ Cookies.binarycookies ファイルからすべてのクッキーをダンプするツールです。
 - [Burp Suite Mobile Assistant](https://portswigger.net/burp/help/mobile_testing_using_mobile_assistant.html) - 証明書ピンニングをバイパスし、アプリにインジェクトできるツールです。
+- [NowSecure](https://nowsecure.com/) - Frida と Radare2 の作成者によりもたらされた Android と iOS モバイルアプリの自動の動的および静的解析で、ネットワーク中間者攻撃や API レベルのセキュリティ解析を含みます。
 
 #### ルート検出および SSL ピンニングのバイパス
 
