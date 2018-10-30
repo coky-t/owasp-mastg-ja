@@ -54,9 +54,9 @@ $ brew install ettercap
 Ettercap は Debian ベースの linux ディストリビューションで `apt-get` を使ってインストールすることもできます。
 
 ```shell
-sudo apt-get install zlib1g zlib1g-dev
-sudo apt-get install build-essential
-sudo apt-get install ettercap
+$ sudo apt-get install zlib1g zlib1g-dev
+$ sudo apt-get install build-essential
+$ sudo apt-get install ettercap
 ```
 
 **ネットワーク解析ツール**
@@ -157,7 +157,7 @@ Xamarin アプリをテストするときに WiFi 設定でシステムプロキ
 
 - [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate()` または `Main()` に以下のコードを追加してアプリを再作成します。
 
-```
+```csharp
 WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
 ```
 
