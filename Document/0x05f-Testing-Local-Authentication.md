@@ -246,6 +246,9 @@ byte[] signed = signature.sign();
 ##### その他のセキュリティ機能
 
 Android Nougat (API 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByBiometricEnrollment(boolean invalidateKey)` メソッドを追加します。`invalidateKey` 値が "true" (デフォルト) に設定されている場合、指紋認証に有効な鍵は新しい指紋が登録された際に不可逆的に無効になります。これにより、たとえ攻撃者が追加の指紋を登録できたとしても、鍵を取得できなくなります。
+Android Oreo (API 26) は二つのエラーコードを追加します。
+- `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
+- `FINGERPRINT_ERROR_VENDOR` – ベンダー固有の指紋リーダーエラーが発生した。
 
 #### 動的解析
 
