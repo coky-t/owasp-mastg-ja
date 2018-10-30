@@ -96,7 +96,7 @@ NSAppTransportSecurity : Dictionary {
 
 以下のリストは ATS 制限をグローバルに無効化するように設定された例外の例です。
 
-```
+```xml
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -108,7 +108,7 @@ NSAppTransportSecurity : Dictionary {
 
 IPA ファイルは ZIP アーカイブであるため、任意の zip ユーティリティを使用して抽出できます。
 
-```
+```shell
 $ unzip app-name.ipa
 ```
 
@@ -118,7 +118,7 @@ $ unzip app-name.ipa
 
 以下のコマンドは Info.plist ファイルを XML 形式に変換する方法を示しています。
 
-```
+```shell
 $ plutil -convert xml1 Info.plist
 ```
 
@@ -129,7 +129,7 @@ $ plutil -convert xml1 Info.plist
 - ATS は Apple のベストプラクティスに従って設定し、特定の状況下でのみ無効化する必要があります。
 - アプリケーションはアプリケーション所有者が管理する定義された数のドメインに接続する場合、ATS 要件をサポートするようにサーバーを構成し、アプリ内の ATS 要件をオプトインします。以下の例では、`example.com` はアプリケーション所有者が所有し、そのドメインに対して ATS が有効になっています。
 
-```
+```xml
 <key>NSAppTransportSecurity</key>
 <dict>
     <key>NSAllowsArbitraryLoads</key>
@@ -176,7 +176,7 @@ $ plutil -convert xml1 Info.plist
 
 デリゲートは `connection:canAuthenticateAgainstProtectionSpace:` と `connection: forAuthenticationChallenge` を実装する必要があります。`connection: forAuthenticationChallenge` では、デリゲートは `SecTrustEvaluate` をコールして一般的な X509 チェックを実行する必要があります。以下のスニペットは証明書のチェックを実装しています。
 
-```
+```objc
 (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
   SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
