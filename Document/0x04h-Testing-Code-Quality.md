@@ -18,7 +18,7 @@
 
 Android と iOS のアプリは両方ともローカルデータストレージを制御及び整理する手段として SQLite データベースを使用します。Android アプリはローカルデータベースにユーザー資格情報を格納することにより、ローカルユーザー認証を処理すると仮定します (この例のための意図的な悪いプログラミングプラクティスです) 。ログインすると、アプリはデータベースをクエリし、ユーザーが入力したユーザー名とパスワードでレコードを検索します。
 
-```java=
+```java
 SQLiteDatabase db;
 
 String sql = "SELECT * FROM users WHERE username = '" +  username + "' AND password = '" + password +"'";
@@ -46,7 +46,7 @@ SELECT * FROM users WHERE username='1' OR '1' = '1' AND Password='1' OR '1' = '1
 
 Ostorlab はこの SQL インジェクションペイロードを使用して、adb で Yahoo 天気モバイルアプリケーションのソートパラメータを悪用しました。
 
-```
+```shell
 $ adb shell content query --uri content://com.yahoo.mobile.client.android.weather.provider.Weather/locations/ --sort '_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master/**/where/**/1=1\)'  
 
 Row: 0 _id=1, woeid=2487956, isCurrentLocation=0, latitude=NULL, longitude=NULL, photoWoeid=NULL, city=NULL, state=NULL, stateAbbr=, country=NULL, countryAbbr=, timeZoneId=NULL, timeZoneAbbr=NULL, lastUpdatedTimeMillis=746034814, crc=1591594725
@@ -58,7 +58,6 @@ Row: 0 _id=1, woeid=2487956, isCurrentLocation=0, latitude=NULL, longitude=NULL,
 この SQL インジェクション脆弱性はユーザーがまだアクセスしていない機密データを開示してはいません。この例は adb を使用して脆弱なコンテンツプロバイダをテストする方法を示しています。Ostorlab はこれをさらに引き継ぎ、SQLite クエリのウェブページインスタンスを作成し、SQLmap を実行してテーブルをダンプします。
 
 ```python
-
 import subprocess
 from flask import Flask, request
 
@@ -84,7 +83,6 @@ def hello():
 
 if __name__=="__main__":
    app.run()
-
 ```
 
 Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "Qnotes" および "Qget" Android アプリ内にクライアントサイドの SQL インジェクションのリアルワールドのインスタンスの一つを発見しました。これらのアプリは SQL インジェクションに脆弱なコンテンツプロバイダをエクスポートし、攻撃者が NAS デバイスの資格情報を取得できるようにしました。この問題の詳細な説明は [Nettitude Blog](https://blog.nettitude.com/uk/qnap-android-dont-provide "Nettitude Blog - QNAP Android: Don't Over Provide") にあります。
@@ -248,12 +246,12 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
 
 - ADB
 ```shell
-adb shell
-am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
+$ adb shell
+$ am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
 ```
 - Clipboard Data
 ```shell
-am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
+$ am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
 ```
 - 3rd party Intent
 
