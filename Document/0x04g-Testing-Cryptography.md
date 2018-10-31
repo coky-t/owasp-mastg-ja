@@ -8,7 +8,8 @@
 
 暗号化アルゴリズムは平文のデータから元の内容を隠す暗号文に変換します。平文のデータは復号化により暗号文から復元できます。暗号化には **対称** (共通鍵 (secret-key) 暗号化) と **非対称** (公開鍵 (public-key) 暗号化) があります。一般に、暗号化操作は完全性を保護しませんが、一部の対称暗号化モードでも保護が機能します。
 
-**対称鍵暗号アルゴリズム** は暗号化と復号化の両方に同じ鍵を使用します。このタイプの暗号化は高速でありバルクデータ処理に適しています。鍵にアクセスするすべての人が暗号化されたコンテンツを復号化できるため、この方式では慎重な鍵管理が必要です。**公開鍵暗号アルゴリズム** は二つの個別の鍵、公開鍵 (public key) と秘密鍵 (private key) で動作します。公開鍵 (public key) は自由に配布できますが、秘密鍵は誰とも共有すべきではありません。公開鍵 (public key) で暗号化されたメッセージは秘密鍵 (private key) でのみ解読できます。非対称暗号化は対称操作よりも数倍遅いため、通常はバルク暗号化のための対称鍵などの少量のデータを暗号化するためにのみ使用されます。
+**対称鍵暗号アルゴリズム** は暗号化と復号化の両方に同じ鍵を使用します。このタイプの暗号化は高速でありバルクデータ処理に適しています。鍵にアクセスするすべての人が暗号化されたコンテンツを復号化できるため、この方式では慎重な鍵管理が必要です。
+**公開鍵暗号アルゴリズム** は二つの個別の鍵、公開鍵 (public key) と秘密鍵 (private key) で動作します。公開鍵 (public key) は自由に配布できますが、秘密鍵は誰とも共有すべきではありません。公開鍵 (public key) で暗号化されたメッセージは秘密鍵 (private key) でのみ解読できます。非対称暗号化は対称操作よりも数倍遅いため、通常はバルク暗号化のための対称鍵などの少量のデータを暗号化するためにのみ使用されます。
 
 **ハッシュ化** は暗号化の形式ではありませんが、暗号化を使用しています。ハッシュ関数は任意のデータを固定長の値に決定論的にマップします。入力からハッシュを計算することは簡単ですが、ハッシュから元の入力を決定することは非常に困難 (つまり実行不可能) です。ハッシュ関数は完全性検証に使用されますが、真正性の保証を提供しません。
 
@@ -22,7 +23,7 @@
 
 モバイルアプリを評価する際には、重大な既知の脆弱性や現代のセキュリティ要件には不十分な暗号アルゴリズムを使用していないことを確認する必要があります。過去にセキュアであると考えられていたアルゴリズムが時間と共に非セキュアとなる可能性があります。したがって、現在のベストプラクティスを定期的に確認し、それに応じて設定を調整することが重要です。
 
-暗号アルゴリズムが最新で業界標準に適合していることを確認します。脆弱なアルゴリズムには古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、不十分な乱数生成器 (Dual_EC_DRBG など) があります。(NIST などにより) 認定されたアルゴリズムでさえ時間の経過とともにセキュアではなくなる可能性があることに注意します。認定はアルゴリズムの堅牢性の定期的な検証に取って代わるものではありません。既知の脆弱性を持つアルゴリズムはよりセキュアなものに置き換えるべきです。
+暗号アルゴリズムが最新で業界標準に適合していることを確認します。脆弱なアルゴリズムには古いブロック暗号 (DES や 3DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 や SHA1 など)、不十分な乱数生成器 (Dual_EC_DRBG や SHA1PRNG など) があります。(NIST などにより) 認定されたアルゴリズムでさえ時間の経過とともにセキュアではなくなる可能性があることに注意します。認定はアルゴリズムの堅牢性の定期的な検証に取って代わるものではありません。既知の脆弱性を持つアルゴリズムはよりセキュアなものに置き換えるべきです。
 
 アプリのソースコードを調査し、以下のような既知の脆弱な暗号アルゴリズムのインスタンスを特定します。
 
@@ -98,6 +99,11 @@
 
 ソースコード内で使用されているすべての暗号手法、特に機密データに直接適用されているものを注意深く調べます。すべての暗号操作は Android および iOS の標準暗号 API を使用すべきです (プラットフォーム固有の章で詳細に説明します) 。既知のプロバイダから標準ルーチンを呼び出さない暗号操作は厳密に検査すべきです。改変された標準アルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。XOR (排他的 OR) などのビット操作演算子を見つけたら常にさらに調査します。
 
+すべての暗号実装では、以下のことが常に行われるようにする必要があります。
+- 一時鍵 (AES/DES/Rijndael の中間/導出鍵など) は使用後にメモリから適切に削除されています。
+- 暗号の内部状態はできるだけ早くメモリから削除されているべきです。
+
+
 #### 不十分な AES 設定
 
 Advanced Encryption Standard (AES) はモバイルアプリの対称暗号化のために広く受け入れられている標準です。これは一連のリンクされた数学演算に基づく反復ブロック暗号です。AES は入力上で可変数のラウンドを実行します。各ラウンドは入力ブロック内のバイトの交換と並び替えを行います。各ラウンドは元の AES 鍵から派生した 128 ビットのラウンド鍵を使用します。
@@ -120,13 +126,25 @@ Cipher Block Chaining (CBC) が ECB の代わりに使用されていること�
 
 ##### 予測可能な初期化ベクトル
 
-CBC モードでは最初の平文ブロックを初期化ベクトル (IV) を組み合わせる必要があります。IV は秘密であり続ける必要はありませんが、予測可能であってはいけません。IV が暗号論的にセキュアな乱数生成器を使用して生成されていることを確認します。IV の詳細については、[Crypto Fail の初期化ベクトルの記事](http://www.cryptofails.com/post/70059609995/crypto-noobs-1-initialization-vectors) を参照してください。
+CBC, OFB, CFB, PCBC モードでは暗号の初期入力として初期化ベクトル (IV) が必要です。IV は秘密であり続ける必要はありませんが、予測可能であってはいけません。IV が暗号論的にセキュアな乱数生成器を使用して生成されていることを確認します。IV の詳細については、[Crypto Fail の初期化ベクトルの記事](http://www.cryptofails.com/post/70059609995/crypto-noobs-1-initialization-vectors) を参照してください。
+
+##### ステートフル操作モードでの初期化ベクトル
+
+CTR および GCM モードを使用する場合、IV の使用法は異なることに注意してください。初期化ベクトルは多くの場合カウンタ (ノンスと組み合わせた CTR) となります。したがって、自身のステートフルモードで予測可能な IV を使用することはまさに必要とされるものです。CTR では新しいブロック操作ごとにカウンタを足した新しいノンスを入力として持ちます。例えば、5120 ビット長の平文の場合、20 のブロックがあるため、ノンスとカウンタで構成される 20 の入力ベクトルを必要とします。一方 GCM では暗号操作ごとに一つの IV を持ちますが、同じ鍵を繰り返すべきではありません。IV の詳細と勧告については [NIST の GCM の文書](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode and GMAC") のセクション 8 を参照してください。
+
+#### 脆弱なパディングメカニズム
+以前は パディングメカニズムとして PKCS #7 (Public Key Cryptography Standards 7) が使用されていました。現在の Java 環境では PKCS #5 として参照しています。このメカニズムはパディングオラクル攻撃に対して脆弱です。したがって、OAEP (Optimal Asymmetric Encryption Padding) (または PKCS #1 v2.0) を使用することがベストです。OAEP を使用している場合でも、[Kudelskisecurity のブログ](https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Kudelskisecurity") で説明されているように Mangers 攻撃としてよく知られている問題に遭遇する可能性があります。
 
 ### Android と iOS の暗号化 API
 
 同じ基本的な暗号原則が特定の OS とは独立して適用されますが、それぞれのオペレーティングシステムは独自の実装と API を提供します。データストレージ用のプラットフォーム固有の暗号化 API については [**Android のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md) [(日本語訳)](https://github.com/coky-t/owasp-mstg-ja/blob/master/Document/0x05d-Testing-Data-Storage.md) および [**iOS のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md) [(日本語訳)](https://github.com/coky-t/owasp-mstg-ja/blob/master/Document/0x06d-Testing-Data-Storage.md) の章で詳しく説明しています。ネットワークトラフィックの暗号化、特に Transport Layer Security (TLS) については [**Android のネットワーク API**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md) [(日本語訳)](https://github.com/coky-t/owasp-mstg-ja/blob/master/Document/0x05g-Testing-Network-Communication.md) の章で説明しています。
 
 #### 参考情報
+
+##### 暗号化の参考情報
+- [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
+- [Breaking RSA with Mangers Attack]( https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Mangers attack")
+- [NIST 800-38d]( https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
 
 ##### OWASP Mobile Top 10 2016
 
