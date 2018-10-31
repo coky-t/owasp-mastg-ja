@@ -46,7 +46,7 @@ Internal requirements count=1 size=176
 
 gobjdump を使用して、メインバイナリとインクルードされた dylib の Stabs および DWARF シンボルを検査します。
 
-```
+```shell
 $ gobjdump --stabs --dwarf TargetApp
 In archive MyTargetApp:
 
@@ -267,7 +267,7 @@ Xcode ではデフォルトですべてのバイナリセキュリティが有�
 
 -	**ARC** - Automatic Reference Counting - メモリ管理機能
 	-	必要に応じてメッセージ保持および解放します
--	**Stack Canary** - バッファオーバーフロー攻撃の防止に役立ちます
+-	**Stack Canary** - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
 -	**PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
 
 #### 静的解析
@@ -382,14 +382,14 @@ iOS アプリケーションではサードパーティライブラリを使用�
 
 1. Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
 ``` sh
-sudo gem install CocoaPods
-pod install
+$ sudo gem install CocoaPods
+$ pod install
 ```
 
 2. 依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
 ```sh
-sudo gem install CocoaPods-dependencies
-pod dependencies
+$ sudo gem install CocoaPods-dependencies
+$ pod dependencies
 ```
 
 3. 上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
@@ -402,8 +402,8 @@ pod dependencies
 Carthage をサードパーティの依存関係に使用する場合には、サードパーティライブラリの脆弱性を解析するために以下の手順を実行します。
 1. Cartfile があるプロジェクトのルートで、以下を入力します。
 ```sh
-brew install carthage
-carthage update --platform iOS
+$ brew install carthage
+$ carthage update --platform iOS
 ```
 
 2. Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
@@ -414,6 +414,12 @@ carthage update --platform iOS
 - ライブラリがアプリケーションにパッケージされている場合、それからライブラリに脆弱性がパッチされているバージョンがあるか確認します。ない場合、脆弱性が実際にアプリケーションに影響を及ぼすかどうかを確認します。それが当てはまる場合、または将来そうなる可能性がある場合、同様の機能を提供する、脆弱性のない代替手段を探します。
 - ライブラリはアプリケーションにはパッケージされていない場合、脆弱性が修正されているパッチされたバージョンがあるかどうかを確認します。これがない場合、ビルドプロセスに対する脆弱性の影響を調べます。脆弱性がビルドを邪魔したり、ビルドパイプラインのセキュリティを弱めたりする場合、脆弱性が修正される代替案を探してみます。
 
+リンクされるライブラリとしてフレームワークを手動で追加する場合。
+1. xcodeproj ファイルを開き、プロジェクトのプロパティを確認します。
+2. "Build Phases" タブに移動して、いずれかのライブラリの "Link Binary With Libraries" のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
+
+コピー＆ペーストされたソースの場合、(Objective-C を使用する場合) ヘッダファイルを検索し、あるいは既存のライブラリの既存のメソッド名の Swift ファイルを検索します。
+
 最後に、ハイブリッドアプリケーションでは、JavaScript の依存関係を RetireJS で確認する必要があることに注意してください。同様に Xamarin では、C# の依存関係を確認する必要があります。
 
 
@@ -423,17 +429,16 @@ carthage update --platform iOS
 アプリケーションソースが利用可能であり、CocoaPods が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
 1. Podfile があるプロジェクトのルートで、以下を実行します。
 ``` sh
-sudo gem install CocoaPods
-pod install
-
+$ sudo gem install CocoaPods
+$ pod install
 ```
 2. Pods フォルダに、インストールされたライブラリがあります。各自のフォルダにあります。各フォルダのライセンスファイルを調べることで、各ライブラリのライセンスを確認できます。
 
 アプリケーションソースが利用可能であり、Carthage が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
 1. Cartfile があるプロジェクトのルートで、以下を実行します。
 ```sh
-brew install carthage
-carthage update --platform iOS
+$ brew install carthage
+$ carthage update --platform iOS
 ```
 
 2. 各依存関係のソースはプロジェクトの `Carthage/Checkouts` フォルダにダウンロードされています。ここで各ライブラリのそれぞれのフォルダにライセンスを見つけることができます。
@@ -453,13 +458,13 @@ carthage update --platform iOS
 ライブラリを取得してそれをクラッチ (例えば DRM を削除) した後、<Application.app> ディレクトリのルートで otool を実行します。
 
 ```shell
-otool -L <Executable>
+$ otool -L <Executable>
 ```
 
 但し、これらには使用されているすべてのライブラリが含まれるわけではありません。次に、(Objective-C の場合) class-dump を使用して、使用されているヘッダファイルのサブセットを生成し、どのライブラリが関係しているかを導き出すことができます。しかし、ライブラリのバージョンは検出されません。
 
 ```shell
-./class-dump <Executable> -r
+$ ./class-dump <Executable> -r
 ```
 
 ### 参考情報
