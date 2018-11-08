@@ -194,6 +194,8 @@ else {
 }
 ```
 
+[TrustKit](https://github.com/datatheorem/TrustKit "TrustKit") など SSL ピンニングを実装するための API を提供するライブラリがあります。TrustKit は Swift と Objective-C アプリの両方をサポートしています。
+
 #### 動的解析
 
 ##### サーバー証明書の妥当性確認
