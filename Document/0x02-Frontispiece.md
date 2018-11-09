@@ -8,7 +8,7 @@ OWASP は多くの執筆者、レビュー担当者、編集者がこのガイ�
 
 ## 著作権とライセンス
 
-![license](Images/license.jpg)
+![license](Images/CC-license.png)
 Copyright © 2018 The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
 
 ## 謝辞
