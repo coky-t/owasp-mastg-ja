@@ -293,7 +293,7 @@ WebView を使用してリモートウェブサイトを表示する場合、HTM
 | / | &amp;#x2F;|
 
 
-エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html "クロスサイトスクリプティング (XSS) 対策チートシート") を参照してください。
+エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") を参照してください。
 
 #### 動的解析
 
@@ -305,11 +305,11 @@ XSS の問題は手動や自動の入力ファジングを使用すると最も�
 
 #### OWASP Mobile Top 10 2016
 
-- M7 - 脆弱なコード品質 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality - (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M7-Poor_Code_Quality.html
+- M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 #### OWASP MASVS
 
-- V6.2: "外部ソースおよびユーザーからの入力がすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
+- V6.2: "外部ソースおよびユーザーからの入力はすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
 
 #### CWE
 
