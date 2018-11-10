@@ -227,7 +227,7 @@ rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 
 #### 静的解析
 
-ソースコード内のすべての API やウェブサービスリクエストを特定し、プレーンの HTTP URL が要求されていないことを確認します。機密情報は [HttpsURLConnection](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [SSLSocket](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (for socket-level communication using TLS) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
+ソースコード内のすべての API やウェブサービスリクエストを特定し、プレーンの HTTP URL が要求されていないことを確認します。機密情報は [HttpsURLConnection](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [SSLSocket](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
 
 `SSLSocket` はホスト名を検証 **しない** ことに注意します。ホスト名を検証するには `getDefaultHostnameVerifier` を使用します。Android 開発者ドキュメントには [コード例](https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket "Warnings About Using SSLSocket Directly") があります。
 
@@ -278,7 +278,7 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 
 #### OWASP MASVS
 - V5.1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
-- V5.5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）一つの安全でない通信チャネルに依存していない。"
+- V5.5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）単方向のセキュアでない通信チャネルに依存していない。"
 
 #### CWE
 - CWE-308 - Use of Single-factor Authentication
