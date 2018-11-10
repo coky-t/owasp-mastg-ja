@@ -231,9 +231,9 @@ rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 
 `SSLSocket` はホスト名を検証 **しない** ことに注意します。ホスト名を検証するには `getDefaultHostnameVerifier` を使用します。Android 開発者ドキュメントには [コード例](https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket "Warnings About Using SSLSocket Directly") があります。
 
-ベストプラクティスに従ってサーバーが構成されていることを確認します。[OWASP Transport Layer Protection チートシート](https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet "Transport Layer Protection Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/TransportLayerProtection.html) および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
+ベストプラクティスに従ってサーバーが構成されていることを確認します。[OWASP Transport Layer Protection チートシート](https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
-静的解析には HTTPS 接続が終端するウェブサーバーやリバースプロキシの構成ファイルが必要です。[OWASP Transport Layer Protection チートシート](https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet "Transport Layer Protection Cheat Sheet") [(日本語訳)](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/TransportLayerProtection.html) および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
+静的解析には HTTPS 接続が終端するウェブサーバーやリバースプロキシの構成ファイルが必要です。[OWASP Transport Layer Protection チートシート](https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
 #### 動的解析
 
@@ -250,7 +250,7 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 
 #### 概要
 
-銀行業務アプリなどの機密性の高いアプリケーションでは、[OWASP MASVS](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md "The Mobile Application Security Verification Standard") [(日本語訳)](https://github.com/coky-t/owasp-masvs-ja/blob/master/Document/0x03-Using_the_MASVS.md) では「多層防御」検証レベルを導入しています。そのようなアプリケーションのクリティカルな操作 (ユーザー登録やアカウント回復など) は攻撃者にとって最も魅力的なターゲットです。ユーザー操作を確認するための追加のチャネル (SMS や電子メールなど) のような高度なセキュリティコントロールを実装する必要があります。
+銀行業務アプリなどの機密性の高いアプリケーションでは、[OWASP MASVS](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md "The Mobile Application Security Verification Standard") では「多層防御」検証レベルを導入しています。そのようなアプリケーションのクリティカルな操作 (ユーザー登録やアカウント回復など) は攻撃者にとって最も魅力的なターゲットです。ユーザー操作を確認するための追加のチャネル (SMS や電子メールなど) のような高度なセキュリティコントロールを実装する必要があります。
 
 #### 静的解析
 
@@ -274,7 +274,7 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 ### 参考情報
 
 #### OWASP Mobile Top 10 2016
-- M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M3-Insecure_Communication.html
+- M3 - Insecure Communication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
 
 #### OWASP MASVS
 - V5.1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
