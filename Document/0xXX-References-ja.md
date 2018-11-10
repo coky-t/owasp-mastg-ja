@@ -66,7 +66,7 @@
 
 - [CWE-20 - 不適切な入力確認](https://jvndb.jvn.jp/ja/cwe/CWE-20.html)
 
-## 0x04i-Testing-user-interaction ユーザー教育のテスト
+## 0x04i-Testing-user-interaction ユーザー啓発のテスト
 
 ### 参考情報
 
@@ -126,9 +126,8 @@
 
 #### Android
 
-- JSSEC *Android アプリのセキュア設計・セキュアコーディングガイド* [(pdf)](https://www.jssec.org/dl/android_securecoding.pdf) [(html)](https://www.jssec.org/dl/android_securecoding/index.html)
+- JSSEC Android アプリのセキュア設計・セキュアコーディングガイド [(pdf)](https://www.jssec.org/dl/android_securecoding.pdf) [(html)](https://www.jssec.org/dl/android_securecoding/index.html)
 
 ## Foreword
 
 ## SUMMARY
-
