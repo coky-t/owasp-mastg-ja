@@ -20,7 +20,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 - [モバイルアプリの暗号化](Document/0x04g-Testing-Cryptography.md)
 - [コード品質のテスト](Document/0x04h-Testing-Code-Quality.md)
 - [改竄とリバースエンジニアリング](Document/0x04c-Tampering-and-Reverse-Engineering.md)
-- [ユーザー教育のテスト](Document/0x04i-Testing-user-interaction.md)
+- [ユーザー啓発のテスト](Document/0x04i-Testing-user-interaction.md)
 
 ### Android テストガイド
 
