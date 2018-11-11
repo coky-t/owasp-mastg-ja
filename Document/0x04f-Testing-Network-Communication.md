@@ -14,7 +14,7 @@
 
 傍受プロキシを使用するには、それを PC/MAC 上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
-プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS 固有の「テスト環境構築」の章でこれを行う方法について説明します。
+プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS ごとの「テスト環境構築」の章でこれを行う方法について説明します。
 
 ![Intercepting HTTP requests with BURP Suite Pro](Images/Chapters/0x04f/BURP.jpg)
 
@@ -63,7 +63,7 @@ $ sudo apt-get install ettercap
 
 マシンにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。二つの最も一般的なネットワーク監視 (またはキャプチャ) ツールは以下のとおりです。
 
-- [Wireshark](https://www.wireshark.org "Wireshark") (CLI pendant: [tshark](https://www.wireshark.org/docs/man-pages/tshark.html "TShark")) 
+- [Wireshark](https://www.wireshark.org "Wireshark") (CLI 用: [tshark](https://www.wireshark.org/docs/man-pages/tshark.html "TShark")) 
 - [tcpdump](https://www.tcpdump.org/tcpdump_man.html "tcpdump")
 
 Wireshark は GUI を提供しており、コマンドラインに慣れていなくても簡単です。コマンドラインツールを探している場合には TShark または tcpdump のいずれかを使用する必要があります。これらのツールはすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。
@@ -153,7 +153,7 @@ ettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (A
 
 Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://developer.xamarin.com/guides/android/getting_started/ "Getting Started with Android") および [iOS アプリ](https://developer.xamarin.com/guides/ios/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
 
-Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリは電話のローカルプロキシ設定を使用しないためです。これを解決する方法は二つあります。
+Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は二つあります。
 
 - [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate()` または `Main()` に以下のコードを追加してアプリを再作成します。
 
@@ -188,13 +188,13 @@ rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 
 #### 概要
 
-コアとなるモバイルアプリの機能のひとつはインターネットなどの信頼できないネットワーク上でデータを送受信することです。データが転送中に正しく保護されない場合、攻撃者はネットワークインフラストラクチャの任意の部分 (Wi-Fi アクセスポイントなど) にアクセスできる攻撃者は、傍受、読み取り、改変の可能性があります。これが平文のネットワークプロトコルがほとんど推奨されない理由です。
+コアとなるモバイルアプリの機能のひとつはインターネットなどの信頼できないネットワーク上でデータを送受信することです。データが転送中に正しく保護されない場合、ネットワークインフラストラクチャの任意の部分 (Wi-Fi アクセスポイントなど) にアクセスできる攻撃者は、傍受、読み取り、改変の可能性があります。これが平文のネットワークプロトコルがほとんど推奨されない理由です。
 
-大部分のアプリはバックエンドとの通信に HTTP に依存しています。HTTPS は暗号化された接続で HTTP をラップします (略語の HTTPS はもともと HTTP over Secure Socket Layer (SSL) と呼ばれていました。SSL は TLS の前身で廃止予定です) 。TLS はバックエンドサービスの認証を可能にし、ネットワークデータの機密性と完全性を保証します。
+大部分のアプリはバックエンドとの通信に HTTP に依存しています。HTTPS は暗号化された接続で HTTP をラップします (略語の HTTPS はもともと HTTP over Secure Socket Layer (SSL) と呼ばれていました。SSL は TLS の前身で非推奨です) 。TLS はバックエンドサービスの認証を可能にし、ネットワークデータの機密性と完全性を保証します。
 
 ##### 推奨される TLS 設定
 
-サーバー側で適切な TLS 設定を確保することも重要です。SSL は廃止予定であり、もはや使用すべきではありません。TLS v1.2 および v1.3 はセキュアであると考えられますが、多くのサービスではいまだに TLS v1.0 および v1.1 が古いクライアントとの互換性のために許可されています。
+サーバー側で適切な TLS 設定を確保することも重要です。SSL は非推奨であり、もはや使用すべきではありません。TLS v1.2 および v1.3 はセキュアであると考えられますが、多くのサービスではいまだに TLS v1.0 および v1.1 が古いクライアントとの互換性のために許可されています。
 
 クライアントとサーバーの両方が同じ組織により制御され、互いに通信するためだけに使用される場合、[設定を堅牢にすること](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") によりセキュリティを向上できます。
 
