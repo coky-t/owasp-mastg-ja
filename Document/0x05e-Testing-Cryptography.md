@@ -330,7 +330,7 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 
 ##### OWASP Mobile Top 10
 
-- M5 - 不十分な暗号化
+- M5 - Insufficient Cryptography - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
 
 ##### OWASP MASVS
 
