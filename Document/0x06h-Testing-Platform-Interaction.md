@@ -585,8 +585,8 @@ Google の [プロトコルバッファ](https://developers.google.com/protocol-
 
 #### OWASP Mobile Top 10 2016
 
-- M1 - Insecure Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
-- M7 - Client-Side Injection - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M1 - Improper Platform Usage - https://www.owasp.org/index.php/Mobile_Top_10_2016-M1-Improper_Platform_Usage
+- M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
 
 #### OWASP MASVS
 
