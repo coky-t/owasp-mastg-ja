@@ -52,7 +52,7 @@
 
 ## 0x04h-Testing-Code-Quality コード品質のテスト
 
-### クロスサイトスクリプティングの欠陥
+### クロスサイトスクリプティング欠陥
 
 - [クロスサイトスクリプティング (XSS) 対策チートシート](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html) 
 
