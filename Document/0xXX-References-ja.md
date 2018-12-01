@@ -120,7 +120,7 @@
 
 ## 0x08-Testing-Tools
 
-## 0x09-Suggested-Reading 推薦図書
+## 0x09-Suggested-Reading さらに学ぶための資料
 
 ### モバイルアプリセキュリティ
 
