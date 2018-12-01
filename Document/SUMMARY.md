@@ -49,4 +49,4 @@
 ### 付録
 
 - [テストツール](0x08-Testing-Tools.md)
-- [推薦図書](0x09-Suggested-Reading.md)
+- [さらに学ぶための資料](0x09-Suggested-Reading.md)
