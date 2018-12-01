@@ -34,6 +34,30 @@ Sealed Resources version=2 rules=12 files=1410
 Internal requirements count=1 size=176
 ```
 
+### アプリがデバッグ可能かどうかの判断
+
+#### 概要
+
+iOS アプリケーションのデバッグは lldb と呼ばれる強力なデバッガを組み込んだ Xcode を使用して行うことができます。lldb は Xcode5 以降のデフォルトデバッガであり、gdb などの GNU ツールを置き換え、開発環境に完全に統合されています。デバッグはアプリを開発する際には便利な機能ですが、App Store やエンタープライズプログラムにリリースする前にオフにする必要があります。
+
+ビルドモードまたはリリースモードでのアプリケーションの生成は Xcode のビルド設定に依存します。アプリがデバッグモードで生成されると、DEBUG フラグが生成されたファイルに挿入されます。
+
+#### 静的解析
+
+まず環境内のフラグをチェックするために、アプリを生成するモードを決定する必要があります。
+- プロジェクトのビルド設定を選択します。
+- 'Apple LVM - Preprocessing' と 'Preprocessor Macros' で、'DEBUG' または 'DEBUG_MODE' が選択されていないことを確認します (Objective-C) 。
+- "Debug executable" オプションが選択されていないことを確認します。
+- もしくは 'Swift Compiler - Custom Flags' セクションの 'Other Swift Flags' で、'-D DEBUG' エントリが存在しないことを確認します。
+
+
+#### 動的解析
+
+Xcode を使用して、直接デバッガをアタッチできるかどうかを確認します。次に、脱獄済みデバイスで Clutch を行った後にアプリをデバッグできるかどうかを確認します。これは Cydia の BigBoss リポジトリにある debug-server を使用して行われます。
+
+注意: アプリケーションにアンチリバースエンジニアリングコントロールが装備されている場合、デバッガを検出して停止することがあります。
+
+
 ### デバッグシンボルの検索
 
 #### 概要
@@ -490,7 +514,7 @@ $ ./class-dump <Executable> -r
 
 - [Carthage](https://github.com/carthage/carthage "Carthage")
 - [CocoaPods](https://CocoaPods.org "CocoaPods")
-- [OWASP Dependency Checker](https://jeremylong.github.io/DependencyCheck/"OWASP Dependency Checker")
+- [OWASP Dependency Checker](https://jeremylong.github.io/DependencyCheck/ "OWASP Dependency Checker")
 - [Sourceclear](https://sourceclear.com "Sourceclear")
 - [Class-dump](https://github.com/nygard/class-dump "Class-dump")
 - [RetireJS](https://retirejs.github.io/retire.js/ "Retire JS")
