@@ -194,7 +194,7 @@ $ otool -L <AppName>.app/<AppName>
 ローカル認証フレームワークはイベントベースのプロシージャであり、唯一の認証方法ではないことに注意します。このタイプの認証はユーザーインタフェースレベルで有効ですが、パッチ適用や計装で容易にバイパスされます。
 
 - 支払いトランザクションをトリガーするユーザーの再認証などの機密プロセスが、キーチェーンサービスメソッドを使用して保護されていることを検証します。
-- `SecAccessControlCreateWithFlags` メソッドがコールされる際に、`kSecAccessControlUserPresence` ポリシーと `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` 保護クラスが設定されていることを検証します。
+- `SecAccessControlCreateWithFlags` メソッドがコールされる際に、`kSecAccessControlTouchIDAny` または `kSecAccessControlTouchIDCurrentSet` フラグが設定され、`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` 保護クラスが設定されていることを検証します。代わりに、フォールバックとしてパスコードを使用できるようにしたい場合に `kSecAccessControlUserPresence` がフラグとして使用できることに注意します。最後に、`kSecAccessControlTouchIDCurrentSet` が設定されている場合、デバイスに登録されている指紋を変更すると、そのフラグで保護されているエントリが無効になることに注意します。
 
 #### 動的解析
 
