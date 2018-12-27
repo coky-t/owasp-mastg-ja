@@ -200,30 +200,117 @@ rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 
 モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
 
-例えば、一般的な Android ネットワークライブラリ okhttp は以下の暗号スイートの推奨セットを使用しますが、これらは Android バージョン 7.0 および以降でのみ利用可能です。
+**暗号スイートの用語**
 
+**プロトコル**_**鍵交換アルゴリズム**_WITH_**ブロック暗号**_**完全性チェックアルゴリズム**
+- プロトコル: 暗号が使用するプロトコル
+- 鍵交換アルゴリズム: TLS ハンドシェイク時の認証にサーバーおよびクライアントで使用される鍵交換アルゴリズム
+- グロック暗号: メッセージストリームを暗号化するために使用されるブロック暗号
+- 完全性チェックアルゴリズム: メッセージを認証するために使用される完全性チェックアルゴリズム
+
+例: `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
+
+上記の例では暗号スイートは以下のものを使用します。
+- TLS をプロトコルとして
+- RSA を認証用の非対称暗号に
+- 3DES を EDE_CBC モードで対称暗号用に
+- SHA を完全性用のハッシュアルゴリズムに
+
+TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではなく、代わりに TLS ハンドシェイク時に決定されることに注意します。
+例: `TLS_AES_128_GCM_SHA256`
+
+以下では、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
+プロトコル:
+- `SSLv1`
+- `SSLv2`[rfc6176](https://tools.ietf.org/html/rfc6176)
+- `SSLv3`[rfc6101](https://tools.ietf.org/html/rfc6101)
+- `TLSv1.0`[rfc2246](https://www.ietf.org/rfc/rfc2246)
+- `TLSv1.1`[rfc4346](https://tools.ietf.org/html/rfc4346)
+- `TLSv1.2`[rfc5246](https://tools.ietf.org/html/rfc5246)
+- `TLSv1.3`[rfc8446](https://tools.ietf.org/html/rfc8446)
+
+鍵交換アルゴリズム: 
+- `DSA`[rfc6979](https://tools.ietf.org/html/rfc6979)
+- `ECDSA`[rfc6979](https://tools.ietf.org/html/rfc6979)
+- `RSA`[rfc8017](https://tools.ietf.org/html/rfc8017)
+- `DHE`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
+- `ECDHE`[rfc4492](https://tools.ietf.org/html/rfc4492)
+- `PSK`[rfc4279](https://tools.ietf.org/html/rfc4279)
+- `DSS`[FIPS186-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf)
+- `DH_anon`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
+- `DHE_RSA`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
+- `DHE_DSS`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
+- `ECDHE_ECDSA`[rfc8422](https://tools.ietf.org/html/rfc8422)
+- `ECDHE_PSK` [rfc8422](https://tools.ietf.org/html/rfc8422) [rfc5489](https://tools.ietf.org/html/rfc5489)
+- `ECDHE_RSA` [rfc8422](https://tools.ietf.org/html/rfc8422)
+
+ブロック暗号:
+- `DES` [rfc4772](https://tools.ietf.org/html/rfc4772)
+- `DES_CBC` [rfc1829](https://tools.ietf.org/html/rfc1829)
+- `3DES` [rfc2420](https://tools.ietf.org/html/rfc2420)
+- `3DES_EDE_CBC`[rfc2420](https://tools.ietf.org/html/rfc2420)
+- `AES_128_CBC`[rfc3268](https://tools.ietf.org/html/rfc3268)
+- `AES_128_GCM` [rfc5288](https://tools.ietf.org/html/rfc5288)
+- `AES_256_CBC`[rfc3268](https://tools.ietf.org/html/rfc3268)
+- `AES_256_GCM`[rfc5288](https://tools.ietf.org/html/rfc5288)
+- `RC4_40` [rfc7465](https://tools.ietf.org/html/rfc7465)
+- `RC4_128` [rfc7465](https://tools.ietf.org/html/rfc7465)
+- `CHACHA20_POLY1305 ` [rfc7905](https://tools.ietf.org/html/rfc7905) [rfc7539](https://tools.ietf.org/html/rfc7539)
+
+完全性チェックアルゴリズム:
+- `MD5` [rfc6151](https://tools.ietf.org/html/rfc6151)
+- `SHA` [rfc6234](https://tools.ietf.org/html/rfc6234)
+- `SHA256` [rfc6234](https://tools.ietf.org/html/rfc6234)
+- `SHA384` [rfc6234](https://tools.ietf.org/html/rfc6234)
+
+暗号スイートの性能はそのアルゴリズムの性能に依存することに注意します。
+
+
+以下では、TLS で使用する最新の推奨暗号スイートリストを提示します。これらの暗号スイートは IANA の TLS パラメータドキュメントと OWASP TLS Cipher String Cheat Sheet の両方で推奨されています。
+
+IANA 推奨暗号スイート [rfc8447](https://tools.ietf.org/html/rfc8447#section-8) [IANA_CIPHERS](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4):
+
+- `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`
+- `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`
+- `TLS_DHE_PSK_WITH_AES_128_GCM_SHA256`
+- `TLS_DHE_PSK_WITH_AES_256_GCM_SHA384`
+- `TLS_AES_128_GCM_SHA256`
+- `TLS_AES_256_GCM_SHA384`
+- `TLS_CHACHA20_POLY1305_SHA256`
+- `TLS_AES_128_CCM_SHA256`
 - `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
 - `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
+- `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
 - `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`
+- `TLS_DHE_RSA_WITH_AES_128_CCM`
+- `TLS_DHE_RSA_WITH_AES_256_CCM`
+- `TLS_DHE_PSK_WITH_AES_128_CCM`
+- `TLS_DHE_PSK_WITH_AES_256_CCM`
 - `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
+- `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`
+- `TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
+- `TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256`
+- `TLS_DHE_PSK_WITH_CHACHA20_POLY1305_SHA256`
+- `TLS_ECDHE_PSK_WITH_AES_128_GCM_SHA256`
+- `TLS_ECDHE_PSK_WITH_AES_256_GCM_SHA384`
+- `TLS_ECDHE_PSK_WITH_AES_128_CCM_SHA256`
 
-以前のバージョンの Android をサポートするためには、`TLS_RSA_WITH_3DES_EDE_CBC_SHA` など、あまりセキュアではないと考えられているいくつかの暗号を追加します。
+OWASP 推奨暗号スイート [Cipher_String_Cheat_Sheet](https://www.owasp.org/index.php/TLS_Cipher_String_Cheat_Sheet):
 
-同様に、iOS ATS (App Transport Security) の設定には以下の暗号のいずれかが必要です。
-
-- `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`
-- `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`
+- `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`
+- `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`
 - `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
 - `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
+- `TLS_DHE_RSA_WITH_AES_256_CBC_SHA256`
+- `TLS_DHE_RSA_WITH_AES_128_CBC_SHA256`
 - `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`
 - `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`
+- `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`
 - `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`
+- `TLS_DHE_RSA_WITH_AES_256_CBC_SHA`
+- `TLS_DHE_RSA_WITH_AES_128_CBC_SHA`
+
+一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites) および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc) バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
 
 #### 静的解析
 
@@ -285,9 +372,54 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 - CWE-319 - Cleartext Transmission of Sensitive Information
 
 #### ツール
-
 - Tcpdump - https://www.androidtcpdump.com/
 - Wireshark - https://www.wireshark.org/
 - OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 - Burp Suite - https://portswigger.net/burp/
 - Vproxy - https://github.com/B4rD4k/Vproxy
+
+#### IETF
+- RFC 6176 - https://tools.ietf.org/html/rfc6176
+- RFC 6101 - https://tools.ietf.org/html/rfc6101
+- RFC 2246 - https://www.ietf.org/rfc/rfc2246
+- RFC 4346 - https://tools.ietf.org/html/rfc4346
+- RFC 5246 - https://tools.ietf.org/html/rfc5246
+- RFC 8446 - https://tools.ietf.org/html/rfc8446
+- RFC 6979 - https://tools.ietf.org/html/rfc6979
+- RFC 8017 - https://tools.ietf.org/html/rfc8017
+- RFC 2631 - https://tools.ietf.org/html/rfc2631
+- RFC 7919 - https://tools.ietf.org/html/rfc7919
+- RFC 4492 - https://tools.ietf.org/html/rfc4492
+- RFC 4279 - https://tools.ietf.org/html/rfc4279
+- RFC 2631 - https://tools.ietf.org/html/rfc2631
+- RFC 8422 - https://tools.ietf.org/html/rfc8422
+- RFC 5489 - https://tools.ietf.org/html/rfc5489
+- RFC 4772 - https://tools.ietf.org/html/rfc4772
+- RFC 1829 - https://tools.ietf.org/html/rfc1829
+- RFC 2420 - https://tools.ietf.org/html/rfc2420
+- RFC 3268 - https://tools.ietf.org/html/rfc3268
+- RFC 5288 - https://tools.ietf.org/html/rfc5288
+- RFC 7465 - https://tools.ietf.org/html/rfc7465
+- RFC 7905 - https://tools.ietf.org/html/rfc7905
+- RFC 7539 - https://tools.ietf.org/html/rfc7539
+- RFC 6151 - https://tools.ietf.org/html/rfc6151
+- RFC 6234 - https://tools.ietf.org/html/rfc6234
+- RFC 8447 - https://tools.ietf.org/html/rfc8447#section-8
+
+
+#### Android 
+- Android supported Cipher suites - https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites
+
+
+#### IOS
+- IOS supported Cipher suites - https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc
+
+
+#### IANA Transport Layer Security (TLS) Parameters
+- TLS Cipher Suites - https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4
+
+#### OWASP TLS Cipher String Cheat Sheet
+- Recommendations for a cipher string - https://www.owasp.org/index.php/TLS_Cipher_String_Cheat_Sheet
+
+#### NIST
+- FIPS PUB 186 - Digital Signature Standard (DSS)
