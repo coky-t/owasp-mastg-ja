@@ -94,6 +94,8 @@ Android `KeyGenerator` クラスと共に指紋 API を使用することで、�
 
 よりセキュアな選択肢は非対称暗号を使用することです。ここでは、モバイルアプリがキーストアに非対称鍵ペアを作成し、サーバーバックエンド上に公開鍵を登録します。その後のトランザクションは秘密鍵で署名され、公開鍵を使用してサーバーにより検証されます。これの利点はキーストアから秘密鍵を抽出することなく、キーストア API を使用してトランザクションに署名できることです。その結果、メモリダンプや計装を使用することにより攻撃者が鍵を取得することは不可能となります。
 
+ベンダーにより提供されるいくつかの SDK があり、バイオメトリックのサポートを提供しますが、それら自体に危険があることに注意します。例えば Samsung Pass SDK を見てみます。これは暗号化なしのバインディングで `onComplete` ハンドラを使用します。詳しくは [the Samsung Programming Guide](https://developer.samsung.com/common/download/check.do?actId=1106 "Pass programming guide") を参照してください。
+
 #### 静的解析
 
 `FingerprintManager.authenticate()` コールを探すことから始めます。このメソッドに渡される最初のパラメータは FingerprintManager によりサポートされる [Crypto オブジェクトのラッパークラス](https://developer.android.com/reference/android/hardware/fingerprint/FingerprintManager.CryptoObject.html) である `CryptoObject` インスタンスである必要があります。パラメータが `null` に設定されている場合、これは指紋認証が単にイベントバウンドであることを意味し、セキュリティの問題が発生する可能性があります。
@@ -250,6 +252,10 @@ Android Oreo (API 26) は二つのエラーコードを追加します。
 - `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
 - `FINGERPRINT_ERROR_VENDOR` – ベンダー固有の指紋リーダーエラーが発生した。
 
+##### サードパーティ SDK
+
+Android SDK とその API に基づいて指紋認証やその種類の生体認証が行われることを確認します。そうでない場合、代替 SDK があらゆる脆弱性に対して適切に検証されていることを確認します。その SDK は TEE/SE がバックにあり、生体認証に基づいて (暗号) 機密をアンロックすることを確認します。この機密は他のものによりアンロックされるべきではなく、有効な生体エントリによってアンロックされるべきです。そのようにして、指紋ロジックがバイパスできることがあってはいけません。
+
 #### 動的解析
 
 アプリにパッチを当てるか実行時計装を使用して、クライアント上の指紋認証をバイパスします。例えば、Frida を使用して `onAuthenticationSucceeded` コールバックメソッドを直接コールできます。詳細については「Android の改竄とリバースエンジニアリング」の章を参照してください。
@@ -274,3 +280,4 @@ Android Oreo (API 26) は二つのエラーコードを追加します。
 #### アプリパーミッションリクエスト
 
 - 実行時のパーミッション - https://developer.android.com/training/permissions/requesting
+- Samsung Pass Developer Guide - https://developer.samsung.com/galaxy/pass/guide
