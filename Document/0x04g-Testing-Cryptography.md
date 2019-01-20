@@ -67,7 +67,7 @@
 
 対称暗号化と鍵付きハッシュ (MAC) のセキュリティは鍵の秘密性に大きく依存します。鍵が開示されている場合、暗号化により得られるセキュリティは失われます。これを防ぐには、作成した暗号化データと同じ場所に共通鍵 (secret key) を保存しないことです。開発者は静的でハードコードされた暗号化鍵を使用してローカルに保存されたデータを暗号化したり、アプリに鍵をコンパイルするという間違いをよくします。これにより鍵は逆アセンブラを使用できるすべての人がアクセスできるようになります。
 
-まず、鍵やパスワードがソースコードに格納されていないことを確認します。ハードコードされた鍵はソースコードが難読化されていたとしても問題であることに注意します。難読化は動的計装により容易にバイパスできるためです。
+まず、鍵やパスワードがソースコードに格納されていないことを確認します。これは、ネイティブコード、Javascript/Dart コード、Android の Java/Kotlin コード、iOS の Objective-C/Swift を確認する必要があることを意味します。ハードコードされた鍵はソースコードが難読化されていたとしても問題であることに注意します。難読化は動的計装により容易にバイパスできるためです。
 
 アプリが双方向 SSL (サーバー証明書とクライアント証明書の両方が検証されている) を使用している場合、以下を確認します。
 
@@ -118,7 +118,7 @@ Advanced Encryption Standard (AES) はモバイルアプリの対称暗号化の
 
 ![Difference of encryption modes](Images/Chapters/0x07c/EncryptionMode.png)
 
-Cipher Block Chaining (CBC) が ECB の代わりに使用されていることを確認します。CBC モードでは、平文ブロックは前の暗号文ブロックと XOR されます。これにより、ブロックに同じ情報が含まれていても、暗号化された各ブロックは一意でありランダム化されます。
+Cipher Block Chaining (CBC) が ECB の代わりに使用されていることを確認します。CBC モードでは、平文ブロックは前の暗号文ブロックと XOR されます。これにより、ブロックに同じ情報が含まれていても、暗号化された各ブロックは一意でありランダム化されます。パディングオラクル攻撃に対する耐性を高めるために、CBC と HMAC を組み合わせることや、「パディングエラー」、「MAC エラー」、「復号化失敗」などのエラーが発生しないようにすることがベストであることに注意してください。
 
 暗号化されたデータを保存する場合には、Galois/Counter Mode (GCM) など、保存されたデータの完全性も保護するブロックモードを使用することをお勧めします。最後のものはそのアルゴリズムが各 TLSv1.2 実装に必須であるという副次の利点があり、すべての最新のプラットフォームで利用できます。
 
@@ -132,12 +132,27 @@ CBC, OFB, CFB, PCBC モードでは暗号の初期入力として初期化ベク
 
 CTR および GCM モードを使用する場合、IV の使用法は異なることに注意してください。初期化ベクトルは多くの場合カウンタ (ノンスと組み合わせた CTR) となります。したがって、自身のステートフルモードで予測可能な IV を使用することはまさに必要とされるものです。CTR では新しいブロック操作ごとにカウンタを足した新しいノンスを入力として持ちます。例えば、5120 ビット長の平文の場合、20 のブロックがあるため、ノンスとカウンタで構成される 20 の入力ベクトルを必要とします。一方 GCM では暗号操作ごとに一つの IV を持ちますが、同じ鍵を繰り返すべきではありません。IV の詳細と勧告については [NIST の GCM の文書](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode and GMAC") のセクション 8 を参照してください。
 
-#### 脆弱なパディングメカニズム
-以前は パディングメカニズムとして PKCS #7 (Public Key Cryptography Standards 7) が使用されていました。現在の Java 環境では PKCS #5 として参照しています。このメカニズムはパディングオラクル攻撃に対して脆弱です。したがって、OAEP (Optimal Asymmetric Encryption Padding) (または PKCS #1 v2.0) を使用することがベストです。OAEP を使用している場合でも、[Kudelskisecurity のブログ](https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Kudelskisecurity") で説明されているように Mangers 攻撃としてよく知られている問題に遭遇する可能性があります。
+#### 脆弱なパディングやブロック操作の実装によるパディングオラクル攻撃
+
+非対称暗号を行う際に、以前は パディングメカニズムとして PKCS #7 (Public Key Cryptography Standards 7) が使用されていました。現在の Java 環境では PKCS #5 として参照しています。このメカニズムはパディングオラクル攻撃に対して脆弱です。したがって、OAEP (Optimal Asymmetric Encryption Padding) (または PKCS #1 v2.0) を使用することがベストです。OAEP を使用している場合でも、[Kudelskisecurity のブログ](https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Kudelskisecurity") で説明されているように Mangers 攻撃としてよく知られている問題に遭遇する可能性があります。
+
+注意: PKCS #5 を使用する AES-CBC は、「パディングエラー」、「MAC エラー」、「復号化失敗」などの警告が得られる実装であるため、パディングオラクル攻撃に対しても脆弱です。例として [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack/ "The Padding Oracle Attack") を参照してください。次に、平文を暗号化した後は HMAC を追加することがベストです。つまり、失敗した MAC を含む暗号文は復号化する必要がなくなり、破棄できるようになります。
+
+
+#### メモリ内の鍵を保護する
+
+メモリダンプが脅威モデルの一部であるとき、鍵はアクティブに使用される瞬間にアクセスできます。メモリダンプには root アクセス (ルート化デバイスや脱獄済みデバイスなど) または Frida によるパッチ適用済みのアプリケーション (Fridump などのツールを使用できます) のいずれかが必要です。
+そのため、デバイスに鍵がまだ必要とされる場合には、以下を考慮することがベストです。
+- すべての暗号化アクションおよび鍵自体が Trusted Execution Environment (Android Keystore を使用するなど) または Secure Enclave (キーチェーンを使用し、署名する際には ECDHE を使用する) にあることを確認します。
+- TEE / SE の外部にある鍵が必要な場合には、必ずそれらを難読化や暗号化し、使用時のみそれらを逆難読化することを確認します。ネイティブコードを使用しているか否かに関わらず、メモリを解放する前に常に鍵をゼロで埋めます。これは、メモリ構造を上書き (配列のヌル埋めなど) するものであり、Android のほとんどの Immutable 型 (`BigInteger` や `String`) がヒープ内にあることを知っていることを意味します。
+
+注意: メモリダンプの容易さを考えると、署名の検証や暗号化に使用される公開鍵以外では、アカウントやデバイス間で同じ鍵を共有してはいけません。
+
 
 ### Android と iOS の暗号化 API
 
 同じ基本的な暗号原則が特定の OS とは独立して適用されますが、それぞれのオペレーティングシステムは独自の実装と API を提供します。データストレージ用のプラットフォーム固有の暗号化 API については [**Android のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md) および [**iOS のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md) の章で詳しく説明しています。ネットワークトラフィックの暗号化、特に Transport Layer Security (TLS) については [**Android のネットワーク API**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md) の章で説明しています。
+
 
 #### 参考情報
 
@@ -156,6 +171,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 - V3.2: "アプリは実績のある暗号化プリミティブの実装を使用している。"
 - V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 - V3.4: "アプリはセキュリティ上の目的で広く非推奨と考えられる暗号プロトコルやアルゴリズムを使用していない。"
+- V7.8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
 
 ##### CWE
 
