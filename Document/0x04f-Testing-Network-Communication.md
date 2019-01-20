@@ -229,7 +229,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `TLSv1.2`[rfc5246](https://tools.ietf.org/html/rfc5246)
 - `TLSv1.3`[rfc8446](https://tools.ietf.org/html/rfc8446)
 
-鍵交換アルゴリズム: 
+鍵交換アルゴリズム:
 - `DSA`[rfc6979](https://tools.ietf.org/html/rfc6979)
 - `ECDSA`[rfc6979](https://tools.ietf.org/html/rfc6979)
 - `RSA`[rfc8017](https://tools.ietf.org/html/rfc8017)
@@ -326,11 +326,15 @@ OWASP 推奨暗号スイート [Cipher_String_Cheat_Sheet](https://www.owasp.org
 
 テストされるアプリの着信および発信するネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
-- [OWASP ZAP](https://security.secure.force.com/security/tools/webapp/zapandroidsetup "OWASP ZAP") や [Burp Suite Professional](https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp "Configuring an Android device to work with Burp") などの傍受プロキシですべての HTTP および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
+- [OWASP ZAP](https://security.secure.force.com/security/tools/webapp/zapandroidsetup "OWASP ZAP") や [Burp Suite Professional](https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp "Configuring an Android device to work with Burp"), [Wireshark](https://www.wireshark.org/ "Wireshark") などの傍受プロキシですべての HTTP および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
 
 Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension) や [mitm-relay](https://github.com/jrmdev/mitm_relay) などの Burp プラグインを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
 
 > 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。Vproxy などのツールを使用すると、すべての HTTP(S) トラフィックをマシンにリダイレクトし、暗号化されていないリクエストに対して盗聴や調査を行うことができます。
+
+サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
+- nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
+- [testssl.sh](https://github.com/drwetter/testssl.sh) は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
 
 ### クリティカルな操作がセキュアな通信チャネルを使用することの確認
@@ -375,6 +379,7 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 
 #### ツール
 - Tcpdump - https://www.androidtcpdump.com/
+- Testssl.sh - https://github.com/drwetter/testssl.sh
 - Wireshark - https://www.wireshark.org/
 - OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
 - Burp Suite - https://portswigger.net/burp/
@@ -409,7 +414,7 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 - RFC 8447 - https://tools.ietf.org/html/rfc8447#section-8
 
 
-#### Android 
+#### Android
 - Android supported Cipher suites - https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites
 
 
