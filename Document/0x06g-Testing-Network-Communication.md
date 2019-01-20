@@ -124,8 +124,52 @@ $ plutil -convert xml1 Info.plist
 
 このファイルを人が読める形式に変換すると、例外を解析できます。アプリケーションには通常の機能を許可するために ATS 例外が定義されている場合があります。例えば、Firefox iOS アプリケーションでは ATS がグローバルに無効化されています。さもないとアプリケーションがすべての ATS 要件を満たしていない任意の HTTP ウェブサイトに接続できなくなるため、この例外は許容されます。
 
-一般に以下のように要約できます。
+#### ATS の使用に関する推奨事項
 
+特定のエンドポイントと通信するときに使用できる ATS 設定を検証することが可能です。macOS ではコマンドラインユーティリティ `nscurl` が同じことを確認するために利用できます。このコマンドは以下のように使用できます。
+
+```
+/usr/bin/nscurl --ats-diagnostics https://www.example.com
+Starting ATS Diagnostics
+
+Configuring ATS Info.plist keys and displaying the result of HTTPS loads to https://www.example.com.
+A test will "PASS" if URLSession:task:didCompleteWithError: returns a nil error.
+Use '--verbose' to view the ATS dictionaries used and to display the error received in URLSession:task:didCompleteWithError:.
+================================================================================
+
+Default ATS Secure Connection
+---
+ATS Default Connection
+Result : PASS
+---
+
+================================================================================
+
+Allowing Arbitrary Loads
+
+---
+Allow All Loads
+Result : PASS
+---
+
+================================================================================
+
+Configuring TLS exceptions for www.example.com
+
+---
+TLSv1.3
+2019-01-15 09:39:27.892 nscurl[11459:5126999] NSURLSession/NSURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9800)
+Result : FAIL
+---
+```
+
+上記の出力は nscurl の最初のいくつかの結果のみを示しています。指定されたエンドポイントに対してさまざまな設定の組み合わせが実行および検証されます。デフォルトの ATS セキュア接続テストに合格した場合、ATS をデフォルトのセキュア構成で使用できます。
+
+> nscurl の出力に不合格がある場合には、クライアント側の ATS の構成を弱くするのではなく、サーバー側をよりセキュアにするために TLS のサーバー側構成を変更してください。
+
+このトピックに関する詳細は [ATS に関する NowSecure によるブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
+
+一般に以下のように要約できます。
 - ATS は Apple のベストプラクティスに従って設定し、特定の状況下でのみ無効化する必要があります。
 - アプリケーションはアプリケーション所有者が管理する定義された数のドメインに接続する場合、ATS 要件をサポートするようにサーバーを構成し、アプリ内の ATS 要件をオプトインします。以下の例では、`example.com` はアプリケーション所有者が所有し、そのドメインに対して ATS が有効になっています。
 
@@ -153,7 +197,6 @@ $ plutil -convert xml1 Info.plist
 
 - (アプリ所有者の管理下にない) サードパーティのドメインとの接続が行われる場合、サードパーティのドメインでサポートされていない ATS 設定と、それらが無効化できるかどうかを評価する必要があります。
 - アプリケーションが WebView でサードパーティのウェブサイトを開く場合、iOS 10 以降では NSAllowsArbitraryLoadsInWebContent を使用して、WebView でロードされるコンテンツの ATS 制限を無効化できます。
-
 
 ### カスタム証明書ストアと証明書ピンニングのテスト
 
@@ -243,3 +286,7 @@ else {
 - CWE-319 - Cleartext Transmission of Sensitive Information
 - CWE-326 - Inadequate Encryption Strength
 - CWE-295 - Improper Certificate Validation
+
+##### Nscurl
+- [ATS に関する NowSecure によるブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS")
+-
