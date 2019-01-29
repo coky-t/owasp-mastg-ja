@@ -193,7 +193,7 @@ keyStore.load(resourceStream, password);
 String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
 TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
 tmf.init(keyStore);
-Create an SSLContext that uses the TrustManager
+// Create an SSLContext that uses the TrustManager
 // SSLContext context = SSLContext.getInstance("TLS");
 sslContext.init(null, tmf.getTrustManagers(), null);
 ```
@@ -212,7 +212,7 @@ OkHttpClient client = new OkHttpClient.Builder()
         .build();
 ```
 
-WebView コンポーネントを使用するアプリケーションは WebViewClient のイベントハンドラを利用して、ターゲットリソースがロードされる前に各リクエストの何かしらの「証明書ピンニング」を行います。以下のコードはサーバーから送信された証明書の Issuer DN の検証例を示しています。
+WebView コンポーネントを使用するアプリケーションは WebViewClient のイベントハンドラを利用して、ターゲットリソースがロードされる前に各リクエストの何かしらの「証明書ピンニング」を行います。以下のコードは検証例を示しています。
 
 ```java
 WebView myWebView = (WebView) findViewById(R.id.webview);
@@ -228,15 +228,15 @@ myWebView.setWebViewClient(new WebViewClient(){
         //Available information on SslCertificate class are "Issuer DN", "Subject DN" and validity date helpers
         SslCertificate serverCert = view.getCertificate();
         if(serverCert != null){
-            //Apply check on Issuer DN against expected one
-            SslCertificate.DName issuerDN = serverCert.getIssuedBy();
-            if(!this.expectedIssuerDN.equals(issuerDN.toString())){
+            //apply either certificate or public key pinning comparison here
                 //Throw exception to cancel resource loading...
             }
         }
     }
 });
 ```
+
+あるいは、設定されたピンで OkHttpClient を使用し、それを `WebViewClient` の `shouldInterceptRequest` をオーバーライドするプロキシとして機能させるのがよいでしょう。
 
 ##### Xamarin アプリケーション
 
@@ -270,7 +270,7 @@ Xamarin で開発されたアプリケーションは一般的に ServicePointMa
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Main);
             TesteAsync("https://security.claudio.pt");
-  
+
         }
 ```
 
@@ -343,7 +343,7 @@ Pin-set には公開鍵ピンのセットが含まれています。各セット
 Network Security Configuration を解析して、どの設定が構成されているかを判断します。このファイルは apk 内の /res/xml/ フォルダに network_security_config.xml という名前で格納されています。
 
 <base-config> または <domain-config> にカスタムの <trust-anchors> が存在する場合、<certificates src="user"> を定義するアプリケーションは特定のドメインまたはすべてのドメインに対してユーザーが提供する CA を信頼します。以下に例を示します。
-    
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
