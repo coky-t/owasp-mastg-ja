@@ -209,7 +209,7 @@ Result : FAIL
 
 #### 静的解析
 
-サーバー証明書がピン留めされていることを確認します。ピンニングは複数の方法で実装できます。
+サーバー証明書がピン留めされていることを確認します。サーバーにより提示された証明書ツリーに関して、ピンニングはさまざまなレベルで実装できます。
 
 1. サーバーの証明書をアプリケーションバンドルに含め、各接続で検証を実行します。これにはサーバーの証明書が更新されるたびに更新メカニズムが必要です。
 2. 証明書発行者を例えば一つのエンティティに制限し、中間 CA の公開鍵をアプリケーションにバンドルします。このようにして攻撃面を制限し、有効な証明書を取得します。
@@ -220,6 +220,7 @@ Result : FAIL
 デリゲートは `connection:canAuthenticateAgainstProtectionSpace:` と `connection: forAuthenticationChallenge` を実装する必要があります。`connection: forAuthenticationChallenge` では、デリゲートは `SecTrustEvaluate` をコールして一般的な X509 チェックを実行する必要があります。以下のスニペットは証明書のチェックを実装しています。
 
 ```objc
+
 (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
   SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
@@ -237,7 +238,13 @@ else {
 }
 ```
 
-[TrustKit](https://github.com/datatheorem/TrustKit "TrustKit") など SSL ピンニングを実装するための API を提供するライブラリがあります。TrustKit は Swift と Objective-C アプリの両方をサポートしています。
+上記の証明書ピンニングの例は、証明書ピンニングを使用して、その証明書を変更する場合、そのピンが無効化されるという大きな欠点があることに注意します。サーバーの公開鍵を再利用できる場合は、同じ公開鍵で新しい証明書を作成でき、メンテナンスが容易になります。これを行うにはさまざまな方法があります。
+
+- 公開鍵に基づいて自身のピンを実装します。この例では、比較式 `if ([remoteCertificateData isEqualToData:localCertData]) {` を鍵バイトや証明書サムの比較に変更します。
+- [TrustKit](https://github.com/datatheorem/TrustKit "TrustKit") を使用します。ここでは Info.plist に公開鍵ハッシュを設定するか、辞書にハッシュを提供することでピンニングできます。詳細は readme を見てください。
+- [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire") を使用します。ここではピンニング方法を定義するドメインごとに `ServerTrustPolicy` を定義します。
+- [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking") を使用します。ここではピンニングを構成するために `AFSecurityPolicy` を設定します。
+
 
 #### 動的解析
 
