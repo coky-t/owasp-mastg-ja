@@ -1,4 +1,3 @@
-
 ## Android のネットワーク API
 
 ### エンドポイント同一性検証のテスト
@@ -11,6 +10,8 @@
 - エンドポイントサーバーが正しい証明書を提示するかどうかを判別します。
 
 ホスト名と証明書自体が正しく検証されていることを確認します。事例と一般的な落とし穴が [Android の公式ドキュメント](https://developer.android.com/training/articles/security-ssl.html "Android Documentation - SSL") にあります。`TrustManager` および `HostnameVerifier` の使用例のコードを探します。下記のセクションには、あなたが探しているようなセキュアではない事例があります。
+
+> Android 8 以降、SSLv3 はサポートされなくなり、HttpsURLConnection はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しないことに注意します。
 
 #### 静的解析
 
@@ -122,11 +123,11 @@ Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクショ�
 
 ##### Network Security Configuration
 
-ネットワークセキュリティ設定を安全な宣言型設定ファイルでアプリコードの修正なしにカスタマイズするには、Android がバージョン 7.0 およびそれ以降で提供している [Network Security Configuration (NSC)](https://developer.android.com/training/articles/security-config.html "Network Security Configuration documentation") を使用できます。
+ネットワークセキュリティ設定を安全な宣言型設定ファイルでアプリコードの修正なしにカスタマイズするには、Android がバージョン 7.0 およびそれ以降で提供している [Network Security Configuration](https://developer.android.com/training/articles/security-config.html "Network Security Configuration documentation") を使用できます。
 
-Network Security Configuration 機能を使用して [宣言型証明書](https://developer.android.com/training/articles/security-config.html#CertificatePinning "Certificate Pinning using Network Security Configuration") を特定のドメインにピン留めすることもできます。アプリケーションが NSC 機能を使用する場合、定義された設定を識別するために二つのことをチェックする必要があります。
+Network Security Configuration を使用して [宣言型証明書](https://developer.android.com/training/articles/security-config.html#CertificatePinning "Certificate Pinning using Network Security Configuration") を特定のドメインにピン留めすることもできます。アプリケーションがこの機能を使用する場合、定義された設定を識別するために二つのことをチェックする必要があります。
 
-1. application タグの "android:networkSecurityConfig" 属性による Android アプリケーションマニフェストの NSC ファイル参照の指定
+1. application タグの "android:networkSecurityConfig" 属性による Android アプリケーションマニフェストのファイル参照の指定
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -137,7 +138,7 @@ Network Security Configuration 機能を使用して [宣言型証明書](https:
 </manifest>
 ```
 
-2. "res/xml/network_security_config.xml" に格納されている NSC ファイルの内容
+2. "res/xml/network_security_config.xml" に格納されているファイルの内容
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -157,7 +158,9 @@ Network Security Configuration 機能を使用して [宣言型証明書](https:
 </network-security-config>
 ```
 
-NSC 設定が存在する場合、以下のイベントがログに表示されることがあります。
+> pin-set には公開鍵ピンのセットが含まれています。各セットは有効期限を定義できます。有効期限が切れると、ネットワーク通信は機能し続けますが、影響を受けるドメインでは証明書ピンニングが無効になります。
+
+設定が存在する場合、以下のイベントがログに表示されることがあります。
 
 ```
 D/NetworkSecurityConfig: Using Network Security Config from resource network_security_config
@@ -169,7 +172,7 @@ D/NetworkSecurityConfig: Using Network Security Config from resource network_sec
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
-逆コンパイラ (Jadx など) や apktool を使用することで、/res/xml/ フォルダにある network_security_config.xml ファイルに \<pin\> エントリが存在するかどうかを確認できます。
+逆コンパイラ (jadx や apktool など) や apktool を使用することで、/res/xml/ フォルダにある network_security_config.xml ファイルに \<pin\> エントリが存在するかどうかを確認できます。
 
 ##### TrustManager
 
@@ -289,9 +292,9 @@ Cordova ベースのハイブリッドアプリケーションはネイティブ
 check() メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
 
 ```javascript
-  //Endpoint to verify against certiticate pinning.
+  // Endpoint to verify against certiticate pinning.
   var server = "https://www.owasp.org";
-  //SHA256 Fingerprint (Can be obtained via "openssl s_client -connect hostname:443 | openssl x509 -noout -fingerprint -sha256"
+  // SHA256 Fingerprint (Can be obtained via "openssl s_client -connect hostname:443 | openssl x509 -noout -fingerprint -sha256"
   var fingerprint = "D8 EF 3C DF 7E F6 44 BA 04 EC D5 97 14 BB 00 4A 7A F5 26 63 53 87 4E 76 67 77 F0 F4 CC ED 67 B9";
 
   window.plugins.sslCertificateChecker.check(
@@ -326,6 +329,7 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 ### Network Security Configuration 設定のテスト
 
 #### 概要
+
 Network Security Configuration は Android 7 で導入され、カスタムトラストアンカーや証明書ピンニングなどのアプリのネットワークセキュリティ設定をカスタマイズできます。
 
 ##### トラストアンカー
@@ -334,11 +338,9 @@ Network Security Configuration は Android 7 で導入され、カスタムト�
 
 この保護はカスタムの Network Security Configuration を使用することでバイパスできます。アプリはユーザーが提供する CA を信頼することを示すカスタムトラストアンカーを用います。
 
-##### Pin-set 有効期限日付
-
-Pin-set には公開鍵ピンのセットが含まれています。各セットには有効期限日付を定義できます。有効期限日付に達した場合、ネットワーク通信は引き続き機能しますが、影響を受けるドメインでは証明書ピンニングが無効になります。
-
 #### 静的解析
+
+ターゲット SDK のバージョンを確認するには逆コンパイラ (jadx や apktool など) を使用します。アプリをデコードした後、出力フォルダに作成された apktool.yml ファイルに存在する `targetSDK` の存在を探します。
 
 Network Security Configuration を解析して、どの設定が構成されているかを判断します。このファイルは apk 内の /res/xml/ フォルダに network_security_config.xml という名前で格納されています。
 
@@ -370,6 +372,7 @@ Network Security Configuration を解析して、どの設定が構成されて�
     </domain-config>
 </network-security-config>
 ```
+
 エントリの順位を理解することが重要です。\<domain-config\> エントリまたは親の \<domain-config\> に値が設定されていない場合、その構成は \<base-config\> をベースに行われます。また、最終的にこのエントリに定義されていない場合、デフォルト構成が使用されます。
 
 Android 9 (API レベル 28) 以上をターゲットとするアプリのデフォルト構成は以下のとおりです。
@@ -405,26 +408,12 @@ Android 6.0 (API レベル 23) 以下をターゲットとするアプリのデ�
 
 #### 動的解析
 
-プロキシルート CA (Burp Suite など) をデバイス上にインストールし、この特定のアプリが targetSDK を API レベル 24 以上に設定し、バージョン 7 以降の Android デバイスで実行するシナリオでは、通信を傍受することはできてはいけません。できる場合、これはこのメカニズムのバイパスがあることを意味します。
+傍受プロキシに Burp を使用して動的解析を行うには、「Android アプリのテスト環境構築」の章の「ネットワークセキュリティ設定のバイパス」の説明に従って、ネットワークセキュリティ設定ファイルにパッチをあてます。
 
+これを必要としないシナリオや、パッチをあてずに MiTM 攻撃をできるシナリオがまだあるかもしれません。
+- Android バージョン 7.0 以降の Android デバイス上でアプリが実行されているが、アプリが 24 未満の API レベルをターゲットにしている場合、ネットワークセキュリティ設定は使用されず、それによりアプリはユーザー提供の CA を信頼します。
+- Android バージョン 7.0 以降の Android デバイス上でアプリが実行されており、アプリにカスタムネットワークセキュリティ設定が実装されていない場合。
 
-### デフォルト Network Security Configuration のテスト
-
-#### 概要
-前のトピックで説明したように、API レベル 24 以上をターゲットとするアプリは、別途定義されない限り、ユーザーが提供する CA を信頼しないデフォルト Network Security Configuration を実装します。
-
-アプリはバージョン 7 以上の Android デバイス上で実行するが、24 未満の API レベルをターゲットとするシナリオでは、この機能を使用せず、依然としてユーザーが提供する CA を信頼します。
-
-Android 8 以降、SSLv3 はサポートされないことに注意します。また、HttpsURLConnection はセキュアではない TLS/SSL プロトコルへのフォールバックを実行することはもはやありません。
-
-#### 静的解析
-
-* 逆コンパイラ (Jadx など) を使用して、AndroidManifest.xml ファイルにある targetSDK を確認します。
-* apktool を使用してアプリをデコードし、出力フォルダの apktool.yml ファイルにある targetSDK を確認します。
-
-#### 動的解析
-
-プロキシルート CA (Burp Suite など) をデバイス上にインストールし、このアプリがバージョン 7 以降の Android デバイス上で実行し、カスタム Network Security Configuration を実装していないシナリオでは、アプリが証明書を正しく検証すると仮定すると、targetSDK は 24 未満の API レベルに設定されていることを示しています。
 
 ### セキュリティプロバイダのテスト
 
