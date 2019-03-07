@@ -318,7 +318,7 @@ check() メソッドを使用してフィンガープリントを確認し、コ
      }
    }
 ```
-APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/www フォルダに置かれます。'plugins' フォルダに使用するプラグインがあります。アプリケーションの Javascript コードでこのメソッドを検索して、その使用状況を確認する必要があります。
+APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/www フォルダに置かれます。'plugins' フォルダに使用するプラグインがあります。アプリケーションの JavaScript コードでこのメソッドを検索して、その使用状況を確認する必要があります。
 
 #### 動的解析
 
@@ -342,7 +342,7 @@ Network Security Configuration は Android 7 で導入され、カスタムト�
 
 ターゲット SDK のバージョンを確認するには逆コンパイラ (jadx や apktool など) を使用します。アプリをデコードした後、出力フォルダに作成された apktool.yml ファイルに存在する `targetSDK` の存在を探します。
 
-Network Security Configuration を解析して、どの設定が構成されているかを判断します。このファイルは apk 内の /res/xml/ フォルダに network_security_config.xml という名前で格納されています。
+Network Security Configuration を解析して、どの設定が構成されているかを判断します。このファイルは APK 内の /res/xml/ フォルダに network_security_config.xml という名前で格納されています。
 
 <base-config> または <domain-config> にカスタムの <trust-anchors> が存在する場合、<certificates src="user"> を定義するアプリケーションは特定のドメインまたはすべてのドメインに対してユーザーが提供する CA を信頼します。以下に例を示します。
 
