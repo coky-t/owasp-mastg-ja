@@ -244,7 +244,7 @@ Kotlin
     }
 ```
 
-Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。html パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
+Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
 
 - ADB
 ```shell
