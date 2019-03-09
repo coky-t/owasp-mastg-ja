@@ -202,7 +202,7 @@ Result : FAIL
 
 #### 概要
 
-証明書ピンニングは、信頼できる認証局により署名された任意の証明書を受け入れる代わりに、モバイルアプリを特定の X509 証明書に関連付けるプロセスです。サーバー証明書や公開鍵を格納 (「ピン留め」) するモバイルアプリは既知のサーバーへの接続のみを確立します。外部認証局の信頼を除くことで、攻撃面が縮小されます (結局のところ、認証局が侵害されたり、偽者に証明書を発行するよう騙されたりという既知の事例が多くあります) 。
+証明書ピンニングは、信頼できる認証局により署名された任意の証明書を受け入れる代わりに、モバイルアプリを特定の X.509 証明書に関連付けるプロセスです。サーバー証明書や公開鍵を格納 (「ピン留め」) するモバイルアプリは既知のサーバーへの接続のみを確立します。外部認証局の信頼を除くことで、攻撃面が縮小されます (結局のところ、認証局が侵害されたり、偽者に証明書を発行するよう騙されたりという既知の事例が多くあります) 。
 
 証明書は開発中またはアプリが最初にバックエンドに接続するときにピン留めできます。
 その場合、証明書は初回に見たときにホストに関連付けられるか「ピン留め」されます。この二つ目のバリエーションはあまりセキュアではなくなります。攻撃者は最初の接続を傍受して自身の証明書を注入する可能性があるためです。
@@ -217,7 +217,7 @@ Result : FAIL
 
 以下に示すコードはサーバーによって提供された証明書がアプリに格納されている証明書と一致しているかどうかを確認する方法を示しています。以下のメソッドは接続認証を実装して、接続が認証チャレンジの要求を送信することをデリゲートに通知します。
 
-デリゲートは `connection:canAuthenticateAgainstProtectionSpace:` と `connection: forAuthenticationChallenge` を実装する必要があります。`connection: forAuthenticationChallenge` では、デリゲートは `SecTrustEvaluate` をコールして一般的な X509 チェックを実行する必要があります。以下のスニペットは証明書のチェックを実装しています。
+デリゲートは `connection:canAuthenticateAgainstProtectionSpace:` と `connection: forAuthenticationChallenge` を実装する必要があります。`connection: forAuthenticationChallenge` では、デリゲートは `SecTrustEvaluate` をコールして一般的な X.509 チェックを実行する必要があります。以下のスニペットは証明書のチェックを実装しています。
 
 ```objc
 
@@ -253,7 +253,7 @@ else {
 私たちのテストアプローチは SSL ハンドシェイクネゴシエーションのセキュリティを少しずつ緩めて、どのセキュリティメカニズムが有効であるかを確認することです。
 
 1. Burp をプロキシとして設定した後、トラストストア (Settings -> General -> Profiles) に証明書が追加されていないこと、および SSL キルスイッチなどのツールが無効であることを確認します。アプリケーションを起動して、Burp にトラフィックが表示されるかどうかを確認します。問題がある場合は 'Alerts' タブに報告されます。トラフィックが見える場合、証明書検証がまったく実行されていないことを意味します。そうではなく、トラフィックを見ることができず、SSL ハンドシェイクの失敗に関する情報がある場合には、次の項目に従います。
-2. 次に、[PortSwigger ユーザードキュメント](https://support.portswigger.net/customer/portal/articles/1841109-installing-burp-s-ca-certificate-in-an-ios-device "Installing Burp's CA Certificate in an iOS Device") で説明されているように、Burp 証明書をインストールします。ハンドシェイクが成功して Burp でトラフィックを見ることができる場合、デバイスのトラストストアに対して証明書が検証されているが、ピンニングが実行されていないことを意味します。
+2. 次に、[Burp のユーザードキュメント](https://support.portswigger.net/customer/portal/articles/1841109-installing-burp-s-ca-certificate-in-an-ios-device "Installing Burp's CA Certificate in an iOS Device") で説明されているように、Burp 証明書をインストールします。ハンドシェイクが成功して Burp でトラフィックを見ることができる場合、デバイスのトラストストアに対して証明書が検証されているが、ピンニングが実行されていないことを意味します。
 3. 前のステップでの指示を実行してもトラフィックが burp 経由でプロキシされない場合、証明書は実際にピン留めされ、すべてのセキュリティ対策が実行されていることを意味します。但し、アプリケーションをテストするには依然としてピンニングをバイパスする必要があります。この詳細については「iOS アプリのテスト環境構築」を参照してください。
 
 ##### クライアント証明書の妥当性確認
@@ -296,4 +296,3 @@ else {
 
 ##### Nscurl
 - [ATS に関する NowSecure によるブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS")
--
