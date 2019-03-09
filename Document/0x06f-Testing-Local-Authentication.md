@@ -212,11 +212,11 @@ $ otool -L <AppName>.app/<AppName>
 - Touch ID プロンプトが表示されたら "cancel" をクリックします
 - Touch ID を必要とせずにアプリケーションフローが継続する場合、そのバイパスは機能しています。
 
-Needle を使用している場合には、"hooking/frida/script_touch-id-bypass" モジュールを実行してプロンプトに従います。これによりアプリケーションを開始して `evaluatePolicy` 関数を計装します。Touch ID で認証が求められた場合、cancel をタップします。アプリケーションフローが継続する場合、Touch ID のバイパスに成功しています。frida の代わりに cycript を使用する同様のモジュール (hooking/cycript/cycript_touchid) も Needle で利用できます。
+Needle を使用している場合には、"hooking/frida/script_touch-id-bypass" モジュールを実行してプロンプトに従います。これによりアプリケーションを開始して `evaluatePolicy` 関数を計装します。Touch ID で認証が求められた場合、cancel をタップします。アプリケーションフローが継続する場合、Touch ID のバイパスに成功しています。Frida の代わりに Cycript を使用する同様のモジュール (hooking/cycript/cycript_touchid) も Needle で利用できます。
 
 あるいは、[objection to bypass Touch ID](https://github.com/sensepost/objection/wiki/Understanding-the-TouchID-Bypass "Understanding the TouchID Bypass") (これは非脱獄済みデバイス上でも機能します) を使用したり、アプリにパッチを当てたり、Cycript や同様のツールを使用してプロセスを計装することもできます。
 
-Needle を使用して iOS プラットフォームの非セキュアな生体認証をバイパスできます。Needle は frida を利用して、`LocalAuthentication.framework` API を使用して開発されたログインフォームをバイパスします。以下のモジュールを使用して、非セキュアな生体認証をテストできます。
+Needle を使用して iOS プラットフォームの非セキュアな生体認証をバイパスできます。Needle は Frida を利用して、`LocalAuthentication.framework` API を使用して開発されたログインフォームをバイパスします。以下のモジュールを使用して、非セキュアな生体認証をテストできます。
 
 ```
 [needle][container] > use hooking/frida/script_touch-id-bypass
@@ -238,7 +238,7 @@ MacOSX や Android とは異なり、iOS は現時点 (iOS 12) ではキーチ�
 #### OWASP MASVS
 
 - V4.8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
-- v2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
+- V2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
 #### CWE
 
