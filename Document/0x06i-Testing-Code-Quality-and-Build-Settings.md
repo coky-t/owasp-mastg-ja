@@ -6,7 +6,7 @@
 
 アプリをコード署名することで、アプリが既知のソースを持ち、最後に署名されてから改変されていないことをユーザーに保証します。アプリは、アプリサービスを統合する前、デバイスにインストールされるか、App Store に提出する前に、Apple により発行された証明書で署名される必要があります。証明書をリクエストしてアプリにコード署名する方法の詳細については、[アプリ配布ガイド](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Introduction/Introduction.html "App Distribution Guide") をご覧ください。
 
-[codesign](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/codesign.1.html) でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
+[codesign](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html) でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
 
 アプリケーションの .ipa ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
 
@@ -387,7 +387,7 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 
 iOS アプリケーションではサードパーティライブラリを使用することがよくあります。これらのサードパーティライブラリは開発者が問題を解決するためのコード記述を少なくし、開発を加速します。ライブラリには二つのカテゴリがあります。
 - 実際の製品アプリケーションにはパックされない (またはすべきではない) ライブラリ、テストに使用される `OHHTTPStubs` など。
-- 実際の製品アプリケーションにパックされるライブラリ、`Alomofire` など。
+- 実際の製品アプリケーションにパックされるライブラリ、`Alamofire` など。
 
 これらのライブラリには以下の二つの種類の望まれない副作用があります。
 - ライブラリには脆弱性が存在する可能性があり、アプリケーションを脆弱にする可能性があります。よい例は `AFNetworking` バージョン 2.5.1 で、証明書検証を無効にしたバグがありました。この脆弱性により攻撃者は API に接続するためにライブラリを使用しているアプリに対して中間者攻撃を実行できます。
