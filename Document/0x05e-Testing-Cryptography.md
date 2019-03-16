@@ -262,6 +262,47 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 但し、`AndroidKeyStore` API は Android のさまざまなバージョンで大幅に変更されていることに注意します。以前のバージョンでは `AndroidKeyStore` API は公開鍵と秘密鍵 (private key) のペア (RSA など) の保存のみをサポートしていました。対称鍵のサポートは API レベル 23 以降でのみ追加されています。結果として、さまざまな Android API レベルで対称鍵をセキュアに保存したいときには開発者は注意する必要があります。対称鍵をセキュアに保存するには、Android API レベル 22 以下で動作するデバイスで、公開鍵と秘密鍵 (private key) のペアを生成する必要があります。公開鍵を使用して対象鍵を暗号化し、秘密鍵 (private key) を `AndroidKeyStore` に保存します。暗号化された対称鍵は `SharedPreferences` に安全に保存できます。対称鍵が必要なときにはいつでも、アプリケーションは ```KeyStore``` から秘密鍵 (private key) を取り出し、対称鍵を復号します。
 鍵が `AndroidKeyStore` 内で生成及び使用され `KeyInfo.isinsideSecureHardware()` が true を返す場合、その鍵をダンプしたり暗号操作を監視したりすることができないことはご存知の通りです。`PBKDF2withHmacSHA256` を使用してまだ到達可能でダンプ可能なメモリに鍵を生成するか、もしくは鍵が決してメモリに入り込まないであろう `AndroidKeyStore` を使用するか、最終的に何がより安全であるかは議論の余地があります。Android Pie では `PBKDF2withHmacSHA256` を使用するよりも有利となるように、TEE と `AndroidKeyStore` を分離するために追加のセキュリティ拡張が実装されています。しかし、近い将来、その議題についてより多くのテストと調査が行われるでしょう。
 
+#### キーストアへのセキュアなキーインポート
+
+Android Pie は鍵を `AndroidKeystore` 内にセキュアにインポートする機能を追加します。最初に `AndroidKeystore` は `PURPOSE_WRAP_KEY` を使用して鍵ペアを生成します。これも認証証明書で保護されるべきです。このペアは `AndroidKeystore` にインポートされる鍵を保護することを目的としています。暗号化された鍵は `SecureKeyWrapper` フォーマットの ASN.1 エンコードメッセージとして生成されます。これにはインポートされた鍵が使用を許される方法の説明も含まれています。その後、鍵はラッピング鍵を生成した特定のデバイスに属する `AndroidKeystore` ハードウェア内で復号化されるため、デバイスのホストメモリに平文で現れることはありません。
+
+![Secure key import into Keystore.](Images/Chapters/0x5e/Android9_secure_key_import_to_keystore.png).
+
+```java
+KeyDescription ::= SEQUENCE {
+    keyFormat INTEGER,
+    authorizationList AuthorizationList
+}
+
+SecureKeyWrapper ::= SEQUENCE {
+    wrapperFormatVersion INTEGER,
+    encryptedTransportKey OCTET_STRING,
+    initializationVector OCTET_STRING,
+    keyDescription KeyDescription,
+    secureKey OCTET_STRING,
+    tag OCTET_STRING
+}
+```
+
+上記のコードは SecureKeyWrapper フォーマットで暗号化された鍵を生成するときに設定されるさまざまなパラメータを表しています。詳細については [WrappedKeyEntry](https://developer.android.com/reference/android/security/keystore/WrappedKeyEntry) の Android ドキュメントを確認してください。
+
+KeyDescription AuthorizationList を定義するときに、以下のパラメータが暗号化鍵セキュリティに影響を与えます。
+- `algorithm` パラメータは鍵が使用される暗号化アルゴリズムを指定します。
+- `keySize` パラメータは鍵のサイズをビット単位で指定します。鍵のアルゴリズムに対して普通に計測されます。
+- `digest` パラメータは署名および検証オペレーションを実行するために鍵とともに使用できるダイジェストアルゴリズムを指定します。
+
+#### アンロックされたデバイスのみでの復号化
+
+セキュリティを高めるために Android Pie では `unlockedDeviceRequied` フラグを導入しています。`setUnlockedDeviceRequired()` メソッドに `true` を渡すことで、アプリはデバイスがロックされたときに `AndroidKeystore` に格納されている鍵が復号化されることを防ぎ、復号化を許可する前にスクリーンをアンロックする必要があります。
+
+#### StrongBox ハードウェアセキュリティモジュール
+
+Android 9 以降を実行しているデバイスは `StrongBox Keymaster` を持つことができます。これは独自の CPU 、セキュリティストレージ、真正乱数生成器、パッケージ改竄に耐するメカニズムを持つハードウェアセキュリティモジュールにある Keymaster HAL の実装です。この機能を使うには `AndroidKeystore` を使用して鍵を生成またはインポートするときに、`KeyGenParameterSpec.Builder` クラスまたは `KeyProtection.Builder` クラスの `setIsStrongBoxBacked()` メソッドに `True` フラグを渡す必要があります。StrongBox が実行時に使用されていることを確認するには、`isInsideSecureHardware` が `true` を返し、鍵に関連付けられた特定のアルゴリズムと鍵サイズで StrongBox Keymaster が利用できない場合にシステムがスローする `StrongBoxUnavailableException` をスローしていないことを確認します。
+
+#### 鍵使用の認可
+
+Android デバイスでの鍵の不正使用を軽減するために、Android Keystore では鍵を生成またはインポートするときにアプリに鍵の認可された使用を指定できます。一度されると、認可は変更できません。
+
 Android により提供されているもう一つの API は `KeyChain` です。これは認証情報ストレージの 秘密鍵 (private key) とそれに対応する証明書チェーンへのアクセスを提供します。これはキーチェーンの対話の必要性と共有の性質からあまり使用されません。詳細については [開発者ドキュメント](https://developer.android.com/reference/android/security/KeyChain "Keychain") を参照してください。
 
 暗号鍵を保存するあまりセキュアではない方法は Android の SharedPreferences におくことです。[SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences.html "Android SharedPreference API") が [MODE_PRIVATE](https://developer.android.com/reference/android/content/Context.html#MODE_PRIVATE "MODE_PRIVATE") で初期化された場合、そのファイルはそれを作成したアプリケーションによってのみ読み取り可能です。但し、ルート化されたデバイスでは、ルートアクセス権を持つ他のアプリケーションが他のアプリの SharedPreference ファイルを簡単に読み取ることができます。MODE_PRIVATE が使われれているかどうかは関係ありません。AndroidKeyStore についてはそうではありません。AndroidKeyStore のアクセスはカーネルレベルで管理されているため、AndroidKeyStore が鍵をクリアまたは破棄することなくバイパスするにはかなりの作業とスキルが必要です。
@@ -327,6 +368,8 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - [Android Keychain API](https://developer.android.com/reference/android/security/KeyChain "Keychain")
 - [SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences.html "Android SharedPreference API")
 - [KeyInfo documentation](https://developer.android.com/reference/android/security/keystore/KeyInfo "KeyInfo")
+- [Android Pie features and APIs](https://developer.android.com/about/versions/pie/android-9.0#secure-key-import)
+- [Android Keystore system](https://developer.android.com/training/articles/keystore#java)
 
 ##### OWASP Mobile Top 10
 
