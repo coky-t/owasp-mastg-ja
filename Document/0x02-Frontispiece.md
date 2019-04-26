@@ -33,6 +33,10 @@ Jeroen は Xebia の主要なセキュリティアーキテクトであり、モ
 
 共同執筆者は一貫して質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 2,000 件の追加が記録されています。
 
+#### Carlos Holguera
+
+Carlos は ESCRYPT のモバイルペネトレーションテストチームを率いるセキュリティエンジニアです。彼はモバイルアプリや自動車のコントロールユニットや IoT デバイスなどの組込みシステムのセキュリティテストの分野で長年の実務経験を積んできました。彼はモバイルアプリのリバースエンジニアリングと動的計装に熱心に取り組んでおり、継続的に学び、知識を共有しています。
+
 #### Romuald Szkudlarek
 
 Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以上の経験を持つ情熱的なサイバーセキュリティおよびプライバシーの専門家です。彼のキャリアの中で、彼はソフトウェアとセキュリティの分野を進歩させることを目標に、さまざまなプロジェクトに余暇をささげていました。彼はさまざまな機関で定期的に指導しています。彼は CISSP, CCSP, CSSLP, CEH の資格を保持しています。
@@ -57,7 +61,7 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Jin Kung Ong, Jeroen Beckers, Abderrahmane Aftahi, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev,  Ryan Teoh, Denis Pilipchuk, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Dominique Righetto, José Carlos Andreu, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Carlos Holguera, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E.
+Jin Kung Ong, Jeroen Beckers, Abderrahmane Aftahi, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev,  Ryan Teoh, Denis Pilipchuk, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Dominique Righetto, José Carlos Andreu, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E.
 
 ### レビュー担当者
 
