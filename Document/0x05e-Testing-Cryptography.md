@@ -266,7 +266,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 Android Pie は鍵を `AndroidKeystore` 内にセキュアにインポートする機能を追加します。最初に `AndroidKeystore` は `PURPOSE_WRAP_KEY` を使用して鍵ペアを生成します。これも認証証明書で保護されるべきです。このペアは `AndroidKeystore` にインポートされる鍵を保護することを目的としています。暗号化された鍵は `SecureKeyWrapper` フォーマットの ASN.1 エンコードメッセージとして生成されます。これにはインポートされた鍵が使用を許される方法の説明も含まれています。その後、鍵はラッピング鍵を生成した特定のデバイスに属する `AndroidKeystore` ハードウェア内で復号化されるため、デバイスのホストメモリに平文で現れることはありません。
 
-![Secure key import into Keystore.](Images/Chapters/0x5e/Android9_secure_key_import_to_keystore.png).
+<img src="Images/Chapters/0x5e/Android9_secure_key_import_to_keystore.png" alt="Secure key import into Keystore" width="500">
 
 ```java
 KeyDescription ::= SEQUENCE {
@@ -348,28 +348,28 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - [#nelenkov] - N. Elenkov, Android Security Internals, No Starch Press, 2014, Chapter 5.
 
 #### 暗号についての参考情報
-- [Android Developer blog: Crypto provider deprecated]( https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html "Android Developer blog: Crypto provider deprecated")
-- [Android Developer blog: cryptography changes in android P]( https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html "Android Developer blog: cryptography changes in android P")
-- [Ida Pro](https://www.hex-rays.com/products/ida/ "IDA Pro")
-- [Android Developer blog: changes for NDK developers]( https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android Developer blog: changes for NDK developers")
-- [security providers](https://developer.android.com/reference/java/security/Provider.html "Android Security Providers")
-- [Spongy Castle](https://rtyley.github.io/spongycastle/ "Spongy Castle")
-- [Legion of the Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java")
-- [Android Developer documentation](https://developer.android.com/training/articles/keystore.html "Keystore")
-- [NIST keylength recommendations](https://www.keylength.com/en/4/ "NIST keylength recommendations")
-- [BSI recommendations - 2017](https://www.keylength.com/en/8/ "BSI recommendations - 2017")
+- Android Developer blog: Crypto provider deprecated - https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html
+- Android Developer blog: cryptography changes in android P - https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html
+- Ida Pro - https://www.hex-rays.com/products/ida/
+- Android Developer blog: changes for NDK developers - https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html
+- security providers -  https://developer.android.com/reference/java/security/Provider.html
+- Spongy Castle  - https://rtyley.github.io/spongycastle/
+- Legion of the Bouncy Castle - https://www.bouncycastle.org/java.html
+- Android Developer documentation - https://developer.android.com/training/articles
+- NIST keylength recommendations - https://www.keylength.com/en/4/
+- BSI recommendations - 2017 - https://www.keylength.com/en/8/
 
 #### SecureRandom についての参考情報
-- [Proper seeding of SecureRandom](https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded "Proper seeding of SecureRandom")
-- [Burpproxy its Sequencer](https://portswigger.net/burp/documentation/desktop/tools/sequencer "Burpproxy its Sequencer")
+- Proper seeding of SecureRandom - https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded
+- Burpproxy its Sequencer - https://portswigger.net/burp/documentation/desktop/tools/sequencer
 
 #### 鍵管理のテストについての参考情報
-- [Android KeyStore API](https://developer.android.com/reference/java/security/KeyStore.html "Android AndroidKeyStore API")
-- [Android Keychain API](https://developer.android.com/reference/android/security/KeyChain "Keychain")
-- [SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences.html "Android SharedPreference API")
-- [KeyInfo documentation](https://developer.android.com/reference/android/security/keystore/KeyInfo "KeyInfo")
-- [Android Pie features and APIs](https://developer.android.com/about/versions/pie/android-9.0#secure-key-import)
-- [Android Keystore system](https://developer.android.com/training/articles/keystore#java)
+- Android KeyStore API - https://developer.android.com/reference/java/security/KeyStore.html
+- Android Keychain API - https://developer.android.com/reference/android/security/KeyChain
+- SharedPreferences - https://developer.android.com/reference/android/content/SharedPreferences.html
+- KeyInfo documentation - https://developer.android.com/reference/android/security/keystore/KeyInfo
+- Android Pie features and APIs - https://developer.android.com/about/versions/pie/android-9.0#secure-key-import
+- Android Keystore system - https://developer.android.com/training/articles/keystore#java
 
 ##### OWASP Mobile Top 10
 
