@@ -378,7 +378,7 @@ $ otool -Iv DamnVulnerableIOSApp | grep release
 
 IDB は stack canary と PIE サポートの両方をチェックするプロセスを自動化します。IDB GUI でターゲットバイナリを選択し、"Analyze Binary..." ボタンをクリックします。
 
-![alt tag](Images/Chapters/0x06i/idb.png)
+<img src="Images/Chapters/0x06i/idb.png" alt="IDB Analyze Binary" width="400">
 
 
 ### サードパーティライブラリの脆弱性のチェック
@@ -517,11 +517,11 @@ $ ./class-dump <Executable> -r
 
 #### ツール
 
-- [Carthage](https://github.com/carthage/carthage "Carthage")
-- [CocoaPods](https://CocoaPods.org "CocoaPods")
-- [OWASP Dependency Checker](https://jeremylong.github.io/DependencyCheck/ "OWASP Dependency Checker")
-- [Sourceclear](https://sourceclear.com "Sourceclear")
-- [Class-dump](https://github.com/nygard/class-dump "Class-dump")
-- [RetireJS](https://retirejs.github.io/retire.js/ "Retire JS")
-- [idb](https://github.com/dmayer/idb)
-- [Codesign](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/codesign.1.html)
+- Carthage - https://github.com/carthage/carthage
+- CocoaPods - https://CocoaPods.org
+- OWASP Dependency Checker - https://jeremylong.github.io/DependencyCheck/
+- Sourceclear - https://sourceclear.com
+- Class-dump - https://github.com/nygard/class-dump
+- RetireJS - https://retirejs.github.io/retire.js/ 
+- idb  - https://github.com/dmayer/idb
+- Codesign - https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/codesign.1.html
