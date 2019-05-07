@@ -295,4 +295,5 @@ else {
 - CWE-295 - Improper Certificate Validation
 
 ##### Nscurl
-- [ATS に関する NowSecure によるブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS")
+
+- ATS のガイド - NowSecure によるブログ投稿 - https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/
