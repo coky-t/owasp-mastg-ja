@@ -8,8 +8,9 @@ OWASP は多くの執筆者、レビュー担当者、編集者がこのガイ�
 
 ## 著作権とライセンス
 
-![license](Images/CC-license.png)
 Copyright © 2018 The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
+
+<img src="Images/CC-license.png" alt="drawing" width="150">
 
 ## 謝辞
 
@@ -51,6 +52,7 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 - Andreas Happe
 - Kyle Benac
 - Alexander Anthuk
+- Jeroen Beckers
 - Wen Bin Kong
 - Abdessamad Temmar
 - Bolot Kerimbaev
@@ -61,7 +63,7 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Jin Kung Ong, Jeroen Beckers, Abderrahmane Aftahi, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev,  Ryan Teoh, Denis Pilipchuk, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, Dominique Righetto, José Carlos Andreu, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E.
+Abderrahmane Aftahi, Jin Kung Ong, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev,  Ryan Teoh, Denis Pilipchuk, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, José Carlos Andreu, Dominique Righetto, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E.
 
 ### レビュー担当者
 
@@ -89,7 +91,6 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 ### 名誉後援者
 
 [![NowSecure](Images/Sponsors/NowSecure_logo.png)](https://www.nowsecure.com/ "NowSecure")
-
 
 ### 旧版
 
