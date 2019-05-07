@@ -46,7 +46,7 @@
 
 コードインジェクションは非常に強力な技法であり、実行時にプロセスを探索および改変できます。インジェクションはさまざまな方法で実装されますが、自由に利用でき十分に文書化されたプロセスを自動化するツールのおかげで、すべての詳細を知らなくても使用できます。これらのツールは、アプリによりインスタンス化されたライブオブジェクトなどの、プロセスメモリや重要な構造体に直接アクセスできます。また、ロードされたライブラリの解決、メソッドやネイティブ関数のフックなどに役立つ多くのユーティリティ関数があります。プロセスメモリの改竄はファイルにパッチを適用するよりも検出が難しく、大半の場合に推奨される方法です。
 
-Substrate, Frida, XPosed はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
+Substrate, Frida, Xposed はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
 
 それだけでなく、Cycript をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も ["frida-cycript"](https://github.com/nowsecure/frida-cycript "Cycript fork powered by Frida") と呼ばれる Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で保守されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (この時点で混乱しても、心配ありません) 。frida-cycript のリリースには Frida の開発者 Ole によるブログ記事 "Cycript on Steroids," が付いていました。このタイトルは [Saurik はあまり好きではありませんでした](https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/ "Cycript on steroids: Pumping up portability and performance with Frida") 。
 
@@ -95,3 +95,18 @@ Substrate, Frida, XPosed はモバイル業界で最も広く使用されてい�
 典型的には、シンボリック実行は動的実行などの他の技法と組み合わされ、従来のシンボリック実行に特有のパス爆発の問題を軽減します。このコンクリート (実際の) 実行とシンボリック実行の組み合わせは *コンコリック実行* (コンコリックという名前は *conc* rete と symb *olic* に由来します) と呼ばれます。改善された SMT ソルバと現在のハードウェアスピードを併せて、コンコリック実行は中規模のソフトウェアモジュール (すなわち、10 KLOC オーダー) のパスを探索することが可能です。それだけでなく、コントロールフローグラフの簡素化など、逆難読化タスクをサポートする場合にも便利です。例えば、Jonathan Salwan と Romain Thomas は [動的シンボリック実行を使用して VM ベースのソフトウェア保護をリバースエンジニアリングする方法を示しました](https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf "Jonathan Salwan and Romain Thomas: How Triton can help to reverse virtual machine based software protections") (すなわち、実際の実行トレース、シミュレーション、シンボリック実行を組み合わせて使用します) 。
 
 Android のセクションでは、シンボリック実行を使用して Android アプリケーションの簡単なライセンスチェックをクラックするためのウォークスルーを説明します。
+
+### 参考情報
+
+#### OWASP Mobile Top 10 2016
+
+- [M9 - Reverse Engineering](https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering "M9 - Reverse Engineering")
+
+#### ツール
+
+- Angr - https://github.com/angr/angr
+- Cycript - http://www.cycript.org/
+- Frida - https://www.frida.re/
+- Radare2 - https://github.com/radare/radare2
+- Substrate - http://www.cydiasubstrate.com/
+- Xposed - https://www.xda-developers.com/xposed-framework-hub/
