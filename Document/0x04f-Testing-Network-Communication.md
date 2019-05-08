@@ -4,7 +4,7 @@
 
 ### HTTP(S) トラフィックの傍受
 
-多くの場合、HTTP(S) トラフィックがホストマシン上で実行されている *傍受プロキシ* 経由でリダイレクトされるように、モバイルデバイス上にシステムプロキシを設定することが最も実用的です。モバイルアプリクライアントとバックエンドの間のリクエストを監視することにより、利用可能なサーバーサイド API を簡単にマップし、通信プロトコルの情報を得ることができます。さらに、サーバー側のバグをテストするためにリクエストを再生および操作できます。
+多くの場合、HTTP(S) トラフィックがホストマシン上で実行されている *傍受プロキシ* 経由でリダイレクトされるように、モバイルデバイス上にシステムプロキシを設定することが最も実用的です。モバイルアプリクライアントとバックエンドの間のリクエストを監視することにより、利用可能なサーバーサイド API を簡単にマップし、通信プロトコルの情報を得ることができます。さらに、サーバー側の脆弱性をテストするためにリクエストを再生および操作できます。
 
 フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
 
@@ -12,11 +12,11 @@
 - [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
 - [Charles Proxy](https://www.charlesproxy.com)
 
-傍受プロキシを使用するには、それを PC/MAC 上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
+傍受プロキシを使用するには、それをマシン上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
+
+![Intercepting HTTP requests with BURP Suite Pro](Images/Chapters/0x04f/BURP.png)
 
 プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS ごとの「テスト環境構築」の章でこれを行う方法について説明します。
-
-![Intercepting HTTP requests with BURP Suite Pro](Images/Chapters/0x04f/BURP.jpg)
 
 ### ネットワーク層でのトラフィックの傍受
 
@@ -29,35 +29,38 @@
 
 このような場合は、次に何をすべきかを決めるために、まずネットワークトラフィックを監視および解析する必要があります。幸いにも、ネットワーク通信をリダイレクトおよび傍受するための選択肢がいくつかあります。
 
-- トラフィックをホストマシンにルーティングします。Mac/PC をネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](https://www.wireshark.org) を使用して、モバイルデバイスからインターネットに送られる任意のトラフィックを傍受できます。
+- トラフィックをホストマシンにルーティングします。マシンをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](https://www.wireshark.org) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
 
-- [ettercap](https://ettercap.github.io/ettercap/ "Ettercap") を使用して、モバイルデバイスからホストマシンへネットワークトラフィックをリダイレクトします (下記参照) 。
+- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストマシンにネットワークトラフィックをリダイレクトするために [bettercap](https://github.com/bettercap/bettercap "bettercap") を検討する必要があります (下図参照) 。
+
+> bettercap は MITM 攻撃を実行するための強力なツールであり、現在では ettercap の代わりとして優先すべきです。bettercap サイトの [Why another MITM tool?](https://www.bettercap.org/legacy/#why-another-mitm-tool "Why another MITM tool?") もご覧ください。
 
 - ルート化デバイスでは、フックやコードインジェクションを使用して、ネットワーク関連の API コール (HTTP リクエストなど) を傍受したり、これらのコールの引数をダンプしたり操作することも可能です。これにより実際のネットワークデータを検査する必要がなくなります。これらの技法については「リバースエンジニアリングと改竄」の章で詳しく説明します。
 
-- iOS では、代わりに "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
+- macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
 
 #### 中間者攻撃のシミュレーション
 
-[Ettercap](https://ettercap.github.io/ettercap/ "Ettercap") はネットワークペネトレーションテストの中で使用して、中間者攻撃をシミュレートします。これは [ARP ポイズニングやスプーフィング](https://en.wikipedia.org/wiki/ARP_spoofing "ARP poisoning/spoofing") をターゲットマシンに実行することで実現します。このような攻撃が成功すると、二つのマシン間のすべてのパケットは第三のマシンにリダイレクトされます。これは中間者の役割を果たし、解析のためにトラフィックを傍受できます。
+[bettercap](https://github.com/bettercap/bettercap "bettercap") はネットワークペネトレーションテストの中で使用して、中間者攻撃 (MITM) をシミュレートします。これは [ARP ポイズニングやスプーフィング](https://en.wikipedia.org/wiki/ARP_spoofing "ARP poisoning/spoofing") をターゲットマシンに実行することで実現します。このような攻撃が成功すると、二つのマシン間のすべてのパケットは第三のマシンにリダイレクトされます。これは中間者の役割を果たし、解析のためにトラフィックを傍受できます。
 
 モバイルアプリの完全な動的解析には、すべてのネットワークトラフィックを傍受する必要があります。メッセージを傍受できるようにするには、準備としていくつかの手順を検討する必要があります。
 
-**Ettercap のインストール**
+**bettercap のインストール**
 
-Ettercap はすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。中間者としての役割を果たすマシンにそれをインストールする必要があります。macOS では brew を使用してインストールできます。
-
-```shell
-$ brew install ettercap
-```
-
-Ettercap は Debian ベースの linux ディストリビューションで `apt-get` を使ってインストールすることもできます。
+bettercap はすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。中間者としての役割を果たすマシンにそれをインストールする必要があります。macOS では brew を使用してインストールできます。
 
 ```shell
-$ sudo apt-get install zlib1g zlib1g-dev
-$ sudo apt-get install build-essential
-$ sudo apt-get install ettercap
+$ brew install bettercap
 ```
+
+Kali Linux では `apt-get` で bettercap をインストールできます。
+
+```shell
+$ apt-get update
+$ apt-get install bettercap
+```
+
+[LinuxHint](https://linuxhint.com/install-bettercap-on-ubuntu-18-04-and-use-the-events-stream/ "Install Bettercap on Ubuntu 18.04") には Ubuntu Linux 18.04 のインストール手順もあります。
 
 **ネットワーク解析ツール**
 
@@ -70,75 +73,33 @@ Wireshark は GUI を提供しており、コマンドラインに慣れてい�
 
 **ネットワークのセットアップ**
 
-中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにマシンがある必要があります。これが完了すると以下の情報が必要です。
+中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにマシンがある必要があります。これが完了するとモバイルフォンの IP アドレスが必要です。
 
-- モバイルフォンの IP アドレス
-- ゲートウェイの IP アドレス
+#### bettercap による ARP ポイズニング
 
-#### Ettercap による ARP ポイズニング
-
-以下のコマンドで ettercap を開始し、最初の IP アドレスをワイヤレスネットワークのネットワークゲートウェイに置き換え、二つ目のものをモバイルデバイスのものと置き換えます。
+まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて bettercap を実行します。
 
 ```shell
-$ sudo ettercap -T -i en0 -M arp:remote /192.168.0.1// /192.168.0.105//
+$ sudo bettercap -eval "set arp.spoof.targets X.X.X.X; arp.spoof on; set arp.spoof.internal true; set arp.spoof.fullduplex true;"
+bettercap v2.22 (built for darwin amd64 with go1.12.1) [type 'help' for a list of commands]
+
+[19:21:39] [sys.log] [inf] arp.spoof enabling forwarding
+[19:21:39] [sys.log] [inf] arp.spoof arp spoofer started, probing 1 targets.
 ```
 
-モバイルフォンでブラウザを起動して example.com に移動すると、以下のような出力が表示されます。
+bettercap は自動的にパケットを (ワイヤレス) ネットワークのネットワークゲートウェイに送信します。あなたはそのトラフィックを盗聴できます。2019年の初めに [全二重 ARP スプーフィング](https://github.com/bettercap/bettercap/issues/426 "Full Duplex ARP Spoofing") サポートが bettercap に追加されました。
 
-```shell
-ettercap 0.8.2 copyright 2001-2015 Ettercap Development Team
+モバイルフォンでブラウザを起動して http://example.com に移動すると、Wireshark を使用している場合には以下のような出力が表示されるはずです。
 
-Listening on:
-   en0 -> AC:BC:32:81:45:05
-	  192.168.0.105/255.255.255.0
-	  fe80::c2a:e80c:5108:f4d3/64
-
-SSL dissection needs a valid 'redir_command_on' script in the etter.conf file
-Privileges dropped to EUID 65534 EGID 65534...
-
-  33 plugins
-  42 protocol dissectors
-  57 ports monitored
-20388 mac vendor fingerprint
-1766 tcp OS fingerprint
-2182 known services
-
-Scanning for merged targets (2 hosts)...
-
-* |=========================================>| 100.00 %
-
-2 hosts added to the hosts list...
-
-ARP poisoning victims:
-
- GROUP 1 : 192.168.0.1 F8:E9:03:C7:D5:10
-
- GROUP 2 : 192.168.0.102 20:82:C0:DE:8F:09
-Starting Unified sniffing...
-
-Text only Interface activated...
-Hit 'h' for inline help
-
-Sun Jul  9 22:23:05 2017 [855399]
-  :::0 --> ff02::1:ff11:998b:0 | SFR (0)
-
-
-Sun Jul  9 22:23:10 2017 [736653]
-TCP  172.217.26.78:443 --> 192.168.0.102:34127 | R (0)
-
-Sun Jul  9 22:23:10 2017 [737483]
-TCP  74.125.68.95:443 --> 192.168.0.102:35354 | R (0)
-```
+<img src="Images/Chapters/0x04f/bettercap.png" alt="Wireshark">
 
 それで、モバイルフォンで送受信される完全なネットワークトラフィックを確認できるようになります。これには DNS, DHCP およびその他の形式の通信も含まれるため、非常に「ノイズが多い」かもしれません。したがって、関連するトラフィックだけに集中するために、[Wireshark の DisplayFilter](https://wiki.wireshark.org/DisplayFilters "DisplayFilters") の使い方や [tcpdump でフィルタする方法](https://danielmiessler.com/study/tcpdump/#gs.OVQjKbk "A tcpdump Tutorial and Primer with Examples") を知る必要があります。
 
 > 中間者攻撃は ARP スプーフィングを通じて OSI レイヤ 2 上で攻撃が実行されるため、あらゆるデバイスやオペレーティングシステムに対して機能します。あなたが MITM である場合、通過するデータは TLS を使用して暗号化されている可能性があるため、平文データを見ることができないかもしれません。しかし、それは関与するホスト、使用されるプロトコルおよびアプリが通信しているポートに関する貴重な情報をあなたに提供します。
 
-例として、次のセクションで Xamarin アプリからのすべてのリクエストを傍受プロキシにリダイレクトします。
-
 #### SPAN ポート / ポートフォワーディング
 
-ettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (AP) やルーターを代わりに使うこともできます。設定には AP の設定にアクセスする必要があります。これはやりとりする前に明確にする必要があります。再構成が可能な場合は、まず AP が以下のいずれかをサポートしているかどうかを確認する必要があります。
+bettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (AP) やルーターを代わりに使うこともできます。設定には AP の設定にアクセスする必要があります。これはやりとりする前に明確にする必要があります。再構成が可能な場合は、まず AP が以下のいずれかをサポートしているかどうかを確認する必要があります。
 
 - ポートフォワーディング
 - SPAN またはミラーポートがある
@@ -151,6 +112,8 @@ ettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (A
 
 #### 例: Xamarin の扱い
 
+例として、すべてのリクエストを Xamarin アプリから傍受プロキシにリダイレクトしてみます。
+
 Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://developer.xamarin.com/guides/android/getting_started/ "Getting Started with Android") および [iOS アプリ](https://developer.xamarin.com/guides/ios/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
 
 Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は二つあります。
@@ -161,7 +124,7 @@ Xamarin アプリをテストするときに WiFi 設定でシステムプロキ
 WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
 ```
 
-- ettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
+- bettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
 
 ```shell
 $ echo "
@@ -183,7 +146,7 @@ Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない�
 
 アプリの使用を開始し、その機能を動かします。傍受プロキシに HTTP メッセージが表示されるはずです。
 
-> ettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
+> bettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
 
 ### ネットワーク上のデータ暗号化の検証
 
@@ -203,7 +166,12 @@ Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない�
 
 **暗号スイートの用語**
 
-**プロトコル**_**鍵交換アルゴリズム**_WITH_**ブロック暗号**_**完全性チェックアルゴリズム**
+暗号スイートの構造は以下の通りです。
+
+**プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム**
+
+この構造を以下で説明します。
+
 - プロトコル: 暗号が使用するプロトコル
 - 鍵交換アルゴリズム: TLS ハンドシェイク時の認証にサーバーおよびクライアントで使用される鍵交換アルゴリズム
 - グロック暗号: メッセージストリームを暗号化するために使用されるブロック暗号
@@ -218,150 +186,108 @@ Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない�
 - SHA を完全性用のハッシュアルゴリズムに
 
 TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではなく、代わりに TLS ハンドシェイク時に決定されることに注意します。
-例: `TLS_AES_128_GCM_SHA256`
 
-以下では、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
+以下のリストでは、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
+
 プロトコル:
 - `SSLv1`
-- `SSLv2`[rfc6176](https://tools.ietf.org/html/rfc6176)
-- `SSLv3`[rfc6101](https://tools.ietf.org/html/rfc6101)
-- `TLSv1.0`[rfc2246](https://www.ietf.org/rfc/rfc2246)
-- `TLSv1.1`[rfc4346](https://tools.ietf.org/html/rfc4346)
-- `TLSv1.2`[rfc5246](https://tools.ietf.org/html/rfc5246)
-- `TLSv1.3`[rfc8446](https://tools.ietf.org/html/rfc8446)
+- `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176)
+- `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101)
+- `TLSv1.0` - [RFC 2246](https://www.ietf.org/rfc/rfc2246)
+- `TLSv1.1` - [RFC 4346](https://tools.ietf.org/html/rfc4346)
+- `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246)
+- `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446)
 
 鍵交換アルゴリズム:
-- `DSA`[rfc6979](https://tools.ietf.org/html/rfc6979)
-- `ECDSA`[rfc6979](https://tools.ietf.org/html/rfc6979)
-- `RSA`[rfc8017](https://tools.ietf.org/html/rfc8017)
-- `DHE`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
-- `ECDHE`[rfc4492](https://tools.ietf.org/html/rfc4492)
-- `PSK`[rfc4279](https://tools.ietf.org/html/rfc4279)
+- `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979)
+- `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979)
+- `RSA` - [RFC 8017](https://tools.ietf.org/html/rfc8017)
+- `DHE` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
+- `ECDHE` - [RFC 4492](https://tools.ietf.org/html/rfc4492)
+- `PSK` - [RFC 4279](https://tools.ietf.org/html/rfc4279)
 - `DSS`[FIPS186-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf)
-- `DH_anon`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
-- `DHE_RSA`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
-- `DHE_DSS`[rfc2631](https://tools.ietf.org/html/rfc2631) [rfc7919](https://tools.ietf.org/html/rfc7919)
-- `ECDHE_ECDSA`[rfc8422](https://tools.ietf.org/html/rfc8422)
-- `ECDHE_PSK` [rfc8422](https://tools.ietf.org/html/rfc8422) [rfc5489](https://tools.ietf.org/html/rfc5489)
-- `ECDHE_RSA` [rfc8422](https://tools.ietf.org/html/rfc8422)
+- `DH_anon` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
+- `DHE_RSA` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
+- `DHE_DSS` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
+- `ECDHE_ECDSA` - [RFC 8422](https://tools.ietf.org/html/rfc8422)
+- `ECDHE_PSK`  - [RFC 8422](https://tools.ietf.org/html/rfc8422)  - [RFC 5489](https://tools.ietf.org/html/rfc5489)
+- `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422)
 
 ブロック暗号:
-- `DES` [rfc4772](https://tools.ietf.org/html/rfc4772)
-- `DES_CBC` [rfc1829](https://tools.ietf.org/html/rfc1829)
-- `3DES` [rfc2420](https://tools.ietf.org/html/rfc2420)
-- `3DES_EDE_CBC`[rfc2420](https://tools.ietf.org/html/rfc2420)
-- `AES_128_CBC`[rfc3268](https://tools.ietf.org/html/rfc3268)
-- `AES_128_GCM` [rfc5288](https://tools.ietf.org/html/rfc5288)
-- `AES_256_CBC`[rfc3268](https://tools.ietf.org/html/rfc3268)
-- `AES_256_GCM`[rfc5288](https://tools.ietf.org/html/rfc5288)
-- `RC4_40` [rfc7465](https://tools.ietf.org/html/rfc7465)
-- `RC4_128` [rfc7465](https://tools.ietf.org/html/rfc7465)
-- `CHACHA20_POLY1305 ` [rfc7905](https://tools.ietf.org/html/rfc7905) [rfc7539](https://tools.ietf.org/html/rfc7539)
+- `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772)
+- `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829)
+- `3DES`  - [RFC 2420](https://tools.ietf.org/html/rfc2420)
+- `3DES_EDE_CBC` - [RFC 2420](https://tools.ietf.org/html/rfc2420)
+- `AES_128_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268)
+- `AES_128_GCM`  - [RFC 5288](https://tools.ietf.org/html/rfc5288)
+- `AES_256_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268)
+- `AES_256_GCM` - [RFC 5288](https://tools.ietf.org/html/rfc5288)
+- `RC4_40`  - [RFC 7465](https://tools.ietf.org/html/rfc7465)
+- `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465)
+- `CHACHA20_POLY1305 `  - [RFC 7905](https://tools.ietf.org/html/rfc7905)  - [RFC 7539](https://tools.ietf.org/html/rfc7539)
 
 完全性チェックアルゴリズム:
-- `MD5` [rfc6151](https://tools.ietf.org/html/rfc6151)
-- `SHA` [rfc6234](https://tools.ietf.org/html/rfc6234)
-- `SHA256` [rfc6234](https://tools.ietf.org/html/rfc6234)
-- `SHA384` [rfc6234](https://tools.ietf.org/html/rfc6234)
+- `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151)
+- `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
+- `SHA256`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
+- `SHA384`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
 
 暗号スイートの性能はそのアルゴリズムの性能に依存することに注意します。
 
-
 以下では、TLS で使用する最新の推奨暗号スイートリストを提示します。これらの暗号スイートは IANA の TLS パラメータドキュメントと OWASP TLS Cipher String Cheat Sheet の両方で推奨されています。
 
-IANA 推奨暗号スイート [rfc8447](https://tools.ietf.org/html/rfc8447#section-8) [IANA_CIPHERS](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4):
-
-- `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`
-- `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`
-- `TLS_DHE_PSK_WITH_AES_128_GCM_SHA256`
-- `TLS_DHE_PSK_WITH_AES_256_GCM_SHA384`
-- `TLS_AES_128_GCM_SHA256`
-- `TLS_AES_256_GCM_SHA384`
-- `TLS_CHACHA20_POLY1305_SHA256`
-- `TLS_AES_128_CCM_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
-- `TLS_DHE_RSA_WITH_AES_128_CCM`
-- `TLS_DHE_RSA_WITH_AES_256_CCM`
-- `TLS_DHE_PSK_WITH_AES_128_CCM`
-- `TLS_DHE_PSK_WITH_AES_256_CCM`
-- `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`
-- `TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
-- `TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256`
-- `TLS_DHE_PSK_WITH_CHACHA20_POLY1305_SHA256`
-- `TLS_ECDHE_PSK_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_PSK_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_PSK_WITH_AES_128_CCM_SHA256`
-
-OWASP 推奨暗号スイート [Cipher_String_Cheat_Sheet](https://www.owasp.org/index.php/TLS_Cipher_String_Cheat_Sheet):
-
-- `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`
-- `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
-- `TLS_DHE_RSA_WITH_AES_256_CBC_SHA256`
-- `TLS_DHE_RSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`
-- `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`
-- `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`
-- `TLS_DHE_RSA_WITH_AES_256_CBC_SHA`
-- `TLS_DHE_RSA_WITH_AES_128_CBC_SHA`
+- IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4) にあります。
+- OWASP 推奨暗号スイートは [TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md "OWASP TLS Cipher String Cheat Sheet") にあります。
 
 一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites) および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc) バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
 
 #### 静的解析
 
-ソースコード内のすべての API やウェブサービスリクエストを特定し、プレーンの HTTP URL が要求されていないことを確認します。機密情報は [HttpsURLConnection](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [SSLSocket](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
+ソースコード内のすべての API やウェブサービスリクエストを特定し、プレーンの HTTP URL が使用されていないことを確認します。機密情報は [HttpsURLConnection](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [SSLSocket](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
 
 `SSLSocket` はホスト名を検証 **しない** ことに注意します。ホスト名を検証するには `getDefaultHostnameVerifier` を使用します。Android 開発者ドキュメントには [コード例](https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket "Warnings About Using SSLSocket Directly") があります。
 
-ベストプラクティスに従ってサーバーが構成されていることを確認します。[OWASP Transport Layer Protection チートシート](https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
-
-静的解析には HTTPS 接続が終端するウェブサーバーやリバースプロキシの構成ファイルが必要です。[OWASP Transport Layer Protection チートシート](https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
+HTTPS 接続の終端となるサーバーや終端プロキシがベストプラクティスに従って構成されていることを確認します。[OWASP Transport Layer Protection チートシート](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
 #### 動的解析
 
 テストされるアプリの着信および発信するネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
-- [OWASP ZAP](https://security.secure.force.com/security/tools/webapp/zapandroidsetup "OWASP ZAP") や [Burp Suite Professional](https://support.portswigger.net/customer/portal/articles/1841101-configuring-an-android-device-to-work-with-burp "Configuring an Android device to work with Burp"), [Wireshark](https://www.wireshark.org/ "Wireshark") などの傍受プロキシですべての HTTP および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
+- OWASP ZAP や Burp Suite などの傍受プロキシですべての HTTP(S) および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
+- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension) などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay) ツールを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
 
-Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension) や [mitm-relay](https://github.com/jrmdev/mitm_relay) などの Burp プラグインを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
-
-> 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。Vproxy などのツールを使用すると、すべての HTTP(S) トラフィックをマシンにリダイレクトし、暗号化されていないリクエストに対して盗聴や調査を行うことができます。
+> 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。
 
 サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
 - nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
 - [testssl.sh](https://github.com/drwetter/testssl.sh) は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
-
 ### クリティカルな操作がセキュアな通信チャネルを使用することの確認
 
 #### 概要
 
-銀行業務アプリなどの機密性の高いアプリケーションでは、[OWASP MASVS](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md "The Mobile Application Security Verification Standard") では「多層防御」検証レベルを導入しています。そのようなアプリケーションのクリティカルな操作 (ユーザー登録やアカウント回復など) は攻撃者にとって最も魅力的なターゲットです。ユーザー操作を確認するための追加のチャネル (SMS や電子メールなど) のような高度なセキュリティコントロールを実装する必要があります。
+銀行業務アプリなどの機密性の高いアプリケーションでは、[OWASP MASVS](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md "The Mobile Application Security Verification Standard") では「多層防御」検証レベルを導入しています。そのようなアプリケーションのクリティカルな操作 (ユーザー登録やアカウント回復など) は攻撃者にとって最も魅力的なターゲットです。 SMS や電子メールに頼ることなくユーザー操作を確認するための追加のチャネルなど、高度なセキュリティコントロールを実装する必要があります。
+
+クリティカルな操作への追加要素として SMS を使用することはお勧めできません。SIM スワップ詐欺のような攻撃は多くの場合 SMS の検証を回避するために [Instagram アカウント、暗号通貨為替](https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin "The SIM Hijackers") やもちろん [金融機関](https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/ "SIM swapping") を攻撃するために使用されてきました。SIM スワッピングは携帯電話番号を新しい SIM カードに切り替えるために多くの通信事業者により提供されている合法的なサービスです。攻撃者が通信事業者を説得するか、携帯ショップの小売店の従業員を雇って SIM スワップを行わせると、携帯電話番号は攻撃者が所有する SIM に転送されます。この結果、攻撃者は被害者に知られることなく SMS や音声通話をすべて受信できるようになります。
+
+[あなたの SIM カードを保護する](https://www.wired.com/story/sim-swap-attack-defend-phone/ "How to protect yourself against a SIM swap attack") にはさまざまな方法がありますが、このレベルのセキュリティ成熟度や意識の高さを通常のユーザーからは期待できず、通信事業者により強制されることもありません。
+
+また電子メールの使用をセキュアな通信チャネルとみなすべきではありません。電子メールの暗号化は通常ではサービスプロバイダにより提供されてはいませんし、利用可能な場合でも平均的なユーザーにより使用されてはいないため、電子メールを使用する際の機密性は保証できません。なりすまし、(スピア|ダイナマイト) フィッシング、スパムは電子メールを悪用してユーザーをだますためのさらなる方法です。したがって、SMS や電子メール以外に他のセキュアな通信チャネルを検討する必要があります。
 
 #### 静的解析
 
 コードをレビューして、クリティカルな操作を参照する部分を特定します。そのような操作に追加のチャネルを使用していることを確認します。追加の検証チャネルの例には以下があります。
 
-- トークン (RSA トークン, yubikey など)
+- トークン (RSA トークン, YubiKey など)
 - プッシュ通知 (Google Prompt など)
-- SMS
-- 電子メール
-- 訪問またはスキャンした他のウェブサイトからのデータ
+- 訪問またはスキャンした他のウェブサイトからのデータ (QR コードなど)
 - 物理的な文字や物理的なエントリポイントからのデータ (銀行で書類に署名した後にのみ受け取るデータなど)
+
+クリティカルな操作ではユーザーの操作を確認するために少なくとも一つの追加チャネルの使用を強制することを確認します。クリティカルな操作を実行する際にこれらのチャネルがバイパスされてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、[Google Authenticator](https://github.com/google/google-authenticator-android "Google Authenticator for Android") を介したワンタイムパスコード (OTP) も検討してください。
 
 #### 動的解析
 
-テストされるアプリケーションのクリティカルな操作 (ユーザー登録、アカウント回復、送金など) をすべて特定します。それぞれのクリティカルな操作に少なくとも一つの追加チャネル (SMS、電子メール、トークンなど)  が必要であることを確認します。関数を直接呼び出すことでこれらのチャネルの使用をバイパスするかどうかを確認します。
-
-#### 改善方法
-
-クリティカルな操作ではユーザーの操作を確認するために少なくとも一つの追加チャネルの使用が必要であることを確認します。クリティカルな操作を実行する際にこれらのチャネルがバイパスできてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、[Infobip 2FA ライブラリ](https://2-fa.github.io/libraries/android-library.html "Infobip 2FA library") や [Google Authenticator](https://github.com/google/google-authenticator-android "Google Authenticator for Android") を介したワンタイムパスコード (OTP) を検討します。
+テストされるアプリケーションのクリティカルな操作 (ユーザー登録、アカウント回復、金融取引など) をすべて特定します。それぞれのクリティカルな操作に少なくとも一つの追加チャネルが必要であることを確認します。関数を直接呼び出すことでこれらのチャネルの使用をバイパスしないことを確認します。
 
 ### 参考情報
 
@@ -379,12 +305,37 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 - CWE-319 - Cleartext Transmission of Sensitive Information
 
 #### ツール
-- Tcpdump - https://www.androidtcpdump.com/
+- bettercap - https://www.bettercap.org
+- Burp Suite - https://portswigger.net/burp/
+- OWASP ZAP - https://www.owasp.org/index.php/
+- tcpdump - https://www.androidtcpdump.com/
 - Testssl.sh - https://github.com/drwetter/testssl.sh
 - Wireshark - https://www.wireshark.org/
-- OWASP ZAP - https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
-- Burp Suite - https://portswigger.net/burp/
-- Vproxy - https://github.com/B4rD4k/Vproxy
+
+#### Android
+- Android supported Cipher suites - https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites
+
+#### iOS
+- iOS supported Cipher suites - https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc
+
+#### IANA Transport Layer Security (TLS) Parameters
+- TLS Cipher Suites - https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4
+
+#### OWASP TLS Cipher String Cheat Sheet
+- Recommendations for a cipher string - https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md
+
+#### SIM Swapping attacks
+
+- The SIM Hijackers - https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin
+- SIM swapping: how the mobile security feature can lead to a hacked bank account - https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/
+
+#### NIST
+- FIPS PUB 186 - Digital Signature Standard (DSS)
+
+#### SIM Swap Fraud
+
+- https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin
+- How to protect yourself against a SIM swap attack - https://www.wired.com/story/sim-swap-attack-defend-phone/
 
 #### IETF
 - RFC 6176 - https://tools.ietf.org/html/rfc6176
@@ -413,21 +364,3 @@ Burp や OWASP ZAP などの傍受プロキシは HTTP トラフィックのみ�
 - RFC 6151 - https://tools.ietf.org/html/rfc6151
 - RFC 6234 - https://tools.ietf.org/html/rfc6234
 - RFC 8447 - https://tools.ietf.org/html/rfc8447#section-8
-
-
-#### Android
-- Android supported Cipher suites - https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites
-
-
-#### IOS
-- IOS supported Cipher suites - https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc
-
-
-#### IANA Transport Layer Security (TLS) Parameters
-- TLS Cipher Suites - https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4
-
-#### OWASP TLS Cipher String Cheat Sheet
-- Recommendations for a cipher string - https://www.owasp.org/index.php/TLS_Cipher_String_Cheat_Sheet
-
-#### NIST
-- FIPS PUB 186 - Digital Signature Standard (DSS)
