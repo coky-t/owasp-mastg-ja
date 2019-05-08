@@ -65,6 +65,9 @@
 - [logcat-color](https://github.com/marshall/logcat-color "Logcat color") - Android SDK の adb logcat コマンドに代わるカラフルで高度な設定が可能なツールです。
 - [VirtualHook](https://github.com/rk700/VirtualHook "VirtualHook") - VirtualHook は Android ART(>=5.0) のアプリケーション用のフッキングツールです。VirtualApp をベースにしており、フックを挿入するためにルート権限は必要ありません。
 - [Xposed Framework](https://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053 "Xposed Framework") - Xposed framework を使用すると、Android アプリケーションパッケージ (APK) の改変や再フラッシュを行わずに、実行時にシステムやアプリケーションのアスペクトや動作を変更できます。
+- [jdb](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html) - jdb ツールはブレークポイントを設定したりアプリケーション変数を表示したりできる Java デバッガです。jdb は JDWP プロトコルを使用します。
+- [Andbug](https://github.com/swdunlop/AndBug) - スクリプト対応の Android デバッガです。AndBug は Android プラットフォームの Dalvik 仮想マシンをターゲットとしたリバースエンジニアと開発者向けのデバッガです。AndBug は Java Debug Wire Protocol (JDWP) を使用しています。
+- [Introspy-Android](https://github.com/iSECPartners/Introspy-Android) - Android アプリケーションが実行時に何をしているのかを理解し、潜在的なセキュリティ問題を特定するのに役立つブラックボックスツールです。制限事項: Introspy は 'Cydia Substrate' をベースとして動作するため動かすには Cydia が必要であり、アプリウェブサイト Cydia ベースではバージョン 2.3 から 4.3 までの Android をサポートしています。前述のバージョンでは Introspy は正しく機能します。 (http://www.cydiasubstrate.com/)
 
 #### ルート検出と証明書ピンニングのバイパス
 
