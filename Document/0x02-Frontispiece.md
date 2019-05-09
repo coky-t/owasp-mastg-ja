@@ -63,7 +63,7 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Abderrahmane Aftahi, Jin Kung Ong, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev,  Ryan Teoh, Denis Pilipchuk, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, José Carlos Andreu, Dominique Righetto, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E.
+Abderrahmane Aftahi, Jin Kung Ong, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev,  Ryan Teoh, Denis Pilipchuk, Dharshin De Silva, Anatoly Rosencrantz, Abhinav Sejpal, José Carlos Andreu, Dominique Righetto, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E., Shiv Sahni
 
 ### レビュー担当者
 
