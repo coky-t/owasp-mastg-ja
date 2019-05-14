@@ -37,8 +37,11 @@
 
 暗号化 API の名前はモバイルプラットフォームごとに異なります。
 
+以下を確認してください。
+
 - 暗号アルゴリズムは最新で業界標準に適合している。これには、古いブロック暗号 (DES など)、ストリーム暗号 (RC4 など)、ハッシュ関数 (MD5 など)、Dual_EC_DRBG などの不十分な乱数生成器など (NIST に認定されているものさえ) があります。これらはすべてセキュアではないとマークされるべきであり、使用すべきではなく、アプリケーションやサーバーから削除されるべきです。
 - 鍵長は業界標準と適合していて十分な時間の保護を提供している。さまざまな鍵長とムーアの法則を考慮した保護の比較が [オンライン](https://www.keylength.com/ "Keylength comparison") にあります。
+- 暗号化手段は互いに他と混在していない。例えば、公開鍵で署名したり、署名に使用された鍵ペアを使用して暗号化することはしていません。
 - 暗号パラメータは妥当な範囲内で十分に定義されている。これには、暗号ソルト (少なくともハッシュ関数出力と同じ長さであるべき) 、パスワード導出関数および反復カウントの妥当な選択 (PBKDF2, scrypt, bcrypt など) 、ランダムかつユニークな IV、目的に合ったブロック暗号モード (特定の場合を除き、ECB を使用すべきでないなど) 、適切な鍵管理 (3DES は三つの独立した鍵を持つべきなど) などがあります。
 
 以下のアルゴリズムが推奨されます。
@@ -54,6 +57,7 @@
 - ["Commercial National Security Algorithm Suite and Quantum Computing FAQ"](https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf "Commercial National Security Algorithm Suite and Quantum Computing FAQ")
 - [NIST recommendations (2016)](https://www.keylength.com/en/4/ "NIST recommendations")
 - [BSI recommendations (2017)](https://www.keylength.com/en/8/ "BSI recommendations")
+
 
 ### よくある設定の問題
 
@@ -148,10 +152,18 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 注意: メモリダンプの容易さを考えると、署名の検証や暗号化に使用される公開鍵以外では、アカウントやデバイス間で同じ鍵を共有してはいけません。
 
+#### 転送時に鍵を保護する
+
+あるデバイスから別のデバイスへ、またはアプリからバックエンドへ鍵を転送する必要がある場合は、転送鍵ペアまたは別のメカニズムを使用して、適切な鍵保護が設定されていることを確認します。多くの場合、鍵は簡単にリバースできる難読化手法で共有されます。代わりに、非対称暗号方式またはラッピング鍵が使用されていることを確認します。
+
 
 ### Android と iOS の暗号化 API
 
 同じ基本的な暗号原則が特定の OS とは独立して適用されますが、それぞれのオペレーティングシステムは独自の実装と API を提供します。データストレージ用のプラットフォーム固有の暗号化 API については [**Android のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md) および [**iOS のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md) の章で詳しく説明しています。ネットワークトラフィックの暗号化、特に Transport Layer Security (TLS) については [**Android のネットワーク API**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md) の章で説明しています。
+
+
+### 暗号化ポリシー
+大規模な組織で、または高リスクのアプリケーションが作成される場合、[NIST 鍵管理における推奨事項](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf "NIST 800-57 Rev4") のようなフレームワークに基づいて、暗号化ポリシーを作成することがよくあります。暗号化の適用に基本的な誤りが見つかった場合、学んだ教訓や暗号鍵管理方針を設定する良い出発点となります。
 
 
 #### 参考情報
@@ -160,6 +172,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 - [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
 - [Breaking RSA with Mangers Attack]( https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Mangers attack")
 - [NIST 800-38d]( https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
+- [NIST 800-57Rev4](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-4/final "NIST 800-57Rev4")
 
 ##### OWASP Mobile Top 10 2016
 
@@ -167,6 +180,8 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 ##### OWASP MASVS
 
+- V1.2: "セキュリティコントロールはクライアント側だけではなくそれぞれのリモートエンドポイントで実施されている。"
+- V1.8: "暗号鍵が（もしあれば）どのように管理されるかについての明確な方針があり、暗号鍵のライフサイクルが施行されている。 NIST SP 800-57 などの鍵管理標準に準拠することが理想的である。"
 - V3.1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
 - V3.2: "アプリは実績のある暗号化プリミティブの実装を使用している。"
 - V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
