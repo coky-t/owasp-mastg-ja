@@ -12,7 +12,7 @@
 
 以下の `codesign` コマンドを実行します。
 
-```sh
+```shell
 $ codesign -dvvv <yourapp.app>
 Executable=/Users/Documents/<yourname>/Payload/<yourname.app>/<yourname>
 Identifier=com.example.example
@@ -411,7 +411,7 @@ $ pod install
 ```
 
 2. 依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
-```sh
+```shell
 $ sudo gem install CocoaPods-dependencies
 $ pod dependencies
 ```
@@ -425,7 +425,7 @@ $ pod dependencies
 
 Carthage をサードパーティの依存関係に使用する場合には、サードパーティライブラリの脆弱性を解析するために以下の手順を実行します。
 1. Cartfile があるプロジェクトのルートで、以下を入力します。
-```sh
+```shell
 $ brew install carthage
 $ carthage update --platform iOS
 ```
@@ -452,7 +452,7 @@ $ carthage update --platform iOS
 
 アプリケーションソースが利用可能であり、CocoaPods が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
 1. Podfile があるプロジェクトのルートで、以下を実行します。
-``` sh
+``` shell
 $ sudo gem install CocoaPods
 $ pod install
 ```
@@ -460,7 +460,7 @@ $ pod install
 
 アプリケーションソースが利用可能であり、Carthage が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
 1. Cartfile があるプロジェクトのルートで、以下を実行します。
-```sh
+```shell
 $ brew install carthage
 $ carthage update --platform iOS
 ```
