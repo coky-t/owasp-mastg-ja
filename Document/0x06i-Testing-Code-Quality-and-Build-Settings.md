@@ -13,8 +13,8 @@
 以下の `codesign` コマンドを実行します。
 
 ```shell
-$ codesign -dvvv <yourapp.app>
-Executable=/Users/Documents/<yourname>/Payload/<yourname.app>/<yourname>
+$ codesign -dvvv YOURAPP.app
+Executable=/Users/Documents/YOURAPP/Payload/YOURAPP.app/YOURNAME
 Identifier=com.example.example
 Format=app bundle with Mach-O universal (armv7 arm64)
 CodeDirectory v=20200 size=154808 flags=0x0(none) hashes=4830+5 location=embedded
@@ -45,18 +45,17 @@ iOS アプリケーションのデバッグは lldb と呼ばれる強力なデ�
 #### 静的解析
 
 まず環境内のフラグをチェックするために、アプリを生成するモードを決定する必要があります。
+
 - プロジェクトのビルド設定を選択します。
 - 'Apple LVM - Preprocessing' と 'Preprocessor Macros' で、'DEBUG' または 'DEBUG_MODE' が選択されていないことを確認します (Objective-C) 。
 - "Debug executable" オプションが選択されていないことを確認します。
 - もしくは 'Swift Compiler - Custom Flags' セクションの 'Other Swift Flags' で、'-D DEBUG' エントリが存在しないことを確認します。
-
 
 #### 動的解析
 
 Xcode を使用して、直接デバッガをアタッチできるかどうかを確認します。次に、脱獄済みデバイスで Clutch を行った後にアプリをデバッグできるかどうかを確認します。これは Cydia の BigBoss リポジトリにある debug-server を使用して行われます。
 
 注意: アプリケーションにアンチリバースエンジニアリングコントロールが装備されている場合、デバッガを検出して停止することがあります。
-
 
 ### デバッグシンボルの検索
 
@@ -101,10 +100,10 @@ gobjdump は [binutils](https://www.gnu.org/s/binutils/ "Binutils") の一部で
 
 ログ出力文について以下の静的解析アプローチをとることができます。
 
-1.	Xcode にアプリケーションのコードをインポートします。
-2.	次の出力関数についてコードを検索します: `NSLog`, `println`, `print`, `dump`, `debugPrint`.
-3.	いずれか一つを見つけたら、ログ出力されるステートメントのより良いマークアップのために開発者がログ出力関数を囲うラップ関数を使用しているかどうかを判断します。そうであれば、その関数を検索に追加します。
-4.	手順 2 と 3 のすべてのものについて、マクロやデバッグ状態に関連するガードがリリースビルドでログ出力なしにするように設定されているかどうかを判断します。Objective-C がプリプロセッサマクロを使用する方法の変更点に注意します。
+1. Xcode にアプリケーションのコードをインポートします。
+2. 次の出力関数についてコードを検索します: `NSLog`, `println`, `print`, `dump`, `debugPrint`.
+3. いずれか一つを見つけたら、ログ出力されるステートメントのより良いマークアップのために開発者がログ出力関数を囲うラップ関数を使用しているかどうかを判断します。そうであれば、その関数を検索に追加します。
+4. 手順 2 と 3 のすべてのものについて、マクロやデバッグ状態に関連するガードがリリースビルドでログ出力なしにするように設定されているかどうかを判断します。Objective-C がプリプロセッサマクロを使用する方法の変更点に注意します。
 
 ```objc
 #ifdef DEBUG
@@ -114,9 +113,9 @@ gobjdump は [binutils](https://www.gnu.org/s/binutils/ "Binutils") の一部で
 
 Swift ではこの動作を有効にする手続きが変更されています。スキームで環境変数を設定するか、ターゲットのビルド設定でカスタムフラグとして設定する必要があります。Xcode 8 および Swift3 ではサポートされていないため、(アプリが Swift 2.1 のリリース構成でビルドされているかどうかを判断できる) 次の関数は推奨されていないことに注意します。
 
--	`_isDebugAssertConfiguration`
--	`_isReleaseAssertConfiguration`
--	`_isFastAssertConfiguration`.
+- `_isDebugAssertConfiguration`
+- `_isReleaseAssertConfiguration`
+- `_isFastAssertConfiguration`.
 
 アプリケーションの設定に応じて、より多くのログ出力関数が存在する可能性があります。例えば、[CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack "CocoaLumberjack") を使用する場合、静的解析は多少異なります。
 
@@ -125,16 +124,15 @@ Swift ではこの動作を有効にする手続きが変更されています�
 #### 動的解析
 
 動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードを実行するために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あるためです。
-1.	シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールで出力を確認します。
-2.	デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールで出力を確認します。
+
+1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールで出力を確認します。
+2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールで出力を確認します。
 
 他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、アプリのプロファイルをプリセットできる機能、実サーバーを選択する機能、API からのレスポンスを選択する機能があるかどうかを確認します。
 
 #### 改善方法
 
-一人の開発者として、アプリケーションのデバッグバージョンにデバッグステートメントを組み込むことは、以下であることが分かっている場合には問題ではありません。
-1.	デバッグステートメントはアプリケーションのリリースバージョンに存在しない。
-2.	デバッグステートメントはアプリケーションのリリース構成にたどり着く。
+一人の開発者として、アプリケーションのデバッグバージョンにデバッグステートメントを組み込むことは、デバッグステートメントがアプリケーションのリリースバージョンに存在しないことを確認していれば問題ありません。
 
 Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
 
@@ -179,15 +177,15 @@ Objective-C には二種類のエラーがあります。
 
 ```objc
  @try {
- 	//do work here
+    //do work here
  }
 
 @catch (NSException *e) {
-	//recover from exception
+    //recover from exception
 }
 
 @finally {
- 	//cleanup
+    //cleanup
 ```
 
 `NSException` の使用にはメモリ管理の落とし穴があることに気をつけます。[finally ブロック](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/HandlingExceptions.html "Handling Exceptions") 内で try ブロックでの [割り当てをクリーンアップする](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/RaisingExceptions.html#//apple_ref/doc/uid/20000058-BBCCFIBF "Raising exceptions") 必要があります。`@catch` ブロックで `NSError` をインスタンス化することにより `NSException` オブジェクトを `NSError` に変換できることに注意します。
@@ -204,31 +202,33 @@ Swift (2～4) の例外処理はまったく異なります。try-catch ブロ�
 
 ```swift
 func dosomething(argumentx:TypeX) throws {
-	try functionThatThrows(argumentx: argumentx)
+    try functionThatThrows(argumentx: argumentx)
 }
 ```
+
 - `do-catch` 文を使用してエラーを処理します。ここでは以下のパターンを使用できます。
 
-```swift
-do {
-    try functionThatThrows()
-    defer {
-    	//use this as your finally block as with Objective-c
+    ```swift
+    do {
+        try functionThatThrows()
+        defer {
+            //use this as your finally block as with Objective-c
+        }
+        statements
+    } catch pattern 1 {
+        statements
+    } catch pattern 2 where condition {
+        statements
     }
-    statements
-} catch pattern 1 {
-    statements
-} catch pattern 2 where condition {
-    statements
-}
-```
+    ```
 
 - エラーを optional 値として処理します。
 
-```swift
-	let x = try? functionThatThrows()
-	//In this case the value of x is nil in case of an error.
-```  
+    ```swift
+        let x = try? functionThatThrows()
+        //In this case the value of x is nil in case of an error.
+    ```
+
 - `try!` 式を使用して、エラーが発生しないことを assert します。
 
 #### 静的解析
@@ -282,17 +282,15 @@ do {
 - 呼び出されているスローメソッドにメソッドにエラーがないことを確認しない限り、Swift では `try!` を使用してはいけません。
 - Swift エラーが多数の中間メソッドに伝播しないことを確認します。
 
-
 ### フリーなセキュリティ機能が有効であることの確認
 
 #### 概要
 
 Xcode ではデフォルトですべてのバイナリセキュリティが有効ですが、古いアプリケーションでの検証やコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用可能です。
 
--	**ARC** - Automatic Reference Counting - メモリ管理機能
-	-	必要に応じてメッセージ保持および解放します
--	**Stack Canary** - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
--	**PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
+- **ARC** - Automatic Reference Counting - メモリ管理機能 - 必要に応じてメッセージ保持および解放します
+- **Stack Canary** - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
+- **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
 
 #### 静的解析
 
@@ -302,24 +300,23 @@ Xcode ではデフォルトですべてのバイナリセキュリティが有�
 
 iOS アプリケーションでスタックスマッシュ保護を有効にする手順。
 
-1.	Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2.	"Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
-
-3.	Position Independent Executables (PIE) support が有効になっていることを確認します。
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. "Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
+3. Position Independent Executables (PIE) support が有効になっていることを確認します。
 
 iOS アプリケーションを PIE としてビルドする手順。
 
-1.	Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2.	iOS Deployment Target を iOS 4.3 以降に設定します。
-3.	"Generate Position-Dependent Code" がデフォルト値 ("NO") に設定されていることを確認します。
-4.	"Don't Create Position Independent Executables" がデフォルト値 ("NO") に設定されていることを確認します。
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. iOS Deployment Target を iOS 4.3 以降に設定します。
+3. "Generate Position-Dependent Code" がデフォルト値 ("NO") に設定されていることを確認します。
+4. "Don't Create Position Independent Executables" がデフォルト値 ("NO") に設定されていることを確認します。
 
 - ARC 保護
 
 iOS アプリケーションの ARC 保護を有効にする手順。
 
-1.	Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2.	"Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. "Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
 
 [Technical Q&A QA1788 Building a Position Independent Executable]( https://developer.apple.com/library/mac/qa/qa1788/_index.html "Technical Q&A QA1788 Building a Position Independent Executable") を参照してください。
 
@@ -327,7 +324,7 @@ iOS アプリケーションの ARC 保護を有効にする手順。
 
 以下は上記のバイナリセキュリティ機能をチェックする手順です。これらの例ではすべての機能が有効になっています。
 
--   PIE:
+- PIE:
 
 ```shell
 $ unzip DamnVulnerableiOSApp.ipa
@@ -345,7 +342,7 @@ MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
 WEAK_DEFINES BINDS_TO_WEAK PIE
 ```
 
--   stack canary:
+- stack canary:
 
 ```shell
 $ otool -Iv DamnVulnerableIOSApp | grep stack
@@ -361,7 +358,7 @@ $ otool -Iv DamnVulnerableIOSApp | grep stack
 0x0000000100593dc8 83414 _sigaltstack
 ```
 
--   Automatic Reference Counting:
+- Automatic Reference Counting:
 
 ```shell
 $ otool -Iv DamnVulnerableIOSApp | grep release
@@ -380,16 +377,17 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 
 <img src="Images/Chapters/0x06i/idb.png" alt="IDB Analyze Binary" width="400">
 
-
 ### サードパーティライブラリの脆弱性のチェック
 
 #### 概要
 
 iOS アプリケーションではサードパーティライブラリを使用することがよくあります。これらのサードパーティライブラリは開発者が問題を解決するためのコード記述を少なくし、開発を加速します。ライブラリには二つのカテゴリがあります。
+
 - 実際の製品アプリケーションにはパックされない (またはすべきではない) ライブラリ、テストに使用される `OHHTTPStubs` など。
 - 実際の製品アプリケーションにパックされるライブラリ、`Alamofire` など。
 
 これらのライブラリには以下の二つの種類の望まれない副作用があります。
+
 - ライブラリには脆弱性が存在する可能性があり、アプリケーションを脆弱にする可能性があります。よい例は `AFNetworking` バージョン 2.5.1 で、証明書検証を無効にしたバグがありました。この脆弱性により攻撃者は API に接続するためにライブラリを使用しているアプリに対して中間者攻撃を実行できます。
 - ライブラリは LGPL2.1 などのライセンスを使用できます。そのライセンスでは、アプリケーションを使用しソースの内容を要求する人に対して、アプリケーション作成者はソースコードへのアクセスを提供する必要があります。実際にはアプリケーションはそのソースコードを改変して再配布することを許可される必要があります。これはアプリケーションの知的財産 (IP) を危険にさらす可能性があります。
 
@@ -404,41 +402,48 @@ iOS アプリケーションではサードパーティライブラリを使用�
 
 サードパーティの依存関係を管理するために CocoaPods を使用する場合には、サードパーティライブラリの脆弱性を解析するために以下の手順を実行します。
 
-1. Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
-``` sh
+最初に、 Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
+
+``` shell
 $ sudo gem install CocoaPods
 $ pod install
 ```
 
-2. 依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
+次に、依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
+
 ```shell
 $ sudo gem install CocoaPods-dependencies
 $ pod dependencies
 ```
 
-3. 上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
+上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
 
 > 注釈:
+
 1. 開発者が .podspec ファイルを使用して自身のサポートライブラリに関してすべての依存関係をパックする場合、この .podspec ファイルをお試しの CocoaPods podspec checker で確認できます。
 2. プロジェクトで CocoaPods を Objective-C と組み合わせて使用する場合、SourceClear を使用できます。
 3. `https` ではなく `http` ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に中間者攻撃を許す可能性があり、攻撃者はあなたがダウンロードしたライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に `https` を使用します。
 
 Carthage をサードパーティの依存関係に使用する場合には、サードパーティライブラリの脆弱性を解析するために以下の手順を実行します。
-1. Cartfile があるプロジェクトのルートで、以下を入力します。
+
+最初に、 Cartfile があるプロジェクトのルートで、以下を入力します。
+
 ```shell
 $ brew install carthage
 $ carthage update --platform iOS
 ```
 
-2. Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
+次に、 Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
 
 > 注釈、この章の執筆時点では、執筆者に知られている Carthage ベースの依存関係解析の自動サポートはありません。
 
 ライブラリに脆弱性が含まれていることが判明した場合、以下の推論を適用します。
+
 - ライブラリがアプリケーションにパッケージされている場合、それからライブラリに脆弱性がパッチされているバージョンがあるか確認します。ない場合、脆弱性が実際にアプリケーションに影響を及ぼすかどうかを確認します。それが当てはまる場合、または将来そうなる可能性がある場合、同様の機能を提供する、脆弱性のない代替手段を探します。
 - ライブラリはアプリケーションにはパッケージされていない場合、脆弱性が修正されているパッチされたバージョンがあるかどうかを確認します。これがない場合、ビルドプロセスに対する脆弱性の影響を調べます。脆弱性がビルドを邪魔したり、ビルドパイプラインのセキュリティを弱めたりする場合、脆弱性が修正される代替案を探してみます。
 
 リンクされるライブラリとしてフレームワークを手動で追加する場合。
+
 1. xcodeproj ファイルを開き、プロジェクトのプロパティを確認します。
 2. "Build Phases" タブに移動して、いずれかのライブラリの "Link Binary With Libraries" のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
 
@@ -446,31 +451,32 @@ $ carthage update --platform iOS
 
 最後に、ハイブリッドアプリケーションでは、JavaScript の依存関係を RetireJS で確認する必要があることに注意してください。同様に Xamarin では、C# の依存関係を確認する必要があります。
 
-
 ##### アプリケーションのライブラリで使用されるライセンスの検出
+
 著作権法が侵害されないようにするには、CocoaPods または Carthage によりインストールされた依存関係を確認することがベストです。
 
 アプリケーションソースが利用可能であり、CocoaPods が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
-1. Podfile があるプロジェクトのルートで、以下を実行します。
+最初に、 Podfile があるプロジェクトのルートで、以下を実行します。
+
 ``` shell
 $ sudo gem install CocoaPods
 $ pod install
 ```
-2. Pods フォルダに、インストールされたライブラリがあります。各自のフォルダにあります。各フォルダのライセンスファイルを調べることで、各ライブラリのライセンスを確認できます。
 
-アプリケーションソースが利用可能であり、Carthage が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
-1. Cartfile があるプロジェクトのルートで、以下を実行します。
+これにより、すべてのライブラリがインストールされている Pods フォルダが作成されます。ライブラリは各自のフォルダにあります。各フォルダのライセンスファイルを調べることで、各ライブラリのライセンスを確認できます。
+
+アプリケーションソースが利用可能であり、Carthage が使用されている場合、 Cartfile があるプロジェクトのルートディレクトリで、以下のコードを実行します。
+
 ```shell
 $ brew install carthage
 $ carthage update --platform iOS
 ```
 
-2. 各依存関係のソースはプロジェクトの `Carthage/Checkouts` フォルダにダウンロードされています。ここで各ライブラリのそれぞれのフォルダにライセンスを見つけることができます。
+各依存関係のソースはプロジェクトの `Carthage/Checkouts` フォルダにダウンロードされます。ここで各ライブラリのそれぞれのフォルダにライセンスを見つけることができます。
 
 ライブラリがアプリの知的財産をオープンソース化する必要があるライセンスを含む場合、同様の機能を提供するために使用できるライブラリの代替があるかどうかを確認します。
 
 注釈：ハイブリッドアプリの場合、使用のビルドツールを確認してください。それらの多くは使用されているライセンスを見つけるためのライセンス列挙プラグインを持っています。
-
 
 #### 動的解析
 
@@ -491,13 +497,11 @@ $ otool -L <Executable>
 $ ./class-dump <Executable> -r
 ```
 
-
-
 ### 参考情報
 
 #### OWASP Mobile Top 10 2016
 
-- M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - Poor Code Quality - [https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality](https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality)
 
 #### OWASP MASVS
 
@@ -517,11 +521,11 @@ $ ./class-dump <Executable> -r
 
 #### ツール
 
-- Carthage - https://github.com/carthage/carthage
-- CocoaPods - https://CocoaPods.org
-- OWASP Dependency Checker - https://jeremylong.github.io/DependencyCheck/
-- Sourceclear - https://sourceclear.com
-- Class-dump - https://github.com/nygard/class-dump
-- RetireJS - https://retirejs.github.io/retire.js/ 
-- idb  - https://github.com/dmayer/idb
-- Codesign - https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/codesign.1.html
+- Carthage - [https://github.com/carthage/carthage](https://github.com/carthage/carthage)
+- CocoaPods - [https://CocoaPods.org](https://CocoaPods.org)
+- OWASP Dependency Checker - [https://jeremylong.github.io/DependencyCheck/](https://jeremylong.github.io/DependencyCheck/)
+- Sourceclear - [https://sourceclear.com](https://sourceclear.com)
+- Class-dump - [https://github.com/nygard/class-dump](https://github.com/nygard/class-dump)
+- RetireJS - [https://retirejs.github.io/retire.js/](https://retirejs.github.io/retire.js/)
+- idb  - [https://github.com/dmayer/idb](https://github.com/dmayer/idb)
+- Codesign - [https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html)
