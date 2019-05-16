@@ -7,6 +7,7 @@ Android では、ローカル認証のために Android Runtime でサポート�
 ### 資格情報の確認のテスト
 
 #### 概要
+
 資格情報の確認フローは Android 6.0 以降で利用できます。ユーザーがロック画面の保護機能とともにアプリ固有のパスワードを入力する必要がないようにするために使用されます。代わりに、ユーザーが自分のデバイスに直近でログインしている場合には、資格情報の確認は `AndroidKeystore` から暗号マテリアルをアンロックするために使用できます。つまり、ユーザーが設定された制限時間 (`setUserAuthenticationValidityDurationSeconds`) 内に自分のデバイスをアンロックしたか、もしくは再度自分のデバイスをアンロックする必要があります。
 
 資格情報の確認のセキュリティはロック画面で設定されている保護と同程度の強度しかないことに注意します。これは単純な予測としてロック画面パターンがよく使用されることを意味しています。したがって、L2 のセキュリティコントロールを要求するアプリに資格情報の確認を使用することは推奨しません。
@@ -51,6 +52,7 @@ Android では、ローカル認証のために Android Runtime でサポート�
 ```
 
 - ロック画面をセットアップして確認します。
+
 ```java
   private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1; //used as a number to verify whether this is where the activity results from
   Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
@@ -59,8 +61,8 @@ Android では、ローカル認証のために Android Runtime でサポート�
         }
 ```
 
-
 - ロック画面の後に鍵を使用します。
+
 ```java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -78,11 +80,9 @@ Android では、ローカル認証のために Android Runtime でサポート�
 
 アンロックされた鍵がアプリケーションフローの中で使用されていることを確認します。例えば、鍵はローカルストレージやリモートエンドポイントから受信したメッセージを復号化するために使用される可能性があります。アプリケーションはユーザーが鍵をアンロックしたかどうかを単に確認しているだけであれば、そのアプリケーションはローカル認証のバイパスに対して脆弱となる可能性があります。
 
-
 #### 動的解析
 
 アプリにパッチを当てるか、実行時計装を使用して、クライアントの指紋認証をバイパスします。例えば、Frida を使用して `onActivityResult` コールバックメソッドを直接コールすることで、ローカル認証フローを続行するために暗号マテリアル (セットアップ暗号など) を無視できるかどうかを確認できます。詳細については「Android の改竄とリバースエンジニアリング」の章を参照してください。
-
 
 ### 生体認証のテスト
 
@@ -94,7 +94,7 @@ Android `KeyGenerator` クラスと共に指紋 API を使用することで、�
 
 よりセキュアな選択肢は非対称暗号を使用することです。ここでは、モバイルアプリがキーストアに非対称鍵ペアを作成し、サーバーバックエンド上に公開鍵を登録します。その後のトランザクションは秘密鍵で署名され、公開鍵を使用してサーバーにより検証されます。これの利点はキーストアから秘密鍵を抽出することなく、キーストア API を使用してトランザクションに署名できることです。その結果、メモリダンプや計装を使用することにより攻撃者が鍵を取得することは不可能となります。
 
-ベンダーにより提供されるいくつかの SDK があり、バイオメトリックのサポートを提供しますが、それら自体に危険があることに注意します。例えば Samsung Pass SDK を見てみます。これは暗号化なしのバインディングで `onComplete` ハンドラを使用します。詳しくは [the Samsung Programming Guide](https://developer.samsung.com/common/download/check.do?actId=1106 "Pass programming guide") を参照してください。
+ベンダーにより提供されるいくつかの SDK があり、バイオメトリックのサポートを提供しますが、それら自体に危険があることに注意します。機密の認証ロジックを処理するためにサードパーティ SDK を使用する場合は、非常に注意が必要です。
 
 #### 静的解析
 
@@ -108,36 +108,37 @@ Android `KeyGenerator` クラスと共に指紋 API を使用することで、�
 
 - パーミッションは Android Manifest でリクエストされる必要があります。
 
-```xml
-	<uses-permission
-        android:name="android.permission.USE_FINGERPRINT" />
-```
+    ```xml
+        <uses-permission
+            android:name="android.permission.USE_FINGERPRINT" />
+    ```
+
 - 指紋ハードウェアが利用可能である必要があります。
 
-```Java
-	 FingerprintManager fingerprintManager = (FingerprintManager)
-                    context.getSystemService(Context.FINGERPRINT_SERVICE);
-    fingerprintManager.isHardwareDetected();                
-```
+    ```Java
+        FingerprintManager fingerprintManager = (FingerprintManager)
+                        context.getSystemService(Context.FINGERPRINT_SERVICE);
+        fingerprintManager.isHardwareDetected();
+    ```
 
 - ユーザーは保護されたロックスクリーンを持つ必要があります。
 
-```Java
-	 KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-	 keyguardManager.isKeyguardSecure();  //note if this is not the case: ask the user to setup a protected lock screen
-```
+    ```Java
+        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        keyguardManager.isKeyguardSecure();  //note if this is not the case: ask the user to setup a protected lock screen
+    ```
 
 - 少なくとも一本の指が登録されている必要があります。
 
-```java
-	fingerprintManager.hasEnrolledFingerprints();
-```
+    ```java
+        fingerprintManager.hasEnrolledFingerprints();
+    ```
 
 - アプリケーションにはユーザーの指紋を要求するパーミッションを持つ必要があります。
 
-```java
-	context.checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PermissionResult.PERMISSION_GRANTED;
-```
+    ```java
+        context.checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PermissionResult.PERMISSION_GRANTED;
+    ```
 
 上記のいずれかのチェックが失敗した場合、指紋認証の選択肢を提供してはいけません。
 
@@ -152,7 +153,7 @@ secetkeyInfo.isInsideSecureHardware()
 特定のシステムでは、ハードウェアを使用した生体認証のポリシーを実施することも可能です。これは以下のようにチェックされます。
 
 ```java
-	keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
+    keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
 ```
 
 ##### 対称鍵を用いた指紋認証
@@ -160,23 +161,23 @@ secetkeyInfo.isInsideSecureHardware()
 指紋認証は `KeyGenerator` クラスを使用して新しい AES 鍵を作成することにより実装できます。`KeyGenParameterSpec.Builder` に `setUserAuthenticationRequired(true)` を追加します。
 
 ```java
-	generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE);
+    generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE);
 
-	generator.init(new KeyGenParameterSpec.Builder (KEY_ALIAS,
-	      KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-	      .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-	      .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-	      .setUserAuthenticationRequired(true)
-	      .build()
-	);
+    generator.init(new KeyGenParameterSpec.Builder (KEY_ALIAS,
+            KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+            .setUserAuthenticationRequired(true)
+            .build()
+    );
 
-	generator.generateKey();
+    generator.generateKey();
 ```
 
 保護された鍵で暗号化または復号化を実行するには、`Cipher` オブジェクトを作成しキーエイリアスで初期化します。
 
-```
-	SecretKey keyspec = (SecretKey)keyStore.getKey(KEY_ALIAS, null);
+```java
+    SecretKey keyspec = (SecretKey)keyStore.getKey(KEY_ALIAS, null);
 
     if (mode == Cipher.ENCRYPT_MODE) {
         cipher.init(mode, keyspec);
@@ -185,17 +186,17 @@ secetkeyInfo.isInsideSecureHardware()
 注意、新しい鍵はすぐには使用できません。最初に `FingerprintManager` で認証する必要があります。これは `Cipher` オブジェクトを `FingerprintManager.CryptoObject` にラップし、認識される前に `FingerprintManager.authenticate()` に渡されます。
 
 ```java
-	cryptoObject = new FingerprintManager.CryptoObject(cipher);
-	fingerprintManager.authenticate(cryptoObject, new CancellationSignal(), 0, this, null);
+    cryptoObject = new FingerprintManager.CryptoObject(cipher);
+    fingerprintManager.authenticate(cryptoObject, new CancellationSignal(), 0, this, null);
 ```
 
 認証が成功すると、その時点でコールバックメソッド `onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)` がコールされ、認証された `CryptoObject` が結果から取得できます。
 
 ```java
 public void authenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-	cipher = result.getCryptoObject().getCipher();
+    cipher = result.getCryptoObject().getCipher();
 
-	(... 認証された cipher オブジェクトで何かをします ...)
+    //(... do something with the authenticated cipher object ...)
 }
 ```
 
@@ -249,6 +250,7 @@ byte[] signed = signature.sign();
 
 Android Nougat (API 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByBiometricEnrollment(boolean invalidateKey)` メソッドを追加します。`invalidateKey` 値が "true" (デフォルト) に設定されている場合、指紋認証に有効な鍵は新しい指紋が登録された際に不可逆的に無効になります。これにより、たとえ攻撃者が追加の指紋を登録できたとしても、鍵を取得できなくなります。
 Android Oreo (API 26) は二つのエラーコードを追加します。
+
 - `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
 - `FINGERPRINT_ERROR_VENDOR` – ベンダー固有の指紋リーダーエラーが発生した。
 
@@ -262,10 +264,9 @@ Android SDK とその API に基づいて指紋認証やその種類の生体認
 
 ### 参考情報
 
-
 #### OWASP Mobile Top 10 2016
 
-- M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M4-Insecure_Authentication.html
+- M4 - Insecure Authentication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication>
 
 #### OWASP MASVS
 
@@ -279,5 +280,4 @@ Android SDK とその API に基づいて指紋認証やその種類の生体認
 
 #### アプリパーミッションリクエスト
 
-- 実行時のパーミッション - https://developer.android.com/training/permissions/requesting
-- Samsung Pass Developer Guide - https://developer.samsung.com/galaxy/pass/guide
+- 実行時のパーミッション - <https://developer.android.com/training/permissions/requesting>
