@@ -91,7 +91,6 @@ HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
 
 信頼できる接続を設定する前にアプリケーションがホスト名を検証していることを確認します。
 
-
 #### 動的解析
 
 動的解析には傍受プロキシが必要です。不適切な証明書の検証をテストするには、以下のコントロールを確認します。
@@ -110,7 +109,6 @@ Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクショ�
 
 さらに MITM 解析を行う場合や傍受プロキシの設定に問題がある場合には、[Tapioca](https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html "Announcing CERT Tapioca for MITM Analysis") の使用を検討します。これは MITM ソフトウェア解析のために CERT が事前設定した [VM アプライアンス](http://www.cert.org/download/mitm/CERT_Tapioca.ova "CERT Tapioca Virtual Machine Download") です。行うべきことは [テストされるアプリケーションをエミュレータにデプロイしてトラフィックのキャプチャを開始する](https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html "Finding Android SSL vulnerabilities with CERT Tapioca") だけです。
 
-
 ### カスタム証明書ストアおよび証明書ピンニングのテスト
 
 #### 概要
@@ -127,48 +125,48 @@ Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクショ�
 
 Network Security Configuration を使用して [宣言型証明書](https://developer.android.com/training/articles/security-config.html#CertificatePinning "Certificate Pinning using Network Security Configuration") を特定のドメインにピン留めすることもできます。アプリケーションがこの機能を使用する場合、定義された設定を識別するために二つのことをチェックする必要があります。
 
-1. application タグの "android:networkSecurityConfig" 属性による Android アプリケーションマニフェストのファイル参照の指定
+最初に、 application タグの "android:networkSecurityConfig" 属性による Android アプリケーションマニフェストの Network Security Configuration ファイルを見つけます。
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="owasp.com.app">
-    <application android:networkSecurityConfig="@xml/network_security_config">
-        ...
-    </application>
-</manifest>
-```
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="owasp.com.app">
+      <application android:networkSecurityConfig="@xml/network_security_config">
+          ...
+      </application>
+  </manifest>
+  ```
 
-2. "res/xml/network_security_config.xml" に格納されているファイルの内容
+識別されたファイルを開きます。この場合、ファイルは "res/xml/network_security_config.xml" にあります。
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config>
-        <!-- Use certificate pinning for OWASP website access including sub domains -->
-        <domain includeSubdomains="true">owasp.org</domain>
-        <pin-set expiration="2018/8/10">
-            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
-            the Intermediate CA of the OWASP website server certificate -->
-            <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
-            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
-            the Root CA of the OWASP website server certificate -->
-            <pin digest="SHA-256">Vjs8r4z+80wjNcr1YKepWQboSIRi63WsWXhIMN+eWys=</pin>
-        </pin-set>
-    </domain-config>
-</network-security-config>
-```
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <network-security-config>
+      <domain-config>
+          <!-- Use certificate pinning for OWASP website access including sub domains -->
+          <domain includeSubdomains="true">owasp.org</domain>
+          <pin-set expiration="2018/8/10">
+              <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
+              the Intermediate CA of the OWASP website server certificate -->
+              <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
+              <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
+              the Root CA of the OWASP website server certificate -->
+              <pin digest="SHA-256">Vjs8r4z+80wjNcr1YKepWQboSIRi63WsWXhIMN+eWys=</pin>
+          </pin-set>
+      </domain-config>
+  </network-security-config>
+  ```
 
 > pin-set には公開鍵ピンのセットが含まれています。各セットは有効期限を定義できます。有効期限が切れると、ネットワーク通信は機能し続けますが、影響を受けるドメインでは証明書ピンニングが無効になります。
 
 設定が存在する場合、以下のイベントがログに表示されることがあります。
 
-```
+```shell
 D/NetworkSecurityConfig: Using Network Security Config from resource network_security_config
 ```
 
 証明書ピンニング妥当性確認が失敗した場合、以下のイベントがログ出力されます。
 
-```
+```shell
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
@@ -279,7 +277,7 @@ Xamarin で開発されたアプリケーションは一般的に ServicePointMa
 
 この例では証明書チェーンの中間 CA をピンニングしています。HTTP レスポンスの出力はシステムログにあります。
 
-前述の例のサンプル Xamarin アプリは https://github.com/owasp-mstg/blob/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk?raw=true から入手できます。
+前述の例のサンプル Xamarin アプリは [MSTG リポジトリ](https://github.com/OWASP/owasp-mstg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk "Xamarin app with certificate pinning") から入手できます。
 
 APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用状況を確認します。
 
@@ -318,6 +316,7 @@ check() メソッドを使用してフィンガープリントを確認し、コ
      }
    }
 ```
+
 APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/www フォルダに置かれます。'plugins' フォルダに使用するプラグインがあります。アプリケーションの JavaScript コードでこのメソッドを検索して、その使用状況を確認する必要があります。
 
 #### 動的解析
@@ -344,7 +343,7 @@ Network Security Configuration は Android 7 で導入され、カスタムト�
 
 Network Security Configuration を解析して、どの設定が構成されているかを判断します。このファイルは APK 内の /res/xml/ フォルダに network_security_config.xml という名前で格納されています。
 
-<base-config> または <domain-config> にカスタムの <trust-anchors> が存在する場合、<certificates src="user"> を定義するアプリケーションは特定のドメインまたはすべてのドメインに対してユーザーが提供する CA を信頼します。以下に例を示します。
+`<base-config>` または `<domain-config>` にカスタムの `<trust-anchors>` が存在する場合、`<certificates src="user">` を定義するアプリケーションは特定のドメインまたはすべてのドメインに対してユーザーが提供する CA を信頼します。以下に例を示します。
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -373,7 +372,7 @@ Network Security Configuration を解析して、どの設定が構成されて�
 </network-security-config>
 ```
 
-エントリの順位を理解することが重要です。\<domain-config\> エントリまたは親の \<domain-config\> に値が設定されていない場合、その構成は \<base-config\> をベースに行われます。また、最終的にこのエントリに定義されていない場合、デフォルト構成が使用されます。
+エントリの順位を理解することが重要です。`<domain-config>` エントリまたは親の `<domain-config>` に値が設定されていない場合、その構成は `<base-config>` をベースに行われます。また、最終的にこのエントリに定義されていない場合、デフォルト構成が使用されます。
 
 Android 9 (API レベル 28) 以上をターゲットとするアプリのデフォルト構成は以下のとおりです。
 
@@ -411,13 +410,14 @@ Android 6.0 (API レベル 23) 以下をターゲットとするアプリのデ�
 傍受プロキシに Burp を使用して動的解析を行うには、「Android アプリのテスト環境構築」の章の「ネットワークセキュリティ設定のバイパス」の説明に従って、ネットワークセキュリティ設定ファイルにパッチをあてます。
 
 これを必要としないシナリオや、パッチをあてずに MiTM 攻撃をできるシナリオがまだあるかもしれません。
+
 - Android バージョン 7.0 以降の Android デバイス上でアプリが実行されているが、アプリが 24 未満の API レベルをターゲットにしている場合、ネットワークセキュリティ設定は使用されず、それによりアプリはユーザー提供の CA を信頼します。
 - Android バージョン 7.0 以降の Android デバイス上でアプリが実行されており、アプリにカスタムネットワークセキュリティ設定が実装されていない場合。
-
 
 ### セキュリティプロバイダのテスト
 
 #### 概要
+
 Android はセキュリティプロバイダに依存して SSL/TLS ベースの接続を提供しています。この種のセキュリティプロバイダの問題 (一例では [OpenSSL](https://www.openssl.org/news/vulnerabilities.html "OpenSSL Vulnerabilities")) は、デバイスに付随するもので、多くの場合バグや脆弱性があります。
 既知の脆弱性を回避するために、開発者はアプリケーションが適切なセキュリティプロバイダをインストールすることを確認する必要があります。
 2016年7月11日以降、Google は脆弱なバージョンの OpenSSL を使用する [Play ストアのアプリケーション提出を拒否しています](https://support.google.com/faqs/answer/6376725?hl=en "How to address OpenSSL vulnerabilities in your apps") (新規アプリケーションおよび更新の両方) 。
@@ -566,41 +566,45 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 #### 動的解析
 
 ソースコードがある場合:
+
 - デバッグモードでアプリケーションを実行し、アプリが最初にエンドポイントに接続するブレークポイントを作成します。
 - 強調表示されたコードを右クリックし、`Evaluate Expression` を選択します。
 - `Security.getProviders()` と入力し Enter キーを押します。
 - プロバイダをチェックし `GmsCore_OpenSSL` を探してみます。これは新たにトップにリストアップされたプロバイダです。
 
 ソースコードがない場合:
+
 - Xposed を使用して `java.security` パッケージにフックし、`java.security.Security` の `getProviders` メソッド (引数なし) にフックします。戻り値は `Provider` の配列になります。
 - 最初のプロバイダが `GmsCore_OpenSSL` であるかどうかを判断します。
-
 
 #### 参考情報
 
 #### OWASP Mobile Top 10 2016
-- M3 - 安全でない通信 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M3-Insecure_Communication.html
+
+- M3 - Insecure Communication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication>
 
 ##### OWASP MASVS
+
 - V5.3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を確認している。信頼されたCAにより署名された証明書のみが受け入れられている。"
 - V5.4: "アプリは独自の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵を固定化しており、信頼できるCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
 - V5.6: "アプリは最新の接続ライブラリとセキュリティライブラリにのみ依存している。"
 
 ##### CWE
+
 - CWE-295 - Improper Certificate Validation
-- CWE-296 - Improper Following of a Certificate's Chain of Trust - https://cwe.mitre.org/data/definitions/296.html
-- CWE-297 - Improper Validation of Certificate with Host Mismatch - https://cwe.mitre.org/data/definitions/297.html
-- CWE-298 - Improper Validation of Certificate Expiration - https://cwe.mitre.org/data/definitions/298.html
+- CWE-296 - Improper Following of a Certificate's Chain of Trust - <https://cwe.mitre.org/data/definitions/296.html>
+- CWE-297 - Improper Validation of Certificate with Host Mismatch - <https://cwe.mitre.org/data/definitions/297.html>
+- CWE-298 - Improper Validation of Certificate Expiration - <https://cwe.mitre.org/data/definitions/298.html>
 
 ##### Android 開発者ドキュメント
 
-- Network Security Config - https://developer.android.com/training/articles/security-config
+- Network Security Config - <https://developer.android.com/training/articles/security-config>
 
 ##### Xamarin 証明書ピンニング
 
-- Certificate and Public Key Pinning with Xamarin - https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin
-- ServicePointManager - https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx
+- Certificate and Public Key Pinning with Xamarin - <https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin>
+- ServicePointManager - <https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx>
 
 ##### Cordova 証明書ピンニング
 
-PhoneGap SSL Certificate Checker plugin - https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin
+PhoneGap SSL Certificate Checker plugin - <https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin>
