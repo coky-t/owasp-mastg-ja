@@ -35,6 +35,7 @@ ATS はパブリックホスト名に接続する際にのみ強制されます�
 ##### ATS 例外
 
 ATS の制限は Info.plist ファイルの `NSAppTransportSecurity` キーに例外を設定することで無効にできます。これらの例外には以下を適用できます。
+
 - セキュアではない接続 (HTTP) の許可
 - 最小 TLS バージョンの引き下げ
 - PFS の無効化
@@ -97,11 +98,11 @@ NSAppTransportSecurity : Dictionary {
 以下のリストは ATS 制限をグローバルに無効化するように設定された例外の例です。
 
 ```xml
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 ```
 
 ソースコードが利用可能ではない場合、`Info.plist` ファイルは脱獄済みデバイスから取得するか、アプリケーション IPA ファイルから抽出する必要があります。
@@ -114,7 +115,7 @@ $ unzip app-name.ipa
 
 `Info.plist` ファイルは抽出した `Payload/BundleName.app/` ディレクトリにあります。これはバイナリエンコードされたファイルであり、解析には人が読める形式に変換する必要があります。
 
-[`plutil`](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/plutil.1.html "OS X Man Pages - Plutil") はこの目的のために設計されたツールです。Mac OS 10.2 およびそれ以降のバージョンでネイティブに提供されます。
+`plutil` はこの目的のために設計されたツールです。Mac OS 10.2 およびそれ以降のバージョンでネイティブに提供されますが、公式オンラインドキュメントは現在入手できません。
 
 以下のコマンドは Info.plist ファイルを XML 形式に変換する方法を示しています。
 
@@ -128,7 +129,7 @@ $ plutil -convert xml1 Info.plist
 
 特定のエンドポイントと通信するときに使用できる ATS 設定を検証することが可能です。macOS ではコマンドラインユーティリティ `nscurl` が同じことを確認するために利用できます。このコマンドは以下のように使用できます。
 
-```
+```shell
 /usr/bin/nscurl --ats-diagnostics https://www.example.com
 Starting ATS Diagnostics
 
@@ -170,6 +171,7 @@ Result : FAIL
 このトピックに関する詳細は [ATS に関する NowSecure によるブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
 
 一般に以下のように要約できます。
+
 - ATS は Apple のベストプラクティスに従って設定し、特定の状況下でのみ無効化する必要があります。
 - アプリケーションはアプリケーション所有者が管理する定義された数のドメインに接続する場合、ATS 要件をサポートするようにサーバーを構成し、アプリ内の ATS 要件をオプトインします。以下の例では、`example.com` はアプリケーション所有者が所有し、そのドメインに対して ATS が有効になっています。
 
@@ -245,7 +247,6 @@ else {
 - [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire") を使用します。ここではピンニング方法を定義するドメインごとに `ServerTrustPolicy` を定義します。
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking") を使用します。ここではピンニングを構成するために `AFSecurityPolicy` を設定します。
 
-
 #### 動的解析
 
 ##### サーバー証明書の妥当性確認
@@ -274,12 +275,11 @@ else {
 
 (Cycript や Frida を使用して) アプリケーションから証明書を抽出し、Burp のクライアント証明書としてそれを追加すると、トラフィックを傍受することが可能となります。
 
-
 #### 参考情報
 
 ##### OWASP Mobile Top 10 2016
 
-- M3 - Insecure Communication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
+- M3 - Insecure Communication - [https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication](https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication)
 
 ##### OWASP MASVS
 
@@ -296,4 +296,4 @@ else {
 
 ##### Nscurl
 
-- ATS のガイド - NowSecure によるブログ投稿 - https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/
+- ATS のガイド - NowSecure によるブログ投稿 - [https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/)
