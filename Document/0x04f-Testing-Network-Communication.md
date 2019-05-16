@@ -45,7 +45,7 @@
 
 モバイルアプリの完全な動的解析には、すべてのネットワークトラフィックを傍受する必要があります。メッセージを傍受できるようにするには、準備としていくつかの手順を検討する必要があります。
 
-**bettercap のインストール**
+##### bettercap のインストール
 
 bettercap はすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。中間者としての役割を果たすマシンにそれをインストールする必要があります。macOS では brew を使用してインストールできます。
 
@@ -62,7 +62,7 @@ $ apt-get install bettercap
 
 [LinuxHint](https://linuxhint.com/install-bettercap-on-ubuntu-18-04-and-use-the-events-stream/ "Install Bettercap on Ubuntu 18.04") には Ubuntu Linux 18.04 のインストール手順もあります。
 
-**ネットワーク解析ツール**
+##### ネットワーク解析ツール
 
 マシンにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。二つの最も一般的なネットワーク監視 (またはキャプチャ) ツールは以下のとおりです。
 
@@ -89,7 +89,7 @@ bettercap v2.22 (built for darwin amd64 with go1.12.1) [type 'help' for a list o
 
 bettercap は自動的にパケットを (ワイヤレス) ネットワークのネットワークゲートウェイに送信します。あなたはそのトラフィックを盗聴できます。2019年の初めに [全二重 ARP スプーフィング](https://github.com/bettercap/bettercap/issues/426 "Full Duplex ARP Spoofing") サポートが bettercap に追加されました。
 
-モバイルフォンでブラウザを起動して http://example.com に移動すると、Wireshark を使用している場合には以下のような出力が表示されるはずです。
+モバイルフォンでブラウザを起動して `http://example.com` に移動すると、Wireshark を使用している場合には以下のような出力が表示されるはずです。
 
 <img src="Images/Chapters/0x04f/bettercap.png" alt="Wireshark">
 
@@ -120,21 +120,21 @@ Xamarin アプリをテストするときに WiFi 設定でシステムプロキ
 
 - [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate()` または `Main()` に以下のコードを追加してアプリを再作成します。
 
-```csharp
-WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
-```
+    ```csharp
+    WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
+    ```
 
 - bettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
 
-```shell
-$ echo "
-rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
-" | sudo pfctl -ef -
-```
+    ```shell
+    $ echo "
+    rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
+    " | sudo pfctl -ef -
+    ```
 
 傍受プロキシは上記のポートフォワーディングルールで指定されたポート 8080 をリッスンする必要があります。
 
-**CA 証明書**
+##### CA 証明書
 
 まだ行われていなければ、HTTPS リクエストの傍受を許可するモバイルデバイスに CA 証明書をインストールします。
 
@@ -142,7 +142,7 @@ rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
 Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない限り、OS はもはやユーザー指定の CA 証明書を信頼しないことに注意します。このセキュリティ対策の回避については、「セキュリティテスト入門」の章で説明します。
 - [iOS フォンに傍受プロキシの CA 証明書をインストールする](https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp "Configuring an iOS Device to Work With Burp")
 
-**トラフィックの傍受**
+##### トラフィックの傍受
 
 アプリの使用を開始し、その機能を動かします。傍受プロキシに HTTP メッセージが表示されるはずです。
 
@@ -164,11 +164,9 @@ Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない�
 
 モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
 
-**暗号スイートの用語**
+###### 暗号スイートの用語
 
-暗号スイートの構造は以下の通りです。
-
-**プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム**
+暗号スイートの構造は次の通りです。 **プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム**
 
 この構造を以下で説明します。
 
@@ -180,6 +178,7 @@ Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない�
 例: `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
 
 上記の例では暗号スイートは以下のものを使用します。
+
 - TLS をプロトコルとして
 - RSA を認証用の非対称暗号に
 - 3DES を EDE_CBC モードで対称暗号用に
@@ -190,6 +189,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 以下のリストでは、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
 
 プロトコル:
+
 - `SSLv1`
 - `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176)
 - `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101)
@@ -199,6 +199,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446)
 
 鍵交換アルゴリズム:
+
 - `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979)
 - `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979)
 - `RSA` - [RFC 8017](https://tools.ietf.org/html/rfc8017)
@@ -214,6 +215,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422)
 
 ブロック暗号:
+
 - `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772)
 - `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829)
 - `3DES`  - [RFC 2420](https://tools.ietf.org/html/rfc2420)
@@ -224,9 +226,10 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `AES_256_GCM` - [RFC 5288](https://tools.ietf.org/html/rfc5288)
 - `RC4_40`  - [RFC 7465](https://tools.ietf.org/html/rfc7465)
 - `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465)
-- `CHACHA20_POLY1305 `  - [RFC 7905](https://tools.ietf.org/html/rfc7905)  - [RFC 7539](https://tools.ietf.org/html/rfc7539)
+- `CHACHA20_POLY1305`  - [RFC 7905](https://tools.ietf.org/html/rfc7905)  - [RFC 7539](https://tools.ietf.org/html/rfc7539)
 
 完全性チェックアルゴリズム:
+
 - `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151)
 - `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
 - `SHA256`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
@@ -259,6 +262,7 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 > 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。
 
 サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
+
 - nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
 - [testssl.sh](https://github.com/drwetter/testssl.sh) は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
@@ -292,9 +296,11 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 ### 参考情報
 
 #### OWASP Mobile Top 10 2016
-- M3 - Insecure Communication - https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication
+
+- M3 - Insecure Communication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication>
 
 #### OWASP MASVS
+
 - V1.2: "セキュリティコントロールはクライアント側だけではなくそれぞれのリモートエンドポイントで実施されている。"
 - V5.1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
 - V5.2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
@@ -302,66 +308,74 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 - V5.5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）単方向のセキュアでない通信チャネルに依存していない。"
 
 #### CWE
+
 - CWE-308 - Use of Single-factor Authentication
 - CWE-319 - Cleartext Transmission of Sensitive Information
 
 #### ツール
-- bettercap - https://www.bettercap.org
-- Burp Suite - https://portswigger.net/burp/
-- OWASP ZAP - https://www.owasp.org/index.php/
-- tcpdump - https://www.androidtcpdump.com/
-- Testssl.sh - https://github.com/drwetter/testssl.sh
-- Wireshark - https://www.wireshark.org/
+
+- bettercap - <https://www.bettercap.org>
+- Burp Suite - <https://portswigger.net/burp/>
+- OWASP ZAP - <https://www.owasp.org/index.php/>
+- tcpdump - <https://www.androidtcpdump.com/>
+- Testssl.sh - <https://github.com/drwetter/testssl.sh>
+- Wireshark - <https://www.wireshark.org/>
 
 #### Android
-- Android supported Cipher suites - https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites
+
+- Android supported Cipher suites - <https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites>
 
 #### iOS
-- iOS supported Cipher suites - https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc
+
+- iOS supported Cipher suites - <https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc>
 
 #### IANA Transport Layer Security (TLS) Parameters
-- TLS Cipher Suites - https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4
+
+- TLS Cipher Suites - <https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4>
 
 #### OWASP TLS Cipher String Cheat Sheet
-- Recommendations for a cipher string - https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md
+
+- Recommendations for a cipher string - <https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md>
 
 #### SIM Swapping attacks
 
-- The SIM Hijackers - https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin
-- SIM swapping: how the mobile security feature can lead to a hacked bank account - https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/
+- The SIM Hijackers - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
+- SIM swapping: how the mobile security feature can lead to a hacked bank account - <https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/>
 
 #### NIST
+
 - FIPS PUB 186 - Digital Signature Standard (DSS)
 
 #### SIM Swap Fraud
 
-- https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin
-- How to protect yourself against a SIM swap attack - https://www.wired.com/story/sim-swap-attack-defend-phone/
+- <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
+- How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
 
 #### IETF
-- RFC 6176 - https://tools.ietf.org/html/rfc6176
-- RFC 6101 - https://tools.ietf.org/html/rfc6101
-- RFC 2246 - https://www.ietf.org/rfc/rfc2246
-- RFC 4346 - https://tools.ietf.org/html/rfc4346
-- RFC 5246 - https://tools.ietf.org/html/rfc5246
-- RFC 8446 - https://tools.ietf.org/html/rfc8446
-- RFC 6979 - https://tools.ietf.org/html/rfc6979
-- RFC 8017 - https://tools.ietf.org/html/rfc8017
-- RFC 2631 - https://tools.ietf.org/html/rfc2631
-- RFC 7919 - https://tools.ietf.org/html/rfc7919
-- RFC 4492 - https://tools.ietf.org/html/rfc4492
-- RFC 4279 - https://tools.ietf.org/html/rfc4279
-- RFC 2631 - https://tools.ietf.org/html/rfc2631
-- RFC 8422 - https://tools.ietf.org/html/rfc8422
-- RFC 5489 - https://tools.ietf.org/html/rfc5489
-- RFC 4772 - https://tools.ietf.org/html/rfc4772
-- RFC 1829 - https://tools.ietf.org/html/rfc1829
-- RFC 2420 - https://tools.ietf.org/html/rfc2420
-- RFC 3268 - https://tools.ietf.org/html/rfc3268
-- RFC 5288 - https://tools.ietf.org/html/rfc5288
-- RFC 7465 - https://tools.ietf.org/html/rfc7465
-- RFC 7905 - https://tools.ietf.org/html/rfc7905
-- RFC 7539 - https://tools.ietf.org/html/rfc7539
-- RFC 6151 - https://tools.ietf.org/html/rfc6151
-- RFC 6234 - https://tools.ietf.org/html/rfc6234
-- RFC 8447 - https://tools.ietf.org/html/rfc8447#section-8
+
+- RFC 6176 - <https://tools.ietf.org/html/rfc6176>
+- RFC 6101 - <https://tools.ietf.org/html/rfc6101>
+- RFC 2246 - <https://www.ietf.org/rfc/rfc2246>
+- RFC 4346 - <https://tools.ietf.org/html/rfc4346>
+- RFC 5246 - <https://tools.ietf.org/html/rfc5246>
+- RFC 8446 - <https://tools.ietf.org/html/rfc8446>
+- RFC 6979 - <https://tools.ietf.org/html/rfc6979>
+- RFC 8017 - <https://tools.ietf.org/html/rfc8017>
+- RFC 2631 - <https://tools.ietf.org/html/rfc2631>
+- RFC 7919 - <https://tools.ietf.org/html/rfc7919>
+- RFC 4492 - <https://tools.ietf.org/html/rfc4492>
+- RFC 4279 - <https://tools.ietf.org/html/rfc4279>
+- RFC 2631 - <https://tools.ietf.org/html/rfc2631>
+- RFC 8422 - <https://tools.ietf.org/html/rfc8422>
+- RFC 5489 - <https://tools.ietf.org/html/rfc5489>
+- RFC 4772 - <https://tools.ietf.org/html/rfc4772>
+- RFC 1829 - <https://tools.ietf.org/html/rfc1829>
+- RFC 2420 - <https://tools.ietf.org/html/rfc2420>
+- RFC 3268 - <https://tools.ietf.org/html/rfc3268>
+- RFC 5288 - <https://tools.ietf.org/html/rfc5288>
+- RFC 7465 - <https://tools.ietf.org/html/rfc7465>
+- RFC 7905 - <https://tools.ietf.org/html/rfc7905>
+- RFC 7539 - <https://tools.ietf.org/html/rfc7539>
+- RFC 6151 - <https://tools.ietf.org/html/rfc6151>
+- RFC 6234 - <https://tools.ietf.org/html/rfc6234>
+- RFC 8447 - <https://tools.ietf.org/html/rfc8447#section-8>
