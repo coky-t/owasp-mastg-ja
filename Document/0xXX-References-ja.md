@@ -86,6 +86,8 @@
 
 ## 0x05f-Testing-Local-Authentication
 
+- [M4 - 安全でない認証](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M4-Insecure_Authentication.html)
+
 ## 0x05g-Testing-Network-Communication
 
 ## 0x05h-Testing-Platform-Interaction
