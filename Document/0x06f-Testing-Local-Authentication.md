@@ -17,7 +17,7 @@ iOS での指紋認証は *Touch ID* として知られています。指紋 ID 
 
 `LocalAuthentication.framework` または `Security.framework` のいずれかを使用すると、ブール値を返すだけで処理を続けるデータがないため、攻撃者がバイパスできるコントロールになることに注意します。詳細については [Don't touch me that way, by David Lidner et al](https://www.youtube.com/watch?v=XhXIHVGCFFM) を参照してください。
 
-##### ローカル認証フレームワーク
+#### ローカル認証フレームワーク
 
 ローカル認証フレームワークはユーザーからのパスフレーズまたは Touch ID 認証を要求する機能を提供します。開発者は `LAContext` クラスの関数 `evaluatePolicy` を利用して、認証プロンプトを表示および利用できます。
 
@@ -36,20 +36,21 @@ let context = LAContext()
 var error: NSError?
 
 guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
-	// ポリシーを評価できなかった。error を見て、適切なメッセージをユーザーに提示する
+    // Could not evaluate policy; look at error and present an appropriate message to user
 }
 
 context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pass authorization to enter this area") { success, evaluationError in
-	guard success else {
-		// ユーザーが正常に認証されなかった。evaluationError を見て、適切な処置を講じる。
-	}
+    guard success else {
+        // User did not authenticate successfully, look at evaluationError and take appropriate action
+    }
 
-	// ユーザーが正常に認証された。適切な処理を講じる。
+    // User authenticated successfully, take appropriate action
 }
 ```
+
 *ローカル認証フレームワークを使用した Swift での Touch ID 認証 (Apple の公式コードサンプル)*
 
-##### ローカル認証にキーチェーンサービスを使用する
+#### ローカル認証にキーチェーンサービスを使用する
 
 ローカル認証を実装するには iOS Keychain API を使用できます (そして、使用すべきです) 。このプロセスでは、アプリは秘密の認証トークンかキーチェーンでユーザーを識別する別の秘密データを格納します。リモートサービスを認証するには、ユーザーは秘密のデータを取得するためにパスフレーズまたは指紋を使用してキーチェーンをアンロックする必要があります。
 
@@ -57,7 +58,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 
 以下の例では、文字列 "test_strong_password" をキーチェーンに保存します。この文字列は、パスコードが設定されている間 (`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` パラメータ)、かつ現在登録されている指のみでの Touch ID 認証後 (`.touchIDCurrentSet パラメータ`) に、現在のデバイス上でのみアクセス可能です。
 
-**Swift**
+##### Swift
 
 ```swift
 
@@ -66,9 +67,9 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 var error: Unmanaged<CFError>?
 
 guard let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-	kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-	.touchIDCurrentSet,
-	&error) else {
+    kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+    .touchIDCurrentSet,
+    &error) else {
     // failed to create AccessControl object
 }
 
@@ -87,46 +88,46 @@ query[kSecAttrAccessControl as String] = accessControl
 let status = SecItemAdd(query as CFDictionary, nil)
 
 if status == noErr {
-	// 正常に保存された
+    // successfully saved
 } else {
-	// 保存中にエラーが発生
+    // error while saving
 }
 ```
 
-**Objective-C**
+##### Objective-C
 
 ```objc
 
-	// 1. 認証設定を表す AccessControl オブジェクトを作成する
-	CFErrorRef *err = nil;
+    // 1. 認証設定を表す AccessControl オブジェクトを作成する
+    CFErrorRef *err = nil;
 
-	SecAccessControlRef sacRef = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-		kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-		kSecAccessControlUserPresence,
-		err);
+    SecAccessControlRef sacRef = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+        kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+        kSecAccessControlUserPresence,
+        err);
 
-	// 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
-	NSDictionary* query = @{
-		(_ _bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
-		(__bridge id)kSecAttrLabel: @"com.me.myapp.password",
-		(__bridge id)kSecAttrAccount: @"OWASP Account",
-		(__bridge id)kSecValueData: [@"test_strong_password" dataUsingEncoding:NSUTF8StringEncoding],
-		(__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacRef
-	};
+    // 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
+    NSDictionary* query = @{
+        (_ _bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+        (__bridge id)kSecAttrLabel: @"com.me.myapp.password",
+        (__bridge id)kSecAttrAccount: @"OWASP Account",
+        (__bridge id)kSecValueData: [@"test_strong_password" dataUsingEncoding:NSUTF8StringEncoding],
+        (__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacRef
+    };
 
-	// 3. アイテムを保存する
-	OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, nil);
+    // 3. アイテムを保存する
+    OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, nil);
 
-	if (status == noErr) {
-		// 正常に保存された
-	} else {
-		// 保存中にエラーが発生
-	}
+    if (status == noErr) {
+        // successfully saved
+    } else {
+        // error while saving
+    }
 ```
 
 これで保存したアイテムをキーチェーンからリクエストできます。キーチェーンサービスはユーザーに認証ダイアログを表示し、適切な指紋が提供されたかどうかに応じてデータまたは nil を返します。
 
-**Swift**
+##### Swift
 
 ```swift
 // 1. クエリを定義する
@@ -151,7 +152,7 @@ if status == noErr {
 }
 ```
 
-**Objective-C**
+##### Objective-C
 
 ```objc
 // 1. クエリを定義する
@@ -182,7 +183,7 @@ $ otool -L <AppName>.app/<AppName>
 
 `LocalAuthentication.framework` がアプリで使用されている場合、その出力には以下の行が両方含まれます (`LocalAuthentication.framework` は内部で `Security.framework` を使用します) 。
 
-```
+```shell
 /System/Library/Frameworks/LocalAuthentication.framework/LocalAuthentication
 /System/Library/Frameworks/Security.framework/Security
 ```
@@ -218,7 +219,7 @@ Needle を使用している場合には、"hooking/frida/script_touch-id-bypass
 
 Needle を使用して iOS プラットフォームの非セキュアな生体認証をバイパスできます。Needle は Frida を利用して、`LocalAuthentication.framework` API を使用して開発されたログインフォームをバイパスします。以下のモジュールを使用して、非セキュアな生体認証をテストできます。
 
-```
+```shell
 [needle][container] > use hooking/frida/script_touch-id-bypass
 [needle][script_touch-id-bypass] > run
 ```
@@ -226,14 +227,14 @@ Needle を使用して iOS プラットフォームの非セキュアな生体�
 脆弱である場合、モジュールは自動的にログインフォームをバイパスします。
 
 ### キーチェーン内の鍵の一過性に関する注釈
-MacOSX や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのエントリのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
 
+MacOSX や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのエントリのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
 
 ### 参考情報
 
 #### OWASP Mobile Top 10 2016
 
-- M4 - 安全でない認証 - https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication (日本語訳) - https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M4-Insecure_Authentication.html
+- M4 - Insecure Authentication - [https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication](https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication)
 
 #### OWASP MASVS
 
