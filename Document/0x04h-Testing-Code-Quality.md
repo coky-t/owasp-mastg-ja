@@ -30,7 +30,6 @@ return c.getCount() != 0;
 
 ここで攻撃者が "username" と "password" のフィールドに以下の値を入力したとします。
 
-
 ```sql
 username = 1' or '1' = '1
 password = 1' or '1' = '1
@@ -165,15 +164,15 @@ Android アプリは大部分が Java で実装されています。これは設
 
 潜在的なバッファオーバーフローを特定するには、限られたサイズのバッファにユーザー入力をコピーするなど、安全ではない文字列関数 (`strcpy`, `strcat`, その他の "str" 接頭辞で始まる関数など) や潜在的に脆弱なプログラミング構造の使用を探します。以下は安全でない文字列関数のため危険とみなすべきです。
 
-    - `strcat`
-    - `strcpy`
-    - `strncat`
-    - `strlcat`
-    - `strncpy`
-    - `strlcpy`
-    - `sprintf`
-    - `snprintf`
-    - `gets`
+- `strcat`
+- `strcpy`
+- `strncat`
+- `strlcat`
+- `strncpy`
+- `strlcpy`
+- `sprintf`
+- `snprintf`
+- `gets`
 
 また、"for" や "while" ループとして実装されたコピー操作のインスタンスを探し、長さのチェックが正しく実行されていることを確認します。
 
@@ -217,11 +216,13 @@ Java
 ```java
 webView.loadUrl("javascript:initialize(" + myNumber + ");");
 ```
+
 Kotlin
 
 ```kotlin
 webView.loadUrl("javascript:initialize($myNumber);")
 ```
+
 ユーザー入力により決定される XSS 問題のもう一つの例は public override メソッドです。
 
 Java
@@ -234,6 +235,7 @@ public boolean shouldOverrideUrlLoading(WebView view, String url) {
   }
 }
 ```
+
 Kotlin
 
 ```kotlin
@@ -247,33 +249,35 @@ Kotlin
 Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
 
 - ADB
-```shell
-$ adb shell
-$ am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
-```
+
+  ```shell
+  $ adb shell
+  $ am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
+  ```
+
 - Clipboard Data
-```shell
-$ am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
-```
-- 3rd party Intent
 
-Java
-```java
-Intent i = new Intent();
-i.setComponent(new ComponentName("com.quora.android","com.quora.android.ActionBarContentActivity"));
-i.putExtra("url","http://test/test");
-i.putExtra("html","XSS PoC <script>alert(123)</script>");
-view.getContext().startActivity(i);
-```
-Kotlin
+  ```shell
+  $ am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
+  ```
 
-```kotlin
-val i = Intent()
-i.component = ComponentName("com.quora.android", "com.quora.android.ActionBarContentActivity")
-i.putExtra("url", "http://test/test")
-i.putExtra("html", "XSS PoC <script>alert(123)</script>")
-view.context.startActivity(i)
-```
+- 3rd party Intent in Java or kotlin:
+
+  ```java
+  Intent i = new Intent();
+  i.setComponent(new ComponentName("com.quora.android","com.quora.android.ActionBarContentActivity"));
+  i.putExtra("url","http://test/test");
+  i.putExtra("html","XSS PoC <script>alert(123)</script>");
+  view.getContext().startActivity(i);
+  ```
+
+  ```kotlin
+  val i = Intent()
+  i.component = ComponentName("com.quora.android", "com.quora.android.ActionBarContentActivity")
+  i.putExtra("url", "http://test/test")
+  i.putExtra("html", "XSS PoC <script>alert(123)</script>")
+  view.context.startActivity(i)
+  ```
 
 WebView を使用してリモートウェブサイトを表示する場合、HTML をエスケープする負担はサーバ側に移ります。XSS の欠陥がウェブサーバーに存在する場合、これを使用して WebView のコンテキストでスクリプトを実行できます。したがって、ウェブアプリケーションソースコードの静的解析を実行することが重要です。
 
@@ -294,7 +298,6 @@ WebView を使用してリモートウェブサイトを表示する場合、HTM
 | ' | &amp;#x27;|
 | / | &amp;#x2F;|
 
-
 エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") を参照してください。
 
 #### 動的解析
@@ -307,7 +310,7 @@ XSS の問題は手動や自動の入力ファジングを使用すると最も�
 
 #### OWASP Mobile Top 10 2016
 
-- M7 - Poor Code Quality - https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality
+- M7 - Poor Code Quality - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality>
 
 #### OWASP MASVS
 
@@ -320,8 +323,4 @@ XSS の問題は手動や自動の入力ファジングを使用すると最も�
 
 #### start ContentActivity を介した XSS
 
-- https://hackerone.com/reports/189793
-
-#### Android, SQL と ContentProvider もしくは、なぜ SQL インジェクションは未だになくならないのか？
-
-- http://blog.ostorlab.co/2016/03/android-sql-and-contentproviders-or-why.html
+- <https://hackerone.com/reports/189793>
