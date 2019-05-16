@@ -29,7 +29,7 @@ String providers = builder.toString();
 
 以下は、セキュリティプロバイダにパッチを当てた後、Google Play API を搭載したエミュレータで実行中の Android 4.4 の出力です。
 
-```
+```text
 provider: GmsCore_OpenSSL1.0 (Android's OpenSSL-backed security provider)
 provider: AndroidOpenSSL1.0 (Android's OpenSSL-backed security provider)
 provider: DRLCertFactory1.0 (ASN.1, DER, PkiPath, PKCS7)
@@ -41,8 +41,8 @@ provider: AndroidKeyStore1.0 (Android AndroidKeyStore security provider)
 
 古いバージョンの Android (例：Pre Android Nougat のみ使用) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Spongy Castle (Bouncy Castle の再パッケージ版) はこのような状況では一般的な選択肢です。Bouncy Castle は Android SDK に含まれているため、再パッケージ化が必要です。[Spongy Castle](https://rtyley.github.io/spongycastle/ "Spongy Castle") の最新バージョンではAndroid に含まれていた旧バージョンの [Bouncy Castle](https://www.cvedetails.com/vulnerability-list/vendor_id-7637/Bouncycastle.html "CVE Details Bouncy Castle") で発生した問題が修正されている可能性があります。Android にパックされた Bouncy Castle ライブラリは [多くの Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java") の対応ほど完全ではないことがよくあることに注意します。最後に、Spongy Castle のような大きなライブラリをパックすることは、しばしばマルチ dex 化 Android アプリケーションにつながることを心に留めておきます。
 
-
 最新の API レベルを対象としたアプリは以下の変更を検討します。
+
 - Android Nougat (7.0) 以上では [Android 開発者ブログは以下のように記されています](https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html "Security provider Crypto deprecated in Andorid N") 。
   - セキュリティプロバイダの指定を停止することを推奨します。代わりに、常にパッチされたセキュリティプロバイダを使用します。
   - `Crypto` プロバイダのサポートは中止されており、このプロバイダは非推奨です。
@@ -224,7 +224,6 @@ public static void main (String args[]) {
 
 ランダム性をテストしたい場合には、数の大きなセットをキャプチャし Burp の [sequencer](https://portswigger.net/burp/documentation/desktop/tools/sequencer "Burp's Sequencer") で確認してランダム性の品質がどれほど良いかを見ます。
 
-
 ### 鍵管理のテスト
 
 #### 概要
@@ -253,6 +252,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
     return new SecretKeySpec(keyBytes, "AES");
 }
 ```
+
 上記の手法はパスワードと必要な鍵長をビットに含む文字配列、例えば 128 または 256 ビットの AES 鍵が必要です。PBKDF2 アルゴリズムにより使用される 10000 ラウンドの反復回数を定義します。これによりブルートフォース攻撃の作業負荷が大幅に増加します。鍵長に等しいソルトサイズを定義し、ビットからバイトへの変換に気をつけて 8 で割ります。`SecureRandom` クラスを使用して、ランダムにソルトを生成します。同じパスワードが与えられた後に同じ暗号鍵が生成されることを確実にするために、明らかに、このソルトは固定に保ちたいものです。ソルトを `SharedPreferences` に非公開で格納できることに注意します。リスクの高いデータの場合には Android のバックアップメカニズムからソルトを除外することを推奨します。詳細は「Android ストレージのテスト」を参照してください。
 ルート化デバイスやパッチされていないデバイス、パッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、`AndroidKeystore` の鍵でソルトを暗号化するほうがよいかもしれないことに注意します。その後、パスワードベースの暗号化 (PBE) 鍵は API バージョン 26 まで推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。そこからは `PBKDF2withHmacSHA256` を使用することがベストです。これは鍵サイズが異なります。
 
@@ -286,6 +286,7 @@ SecureKeyWrapper ::= SEQUENCE {
 上記のコードは SecureKeyWrapper フォーマットで暗号化された鍵を生成するときに設定されるさまざまなパラメータを表しています。詳細については [WrappedKeyEntry](https://developer.android.com/reference/android/security/keystore/WrappedKeyEntry) の Android ドキュメントを確認してください。
 
 KeyDescription AuthorizationList を定義するときに、以下のパラメータが暗号化鍵セキュリティに影響を与えます。
+
 - `algorithm` パラメータは鍵が使用される暗号化アルゴリズムを指定します。
 - `keySize` パラメータは鍵のサイズをビット単位で指定します。鍵のアルゴリズムに対して普通に計測されます。
 - `digest` パラメータは署名および検証オペレーションを実行するために鍵とともに使用できるダイジェストアルゴリズムを指定します。
@@ -322,18 +323,23 @@ Android により提供されているもう一つの API は `KeyChain` です�
 - `java.security.*` および `javax.crypto.*` パッケージにあるその他のもの
 
 例として、ハードコードされた暗号鍵の使用の特定方法を示します。最初に ```Baksmali``` を使用して Smali バイトコードのコレクションに DEX バイトコードを逆アセンブルします。
+
 ```shell
 $ baksmali d file.apk -o smali_output/
 ```
+
 Smali バイトコードファイルのコレクションがあるので、```SecretKeySpec``` クラスの使用法についてファイルを検索できます。今取得した Smali ソースコードを単に再帰的に grep することでこれを行います。Smali のクラス記述子は `L` で始まり `;` で終わることに注意してください。
+
 ```shell
 $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 ```
+
 これは `SecretKeySpec` クラスを使用するすべてのクラスをハイライト表示します。ハイライトされたすべてのファイルを調べて、鍵マテリアルを渡すのに使用されているバイトはどれかをトレースします。下の図は出荷準備が完了したアプリケーションでこの評価を行った結果を示しています。読みやすくするため、DEX バイトコードから Java コードにリバースエンジニアしました。静的バイト配列 `Encrypt.keyBytes` にハードコードされ初期化された静的暗号鍵の使用がはっきりとわかります。
 
 ![Use of a static encryption key in a production ready application.](Images/Chapters/0x5e/static_encryption_key.png).
 
 ソースコードにアクセスできる場合には、少なくとも以下について確認します。
+
 - 鍵を格納するためにどのメカニズムが使用されているかチェックします。他のすべてのソリューションよりも `AndroidKeyStore` を推奨します。
 - TEE の使用を確実にするために多層防御メカニズムが使用されているかどうかをチェックします。例えば、時刻有効性は強制されていますか？ハードウェアセキュリティの使用はコードにより評価されていますか？詳細については [KeyInfo のドキュメント](https://developer.android.com/reference/android/security/keystore/KeyInfo "KeyInfo") を参照してください。
 - ホワイトボックス暗号化ソリューションの場合、その有効性を調べるか、その分野の専門家に相談します。
@@ -348,32 +354,35 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - [#nelenkov] - N. Elenkov, Android Security Internals, No Starch Press, 2014, Chapter 5.
 
 #### 暗号についての参考情報
-- Android Developer blog: Crypto provider deprecated - https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html
-- Android Developer blog: cryptography changes in android P - https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html
-- Ida Pro - https://www.hex-rays.com/products/ida/
-- Android Developer blog: changes for NDK developers - https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html
-- security providers -  https://developer.android.com/reference/java/security/Provider.html
-- Spongy Castle  - https://rtyley.github.io/spongycastle/
-- Legion of the Bouncy Castle - https://www.bouncycastle.org/java.html
-- Android Developer documentation - https://developer.android.com/training/articles
-- NIST keylength recommendations - https://www.keylength.com/en/4/
-- BSI recommendations - 2017 - https://www.keylength.com/en/8/
+
+- Android Developer blog: Crypto provider deprecated - <https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html>
+- Android Developer blog: cryptography changes in android P - <https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html>
+- Ida Pro - <https://www.hex-rays.com/products/ida/>
+- Android Developer blog: changes for NDK developers - <https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html>
+- security providers -  <https://developer.android.com/reference/java/security/Provider.html>
+- Spongy Castle  - <https://rtyley.github.io/spongycastle/>
+- Legion of the Bouncy Castle - <https://www.bouncycastle.org/java.html>
+- Android Developer documentation - <https://developer.android.com/guide>
+- NIST keylength recommendations - <https://www.keylength.com/en/4/>
+- BSI recommendations - 2017 - <https://www.keylength.com/en/8/>
 
 #### SecureRandom についての参考情報
-- Proper seeding of SecureRandom - https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded
-- Burpproxy its Sequencer - https://portswigger.net/burp/documentation/desktop/tools/sequencer
+
+- Proper seeding of SecureRandom - <https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded>
+- Burpproxy its Sequencer - <https://portswigger.net/burp/documentation/desktop/tools/sequencer>
 
 #### 鍵管理のテストについての参考情報
-- Android KeyStore API - https://developer.android.com/reference/java/security/KeyStore.html
-- Android Keychain API - https://developer.android.com/reference/android/security/KeyChain
-- SharedPreferences - https://developer.android.com/reference/android/content/SharedPreferences.html
-- KeyInfo documentation - https://developer.android.com/reference/android/security/keystore/KeyInfo
-- Android Pie features and APIs - https://developer.android.com/about/versions/pie/android-9.0#secure-key-import
-- Android Keystore system - https://developer.android.com/training/articles/keystore#java
+
+- Android KeyStore API - <https://developer.android.com/reference/java/security/KeyStore.html>
+- Android Keychain API - <https://developer.android.com/reference/android/security/KeyChain>
+- SharedPreferences - <https://developer.android.com/reference/android/content/SharedPreferences.html>
+- KeyInfo documentation - <https://developer.android.com/reference/android/security/keystore/KeyInfo>
+- Android Pie features and APIs - <https://developer.android.com/about/versions/pie/android-9.0#secure-key-import>
+- Android Keystore system - <https://developer.android.com/training/articles/keystore#java>
 
 ##### OWASP Mobile Top 10
 
-- M5 - Insufficient Cryptography - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
+- M5 - Insufficient Cryptography - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography>
 
 ##### OWASP MASVS
 
