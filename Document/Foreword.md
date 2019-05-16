@@ -5,7 +5,7 @@ OWASP モバイルセキュリティテストガイドへようこそ。既存�
 
 ご意見やご提案がある場合、または寄稿したい場合、GitHub に issue を作成するか Slack で ping してください。手順については README を参照してください。
 
-https://www.github.com/OWASP/owasp-mstg/
+<https://www.github.com/OWASP/owasp-mstg/>
 
 ---
 
