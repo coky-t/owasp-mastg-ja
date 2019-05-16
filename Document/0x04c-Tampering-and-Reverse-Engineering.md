@@ -104,9 +104,9 @@ Android のセクションでは、シンボリック実行を使用して Andro
 
 #### ツール
 
-- Angr - https://github.com/angr/angr
-- Cycript - http://www.cycript.org/
-- Frida - https://www.frida.re/
-- Radare2 - https://github.com/radare/radare2
-- Substrate - http://www.cydiasubstrate.com/
-- Xposed - https://www.xda-developers.com/xposed-framework-hub/
+- Angr - <https://github.com/angr/angr>
+- Cycript - <http://www.cycript.org/>
+- Frida - <https://www.frida.re/>
+- Radare2 - <https://github.com/radare/radare2>
+- Substrate - <http://www.cydiasubstrate.com/>
+- Xposed - <https://www.xda-developers.com/xposed-framework-hub/>
