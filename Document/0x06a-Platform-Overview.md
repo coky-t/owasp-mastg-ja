@@ -22,7 +22,6 @@ iOS アプリは Apple の iOS Sandbox (歴史的に Seatbelt と呼ばれてい
 
 iOS には多くの強みがありますが、iOS アプリ開発者はそれでもセキュリティについて心配する必要があります。データ保護、キーチェーン、Touch ID/Face ID 認証、ネットワークセキュリティは依然としてエラーの余地を多く残しています。以下の章では、iOS セキュリティアーキテクチャについて述べ、基本的なセキュリティテスト手法を説明し、リバースエンジニアリングの方法を提供します。
 
-
 ### iOS セキュリティアーキテクチャ
 
 [iOS セキュリティアーキテクチャ](https://www.apple.com/business/docs/iOS_Security_Guide.pdf "Apple iOS Security Guide") は Apple が iOS セキュリティガイドで公式に文書化したもので、六つのコア機能で構成されています。このセキュリティガイドは各メジャー iOS バージョンごとに Apple により更新されています。
@@ -124,6 +123,7 @@ IPA コンテナ内のさまざまなファイルを詳しく見てみましょ�
 - **Custom resource files**: ローカライズされていないリソースは最上位ディレクトリに配置され、ローカライズされたリソースはアプリケーションバンドルの言語固有のサブディレクトリに配置されます。リソースには nib ファイル、画像、音声ファイル、構成ファイル、文字列ファイル、およびアプリケーションが使用するその他のカスタムデータがあります。
 
 language.lproj フォルダはアプリケーションがサポートする言語ごとに定義されています。これにはストーリーボードと文字列ファイルを含んでいます。
+
 - ストーリーボードは iOS アプリケーションのユーザーインタフェースの視覚的な表現です。スクリーンと、スクリーン間の接続を示しています。
 - 文字列ファイル形式は一つ以上のキー・バリューのペアとオプションのコメントで構成されています。
 
@@ -186,11 +186,12 @@ iOS 開発者はパーミッションを直接設定することはできませ�
 ### iOS アプリケーション攻撃領域
 
 iOS アプリケーション攻撃領域はそのアプリケーションのすべてのコンポーネントで構成されます。アプリをリリースおよびその機能をサポートするために必要なサポートマテリアルを含みます。iOS アプリケーションは以下を行っていない場合、攻撃に対して脆弱である可能性があります。
+
 - IPC 通信や URL スキームによるすべての入力を検証します。以下を参照してください。
   - [カスタム URL スキームのテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-custom-url-schemes "Testing Custom URL Schemes")
 - ユーザーによる入力フィールドへのすべての入力を検証します。
 - WebView 内にロードされるコンテンツを検証します。以下を参照してください。
-  -  [iOS WebView のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-ios-webviews "Testing iOS webviews")
+  - [iOS WebView のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#testing-ios-webviews "Testing iOS webviews")
   - [ネイティブメソッドが WebView を通じて公開されているかどうかを判断する](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md#determining-whether-native-methods-are-exposed-through-webviews "Determining Whether Native Methods Are Exposed Through WebViews")
 - バックエンドサーバーとセキュアに通信しています。そうでなければサーバーとモバイルアプリケーションの間で中間者攻撃 (MitM) の影響を受けます。以下を参照してください。
   - [ネットワーク通信のテスト](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication "Testing Network Communication")
