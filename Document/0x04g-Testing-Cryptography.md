@@ -54,10 +54,10 @@
 さらに、暗号鍵の格納、暗号操作の実行などのために、(利用可能な場合) セキュアハードウェアに常に依拠するべきです。
 
 アルゴリズムの選択とベストプラクティスの詳細については、以下のリソースを参照してください。
+
 - ["Commercial National Security Algorithm Suite and Quantum Computing FAQ"](https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf "Commercial National Security Algorithm Suite and Quantum Computing FAQ")
 - [NIST recommendations (2016)](https://www.keylength.com/en/4/ "NIST recommendations")
 - [BSI recommendations (2017)](https://www.keylength.com/en/8/ "BSI recommendations")
-
 
 ### よくある設定の問題
 
@@ -104,9 +104,9 @@
 ソースコード内で使用されているすべての暗号手法、特に機密データに直接適用されているものを注意深く調べます。すべての暗号操作は Android および iOS の標準暗号 API を使用すべきです (プラットフォーム固有の章で詳細に説明します) 。既知のプロバイダから標準ルーチンを呼び出さない暗号操作は厳密に検査すべきです。改変された標準アルゴリズムに細心の注意を払います。エンコーディングは暗号化ではないことを忘れないでください。XOR (排他的 OR) などのビット操作演算子を見つけたら常にさらに調査します。
 
 すべての暗号実装では、以下のことが常に行われるようにする必要があります。
+
 - 一時鍵 (AES/DES/Rijndael の中間/導出鍵など) は使用後にメモリから適切に削除されています。
 - 暗号の内部状態はできるだけ早くメモリから削除されているべきです。
-
 
 #### 不十分な AES 設定
 
@@ -142,11 +142,11 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 注意: PKCS #5 を使用する AES-CBC は、「パディングエラー」、「MAC エラー」、「復号化失敗」などの警告が得られる実装であるため、パディングオラクル攻撃に対しても脆弱です。例として [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack/ "The Padding Oracle Attack") を参照してください。次に、平文を暗号化した後は HMAC を追加することがベストです。つまり、失敗した MAC を含む暗号文は復号化する必要がなくなり、破棄できるようになります。
 
-
 #### メモリ内の鍵を保護する
 
 メモリダンプが脅威モデルの一部であるとき、鍵はアクティブに使用される瞬間にアクセスできます。メモリダンプには root アクセス (ルート化デバイスや脱獄済みデバイスなど) または Frida によるパッチ適用済みのアプリケーション (Fridump などのツールを使用できます) のいずれかが必要です。
 そのため、デバイスに鍵がまだ必要とされる場合には、以下を考慮することがベストです。
+
 - すべての暗号化アクションおよび鍵自体が Trusted Execution Environment (Android Keystore を使用するなど) または Secure Enclave (キーチェーンを使用し、署名する際には ECDHE を使用する) にあることを確認します。
 - TEE / SE の外部にある鍵が必要な場合には、必ずそれらを難読化や暗号化し、使用時のみそれらを逆難読化することを確認します。ネイティブコードを使用しているか否かに関わらず、メモリを解放する前に常に鍵をゼロで埋めます。これは、メモリ構造を上書き (配列のヌル埋めなど) するものであり、Android のほとんどの Immutable 型 (`BigInteger` や `String`) がヒープ内にあることを知っていることを意味します。
 
@@ -156,19 +156,18 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 あるデバイスから別のデバイスへ、またはアプリからバックエンドへ鍵を転送する必要がある場合は、転送鍵ペアまたは別のメカニズムを使用して、適切な鍵保護が設定されていることを確認します。多くの場合、鍵は簡単にリバースできる難読化手法で共有されます。代わりに、非対称暗号方式またはラッピング鍵が使用されていることを確認します。
 
-
 ### Android と iOS の暗号化 API
 
 同じ基本的な暗号原則が特定の OS とは独立して適用されますが、それぞれのオペレーティングシステムは独自の実装と API を提供します。データストレージ用のプラットフォーム固有の暗号化 API については [**Android のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md) および [**iOS のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md) の章で詳しく説明しています。ネットワークトラフィックの暗号化、特に Transport Layer Security (TLS) については [**Android のネットワーク API**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md) の章で説明しています。
 
-
 ### 暗号化ポリシー
-大規模な組織で、または高リスクのアプリケーションが作成される場合、[NIST 鍵管理における推奨事項](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf "NIST 800-57 Rev4") のようなフレームワークに基づいて、暗号化ポリシーを作成することがよくあります。暗号化の適用に基本的な誤りが見つかった場合、学んだ教訓や暗号鍵管理方針を設定する良い出発点となります。
 
+大規模な組織で、または高リスクのアプリケーションが作成される場合、[NIST 鍵管理における推奨事項](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf "NIST 800-57 Rev4") のようなフレームワークに基づいて、暗号化ポリシーを作成することがよくあります。暗号化の適用に基本的な誤りが見つかった場合、学んだ教訓や暗号鍵管理方針を設定する良い出発点となります。
 
 #### 参考情報
 
 ##### 暗号化の参考情報
+
 - [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
 - [Breaking RSA with Mangers Attack]( https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Mangers attack")
 - [NIST 800-38d]( https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
@@ -176,7 +175,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 ##### OWASP Mobile Top 10 2016
 
-- M5 - Insufficient Cryptography - https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography
+- M5 - Insufficient Cryptography - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography>
 
 ##### OWASP MASVS
 
