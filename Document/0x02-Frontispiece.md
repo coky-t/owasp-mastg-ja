@@ -46,13 +46,13 @@ Romuald はウェブ、モバイル、IoT、クラウドの分野で 15 年以�
 
 主寄稿者は一貫して質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 500 件の追加が記録されています。
 
+- Jeroen Beckers
 - Pawel Rzepa
 - Francesco Stillavato
 - Henry Hoggard
 - Andreas Happe
 - Kyle Benac
 - Alexander Anthuk
-- Jeroen Beckers
 - Wen Bin Kong
 - Abdessamad Temmar
 - Bolot Kerimbaev
@@ -69,6 +69,7 @@ Abderrahmane Aftahi, Jin Kung Ong, Koki Takeyama, Sjoerd Langkemper, Gerhard Wag
 
 レビュー担当者は GitHub issues および pull request コメントを通して有用なフィードバックを一貫して提供しています。
 
+- Jeroen Beckers
 - Sjoerd Langkemper
 - Anant Shrivastava
 
