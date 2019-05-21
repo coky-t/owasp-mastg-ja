@@ -12,6 +12,10 @@ Copyright © 2018 The OWASP Foundation. 本書は [Creative Commons Attribution-
 
 <img src="Images/CC-license.png" alt="drawing" width="150">
 
+## ISBN
+
+ISBN 番号は 978-0-359-47489-9 です。
+
 ## 謝辞
 
 **注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mstg/graphs/contributors "GitHub contribution statistics") に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mstg/blob/master/README.md "GitHub Repository README") を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
