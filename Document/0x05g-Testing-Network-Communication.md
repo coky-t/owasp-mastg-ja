@@ -599,6 +599,7 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 ##### Android 開発者ドキュメント
 
 - Network Security Config - <https://developer.android.com/training/articles/security-config>
+- Network Security Config (cached alternative) - <https://webcache.googleusercontent.com/search?q=cache:hOONLxvMTwYJ:https://developer.android.com/training/articles/security-config+&cd=10&hl=nl&ct=clnk&gl=nl>
 
 ##### Xamarin 証明書ピンニング
 
