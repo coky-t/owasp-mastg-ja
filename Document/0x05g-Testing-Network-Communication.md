@@ -170,7 +170,7 @@ D/NetworkSecurityConfig: Using Network Security Config from resource network_sec
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
-逆コンパイラ (jadx や apktool など) や apktool を使用することで、/res/xml/ フォルダにある network_security_config.xml ファイルに \<pin\> エントリが存在するかどうかを確認できます。
+逆コンパイラ (jadx や apktool など) や apktool を使用することで、/res/xml/ フォルダにある network_security_config.xml ファイルに `<pin>` エントリが存在するかどうかを確認できます。
 
 ##### TrustManager
 
