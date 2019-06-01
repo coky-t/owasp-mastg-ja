@@ -146,20 +146,6 @@ iOS 9.3.x 以降、Bundle パスは `/var/containers/Bundle/Application/` に再
 
 <img src="Images/Chapters/0x06a/iOS_Folder_Structure.png" alt="iOS App Folder Structure" width="350">
 
-#### インストールプロセス
-
-IPA パッケージを iOS デバイスにインストールするにはさまざまな方法があります。最も簡単な方法は [Cydia Impactor](http://www.cydiaimpactor.com/ "Cydia Impactor") を使うことです。このツールはもともと iPhone を脱獄するために作成されたものですが、IPA パッケージに署名してサイドローディングを介して iOS デバイスにインストールするように書き直されました。このツールは MacOS, Windows, Linux で利用でき、APK ファイルを Android デバイスにインストールすることもできます。 [ステップバイステップガイドとトラブルシューティングの手順はこちらにあります](https://yalujailbreak.net/how-to-use-cydia-impactor/ "How to use Cydia Impactor") 。
-
-Linux では、代わりにクロスプラットフォームのソフトウェアプロトコルライブラリである [libimobiledevice](http://www.libimobiledevice.org/ "libimobiledevice") と、iOS デバイスとネイティブに通信するためのツールセットを使用できます。ideviceinstaller を介して USB 接続経由でパッケージをインストールできます。接続は USB 多重化デーモン [usbmuxd](https://www.theiphonewiki.com/wiki/Usbmux "Usbmux") を使用して実装され、USB 経由での TCP トンネルを提供します。
-
-iOS デバイスでは、実際のインストールプロセスは installd デーモンにより処理され、アプリケーションをアンパックおよびインストールします。アプリサービスを統合する、もしくは iOS デバイスにインストールされるには、すべてのアプリケーションは Apple が発行した証明書で署名されている必要があります。これはコード署名の検証が成功した後にのみアプリケーションがインストールされることを意味します。但し、脱獄済みの電話機では、Cydia ストアで利用できる [AppSync](http://repo.hackyouriphone.org/appsyncunified) でこのセキュリティ機能を回避できます。Cydia は代替アプリストアまたはソフトウェア配信システムです。この代替アプリストアには脱獄によって提供されたルート権限を活用して高度な機能を実行する多くの有用なアプリケーションが含まれています。AppSync は偽の署名付き IPA パッケージのインストールを可能にするために installd にパッチをあてたものです。
-
-IPA は [ipainstaller](https://github.com/autopear/ipainstaller "IPA Installer") を使用してコマンドラインから直接インストールすることもできます。例えば scp 経由などで、ファイルをデバイスにコピーした後、ipainstaller を IPA のファイル名と共に実行します。
-
-```shell
-$ ipainstaller App_name.ipa
-```
-
 #### アプリパーミッション
 
 Android アプリ (Android 6 以前) とは異なり、iOS アプリは事前に割り当てられたパーミッションを持ちません。代わりに、アプリが初めてセンシティブな API を使用しようとした際に、実行時にパーミッションを与えるようユーザーに求めます。パーミッションを付与されたアプリは 設定 > プライバシー メニューに表示され、ユーザーはアプリ固有の設定を変更できます。Apple はこのパーミッションコンセプト [プライバシー管理](https://support.apple.com/en-sg/HT203033 "Apple - About privacy and Location Services in iOS 8 and later") を呼び出します。
