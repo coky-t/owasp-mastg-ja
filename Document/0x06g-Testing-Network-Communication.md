@@ -204,7 +204,11 @@ Result : FAIL
 
 #### 概要
 
-証明書ピンニングは、信頼できる認証局により署名された任意の証明書を受け入れる代わりに、モバイルアプリを特定の X.509 証明書に関連付けるプロセスです。サーバー証明書や公開鍵を格納 (「ピン留め」) するモバイルアプリは既知のサーバーへの接続のみを確立します。外部認証局の信頼を除くことで、攻撃面が縮小されます (結局のところ、認証局が侵害されたり、偽者に証明書を発行するよう騙されたりという既知の事例が多くあります) 。
+認証局はセキュアなクライアントサーバー通信に不可欠な要素であり、各オペレーティングシステムのトラストストアに事前定義されています。iOS では自動的に膨大な量の証明書を信頼しています。これらは Apple のドキュメント [iOS バージョンごとの利用可能な信頼されたルート証明書のリスト](https://support.apple.com/en-gb/HT204132 "Lists of available trusted root certificates in iOS") で詳細を調べることができます。
+
+CA はトラストストアに追加できます。ユーザーを介して手動で、エンタープライズデバイスを管理する MDM により、もしくはマルウェアを介して行われます。問題はそれらのすべての CA を信頼できるかどうか、そしてアプリはトラストストアに頼るべきかどうかということです。
+
+このリスクに対処するために、証明書ピンニングを使用できます。証明書ピンニングは、信頼できる認証局により署名された任意の証明書を受け入れる代わりに、モバイルアプリをサーバーの特定の X.509 証明書に関連付けるプロセスです。サーバー証明書や公開鍵を格納するモバイルアプリは、その後、既知のサーバーへの接続のみを確立し、それによりサーバーを「ピンニング」します。外部の認証局 (CA) への信頼を排除することで、攻撃対象となる面が少なくなります。結局のところ、認証局が侵害されたり、偽者に証明書を発行するよう騙されたりという既知の事例が多くあります。CA 違反や失敗の詳細なタイムラインは [sslmate.com](https://sslmate.com/certspotter/failures "Timeline of PKI Security Failures") で見つけることができます。
 
 証明書は開発中またはアプリが最初にバックエンドに接続するときにピン留めできます。
 その場合、証明書は初回に見たときにホストに関連付けられるか「ピン留め」されます。この二つ目のバリエーションはあまりセキュアではなくなります。攻撃者は最初の接続を傍受して自身の証明書を注入する可能性があるためです。
@@ -255,7 +259,7 @@ else {
 
 1. Burp をプロキシとして設定した後、トラストストア (Settings -> General -> Profiles) に証明書が追加されていないこと、および SSL キルスイッチなどのツールが無効であることを確認します。アプリケーションを起動して、Burp にトラフィックが表示されるかどうかを確認します。問題がある場合は 'Alerts' タブに報告されます。トラフィックが見える場合、証明書検証がまったく実行されていないことを意味します。そうではなく、トラフィックを見ることができず、SSL ハンドシェイクの失敗に関する情報がある場合には、次の項目に従います。
 2. 次に、[Burp のユーザードキュメント](https://support.portswigger.net/customer/portal/articles/1841109-installing-burp-s-ca-certificate-in-an-ios-device "Installing Burp's CA Certificate in an iOS Device") で説明されているように、Burp 証明書をインストールします。ハンドシェイクが成功して Burp でトラフィックを見ることができる場合、デバイスのトラストストアに対して証明書が検証されているが、ピンニングが実行されていないことを意味します。
-3. 前のステップでの指示を実行してもトラフィックが burp 経由でプロキシされない場合、証明書は実際にピン留めされ、すべてのセキュリティ対策が実行されていることを意味します。但し、アプリケーションをテストするには依然としてピンニングをバイパスする必要があります。この詳細については「iOS アプリのテスト環境構築」を参照してください。
+3. 前のステップでの指示を実行してもトラフィックが burp 経由でプロキシされない場合、証明書は実際にピン留めされ、すべてのセキュリティ対策が実行されていることを意味します。但し、アプリケーションをテストするには依然としてピンニングをバイパスする必要があります。この詳細については以下の「証明書ピンニングのバイパス」というタイトルのセクションを参照してください。
 
 ##### クライアント証明書の妥当性確認
 
@@ -275,7 +279,40 @@ else {
 
 (Cycript や Frida を使用して) アプリケーションから証明書を抽出し、Burp のクライアント証明書としてそれを追加すると、トラフィックを傍受することが可能となります。
 
+##### 証明書ピンニングのバイパス
+
+SSL ピンニングをバイパスするにはさまざまな方法があります。以下のセクションでは脱獄済みデバイスと非脱獄済みデバイス向けに説明します。
+
+脱獄済みデバイスを持っているのであれば、自動的に SSL ピンニングを無効にできる以下のツールのいずれかを試してみます。
+
+- "[SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2 "SSL Kill Switch 2")" は証明書ピンニングを無効にする方法の一つです。Cydia ストアからインストールできます。すべての高レベル API コールにフックし、証明書ピンニングをバイパスします。
+- Burp Suite アプリ "[Mobile Assistant](https://portswigger.net/burp/help/mobile_testing_using_mobile_assistant.html "Using Burp Suite Mobile Assistant")" でも証明書ピンニングをバイパスするために使うことができます。
+
+場合によっては、証明書ピンニングをバイパスすることが難しくなります。ソースコードにアクセスしてアプリを再コンパイルできる場合には、以下を確認します。
+
+- API コール `NSURLSession`, `CFStream`, `AFNetworking`
+- "pinning", "X.509", "Certificate" などの単語を含むメソッドや文字列
+
+ソースにアクセスできない場合は、バイナリパッチを試してみます。
+
+- OpenSSL 証明書ピンニングが使用されている場合、[バイナリパッチ](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2015/january/bypassing-openssl-certificate-pinning-in-ios-apps/ "Bypassing OpenSSL Certificate Pinning in iOS Apps") を試してみます。
+- 多くの場合、証明書はアプリケーションバンドル内のファイルです。証明書を Burp の証明書で置き換えることで十分なこともありますが、証明書の SHA sum には注意します。バイナリにハードコードされている場合、それも置き換えなければなりません。
+
+Frida と Objection を使用して、非脱獄済みデバイスで SSL ピンニングをバイパスすることもできます (これは脱獄済みデバイスでも機能します) 。「iOS の基本的なセキュリティテスト」の説明に従って、Objection でアプリケーションを再パッケージ化した後、Objection で以下のコマンドを使用して一般的な SSL ピンニング実装を無効にできます。
+
+```shell
+$ ios sslpinning disable
+```
+
+[pinning.ts](https://github.com/sensepost/objection/blob/master/agent/src/ios/pinning.ts "pinning.ts") を調べてバイパスの仕組みを理解できます。
+
+詳細情報として [iOS の SSL ピンニング無効化に関する Objection の文書](https://github.com/sensepost/objection#ssl-pinning-bypass-running-for-an-ios-application "Disable SSL Pinning in iOS" ) もご覧ください。
+
+ホワイトボックステストと典型的なコードパターンについてもっと知りたい場合には、[#thiel] を参照してください。これには最も一般的な証明書ピンニング技法を説明する記述とコードスニペットが含まれています。
+
 #### 参考情報
+
+- [#thiel] - David Thiel. iOS Application Security, No Starch Press, 2015
 
 ##### OWASP Mobile Top 10 2016
 
@@ -296,4 +333,4 @@ else {
 
 ##### Nscurl
 
-- ATS のガイド - NowSecure によるブログ投稿 - [https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/)
+- ATS のガイド - NowSecure によるブログ投稿 - <https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/>
