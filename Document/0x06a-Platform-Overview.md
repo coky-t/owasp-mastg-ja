@@ -131,21 +131,6 @@ language.lproj フォルダはアプリケーションがサポートする言�
 
 脱獄済みデバイスでは、メインのアプリバイナリを復号し IPA ファイルの再構築を可能にするさまざまなツールを使用して、インストールされた iOS アプリの IPA を復元できます。同様に、脱獄済みデバイスでは [IPA Installer](https://github.com/autopear/ipainstaller "IPA Installer") を使用して IPA ファイルをインストールできます。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがよくあります。あなたに実際のファイルを送ったり、[HockeyApp](https://hockeyapp.net/ "HockeyApp") や [Testflight](https://developer.apple.com/testflight/ "Testflight") などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
-#### iOS ファイルシステム上のアプリ構造
-
-以前、iOS 7 に至るまでは、アプリケーションは `/var/mobile/Applications/` ディレクトリ内のフォルダにアンパックされていました。iOS 8 から、アプリケーションがデバイスに格納される方法が変更されました (下記を参照) 。アプリケーションは UUID (Universal Unique Identifier) というランダムな 128 ビット数によって識別されます。この番号はアプリケーション自体を格納するフォルダの名前です。静的バンドルとアプリケーションデータフォルダは別の場所に格納されます。これらのフォルダにはアプリケーションセキュリティアセスメント時に詳細に調査する必要がある情報が含まれています。
-
-- `/var/mobile/Containers/Bundle/Application/[UUID]/Application.app` には前述の Application.app データが含まれ、アプリケーションの ARM コンパイル済みバイナリだけでなく静的コンテンツも格納されます。このフォルダのコンテンツはコード署名の検証に使用されます。
-- `/var/mobile/Containers/Data/Application/[UUID]/Documents` にはユーザーが生成したすべてのデータが含まれます。アプリケーションエンドユーザーがこのデータの作成を開始します。
-- `/var/mobile/Containers/Data/Application/[UUID]/Library` にはユーザー固有ではないすべてのファイルが含まれます。キャッシュ、プリファレンス、クッキー、プロパティリスト (plist) 設定ファイルなどがあります。
-- `/var/mobile/Containers/Data/Application/[UUID]/tmp` にはアプリケーションの機能の間に必要とされない一時ファイルが含まれます。
-
-iOS 9.3.x 以降、Bundle パスは `/var/containers/Bundle/Application/` に再度変更されていることに注意します。
-
-以下の図はアプリケーションのフォルダ構造を表しています。
-
-<img src="Images/Chapters/0x06a/iOS_Folder_Structure.png" alt="iOS App Folder Structure" width="350">
-
 #### アプリパーミッション
 
 Android アプリ (Android 6 以前) とは異なり、iOS アプリは事前に割り当てられたパーミッションを持ちません。代わりに、アプリが初めてセンシティブな API を使用しようとした際に、実行時にパーミッションを与えるようユーザーに求めます。パーミッションを付与されたアプリは 設定 > プライバシー メニューに表示され、ユーザーはアプリ固有の設定を変更できます。Apple はこのパーミッションコンセプト [プライバシー管理](https://support.apple.com/en-sg/HT203033 "Apple - About privacy and Location Services in iOS 8 and later") を呼び出します。
