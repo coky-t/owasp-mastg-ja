@@ -323,7 +323,43 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 動的解析は好みの傍受プロキシを使用して MITM 攻撃を開始することで実行できます。これにより、クライアント (モバイルアプリケーション) とバックエンドサーバー間のトラフィックを監視できます。プロキシが HTTP リクエストおよびレスポンスを傍受できない場合、SSL ピンニングは正しく実装されています。
 
-詳細については、[OWASP certificate pinning guide](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#Android "OWASP Certificate Pinning for Android") を確認してください。
+##### 証明書ピンニングのバイパス
+
+デバイスで利用可能なフレームワークに応じて、ブラックボックステストのために証明書ピンニングをバイパスする方法がいくつかあります。
+
+- Objection: `android sslpinning disable` コマンドを使います。
+- Xposed: [TrustMeAlready](https://github.com/ViRb3/TrustMeAlready "TrustMeAlready") または [SSLUnpinning](https://github.com/ac-pm/SSLUnpinning_Xposed "SSLUnpinning") モジュールをインストールします。
+- Cydia Substrate: [Android-SSL-TrustKiller](https://github.com/iSECPartners/Android-SSL-TrustKiller "Android-SSL-TrustKiller") パッケージをインストールします。
+
+ほとんどのアプリケーションでは、証明書ピンニングは数秒以内にバイパスできますが、これはアプリがこれらのツールでカバーしている API 関数を使用している場合に限られます。アプリがカスタムフレームワークまたはカスタムライブラリを使用して SSL ピンニングを実装している場合には、SSL ピンニングを手動でパッチ適用および無効化する必要があるため、時間がかかります。
+
+###### カスタム証明書ピンニングの静的なバイパス
+
+アプリケーション内のどこかで、エンドポイントと証明書 (またはそのハッシュ) の両方を定義する必要があります。アプリケーションを逆コンパイルした後、以下のものを検索します。
+
+- 証明書ハッシュ: `grep -ri "sha256\|sha1" ./smali` 識別されたハッシュをプロキシの CA のハッシュで置き換えます。あるいは、ハッシュにドメイン名が付随している場合には、元のドメインがピン留めされないようにドメイン名を存在しないドメイン名に改変してみることができます。これは難読化された OkHTTP 実装ではうまく機能します。
+- 証明書ファイル: `find ./assets -type f \( -iname \*.cer -o -iname \*.crt \)` これらのファイルをプロキシの証明書で置き換え、正しい形式であることを確認します。
+
+アプリケーションがネットワーク通信を実装するためにネイティブライブラリを使用する場合は、さらにリバースエンジニアリングが必要です。このようなアプローチの例がブログ記事 [smali コードでの SSL ピンニングロジックの識別、パッチ適用、および APK の再構築](https://serializethoughts.com/2016/08/18/bypassing-ssl-pinning-in-android-applications/ "Bypassing SSL Pinning in Android Applications")  にあります。
+
+これらの改変を行った後、apktool を使用してアプリケーションを再パッケージ化してデバイスにインストールします。
+
+###### カスタム証明書ピンニングの動的なバイパス
+
+ピンニングロジックを動的にバイパスすると、整合性チェックをバイパスする必要がなくなり、試行錯誤の実施がはるかに高速になるため、より便利になります。
+
+フックする正しいメソッドを見つけることは通常最も難しい部分であり、難読化のレベルによってはかなりの時間がかかることがあります。開発者は一般的に既存のライブラリを再利用するので、使用されているライブラリを識別する文字列およびライセンスファイルを検索するのがよいアプローチです。ライブラリを特定したら、難読化されていないソースコードを調べて動的計装に適したメソッドを見つけます。
+
+例として、難読化された OkHTTP3 ライブラリを使用するアプリケーションを見つけたとします。[ドキュメント](https://square.github.io/okhttp/3.x/okhttp/ "OkHTTP3 documentation") は CertificatePinner.Builder クラスが特定のドメインのピンを追加する責任があることを示しています。[Builder.add メソッド](https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.Builder.html#add-java.lang.String-java.lang.String...- "Builder.add method") の引数を改変できるのであれば、ハッシュを自分の証明書に属する正しいハッシュに変更できます。正しいメソッドを見つけるには二つの方法があります。
+
+- 前のセクションで説明したようにハッシュとドメイン名を検索します。実際のピンニングメソッドは一般的にこれらの文字列に近接して使用または定義されます。
+- SMALI コードでメソッドシグネチャを検索します。
+
+Builder.add メソッドの場合、次の grep コマンド `grep -ri java/lang/String;\[Ljava/lang/String;)L ./` を実行して可能なメソッドを見つけることができます。
+
+このコマンドは文字列と文字列の可変リストを引数として取るすべてのメソッドを検索し、複雑なオブジェクトを返します。アプリケーションのサイズに応じて、これはコード内で一つあるいは複数の一致を持つ可能性があります。
+
+Frida で各メソッドをフックして引数を出力します。そのうちの一つはドメイン名と証明書ハッシュを表示します。その後、実装されたピンニングを回避するために引数を改変できます。
 
 ### Network Security Configuration 設定のテスト
 
