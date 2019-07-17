@@ -4,7 +4,7 @@
 
 同じプログラミングの欠陥が Android と iOS の両方のアプリにある程度の影響を与える可能性があるため、最も一般的な脆弱性クラスの概要をこのガイドの一般セクションで繰り返し説明します。後のセクションでは、OS 固有のインスタンスと悪用緩和機能について説明します。
 
-### インジェクション欠陥
+### インジェクション欠陥 (MSTG‑ARCH‑2 および MSTG‑PLATFORM‑2)
 
 *インジェクション欠陥* はユーザーの入力がバックエンドのクエリやコマンドに挿入されたときに発生するセキュリティ脆弱性のクラスを表します。メタ文字を注入することにより、攻撃者は誤ってコマンドやクエリの一部として解釈される悪質なコードを実行できます。例えば、SQL クエリを操作することにより、攻撃者は任意のデータベースレコードを取得したり、バックエンドデータベースの内容を操作する可能性があります。
 
@@ -91,7 +91,121 @@ Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "
 
 OS 固有のテストガイドでは各モバイル OS の入力ソースや潜在的に脆弱な API に関する詳細について説明します。
 
-### メモリ破損バグ
+### クロスサイトスクリプティング欠陥 (MSTG‑ARCH‑2 および MSTG‑PLATFORM‑2)
+
+クロスサイトスクリプティング (XSS) の問題により、攻撃者はクライアント側のスクリプトをユーザーが閲覧したウェブページに注入できます。この種の脆弱性はウェブアプリケーションによく見られます。ユーザーがブラウザに注入されたスクリプトを閲覧すると、攻撃者は同一生成元ポリシーをバイパスすることができ、さまざまな攻撃 (例えば、セッションクッキーの盗難、キー押下の記録、任意のアクションの実行など) を可能にします。
+
+*ネイティブアプリ* のコンテキストでは、これらの種類のアプリケーションはウェブブラウザに依存していないという単純な理由により、XSS のリスクはあまりありません。但し、iOS の 'WKWebView' や非推奨の 'UIWebView' および Android の 'WebView' などの WebView コンポーネントを使用するアプリではこのような攻撃について潜在的に脆弱です。
+
+古いですがよく知られている例として [Phil Purviance により最初に特定された、iOS 向け Skype アプリのローカル XSS の問題]( https://superevr.com/blog/2011/xss-in-skype-for-ios) があります。Skype アプリがメッセージ送信者の名前を正しくエンコードできなかったため、攻撃者は悪意のある JavsScript を注入でき、ユーザーがメッセージを表示したときに実行される可能性があります。概念実証で、Phil はこの問題を悪用してユーザーのアドレス帳を盗む方法を示しました。
+
+#### 静的解析
+
+存在する WebView を注意深く見て、信頼できない入力についてアプリによる処理を調査します。
+
+WebView で開かれる URL が部分的にユーザーの入力により決定される場合、XSS の問題が存在する可能性があります。以下の例は [Linus Särud により報告された Zoho Web Service](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/) の XSS の問題です。
+
+Java
+
+```java
+webView.loadUrl("javascript:initialize(" + myNumber + ");");
+```
+
+Kotlin
+
+```kotlin
+webView.loadUrl("javascript:initialize($myNumber);")
+```
+
+ユーザー入力により決定される XSS 問題のもう一つの例は public override メソッドです。
+
+Java
+
+```java
+@Override
+public boolean shouldOverrideUrlLoading(WebView view, String url) {
+  if (url.substring(0,6).equalsIgnoreCase("yourscheme:")) {
+    // parse the URL object and execute functions
+  }
+}
+```
+
+Kotlin
+
+```kotlin
+    fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        if (url.substring(0, 6).equals("yourscheme:", ignoreCase = true)) {
+            // parse the URL object and execute functions
+        }
+    }
+```
+
+Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
+
+- ADB
+
+  ```shell
+  $ adb shell
+  $ am start -n com.quora.android/com.quora.android.ActionBarContentActivity \
+  -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
+  ```
+
+- Clipboard Data
+
+  ```shell
+  $ am start -n com.quora.android/com.quora.android.ModalContentActivity  \
+  -e url 'http://test/test' -e html \
+  '<script>alert(QuoraAndroid.getClipboardData());</script>'
+  ```
+
+- 3rd party Intent in Java or kotlin:
+
+  ```java
+  Intent i = new Intent();
+  i.setComponent(new ComponentName("com.quora.android",
+  "com.quora.android.ActionBarContentActivity"));
+  i.putExtra("url","http://test/test");
+  i.putExtra("html","XSS PoC <script>alert(123)</script>");
+  view.getContext().startActivity(i);
+  ```
+
+  ```kotlin
+  val i = Intent()
+  i.component = ComponentName("com.quora.android", 
+  "com.quora.android.ActionBarContentActivity")
+  i.putExtra("url", "http://test/test")
+  i.putExtra("html", "XSS PoC <script>alert(123)</script>")
+  view.context.startActivity(i)
+  ```
+
+WebView を使用してリモートウェブサイトを表示する場合、HTML をエスケープする負担はサーバ側に移ります。XSS の欠陥がウェブサーバーに存在する場合、これを使用して WebView のコンテキストでスクリプトを実行できます。したがって、ウェブアプリケーションソースコードの静的解析を実行することが重要です。
+
+以下のベストプラクティスに準じていることを確認します。
+
+- 絶対に必要でない限り、信頼できないデータを HTML, JavaScript, 他の解釈されるコンテキストで処理していません。
+
+- エスケープ文字には HTML エンティティエンコーディングなどの適切なエンコーディングが適用されています。注：エスケープのルールは HTML が他のコード内にネストされていると複雑になります。例えば、JavaScript ブロック内にある URL を処理するなどです。
+
+レスポンスでのデータの処理方法を検討します。例えば、データが HTML コンテキストで処理される場合に、エスケープする必要がある六つの制御文字です。
+
+| 文字 | エスケープ後 |
+| :-------------: |:-------------:|
+| & | &amp;amp;|
+| < | &amp;lt; |
+| > | &amp;gt;|
+| " | &amp;quot;|
+| ' | &amp;#x27;|
+| / | &amp;#x2F;|
+
+エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") を参照してください。
+
+#### 動的解析
+
+XSS の問題は手動や自動の入力ファジングを使用すると最も良く検出できます。すなわち、利用可能なすべての入力フィールドに HTML タグや特殊文字を注入して、ウェブアプリケーションが無効な入力を拒否するか、その出力に HTML メタキャラクタをエスケープすることを確認します。
+
+[反射型 XSS 攻撃](https://goo.gl/eqqiHV "Testing for Reflected Cross site scripting (OTG-INPVAL-001)") は悪意のあるコードが悪意のあるリンクを介して注入される攻撃を指します。これらの攻撃をテストするためには、自動化された入力ファジングが効果的な方法であると考えられています。例えば、[BURP Scanner](https://portswigger.net/burp/ "Burp Suite") は反射型 XSS 脆弱性の特定に非常に効果的です。自動解析の常として、すべての入力ベクトルがテストパラメータの手動レビューでカバーされていることを確認します。
+
+### メモリ破損バグ (MSTG‑CODE‑8)
 
 メモリ破損バグはハッカーにとって一般的な頼みの綱です。このクラスのバグはプログラムが意図しないメモリ位置にアクセスするようなプログラミングエラーが原因です。適切な状況下では、攻撃者はこの動作を利用し、脆弱なプログラムの実行フローをハイジャックして任意のコードを実行できます。この種の脆弱性は様々な方法で発生します。
 
@@ -158,115 +272,6 @@ Android アプリは大部分が Java で実装されています。これは設
 
 ファジングの詳細については、[OWASP ファジングガイド](https://www.owasp.org/index.php/Fuzzing "OWASP Fuzzing Guide") を参照してください。
 
-### クロスサイトスクリプティング欠陥
-
-クロスサイトスクリプティング (XSS) の問題により、攻撃者はクライアント側のスクリプトをユーザーが閲覧したウェブページに注入できます。この種の脆弱性はウェブアプリケーションによく見られます。ユーザーがブラウザに注入されたスクリプトを閲覧すると、攻撃者は同一生成元ポリシーをバイパスすることができ、さまざまな攻撃 (例えば、セッションクッキーの盗難、キー押下の記録、任意のアクションの実行など) を可能にします。
-
-*ネイティブアプリ* のコンテキストでは、これらの種類のアプリケーションはウェブブラウザに依存していないという単純な理由により、XSS のリスクはあまりありません。但し、iOS の 'WKWebView' や非推奨の 'UIWebView' および Android の 'WebView' などの WebView コンポーネントを使用するアプリではこのような攻撃について潜在的に脆弱です。
-
-古いですがよく知られている例として [Phil Purviance により最初に特定された、iOS 向け Skype アプリのローカル XSS の問題]( https://superevr.com/blog/2011/xss-in-skype-for-ios) があります。Skype アプリがメッセージ送信者の名前を正しくエンコードできなかったため、攻撃者は悪意のある JavsScript を注入でき、ユーザーがメッセージを表示したときに実行される可能性があります。概念実証で、Phil はこの問題を悪用してユーザーのアドレス帳を盗む方法を示しました。
-
-#### 静的解析
-
-存在する WebView を注意深く見て、信頼できない入力についてアプリによる処理を調査します。
-
-WebView で開かれる URL が部分的にユーザーの入力により決定される場合、XSS の問題が存在する可能性があります。以下の例は [Linus Särud により報告された Zoho Web Service](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/) の XSS の問題です。
-
-Java
-
-```java
-webView.loadUrl("javascript:initialize(" + myNumber + ");");
-```
-
-Kotlin
-
-```kotlin
-webView.loadUrl("javascript:initialize($myNumber);")
-```
-
-ユーザー入力により決定される XSS 問題のもう一つの例は public override メソッドです。
-
-Java
-
-```java
-@Override
-public boolean shouldOverrideUrlLoading(WebView view, String url) {
-  if (url.substring(0,6).equalsIgnoreCase("yourscheme:")) {
-    // parse the URL object and execute functions
-  }
-}
-```
-
-Kotlin
-
-```kotlin
-    fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        if (url.substring(0, 6).equals("yourscheme:", ignoreCase = true)) {
-            // parse the URL object and execute functions
-        }
-    }
-```
-
-Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
-
-- ADB
-
-  ```shell
-  $ adb shell
-  $ am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
-  ```
-
-- Clipboard Data
-
-  ```shell
-  $ am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
-  ```
-
-- 3rd party Intent in Java or kotlin:
-
-  ```java
-  Intent i = new Intent();
-  i.setComponent(new ComponentName("com.quora.android","com.quora.android.ActionBarContentActivity"));
-  i.putExtra("url","http://test/test");
-  i.putExtra("html","XSS PoC <script>alert(123)</script>");
-  view.getContext().startActivity(i);
-  ```
-
-  ```kotlin
-  val i = Intent()
-  i.component = ComponentName("com.quora.android", "com.quora.android.ActionBarContentActivity")
-  i.putExtra("url", "http://test/test")
-  i.putExtra("html", "XSS PoC <script>alert(123)</script>")
-  view.context.startActivity(i)
-  ```
-
-WebView を使用してリモートウェブサイトを表示する場合、HTML をエスケープする負担はサーバ側に移ります。XSS の欠陥がウェブサーバーに存在する場合、これを使用して WebView のコンテキストでスクリプトを実行できます。したがって、ウェブアプリケーションソースコードの静的解析を実行することが重要です。
-
-以下のベストプラクティスに準じていることを確認します。
-
-- 絶対に必要でない限り、信頼できないデータを HTML, JavaScript, 他の解釈されるコンテキストで処理していません。
-
-- エスケープ文字には HTML エンティティエンコーディングなどの適切なエンコーディングが適用されています。注：エスケープのルールは HTML が他のコード内にネストされていると複雑になります。例えば、JavaScript ブロック内にある URL を処理するなどです。
-
-レスポンスでのデータの処理方法を検討します。例えば、データが HTML コンテキストで処理される場合に、エスケープする必要がある六つの制御文字です。
-
-| 文字 | エスケープ後 |
-| :-------------: |:-------------:|
-| & | &amp;amp;|
-| < | &amp;lt; |
-| > | &amp;gt;|
-| " | &amp;quot;|
-| ' | &amp;#x27;|
-| / | &amp;#x2F;|
-
-エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") を参照してください。
-
-#### 動的解析
-
-XSS の問題は手動や自動の入力ファジングを使用すると最も良く検出できます。すなわち、利用可能なすべての入力フィールドに HTML タグや特殊文字を注入して、ウェブアプリケーションが無効な入力を拒否するか、その出力に HTML メタキャラクタをエスケープすることを確認します。
-
-[反射型 XSS 攻撃](https://goo.gl/eqqiHV "Testing for Reflected Cross site scripting (OTG-INPVAL-001)") は悪意のあるコードが悪意のあるリンクを介して注入される攻撃を指します。これらの攻撃をテストするためには、自動化された入力ファジングが効果的な方法であると考えられています。例えば、[BURP Scanner](https://portswigger.net/burp/ "Burp Suite") は反射型 XSS 脆弱性の特定に非常に効果的です。自動解析の常として、すべての入力ベクトルがテストパラメータの手動レビューでカバーされていることを確認します。
-
 ### 参考情報
 
 #### OWASP Mobile Top 10 2016
@@ -275,8 +280,9 @@ XSS の問題は手動や自動の入力ファジングを使用すると最も�
 
 #### OWASP MASVS
 
-- V6.2: "外部ソースおよびユーザーからの入力はすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
-- V7.8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
+- MSTG‑ARCH‑2: "セキュリティコントロールはクライアント側だけではなくそれぞれのリモートエンドポイントで実施されている。"
+- MSTG‑PLATFORM‑2: "外部ソースおよびユーザーからの入力はすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
+- MSTG‑CODE‑8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
 
 #### CWE
 
