@@ -4,7 +4,7 @@
 
 モバイルアプリの認証アーキテクチャの章で前述しているように、テスト技術者はローカル認証が常にリモートエンドポイントで実行されることや暗号プリミティブに基づいている必要があることに注意します。認証プロセスからデータが返らない場合、攻撃者は簡単にローカル認証をバイパスできます。
 
-### ローカル認証のテスト
+### ローカル認証のテスト (MSTG-AUTH-8 および MSTG-STORAGE-11)
 
 iOS にはアプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication "Local Authentication framework") では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html "Introduction into the Keychain") を利用することが可能であり (および推奨され) ます。
 
@@ -234,12 +234,12 @@ MacOSX や Android とは異なり、iOS は現時点 (iOS 12) ではキーチ�
 
 #### OWASP Mobile Top 10 2016
 
-- M4 - Insecure Authentication - [https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication](https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication)
+- M4 - Insecure Authentication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication>
 
 #### OWASP MASVS
 
-- V4.8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
-- V2.11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
+- MSTG-AUTH-8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
+- MSTG-STORAGE-11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
 
 #### CWE
 
