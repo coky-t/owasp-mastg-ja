@@ -1,6 +1,6 @@
 ## iOS アプリのコード品質とビルド設定
 
-### アプリが正しく署名されていることの確認
+### アプリが正しく署名されていることの確認 (MSTG-CODE-1)
 
 #### 概要
 
@@ -10,7 +10,7 @@
 
 アプリケーションの .ipa ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
 
-以下の `codesign` コマンドを実行します。
+以下の `codesign` コマンドを実行して、署名情報を表示します。
 
 ```shell
 $ codesign -dvvv YOURAPP.app
@@ -34,7 +34,7 @@ Sealed Resources version=2 rules=12 files=1410
 Internal requirements count=1 size=176
 ```
 
-### アプリがデバッグ可能かどうかの判断
+### アプリがデバッグ可能かどうかの判断 (MSTG-CODE-2)
 
 #### 概要
 
@@ -57,7 +57,7 @@ Xcode を使用して、直接デバッガをアタッチできるかどうか�
 
 注意: アプリケーションにアンチリバースエンジニアリングコントロールが装備されている場合、デバッガを検出して停止することがあります。
 
-### デバッグシンボルの検索
+### デバッグシンボルの検索 (MSTG-CODE-3)
 
 #### 概要
 
@@ -80,17 +80,15 @@ aarch64:     file format mach-o-arm64
 
 gobjdump は [binutils](https://www.gnu.org/s/binutils/ "Binutils") の一部であり、Homebrew 経由で macOS にインストールできます。
 
+アプリケーションが本番用にビルドされているときは、デバッグシンボルが削除されていることを確認します。デバッグシンボルを削除するとバイナリのサイズが小さくなり、リバースエンジニアリングの難しさが増します。デバッグシンボルを削除するには、プロジェクトの build settings で `Strip Debug Symbols During Copy` を "YES" に設定します。
+
+システムはアプリケーションバイナリにシンボルを必要としないため、適切な [Crash Reporter System](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AnalyzingCrashReports/AnalyzingCrashReports.html "Crash Reporter System") が可能です。
+
 #### 動的解析
 
 動的解析はデバッグシンボルの検索には適用できません。
 
-#### 改善方法
-
-アプリケーションが本番用にビルドされているときは、デバッグシンボルが削除されていることを確認します。デバッグシンボルを削除するとバイナリのサイズが小さくなり、リバースエンジニアリングの難しさが増します。デバッグシンボルを削除するには、プロジェクトの build settings で `Strip Debug Symbols During Copy` を "YES" に設定します。
-
-システムはアプリケーションバイナリにシンボルを必要としないため、適切な [Crash Reporter System](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AnalyzingCrashReports/AnalyzingCrashReports.html) が可能です。
-
-### デバッグコードと詳細エラーログの検索
+### デバッグコードと詳細エラーログの検索 (MSTG-CODE-4)
 
 #### 概要
 
@@ -121,17 +119,6 @@ Swift ではこの動作を有効にする手続きが変更されています�
 
 (ビルトインの) 「デバッグ管理」コードについて、ストーリーボードを調査して、アプリケーションがサポートすべき機能とは異なる機能を提供するフローやビューコントローラがあるかどうかを確認します。この機能には、デバッグビューからエラーメッセージ出力まで、カスタムスタブレスポンス構成からアプリケーション上のファイルシステムやリモートサーバーへのログ出力まで、いろいろあります。
 
-#### 動的解析
-
-動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードを実行するために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あるためです。
-
-1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールで出力を確認します。
-2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールで出力を確認します。
-
-他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、アプリのプロファイルをプリセットできる機能、実サーバーを選択する機能、API からのレスポンスを選択する機能があるかどうかを確認します。
-
-#### 改善方法
-
 一人の開発者として、アプリケーションのデバッグバージョンにデバッグステートメントを組み込むことは、デバッグステートメントがアプリケーションのリリースバージョンに存在しないことを確認していれば問題ありません。
 
 Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
@@ -158,226 +145,16 @@ Swift 3 では (Xcode 8 を使用して) 、Build settings/Swift compiler - Cust
 #endif
 ```
 
-### 例外処理のテスト
+#### 動的解析
 
-#### 概要
+動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードを実行するために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あるためです。
 
-例外はアプリケーションが正常ではない状態やエラーのある状態になった場合によく発生します。
-例外処理のテストとは、ログ出力メカニズムや UI を介して機密情報を開示することなく、アプリケーションが例外を処理して安全な状態になることを確認することです。
+1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールで出力を確認します。
+2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールで出力を確認します。
 
-但し、Objective-C の例外処理は Swift とはまったく異なることに注意します。従来の Objective-C コードと Swift コードの両方で書かれたアプリケーションで二つの概念を橋渡しすることは問題になる可能性があります。
+他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、アプリのプロファイルをプリセットできる機能、実サーバーを選択する機能、API からのレスポンスを選択する機能があるかどうかを確認します。
 
-##### Objective-C の例外処理
-
-Objective-C には二種類のエラーがあります。
-
-**NSException**
-`NSException` はプログラミングエラーや低レベルエラー (0 による除算、配列の境界外アクセスなど) を処理するために使用されます。
-`NSException` は `raise` によりレイズされるか、または `@throw` でスローされます。catch されない場合、この例外は unhandled 例外ハンドラを呼び出し、ステートメントをログ出力します (ログ出力はプログラムを停止します) 。`@try`-`@catch` ブロックを使用している場合、`@catch` はその例外から回復できます。
-
-```objc
- @try {
-    //do work here
- }
-
-@catch (NSException *e) {
-    //recover from exception
-}
-
-@finally {
-    //cleanup
-```
-
-`NSException` の使用にはメモリ管理の落とし穴があることに気をつけます。[finally ブロック](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/HandlingExceptions.html "Handling Exceptions") 内で try ブロックでの [割り当てをクリーンアップする](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/RaisingExceptions.html#//apple_ref/doc/uid/20000058-BBCCFIBF "Raising exceptions") 必要があります。`@catch` ブロックで `NSError` をインスタンス化することにより `NSException` オブジェクトを `NSError` に変換できることに注意します。
-
-**NSError**
-`NSError` は他のすべてのタイプの [エラー](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/ErrorHandling/ErrorHandling.html "Dealing with Errors") に使用されます。Cocoa フレームワークの一部の API では何らかの問題が発生した場合に失敗時コールバックのオブジェクトしてエラーを提供します。それらを提供しないものは `NSError` オブジェクトへのポインタを参照渡しします。成功または失敗を示す `NSError` オブジェクトへのポインタを取るメソッドに、`BOOL` の戻り値型を提供することはよい習慣です。戻り値の型がある場合、エラーの場合に "nil" を戻すことを確認します。"NO" または "nil" が戻される場合には、エラーや失敗の理由を調べることができます。
-
-##### Swift の例外処理
-
-Swift (2～4) の例外処理はまったく異なります。try-catch ブロックは `NSException` を処理するためのものではありません。そのブロックは `Error` (Swift3) または `ErrorType` (Swift2) プロトコルに準拠するエラーを処理するために使用されます。一つのアプリケーション内で Objective-C と Swift コードを組み合わせる場合、これは困難になることがあります。したがって、両方の言語で書かれたプログラムでは `NSException` よりも `NSError` が好まれます。さらに、Objective-C ではエラー処理はオプトインですが、Swift では明示的に `throws` を処理する必要があります。エラーを throw する際の変換には、[Apple のドキュメント](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html "Adopting Cocoa Design Patterns") をご覧ください。
-エラーを throw するメソッドは `throws` キーワードを使用します。[Swift でエラーを処理する](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html "Error Handling in Swift") 方法は四つあります。
-
-- 関数からその関数を呼び出すコードにエラーを伝えることができます。この場合、`do-catch` はありません。単に実際のエラーを throw する `throw` があるか、throw するメソッドを実行する `try` があります。`try` を含むメソッドには `throws` キーワードも必要です。
-
-```swift
-func dosomething(argumentx:TypeX) throws {
-    try functionThatThrows(argumentx: argumentx)
-}
-```
-
-- `do-catch` 文を使用してエラーを処理します。ここでは以下のパターンを使用できます。
-
-    ```swift
-    do {
-        try functionThatThrows()
-        defer {
-            //use this as your finally block as with Objective-c
-        }
-        statements
-    } catch pattern 1 {
-        statements
-    } catch pattern 2 where condition {
-        statements
-    }
-    ```
-
-- エラーを optional 値として処理します。
-
-    ```swift
-        let x = try? functionThatThrows()
-        //In this case the value of x is nil in case of an error.
-    ```
-
-- `try!` 式を使用して、エラーが発生しないことを assert します。
-
-#### 静的解析
-
-ソースコードをレビューして、アプリケーションがさまざまなタイプのエラー (IPC 通信、リモートサービス呼び出しなど) をどのように処理するか理解します。以下のセクションでは言語ごとにこのステージでチェックするものの例を示します。
-
-##### Objective-C の静的解析
-
-以下を確認します。
-
-- アプリケーションは例外やエラーを処理するために十分に設計および統合されたスキームを使用しています。
-- Cocoa フレームワークの例外を正しく処理しています。
-- `@try` ブロックで割り当てられたメモリは `@finally` ブロックで解放されています。
-- すべての `@throw` に対して、呼び出し側のメソッドは適切な `@catch` を呼び出し側のメソッドレベルか `NSApplication`/`UIApplication` オブジェクトのレベルで持ち、機密情報をクリーンアップし、可能であれば回復します。
-- UI またはログステートメントでエラーを処理する際に、アプリケーションは機密情報を開示せず、そのステートメントはユーザーに問題を十分詳細に説明しています。
-- リスクの高いアプリケーションの、鍵マテリアルや認証情報などの機密情報は `@finally` ブロックの実行で常に消去されます。
-- `raise` はまれな状況でのみ使用されます (これ以上の警告なしでプログラムの終了が必要がある場合にそれが使用されます) 。
-- `NSError` オブジェクトには機密情報が漏洩する可能性のある情報を含みません。
-
-##### Swift の静的解析
-
-以下を確認します。
-
-- アプリケーションはエラーを処理するために十分に設計および統合されたスキームを使用しています。
-- UI またはログステートメントでエラーを処理する際に、アプリケーションは機密情報を開示せず、そのステートメントはユーザーに問題を十分詳細に説明しています。
-- リスクの高いアプリケーションの、鍵マテリアルや認証情報などの機密情報は `defer` ブロックの実行で常に消去されます。
-- `try!` は前面を適切にガードすることにのみ使用されます (`try!` を使用して呼び出されるメソッドはエラーをスローしないことがプログラムで検証されています) 。
-
-#### 動的テスト
-
-動的解析にはいくつかの方法があります。
-
-- iOS アプリケーションの UI フィールドに予期しない値を入力します。
-- 予期しない値や例外を発生させる値を指定して、カスタム URL スキーム、ペーストボード、その他アプリ間通信制御をテストします。
-- ネットワーク通信やアプリケーションにより格納されたファイルを改竄します。
-- Objective-C の場合には、Cycript を使用してメソッドにフックし、呼出先に例外をスローする可能性のある引数を入力します。
-
-ほとんどの場合には、アプリケーションはクラッシュしてはいけません。代わりに、以下のようにすべきです。
-
-- エラーから回復するか、継続できないことをユーザーに通知できる状態にします。
-- ユーザーに適切な措置を取らせるためのメッセージを通知します (メッセージは機密情報を漏洩してはいけません) 。
-- アプリケーションにより使用されるログ出力機構には何も情報を提供しません。
-
-#### 改善方法
-
-開発者はいくつかの方法で適切なエラー処理を実装できます。
-
-- アプリケーションがエラーを処理するために十分に設計および統合されたスキームを使用していることを確認します。
-- テストケース「デバッグコードと詳細エラーログのテスト」で説明されているように、すべてのログ出力が削除されている、もしくはガードされていることを確認します。
-- Objective-C で書かれたリスクの高いアプリケーションの場合、容易に取得されてはいけない秘密を消去する例外ハンドラを作成します。ハンドラは `NSSetUncaughtExceptionHandler` で設定可能です。
-- 呼び出されているスローメソッドにメソッドにエラーがないことを確認しない限り、Swift では `try!` を使用してはいけません。
-- Swift エラーが多数の中間メソッドに伝播しないことを確認します。
-
-### フリーなセキュリティ機能が有効であることの確認
-
-#### 概要
-
-Xcode ではデフォルトですべてのバイナリセキュリティが有効ですが、古いアプリケーションでの検証やコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用可能です。
-
-- **ARC** - Automatic Reference Counting - メモリ管理機能 - 必要に応じてメッセージ保持および解放します
-- **Stack Canary** - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
-- **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
-
-#### 静的解析
-
-##### Xcode プロジェクト設定
-
-- スタックスマッシュ保護
-
-iOS アプリケーションでスタックスマッシュ保護を有効にする手順。
-
-1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2. "Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
-3. Position Independent Executables (PIE) support が有効になっていることを確認します。
-
-iOS アプリケーションを PIE としてビルドする手順。
-
-1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2. iOS Deployment Target を iOS 4.3 以降に設定します。
-3. "Generate Position-Dependent Code" がデフォルト値 ("NO") に設定されていることを確認します。
-4. "Don't Create Position Independent Executables" がデフォルト値 ("NO") に設定されていることを確認します。
-
-- ARC 保護
-
-iOS アプリケーションの ARC 保護を有効にする手順。
-
-1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2. "Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
-
-[Technical Q&A QA1788 Building a Position Independent Executable]( https://developer.apple.com/library/mac/qa/qa1788/_index.html "Technical Q&A QA1788 Building a Position Independent Executable") を参照してください。
-
-##### otool を使用
-
-以下は上記のバイナリセキュリティ機能をチェックする手順です。これらの例ではすべての機能が有効になっています。
-
-- PIE:
-
-```shell
-$ unzip DamnVulnerableiOSApp.ipa
-$ cd Payload/DamnVulnerableIOSApp.app
-$ otool -hv DamnVulnerableIOSApp
-DamnVulnerableIOSApp (architecture armv7):
-Mach header
-magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
-MH_MAGIC ARM V7 0x00 EXECUTE 38 4292 NOUNDEFS DYLDLINK TWOLEVEL
-WEAK_DEFINES BINDS_TO_WEAK PIE
-DamnVulnerableIOSApp (architecture arm64):
-Mach header
-magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
-MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
-WEAK_DEFINES BINDS_TO_WEAK PIE
-```
-
-- stack canary:
-
-```shell
-$ otool -Iv DamnVulnerableIOSApp | grep stack
-0x0046040c 83177 ___stack_chk_fail
-0x0046100c 83521 _sigaltstack
-0x004fc010 83178 ___stack_chk_guard
-0x004fe5c8 83177 ___stack_chk_fail
-0x004fe8c8 83521 _sigaltstack
-0x00000001004b3fd8 83077 ___stack_chk_fail
-0x00000001004b4890 83414 _sigaltstack
-0x0000000100590cf0 83078 ___stack_chk_guard
-0x00000001005937f8 83077 ___stack_chk_fail
-0x0000000100593dc8 83414 _sigaltstack
-```
-
-- Automatic Reference Counting:
-
-```shell
-$ otool -Iv DamnVulnerableIOSApp | grep release
-0x0045b7dc 83156 ___cxa_guard_release
-0x0045fd5c 83414 _objc_autorelease
-0x0045fd6c 83415 _objc_autoreleasePoolPop
-0x0045fd7c 83416 _objc_autoreleasePoolPush
-0x0045fd8c 83417 _objc_autoreleaseReturnValue
-0x0045ff0c 83441 _objc_release
-[SNIP]
-```
-
-##### idb を使用
-
-IDB は stack canary と PIE サポートの両方をチェックするプロセスを自動化します。IDB GUI でターゲットバイナリを選択し、"Analyze Binary..." ボタンをクリックします。
-
-<img src="Images/Chapters/0x06i/idb.png" alt="IDB Analyze Binary" width="400">
-
-### サードパーティライブラリの脆弱性のチェック
+### サードパーティライブラリの脆弱性のチェック (MSTG-CODE-5)
 
 #### 概要
 
@@ -497,7 +274,131 @@ $ otool -L <Executable>
 $ ./class-dump <Executable> -r
 ```
 
-### メモリ破損バグ
+### 例外処理のテスト (MSTG-CODE-6)
+
+#### 概要
+
+例外はアプリケーションが正常ではない状態やエラーのある状態になった場合によく発生します。
+例外処理のテストとは、ログ出力メカニズムや UI を介して機密情報を開示することなく、アプリケーションが例外を処理して安全な状態になることを確認することです。
+
+但し、Objective-C の例外処理は Swift とはまったく異なることに注意します。従来の Objective-C コードと Swift コードの両方で書かれたアプリケーションで二つの概念を橋渡しすることは問題になる可能性があります。
+
+##### Objective-C の例外処理
+
+Objective-C には二種類のエラーがあります。
+
+**NSException**
+`NSException` はプログラミングエラーや低レベルエラー (0 による除算、配列の境界外アクセスなど) を処理するために使用されます。
+`NSException` は `raise` によりレイズされるか、または `@throw` でスローされます。catch されない場合、この例外は unhandled 例外ハンドラを呼び出し、ステートメントをログ出力します (ログ出力はプログラムを停止します) 。`@try`-`@catch` ブロックを使用している場合、`@catch` はその例外から回復できます。
+
+```objc
+ @try {
+    //do work here
+ }
+
+@catch (NSException *e) {
+    //recover from exception
+}
+
+@finally {
+    //cleanup
+```
+
+`NSException` の使用にはメモリ管理の落とし穴があることに気をつけます。[finally ブロック](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/HandlingExceptions.html "Handling Exceptions") 内で try ブロックでの [割り当てをクリーンアップする](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/RaisingExceptions.html#//apple_ref/doc/uid/20000058-BBCCFIBF "Raising exceptions") 必要があります。`@catch` ブロックで `NSError` をインスタンス化することにより `NSException` オブジェクトを `NSError` に変換できることに注意します。
+
+**NSError**
+`NSError` は他のすべてのタイプの [エラー](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/ErrorHandling/ErrorHandling.html "Dealing with Errors") に使用されます。Cocoa フレームワークの一部の API では何らかの問題が発生した場合に失敗時コールバックのオブジェクトしてエラーを提供します。それらを提供しないものは `NSError` オブジェクトへのポインタを参照渡しします。成功または失敗を示す `NSError` オブジェクトへのポインタを取るメソッドに、`BOOL` の戻り値型を提供することはよい習慣です。戻り値の型がある場合、エラーの場合に "nil" を戻すことを確認します。"NO" または "nil" が戻される場合には、エラーや失敗の理由を調べることができます。
+
+##### Swift の例外処理
+
+Swift (2～4) の例外処理はまったく異なります。try-catch ブロックは `NSException` を処理するためのものではありません。そのブロックは `Error` (Swift3) または `ErrorType` (Swift2) プロトコルに準拠するエラーを処理するために使用されます。一つのアプリケーション内で Objective-C と Swift コードを組み合わせる場合、これは困難になることがあります。したがって、両方の言語で書かれたプログラムでは `NSException` よりも `NSError` が好まれます。さらに、Objective-C ではエラー処理はオプトインですが、Swift では明示的に `throws` を処理する必要があります。エラーを throw する際の変換には、[Apple のドキュメント](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html "Adopting Cocoa Design Patterns") をご覧ください。
+エラーを throw するメソッドは `throws` キーワードを使用します。[Swift でエラーを処理する](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html "Error Handling in Swift") 方法は四つあります。
+
+- 関数からその関数を呼び出すコードにエラーを伝えることができます。この場合、`do-catch` はありません。単に実際のエラーを throw する `throw` があるか、throw するメソッドを実行する `try` があります。`try` を含むメソッドには `throws` キーワードも必要です。
+
+```swift
+func dosomething(argumentx:TypeX) throws {
+    try functionThatThrows(argumentx: argumentx)
+}
+```
+
+- `do-catch` 文を使用してエラーを処理します。ここでは以下のパターンを使用できます。
+
+    ```swift
+    do {
+        try functionThatThrows()
+        defer {
+            //use this as your finally block as with Objective-c
+        }
+        statements
+    } catch pattern 1 {
+        statements
+    } catch pattern 2 where condition {
+        statements
+    }
+    ```
+
+- エラーを optional 値として処理します。
+
+    ```swift
+        let x = try? functionThatThrows()
+        //In this case the value of x is nil in case of an error.
+    ```
+
+- `try!` 式を使用して、エラーが発生しないことを assert します。
+
+#### 静的解析
+
+ソースコードをレビューして、アプリケーションがさまざまなタイプのエラー (IPC 通信、リモートサービス呼び出しなど) をどのように処理するか理解します。以下のセクションでは言語ごとにこのステージでチェックするものの例を示します。
+
+##### Objective-C の静的解析
+
+以下を確認します。
+
+- アプリケーションは例外やエラーを処理するために十分に設計および統合されたスキームを使用しています。
+- Cocoa フレームワークの例外を正しく処理しています。
+- `@try` ブロックで割り当てられたメモリは `@finally` ブロックで解放されています。
+- すべての `@throw` に対して、呼び出し側のメソッドは適切な `@catch` を呼び出し側のメソッドレベルか `NSApplication`/`UIApplication` オブジェクトのレベルで持ち、機密情報をクリーンアップし、可能であれば回復します。
+- UI またはログステートメントでエラーを処理する際に、アプリケーションは機密情報を開示せず、そのステートメントはユーザーに問題を十分詳細に説明しています。
+- リスクの高いアプリケーションの、鍵マテリアルや認証情報などの機密情報は `@finally` ブロックの実行で常に消去されます。
+- `raise` はまれな状況でのみ使用されます (これ以上の警告なしでプログラムの終了が必要がある場合にそれが使用されます) 。
+- `NSError` オブジェクトには機密情報が漏洩する可能性のある情報を含みません。
+
+##### Swift の静的解析
+
+以下を確認します。
+
+- アプリケーションはエラーを処理するために十分に設計および統合されたスキームを使用しています。
+- UI またはログステートメントでエラーを処理する際に、アプリケーションは機密情報を開示せず、そのステートメントはユーザーに問題を十分詳細に説明しています。
+- リスクの高いアプリケーションの、鍵マテリアルや認証情報などの機密情報は `defer` ブロックの実行で常に消去されます。
+- `try!` は前面を適切にガードすることにのみ使用されます (`try!` を使用して呼び出されるメソッドはエラーをスローしないことがプログラムで検証されています) 。
+
+##### 適切なエラー処理
+
+開発者はいくつかの方法で適切なエラー処理を実装できます。
+
+- アプリケーションがエラーを処理するために十分に設計および統合されたスキームを使用していることを確認します。
+- テストケース「デバッグコードと詳細エラーログのテスト」で説明されているように、すべてのログ出力が削除されている、もしくはガードされていることを確認します。
+- Objective-C で書かれたリスクの高いアプリケーションの場合、容易に取得されてはいけない秘密を消去する例外ハンドラを作成します。ハンドラは `NSSetUncaughtExceptionHandler` で設定可能です。
+- 呼び出されているスローメソッドにメソッドにエラーがないことを確認しない限り、Swift では `try!` を使用してはいけません。
+- Swift エラーが多数の中間メソッドに伝播しないことを確認します。
+
+#### 動的テスト
+
+動的解析にはいくつかの方法があります。
+
+- iOS アプリケーションの UI フィールドに予期しない値を入力します。
+- 予期しない値や例外を発生させる値を指定して、カスタム URL スキーム、ペーストボード、その他アプリ間通信制御をテストします。
+- ネットワーク通信やアプリケーションにより格納されたファイルを改竄します。
+- Objective-C の場合には、Cycript を使用してメソッドにフックし、呼出先に例外をスローする可能性のある引数を入力します。
+
+ほとんどの場合には、アプリケーションはクラッシュしてはいけません。代わりに、以下のようにすべきです。
+
+- エラーから回復するか、継続できないことをユーザーに通知できる状態にします。
+- ユーザーに適切な措置を取らせるためのメッセージを通知します (メッセージは機密情報を漏洩してはいけません) 。
+- アプリケーションにより使用されるログ出力機構には何も情報を提供しません。
+
+### メモリ破損バグ (MSTG-CODE-8)
 
 iOS アプリケーションはさまざまな状況でメモリ破損バグに遭遇します。まず、一般的なメモリ破損バグのセクションで言及されているネイティブコードの問題があります。次に、Objective-C と Swift のいずれにも問題を引き起こす可能性のあるネイティブコードを実際にラップするさまざまな危険な操作があります。最後に、Swift と Objective-C の実装はいずれも使用されなくなったオブジェクトを保持するためにメモリリークが発生する可能性があります。
 
@@ -524,6 +425,105 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 
 メモリ管理の面倒を見る手助けとなるさまざまなうまくまとめられた解説があります。これらは本章の参考情報リストにあります。
 
+### フリーなセキュリティ機能が有効であることの確認 (MSTG-CODE-9)
+
+#### 概要
+
+Xcode ではデフォルトですべてのバイナリセキュリティが有効ですが、古いアプリケーションでの検証やコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用可能です。
+
+- **ARC** - Automatic Reference Counting - メモリ管理機能 - 必要に応じてメッセージ保持および解放します
+- **Stack Canary** - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
+- **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
+
+#### 静的解析
+
+##### Xcode プロジェクト設定
+
+- スタックスマッシュ保護
+
+iOS アプリケーションでスタックスマッシュ保護を有効にする手順。
+
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. "Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
+3. Position Independent Executables (PIE) support が有効になっていることを確認します。
+
+iOS アプリケーションを PIE としてビルドする手順。
+
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. iOS Deployment Target を iOS 4.3 以降に設定します。
+3. "Generate Position-Dependent Code" がデフォルト値 ("NO") に設定されていることを確認します。
+4. "Don't Create Position Independent Executables" がデフォルト値 ("NO") に設定されていることを確認します。
+
+- ARC 保護
+
+iOS アプリケーションの ARC 保護を有効にする手順。
+
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. "Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
+
+[Technical Q&A QA1788 Building a Position Independent Executable]( https://developer.apple.com/library/mac/qa/qa1788/_index.html "Technical Q&A QA1788 Building a Position Independent Executable") を参照してください。
+
+##### otool を使用
+
+以下は上記のバイナリセキュリティ機能をチェックする手順です。これらの例ではすべての機能が有効になっています。
+
+- PIE:
+
+```shell
+$ unzip DamnVulnerableiOSApp.ipa
+$ cd Payload/DamnVulnerableIOSApp.app
+$ otool -hv DamnVulnerableIOSApp
+DamnVulnerableIOSApp (architecture armv7):
+Mach header
+magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
+MH_MAGIC ARM V7 0x00 EXECUTE 38 4292 NOUNDEFS DYLDLINK TWOLEVEL
+WEAK_DEFINES BINDS_TO_WEAK PIE
+DamnVulnerableIOSApp (architecture arm64):
+Mach header
+magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
+MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
+WEAK_DEFINES BINDS_TO_WEAK PIE
+```
+
+- stack canary:
+
+```shell
+$ otool -Iv DamnVulnerableIOSApp | grep stack
+0x0046040c 83177 ___stack_chk_fail
+0x0046100c 83521 _sigaltstack
+0x004fc010 83178 ___stack_chk_guard
+0x004fe5c8 83177 ___stack_chk_fail
+0x004fe8c8 83521 _sigaltstack
+0x00000001004b3fd8 83077 ___stack_chk_fail
+0x00000001004b4890 83414 _sigaltstack
+0x0000000100590cf0 83078 ___stack_chk_guard
+0x00000001005937f8 83077 ___stack_chk_fail
+0x0000000100593dc8 83414 _sigaltstack
+```
+
+- Automatic Reference Counting:
+
+```shell
+$ otool -Iv DamnVulnerableIOSApp | grep release
+0x0045b7dc 83156 ___cxa_guard_release
+0x0045fd5c 83414 _objc_autorelease
+0x0045fd6c 83415 _objc_autoreleasePoolPop
+0x0045fd7c 83416 _objc_autoreleasePoolPush
+0x0045fd8c 83417 _objc_autoreleaseReturnValue
+0x0045ff0c 83441 _objc_release
+[SNIP]
+```
+
+##### idb を使用
+
+IDB は stack canary と PIE サポートの両方をチェックするプロセスを自動化します。IDB GUI でターゲットバイナリを選択し、"Analyze Binary..." ボタンをクリックします。
+
+<img src="Images/Chapters/0x06i/idb.png" alt="IDB Analyze Binary" width="400">
+
+#### 動的解析
+
+動的解析はツールチェーンにより提供されるセキュリティ機能を見つけるためには適用できません。
+
 ### 参考情報
 
 #### メモリ管理 - 動的解析事例
@@ -534,19 +534,18 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 
 #### OWASP Mobile Top 10 2016
 
-- M7 - Poor Code Quality - [https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality](https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality)
+- M7 - Poor Code Quality - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality>
 
 #### OWASP MASVS
 
-- V7.1: "アプリは有効な証明書で署名およびプロビジョニングされている。その秘密鍵は適切に保護されている。"
-- V7.2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である（デバッグ不可など）。"
-- V7.3: "デバッグシンボルはネイティブバイナリから削除されている。"
-- V7.4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
-- V7.5: "モバイルアプリで使用されるライブラリ、フレームワークなどのすべてのサードパーティコンポーネントを把握し、既知の脆弱性を確認している。"
-- V7.6: "アプリは可能性のある例外をキャッチし処理している。"
-- V7.7: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
-- V7.8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
-- V7.9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
+- MSTG-CODE-1: "アプリは有効な証明書で署名およびプロビジョニングされている。その秘密鍵は適切に保護されている。"
+- MSTG-CODE-2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である（デバッグ不可など）。"
+- MSTG-CODE-3: "デバッグシンボルはネイティブバイナリから削除されている。"
+- MSTG-CODE-4: "デバッグコードは削除されており、アプリは詳細なエラーやデバッグメッセージを記録していない。"
+- MSTG-CODE-5: "モバイルアプリで使用されるライブラリ、フレームワークなどのすべてのサードパーティコンポーネントを把握し、既知の脆弱性を確認している。"
+- MSTG-CODE-6: "アプリは可能性のある例外をキャッチし処理している。"
+- MSTG-CODE-8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
+- MSTG-CODE-9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
 ##### CWE
 
@@ -554,11 +553,11 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 
 #### ツール
 
-- Carthage - [https://github.com/carthage/carthage](https://github.com/carthage/carthage)
-- CocoaPods - [https://CocoaPods.org](https://CocoaPods.org)
-- OWASP Dependency Checker - [https://jeremylong.github.io/DependencyCheck/](https://jeremylong.github.io/DependencyCheck/)
-- Sourceclear - [https://sourceclear.com](https://sourceclear.com)
-- Class-dump - [https://github.com/nygard/class-dump](https://github.com/nygard/class-dump)
-- RetireJS - [https://retirejs.github.io/retire.js/](https://retirejs.github.io/retire.js/)
-- idb  - [https://github.com/dmayer/idb](https://github.com/dmayer/idb)
-- Codesign - [https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html)
+- Carthage - <https://github.com/carthage/carthage>
+- CocoaPods - <https://CocoaPods.org>
+- OWASP Dependency Checker - <https://jeremylong.github.io/DependencyCheck/>
+- Sourceclear - <https://sourceclear.com>
+- Class-dump - <https://github.com/nygard/class-dump>
+- RetireJS - <https://retirejs.github.io/retire.js/>
+- idb  - <https://github.com/dmayer/idb>
+- Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
