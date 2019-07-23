@@ -59,7 +59,7 @@ Jeroen は NVISO のモバイルセキュリティのリーダーであり、モ
 - Henry Hoggard
 - Andreas Happe
 - Kyle Benac
-- Alexander Anthuk
+- Alexander Antukh
 - Wen Bin Kong
 - Abdessamad Temmar
 - Bolot Kerimbaev
