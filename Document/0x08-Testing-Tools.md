@@ -27,6 +27,7 @@
 - Frida: 開発者、リバースエンジニア、セキュリティ研究者向けの動的計装ツールキットです。クライアントサーバーモデルを使用して動作し、Android および iOS の上で実行中のプロセスにインジェクトします。 - <https://www.frida.re>
 - Frida CodeShare: Frida スクリプトを公開しているプロジェクトで、モバイルアプリのクライアント側のセキュリティコントロール (SSL ピンニングなど) をバイパスするのに役立ちます。 - <https://codeshare.frida.re/>
 - NowSecure Workstation (商用ツール): モバイルアプリの脆弱性評価およびペネトレーションテスト用に事前設定されたハードウェアおよびソフトウェアキットです。 - <https://www.nowsecure.com/solutions/power-tools-for-security-analysts/>
+- r2frida: radare2 の強力なリバースエンジニアリング機能と Frida の動的計装ツールキットをマージしたプロジェクトです。 - <https://github.com/nowsecure/r2frida>
 
 ### リバースエンジニアリングおよび静的解析
 
