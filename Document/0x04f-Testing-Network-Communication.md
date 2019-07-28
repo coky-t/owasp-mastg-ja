@@ -129,7 +129,7 @@ Xamarin は Visual Studio と C# をプログラミング言語として使用�
 
 Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は二つあります。
 
-- [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate()` または `Main()` に以下のコードを追加してアプリを再作成します。
+- [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate` または `Main` に以下のコードを追加してアプリを再作成します。
 
     ```csharp
     WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
