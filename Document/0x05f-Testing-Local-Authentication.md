@@ -88,7 +88,7 @@ Android では、ローカル認証のために Android Runtime でサポート�
 
 #### 概要
 
-Android Marshmallow (6.0) では指紋でユーザーを認証するパブリック API が導入されました。指紋ハードウェアへのアクセスは [FingerprintManager クラス](https://developer.android.com/reference/android/hardware/fingerprint/) を通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化し、`authenticate()` メソッドをコールすることで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能性がある結果 (成功、失敗、エラー) を処理します。このメソッドは指紋認証が実際に実行されたことを強く証明するものではないことに注意します。例えば、認証ステップは攻撃者によりパッチアウトされる可能性がありますし、計装を使用して「成功」コールバックがコールされる可能性があります。
+Android Marshmallow (6.0) では指紋でユーザーを認証するパブリック API が導入されました。指紋ハードウェアへのアクセスは [FingerprintManager クラス](https://developer.android.com/reference/android/hardware/fingerprint/) を通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化し、`authenticate` メソッドをコールすることで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能性がある結果 (成功、失敗、エラー) を処理します。このメソッドは指紋認証が実際に実行されたことを強く証明するものではないことに注意します。例えば、認証ステップは攻撃者によりパッチアウトされる可能性がありますし、計装を使用して「成功」コールバックがコールされる可能性があります。
 
 Android `KeyGenerator` クラスと共に指紋 API を使用することで、より良いセキュリティが実現します。このメソッドでは、対称鍵がキーストアに格納され、ユーザーの指紋で「アンロック」されます。例えば、リモートサービスへのユーザーアクセスを有効にするには、ユーザー PIN または認証トークンを暗号化する AES 鍵が作成されます。鍵を作成する際に `setUserAuthenticationRequired(true)` をコールすることで、ユーザーが鍵を取得するには再認証する必要があることを確実にします。暗号化された認証資格情報はデバイス上の通常のストレージに直接保存することができます (例、`SharedPreferences`) 。この設計はユーザーが実際に認可された指紋を実際に入力したことを確実にする比較的安全な方法です。但し、この設定はアプリが暗号操作中にメモリ内に対称鍵を保持する必要があり、実行時にアプリのメモリにアクセスする攻撃者に潜在的に開示されることに注意します。
 
@@ -98,7 +98,7 @@ Android `KeyGenerator` クラスと共に指紋 API を使用することで、�
 
 #### 静的解析
 
-`FingerprintManager.authenticate()` コールを探すことから始めます。このメソッドに渡される最初のパラメータは FingerprintManager によりサポートされる [Crypto オブジェクトのラッパークラス](https://developer.android.com/reference/android/hardware/fingerprint/FingerprintManager.CryptoObject.html) である `CryptoObject` インスタンスである必要があります。パラメータが `null` に設定されている場合、これは指紋認証が単にイベントバウンドであることを意味し、セキュリティの問題が発生する可能性があります。
+`FingerprintManager.authenticate` コールを探すことから始めます。このメソッドに渡される最初のパラメータは FingerprintManager によりサポートされる [Crypto オブジェクトのラッパークラス](https://developer.android.com/reference/android/hardware/fingerprint/FingerprintManager.CryptoObject.html) である `CryptoObject` インスタンスである必要があります。パラメータが `null` に設定されている場合、これは指紋認証が単にイベントバウンドであることを意味し、セキュリティの問題が発生する可能性があります。
 
 暗号ラッパーを初期化するために使用される鍵の作成は `CryptoObject` にトレースバックされます。`KeyGenParameterSpec` オブジェクトの作成中にコールされる `setUserAuthenticationRequired(true)` を加えた `KeyGenerator` クラスを使用して鍵が作成されたことを確認します (以下のコードサンプルを参照) 。
 
@@ -183,7 +183,7 @@ secetkeyInfo.isInsideSecureHardware()
         cipher.init(mode, keyspec);
 ```
 
-注意、新しい鍵はすぐには使用できません。最初に `FingerprintManager` で認証する必要があります。これは `Cipher` オブジェクトを `FingerprintManager.CryptoObject` にラップし、認識される前に `FingerprintManager.authenticate()` に渡されます。
+注意、新しい鍵はすぐには使用できません。最初に `FingerprintManager` で認証する必要があります。これは `Cipher` オブジェクトを `FingerprintManager.CryptoObject` にラップし、認識される前に `FingerprintManager.authenticate` に渡されます。
 
 ```java
     cryptoObject = new FingerprintManager.CryptoObject(cipher);
