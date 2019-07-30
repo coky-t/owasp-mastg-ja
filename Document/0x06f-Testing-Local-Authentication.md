@@ -15,7 +15,7 @@ iOS での指紋認証は *Touch ID* として知られています。指紋 ID 
 - `LocalAuthentication.framework` は上位レベルの API であり、Touch ID 経由でユーザーを認証するために使用できます。アプリは登録された指紋に関連付けられたデータにアクセスすることはできません。認証が成功したかどうかだけが通知されます。
 - `Security.framework` は下位レベルの API であり、[Keychain Services](https://developer.apple.com/documentation/security/keychain_services "Keychain Services") にアクセスします。アプリが生体認証である機密データを保護する必要がある場合、アクセス制御はシステムレベルで管理され、簡単にはバイパスできないため、これはセキュアな選択肢です。`Security.framework` には C API がありますが、いくつかの [オープンソースラッパーを利用](https://www.raywenderlich.com/147308/secure-ios-user-data-keychain-touch-id "How To Secure iOS User Data: The Keychain and Touch ID") して、キーチェーンへのアクセスを NSUserDefaults のように簡単に行えます。`Security.framework` は `LocalAuthentication.framework` の基礎にあります。Apple は可能であれば上位レベル API をデフォルトとすることを推奨しています。
 
-`LocalAuthentication.framework` または `Security.framework` のいずれかを使用すると、ブール値を返すだけで処理を続けるデータがないため、攻撃者がバイパスできるコントロールになることに注意します。詳細については [Don't touch me that way, by David Lidner et al](https://www.youtube.com/watch?v=XhXIHVGCFFM) を参照してください。
+`LocalAuthentication.framework` または `Security.framework` のいずれかを使用すると、ブール値を返すだけで処理を続けるデータがないため、攻撃者がバイパスできるコントロールになることに注意します。詳細については [Don't touch me that way, by David Lidner et al](https://www.youtube.com/watch?v=XhXIHVGCFFM "Don't Touch Me That Way - David Linder") を参照してください。
 
 #### ローカル認証フレームワーク
 
@@ -29,7 +29,7 @@ iOS での指紋認証は *Touch ID* として知られています。指紋 ID 
 
 `evaluatePolicy` 関数はユーザーが認証に成功したかどうかを示すブール値を返します。
 
-Apple Developer ウェブサイトでは [Swift](https://developer.apple.com/documentation/localauthentication) と [Objective-C](https://developer.apple.com/documentation/localauthentication?language=objc) の両方のコードサンプルを提供しています。Swift での典型的な実装は以下のようになります。
+Apple Developer ウェブサイトでは [Swift](https://developer.apple.com/documentation/localauthentication "LocalAuthentication") と [Objective-C](https://developer.apple.com/documentation/localauthentication?language=objc "LocalAuthentication") の両方のコードサンプルを提供しています。Swift での典型的な実装は以下のようになります。
 
 ```swift
 let context = LAContext()
