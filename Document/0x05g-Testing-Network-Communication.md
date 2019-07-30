@@ -125,7 +125,7 @@ Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクショ�
 
 Network Security Configuration を使用して [宣言型証明書](https://developer.android.com/training/articles/security-config.html#CertificatePinning "Certificate Pinning using Network Security Configuration") を特定のドメインにピン留めすることもできます。アプリケーションがこの機能を使用する場合、定義された設定を識別するために二つのことをチェックする必要があります。
 
-最初に、 application タグの "android:networkSecurityConfig" 属性による Android アプリケーションマニフェストの Network Security Configuration ファイルを見つけます。
+最初に、 application タグの `android:networkSecurityConfig` 属性による Android アプリケーションマニフェストの Network Security Configuration ファイルを見つけます。
 
   ```xml
   <?xml version="1.0" encoding="utf-8"?>
