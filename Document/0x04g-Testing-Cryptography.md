@@ -130,7 +130,7 @@ Cipher Block Chaining (CBC) が ECB の代わりに使用されていること�
 
 ##### 予測可能な初期化ベクトル
 
-CBC, OFB, CFB, PCBC モードでは暗号の初期入力として初期化ベクトル (IV) が必要です。IV は秘密であり続ける必要はありませんが、予測可能であってはいけません。IV が暗号論的にセキュアな乱数生成器を使用して生成されていることを確認します。IV の詳細については、[Crypto Fail の初期化ベクトルの記事](http://www.cryptofails.com/post/70059609995/crypto-noobs-1-initialization-vectors) を参照してください。
+CBC, OFB, CFB, PCBC モードでは暗号の初期入力として初期化ベクトル (IV) が必要です。IV は秘密であり続ける必要はありませんが、予測可能であってはいけません。IV が暗号論的にセキュアな乱数生成器を使用して生成されていることを確認します。IV の詳細については、[Crypto Fail の初期化ベクトルの記事](http://www.cryptofails.com/post/70059609995/crypto-noobs-1-initialization-vectors "Crypto Noobs #1: Initialization Vectors") を参照してください。
 
 ##### ステートフル操作モードでの初期化ベクトル
 
