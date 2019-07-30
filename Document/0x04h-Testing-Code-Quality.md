@@ -41,7 +41,7 @@ password = 1' or '1' = '1
 SELECT * FROM users WHERE username='1' OR '1' = '1' AND Password='1' OR '1' = '1'
 ```
 
-条件 `'1' = '1'` は常に true と評価されるため、このクエリはデータベース内のすべてのレコードを返し、有効なユーザーアカウントが入力されていなくてもログイン関数は "true" を返すようになります。
+条件 `'1' = '1'` は常に true と評価されるため、このクエリはデータベース内のすべてのレコードを返し、有効なユーザーアカウントが入力されていなくてもログイン関数は `true` を返すようになります。
 
 Ostorlab はこの SQL インジェクションペイロードを使用して、adb で [Yahoo 天気モバイルアプリケーション](https://blog.ostorlab.co/android-sql-contentProvider-sql-injections.html "Android, SQL and ContentProviders or Why SQL injections aren't dead yet ?") のソートパラメータを悪用しました。
 
@@ -51,7 +51,7 @@ Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "
 
 *XML インジェクション* 攻撃では、攻撃者は XML メタキャラクタを注入して XML コンテンツを構造的に変更します。これは XML ベースのアプリケーションやサービスのロジックを侵害するために使用される可能性があり、攻撃者がコンテンツを処理する XML パーサーの操作を悪用する可能性もあります。
 
-この攻撃の一般的な変種には [XML Entity Injection (XXE)](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing) があります。ここでは、攻撃者が URI を含む外部エンティティ定義を入力 XML に注入します。解析時に、XML パーサーは URI で指定されたリソースにアクセスして攻撃者が定義したエンティティを展開します。解析アプリケーションの完全性により最終的に攻撃者にもたらす能力を決定します。悪意のあるユーザーが次の一部 (または全て) を行う可能性があります。ローカルファイルにアクセスしたり、任意のホストおよびポートへの HTTP リクエストをトリガしたり、[クロスサイトリクエストフォージェリ (CSRF)](https://goo.gl/UknMCj "Cross-Site Request Forgery (CSRF)") 攻撃を実行したり、サービス拒否状態を引き起こしたりします。OWASP ウェブテストガイドには [XXE の以下の例](https://goo.gl/QGQkEX "Testing for XML Injection (OTG-INPVAL-008)") があります。
+この攻撃の一般的な変種には [XML eXternal Entity (XXE)](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing "XML eXternal Entity attack (XXE)") があります。ここでは、攻撃者が URI を含む外部エンティティ定義を入力 XML に注入します。解析時に、XML パーサーは URI で指定されたリソースにアクセスして攻撃者が定義したエンティティを展開します。解析アプリケーションの完全性により最終的に攻撃者にもたらす能力を決定します。悪意のあるユーザーが次の一部 (または全て) を行う可能性があります。ローカルファイルにアクセスしたり、任意のホストおよびポートへの HTTP リクエストをトリガしたり、[クロスサイトリクエストフォージェリ (CSRF)](https://goo.gl/UknMCj "Cross-Site Request Forgery (CSRF)") 攻撃を実行したり、サービス拒否状態を引き起こしたりします。OWASP ウェブテストガイドには [XXE の以下の例](https://goo.gl/QGQkEX "Testing for XML Injection (OTG-INPVAL-008)") があります。
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -95,15 +95,15 @@ OS 固有のテストガイドでは各モバイル OS の入力ソースや潜�
 
 クロスサイトスクリプティング (XSS) の問題により、攻撃者はクライアント側のスクリプトをユーザーが閲覧したウェブページに注入できます。この種の脆弱性はウェブアプリケーションによく見られます。ユーザーがブラウザに注入されたスクリプトを閲覧すると、攻撃者は同一生成元ポリシーをバイパスすることができ、さまざまな攻撃 (例えば、セッションクッキーの盗難、キー押下の記録、任意のアクションの実行など) を可能にします。
 
-*ネイティブアプリ* のコンテキストでは、これらの種類のアプリケーションはウェブブラウザに依存していないという単純な理由により、XSS のリスクはあまりありません。但し、iOS の 'WKWebView' や非推奨の 'UIWebView' および Android の 'WebView' などの WebView コンポーネントを使用するアプリではこのような攻撃について潜在的に脆弱です。
+*ネイティブアプリ* のコンテキストでは、これらの種類のアプリケーションはウェブブラウザに依存していないという単純な理由により、XSS のリスクはあまりありません。但し、iOS の `WKWebView` や非推奨の `UIWebView` および Android の `WebView` などの WebView コンポーネントを使用するアプリではこのような攻撃について潜在的に脆弱です。
 
-古いですがよく知られている例として [Phil Purviance により最初に特定された、iOS 向け Skype アプリのローカル XSS の問題]( https://superevr.com/blog/2011/xss-in-skype-for-ios) があります。Skype アプリがメッセージ送信者の名前を正しくエンコードできなかったため、攻撃者は悪意のある JavsScript を注入でき、ユーザーがメッセージを表示したときに実行される可能性があります。概念実証で、Phil はこの問題を悪用してユーザーのアドレス帳を盗む方法を示しました。
+古いですがよく知られている例として [Phil Purviance により最初に特定された、iOS 向け Skype アプリのローカル XSS の問題](https://superevr.com/blog/2011/xss-in-skype-for-ios "XSS in Skype for iOS") があります。Skype アプリがメッセージ送信者の名前を正しくエンコードできなかったため、攻撃者は悪意のある JavsScript を注入でき、ユーザーがメッセージを表示したときに実行される可能性があります。概念実証で、Phil はこの問題を悪用してユーザーのアドレス帳を盗む方法を示しました。
 
 #### 静的解析
 
 存在する WebView を注意深く見て、信頼できない入力についてアプリによる処理を調査します。
 
-WebView で開かれる URL が部分的にユーザーの入力により決定される場合、XSS の問題が存在する可能性があります。以下の例は [Linus Särud により報告された Zoho Web Service](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/) の XSS の問題です。
+WebView で開かれる URL が部分的にユーザーの入力により決定される場合、XSS の問題が存在する可能性があります。以下の例は [Linus Särud により報告された Zoho Web Service](https://labs.detectify.com/2015/02/20/finding-an-xss-in-an-html-based-android-application/ "Finding an XSS in an HTML-based Android application") の XSS の問題です。
 
 Java
 
@@ -140,7 +140,7 @@ Kotlin
     }
 ```
 
-Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793) で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
+Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793 "[Android] XSS via start ContentActivity") で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
 
 - ADB
 
@@ -158,7 +158,7 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
   '<script>alert(QuoraAndroid.getClipboardData());</script>'
   ```
 
-- 3rd party Intent in Java or kotlin:
+- 3rd party Intent in Java or Kotlin:
 
   ```java
   Intent i = new Intent();
@@ -183,7 +183,6 @@ WebView を使用してリモートウェブサイトを表示する場合、HTM
 以下のベストプラクティスに準じていることを確認します。
 
 - 絶対に必要でない限り、信頼できないデータを HTML, JavaScript, 他の解釈されるコンテキストで処理していません。
-
 - エスケープ文字には HTML エンティティエンコーディングなどの適切なエンコーディングが適用されています。注：エスケープのルールは HTML が他のコード内にネストされていると複雑になります。例えば、JavaScript ブロック内にある URL を処理するなどです。
 
 レスポンスでのデータの処理方法を検討します。例えば、データが HTML コンテキストで処理される場合に、エスケープする必要がある六つの制御文字です。
