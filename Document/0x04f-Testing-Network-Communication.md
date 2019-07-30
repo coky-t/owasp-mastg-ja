@@ -8,9 +8,9 @@
 
 フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
 
-- [Burp Suite](https://portswigger.net/burp)
-- [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
-- [Charles Proxy](https://www.charlesproxy.com)
+- [Burp Suite](https://portswigger.net/burp "Burp Suite")
+- [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project "OWASP ZAP")
+- [Charles Proxy](https://www.charlesproxy.com "Charles Proxy")
 
 傍受プロキシを使用するには、それをマシン上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
@@ -22,8 +22,8 @@
 
 Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
 
-- [Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension)
-- [Mitm-relay](https://github.com/jrmdev/mitm_relay)
+- [Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension")
+- [Mitm-relay](https://github.com/jrmdev/mitm_relay "Mitm-relay")
 
 これらのプラグインは非 HTTP プロトコルを視覚化することができ、トラフィックを傍受および操作することもできます。
 
@@ -40,7 +40,7 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 このような場合は、次に何をすべきかを決めるために、まずネットワークトラフィックを監視および解析する必要があります。幸いにも、ネットワーク通信をリダイレクトおよび傍受するための選択肢がいくつかあります。
 
-- トラフィックをホストマシンにルーティングします。マシンをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](https://www.wireshark.org) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
+- トラフィックをホストマシンにルーティングします。マシンをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](https://www.wireshark.org "Wireshark") を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
 
 - 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストマシンにネットワークトラフィックをリダイレクトするために [bettercap](https://github.com/bettercap/bettercap "bettercap") を検討する必要があります (下図参照) 。
 
@@ -119,7 +119,7 @@ bettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (
 
 #### 実行時計装によるプロキシの設定
 
-ルート化または脱獄済みデバイスでは、ランタイムフックを使用して、新しいプロキシを設定したりネットワークトラフィックをリダイレクトすることが可能です。これは [Inspeckage](https://github.com/ac-pm/Inspeckage) などのフックツールや [Frida](https://www.frida.re) および [cycript](http://www.cycript.org) などのコードインジェクションフレームワークで実現できます。実行時計装についての詳細はこのガイドの「リバースエンジニアリングと改竄」の章で参照できます。
+ルート化または脱獄済みデバイスでは、ランタイムフックを使用して、新しいプロキシを設定したりネットワークトラフィックをリダイレクトすることが可能です。これは [Inspeckage](https://github.com/ac-pm/Inspeckage "Inspeckage") などのフックツールや [Frida](https://www.frida.re "Frida") および [cycript](http://www.cycript.org "cycript") などのコードインジェクションフレームワークで実現できます。実行時計装についての詳細はこのガイドの「リバースエンジニアリングと改竄」の章で参照できます。
 
 #### 例: Xamarin の扱い
 
@@ -202,58 +202,58 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 プロトコル:
 
 - `SSLv1`
-- `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176)
-- `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101)
-- `TLSv1.0` - [RFC 2246](https://www.ietf.org/rfc/rfc2246)
-- `TLSv1.1` - [RFC 4346](https://tools.ietf.org/html/rfc4346)
-- `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246)
-- `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446)
+- `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176 "RFC 6176")
+- `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101 "RFC 6101")
+- `TLSv1.0` - [RFC 2246](https://www.ietf.org/rfc/rfc2246 "RFC 2246")
+- `TLSv1.1` - [RFC 4346](https://tools.ietf.org/html/rfc4346 "RFC 4346")
+- `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246 "RFC 5246")
+- `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446 "RFC 8446")
 
 鍵交換アルゴリズム:
 
-- `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979)
-- `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979)
-- `RSA` - [RFC 8017](https://tools.ietf.org/html/rfc8017)
-- `DHE` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
-- `ECDHE` - [RFC 4492](https://tools.ietf.org/html/rfc4492)
-- `PSK` - [RFC 4279](https://tools.ietf.org/html/rfc4279)
-- `DSS`[FIPS186-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf)
-- `DH_anon` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
-- `DHE_RSA` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
-- `DHE_DSS` - [RFC 2631](https://tools.ietf.org/html/rfc2631)  - [RFC 7919](https://tools.ietf.org/html/rfc7919)
-- `ECDHE_ECDSA` - [RFC 8422](https://tools.ietf.org/html/rfc8422)
-- `ECDHE_PSK`  - [RFC 8422](https://tools.ietf.org/html/rfc8422)  - [RFC 5489](https://tools.ietf.org/html/rfc5489)
-- `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422)
+- `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
+- `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
+- `RSA` - [RFC 8017](https://tools.ietf.org/html/rfc8017 "RFC 8017")
+- `DHE` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `ECDHE` - [RFC 4492](https://tools.ietf.org/html/rfc4492 "RFC 4492")
+- `PSK` - [RFC 4279](https://tools.ietf.org/html/rfc4279 "RFC 4279")
+- `DSS` - [FIPS186-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf "FIPS186-4")
+- `DH_anon` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `DHE_RSA` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `DHE_DSS` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `ECDHE_ECDSA` - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
+- `ECDHE_PSK`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")  - [RFC 5489](https://tools.ietf.org/html/rfc5489 "RFC 5489")
+- `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
 
 ブロック暗号:
 
-- `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772)
-- `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829)
-- `3DES`  - [RFC 2420](https://tools.ietf.org/html/rfc2420)
-- `3DES_EDE_CBC` - [RFC 2420](https://tools.ietf.org/html/rfc2420)
-- `AES_128_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268)
-- `AES_128_GCM`  - [RFC 5288](https://tools.ietf.org/html/rfc5288)
-- `AES_256_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268)
-- `AES_256_GCM` - [RFC 5288](https://tools.ietf.org/html/rfc5288)
-- `RC4_40`  - [RFC 7465](https://tools.ietf.org/html/rfc7465)
-- `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465)
-- `CHACHA20_POLY1305`  - [RFC 7905](https://tools.ietf.org/html/rfc7905)  - [RFC 7539](https://tools.ietf.org/html/rfc7539)
+- `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772 "RFC 4772")
+- `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829 "RFC 1829")
+- `3DES`  - [RFC 2420](https://tools.ietf.org/html/rfc2420 "RFC 2420")
+- `3DES_EDE_CBC` - [RFC 2420](https://tools.ietf.org/html/rfc2420 "RFC 2420")
+- `AES_128_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268 "RFC 3268")
+- `AES_128_GCM`  - [RFC 5288](https://tools.ietf.org/html/rfc5288 "RFC 5288")
+- `AES_256_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268 "RFC 3268")
+- `AES_256_GCM` - [RFC 5288](https://tools.ietf.org/html/rfc5288 "RFC 5288")
+- `RC4_40`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
+- `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
+- `CHACHA20_POLY1305`  - [RFC 7905](https://tools.ietf.org/html/rfc7905 "RFC 7905")  - [RFC 7539](https://tools.ietf.org/html/rfc7539 "RFC 7539")
 
 完全性チェックアルゴリズム:
 
-- `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151)
-- `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
-- `SHA256`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
-- `SHA384`  - [RFC 6234](https://tools.ietf.org/html/rfc6234)
+- `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151 "RFC 6151")
+- `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
+- `SHA256`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
+- `SHA384`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
 
 暗号スイートの性能はそのアルゴリズムの性能に依存することに注意します。
 
 以下では、TLS で使用する最新の推奨暗号スイートリストを提示します。これらの暗号スイートは IANA の TLS パラメータドキュメントと OWASP TLS Cipher String Cheat Sheet の両方で推奨されています。
 
-- IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4) にあります。
+- IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4 "TLS Cipher Suites") にあります。
 - OWASP 推奨暗号スイートは [TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md "OWASP TLS Cipher String Cheat Sheet") にあります。
 
-一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites) および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc) バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
+一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#cipher-suites "Cipher suites") および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc "SSL Cipher Suite Values") バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
 
 #### 静的解析
 
@@ -268,14 +268,14 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 テストされるアプリの着信および発信するネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
 - OWASP ZAP や Burp Suite などの傍受プロキシですべての HTTP(S) および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
-- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension) などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay) ツールを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
+- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") ツールを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
 
 > 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。
 
 サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
 
 - nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
-- [testssl.sh](https://github.com/drwetter/testssl.sh) は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
+- [testssl.sh](https://github.com/drwetter/testssl.sh "mitm-relay") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
 ### クリティカルな操作がセキュアな通信チャネルを使用することの確認 (MSTG‑NETWORK‑5)
 
