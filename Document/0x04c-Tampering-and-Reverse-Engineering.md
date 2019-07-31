@@ -48,9 +48,60 @@
 
 Substrate, Frida, Xposed はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
 
-それだけでなく、Cycript をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も ["frida-cycript"](https://github.com/nowsecure/frida-cycript "Cycript fork powered by Frida") と呼ばれる Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で保守されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (この時点で混乱しても、心配ありません) 。frida-cycript のリリースには Frida の開発者 Ole によるブログ記事 "Cycript on Steroids," が付いていました。このタイトルは [Saurik はあまり好きではありませんでした](https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/ "Cycript on steroids: Pumping up portability and performance with Frida") 。
+それだけでなく、Cycript をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も ["frida-cycript"](https://github.com/nowsecure/frida-cycript "Cycript fork powered by Frida") と呼ばれる Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で保守されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (この時点で混乱しても、心配ありません) 。frida-cycript のリリースには Frida の開発者 Ole によるブログ記事 "Cycript on Steroids" が付いていました。このタイトルは [Saurik はあまり好きではありませんでした](https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/ "Cycript on steroids: Pumping up portability and performance with Frida") 。
 
 三つすべてのフレームワークについて例を紹介します。私たちは Frida で始めることをお勧めします。これは三つの中で最も汎用性が高いからです (このため、Frida の詳細と事例が多く紹介されています) 。特に、Frida は Android と iOS の両方のプロセスに JavaScript VM をインジェクトできます。一方で Substrate での Cycript インジェクションは iOS でのみ動作します。しかし最終的には、いずれのフレームワークでも多くの同じ目標に到達できます。
+
+##### Frida
+
+[Frida](https://www.frida.re "Frida") は C で書かれたフリーでオープンソースの動的コード計装ツールキットです。JavaScript エンジン ([Duktape](https://duktape.org/ "Duktape JavaScript Engine") および [V8](https://v8.dev/docs "V8 JavaScript Engine")) を計装化プロセスにインジェクトすることにより機能します。Frida では Android や iOS (および [その他のプラットフォーム](https://www.frida.re/docs/home/ "So what is Frida, exactly?")) のネイティブアプリ内で JavaScript のスニペットを実行することができます。
+
+コードはいくつかの方法でインジェクトできます。例えば、Xposed は Android アプリローダーを恒久的に改変し、新しいプロセスが開始されるたびに独自のコードを実行するフックを提供します。
+対照的に、Frida は直接プロセスメモリにコードを書くことでコードインジェクションを実装しています。実行中のアプリにアタッチされている場合には、
+
+- Frida は実行中プロセスのスレッドをハイジャックするために ptrace を使用します。このスレッドはメモリのチャンクを割り当てるために使用され、それにミニブートストラップを投入します。
+- ブートストラップは新しいスレッドを起動し、デバイス上で実行されている Frida デバッグサーバーに接続し、Frida エージェント (`frida-agent.so`) を含む共有ライブラリをロードします。
+- エージェントはツール (例えば、Frida REPL やカスタム Python スクリプト) への双方向通信チャネルを確立します。
+- ハイジャックされたスレッドは元の状態に復元された後に再開し、プロセスの実行は通常どおり続行します。
+
+![Frida](Images/Chapters/0x04/frida.png)
+
+*Frida アーキテクチャ, 参照元: [https://www.frida.re/docs/hacking/](https://www.frida.re/docs/hacking "Frida - Hacking")*
+
+Frida には三つの動作モードがあります。
+
+1. Injected: これは frida-server が iOS または Android デバイスでデーモンとして実行されているときの最も一般的なシナリオです。frida-core は TCP 上で公開され、デフォルトでは localhost:27042 で待機しています。このモードでの実行はルート化されていないデバイスや脱獄されていないデバイスでは不可能です。
+2. Embedded: これはあなたのデバイスがルート化または脱獄済みである (あなたは非特権ユーザーとして ptrace を使用できない) 場合のものです。あなたにはアプリに [frida-gadget](https://www.frida.re/docs/gadget/ "Frida Gadget") ライブラリを埋め込むことによるインジェクションの責任があります。
+3. Preloaded: `LD_PRELOAD` や `DYLD_INSERT_LIBRARIES` に似ています。frida-gadget を自律的に実行し、ファイルシステム (Gadget バイナリが存在する場所からの相対パスなど) からスクリプトをロードするように設定できます。
+
+Frida は Frida API 上に構築された一連のシンプルなツール群も提供します。pip を介して frida-tools をインストールした後で端末から直接利用できます。例を示します。
+
+- 迅速なスクリプトプロトタイピングやトライ＆エラーシナリオには [Frida CLI](https://www.frida.re/docs/frida-cli/ "Frida CLI") (`frida`) を使うことができます。
+- [`frida-ps`](https://www.frida.re/docs/frida-ps/ "frida-ps") はデバイス上で実行されているすべてのアプリ (またはプロセス) の名前と PDI を含むリストを取得します。
+- [`frida-ls-devices`](https://www.frida.re/docs/frida-ls-devices/ "frida-ls-devices") は接続しているデバイスを一覧表示します。
+- [`frida-trace`](https://www.frida.re/docs/frida-trace/ "frida-trace") は、iOS アプリの一部であるメソッドや Android ネイティブライブラリ内で実装されているメソッドを迅速にトレースします。
+
+さらに、Frida ベースのオープンソースツールもいくつかあります。例を示します。
+
+- [Passionfruit](https://github.com/chaitin/passionfruit "Passionfruit"): iOS アプリのブラックボックス評価ツール。
+- [Fridump](https://github.com/Nightbringer21/fridump "fridump"): Android と iOS の両方で使えるメモリダンプツール。
+- [Objection](https://github.com/sensepost/objection "objection"): ランタイムモバイルセキュリティ評価フレームワーク。
+- [r2frida](https://github.com/nowsecure/r2frida "r2frida"): radare2 の強力なリバースエンジニアリング機能と Frida の動的計装ツールキットをマージしたプロジェクト。
+
+このガイドではこれらすべてのツールを使用していきます。
+
+これらのツールはそのまま使用することも、ニーズに合わせて調整することも、API の使用方法に関する優れた例として使用することもできます。例としてそれらを持つことは、あなたが自身のフックスクリプトを書くときやイントロスペクションツールを構築するとき、リバースエンジニアリングワークフローをサポートするために非常に役立ちます。
+
+もうひとつ、Frida CodeShare プロジェクト (<https://codeshare.frida.re>) について説明します。すぐに実行可能な Frida スクリプトのコレクションがあります。Android と iOS の両方で具体的なタスクを実行するときだけでなく、独自のスクリプトを作成するためのインスピレーションとしても役立ちます。代表的な二つの例を示します。
+
+- Universal Android SSL Pinning Bypass with Frida - <https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/>
+- ObjC method observer - <https://codeshare.frida.re/@mrmacete/objc-method-observer/>
+
+使い方は簡単です。Frida CLI を使用するときに `--codeshare <handler>` フラグとハンドラを含めます。例えば、"ObjC method observer" を使用するには、以下のように入力します。
+
+```shell
+$ frida --codeshare mrmacete/objc-method-observer -f YOUR_BINARY
+```
 
 ### 静的および動的バイナリ解析
 
@@ -58,7 +109,7 @@ Substrate, Frida, Xposed はモバイル業界で最も広く使用されてい�
 
 #### 逆アセンブラと逆コンパイラの使用
 
-逆アセンブラと逆コンパイラはアプリのバイナリコードやバイトコードを多かれ少なかれ理解できる形式に逆変換できます。ネイティブバイナリにこれらのツールを使用することで、アプリがコンパイルされたアーキテクチャに一致するアセンブラコードを取得できます。Android Java アプリは smali に逆アセンブルできます。これは Android の Java VM である dalvik で使用される dex 形式のアセンブラ言語です。smali アセンブリは逆コンパイルして Java コードに戻すことも簡単です。
+逆アセンブラと逆コンパイラはアプリのバイナリコードやバイトコードを多かれ少なかれ理解できる形式に逆変換できます。ネイティブバイナリにこれらのツールを使用することで、アプリがコンパイルされたアーキテクチャに一致するアセンブラコードを取得できます。Android Java アプリは smali に逆アセンブルできます。これは Android の Java VM である Dalvik で使用される dex 形式のアセンブラ言語です。smali アセンブリは逆コンパイルして Java コードに戻すことも簡単です。
 
 高価ですが便利な GUI ツール、オープンソースの逆アセンブラエンジン、リバースエンジニアリングフレームワークなど、幅広いツールやフレームワークが利用可能です。これらのツールについての高度な使用方法はたいていそれ自体で簡単に一冊の本になってしまいます。開始する最適な方法はあなたのニーズと予算にあったツールを選び、十分にレビューされたユーザーガイドを購入するだけです。OS ごとの「リバースエンジニアリングと改竄」の章で最も一般的なツールをいくつか紹介します。
 
@@ -107,6 +158,14 @@ Android のセクションでは、シンボリック実行を使用して Andro
 - Angr - <https://github.com/angr/angr>
 - Cycript - <http://www.cycript.org/>
 - Frida - <https://www.frida.re/>
+- Frida CLI - <https://www.frida.re/docs/frida-cli/>
+- frida-ls-devices - <https://www.frida.re/docs/frida-ls-devices/>
+- frida-ps - <https://www.frida.re/docs/frida-ps/>
+- frida-trace - <https://www.frida.re/docs/frida-trace/>
+- Fridump - <https://github.com/Nightbringer21/fridump>
+- Objection - <https://github.com/sensepost/objection>
+- Passionfruit - <https://github.com/chaitin/passionfruit>
+- r2frida - <https://github.com/nowsecure/r2frida>
 - Radare2 - <https://github.com/radare/radare2>
 - Substrate - <http://www.cydiasubstrate.com/>
 - Xposed - <https://www.xda-developers.com/xposed-framework-hub/>
