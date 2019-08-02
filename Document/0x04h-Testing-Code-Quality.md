@@ -171,7 +171,7 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
 
   ```kotlin
   val i = Intent()
-  i.component = ComponentName("com.quora.android", 
+  i.component = ComponentName("com.quora.android",
   "com.quora.android.ActionBarContentActivity")
   i.putExtra("url", "http://test/test")
   i.putExtra("html", "XSS PoC <script>alert(123)</script>")
