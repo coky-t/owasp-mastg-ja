@@ -121,7 +121,7 @@ bettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (
 
 ルート化または脱獄済みデバイスでは、ランタイムフックを使用して、新しいプロキシを設定したりネットワークトラフィックをリダイレクトすることが可能です。これは [Inspeckage](https://github.com/ac-pm/Inspeckage "Inspeckage") などのフックツールや [Frida](https://www.frida.re "Frida") および [cycript](http://www.cycript.org "cycript") などのコードインジェクションフレームワークで実現できます。実行時計装についての詳細はこのガイドの「リバースエンジニアリングと改竄」の章で参照できます。
 
-#### 例: Xamarin の扱い
+#### 例 - Xamarin の扱い
 
 例として、すべてのリクエストを Xamarin アプリから傍受プロキシにリダイレクトしてみます。
 
