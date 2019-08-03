@@ -2,7 +2,7 @@
 
 [モバイルアプリの暗号化](0x04g-Testing-Cryptography.md) の章では、一般的な暗号のベストプラクティスを紹介し、モバイルアプリで暗号が間違って使用される場合に起こりうる典型的な欠陥について説明しました。この章では、Android の暗号化 API について詳しく説明します。これらの API の使用をソースコード内でどのように識別し、どのように構成を解釈するかを示します。コードをレビューする際には、このガイドからリンクされている最新のベストプラクティスで使用されている暗号パラメータを必ず比較します。
 
-### 暗号標準アルゴリズムの構成の検討
+### 暗号標準アルゴリズムの構成の検討 (MSTG-CRYPTO-2, MSTG-CRYPTO-3 および MSTG-CRYPTO-4)
 
 #### 概要
 
@@ -56,7 +56,7 @@ provider: AndroidKeyStore1.0 (Android AndroidKeyStore security provider)
   - ソケット読み込みが中断された場合は、`SocketException` を取得します。
 - Android Pie (9.0) 以上では [Android 開発者ブログ](https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html "Cryptography Changes in Android P
 ") はより積極的な変更を記しています。
-  - `getInstance()` メソッドを使用してプロバイダを指定し、P より下の任意の API をターゲットにすると、警告を得ます。P 以上をターゲットにすると、エラーを得ます。
+  - `getInstance` メソッドを使用してプロバイダを指定し、P より下の任意の API をターゲットにすると、警告を得ます。P 以上をターゲットにすると、エラーを得ます。
   - `Crypto` プロバイダは現在削除されています。これをコールすると `NoSuchProviderException` が返されます。
 
 Android SDK はセキュアな鍵生成および使用を記述するためのメカニズムを提供します。Android 6.0 (Marshmallow, API 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。
@@ -166,7 +166,7 @@ KeyPair keyPair = keyPairGenerator.generateKeyPair();
 「モバイルアプリの暗号化」の章に記載されているベストプラクティスに従っていることを確認します。使用されている暗号アルゴリズムの構成が [NIST](https://www.keylength.com/en/4/ "NIST recommendations - 2016") および[BSI](https://www.keylength.com/en/8/ "BSI recommendations - 2017") のベストプラクティスと整合し、強力であるとみなされていることを確認します。`SHA1PRNG` は暗号学的にセキュアではないため、もはや使用していないことを確認します。
 最後に、鍵がネイティブコードにハードコードされていないこと、および安全でないメカニズムがこのレベルで使用されていないことを確認します。
 
-### 乱数生成のテスト
+### 乱数生成のテスト (MSTG-CRYPTO-6)
 
 #### 概要
 
@@ -224,7 +224,7 @@ public static void main (String args[]) {
 
 ランダム性をテストしたい場合には、数の大きなセットをキャプチャし Burp の [sequencer](https://portswigger.net/burp/documentation/desktop/tools/sequencer "Burp's Sequencer") で確認してランダム性の品質がどれほど良いかを見ます。
 
-### 鍵管理のテスト
+### 鍵管理のテスト (MSTG-STORAGE-1, MSTG-CRYPTO-1 および MSTG-CRYPTO-5)
 
 #### 概要
 
@@ -259,7 +259,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 今では、定期的にユーザーにパスフレーズを促すことはすべてのアプリケーションにとって機能するものではないことは明らかです。その場合には必ず [Android KeyStore API](https://developer.android.com/reference/java/security/KeyStore.html "Android AndroidKeyStore API") を使用してください。この API は鍵マテリアルにセキュアなストレージを提供するために特別に開発されました。あなたのアプリケーションだけが生成した鍵にアクセスできます。Android 6.0 からは AndroidKeyStore は指紋センサーが存在する場合にハードウェア支援も強制されます。これは鍵マテリアルをセキュアにするために専用の暗号チップまたは Trusted Platform Module (TPM) が使用されていることを意味します。
 
 但し、`AndroidKeyStore` API は Android のさまざまなバージョンで大幅に変更されていることに注意します。以前のバージョンでは `AndroidKeyStore` API は公開鍵と秘密鍵 (private key) のペア (RSA など) の保存のみをサポートしていました。対称鍵のサポートは API レベル 23 以降でのみ追加されています。結果として、さまざまな Android API レベルで対称鍵をセキュアに保存したいときには開発者は注意する必要があります。対称鍵をセキュアに保存するには、Android API レベル 22 以下で動作するデバイスで、公開鍵と秘密鍵 (private key) のペアを生成する必要があります。公開鍵を使用して対象鍵を暗号化し、秘密鍵 (private key) を `AndroidKeyStore` に保存します。暗号化された対称鍵は `SharedPreferences` に安全に保存できます。対称鍵が必要なときにはいつでも、アプリケーションは ```KeyStore``` から秘密鍵 (private key) を取り出し、対称鍵を復号します。
-鍵が `AndroidKeyStore` 内で生成及び使用され `KeyInfo.isinsideSecureHardware()` が true を返す場合、その鍵をダンプしたり暗号操作を監視したりすることができないことはご存知の通りです。`PBKDF2withHmacSHA256` を使用してまだ到達可能でダンプ可能なメモリに鍵を生成するか、もしくは鍵が決してメモリに入り込まないであろう `AndroidKeyStore` を使用するか、最終的に何がより安全であるかは議論の余地があります。Android Pie では `PBKDF2withHmacSHA256` を使用するよりも有利となるように、TEE と `AndroidKeyStore` を分離するために追加のセキュリティ拡張が実装されています。しかし、近い将来、その議題についてより多くのテストと調査が行われるでしょう。
+鍵が `AndroidKeyStore` 内で生成及び使用され `KeyInfo.isinsideSecureHardware` が true を返す場合、その鍵をダンプしたり暗号操作を監視したりすることができないことはご存知の通りです。`PBKDF2withHmacSHA256` を使用してまだ到達可能でダンプ可能なメモリに鍵を生成するか、もしくは鍵が決してメモリに入り込まないであろう `AndroidKeyStore` を使用するか、最終的に何がより安全であるかは議論の余地があります。Android Pie では `PBKDF2withHmacSHA256` を使用するよりも有利となるように、TEE と `AndroidKeyStore` を分離するために追加のセキュリティ拡張が実装されています。しかし、近い将来、その議題についてより多くのテストと調査が行われるでしょう。
 
 #### キーストアへのセキュアなキーインポート
 
@@ -283,7 +283,7 @@ SecureKeyWrapper ::= SEQUENCE {
 }
 ```
 
-上記のコードは SecureKeyWrapper フォーマットで暗号化された鍵を生成するときに設定されるさまざまなパラメータを表しています。詳細については [WrappedKeyEntry](https://developer.android.com/reference/android/security/keystore/WrappedKeyEntry) の Android ドキュメントを確認してください。
+上記のコードは SecureKeyWrapper フォーマットで暗号化された鍵を生成するときに設定されるさまざまなパラメータを表しています。詳細については [`WrappedKeyEntry`](https://developer.android.com/reference/android/security/keystore/WrappedKeyEntry "WrappedKeyEntry") の Android ドキュメントを確認してください。
 
 KeyDescription AuthorizationList を定義するときに、以下のパラメータが暗号化鍵セキュリティに影響を与えます。
 
@@ -291,17 +291,84 @@ KeyDescription AuthorizationList を定義するときに、以下のパラメ�
 - `keySize` パラメータは鍵のサイズをビット単位で指定します。鍵のアルゴリズムに対して普通に計測されます。
 - `digest` パラメータは署名および検証オペレーションを実行するために鍵とともに使用できるダイジェストアルゴリズムを指定します。
 
+#### 鍵構成証明
+
+暗号プリミティブによる多要素認証、クライアント側での機密データのセキュアな保管など、ビジネスに不可欠な操作のために Android Keystore に大きく依存しているアプリケーションに対して、Android は [鍵構成証明 (Key Attestation)](https://developer.android.com/training/articles/security-key-attestation "Key Attestation") の機能を提供します。これは Android Keystore を介して管理される暗号マテリアルのセキュリティを分析するのに役立ちます。Android 8.0 以降、Google スイーツアプリでデバイス認証を取得する必要があるすべての新しい (Android 7.0 以降) デバイスでは鍵構成証明が必須になりました。このようなデバイスでは [Google ハードウェア構成証明ルート証明書](https://developer.android.com/training/articles/security-key-attestation#root_certificate "Google Hardware Attestation Root Certificate") で署名された構成証明鍵を使用し、鍵構成証明プロセスの中で検証されます。
+
+鍵構成証明の中で、鍵ペアのエイリアスを指定し、リターンとして証明書チェーンを取得します。これを使用して、鍵ペアのプロパティを検証できます。チェーンのルート証明書が [Google ハードウェア構成証明ルート証明書](https://developer.android.com/training/articles/security-key-attestation#root_certificate "Google Hardware Attestation Root certificate") であり、ハードウェア内での鍵ペアの保存に関連するチェックが行われた場合、デバイスがハードウェアレベルの鍵構成証明をサポートし、その鍵が Google がセキュアであると信ずるハードウェア支援のキーストアにあることが保証されます。また、構成証明チェーンに他のルート証明書がある場合、Google はそのハードウェアのセキュリティについて一切主張しません。
+
+鍵構成証明プロセスはアプリケーション内で直接実装できますが、セキュリティ上の理由からサーバー側で実装することをお勧めします。以下は鍵構成証明をセキュアに実装するための高レベルのガイドラインです。
+
+- サーバーは CSPRNG (暗号論的にセキュアな乱数生成器) を使用してセキュアに乱数を作成することにより鍵構成証明プロセスを開始しすべきであり、同じものをチャレンジとしてユーザーに送信すべきです。
+
+- クライアントはサーバーから受信したチャレンジを使用して `setAttestationChallenge` API を呼び出し、それから `KeyStore.getCertificateChain` を使用して構成証明証明書チェーンを検索すべきです。
+
+- 構成証明レスポンスを検証のためにサーバーに送信し、鍵構成証明レスポンスの検証のために以下のチェックを実行すべきです。
+
+  - ルートまでの証明書チェーンを検証し、有効性、完全性、信頼性などの証明書のサニティチェックを実行します。
+
+  - ルート証明書が検証プロセスを信頼できるものにする Google 構成証明ルート鍵で署名されているかどうかを確認します。
+
+  - 証明書チェーンの最初の要素内に現れる構成証明証明書拡張データを抽出し、以下のチェックを実行します。
+
+    - 構成証明チャレンジが構成証明プロセスを開始する際にサーバーで生成されたものと同じ値であることを検証します。
+
+    - 鍵構成証明レスポンスの署名を検証します。
+
+    - ここで鍵マスターのセキュリティレベルをチェックし、デバイスにセキュアな鍵ストレージメカニズムがあるかどうかを確認します。鍵マスターはセキュリティのコンテキストで動作し、すべてのセキュアなキーストア操作を提供するソフトウェアの一部です。セキュリティレベルは `Software`, `TrustedEnvironment`, `StrongBox` のいずれかになります。
+
+    - さらに、Software, TrustedEnvironment, StrongBox のいずれかである構成証明セキュリティレベルをチェックし、その構成証明証明書がどのように生成されたかを確認します。また、目的、アクセス時間、認証要件など鍵に関する他のいくつかのチェックを行い、鍵属性を検証します。
+
+Android Keystore 構成証明レスポンスの一般的な例は以下のようになります。
+
+```json
+{
+    "fmt": "android-key",
+    "authData": "9569088f1ecee3232954035dbd10d7cae391305a2751b559bb8fd7cbb229bdd4450000000028f37d2b92b841c4b02a860cef7cc034004101552f0265f6e35bcc29877b64176690d59a61c3588684990898c544699139be88e32810515987ea4f4833071b646780438bf858c36984e46e7708dee61eedcbd0a50102032620012158203849a20fde26c34b0088391a5827783dff93880b1654088aadfaf57a259549a1225820743c4b5245cf2685cf91054367cd4fafb9484e70593651011fc0dcce7621c68f",
+    "attStmt": {
+        "alg": -7,
+        "sig": "304402202ca7a8cfb6299c4a073e7e022c57082a46c657e9e53b28a6e454659ad024499602201f9cae7ff95a3f2372e0f952e9ef191e3b39ee2cedc46893a8eec6f75b1d9560",
+        "x5c": [
+            "308202ca30820270a003020102020101300a06082a8648ce3d040302308188310b30090603550406130255533113301106035504080c0a43616c69666f726e696131153013060355040a0c0c476f6f676c652c20496e632e3110300e060355040b0c07416e64726f6964313b303906035504030c32416e64726f6964204b657973746f726520536f667477617265204174746573746174696f6e20496e7465726d656469617465301e170d3138313230323039313032355a170d3238313230323039313032355a301f311d301b06035504030c14416e64726f6964204b657973746f7265204b65793059301306072a8648ce3d020106082a8648ce3d030107034200043849a20fde26c34b0088391a5827783dff93880b1654088aadfaf57a259549a1743c4b5245cf2685cf91054367cd4fafb9484e70593651011fc0dcce7621c68fa38201313082012d300b0603551d0f0404030207803081fc060a2b06010401d6790201110481ed3081ea0201020a01000201010a010104202a4382d7bbd89d8b5bdf1772cfecca14392487b9fd571f2eb72bdf97de06d4b60400308182bf831008020601676e2ee170bf831108020601b0ea8dad70bf831208020601b0ea8dad70bf853d08020601676e2edfe8bf85454e044c304a31243022041d636f6d2e676f6f676c652e6174746573746174696f6e6578616d706c65020101312204205ad05ec221c8f83a226127dec557500c3e574bc60125a9dc21cb0be4a00660953033a1053103020102a203020103a30402020100a5053103020104aa03020101bf837803020117bf83790302011ebf853e03020100301f0603551d230418301680143ffcacd61ab13a9e8120b8d5251cc565bb1e91a9300a06082a8648ce3d0403020348003045022067773908938055fd634ee413eaafc21d8ac7a9441bdf97af63914f9b3b00affe022100b9c0c89458c2528e2b25fa88c4d63ddc75e1bc80fb94dcc6228952d04f812418",
+            "308202783082021ea00302010202021001300a06082a8648ce3d040302308198310b30090603550406130255533113301106035504080c0a43616c69666f726e69613116301406035504070c0d4d6f756e7461696e205669657731153013060355040a0c0c476f6f676c652c20496e632e3110300e060355040b0c07416e64726f69643133303106035504030c2a416e64726f6964204b657973746f726520536f667477617265204174746573746174696f6e20526f6f74301e170d3136303131313030343630395a170d3236303130383030343630395a308188310b30090603550406130255533113301106035504080c0a43616c69666f726e696131153013060355040a0c0c476f6f676c652c20496e632e3110300e060355040b0c07416e64726f6964313b303906035504030c32416e64726f6964204b657973746f726520536f667477617265204174746573746174696f6e20496e7465726d6564696174653059301306072a8648ce3d020106082a8648ce3d03010703420004eb9e79f8426359accb2a914c8986cc70ad90669382a9732613feaccbf821274c2174974a2afea5b94d7f66d4e065106635bc53b7a0a3a671583edb3e11ae1014a3663064301d0603551d0e041604143ffcacd61ab13a9e8120b8d5251cc565bb1e91a9301f0603551d23041830168014c8ade9774c45c3a3cf0d1610e479433a215a30cf30120603551d130101ff040830060101ff020100300e0603551d0f0101ff040403020284300a06082a8648ce3d040302034800304502204b8a9b7bee82bcc03387ae2fc08998b4ddc38dab272a459f690cc7c392d40f8e022100eeda015db6f432e9d4843b624c9404ef3a7cccbd5efb22bbe7feb9773f593ffb",
+            "3082028b30820232a003020102020900a2059ed10e435b57300a06082a8648ce3d040302308198310b30090603550406130255533113301106035504080c0a43616c69666f726e69613116301406035504070c0d4d6f756e7461696e205669657731153013060355040a0c0c476f6f676c652c20496e632e3110300e060355040b0c07416e64726f69643133303106035504030c2a416e64726f6964204b657973746f726520536f667477617265204174746573746174696f6e20526f6f74301e170d3136303131313030343335305a170d3336303130363030343335305a308198310b30090603550406130255533113301106035504080c0a43616c69666f726e69613116301406035504070c0d4d6f756e7461696e205669657731153013060355040a0c0c476f6f676c652c20496e632e3110300e060355040b0c07416e64726f69643133303106035504030c2a416e64726f6964204b657973746f726520536f667477617265204174746573746174696f6e20526f6f743059301306072a8648ce3d020106082a8648ce3d03010703420004ee5d5ec7e1c0db6d03a67ee6b61bec4d6a5d6a682e0fff7f490e7d771f44226dbdb1affa16cbc7adc577d2569caab7b02d54015d3e432b2a8ed74eec487541a4a3633061301d0603551d0e04160414c8ade9774c45c3a3cf0d1610e479433a215a30cf301f0603551d23041830168014c8ade9774c45c3a3cf0d1610e479433a215a30cf300f0603551d130101ff040530030101ff300e0603551d0f0101ff040403020284300a06082a8648ce3d040302034700304402203521a3ef8b34461e9cd560f31d5889206adca36541f60d9ece8a198c6648607b02204d0bf351d9307c7d5bda35341da8471b63a585653cad4f24a7e74daf417df1bf"
+        ]
+    }
+}
+```
+
+上記の JSON スニペット でのキーの意味は以下の通りです。
+        `fmt`: 構成証明ステートメントの書式識別子
+        `authData`: 構成証明用の認証データを表します
+        `alg`: 署名に使用されるアルゴリズム
+        `sig`: 署名
+        `x5c`: 構成証明証明書チェーン
+
+注意: `sig` は _authData_ と `clientDataHash` (サーバーから送信されたチャレンジ) を連結し、alg 署名アルゴリズムを使用して資格情報秘密鍵を介して署名することにより生成されます。最初の証明書の公開鍵を使用して、サーバー側でも同じものが検証されます。
+
+実装ガイドラインの詳細については、 [Google サンプルコード](https://github.com/googlesamples/android-key-attestation/blob/master/server/src/main/java/com/android/example/KeyAttestationExample.java "Google Sample Code For Android Key Attestation") を参照できます。
+
+セキュリティ分析の観点から、アナリストは鍵構成証明のセキュアな実装のために以下のチェックを実行したほうがよいでしょう。
+
+- 鍵構成証明が全体的にクライアント側で実装されているかどうかを確認します。このようなシナリオでは、アプリケーションの改竄、メソッドフックなどにより同じものが簡単に回避される可能性があります。
+
+- 鍵構成証明を開始する際にサーバーがランダムチャレンジを使用しているかどうかを確認します。これを怠ると、実装がセキュアではなくなり、その結果としてリプレイ攻撃に対して脆弱になります。またチャレンジの無作為性に関するチェックも実行すべきです。
+
+- サーバーが鍵構成証明レスポンスの完全性を検証しているかどうかを確認します。
+
+- サーバーがチェーン内の証明書に対して完全性検証、信頼性検証、有効性などの基本的なチェックを実行しているかどうかを確認します。
+
 #### アンロックされたデバイスのみでの復号化
 
-セキュリティを高めるために Android Pie では `unlockedDeviceRequied` フラグを導入しています。`setUnlockedDeviceRequired()` メソッドに `true` を渡すことで、アプリはデバイスがロックされたときに `AndroidKeystore` に格納されている鍵が復号化されることを防ぎ、復号化を許可する前にスクリーンをアンロックする必要があります。
+セキュリティを高めるために Android Pie では `unlockedDeviceRequied` フラグを導入しています。`setUnlockedDeviceRequired` メソッドに `true` を渡すことで、アプリはデバイスがロックされたときに `AndroidKeystore` に格納されている鍵が復号化されることを防ぎ、復号化を許可する前にスクリーンをアンロックする必要があります。
 
 #### StrongBox ハードウェアセキュリティモジュール
 
-Android 9 以降を実行しているデバイスは `StrongBox Keymaster` を持つことができます。これは独自の CPU 、セキュリティストレージ、真正乱数生成器、パッケージ改竄に耐するメカニズムを持つハードウェアセキュリティモジュールにある Keymaster HAL の実装です。この機能を使うには `AndroidKeystore` を使用して鍵を生成またはインポートするときに、`KeyGenParameterSpec.Builder` クラスまたは `KeyProtection.Builder` クラスの `setIsStrongBoxBacked()` メソッドに `True` フラグを渡す必要があります。StrongBox が実行時に使用されていることを確認するには、`isInsideSecureHardware` が `true` を返し、鍵に関連付けられた特定のアルゴリズムと鍵サイズで StrongBox Keymaster が利用できない場合にシステムがスローする `StrongBoxUnavailableException` をスローしていないことを確認します。
+Android 9 以降を実行しているデバイスは `StrongBox Keymaster` を持つことができます。これは独自の CPU 、セキュリティストレージ、真正乱数生成器、パッケージ改竄に耐するメカニズムを持つハードウェアセキュリティモジュールにある Keymaster HAL の実装です。この機能を使うには `AndroidKeystore` を使用して鍵を生成またはインポートするときに、`KeyGenParameterSpec.Builder` クラスまたは `KeyProtection.Builder` クラスの `setIsStrongBoxBacked` メソッドに `true` を渡す必要があります。StrongBox が実行時に使用されていることを確認するには、`isInsideSecureHardware` が `true` を返し、鍵に関連付けられた特定のアルゴリズムと鍵サイズで StrongBox Keymaster が利用できない場合にシステムがスローする `StrongBoxUnavailableException` をスローしていないことを確認します。
 
 #### 鍵使用の認可
 
-Android デバイスでの鍵の不正使用を軽減するために、Android Keystore では鍵を生成またはインポートするときにアプリに鍵の認可された使用を指定できます。一度されると、認可は変更できません。
+Android デバイスでの鍵の不正使用を軽減するために、Android KeyStore では鍵を生成またはインポートするときにアプリに鍵の認可された使用を指定できます。一度されると、認可は変更できません。
 
 Android により提供されているもう一つの API は `KeyChain` です。これは認証情報ストレージの 秘密鍵 (private key) とそれに対応する証明書チェーンへのアクセスを提供します。これはキーチェーンの対話の必要性と共有の性質からあまり使用されません。詳細については [開発者ドキュメント](https://developer.android.com/reference/android/security/KeyChain "Keychain") を参照してください。
 
@@ -343,7 +410,9 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - 鍵を格納するためにどのメカニズムが使用されているかチェックします。他のすべてのソリューションよりも `AndroidKeyStore` を推奨します。
 - TEE の使用を確実にするために多層防御メカニズムが使用されているかどうかをチェックします。例えば、時刻有効性は強制されていますか？ハードウェアセキュリティの使用はコードにより評価されていますか？詳細については [KeyInfo のドキュメント](https://developer.android.com/reference/android/security/keystore/KeyInfo "KeyInfo") を参照してください。
 - ホワイトボックス暗号化ソリューションの場合、その有効性を調べるか、その分野の専門家に相談します。
-- 鍵が異なる目的に使用されていないことを確認します。例えば、暗号化鍵が署名に使用されていないことを確認します。その逆も同様です。
+- 鍵の目的の検証には特に注意します。以下はその例です。
+  - 非対称鍵の場合、秘密鍵 (private key) は署名にのみ使用され、公開鍵 (public key) は暗号化にのみ使用されることを確認します。
+  - 対象鍵が複数の目的に再利用されないことを確認します。別のコンテキストで使用される場合には、新しい対象鍵を生成すべきです。
 
 #### 動的解析
 
@@ -380,16 +449,29 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - Android Pie features and APIs - <https://developer.android.com/about/versions/pie/android-9.0#secure-key-import>
 - Android Keystore system - <https://developer.android.com/training/articles/keystore#java>
 
+#### 鍵構成証明についての参考情報
+
+- Android Key Attestation - <https://developer.android.com/training/articles/security-key-attestation>
+- W3C Android Key Attestation - <https://www.w3.org/TR/webauthn/#android-key-attestation>
+- Verifying Android Key Attestation - <https://medium.com/@herrjemand/webauthn-fido2-verifying-android-keystore-attestation-4a8835b33e9d>
+- Attestation and Assertion - <https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API/Attestation_and_Assertion>
+- Google Sample Codes - <https://github.com/googlesamples/android-key-attestation/tree/master/server>
+- FIDO Alliance Whitepaper - <https://fidoalliance.org/wp-content/uploads/Hardware-backed_Keystore_White_Paper_June2018.pdf>
+- FIDO Alliance TechNotes - <https://fidoalliance.org/fido-technotes-the-truth-about-attestation/>
+
 ##### OWASP Mobile Top 10
 
 - M5 - Insufficient Cryptography - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography>
 
 ##### OWASP MASVS
 
-- V3.1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
-- V3.3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
-- V3.5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
-- V3.6: "すべての乱数値は、十分に安全な乱数生成器を用いて生成している。"
+- MSTG-STORAGE-1: "個人識別情報、ユーザー資格情報、暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
+- MSTG-CRYPTO-1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
+- MSTG-CRYPTO-2: "アプリは実績のある暗号化プリミティブの実装を使用している。"
+- MSTG-CRYPTO-3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
+- MSTG-CRYPTO-4: "アプリはセキュリティ上の目的で広く非推奨と考えられる暗号プロトコルやアルゴリズムを使用していない。"
+- MSTG-CRYPTO-5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
+- MSTG-CRYPTO-6: "すべての乱数値は、十分に安全な乱数生成器を用いて生成している。"
 
 ##### CWE
 
