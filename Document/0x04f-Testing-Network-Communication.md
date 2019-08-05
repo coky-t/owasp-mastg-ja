@@ -145,6 +145,9 @@ Xamarin アプリをテストするときに WiFi 設定でシステムプロキ
 
 傍受プロキシは上記のポートフォワーディングルールで指定されたポート 8080 をリッスンする必要があります。
 
+<br/>
+<br/>
+
 ##### CA 証明書
 
 まだ行われていなければ、HTTPS リクエストの傍受を許可するモバイルデバイスに CA 証明書をインストールします。
@@ -359,6 +362,9 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 
 - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
 - How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
+
+<br/>
+<br/>
 
 #### IETF
 
