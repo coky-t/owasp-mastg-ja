@@ -66,6 +66,9 @@ Jeroen は NVISO のモバイルセキュリティのリーダーであり、モ
 - Cláudio André
 - Slawomir Kosowski
 
+<br/>
+<br/>
+
 ### 寄稿者
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
@@ -100,6 +103,9 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 
 [![NowSecure](Images/Sponsors/NowSecure_logo.png)](https://www.nowsecure.com/ "NowSecure")
 
+<br/>
+<br/>
+
 ### 旧版
 
 モバイルセキュリティテストガイドは2015年に Milan Singh Thakur によって開始されました。元のドキュメントは Google ドライブでホストされていました。ガイド開発は2016年10月に GitHub に移されました。
@@ -109,8 +115,6 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 | 執筆者 | レビュー担当者 | 主寄稿者 |
 | --- | --- | --- |
 | Milan Singh Thakur, Abhinav Sejpal, Blessen Thomas, Dennis Titze, Davide Cioccia, Pragati Singh, Mohammad Hamed Dadpour, David Fern, Ali Yazdani, Mirza Ali, Rahil Parikh, Anant Shrivastava, Stephen Corbiaux, Ryan Dewhurst, Anto Joseph, Bao Lee, Shiv Patel, Nutan Kumar Panda, Julian Schütte, Stephanie Vanroelen, Bernard Wagner, Gerhard Wagner, Javier Dominguez | Andrew Muller, Jonathan Carter, Stephanie Vanroelen, Milan Singh Thakur  | Jim Manico, Paco Hope, Pragati Singh, Yair Amit, Amin Lalji, OWASP Mobile Team|
-
-<br/>
 
 #### OWASP MSTG "Beta 1" (Google Doc)
 
