@@ -88,7 +88,7 @@ Android では、ローカル認証のために Android Runtime でサポート�
 
 #### 概要
 
-Android Marshmallow (6.0) では指紋でユーザーを認証するパブリック API が導入されました。指紋ハードウェアへのアクセスは [FingerprintManager クラス](https://developer.android.com/reference/android/hardware/fingerprint/ "FingerprintManager") を通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化し、`authenticate` メソッドをコールすることで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能性がある結果 (成功、失敗、エラー) を処理します。このメソッドは指紋認証が実際に実行されたことを強く証明するものではないことに注意します。例えば、認証ステップは攻撃者によりパッチアウトされる可能性がありますし、計装を使用して「成功」コールバックがコールされる可能性があります。
+Android 6.0 (API level 23) では指紋でユーザーを認証するパブリック API が導入されました。指紋ハードウェアへのアクセスは [FingerprintManager クラス](https://developer.android.com/reference/android/hardware/fingerprint/ "FingerprintManager") を通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化し、`authenticate` メソッドをコールすることで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能性がある結果 (成功、失敗、エラー) を処理します。このメソッドは指紋認証が実際に実行されたことを強く証明するものではないことに注意します。例えば、認証ステップは攻撃者によりパッチアウトされる可能性がありますし、計装を使用して「成功」コールバックがコールされる可能性があります。
 
 Android `KeyGenerator` クラスと共に指紋 API を使用することで、より良いセキュリティが実現します。このメソッドでは、対称鍵がキーストアに格納され、ユーザーの指紋で「アンロック」されます。例えば、リモートサービスへのユーザーアクセスを有効にするには、ユーザー PIN または認証トークンを暗号化する AES 鍵が作成されます。鍵を作成する際に `setUserAuthenticationRequired(true)` をコールすることで、ユーザーが鍵を取得するには再認証する必要があることを確実にします。暗号化された認証資格情報はデバイス上の通常のストレージに直接保存することができます (例、`SharedPreferences`) 。この設計はユーザーが実際に認可された指紋を実際に入力したことを確実にする比較的安全な方法です。但し、この設定はアプリが暗号操作中にメモリ内に対称鍵を保持する必要があり、実行時にアプリのメモリにアクセスする攻撃者に潜在的に開示されることに注意します。
 
@@ -243,13 +243,12 @@ byte[] signed = signature.sign();
 ```
 
 - トランザクションを署名する場合には、ランダムなノンスを生成し、署名されるデータに追加することに注意します。そうしなければ、攻撃者はトランザクションをリプレイできる可能性があります。
-
 - 対称指紋認証を使用して認証を実装するには、チャレンジレスポンスプロトコルを使用します。
 
 ##### その他のセキュリティ機能
 
-Android Nougat (API 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByBiometricEnrollment(boolean invalidateKey)` メソッドを追加します。`invalidateKey` 値が `true` (デフォルト) に設定されている場合、指紋認証に有効な鍵は新しい指紋が登録された際に不可逆的に無効になります。これにより、たとえ攻撃者が追加の指紋を登録できたとしても、鍵を取得できなくなります。
-Android Oreo (API 26) は二つのエラーコードを追加します。
+Android 7.0 (API level 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByBiometricEnrollment(boolean invalidateKey)` メソッドを追加します。`invalidateKey` 値が `true` (デフォルト) に設定されている場合、指紋認証に有効な鍵は新しい指紋が登録された際に不可逆的に無効になります。これにより、たとえ攻撃者が追加の指紋を登録できたとしても、鍵を取得できなくなります。
+Android 8.0 (API level 26) は二つのエラーコードを追加します。
 
 - `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
 - `FINGERPRINT_ERROR_VENDOR` – ベンダー固有の指紋リーダーエラーが発生した。
