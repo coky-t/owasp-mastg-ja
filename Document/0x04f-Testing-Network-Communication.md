@@ -153,7 +153,7 @@ Xamarin アプリをテストするときに WiFi 設定でシステムプロキ
 まだ行われていなければ、HTTPS リクエストの傍受を許可するモバイルデバイスに CA 証明書をインストールします。
 
 - [Android フォンに傍受プロキシの CA 証明書をインストールする](https://support.portswigger.net/customer/portal/articles/1841102-installing-burp-s-ca-certificate-in-an-android-device "Installing Burp's CA Certificate in an Android Device").
-Android Nougat 7.0 (API Level 24) 以降、アプリで指定されていない限り、OS はもはやユーザー指定の CA 証明書を信頼しないことに注意します。このセキュリティ対策の回避については、「セキュリティテスト入門」の章で説明します。
+    > Android 7.0 (API level 24) 以降、アプリで指定されていない限り、OS はもはやユーザー指定の CA 証明書を信頼しないことに注意します。このセキュリティ対策の回避については、「セキュリティテスト入門」の章で説明します。
 - [iOS フォンに傍受プロキシの CA 証明書をインストールする](https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp "Configuring an iOS Device to Work With Burp")
 
 ##### トラフィックの傍受
