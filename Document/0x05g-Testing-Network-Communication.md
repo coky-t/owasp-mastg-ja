@@ -6,20 +6,20 @@
 
 二つの主要な問題に対処する必要があります。
 
-- 証明書が信頼できるソース (CA) に由来することを検証します。
+- 証明書が信頼できるソース、つまり信頼できる CA (Certificate Authority, 認証局) に由来することを検証します。
 - エンドポイントサーバーが正しい証明書を提示するかどうかを判別します。
 
 ホスト名と証明書自体が正しく検証されていることを確認します。事例と一般的な落とし穴が [Android の公式ドキュメント](https://developer.android.com/training/articles/security-ssl.html "Android Documentation - SSL") にあります。`TrustManager` および `HostnameVerifier` の使用例のコードを探します。下記のセクションには、あなたが探しているようなセキュアではない事例があります。
 
-> Android 8 以降、SSLv3 はサポートされなくなり、HttpsURLConnection はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しないことに注意します。
+> Android 8.0 (API level 26) 以降、SSLv3 はサポートされなくなり、HttpsURLConnection はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しないことに注意します。
 
 #### 静的解析
 
 ##### サーバー証明書の検証
 
-"TrustManager" は Android で信頼できる接続を確立するために必要な条件を検証する手段です。この点について以下の条件を確認する必要があります。
+`TrustManager` は Android で信頼できる接続を確立するために必要な条件を検証する手段です。この点について以下の条件を確認する必要があります。
 
-- 証明書は「信頼できる」CA により署名されていますか
+- 証明書は信頼できる CA により署名されていますか
 - 証明書は有効期限切れではありませんか
 - 証明書は自己署名されていませんか
 
@@ -361,11 +361,11 @@ Frida で各メソッドをフックして引数を出力します。そのう�
 
 #### 概要
 
-Network Security Configuration は Android 7 で導入され、カスタムトラストアンカーや証明書ピンニングなどのアプリのネットワークセキュリティ設定をカスタマイズできます。
+Network Security Configuration は Android 7.0 (API level 24) で導入され、カスタムトラストアンカーや証明書ピンニングなどのアプリのネットワークセキュリティ設定をカスタマイズできます。
 
 ##### トラストアンカー
 
-アプリが API レベル 24 以上をターゲットとし、バージョン 7 以降の Android デバイス上で実行している場合、デフォルトの Network Security Configuration を使用します。それはユーザーが提供する CA を信頼せず、ユーザーに悪意のある CA をインストールさせることによる MiTM 攻撃の可能性を減らします。
+Android 7.0 (API level 24) 以降で実行している場合、これらの API レベルをターゲットとするアプリはデフォルトの Network Security Configuration を使用します。それはユーザーが提供する CA を信頼せず、ユーザーに悪意のある CA をインストールさせることによる MITM 攻撃の可能性を減らします。
 
 この保護はカスタムの Network Security Configuration を使用することでバイパスできます。アプリはユーザーが提供する CA を信頼することを示すカスタムトラストアンカーを用います。
 
@@ -439,12 +439,12 @@ Android 6.0 (API レベル 23) 以下をターゲットとするアプリのデ�
 
 #### 動的解析
 
-傍受プロキシに Burp を使用して動的解析を行うには、「Android アプリのテスト環境構築」の章の「ネットワークセキュリティ設定のバイパス」の説明に従って、ネットワークセキュリティ設定ファイルにパッチをあてます。
+動的なアプローチを使用することにより、通常は Burp などの傍受プロキシを使用して、ターゲットアプリの Network Security Configuration 設定をテストできます。但し、例えば、Android 7.0 (API level 24) 以上をターゲットとし、Network Security Configuration を効果的に適用するアプリをテストする場合には、最初はトラフィックを見ることができない可能性があります。そのような状況では、Network Security Configuration ファイルにパッチを適用する必要があります。必要な手順は「Android セキュリティテスト入門」の章の「[Network Security Configuration のバイパス](0x05b-Basic-Security_Testing.md#bypassing-the-network-security-configuration "Bypassing the Network Security Configuration")」のセクションにあります。
 
-これを必要としないシナリオや、パッチをあてずに MiTM 攻撃をできるシナリオがまだあるかもしれません。
+これを必要としないシナリオや、パッチをあてずに MITM 攻撃をできるシナリオがまだあるかもしれません。
 
-- Android バージョン 7.0 以降の Android デバイス上でアプリが実行されているが、アプリが 24 未満の API レベルをターゲットにしている場合、ネットワークセキュリティ設定は使用されず、それによりアプリはユーザー提供の CA を信頼します。
-- Android バージョン 7.0 以降の Android デバイス上でアプリが実行されており、アプリにカスタムネットワークセキュリティ設定が実装されていない場合。
+- Android 7.0 (API level 24) 以降の Android デバイス上でアプリが実行されているが、アプリが 24 未満の API レベルをターゲットにしている場合、Network Security Configuration ファイルを使用しません。代わりに、アプリはユーザー提供の CA を信頼します。
+- Android 7.0 (API level 24) 以降の Android デバイス上でアプリが実行されており、アプリにカスタム Network Security Configuration が実装されていない場合。
 
 ### セキュリティプロバイダのテスト (MSTG-NETWORK-6)
 
