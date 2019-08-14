@@ -559,5 +559,5 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 - Sourceclear - <https://sourceclear.com>
 - Class-dump - <https://github.com/nygard/class-dump>
 - RetireJS - <https://retirejs.github.io/retire.js/>
-- idb  - <https://github.com/dmayer/idb>
+- idb - <https://github.com/dmayer/idb>
 - Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
