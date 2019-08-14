@@ -25,7 +25,7 @@ This is draft for the Japanese translation of the [OWASP Mobile Security Testing
 ### Android テストガイド
 
 - [プラットフォーム概要](Document/0x05a-Platform-Overview.md)
-- [Android アプリのテスト環境構築](Document/0x05b-Basic-Security_Testing.md)
+- [Android セキュリティテスト入門](Document/0x05b-Basic-Security_Testing.md)
 - [Android のデータストレージ](Document/0x05d-Testing-Data-Storage.md)
 - [Android の暗号化 API](Document/0x05e-Testing-Cryptography.md)
 - [Android のローカル認証](Document/0x05f-Testing-Local-Authentication.md)
@@ -38,7 +38,7 @@ This is draft for the Japanese translation of the [OWASP Mobile Security Testing
 ### iOS テストガイド
 
 - [プラットフォーム概要](Document/0x06a-Platform-Overview.md)
-- [iOS アプリのテスト環境構築](Document/0x06b-Basic-Security-Testing.md)
+- [iOS セキュリティテスト入門](Document/0x06b-Basic-Security-Testing.md)
 - [iOS のデータストレージ](Document/0x06d-Testing-Data-Storage.md)
 - [iOS の暗号化 API](Document/0x06e-Testing-Cryptography.md)
 - [iOS のローカル認証](Document/0x06f-Testing-Local-Authentication.md)
