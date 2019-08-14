@@ -84,7 +84,7 @@
 
 アプリがアプリデータに格納されている追加の暗号化されたコンテナに依存している場合には、暗号化鍵の使用方法を確認します。鍵ラッピングスキームが使用されている場合、マスターシークレットがユーザーごとに初期化されていること、またはコンテナが新しい鍵で再暗号化されていることを確認します。マスターシークレットや以前のパスワードを使用してコンテナを復号化できる場合には、パスワードの変更がどのように処理されるかを確認します。
 
-モバイルアプリで対称暗号化が使用されるときには常に共通鍵 (secret key) をセキュアなデバイスストレージに保存する必要があります。プラットフォーム固有の API の詳細については、[**Android のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md) および [**iOS のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md) の章を参照してください。
+モバイルアプリで対称暗号化が使用されるときには常に共通鍵 (secret key) をセキュアなデバイスストレージに保存する必要があります。プラットフォーム固有の API の詳細については、"[Android のデータストレージ](0x05d-Testing-Data-Storage.md)" および "[iOS のデータストレージ](0x06d-Testing-Data-Storage.md)" の章を参照してください。
 
 #### 脆弱な鍵生成関数
 
@@ -162,7 +162,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 ### Android と iOS の暗号化 API
 
-同じ基本的な暗号原則が特定の OS とは独立して適用されますが、それぞれのオペレーティングシステムは独自の実装と API を提供します。データストレージ用のプラットフォーム固有の暗号化 API については [**Android のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md) および [**iOS のデータストレージ**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md) の章で詳しく説明しています。ネットワークトラフィックの暗号化、特に Transport Layer Security (TLS) については [**Android のネットワーク API**](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md) の章で説明しています。
+同じ基本的な暗号原則が特定の OS とは独立して適用されますが、それぞれのオペレーティングシステムは独自の実装と API を提供します。データストレージ用のプラットフォーム固有の暗号化 API については "[Android のデータストレージ](0x05d-Testing-Data-Storage.md)" および "[iOS のデータストレージ](0x06d-Testing-Data-Storage.md)" の章で詳しく説明しています。ネットワークトラフィックの暗号化、特に Transport Layer Security (TLS) については "[Android のネットワーク API](0x05g-Testing-Network-Communication.md)" の章で説明しています。
 
 ### 暗号化ポリシー
 
