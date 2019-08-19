@@ -8,7 +8,7 @@
 
 [codesign](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html "Code Signing Tasks") でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
 
-アプリケーションの .ipa ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
+アプリケーションの IPA ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
 
 以下の `codesign` コマンドを実行して、署名情報を表示します。
 
