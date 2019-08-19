@@ -50,12 +50,12 @@
 - ByteCodeViewer: Java 8 Jar および Android APK のリバースエンジニアリングスイート (デコンパイラ、エディタ、デバッガなど) です。 - <https://bytecodeviewer.com/>
 - ClassNameDeobfuscator: apktool により生成される .smali ファイルを解析して .source アノテーション行を抽出するシンプルなスクリプトです。 - <https://github.com/HamiltonianCycle/ClassNameDeobfuscator>
 - FindSecurityBugs: FindSecurityBugs は SpotBugs の拡張機能であり、Java アプリケーション向けのセキュリティルールを含んでいます。 - <https://find-sec-bugs.github.io>
-- Jadx (Dex to Java Decompiler): Android Dex および Apk ファイルから Java ソースコードを生成するコマンドラインおよび GUI ツールです。 - <https://github.com/skylot/jadx>
+- Jadx (Dex to Java Decompiler): Android DEX および APK ファイルから Java ソースコードを生成するコマンドラインおよび GUI ツールです。 - <https://github.com/skylot/jadx>
 - Oat2dex: .oat ファイルから .dex ファイルに変換するためのツールです。 - <https://github.com/testwhat/SmaliEx>
 - Qark: セキュリティに関連する Android アプリケーション脆弱性をソースコードまたはパッケージ化された APK のいずれかで探索するように設計されたツールです。 - <https://github.com/linkedin/qark>
-- Sign: Android テスト証明書で自動的に apk に署名する Java JAR 実行形式ファイル (Sign.jar) です。 - <https://github.com/appium/sign>
-- Simplify: Classes.dex 内の android パッケージを逆難読化するツールです。Dex2jar や JD-GUI を使用して dex ファイルの内容を抽出できます。 - <https://github.com/CalebFenton/simplify>
-- SUPER: Windows, macOS, Linux で使用できるコマンドラインアプリケーションで、.apk ファイルを解析して脆弱性を探します。 - <https://github.com/SUPERAndroidAnalyzer/super>
+- Sign: Android テスト証明書で自動的に APK に署名する Java JAR 実行形式ファイル (Sign.jar) です。 - <https://github.com/appium/sign>
+- Simplify: Classes.dex 内の android パッケージを逆難読化するツールです。Dex2jar や JD-GUI を使用して DEX ファイルの内容を抽出できます。 - <https://github.com/CalebFenton/simplify>
+- SUPER: Windows, macOS, Linux で使用できるコマンドラインアプリケーションで、APK ファイルを解析して脆弱性を探します。 - <https://github.com/SUPERAndroidAnalyzer/super>
 - SpotBugs: Java 用の静的解析ツールです。 - <https://spotbugs.github.io/>
 
 #### 動的解析および実行時解析
@@ -91,7 +91,7 @@
 #### リバースエンジニアリングおよび静的解析
 
 - class-dump: Mach-O ファイルに格納されている Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。 - <http://stevenygard.com/projects/class-dump/>
-- Clutch: アプリケーションを解読し、バイナリや .ipa ファイル内に指定された bundleID をダンプします。 - <https://github.com/KJCracks/Clutch>
+- Clutch: アプリケーションを解読し、バイナリや IPA ファイル内に指定された bundleID をダンプします。 - <https://github.com/KJCracks/Clutch>
 - Dumpdecrypted: 暗号化された iPhone アプリケーションから復号された mach-o ファイルをメモリからディスクにダンプします。 - <https://github.com/stefanesser/dumpdecrypted>
 - hopperscripts: HopperApp の Swift 関数名をデマングルするために使用できるスクリプトのコレクションです。 - <https://github.com/Januzellij/hopperscripts>
 - otool: オブジェクトファイルやライブラリの指定された箇所を表示するツールです。 - <https://www.unix.com/man-page/osx/1/otool/>
