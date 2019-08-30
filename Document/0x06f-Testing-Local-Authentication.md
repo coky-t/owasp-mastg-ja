@@ -56,26 +56,27 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 
 キーチェーンは特別な `SecAccessControl` 属性でアイテムを保存することができます。これはユーザーが Touch ID 認証 (またはパスコード、属性パラメータによりそのようなフォールバックが許可されている場合) をパスした後でのみ、キーチェーンからアイテムへのアクセスを許可します。
 
-以下の例では、文字列 "test_strong_password" をキーチェーンに保存します。この文字列は、パスコードが設定されている間 (`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` パラメータ)、かつ現在登録されている指のみでの Touch ID 認証後 (`.touchIDCurrentSet パラメータ`) に、現在のデバイス上でのみアクセス可能です。
+以下の例では、文字列 "test_strong_password" をキーチェーンに保存します。この文字列は、パスコードが設定されている間 (`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` パラメータ)、かつ現在登録されている指のみでの Touch ID 認証後 (`SecAccessControlCreateFlags.biometryCurrentSet パラメータ`) に、現在のデバイス上でのみアクセス可能です。
 
 ##### Swift
 
 ```swift
-
 // 1. 認証設定を表す AccessControl オブジェクトを作成する
 
 var error: Unmanaged<CFError>?
 
 guard let accessControl = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-    kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-    .touchIDCurrentSet,
-    &error) else {
+                                                          kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                                                          SecAccessControlCreateFlags.biometryCurrentSet,
+                                                          &error) else {
     // failed to create AccessControl object
+
+    return
 }
 
 // 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
 
-var query: Dictionary<String, Any> = [:]
+var query: [String: Any] = [:]
 
 query[kSecClass as String] = kSecClassGenericPassword
 query[kSecAttrLabel as String] = "com.me.myapp.password" as CFString
