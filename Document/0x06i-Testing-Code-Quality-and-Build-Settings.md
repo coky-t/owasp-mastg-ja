@@ -222,7 +222,7 @@ $ carthage update --platform iOS
 リンクされるライブラリとしてフレームワークを手動で追加する場合。
 
 1. xcodeproj ファイルを開き、プロジェクトのプロパティを確認します。
-2. "Build Phases" タブに移動して、いずれかのライブラリの "Link Binary With Libraries" のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
+2. **Build Phases** タブに移動して、いずれかのライブラリの **Link Binary With Libraries** のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
 
 コピー＆ペーストされたソースの場合、(Objective-C を使用する場合) ヘッダファイルを検索し、あるいは既存のライブラリの既存のメソッド名の Swift ファイルを検索します。
 
@@ -325,35 +325,35 @@ func dosomething(argumentx:TypeX) throws {
 - `do-catch` 文を使用してエラーを処理します。ここでは以下のパターンを使用できます。
 
     ```swift
-func doTryExample() {
-    do {
-        try functionThatThrows(number: 203)
-    } catch NumberError.lessThanZero {
-        // Handle number is less than zero
-    } catch let NumberError.tooLarge(delta) {
-        // Handle number is too large (with delta value)
-    } catch {
-        // Handle any other errors
+    func doTryExample() {
+        do {
+            try functionThatThrows(number: 203)
+        } catch NumberError.lessThanZero {
+            // Handle number is less than zero
+        } catch let NumberError.tooLarge(delta) {
+            // Handle number is too large (with delta value)
+        } catch {
+            // Handle any other errors
+        }
     }
-}
 
-enum NumberError: Error {
-    case lessThanZero
-    case tooLarge(Int)
-    case tooSmall(Int)
-}
-
-func functionThatThrows(number: Int) throws -> Bool {
-    if number < 0 {
-        throw NumberError.lessThanZero
-    } else if number < 10 {
-        throw NumberError.tooSmall(10 - number)
-    } else if number > 100 {
-        throw NumberError.tooLarge(100 - number)
-    } else {
-        return true
+    enum NumberError: Error {
+        case lessThanZero
+        case tooLarge(Int)
+        case tooSmall(Int)
     }
-}
+
+    func functionThatThrows(number: Int) throws -> Bool {
+        if number < 0 {
+            throw NumberError.lessThanZero
+        } else if number < 10 {
+            throw NumberError.tooSmall(10 - number)
+        } else if number > 100 {
+            throw NumberError.tooLarge(100 - number)
+        } else {
+            return true
+        }
+    }
     ```
 
 - エラーを optional 値として処理します。
@@ -364,8 +364,6 @@ func functionThatThrows(number: Int) throws -> Bool {
     ```
 
 - `try!` 式を使用して、エラーが発生しないことを assert します。
-
-
 - 一般的なエラーを `Result` 戻り値として処理します。
 
 ```swift
@@ -386,7 +384,7 @@ func callResultFunction() {
 
     switch result {
     case let .success(value):
-    	// Handle success
+        // Handle success
     case let .failure(error):
         // Handle failure (with error)
     }
@@ -395,7 +393,7 @@ func callResultFunction() {
 
 - ネットワークおよび JSON デコーディングエラーを `Result` タイプで処理します。
 
-```swift 
+```swift
 struct MSTG: Codable {
     var root: String
     var plugins: [String]
@@ -427,7 +425,7 @@ func getMSTGInfo() {
             let mstgTitle = data.title
             let mstgDescription = data.description
         case let .failure(error):
-        	// Handle failure
+            // Handle failure
             switch error {
             case let .requestError(error):
                 // Handle request error (with error)
