@@ -202,19 +202,19 @@ $ otool -L <AppName>.app/<AppName>
 
 [Swizzler2](https://github.com/vtky/Swizzler2 "Swizzler2") や [Needle](https://github.com/mwrlabs/needle "Needle") などの脱獄済みデバイス用ツールを使用して LocalAuthentication をバイパスできます。いずれのツールも Frida を使用して `evaluatePolicy` 関数を計装し、認証が成功しなくても `True` を返すようにします。Swizzler2 でこの機能を有効にするには以下の手順に従います。
 
-- Settings->Swizzler
-- "Inject Swizzler into Apps" を有効にします
-- "Log Everything to Syslog" を有効にします
-- "Log Everything to File" を有効にします
-- サブメニュー "iOS Frameworks" に入ります
-- "LocalAuthentication" を有効にします
-- サブメニュー "Select Target Apps" に入ります
+- **Settings** -> **Swizzler**
+- **Inject Swizzler into Apps** を有効にします
+- **Log Everything to Syslog** を有効にします
+- **Log Everything to File** を有効にします
+- サブメニュー **iOS Frameworks** に入ります
+- **LocalAuthentication** を有効にします
+- サブメニュー **Select Target Apps** に入ります
 - ターゲットアプリを有効にします
 - アプリを閉じて再度起動します
-- Touch ID プロンプトが表示されたら "cancel" をクリックします
+- Touch ID プロンプトが表示されたら **cancel** をクリックします
 - Touch ID を必要とせずにアプリケーションフローが継続する場合、そのバイパスは機能しています。
 
-Needle を使用している場合には、"hooking/frida/script_touch-id-bypass" モジュールを実行してプロンプトに従います。これによりアプリケーションを開始して `evaluatePolicy` 関数を計装します。Touch ID で認証が求められた場合、cancel をタップします。アプリケーションフローが継続する場合、Touch ID のバイパスに成功しています。Frida の代わりに Cycript を使用する同様のモジュール (hooking/cycript/cycript_touchid) も Needle で利用できます。
+Needle を使用している場合には、`hooking/frida/script_touch-id-bypass` モジュールを実行してプロンプトに従います。これによりアプリケーションを開始して `evaluatePolicy` 関数を計装します。Touch ID で認証が求められた場合、cancel をタップします。アプリケーションフローが継続する場合、Touch ID のバイパスに成功しています。Frida の代わりに Cycript を使用する同様のモジュール (hooking/cycript/cycript_touchid) も Needle で利用できます。
 
 あるいは、[objection to bypass Touch ID](https://github.com/sensepost/objection/wiki/Understanding-the-TouchID-Bypass "Understanding the TouchID Bypass") (これは非脱獄済みデバイス上でも機能します) を使用したり、アプリにパッチを当てたり、Cycript や同様のツールを使用してプロセスを計装することもできます。
 
