@@ -97,15 +97,15 @@ HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
 
 - 自己署名証明書
 
-Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクションに移動し、リスナを強調表示にしてから `Edit` をクリックします。それから `Certificate` タブに移動し `Use a self-signed certificate` をチェックして `Ok` をクリックします。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが自己署名証明書を受け入れていることを意味します。
+Burp で **Proxy** タブに移動し、**Options** タブを選択し、**Proxy Listeners** セクションに移動し、リスナを強調表示にしてから **Edit** をクリックします。それから **Certificate** タブに移動し **Use a self-signed certificate** をチェックして **Ok** をクリックします。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが自己署名証明書を受け入れていることを意味します。
 
 - 無効な証明書の受け入れ
 
-Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクションに移動し、リスナを強調表示にしてから `Edit` をクリックします。それから `Certificate` タブに移動し `Generate a CA-signed certificate with a specific hostname` をチェックしてバックエンドサーバーのホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意の証明書を受け入れていることを意味します。
+Burp で **Proxy** タブに移動し、**Options** タブを選択し、**Proxy Listeners** セクションに移動し、リスナを強調表示にしてから **Edit** をクリックします。それから **Certificate** タブに移動し **Generate a CA-signed certificate with a specific hostname** をチェックしてバックエンドサーバーのホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが信頼できない CA の証明書を受け入れていることを意味します。
 
 - 間違ったホスト名の受け入れ
 
-Burp で `Proxy -> Options` タブに移動し、`Proxy Listeners` セクションに移動し、リスナを強調表示にしてから `Edit` をクリックします。それから `Certificate` タブに移動し `Generate a CA-signed certificate with a specific hostname` をチェックして example.org などの無効なホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意のホスト名を受け入れていることを意味します。
+Burp で **Proxy** タブに移動し、**Options** タブを選択し、**Proxy Listeners** セクションに移動し、リスナを強調表示にしてから **Edit** をクリックします。それから **Certificate** タブに移動し **Generate a CA-signed certificate with a specific hostname** をチェックして example.org などの無効なホスト名を入力します。ここで、アプリケーションを実行します。HTTPS トラフィックを見ることができれば、アプリケーションが任意のホスト名を受け入れていることを意味します。
 
 さらに MITM 解析を行う場合や傍受プロキシの設定に問題がある場合には、[Tapioca](https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html "Announcing CERT Tapioca for MITM Analysis") の使用を検討します。これは MITM ソフトウェア解析のために CERT が事前設定した [VM アプライアンス](http://www.cert.org/download/mitm/CERT_Tapioca.ova "CERT Tapioca Virtual Machine Download") です。行うべきことは [テストされるアプリケーションをエミュレータにデプロイしてトラフィックのキャプチャを開始する](https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html "Finding Android SSL vulnerabilities with CERT Tapioca") だけです。
 
