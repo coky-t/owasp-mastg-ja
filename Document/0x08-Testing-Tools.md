@@ -151,6 +151,7 @@
 #### Android
 
 - Crackmes: Android アプリのハッキングスキルをテストするためのアプリのセットです。 - <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes>
+- AndroGoat: Kotlin を使用したオープンソースの脆弱であり、セキュアではないアプリ。このアプリには証明書ピンニング、カスタム URL スキーム、Android Network Security Configuration、WebView、ルート検出、その他 20 を超える脆弱性に関連する幅広い脆弱性があります。 - <https://github.com/satishpatnayak/AndroGoat>
 - DVHMA: 意図的に脆弱性を含んでいるハイブリッドモバイルアプリ (Android 向け) です。 - <https://github.com/logicalhacking/DVHMA>
 - Digitalbank: 2015年に作られた脆弱なアプリで、古い Android プラットフォームで使用できます。 - <https://github.com/CyberScions/Digitalbank>
 - DIVA Android: 意図的にセキュアではないように設計されたアプリで、2016年に更新されており、13のさまざまな課題を含んでいます。 - <https://github.com/payatu/diva-android>
