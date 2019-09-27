@@ -6,16 +6,16 @@
 
 ### ローカル認証のテスト (MSTG-AUTH-8 および MSTG-STORAGE-11)
 
-iOS にはアプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication "Local Authentication framework") では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html "Introduction into the Keychain") を利用することが可能であり (および推奨され) ます。
+iOS にはアプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication "Local Authentication framework") では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html "Keychain Services") を利用することが可能であり (および推奨され) ます。
 
 iOS での指紋認証は *Touch ID* として知られています。指紋 ID センサーは [SecureEnclave security coprocessor](http://mista.nu/research/sep-paper.pdf "Demystifying the Secure Enclave Processor by Tarjei Mandt, Mathew Solnik, and David Wang") により操作され、指紋データをシステムの他の部分に開示することはありません。Touch ID の次に、Apple は顔認識に基づく認証を可能にする *Face ID* を導入しました。いずれもアプリケーションレベルで、データを格納し、データを格納する実際の手法として、似たような API を使用します (例えば、顔データと指紋関連データが異なります) 。
 
 開発者には Touch ID/FaceID 認証を組み込むために二つの選択肢があります。
 
 - `LocalAuthentication.framework` は上位レベルの API であり、Touch ID 経由でユーザーを認証するために使用できます。アプリは登録された指紋に関連付けられたデータにアクセスすることはできません。認証が成功したかどうかだけが通知されます。
-- `Security.framework` は下位レベルの API であり、[Keychain Services](https://developer.apple.com/documentation/security/keychain_services "Keychain Services") にアクセスします。アプリが生体認証である機密データを保護する必要がある場合、アクセス制御はシステムレベルで管理され、簡単にはバイパスできないため、これはセキュアな選択肢です。`Security.framework` には C API がありますが、いくつかの [オープンソースラッパーを利用](https://www.raywenderlich.com/147308/secure-ios-user-data-keychain-touch-id "How To Secure iOS User Data: The Keychain and Touch ID") して、キーチェーンへのアクセスを NSUserDefaults のように簡単に行えます。`Security.framework` は `LocalAuthentication.framework` の基礎にあります。Apple は可能であれば上位レベル API をデフォルトとすることを推奨しています。
+- `Security.framework` は下位レベルの API であり、[keychain Services](https://developer.apple.com/documentation/security/keychain_services "keychain Services") にアクセスします。アプリが生体認証である機密データを保護する必要がある場合、アクセス制御はシステムレベルで管理され、簡単にはバイパスできないため、これはセキュアな選択肢です。`Security.framework` には C API がありますが、いくつかの [オープンソースラッパーを利用](https://www.raywenderlich.com/147308/secure-ios-user-data-keychain-touch-id "How To Secure iOS User Data: The keychain and Touch ID") して、キーチェーンへのアクセスを NSUserDefaults のように簡単に行えます。`Security.framework` は `LocalAuthentication.framework` の基礎にあります。Apple は可能であれば上位レベル API をデフォルトとすることを推奨しています。
 
-`LocalAuthentication.framework` または `Security.framework` のいずれかを使用すると、ブール値を返すだけで処理を続けるデータがないため、攻撃者がバイパスできるコントロールになることに注意します。詳細については [Don't touch me that way, by David Lidner et al](https://www.youtube.com/watch?v=XhXIHVGCFFM "Don't Touch Me That Way - David Linder") を参照してください。
+`LocalAuthentication.framework` または `Security.framework` のいずれかを使用すると、ブール値を返すだけで処理を続けるデータがないため、攻撃者がバイパスできるコントロールになることに注意します。詳細については [Don't touch me that way, by David Lindner et al](https://www.youtube.com/watch?v=XhXIHVGCFFM "Don't Touch Me That Way - David Lindner") を参照してください。
 
 #### ローカル認証フレームワーク
 
@@ -52,7 +52,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 
 #### ローカル認証にキーチェーンサービスを使用する
 
-ローカル認証を実装するには iOS Keychain API を使用できます (そして、使用すべきです) 。このプロセスでは、アプリは秘密の認証トークンかキーチェーンでユーザーを識別する別の秘密データを格納します。リモートサービスを認証するには、ユーザーは秘密のデータを取得するためにパスフレーズまたは指紋を使用してキーチェーンをアンロックする必要があります。
+ローカル認証を実装するには iOS keychain API を使用できます (そして、使用すべきです) 。このプロセスでは、アプリは秘密の認証トークンかキーチェーンでユーザーを識別する別の秘密データを格納します。リモートサービスを認証するには、ユーザーは秘密のデータを取得するためにパスフレーズまたは指紋を使用してキーチェーンをアンロックする必要があります。
 
 キーチェーンは特別な `SecAccessControl` 属性でアイテムを保存することができます。これはユーザーが Touch ID 認証 (またはパスコード、属性パラメータによりそのようなフォールバックが許可されている場合) をパスした後でのみ、キーチェーンからアイテムへのアクセスを許可します。
 
@@ -193,10 +193,17 @@ $ otool -L <AppName>.app/<AppName>
 
 #### 静的解析
 
-ローカル認証フレームワークはイベントベースのプロシージャであり、唯一の認証方法ではないことに注意します。このタイプの認証はユーザーインタフェースレベルで有効ですが、パッチ適用や計装で容易にバイパスされます。
+ローカル認証フレームワークはイベントベースのプロシージャであり、唯一の認証方法ではないことに注意します。このタイプの認証はユーザーインタフェースレベルで有効ですが、パッチ適用や計装で容易にバイパスされます。したがって、キーチェーンサービスメソッドを使用することをお勧めします。つまり、以下を行う必要があります。
 
-- 支払いトランザクションをトリガーするユーザーの再認証などの機密プロセスが、キーチェーンサービスメソッドを使用して保護されていることを検証します。
-- `SecAccessControlCreateWithFlags` メソッドがコールされる際に、`kSecAccessControlTouchIDAny` または `kSecAccessControlTouchIDCurrentSet` フラグが設定され、`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` 保護クラスが設定されていることを検証します。代わりに、フォールバックとしてパスコードを使用できるようにしたい場合に `kSecAccessControlUserPresence` がフラグとして使用できることに注意します。最後に、`kSecAccessControlTouchIDCurrentSet` が設定されている場合、デバイスに登録されている指紋を変更すると、そのフラグで保護されているエントリが無効になることに注意します。
+- 支払いトランザクションを実行するユーザーの再認証などの機密プロセスが、キーチェーンサービスメソッドを使用して保護されていることを検証します。
+- キーチェーンアイテムのデータがユーザーの認証によってのみロック解除できるようにするために、アクセス制御フラグがキーチェーンアイテムに設定されていることを検証します。これには以下のフラグのいずれかを使用できます。
+  - `kSecAccessControlBiometryCurrentSet` (iOS 11.3 より前では `kSecAccessControlTouchIDCurrentSet`) 。これによりユーザーがキーチェーンアイテムのデータにアクセスできるようになる前に、ユーザーが自分の生体情報 (Face ID や Touch ID など) で認証する必要があることを確実にします。ユーザーがデバイスに指紋や外観を追加すると、キーチェーンのエントリが自動的に無効になります。これによりアイテムがキーチェーンに追加されたときに登録されていたユーザーのみがキーチェーンアイテムのロックを解除できるようになります。
+  - `kSecAccessControlBiometryAny` (iOS 11.3 より前では `kSecAccessControlTouchIDAny`) 。これによりユーザーがキーチェーンアイテムのデータにアクセスできるようになる前に、ユーザーが自分の生体情報 (Face ID や Touch ID など) で認証する必要があることを確実にします。キーチェーンは新しい指紋や顔の表現を (再) 登録しても存続します。ユーザーの指紋が変化している場合、これは非常に実用的です。但し、指紋や顔の表現を何らかの方法でデバイスに登録できる攻撃者は、これらのエントリにもアクセスできることも意味します。
+  - `kSecAccessControlUserPresence` を代替として使用できます。これにより生体認証が機能しない場合に、ユーザーはパスコードを介して自分自身を認証できます。Touch ID や Face ID サービスをバイパスするよりも、ショルダーサーフィンによって誰かのパスコードエントリを盗むほうがはるかに簡単であるため、`kSecAccessControlBiometryAny` よりも脆弱であると考えられます。
+- 生体情報を使用できるようにするために、`SecAccessControlCreateWithFlags` メソッドがコールされたときに `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` または `kSecAttrAccessibleWhenPasscodeSet` 保護クラスが設定されていることを検証します。`...ThisDeviceOnly` バリアントはキーチェーンアイテムが他の iOS デバイスと同期されないようにすることに注意します。
+
+> 注意、データ保護クラスはデータをセキュアにするために使用されるアクセス方法を指定します。
+各クラスはいつデータがアクセス可能となるかを決定するために異なるポリシーを使用します。
 
 #### 動的解析
 
@@ -229,7 +236,7 @@ Needle を使用して iOS プラットフォームの非セキュアな生体�
 
 ### キーチェーン内の鍵の一過性に関する注釈
 
-macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのエントリのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
+macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのアイテムのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
 
 ### 参考情報
 
