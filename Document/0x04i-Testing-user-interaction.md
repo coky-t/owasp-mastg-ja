@@ -5,7 +5,9 @@
 開発者がユーザーに知っておくべきことを教えなければならない責任の面で、最近多くのことが起こっています。
 これは特にヨーロッパの [一般データ保護規則 (GDPR)](https://gdpr-info.eu/ "GDPR") の導入に伴ってシフトしています。そのときから、プライベートなデータで何が起こっているのか、またその理由をユーザーに教えるのがベストです。
 さらに、情報のセキュアな処理を保証するためにアプリケーションをどのように利用するのが最善であるかについて、ユーザーに通知することがよいプラクティスです。
-両方の項目をここでは扱います。
+次に、PII であるかどうかにかかわらず、アプリがアクセスするデバイスデータの種類についてユーザーに通知すべきです。
+最後に、OSS 関連情報をユーザーと共有する必要があります。
+全四項目をここではカバーします。
 
 > これは MSTG プロジェクトであり、法的な手引書ではないことをご了承ください。したがって、ここでは GDPR および他の関連する法律については扱いません。
 
@@ -30,6 +32,16 @@
 - **特定の資格情報**: ユーザーがリカバリーコード、パスワード、ピンをアプリケーションから取得 (あるいはいずれかを設定) する場合には、これを他人と決して共有してはならず、アプリだけがそれを要求することを教えます。
 - **アプリケーションの配布**: 高いリスクのアプリケーションの場合には、アプリを配布する公式な方法を伝えることを推奨します。そうしなければ、ユーザーは他のチャネルを使用して危険なバージョンのアプリケーションをダウンロードする可能性があります。
 
+#### デバイスデータへのアクセス
+
+Google Play ストアと Apple App Store で部分的にカバーされていますが、あなたのアプリが使用するサービスとその理由をユーザーに説明する必要があります。以下に例を示します。
+
+- あなたのアプリは連絡先リストへのアクセスを必要としますか？
+- あなたのアプリはデバイスの位置情報サービスにアクセスする必要がありますか？
+- あなたのアプリはデバイスを識別するためにデバイス識別子を使用しますか？
+
+あなたのアプリがこのようなことをする必要がある理由をユーザーに説明します。この話題の詳細については [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/requesting-permission/ "Apple Human Interface Guidelines") および [Android App permissions best practices](https://developer.android.com/training/permissions/requesting.html#explain "Android App permissions best practices") にあります。
+
 #### 共有する必要があるその他の情報 (OSS 情報)
 
 著作権法では、アプリで使用されているサードパーティライブラリについてユーザーに知らせる必要があります。各サードパーティライブラリについて、特定の情報 (著作権、改変、オリジナルの作者など) をユーザーに提示する必要があるかどうかを確認するために、ライセンスを参照する必要があります。これには、専門家に法的助言を求めるのがベストです。例として [Big Nerd Ranch のブログ投稿](https://www.bignerdranch.com/blog/open-source-licenses-and-android/ "Example on license overview") があります。さらに、ウェブサイト [TL;DR - Legal](https://tldrlegal.com/ "TL;DR - Legal") は各ライセンスに必要なものを把握するのに役立ちます。
@@ -47,3 +59,8 @@
 #### ライセンスの理解に役立つウェブサイト
 
 - <https://tldrlegal.com/>
+
+#### パーミッションリクエストに関するガイダンス
+
+- [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/requesting-permission/ "Apple Human Interface Guidelines")
+- [Android App permissions best practices](https://developer.android.com/training/permissions/requesting.html#explain "Android App permissions best practices")
