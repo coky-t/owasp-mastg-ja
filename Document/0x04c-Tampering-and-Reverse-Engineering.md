@@ -54,7 +54,7 @@ Substrate, Frida, Xposed はモバイル業界で最も広く使用されてい�
 
 ##### Frida
 
-[Frida](https://www.frida.re "Frida") は C で書かれたフリーでオープンソースの動的コード計装ツールキットです。JavaScript エンジン ([Duktape](https://duktape.org/ "Duktape JavaScript Engine") および [V8](https://v8.dev/docs "V8 JavaScript Engine")) を計装化プロセスにインジェクトすることにより機能します。Frida では Android や iOS (および [その他のプラットフォーム](https://www.frida.re/docs/home/ "So what is Frida, exactly?")) のネイティブアプリ内で JavaScript のスニペットを実行することができます。
+[Frida](https://www.frida.re "Frida") は Ole André Vadla Ravnås により Vala で書かれたフリーでオープンソースの動的コード計装ツールキットです。JavaScript エンジン ([Duktape](https://duktape.org/ "Duktape JavaScript Engine") および [V8](https://v8.dev/docs "V8 JavaScript Engine")) を計装化プロセスにインジェクトすることにより機能します。Frida では Android や iOS (および [その他のプラットフォーム](https://www.frida.re/docs/home/ "So what is Frida, exactly?")) のネイティブアプリ内で JavaScript のスニペットを実行することができます。
 
 コードはいくつかの方法でインジェクトできます。例えば、Xposed は Android アプリローダーを恒久的に改変し、新しいプロセスが開始されるたびに独自のコードを実行するフックを提供します。
 対照的に、Frida は直接プロセスメモリにコードを書くことでコードインジェクションを実装しています。実行中のアプリにアタッチされている場合には、
@@ -71,8 +71,15 @@ Substrate, Frida, Xposed はモバイル業界で最も広く使用されてい�
 Frida には三つの動作モードがあります。
 
 1. Injected: これは frida-server が iOS または Android デバイスでデーモンとして実行されているときの最も一般的なシナリオです。frida-core は TCP 上で公開され、デフォルトでは localhost:27042 で待機しています。このモードでの実行はルート化されていないデバイスや脱獄されていないデバイスでは不可能です。
-2. Embedded: これはあなたのデバイスがルート化または脱獄済みである (あなたは非特権ユーザーとして ptrace を使用できない) 場合のものです。あなたにはアプリに [frida-gadget](https://www.frida.re/docs/gadget/ "Frida Gadget") ライブラリを埋め込むことによるインジェクションの責任があります。
+2. Embedded: これはあなたのデバイスがルート化や脱獄済みではない (あなたは非特権ユーザーとして ptrace を使用できない) 場合のものです。あなたにはアプリに [frida-gadget](https://www.frida.re/docs/gadget/ "Frida Gadget") ライブラリを埋め込むことによるインジェクションの責任があります。
 3. Preloaded: `LD_PRELOAD` や `DYLD_INSERT_LIBRARIES` に似ています。frida-gadget を自律的に実行し、ファイルシステム (Gadget バイナリが存在する場所からの相対パスなど) からスクリプトをロードするように設定できます。
+
+選択したモードに関係なく、[Frida JavaScript API](https://www.frida.re/docs/javascript-api/ "Frida JavaScript APIs") を使用して、実行中のプロセスとそのメモリと対話できます。基本的な API の一部を以下に示します。
+
+- [Interceptor](https://www.frida.re/docs/javascript-api/#interceptor "Interceptor"): Interceptor API を使用する場合、Frida は関数プロローグにトランポリン (別名インラインフック) を注入し、カスタムコードへのリダイレクトを引き起こし、そのコードを実行して、元の関数に戻ります。私たちの目的には非常に効果的ですが、かなりのオーバーヘッドをもたらし (トランポリン関連のジャンプとコンテキストスイッチのため) 、元のコードを上書きしデバッガと同様に動作する (ブレークポイントを置く) ため透過的であるとはみなせず、したがって例えば定期的に自身のコードを定期的にチェックサムするアプリケーションにより、同様の方法で検出されることに注意します。
+- [Stalker](https://www.frida.re/docs/javascript-api/#stalker "Stalker"): トレース要件に透明性、パフォーマンス、高粒度が含まれる場合、Stalker が選択すべき API となります。Stalker API でコードをトレースする際、Frida はジャストインタイムの動的再コンパイルを活用します ([Capstone](http://www.capstone-engine.org/ "Capstone") を使用) 。スレッドが次の命令を実行しようとすると、Stalker はメモリを割り当て、元のコードをコピーし、そのコピーをインストルメンテーション用のカスタムコードとインターレースします。最後に、そのコピーを実行します (元のコードには手を加えません。したがって、アンチデバッグチェックを回避します) 。このアプローチによりインストルメンテーションのパフォーマンスは大幅に向上し、トレース時に非常に高い粒度が可能になります (例えば CALL や RET 命令のみをトレースします) 。詳細については [Frida の作者である Ole によるブログ記事 "Anatomy of a code tracer"](https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8 "Anatomy of a code tracer") [#vadla] で学ぶことができます。Stalker の使用例には、例えば [who-does-it-call](https://codeshare.frida.re/@oleavr/who-does-it-call/ "who-does-it-call") や [diff-calls](https://github.com/frida/frida-presentations/blob/master/R2Con2017/01-basics/02-diff-calls.js "diff-calls") があります。
+- [Java](https://www.frida.re/docs/javascript-api/#java "Java"): Android 上で作業している場合、この API を使用してロードされたクラスの列挙、クラスローダーの列挙、特定のクラスインスタンスの作成および使用、ヒープをスキャンすることによるクラスのライブインスタンスの列挙などが可能です。
+- [ObjC](https://www.frida.re/docs/javascript-api/#objc "ObjC"): iOS 上で作業している場合、この API を使用して登録されたすべてのクラスのマッピングの取得、特定のクラスまたはプロトコルインスタンスの登録または使用、ヒープをスキャンすることによるクラスのライブインスタンスの列挙などが可能です。
 
 Frida は Frida API 上に構築された一連のシンプルなツール群も提供します。pip を介して frida-tools をインストールした後で端末から直接利用できます。例を示します。
 
@@ -151,6 +158,8 @@ $ frida --codeshare mrmacete/objc-method-observer -f YOUR_BINARY
 Android のセクションでは、シンボリック実行を使用して Android アプリケーションの簡単なライセンスチェックをクラックするためのウォークスルーを説明します。
 
 ### 参考情報
+
+- [#vadla] Ole André Vadla Ravnås, Anatomy of a code tracer - <https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8>
 
 #### OWASP Mobile Top 10 2016
 
