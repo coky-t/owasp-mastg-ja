@@ -51,7 +51,7 @@
 以下のアルゴリズムが推奨されます。
 
 - 機密性アルゴリズム: AES-GCM-256 または ChaCha20-Poly1305
-- 完全性アルゴリズム: SHA-256, SHA-384, SHA-512, Blake2
+- 完全性アルゴリズム: SHA-256, SHA-384, SHA-512, Blake2, SHA-3 ファミリー
 - デジタル署名アルゴリズム: RSA (3072 ビット以上), ECDSA with NIST P-384
 - 鍵共有アルゴリズム: RSA (3072 ビット以上), DH (3072 ビット以上), ECDH with NIST P-384
 
@@ -97,7 +97,7 @@
 
 #### 脆弱な乱数生成器
 
-決定性のデバイスで真の乱数を生成することは基本的に不可能です。擬似乱数生成器 (RNG) は擬似乱数ストリームを生成することでこれを補うものです。擬似乱数ストリームはランダムに生成されているように *見える* 数値のストリームです。生成される数値の品質は使用されるアルゴリズムのタイプにより異なります。*暗号論的にセキュアな* RNG は統計的ランダム性テストに合格する乱数を生成し、予測攻撃に対して耐性があります。
+決定性のデバイスで真の乱数を生成することは基本的に不可能です。擬似乱数生成器 (RNG) は擬似乱数ストリームを生成することでこれを補うものです。擬似乱数ストリームはランダムに生成されているように *見える* 数値のストリームです。生成される数値の品質は使用されるアルゴリズムのタイプにより異なります。*暗号論的にセキュアな* RNG は統計的ランダム性テストに合格する乱数を生成し、予測攻撃に対して耐性があります (例えば、次に生成される数を予測することは統計的に実行不可能です) 。
 
 モバイル SDK では十分な人工のランダム性を持つ数値を生成する RNG アルゴリズムの標準実装を提供しています。利用可能な API については Android および iOS 固有のセクションで説明します。
 
@@ -142,9 +142,9 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 #### 脆弱なパディングやブロック操作の実装によるパディングオラクル攻撃
 
-非対称暗号を行う際に、以前は パディングメカニズムとして PKCS #7 (Public Key Cryptography Standards 7) が使用されていました。現在の Java 環境では PKCS #5 として参照しています。このメカニズムはパディングオラクル攻撃に対して脆弱です。したがって、OAEP (Optimal Asymmetric Encryption Padding) (または PKCS #1 v2.0) を使用することがベストです。OAEP を使用している場合でも、[Kudelskisecurity のブログ](https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Kudelskisecurity") で説明されているように Mangers 攻撃としてよく知られている問題に遭遇する可能性があります。
+非対称暗号を行う際に、以前は パディングメカニズムとして [PKCS1.5](https://tools.ietf.org/html/rfc2313 "PCKS1.5 in RFC2313") パディング (コード内では `PKCS1Padding`) が使用されていました。現在の Java 環境では PKCS #5 として参照しています。このメカニズムはパディングオラクル攻撃に対して脆弱です。したがって、[PKCS#1 v2.0](https://tools.ietf.org/html/rfc2437 "PKCS1 v2.0 in RFC 2437") (コード内では `OAEPPadding`, `OAEPwithSHA-256andMGF1Padding`, `OAEPwithSHA-224andMGF1Padding`, `OAEPwithSHA-384andMGF1Padding`, `OAEPwithSHA-512andMGF1Padding`) でキャプチャされた OAEP (Optimal Asymmetric Encryption Padding) を使用することがベストです。OAEP を使用している場合でも、[Kudelskisecurity のブログ](https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Kudelskisecurity") で説明されているように Mangers 攻撃としてよく知られている問題に遭遇する可能性があります。
 
-注意: PKCS #5 を使用する AES-CBC は、「パディングエラー」、「MAC エラー」、「復号化失敗」などの警告が得られる実装であるため、パディングオラクル攻撃に対しても脆弱です。例として [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack/ "The Padding Oracle Attack") を参照してください。次に、平文を暗号化した後は HMAC を追加することがベストです。つまり、失敗した MAC を含む暗号文は復号化する必要がなくなり、破棄できるようになります。
+注意: PKCS #5 を使用する AES-CBC は、「パディングエラー」、「MAC エラー」、「復号化失敗」などの警告が得られる実装であるため、パディングオラクル攻撃に対しても脆弱です。例として [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack/ "The Padding Oracle Attack") および [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem") を参照してください。次に、平文を暗号化した後は HMAC を追加することがベストです。つまり、失敗した MAC を含む暗号文は復号化する必要がなくなり、破棄できるようになります。
 
 #### メモリ内の鍵を保護する
 
@@ -174,8 +174,12 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 - [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
 - [Breaking RSA with Mangers Attack]( https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Mangers attack")
-- [NIST 800-38d]( https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
+- [NIST 800-38d](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
 - [NIST 800-57Rev4](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-4/final "NIST 800-57Rev4")
+- [PKCS #1: RSA Encryption Version 1.5](https://tools.ietf.org/html/rfc2313 "PKCS #1: RSA Encryption Version 1.5")
+- [PKCS #1: RSA Cryptography Specifications Version 2.0](https://tools.ietf.org/html/rfc2437 "PKCS #1: RSA Cryptography Specifications Version 2.0")
+- [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack "The Padding Oracle Attack")
+- [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem")
 
 ##### OWASP Mobile Top 10 2016
 
