@@ -62,5 +62,5 @@ Google Play ストアと Apple App Store で部分的にカバーされていま
 
 #### パーミッションリクエストに関するガイダンス
 
-- [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/requesting-permission/ "Apple Human Interface Guidelines")
-- [Android App permissions best practices](https://developer.android.com/training/permissions/requesting.html#explain "Android App permissions best practices")
+- Apple Human Interface Guidelines - <https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/requesting-permission/>
+- Android App permissions best practices - <https://developer.android.com/training/permissions/requesting.html#explain>
