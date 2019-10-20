@@ -251,4 +251,4 @@ macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェ
 
 #### CWE
 
-- CWE-287 - Improper Authentication
+- CWE-287 - Improper Authentication - <https://cwe.mitre.org/data/definitions/287.html>
