@@ -639,7 +639,7 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 
 ##### CWE
 
-- CWE-295 - Improper Certificate Validation
+- CWE-295 - Improper Certificate Validation - <https://cwe.mitre.org/data/definitions/295.html>
 - CWE-296 - Improper Following of a Certificate's Chain of Trust - <https://cwe.mitre.org/data/definitions/296.html>
 - CWE-297 - Improper Validation of Certificate with Host Mismatch - <https://cwe.mitre.org/data/definitions/297.html>
 - CWE-298 - Improper Validation of Certificate Expiration - <https://cwe.mitre.org/data/definitions/298.html>
@@ -656,4 +656,4 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 
 ##### Cordova 証明書ピンニング
 
-PhoneGap SSL Certificate Checker plugin - <https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin>
+- PhoneGap SSL Certificate Checker plugin - <https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin>
