@@ -59,13 +59,14 @@ Jeroen は NVISO のモバイルセキュリティのリーダーであり、モ
 - Henry Hoggard
 - Andreas Happe
 - Kyle Benac
-- Alexander Antukh
+- Paulino Calderon
+- Alexander Anthuk
+- Abderrahmane Aftahi
 - Wen Bin Kong
 - Abdessamad Temmar
-- Bolot Kerimbaev
 - Cláudio André
 - Slawomir Kosowski
-- Abderrahmane Aftahi
+- Bolot Kerimbaev
 
 <br/>
 <br/>
@@ -74,7 +75,7 @@ Jeroen は NVISO のモバイルセキュリティのリーダーであり、モ
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Jin Kung Ong, Koki Takeyama, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, Ryan Teoh, Caleb Kinney, Denis Pilipchuk, Dharshin De Silva, Paulino Calderon, Anatoly Rosencrantz, Abhinav Sejpal, José Carlos Andreu, Dominique Righetto, Raul Siles, Daniel Ramirez Martin, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Emil Tostrup, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Shiv Sahni, Dario Incalza, Akanksha Bana, Oguzhan Topgul, Vikas Gupta, Sijo Abraham, David Fern, Pishu Mahtani, Anuruddha E, Jay Mbolda, Elie Saad.
+Koki Takeyama, Jin Kung Ong, Sjoerd Langkemper, Caleb Kinney, Gerhard Wagner, Michael Helwig, Pece Milosev, Ryan Teoh, Denis Pilipchuk, José Carlos Andreu, Dharshin De Silva, Anatoly Rosencrantz, Caitlin Andrews, Abhinav Sejpal, Anita Diamond, Raul Siles, Yogesh Sharma, Enrico Verzegnassi, Nick Epson, Anna Szkudlarek, Elie Saad, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Shiv Sahni, Akanksha Bana, Dario Incalza, Jason Doyle, Oguzhan Topgul, Ender IBL, Imani Sherman, magicansk, Sijo Abraham, Dominique RIGHETTO, Pishu Mahtani, Jay Mbolda, Anuruddha E., Emil Tostrup.
 
 ### レビュー担当者
 
