@@ -55,6 +55,7 @@ Jeroen は NVISO のモバイルセキュリティのリーダーであり、モ
 主寄稿者は一貫して質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 500 件の追加が記録されています。
 
 - Pawel Rzepa
+- Vikas Gupta
 - Francesco Stillavato
 - Henry Hoggard
 - Andreas Happe
@@ -104,6 +105,10 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 ### 名誉後援者
 
 [![NowSecure](Images/Sponsors/NowSecure_logo.png)](https://www.nowsecure.com/ "NowSecure")
+
+#### 寄付者
+
+次の人々や企業は Leanpub や他の方法を使用して 25 ドル以上を寄付しました: RandoriSec, eShard
 
 <br/>
 <br/>
