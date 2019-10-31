@@ -131,7 +131,6 @@ $ frida --codeshare mrmacete/objc-method-observer -f YOUR_BINARY
 
 長年にわたり多くのツールが逆アセンブリと逆コンパイルのプロセスを完成させ、高い忠実度で出力を作成しています。なにかしらの利用可能なツールの高度な使用手順は多くの場合それ自体の本を簡単に埋めてしまいます。開始する最善の方法はニーズと予算にあったツールを選択して十分にレビューされたユーザーガイドを取得することです。このセクションでは、これらのツールの一部を紹介し、以降の Android および iOS の「リバースエンジニアリングと改竄」の章では、特に身近にあるプラットフォームに固有のテクニック自体にフォーカスします。
 
-
 ##### Ghidra
 
 Ghidra は米国の国家安全保障局 (NSA) の研究部門で開発されたツールのオープンソースのソフトウェアリバースエンジニアリング (SRE) スイートです。Ghidra は逆アセンブラ、逆コンパイラおよび高度な使用のための組込みスクリプティングエンジンで構成される汎用性の高いツールです。インストール方法については [インストールガイド](https://ghidra-sre.org/InstallationGuide.html "Ghidra Installation Guide") を参照してください。また、 [チートシート](https://ghidra-sre.org/CheatSheet.html "Cheat Sheet") で利用可能なコマンドおよびショートカットの概要も確認できます。このセクションでは、プロジェクトの作成方法、バイナリの逆アセンブリおよび逆コンパイルされたコードの閲覧方法について説明します。
@@ -156,12 +155,9 @@ Ghidra でバイナリを調査するために最も重要なウィンドウは 
 
 ![Ghidra function graph view](Images/Chapters/0x04c/Ghidra_function_graph.png)
 
-
 Ghidra にはほかにも多くの機能が利用可能であり、それらの多くは **Window** メニューを開いて調べることができます。たとえば、バイナリに存在する文字列を調べたい場合には、**Defined Strings** オプションを開きます。以降の章では Android および iOS プラットフォームのさまざまなバイナリを解析しながら、他の高度な機能について説明します。
 
 ![Ghidra strings window](Images/Chapters/0x04c/Ghidra_string_window.png)
-
-
 
 #### デバッグとトレース
 
@@ -174,7 +170,6 @@ Ghidra にはほかにも多くの機能が利用可能であり、それらの�
 強力に難読化されたバイナリを逆難読化するなど、より複雑なタスクの場合、解析の特定の部分を自動化することなく成功することはありません。例えば、逆アセンブラでの手動解析を基にして複雑なコントロールフローグラフを理解および単純化するには何年もかかるでしょう (そして、完了する前におそらく気が狂うことでしょう) 。代わりに、カスタムメイドのツールでワークフローを増強します。幸いにも、現代の逆アセンブラにはスクリプティングと拡張 API が付属しており、一般的な逆アセンブラには多くの便利な拡張が用意されています。さらに、オープンソースの逆アセンブラエンジンやバイナリ解析フレームワークも存在します。
 
 ハッキングの常として、何でもありのルールが適用されます。単純に最も効率的なものを使用します。すべてのバイナリは異なり、すべてのリバースエンジニアは独自のスタイルを持っています。多くの場合、目標に到達する最善の方法は (エミュレータベースのトレースやシンボリック実行など) アプローチを組み合わせることです。始めるには、優れた逆アセンブラやリバースエンジニアリングフレームワークを選択し、それらの特定の機能や格拡張 API に慣れることです。最終的には、より良くなる最善の方法は実践的な経験を積むことです。
-
 
 #### 動的バイナリ計装
 
@@ -224,6 +219,7 @@ Android のセクションでは、シンボリック実行を使用して Andro
 
 - [#vadla] Ole André Vadla Ravnås, Anatomy of a code tracer - <https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8>
 - [#JSalwan] Jonathan Salwan and Romain Thomas - How Triton can help to reverse virtual machine based software protections - <https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf>
+
 #### OWASP Mobile Top 10 2016
 
 - M9 - Reverse Engineering - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering>
