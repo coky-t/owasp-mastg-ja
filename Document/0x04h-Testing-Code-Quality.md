@@ -43,9 +43,9 @@ SELECT * FROM users WHERE username='1' OR '1' = '1' AND Password='1' OR '1' = '1
 
 条件 `'1' = '1'` は常に true と評価されるため、このクエリはデータベース内のすべてのレコードを返し、有効なユーザーアカウントが入力されていなくてもログイン関数は `true` を返すようになります。
 
-Ostorlab はこの SQL インジェクションペイロードを使用して、adb で [Yahoo 天気モバイルアプリケーション](https://blog.ostorlab.co/android-sql-contentProvider-sql-injections.html "Android, SQL and ContentProviders or Why SQL injections aren't dead yet ?") のソートパラメータを悪用しました。
+Ostorlab はこの SQL インジェクションペイロードを使用して、adb で [Yahoo 天気モバイルアプリケーション](https://blog.ostorlab.co/android-sql-contentProvider-sql-injections.html "Android, SQL and ContentProviders or Why SQL injections aren\'t dead yet ?") のソートパラメータを悪用しました。
 
-Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "Qnotes" および "Qget" Android アプリ内にクライアントサイドの SQL インジェクションのリアルワールドのインスタンスの一つを発見しました。これらのアプリは SQL インジェクションに脆弱なコンテンツプロバイダをエクスポートし、攻撃者が NAS デバイスの資格情報を取得できるようにしました。この問題の詳細な説明は [Nettitude Blog](https://blog.nettitude.com/uk/qnap-android-dont-provide "Nettitude Blog - QNAP Android: Don't Over Provide") にあります。
+Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "Qnotes" および "Qget" Android アプリ内にクライアントサイドの SQL インジェクションのリアルワールドのインスタンスの一つを発見しました。これらのアプリは SQL インジェクションに脆弱なコンテンツプロバイダをエクスポートし、攻撃者が NAS デバイスの資格情報を取得できるようにしました。この問題の詳細な説明は [Nettitude Blog](https://blog.nettitude.com/uk/qnap-android-dont-provide "Nettitude Blog - QNAP Android: Don\'t Over Provide") にあります。
 
 #### XML インジェクション
 
