@@ -351,7 +351,7 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 - 証明書ハッシュ: `grep -ri "sha256\|sha1" ./smali` 識別されたハッシュをプロキシの CA のハッシュで置き換えます。あるいは、ハッシュにドメイン名が付随している場合には、元のドメインがピン留めされないようにドメイン名を存在しないドメイン名に改変してみることができます。これは難読化された OkHTTP 実装ではうまく機能します。
 - 証明書ファイル: `find ./assets -type f \( -iname \*.cer -o -iname \*.crt \)` これらのファイルをプロキシの証明書で置き換え、正しい形式であることを確認します。
 
-アプリケーションがネットワーク通信を実装するためにネイティブライブラリを使用する場合は、さらにリバースエンジニアリングが必要です。このようなアプローチの例がブログ記事 [smali コードでの SSL ピンニングロジックの識別、パッチ適用、および APK の再構築](https://serializethoughts.com/2016/08/18/bypassing-ssl-pinning-in-android-applications/ "Bypassing SSL Pinning in Android Applications")  にあります。
+アプリケーションがネットワーク通信を実装するためにネイティブライブラリを使用する場合は、さらにリバースエンジニアリングが必要です。このようなアプローチの例がブログ記事 [smali コードでの SSL ピンニングロジックの識別、パッチ適用、および APK の再構築](https://serializethoughts.wordpress.com/2016/08/18/bypassing-ssl-pinning-in-android-applications/ "Bypassing SSL Pinning in Android Applications")  にあります。
 
 これらの改変を行った後、apktool を使用してアプリケーションを再パッケージ化してデバイスにインストールします。
 
