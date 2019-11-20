@@ -257,7 +257,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 今では、定期的にユーザーにパスフレーズを促すことはすべてのアプリケーションにとって機能するものではないことは明らかです。その場合には必ず [Android KeyStore API](https://developer.android.com/reference/java/security/KeyStore.html "Android AndroidKeyStore API") を使用してください。この API は鍵マテリアルにセキュアなストレージを提供するために特別に開発されました。あなたのアプリケーションだけが生成した鍵にアクセスできます。Android 6.0 からは AndroidKeyStore は指紋センサーが存在する場合にハードウェア支援も強制されます。これは鍵マテリアルをセキュアにするために専用の暗号チップまたは Trusted Platform Module (TPM) が使用されていることを意味します。
 
-但し、`AndroidKeyStore` API は Android のさまざまなバージョンで大幅に変更されていることに注意します。以前のバージョンでは `AndroidKeyStore` API は公開鍵と秘密鍵 (private key) のペア (RSA など) の保存のみをサポートしていました。対称鍵のサポートは Android 6.0 (API level 23) 以降でのみ追加されています。結果として、さまざまな Android API レベルで対称鍵をセキュアに保存したいときには開発者は注意する必要があります。
+但し、`AndroidKeyStore` API は Android のさまざまなバージョンで大幅に変更されていることに注意します。以前のバージョンでは `AndroidKeyStore` API は公開鍵と秘密鍵 (private key) のペア (RSA など) の保存のみをサポートしていました。対称鍵のサポートは Android 6.0 (API level 23) 以降でのみ追加されています。結果として、開発者は対称鍵をセキュアに保存するためにさまざまな Android API レベルを処理する必要があります。
 
 Android 5.1 (API level 22) 以下で動作するデバイスで対称鍵をセキュアに保存するには、公開鍵と秘密鍵 (private key) のペアを生成する必要があります。公開鍵を使用して対象鍵を暗号化し、秘密鍵 (private key) を `AndroidKeyStore` に保存します。暗号化された対称鍵は `SharedPreferences` に安全に保存できます。対称鍵が必要なときにはいつでも、アプリケーションは `AndroidKeyStore` から秘密鍵 (private key) を取り出し、対称鍵を復号します。
 
@@ -364,7 +364,7 @@ Android により提供されているもう一つの API は `KeyChain` です�
 
 暗号鍵を保存するあまりセキュアではない方法は Android の SharedPreferences におくことです。[SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences.html "Android SharedPreference API") が [MODE_PRIVATE](https://developer.android.com/reference/android/content/Context.html#MODE_PRIVATE "MODE_PRIVATE") で初期化された場合、そのファイルはそれを作成したアプリケーションによってのみ読み取り可能です。但し、ルート化されたデバイスでは、ルートアクセス権を持つ他のアプリケーションが他のアプリの SharedPreference ファイルを簡単に読み取ることができます。MODE_PRIVATE が使われれているかどうかは関係ありません。AndroidKeyStore についてはそうではありません。AndroidKeyStore のアクセスはカーネルレベルで管理されているため、AndroidKeyStore が鍵をクリアまたは破棄することなくバイパスするにはかなりの作業とスキルが必要です。
 
-最後の三つのオプションはソースコード内にハードコードされた暗号化鍵を使用すること、堅牢な属性に基づく予測可能な鍵導出関数を持つこと、そして `/sdcard/` などのパブリックな場所に生成された鍵を格納することです。明らかに、ハードコードされた鍵は進むべき道ではありません。これはアプリケーションのすべてのインスタンスが同じ暗号化鍵を使用することを意味します。攻撃者は、ネイティブまたは Java/Kotlin のいずれに格納されているかにかかわらず、ソースコードから鍵を抽出するために、一度作業を行うだけで済みます。その結果、攻撃者は彼が取得できるアプリケーションにより暗号化された他のデータを復号できます。
+最後の三つのオプションはソースコード内にハードコードされた暗号化鍵を使用すること、堅牢な属性に基づく予測可能な鍵導出関数を持つこと、そして `/sdcard/` などのパブリックな場所に生成された鍵を格納することです。明らかに、ハードコードされた鍵は進むべき道ではありません。これはアプリケーションのすべてのインスタンスが同じ暗号化鍵を使用することを意味します。攻撃者は、ネイティブまたは Java/Kotlin のいずれに格納されているかにかかわらず、ソースコードから鍵を抽出するために、一度作業を行うだけで済みます。その結果、攻撃者はアプリケーションにより暗号化された他のデータを復号できます。
 次に、他のアプリケーションからアクセス可能な識別子に基づく予測可能な鍵導出関数がある場合、攻撃者は KDF を見つけて、鍵を見つけるためにデバイスにそれを適用するだけで済みます。最後に、暗号化鍵をパブリックに格納することもあまりお勧めできません。他のアプリケーションがパブリックパーティションを読むパーミッションを持ち、鍵を盗むことができるためです。
 
 #### 静的解析
