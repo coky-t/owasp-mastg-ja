@@ -127,7 +127,7 @@ bettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (
 
 Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://developer.xamarin.com/guides/android/getting_started/ "Getting Started with Android") および [iOS アプリ](https://developer.xamarin.com/guides/ios/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
 
-Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は二つあります。
+Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は三つあります。
 
 - [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate` または `Main` に以下のコードを追加してアプリを再作成します。
 
@@ -143,8 +143,32 @@ Xamarin アプリをテストするときに WiFi 設定でシステムプロキ
     " | sudo pfctl -ef -
     ```
 
+  Linux システムでは `iptables` を使用できます。
+
+    ```shell
+    $ sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080 
+    ```
+
+  最後のステップとして、 Burp Suite の listener settings で 'Support invisible proxy' をセットする必要があります。
+
+- bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MiTM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
+
+> トラフィックをリダイレクトする際、ノイズとスコープ外のトラフィックを最小限に抑えるために、スコープ内のドメインと IP を狭めるルールを作成する必要があります。
+
 傍受プロキシは上記のポートフォワーディングルールで指定されたポート 8080 をリッスンする必要があります。
 
+Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy` を使用) するように設定されている場合、トラフィックを傍受プロキシにリダイレクトした後、次にトラフィックを送信すべき場所を指定する必要があります。そのトラフィックを元のロケーションにリダイレクトする必要があります。以下の手順は Burp で元のロケーションへのリダイレクトを設定しています。
+
+1. **Proxy** タブに移動し、**Options** をクリックします。
+2. proxy listeners のリストからリスナーを選択して編集します。
+3. **Request handling** タブに移動して以下をセットします。
+
+    - Redirect to host: 元のトラフィックロケーションを指定します
+    - Redirect to port: 元のポートロケーションを指定します
+    - 'Force use of SSL' をセット (HTTPS 使用時) および 'Support invisible proxy' をセットします。
+
+<img width=600px src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location"/>
+ 
 <br/>
 <br/>
 
