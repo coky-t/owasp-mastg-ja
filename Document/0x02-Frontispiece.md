@@ -118,11 +118,14 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 
 [OWASP Bay Area Chapter](https://twitter.com/OWASPBayArea?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor "Twitter Bay Area")
 
+#### 慈善後援者
+
+[![RandoriSec](Images/Sponsors/Randorisec_logo.png)](https://www.randorisec.fr/ "RandoriSec")
+
 #### 寄付者
 
 次の人々や企業は Leanpub や他の方法を使用して 25 ドル以上を寄付しました:
 
-- [RandoriSec](https://www.randorisec.fr/ "RandoriSec")
 - eShard
 
 <br/>
