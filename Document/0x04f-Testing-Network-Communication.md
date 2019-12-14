@@ -42,7 +42,7 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 - トラフィックをホストマシンにルーティングします。マシンをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](https://www.wireshark.org "Wireshark") を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
 
-- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストマシンにネットワークトラフィックをリダイレクトするために [bettercap](https://github.com/bettercap/bettercap "bettercap") を検討する必要があります (下図参照) 。
+- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストマシンにネットワークトラフィックをリダイレクトするために [bettercap](https://github.com/bettercap/bettercap "bettercap") または独自のアクセスポイントを検討する必要があります (下図参照) 。
 
 > bettercap は MITM 攻撃を実行するための強力なツールであり、現在では ettercap の代わりとして優先すべきです。bettercap サイトの [Why another MITM tool?](https://www.bettercap.org/legacy/#why-another-mitm-tool "Why another MITM tool?") もご覧ください。
 
@@ -50,7 +50,11 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 - macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
 
-#### 中間者攻撃のシミュレーション
+#### bettercap による中間者攻撃のシミュレーション
+
+##### ネットワークのセットアップ
+
+中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにマシンがある必要があります。これが完了するとモバイルフォンの IP アドレスが必要です。
 
 [bettercap](https://github.com/bettercap/bettercap "bettercap") はネットワークペネトレーションテストの中で使用して、中間者攻撃 (MITM) をシミュレートします。これは [ARP ポイズニングやスプーフィング](https://en.wikipedia.org/wiki/ARP_spoofing "ARP poisoning/spoofing") をターゲットマシンに実行することで実現します。このような攻撃が成功すると、二つのマシン間のすべてのパケットは第三のマシンにリダイレクトされます。これは中間者の役割を果たし、解析のためにトラフィックを傍受できます。
 
@@ -72,19 +76,6 @@ $ apt-get install bettercap
 ```
 
 [LinuxHint](https://linuxhint.com/install-bettercap-on-ubuntu-18-04-and-use-the-events-stream/ "Install Bettercap on Ubuntu 18.04") には Ubuntu Linux 18.04 のインストール手順もあります。
-
-##### ネットワーク解析ツール
-
-マシンにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。二つの最も一般的なネットワーク監視 (またはキャプチャ) ツールは以下のとおりです。
-
-- [Wireshark](https://www.wireshark.org "Wireshark") (CLI 用: [tshark](https://www.wireshark.org/docs/man-pages/tshark.html "TShark")) 
-- [tcpdump](https://www.tcpdump.org/tcpdump_man.html "tcpdump")
-
-Wireshark は GUI を提供しており、コマンドラインに慣れていなくても簡単です。コマンドラインツールを探している場合には TShark または tcpdump のいずれかを使用する必要があります。これらのツールはすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。
-
-**ネットワークのセットアップ**
-
-中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにマシンがある必要があります。これが完了するとモバイルフォンの IP アドレスが必要です。
 
 #### bettercap による ARP ポイズニング
 
@@ -108,14 +99,147 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 
 > 中間者攻撃は ARP スプーフィングを通じて OSI レイヤ 2 上で攻撃が実行されるため、あらゆるデバイスやオペレーティングシステムに対して機能します。あなたが MITM である場合、通過するデータは TLS を使用して暗号化されている可能性があるため、平文データを見ることができないかもしれません。しかし、それは関与するホスト、使用されるプロトコルおよびアプリが通信しているポートに関する貴重な情報をあなたに提供します。
 
-#### SPAN ポート / ポートフォワーディング
+#### アクセスポイントを使用した中間者攻撃のシミュレーション
 
-bettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (AP) やルーターを代わりに使うこともできます。設定には AP の設定にアクセスする必要があります。これはやりとりする前に明確にする必要があります。再構成が可能な場合は、まず AP が以下のいずれかをサポートしているかどうかを確認する必要があります。
+##### ネットワークのセットアップ
 
-- ポートフォワーディング
-- SPAN またはミラーポートがある
+中間者 (MITM) 攻撃をシミュレートする簡単な方法は、スコープ内のデバイスとターゲットネットワーク間のすべてのパケットがマシンを通過するネットワークを構成することです。モバイルペネトレーションテストでは、モバイルデバイスとマシンが接続されているアクセスポイントを使用して実現できます。そうしてマシンがルータおよびアクセスポイントになります。
 
-どのシナリオでも、AP はマシン IP を指すように設定する必要があります。それから Wireshark などのツールを使用して、さらなる調査のためにトラフィックを監視および記録します。
+以下のシナリオが可能です。
+
+- マシンの内蔵 WiFi カードをアクセスポイントとして使用し、有線接続を使用してターゲットネットワークに接続します。
+- 外部 USB WiFi カードをアクセスポイントとして使用し、マシンの内蔵 WiFi を使用してターゲットネットワークに接続します (逆も可能です) 。
+- 別のアクセスポイントを使用し、トラフィックをマシンにリダイレクトします。
+
+外部 WiFi カードを使用するシナリオではカードがアクセスポイントを作成する機能が必要です。さらに、いくつかのツールをインストールするかネットワークを構成して中間者ポジションとなる必要があります (下記参照) 。Kali Linux で `iwconfig` コマンドを使用して、WiFi カードに AP 機能があるかどうかを確認できます。
+
+    ```shell
+    $ iw list | grep AP 
+    ```
+
+別のアクセスポイントを使用するシナリオでは AP の構成にアクセスする必要があります。AP が以下のいずれかをサポートしているかどうかを最初に確認する必要があります。
+
+- ポートフォワーディングまたは
+- スパンまたはミラーポートを持っている。
+
+どちらの場合もマシン IP を指すように AP を構成する必要があります。マシンは (有線接続または WiFi を介して) AP に接続する必要があり、ターゲットネットワークに接続する必要があります (AP と同じ接続でもかまいません) 。ターゲットネットワークにトラフィックをルーティングするにはマシンに追加の構成が必要になる場合があります。
+
+> 別のアクセスポイントがお客様のものである場合、変更を行う前に、すべての変更と構成をエンゲージメントの前に明確にし、バックアップを作成する必要があります。
+
+<img src="Images/Chapters/0x04f/architecture_MITM_AP.png" alt="Network Diagram - MITM with an access point">
+
+##### インストール
+
+以下の手順はアクセスポイントと追加のネットワークインタフェースを使用して中間者ポジションをセットアップしています。
+1. 別のアクセスポイント、外部 USB WiFi カード、またはマシンの内蔵カードのいずれかを使用して WiFi ネットワークを作成します。
+
+これは macOS のビルトインユーティリティを使用して実行できます。[Mac のインターネット接続を他のネットワークユーザーと共有する](https://support.apple.com/en-ke/guide/mac-help/mchlp1540/mac "Share the internet connection on Mac with other network users") を使用できます。
+
+すべての主要な Linux および Unix オペレーティングシステムでは以下のようなツールが必要です。
+- hostapd
+- dnsmasq
+- iptables
+- wpa_supplicant
+- airmon-ng
+
+Kali Linux ではこれらのツールを `apt-get` でインストールできます。
+
+```shell
+$ apt-get update
+$ apt-get install hostapd dnsmasq aircrack-ng
+```
+> iptables と wpa_supplicant は Kali Linux にデフォルトでインストールされています。
+
+2. 別のアクセスポイントの場合、トラフィックをマシンにルーティングします。外部 USB WiFi カードまたは内蔵 WiFi カードの場合、トラフィックはすでにマシンで利用可能です。
+3. WiFi からの着信トラフィックを、トラフィックがターゲットネットワークに到達できる追加のネットワークインタフェースにルーティングします。追加のネットワークインタフェースは、セットアップに応じて有線接続または他の WiFi カードにできます。
+
+##### 構成
+
+Kali Linux の構成ファイルにフォーカスします。以下の値を定義する必要があります。
+- wlan1 - AP ネットワークインタフェースの ID (AP 機能あり)
+- wlan0 - ターゲットネットワークインタフェースの ID (これは有線インタフェースまたは他の WiFi カードにできます)
+- 10.0.0.0/24 - AP ネットワークの IP アドレスとマスク
+
+以下の構成ファイルを変更し適宜に調整する必要があります。
+
+- hostapd.conf
+
+    ```
+    # Name of the WiFi interface we use 
+    interface=wlan1
+    # Use the nl80211 driver
+    driver=nl80211
+    hw_mode=g
+    channel=6
+    wmm_enabled=1
+    macaddr_acl=0
+    auth_algs=1
+    ignore_broadcast_ssid=0
+    wpa=2
+    wpa_key_mgmt=WPA-PSK
+    rsn_pairwise=CCMP
+    # Name of the AP network
+    ssid=STM-AP
+    # Password of the AP network
+    wpa_passphrase=password
+    ```
+
+- wpa_supplicant.conf
+
+    ```
+    network={
+        ssid="NAME_OF_THE_TARGET_NETWORK"
+        psk="PASSWORD_OF_THE_TARGET_NETWORK"
+    }
+    ```
+
+- dnsmasq.conf
+
+    ```
+    interface=wlan1
+    dhcp-range=10.0.0.10,10.0.0.250,12h
+    dhcp-option=3,10.0.0.1
+    dhcp-option=6,10.0.0.1
+    server=8.8.8.8
+    log-queries
+    log-dhcp
+    listen-address=127.0.0.1
+    ```
+
+##### MITM 攻撃
+
+中間者ポジションを取得できるためには上記の構成を実行する必要があります。これは Kali Linux 上で以下のコマンドを使用して実行できます。
+
+    ```shell
+    # check if other process is not using WiFi interfaces
+    $ airmon-ng check kill
+    # configure IP address of the AP network interface
+    $ ifconfig wlan1 10.0.0.1 up
+    # start access point
+    $ hostapd hostapd.conf
+    # connect the target network interface
+    $ wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
+    # run DNS server
+    $ dnsmasq -C dnsmasq.conf -d
+    # enable routing 
+    $ echo 1 > /proc/sys/net/ipv4/ip_forward
+    # iptables will NAT connections from AP network interface to the target network interface
+    $ iptables --flush
+    $ iptables --table nat --append POSTROUTING --out-interface wlan0 -j MASQUERADE
+    $ iptables --append FORWARD --in-interface wlan1 -j ACCEPT 
+    $ iptables -t nat -A POSTROUTING -j MASQUERADE
+    ```
+
+これでモバイルデバイスをアクセスポイントに接続できます。
+
+#### ネットワーク解析ツール
+
+マシンにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。もっとも一般的な二つのネットワーク監視 (またはキャプチャ) ツールは以下の通りです。
+
+- [Wireshark](https://www.wireshark.org "Wireshark") (CLI pendant: [TShark](https://www.wireshark.org/docs/man-pages/tshark.html "TShark"))
+- [tcpdump](https://www.tcpdump.org/tcpdump_man.html "tcpdump")
+
+Wireshark には GUI があり、コマンドラインに慣れていないのであれば簡単です。コマンドラインツールを探しているのであれば TShark または tcpdump を使用する必要があります。これらのツールはいずれも、すべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部です。
 
 #### 実行時計装によるプロキシの設定
 
@@ -127,7 +251,7 @@ bettercap による MITM 攻撃の代わりに、Wifi アクセスポイント (
 
 Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://developer.xamarin.com/guides/android/getting_started/ "Getting Started with Android") および [iOS アプリ](https://developer.xamarin.com/guides/ios/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
 
-Xamarin アプリをテストするときに WiFi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は三つあります。
+Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は三つあります。
 
 - [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate` または `Main` に以下のコードを追加してアプリを再作成します。
 
