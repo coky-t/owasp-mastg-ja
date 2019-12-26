@@ -1,7 +1,9 @@
 ## Android のローカル認証
 
-ローカル認証では、アプリはデバイス上でローカルに保存された資格情報に対してユーザーを認証します。言い換えると、ユーザーはローカルデータを参照することにより検証される PIN、パスワード、指紋を提供することで、アプリや機能の何かしらの内部層を「アンロック」します。一般的に、このプロセスはリモートサービスで既存のセッションを再開するためのユーザーの利便性を提供するような理由で、またはある重要な機能を保護するためのステップアップ認証の手段として呼び出されます。
-"[モバイルアプリの認証アーキテクチャ](0x04e-Testing-Authentication-and-Session-Management.md)" の章で前述したように、少なくとも暗号プリミティブ (鍵をアンロックする認証手順など) で認証が行われることを再確認することが重要です。次に、認証がリモートエンドポイントで検証されることを推奨します。
+ローカル認証では、アプリはデバイス上でローカルに保存された資格情報に対してユーザーを認証します。言い換えると、ユーザーはローカルデータを参照することにより検証される PIN、パスワード、または顔や指紋などの生体特性を提供することで、アプリや機能の何かしらの内部層を「アンロック」します。一般的に、これはユーザーがより便利にリモートサービスでの既存のセッションを再開するため、またはある重要な機能を保護するためのステップアップ認証の手段として行われます。
+
+"[モバイルアプリの認証アーキテクチャ](0x04e-Testing-Authentication-and-Session-Management.md)" の章で前述しているように、テスト技術者はローカル認証が常にリモートエンドポイントで実行されることや暗号プリミティブに基づいている必要があることに注意します。認証プロセスからデータが返らない場合、攻撃者は簡単にローカル認証をバイパスできます。
+
 Android では、ローカル認証のために Android Runtime でサポートされている二つのメカニズムがあります。資格情報の確認フローと生体認証フローです。
 
 ### 資格情報の確認のテスト (MSTG-AUTH-1 および MSTG-STORAGE-11)
@@ -82,21 +84,66 @@ Android では、ローカル認証のために Android Runtime でサポート�
 
 #### 動的解析
 
-アプリにパッチを当てるか、実行時計装を使用して、クライアントの指紋認証をバイパスします。例えば、Frida を使用して `onActivityResult` コールバックメソッドを直接コールすることで、ローカル認証フローを続行するために暗号マテリアル (セットアップ暗号など) を無視できるかどうかを確認できます。詳細については "[Android の改竄とリバースエンジニアリング](0x05c-Reverse-Engineering-and-Tampering.md)" の章を参照してください。
+ユーザーが正常に認証された後、鍵の使用が認可されている期間 (秒) を妥当性確認します。これは `setUserAuthenticationRequired` が使用されている場合にのみ必要です。
 
 ### 生体認証のテスト (MSTG-AUTH-8)
 
 #### 概要
 
-Android 6.0 (API level 23) では指紋でユーザーを認証するパブリック API が導入されました。指紋ハードウェアへのアクセスは [FingerprintManager クラス](https://developer.android.com/reference/android/hardware/fingerprint/ "FingerprintManager") を通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化し、`authenticate` メソッドをコールすることで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能性がある結果 (成功、失敗、エラー) を処理します。このメソッドは指紋認証が実際に実行されたことを強く証明するものではないことに注意します。例えば、認証ステップは攻撃者によりパッチアウトされる可能性がありますし、計装を使用して「成功」コールバックがコールされる可能性があります。
+生体認証は認証に便利なメカニズムですが、使用時にさらなる攻撃領域をもらたします。Android 開発者ドキュメントでは [生体認証アンロックセキュリティの測定](https://source.android.com/security/biometric/measure#strong-weak-unlocks "Measuring Biometric Unlock Security") に興味深い概要と指標が記載されています。
 
-Android `KeyGenerator` クラスと共に指紋 API を使用することで、より良いセキュリティが実現します。このメソッドでは、対称鍵がキーストアに格納され、ユーザーの指紋で「アンロック」されます。例えば、リモートサービスへのユーザーアクセスを有効にするには、ユーザー PIN または認証トークンを暗号化する AES 鍵が作成されます。鍵を作成する際に `setUserAuthenticationRequired(true)` をコールすることで、ユーザーが鍵を取得するには再認証する必要があることを確実にします。暗号化された認証資格情報はデバイス上の通常のストレージに直接保存することができます (例、`SharedPreferences`) 。この設計はユーザーが実際に認可された指紋を実際に入力したことを確実にする比較的安全な方法です。但し、この設定はアプリが暗号操作中にメモリ内に対称鍵を保持する必要があり、実行時にアプリのメモリにアクセスする攻撃者に潜在的に開示されることに注意します。
+Android プラットフォームは生体認証用に三つの異なるクラスを提供しています。
 
-よりセキュアな選択肢は非対称暗号を使用することです。ここでは、モバイルアプリがキーストアに非対称鍵ペアを作成し、サーバーバックエンド上に公開鍵を登録します。その後のトランザクションは秘密鍵で署名され、公開鍵を使用してサーバーにより検証されます。これの利点はキーストアから秘密鍵を抽出することなく、キーストア API を使用してトランザクションに署名できることです。その結果、メモリダンプや計装を使用することにより攻撃者が鍵を取得することは不可能となります。
+- Android Q / 10 (API レベル 29) および以降: `BiometricManager`
+- Android P / 9 (API レベル 28) および以降: `BiometricPrompt`
+- Android 6.0 (API レベル 23) および以降: `FingerprintManager` (Android 9 で廃止)
 
-ベンダーにより提供されるいくつかの SDK があり、バイオメトリックのサポートを提供しますが、それら自体に危険があることに注意します。機密の認証ロジックを処理するためにサードパーティ SDK を使用する場合は、非常に注意が必要です。
+<img src="Images/Chapters/0x05f/biometricprompt-architecture.png" width="500" alt="Biometric Auth in Android">
+
+[`BiometricManager`](https://developer.android.com/reference/kotlin/android/hardware/biometrics/BiometricManager "BiometricManager") クラスを使用して、そのデバイスでバイオメトリックハードウェアが利用可能かどうか、およびユーザーにより構成されているかどうかを検証できます。そうである場合、[`BiometricPrompt`](https://developer.android.com/reference/kotlin/android/hardware/biometrics/BiometricPrompt "BiometricPrompt") クラスを使用して、システムが提供するバイオメトリックダイアログを表示できます。
+
+`BiometricPrompt` クラスは大幅に改善されています。Android での生体認証の一貫した UI を持ち、指紋以外のセンサーもサポートしています。
+
+これが指紋センサーのみをサポートし UI を提供しない `FingerprintManager` クラスとの違いです。開発者は独自の指紋 UI を作成する必要があります。
+
+Android の Biometric API の非常に詳細な概要と説明は [Android 開発者ブログ](https://android-developers.googleblog.com/2019/10/one-biometric-api-over-all-android.html "One Biometric API Over all Android") に公開されています。
+
+##### FingerprintManager (Android 9 で廃止)
+
+Android 6.0 (API レベル 23) では指紋を介してユーザーを認証する公開 API を導入しましたが、Android 9 (API レベル 28) で廃止されました。指紋ハードウェアへのアクセスは [`FingerprintManager`](https://developer.android.com/reference/android/hardware/fingerprint/ "FingerprintManager") クラスを通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化してその `authenticate` メソッドを呼び出すことで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能な結果 (成功、失敗、エラーなど) を処理します。このメソッドは指紋認証が実際字実行されたという強力な証拠を構成しないことに注意します。例えば、認証ステップが攻撃者によりパッチされたり、「成功」コールバックが動的計装を使用してオーバーロードされる可能性があります。
+
+Android `KeyGenerator` クラスと組み合わせて指紋 API を使用することによってより優れたセキュリティを実現できます。このアプローチでは対称鍵が Android KeyStore に保存され、ユーザーの指紋でアンロックされます。例えば、リモートサービスへのユーザーアクセスを有効にするために、認証トークンを暗号化する AES 鍵が作成されます。鍵を作成する際に `setUserAuthenticationRequired(true)` をコールすることにより、ユーザーは鍵を取得するために再認証する必要があることを保証されます。暗号化された認証トークンはデバイスに直接保存できます (例えば Shared Preferences を介して) 。このデザインはユーザーが認証済みの指紋を実際に入力することを保証する比較的安全な方法です。
+
+さらにセキュアな選択肢は非対称暗号化を使用することです。ここで、モバイルアプリは KeyStore に非対称鍵ペアを作成し、サーバーバックエンドに公開鍵を登録します。そのあと、後のトランザクションは秘密鍵 (private key) で署名され、公開鍵を使用してサーバーにより検証されます。
 
 #### 静的解析
+
+バイオメトリックサポートを提供するベンダーやサードパーティーの SDK はかなりありますが、個別の危険性があることに注意します。サードパーティー SDK を使用して機密認証ロジックを処理する場合は十分に気を付けてください。
+
+次のセクションではさまざまな生体認証クラスについて説明します。
+
+##### Biometric ライブラリ
+
+Android は [Biometric](https://developer.android.com/jetpack/androidx/releases/biometric "Biometric library for Android")  というライブラリを提供します。これは `BiometricPrompt` および `BiometricManager` API の互換バージョンを提供します。Android 10 に実装されており、Android 6.0 (API 23) に完全対応する機能を備えています。
+
+Android 開発者ドキュメントにリファレンス実装と [生体認証ダイアログを表示](https://developer.android.com/training/sign-in/biometric-auth "Show a biometric authentication dialog") する方法の説明があります。
+
+`BiometricPrompt` クラスで利用できる二つの `authenticate` メソッドがあります。それらの一つは [`CryptoObject`](https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.CryptoObject.html "CryptoObject") を待ち受けます。これにより生体認証に追加のセキュリティレイヤーが追加されます。
+
+CryptoObject を使用する際の認証フローは以下の通りです。
+
+- アプリは `setUserAuthenticationRequired` に true をセットし `setInvalidatedByBiometricEnrollment` に -1 をセットして KeyStore に鍵を作成します。
+- この鍵はユーザーを認証している情報 (セッション情報や認証トークンなど) を暗号化するために使用されます。
+- データを復号するために KeyStore から鍵をリリースする前に、有効な生体認証セットを提示する必要があります。これは `authenticate` メソッドと `CryptoObject` を通して妥当性確認されます。
+- このソリューションはルート化デバイスでもバイパスできません。KeyStore からの鍵は生体認証の成功後にのみ使用できるためです。
+
+authenticate メソッドの一環として `CryptoObject` が使用されない場合、Frida を使用してバイパスできます。詳細については「動的計装」セクションを参照してください。
+
+開発者は Android が提供するいくつかの [validation クラス](https://source.android.com/security/biometric#validation "Validation of Biometric Auth") を使用して、アプリでの生体認証の実装をテストできます。
+
+##### FingerprintManager
+
+> このセクションでは `FingerprintManager` クラスを使用して生体認証を実装する方法について説明します。このクラスは非推奨であり、ベストプラクティスとして [Biometric ライブラリ](https://developer.android.com/jetpack/androidx/releases/biometric "Biometric library for Android") を代わりにしようすべきであることに気を付けてください。このセクションはそのような実装に遭遇し解析する必要がある場合に参照するためのものです。
 
 `FingerprintManager.authenticate` コールを探すことから始めます。このメソッドに渡される最初のパラメータは FingerprintManager によりサポートされる [Crypto オブジェクトのラッパークラス](https://developer.android.com/reference/android/hardware/fingerprint/FingerprintManager.CryptoObject.html "FingerprintManager.CryptoObject") である `CryptoObject` インスタンスである必要があります。パラメータが `null` に設定されている場合、これは指紋認証が単にイベントバウンドであることを意味し、セキュリティの問題が発生する可能性があります。
 
@@ -156,7 +203,7 @@ secetkeyInfo.isInsideSecureHardware()
     keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
 ```
 
-##### 対称鍵を用いた指紋認証
+次に対称鍵ペアを使用して指紋認証を行う方法について説明します。
 
 指紋認証は `KeyGenerator` クラスを使用して新しい AES 鍵を作成することにより実装できます。`KeyGenParameterSpec.Builder` に `setUserAuthenticationRequired(true)` を追加します。
 
@@ -200,7 +247,7 @@ public void authenticationSucceeded(FingerprintManager.AuthenticationResult resu
 }
 ```
 
-##### 非対称鍵ペアを用いた指紋認証
+次に非対称鍵ペアを使用して指紋認証を行う方法を説明します。
 
 非対称暗号を使用して指紋認証を実装するには、まず `KeyPairGenerator` クラスを使用して署名鍵を作成し、サーバに公開鍵を登録します。その後、クライアント上で署名しサーバ上で署名を検証することにより、個々のデータを認証できます。指紋 API を使用してリモートサーバに認証する詳細な例は [Android Developers Blog](https://android-developers.googleblog.com/2015/10/new-in-android-samples-authenticating.html "Authenticating to remote servers using the Fingerprint API") にあります。
 
@@ -248,6 +295,7 @@ byte[] signed = signature.sign();
 ##### その他のセキュリティ機能
 
 Android 7.0 (API level 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByBiometricEnrollment(boolean invalidateKey)` メソッドを追加します。`invalidateKey` 値が `true` (デフォルト) に設定されている場合、指紋認証に有効な鍵は新しい指紋が登録された際に不可逆的に無効になります。これにより、たとえ攻撃者が追加の指紋を登録できたとしても、鍵を取得できなくなります。
+
 Android 8.0 (API level 26) は二つのエラーコードを追加します。
 
 - `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
@@ -255,11 +303,16 @@ Android 8.0 (API level 26) は二つのエラーコードを追加します。
 
 ##### サードパーティ SDK
 
-Android SDK とその API に基づいて指紋認証やその種類の生体認証が行われることを確認します。そうでない場合、代替 SDK があらゆる脆弱性に対して適切に検証されていることを確認します。その SDK は TEE/SE がバックにあり、生体認証に基づいて (暗号) 機密をアンロックすることを確認します。この機密は他のものによりアンロックされるべきではなく、有効な生体エントリによってアンロックされるべきです。そのようにして、指紋ロジックがバイパスできることがあってはいけません。
+指紋認証やその種類の生体認証はもっぱら Android SDK とその API に基づいていることを確認します。そうでない場合、代替 SDK があらゆる脆弱性に対して適切に検証されていることを確認します。その SDK は TEE/SE がバックにあり、生体認証に基づいて (暗号) 機密をアンロックすることを確認します。この機密は他のものによりアンロックされるべきではなく、有効な生体エントリによってアンロックされるべきです。そのようにして、指紋ロジックがバイパスできることがあってはいけません。
 
 #### 動的解析
 
-アプリにパッチを当てるか実行時計装を使用して、クライアント上の指紋認証をバイパスします。例えば、Frida を使用して `onAuthenticationSucceeded` コールバックメソッドを直接コールできます。詳細については「Android の改竄とリバースエンジニアリング」の章を参照してください。
+F-Secure Labs は非常に詳細な [Android KeyStore と生体認証に関するブログ記事](https://labs.f-secure.com/blog/how-secure-is-your-android-keystore-authentication "How Secure is your Android Keystore Authentication ?") を公開しています。
+
+この調査の一環として二つの Frida スクリプトがリリースされました。これらのスクリプトを使用して生体認証のセキュアではない実装をテストし、バイパスできるかどうかを試みることができます。
+
+- [Fingerprint bypass](https://github.com/FSecureLABS/android-keystore-audit/blob/master/frida-scripts/fingerprint-bypass.js "Fingerprint Bypass"): この Frida スクリプトは `CryptoObject` が `BiometricPrompt` クラスの `authenticate` メソッドで使用されていない場合に認証をバイパスします。認証の実装はコールされる `onAuthenticationSucceded` コールバックに依存しています。
+- [Fingerprint bypass via exception handling](https://github.com/FSecureLABS/android-keystore-audit/blob/master/frida-scripts/fingerprint-bypass-via-exception-handling.js "Fingerprint bypass via exception handling"): この Frida スクリプトは `CryptoObject` が使用されているが正しくない方法で使用されている場合に認証のバイパスを試みます。詳細な説明はブログ記事の "Crypto Object Exception Handling" セクションにあります。
 
 ### 参考情報
 
