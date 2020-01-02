@@ -219,14 +219,14 @@ Android 用 QEMU ベースのエミュレータはアプリケーションの実
 
 これを視覚化するために、上記の例では、さらにリバースエンジニアリングを実行するかプログラムを動的に実行してこの情報をシンボリック実行解析に渡すことにより、外部変数の値を取得できます。この追加情報により方程式の複雑さを軽減し、より正確な解析結果を生み出すこともあります。改善された SMT ソルバーと現在のハードウェアスピードを併せることで、コンコリック実行は中規模のソフトウェアモジュール (10 KLOC 程度) のパスを探索できます。
 
-さらに、シンボリック実行はコントロールフローグラフの簡素化など逆難読化タスクのサポートにも役立ちます。例えば、Jonathan Salwan と Romain Thomas は [動的シンボリック実行を使用して VM ベースのソフトウェア保護をリバースエンジニアリングする方法を示しました](https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf "Jonathan Salwan and Romain Thomas: How Triton can help to reverse virtual machine based software protections") [#JSalwan] (つまり、実際の実行トレース、シミュレーション、シンボリック実行を組み合わせて使用します) 。
+さらに、シンボリック実行はコントロールフローグラフの簡素化など逆難読化タスクのサポートにも役立ちます。例えば、Jonathan Salwan と Romain Thomas は [動的シンボリック実行を使用して VM ベースのソフトウェア保護をリバースエンジニアリングする方法を示しました](https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf "Jonathan Salwan and Romain Thomas: How Triton can help to reverse virtual machine based software protections") [#salwan] (つまり、実際の実行トレース、シミュレーション、シンボリック実行を組み合わせて使用します) 。
 
 Android のセクションでは、シンボリック実行を使用して Android アプリケーションの簡単なライセンスチェックをクラックするためのウォークスルーを説明します。
 
 ### 参考情報
 
 - [#vadla] Ole André Vadla Ravnås, Anatomy of a code tracer - <https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8>
-- [#JSalwan] Jonathan Salwan and Romain Thomas - How Triton can help to reverse virtual machine based software protections - <https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf>
+- [#salwan] Jonathan Salwan and Romain Thomas, How Triton can help to reverse virtual machine based software protections - <https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf>
 
 #### OWASP Mobile Top 10 2016
 
