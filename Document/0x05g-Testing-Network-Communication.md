@@ -338,9 +338,10 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 デバイスで利用可能なフレームワークに応じて、ブラックボックステストのために証明書ピンニングをバイパスする方法がいくつかあります。
 
+- Cydia Substrate: [Android-SSL-TrustKiller](https://github.com/iSECPartners/Android-SSL-TrustKiller "Android-SSL-TrustKiller") パッケージをインストールします。
+- Frida: [Universal Android SSL Pinning Bypass with Frida](https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/ "Universal Android SSL Pinning Bypass with Frida") スクリプトを使用します。
 - Objection: `android sslpinning disable` コマンドを使います。
 - Xposed: [TrustMeAlready](https://github.com/ViRb3/TrustMeAlready "TrustMeAlready") または [SSLUnpinning](https://github.com/ac-pm/SSLUnpinning_Xposed "SSLUnpinning") モジュールをインストールします。
-- Cydia Substrate: [Android-SSL-TrustKiller](https://github.com/iSECPartners/Android-SSL-TrustKiller "Android-SSL-TrustKiller") パッケージをインストールします。
 
 ほとんどのアプリケーションでは、証明書ピンニングは数秒以内にバイパスできますが、これはアプリがこれらのツールでカバーしている API 関数を使用している場合に限られます。アプリがカスタムフレームワークまたはカスタムライブラリを使用して SSL ピンニングを実装している場合には、SSL ピンニングを手動でパッチ適用および無効化する必要があるため、時間がかかります。
 
@@ -350,10 +351,31 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 - 証明書ハッシュ: `grep -ri "sha256\|sha1" ./smali` 識別されたハッシュをプロキシの CA のハッシュで置き換えます。あるいは、ハッシュにドメイン名が付随している場合には、元のドメインがピン留めされないようにドメイン名を存在しないドメイン名に改変してみることができます。これは難読化された OkHTTP 実装ではうまく機能します。
 - 証明書ファイル: `find ./assets -type f \( -iname \*.cer -o -iname \*.crt \)` これらのファイルをプロキシの証明書で置き換え、正しい形式であることを確認します。
+- トラストストアファイル: `find ./ -type f \( -iname \*.jks -o -iname \*.bks \)` プロキシの証明書をトラストストアに追加し、それらが正しい形式であることを確認します。
 
-アプリケーションがネットワーク通信を実装するためにネイティブライブラリを使用する場合は、さらにリバースエンジニアリングが必要です。このようなアプローチの例がブログ記事 [smali コードでの SSL ピンニングロジックの識別、パッチ適用、および APK の再構築](https://serializethoughts.wordpress.com/2016/08/18/bypassing-ssl-pinning-in-android-applications/ "Bypassing SSL Pinning in Android Applications")  にあります。
+> アプリには拡張子のないファイルが含まれる可能性があることに気を付けます。最も一般的なファイルの場所は `assets` ディレクトリおよび `res` ディレクトリであり、これらも調査すべきです。
+
+例として、BKS (BouncyCastle) トラストストアを使用するアプリケーションを見つけ、`res/raw/truststore.bks` ファイルに保存されているとしましょう。SSL ピンニングをバイパスするには、コマンドラインツール `keytool` を使用してプロキシの証明書をトラストストアに追加する必要があります。`keytool` は Java SDK に付属しており、コマンドを実行するには以下の値が必要です。
+- password - キーストア用のパスワード。逆コンパイルされたアプリコードからハードコードされたパスワードを探します。
+- providerpath - BouncyCastle Provider jar ファイルの場所。[The Legion of the Bouncy Castle](https://www.bouncycastle.org/latest_releases.html "https://www.bouncycastle.org/latest_releases.html") からダウンロードできます。
+- proxy.cer - プロキシの証明書。
+- aliascert - プロキシの証明書のエイリアスとして使用される一意の値。
+
+プロキシの証明書を追加するには以下のコマンドを使用します。
+
+```shell
+$ keytool -importcert -v -trustcacerts -file proxy.cer -alias aliascert -keystore "res/raw/truststore.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "providerpath/bcprov-jdk15on-164.jar" -storetype BKS -storepass password
+```
+
+BKS トラストストア内の証明書をリストするには以下のコマンドを使用します。
+
+```shell
+$ keytool -list -keystore "res/raw/truststore.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "providerpath/bcprov-jdk15on-164.jar"  -storetype BKS -storepass password
+```
 
 これらの改変を行った後、apktool を使用してアプリケーションを再パッケージ化してデバイスにインストールします。
+
+アプリケーションがネットワーク通信を実装するためにネイティブライブラリを使用する場合は、さらにリバースエンジニアリングが必要です。このようなアプローチの例がブログ記事 [smali コードでの SSL ピンニングロジックの識別、パッチ適用、および APK の再構築](https://serializethoughts.wordpress.com/2016/08/18/bypassing-ssl-pinning-in-android-applications/ "Bypassing SSL Pinning in Android Applications")  にあります。
 
 ###### カスタム証明書ピンニングの動的なバイパス
 
