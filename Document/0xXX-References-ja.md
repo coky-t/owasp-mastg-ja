@@ -17,6 +17,10 @@
 
 ## 0x04e-Testing-Authentication-and-Session-Management
 
+### OAuth 2.0 フローのテスト (MSTG-AUTH-1 and MSTG-AUTH-3)
+
+- [セキュリティトークンとOAuth 2.0](https://www.ipa.go.jp/security/awareness/vendor/programmingv2/contents/709.html)
+
 ## 0x04f-Testing-Network-Communication ネットワーク通信のテスト
 
 ### HTTP(S) トラフィックの傍受
