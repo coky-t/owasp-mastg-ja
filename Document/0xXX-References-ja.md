@@ -21,6 +21,8 @@
 
 - [セキュリティトークンとOAuth 2.0](https://www.ipa.go.jp/security/awareness/vendor/programmingv2/contents/709.html)
 
+- [OAuth 2.0 Threat Model and Security Considerations (日本語訳)](https://openid-foundation-japan.github.io/rfc6819.ja.html)
+
 ## 0x04f-Testing-Network-Communication ネットワーク通信のテスト
 
 ### HTTP(S) トラフィックの傍受
