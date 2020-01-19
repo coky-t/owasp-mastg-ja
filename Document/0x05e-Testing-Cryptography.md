@@ -449,10 +449,6 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - FIDO Alliance Whitepaper - <https://fidoalliance.org/wp-content/uploads/Hardware-backed_Keystore_White_Paper_June2018.pdf>
 - FIDO Alliance TechNotes - <https://fidoalliance.org/fido-technotes-the-truth-about-attestation/>
 
-##### OWASP Mobile Top 10
-
-- M5 - Insufficient Cryptography - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography>
-
 ##### OWASP MASVS
 
 - MSTG-STORAGE-1: "個人識別情報、ユーザー資格情報、暗号化鍵などの機密データを格納するために、システムの資格情報保存機能が適切に使用されている。"
@@ -462,9 +458,3 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 - MSTG-CRYPTO-4: "アプリはセキュリティ上の目的で広く非推奨と考えられる暗号プロトコルやアルゴリズムを使用していない。"
 - MSTG-CRYPTO-5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
 - MSTG-CRYPTO-6: "すべての乱数値は、十分に安全な乱数生成器を用いて生成している。"
-
-##### CWE
-
-- CWE-321 - Use of Hard-coded Cryptographic Key
-- CWE-326 - Inadequate Encryption Strength
-- CWE-330 - Use of Insufficiently Random Values
