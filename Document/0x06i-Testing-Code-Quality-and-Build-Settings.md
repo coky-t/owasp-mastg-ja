@@ -646,10 +646,6 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 - <https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html>
 - <https://medium.com/zendesk-engineering/ios-identifying-memory-leaks-using-the-xcode-memory-graph-debugger-e84f097b9d15>
 
-#### OWASP Mobile Top 10 2016
-
-- M7 - Poor Code Quality - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality>
-
 #### OWASP MASVS
 
 - MSTG-CODE-1: "アプリは有効な証明書で署名およびプロビジョニングされている。その秘密鍵は適切に保護されている。"
@@ -660,10 +656,6 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 - MSTG-CODE-6: "アプリは可能性のある例外をキャッチし処理している。"
 - MSTG-CODE-8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
 - MSTG-CODE-9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
-
-##### CWE
-
-- CWE-937 - OWASP Top Ten 2013 Category A9 - Using Components with Known Vulnerabilities
 
 #### ツール
 
