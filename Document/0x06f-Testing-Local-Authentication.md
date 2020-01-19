@@ -240,15 +240,7 @@ macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェ
 
 ### 参考情報
 
-#### OWASP Mobile Top 10 2016
-
-- M4 - Insecure Authentication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication>
-
 #### OWASP MASVS
 
 - MSTG-AUTH-8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
 - MSTG-STORAGE-11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
-
-#### CWE
-
-- CWE-287 - Improper Authentication - <https://cwe.mitre.org/data/definitions/287.html>
