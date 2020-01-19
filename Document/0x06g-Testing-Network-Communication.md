@@ -302,21 +302,11 @@ $ ios sslpinning disable
 
 - [#thiel] - David Thiel. iOS Application Security, No Starch Press, 2015
 
-##### OWASP Mobile Top 10 2016
-
-- M3 - Insecure Communication - [https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication](https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication)
-
 ##### OWASP MASVS
 
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨された標準をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を確認している。信頼されたCAにより署名された証明書のみが受け入れられている。"
 - MSTG-NETWORK-4: "アプリは独自の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵を固定化しており、信頼できるCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
-
-##### CWE
-
-- CWE-319 - Cleartext Transmission of Sensitive Information
-- CWE-326 - Inadequate Encryption Strength
-- CWE-295 - Improper Certificate Validation
 
 ##### Nscurl
 
