@@ -356,6 +356,7 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 > アプリには拡張子のないファイルが含まれる可能性があることに気を付けます。最も一般的なファイルの場所は `assets` ディレクトリおよび `res` ディレクトリであり、これらも調査すべきです。
 
 例として、BKS (BouncyCastle) トラストストアを使用するアプリケーションを見つけ、`res/raw/truststore.bks` ファイルに保存されているとしましょう。SSL ピンニングをバイパスするには、コマンドラインツール `keytool` を使用してプロキシの証明書をトラストストアに追加する必要があります。`keytool` は Java SDK に付属しており、コマンドを実行するには以下の値が必要です。
+
 - password - キーストア用のパスワード。逆コンパイルされたアプリコードからハードコードされたパスワードを探します。
 - providerpath - BouncyCastle Provider jar ファイルの場所。[The Legion of the Bouncy Castle](https://www.bouncycastle.org/latest_releases.html "https://www.bouncycastle.org/latest_releases.html") からダウンロードできます。
 - proxy.cer - プロキシの証明書。
@@ -648,23 +649,12 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 
 #### 参考情報
 
-#### OWASP Mobile Top 10 2016
-
-- M3 - Insecure Communication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication>
-
 ##### OWASP MASVS
 
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を確認している。信頼されたCAにより署名された証明書のみが受け入れられている。"
 - MSTG-NETWORK-4: "アプリは独自の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵を固定化しており、信頼できるCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
 - MSTG-NETWORK-6: "アプリは最新の接続ライブラリとセキュリティライブラリにのみ依存している。"
-
-##### CWE
-
-- CWE-295 - Improper Certificate Validation - <https://cwe.mitre.org/data/definitions/295.html>
-- CWE-296 - Improper Following of a Certificate's Chain of Trust - <https://cwe.mitre.org/data/definitions/296.html>
-- CWE-297 - Improper Validation of Certificate with Host Mismatch - <https://cwe.mitre.org/data/definitions/297.html>
-- CWE-298 - Improper Validation of Certificate Expiration - <https://cwe.mitre.org/data/definitions/298.html>
 
 ##### Android 開発者ドキュメント
 
