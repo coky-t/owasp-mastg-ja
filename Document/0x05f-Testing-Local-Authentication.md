@@ -316,20 +316,11 @@ F-Secure Labs は非常に詳細な [Android KeyStore と生体認証に関す�
 
 ### 参考情報
 
-#### OWASP Mobile Top 10 2016
-
-- M4 - Insecure Authentication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication>
-
 #### OWASP MASVS
 
 - MSTG-AUTH-1: "アプリがユーザーにリモートサービスへのアクセスを提供する場合、ユーザー名/パスワード認証など何らかの形態の認証がリモートエンドポイントで実行されている。"
 - MSTG-AUTH-8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
 - MSTG-STORAGE-11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
-
-#### CWE
-
-- CWE-287 - Improper Authentication
-- CWE-604 - Use of Client-Side Authentication
 
 #### アプリパーミッションリクエスト
 
