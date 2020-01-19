@@ -273,19 +273,11 @@ Android アプリは大部分が Java で実装されています。これは設
 
 ### 参考情報
 
-#### OWASP Mobile Top 10 2016
-
-- M7 - Poor Code Quality - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M7-Poor_Code_Quality>
-
 #### OWASP MASVS
 
 - MSTG-ARCH-2: "セキュリティコントロールはクライアント側だけではなくそれぞれのリモートエンドポイントで実施されている。"
 - MSTG-PLATFORM-2: "外部ソースおよびユーザーからの入力はすべて検証されており、必要に応じてサニタイズされている。これにはUI、インテントやカスタムURLなどのIPCメカニズム、ネットワークソースを介して受信したデータを含んでいる。"
 - MSTG-CODE-8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
-
-#### CWE
-
-- CWE-20 - Improper Input Validation
 
 #### start ContentActivity を介した XSS
 
