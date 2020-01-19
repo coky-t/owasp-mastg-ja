@@ -113,9 +113,9 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 
 外部 WiFi カードを使用するシナリオではカードがアクセスポイントを作成する機能が必要です。さらに、いくつかのツールをインストールするかネットワークを構成して中間者ポジションとなる必要があります (下記参照) 。Kali Linux で `iwconfig` コマンドを使用して、WiFi カードに AP 機能があるかどうかを確認できます。
 
-    ```shell
-    $ iw list | grep AP 
-    ```
+```shell
+    $ iw list | grep AP
+```
 
 別のアクセスポイントを使用するシナリオでは AP の構成にアクセスする必要があります。AP が以下のいずれかをサポートしているかどうかを最初に確認する必要があります。
 
@@ -131,11 +131,13 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 ##### インストール
 
 以下の手順はアクセスポイントと追加のネットワークインタフェースを使用して中間者ポジションをセットアップしています。
+
 1. 別のアクセスポイント、外部 USB WiFi カード、またはマシンの内蔵カードのいずれかを使用して WiFi ネットワークを作成します。
 
 これは macOS のビルトインユーティリティを使用して実行できます。[Mac のインターネット接続を他のネットワークユーザーと共有する](https://support.apple.com/en-ke/guide/mac-help/mchlp1540/mac "Share the internet connection on Mac with other network users") を使用できます。
 
 すべての主要な Linux および Unix オペレーティングシステムでは以下のようなツールが必要です。
+
 - hostapd
 - dnsmasq
 - iptables
@@ -148,6 +150,7 @@ Kali Linux ではこれらのツールを `apt-get` でインストールでき�
 $ apt-get update
 $ apt-get install hostapd dnsmasq aircrack-ng
 ```
+
 > iptables と wpa_supplicant は Kali Linux にデフォルトでインストールされています。
 
 2. 別のアクセスポイントの場合、トラフィックをマシンにルーティングします。外部 USB WiFi カードまたは内蔵 WiFi カードの場合、トラフィックはすでにマシンで利用可能です。
@@ -156,6 +159,7 @@ $ apt-get install hostapd dnsmasq aircrack-ng
 ##### 構成
 
 Kali Linux の構成ファイルにフォーカスします。以下の値を定義する必要があります。
+
 - wlan1 - AP ネットワークインタフェースの ID (AP 機能あり)
 - wlan0 - ターゲットネットワークインタフェースの ID (これは有線インタフェースまたは他の WiFi カードにできます)
 - 10.0.0.0/24 - AP ネットワークの IP アドレスとマスク
@@ -165,7 +169,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 - hostapd.conf
 
     ```
-    # Name of the WiFi interface we use 
+    # Name of the WiFi interface we use
     interface=wlan1
     # Use the nl80211 driver
     driver=nl80211
@@ -210,7 +214,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 中間者ポジションを取得できるためには上記の構成を実行する必要があります。これは Kali Linux 上で以下のコマンドを使用して実行できます。
 
-    ```shell
+```shell
     # check if other process is not using WiFi interfaces
     $ airmon-ng check kill
     # configure IP address of the AP network interface
@@ -221,14 +225,14 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
     $ wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
     # run DNS server
     $ dnsmasq -C dnsmasq.conf -d
-    # enable routing 
+    # enable routing
     $ echo 1 > /proc/sys/net/ipv4/ip_forward
     # iptables will NAT connections from AP network interface to the target network interface
     $ iptables --flush
     $ iptables --table nat --append POSTROUTING --out-interface wlan0 -j MASQUERADE
-    $ iptables --append FORWARD --in-interface wlan1 -j ACCEPT 
+    $ iptables --append FORWARD --in-interface wlan1 -j ACCEPT
     $ iptables -t nat -A POSTROUTING -j MASQUERADE
-    ```
+```
 
 これでモバイルデバイスをアクセスポイントに接続できます。
 
@@ -261,17 +265,17 @@ Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロ�
 
 - bettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
 
-    ```shell
+```shell
     $ echo "
     rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
     " | sudo pfctl -ef -
-    ```
+```
 
   Linux システムでは `iptables` を使用できます。
 
-    ```shell
-    $ sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080 
-    ```
+```shell
+    $ sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080
+```
 
   最後のステップとして、 Burp Suite の listener settings で 'Support invisible proxy' をセットする必要があります。
 
@@ -292,7 +296,7 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
     - 'Force use of SSL' をセット (HTTPS 使用時) および 'Support invisible proxy' をセットします。
 
 <img width=600px src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location"/>
- 
+
 <br/>
 <br/>
 
@@ -457,20 +461,11 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 
 ### 参考情報
 
-#### OWASP Mobile Top 10 2016
-
-- M3 - Insecure Communication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M3-Insecure_Communication>
-
 #### OWASP MASVS
 
 - MSTG-NETWORK-1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）単方向のセキュアでない通信チャネルに依存していない。"
-
-#### CWE
-
-- CWE-308 - Use of Single-factor Authentication
-- CWE-319 - Cleartext Transmission of Sensitive Information
 
 #### ツール
 
