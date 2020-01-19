@@ -570,10 +570,6 @@ Android では、開発者は Android 8.0 (API レベル 26) まで `Settings.Se
 
 ### 参考情報
 
-#### OWASP Mobile Top 10 2016
-
-- M4 - Insecure Authentication - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication>
-
 #### OWASP MASVS
 
 - MSTG-ARCH-2: "セキュリティコントロールはクライアント側だけではなくそれぞれのリモートエンドポイントで実施されている。"
@@ -587,14 +583,6 @@ Android では、開発者は Android 8.0 (API レベル 26) まで `Settings.Se
 - MSTG-AUTH-9: "リモートエンドポイントに二要素認証が存在し、リモートエンドポイントで二要素認証要件が一貫して適用されている。"
 - MSTG-AUTH-10: "機密トランザクションはステップアップ認証を必要としている。"
 - MSTG-AUTH-11: "アプリはユーザーのアカウントでのすべての機密アクティビティをユーザーに通知している。ユーザーはデバイスの一覧を表示したり、コンテキスト情報 (IP アドレス、位置情報など) を表示したり、特定のデバイスをブロックすることができる。"
-
-#### CWE
-
-- CWE-287 - Improper Authentication
-- CWE-307 - Improper Restriction of Excessive Authentication Attempts
-- CWE-308 - Use of Single-factor Authentication
-- CWE-521 - Weak Password Requirements
-- CWE-613 - Insufficient Session Expiration
 
 ##### SMS-OTP Research
 
