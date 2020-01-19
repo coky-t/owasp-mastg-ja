@@ -126,7 +126,6 @@ Advanced Encryption Standard (AES) はモバイルアプリの対称暗号化の
 
 <img src="Images/Chapters/0x07c/EncryptionMode.png" width="550px"/>
 
-
 Cipher Block Chaining (CBC) が ECB の代わりに使用されていることを確認します。CBC モードでは、平文ブロックは前の暗号文ブロックと XOR されます。これにより、ブロックに同じ情報が含まれていても、暗号化された各ブロックは一意でありランダム化されます。パディングオラクル攻撃に対する耐性を高めるために、CBC と HMAC を組み合わせることや、「パディングエラー」、「MAC エラー」、「復号化失敗」などのエラーが発生しないようにすることがベストであることに注意してください。
 
 暗号化されたデータを保存する場合には、Galois/Counter Mode (GCM) など、保存されたデータの完全性も保護するブロックモードを使用することをお勧めします。最後のものはそのアルゴリズムが各 TLSv1.2 実装に必須であるという副次の利点があり、すべての最新のプラットフォームで利用できます。
@@ -182,10 +181,6 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 - [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack "The Padding Oracle Attack")
 - [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem")
 
-##### OWASP Mobile Top 10 2016
-
-- M5 - Insufficient Cryptography - <https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography>
-
 ##### OWASP MASVS
 
 - MSTG-ARCH-8: "暗号鍵が（もしあれば）どのように管理されるかについての明確な方針があり、暗号鍵のライフサイクルが施行されている。 NIST SP 800-57 などの鍵管理標準に準拠することが理想的である。"
@@ -193,9 +188,3 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 - MSTG-CRYPTO-2: "アプリは実績のある暗号化プリミティブの実装を使用している。"
 - MSTG-CRYPTO-3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 - MSTG-CRYPTO-4: "アプリはセキュリティ上の目的で広く非推奨と考えられる暗号プロトコルやアルゴリズムを使用していない。"
-
-##### CWE
-
-- CWE-326 - Inadequate Encryption Strength
-- CWE-327 - Use of a Broken or Risky Cryptographic Algorithm
-- CWE-329 - Not Using a Random IV with CBC Mode
