@@ -324,7 +324,9 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 
 ##### 推奨される TLS 設定
 
-サーバー側で適切な TLS 設定を確保することも重要です。SSL は非推奨であり、もはや使用すべきではありません。TLS v1.2 および v1.3 はセキュアであると考えられますが、多くのサービスではいまだに TLS v1.0 および v1.1 が古いクライアントとの互換性のために許可されています。
+サーバー側で適切な TLS 設定を確保することも重要です。SSL プロトコルは非推奨であり、もはや使用すべきではありません。
+また TLS v1.0 および TLS v1.1 には [既知の脆弱性](https://portswigger.net/daily-swig/the-end-is-nigh-browser-makers-ditch-support-for-aging-tls-1-0-1-1-protocols "Browser-makers ditch support for aging TLS 1.0, 1.1 protocols") があり、2020年までにすべての主要なブラウザでその使用が非推奨になりました。
+TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベストプラクティスとみなされています。Android 10 (API level 29) 以降 TLS v1.3 はより高速でセキュアな通信のためにデフォルトで有効になります。[TLS v1.3 での主な変更点](https://developer.android.com/about/versions/10/behavior-changes-all#tls-1.3 "TLS 1.3 enabled by default") は暗号スイートのカスタマイズができなくなること、および TLS v1.3 が有効である場合にはそれらすべてが有効になることです。一方、ゼロラウンドトリップ (0-RTT) モードはサポートされません。
 
 クライアントとサーバーの両方が同じ組織により制御され、互いに通信するためだけに使用される場合、[設定を堅牢にすること](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") によりセキュリティを向上できます。
 
@@ -408,6 +410,15 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4 "TLS Cipher Suites") にあります。
 - OWASP 推奨暗号スイートは [TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md "OWASP TLS Cipher String Cheat Sheet") にあります。
 
+Android 10 では以下の [SHA-2 CBC 暗号スイートが削除された](https://developer.android.com/about/versions/10/behavior-changes-all#sha2-cbc-cipher-suites "SHA-2 CBC cipher suites removed") ことに注意します。
+
+- `TLS_RSA_WITH_AES_128_CBC_SHA256`
+- `TLS_RSA_WITH_AES_256_CBC_SHA256`
+- `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`
+- `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`
+- `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`
+- `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`
+
 一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#cipher-suites "Cipher suites") および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc "SSL Cipher Suite Values") バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
 
 #### 静的解析
@@ -479,6 +490,7 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 #### Android
 
 - Android supported Cipher suites - <https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites>
+- Android documentation: Android 10 Changes - <https://developer.android.com/about/versions/10/behavior-changes-all>
 
 #### iOS
 
