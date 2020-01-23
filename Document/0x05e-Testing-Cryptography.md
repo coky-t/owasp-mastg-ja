@@ -57,6 +57,7 @@ provider: AndroidKeyStore1.0 (Android AndroidKeyStore security provider)
 - Android 9 (API level 28) 以上では [Android 開発者ブログ](https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html "Cryptography Changes in Android P") はより積極的な変更を記しています。
   - `getInstance` メソッドを使用してプロバイダを指定し、P より下の任意の API をターゲットにすると、警告を得ます。P 以上をターゲットにすると、エラーを得ます。
   - `Crypto` プロバイダは現在削除されています。これをコールすると `NoSuchProviderException` が返されます。
+- Android 10 (API level 29) では [開発者ドキュメント](https://developer.android.com/about/versions/10/behavior-changes-all#security "Security Changes in Android 10") にすべてのネットワークセキュリティの変更がリストされています。
 
 Android SDK はセキュアな鍵生成および使用を記述するためのメカニズムを提供します。Android 6.0 (API level 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。
 
