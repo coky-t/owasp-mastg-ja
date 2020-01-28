@@ -37,12 +37,6 @@
 
 - [OWASP Transport Layer Protection チートシート](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/TransportLayerProtection.html)
 
-### 参考情報
-
-#### OWASP Mobile Top 10 2016
-
-- [M3 - 安全でない通信](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M3-Insecure_Communication.html)
-
 ## 0x04g-Testing-Cryptography モバイルアプリの暗号化
 
 ### 非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズムの特定
@@ -50,27 +44,11 @@
 - [CRYPTREC暗号リスト](http://www.cryptrec.go.jp/list/cryptrec-ls-0001-2012r4.pdf)
 - [SSL/TLS暗号設定ガイドライン](http://www.cryptrec.go.jp/report/cryptrec-gl-3001-2.0.pdf)
 
-### 参考情報
-
-#### OWASP Mobile Top 10 2016
-
-- [M5 - 不十分な暗号化](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M5-Insufficient_Cryptography.html)
-
 ## 0x04h-Testing-Code-Quality コード品質のテスト
 
 ### クロスサイトスクリプティング欠陥
 
 - [クロスサイトスクリプティング (XSS) 対策チートシート](https://jpcertcc.github.io/OWASPdocuments/CheatSheets/XSSPrevention.html) 
-
-### 参考情報
-
-#### OWASP Mobile Top 10 2016
-
-- [M7 - 脆弱なコード品質](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M7-Poor_Code_Quality.html)
-
-#### CWE
-
-- [CWE-20 - 不適切な入力確認](https://jvndb.jvn.jp/ja/cwe/CWE-20.html)
 
 ## 0x04i-Testing-user-interaction ユーザー啓発のテスト
 
@@ -92,11 +70,7 @@
 
 ## 0x05f-Testing-Local-Authentication
 
-- [M4 - 安全でない認証](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M4-Insecure_Authentication.html)
-
 ## 0x05g-Testing-Network-Communication
-
-- [M3 - 安全でない通信](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M3-Insecure_Communication.html)
 
 ## 0x05h-Testing-Platform-Interaction
 
@@ -117,8 +91,6 @@
 ## 0x06e-Testing-Cryptography
 
 ## 0x06f-Testing-Local-Authentication
-
-- [M4 - 安全でない認証](https://coky-t.github.io/owasp-mobile-top10-2016-ja/Mobile_Top_10_2016-M4-Insecure_Authentication.html)
 
 ## 0x06g-Testing-Network-Communication
 
