@@ -215,10 +215,9 @@ Core Data や Realm からのシンクが `NSFileProtectionComplete` データ�
 
 静的解析に関する推奨事項のほとんどは「iOS のデータストレージのテスト」の章にすでに記載されています。次に、以下のページで読むことができます。
 
-- [Apple 開発者ドキュメント: 証明書と鍵]( https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys "Certificates and keys")
+- [Apple 開発者ドキュメント: 証明書と鍵](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys "Certificates and keys")
 - [Apple 開発者ドキュメント: 新しい鍵の生成](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/generating_new_cryptographic_keys "Generating new keys")
-- [Apple 開発者ドキュメント: 鍵生成属性](
-https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/key_generation_attributes "Key Generation attributes")
+- [Apple 開発者ドキュメント: 鍵生成属性](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/key_generation_attributes "Key Generation attributes")
 
 #### 動的解析
 
