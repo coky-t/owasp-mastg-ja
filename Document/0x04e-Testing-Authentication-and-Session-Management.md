@@ -127,7 +127,7 @@ zxcvbn はアプリ開発者が Java (またはその他の) 実装を使用し�
 
 #### Have I Been Pwned: PwnedPasswords
 
-単一要素認証スキーム (たとえばパスワードのみ) に対する辞書攻撃の成功の可能性を減らすために、データ侵害でパスワードが危殆化されているかどうかを検証できます。これは Troy Hunt による Pwned Passwords API (api.pwnedpasswords.com で利用可能) に基づくサービスを使用して実行できます。例えば、"[Have I been pwned?](https://haveibeenpwned.com "';--have i been pwned?")" コンパニオンウェブサイトがあります。
+単一要素認証スキーム (たとえばパスワードのみ) に対する辞書攻撃の成功の可能性を減らすために、データ侵害でパスワードが危殆化されているかどうかを検証できます。これは Troy Hunt による Pwned Passwords API (api.pwnedpasswords.com で利用可能) に基づくサービスを使用して実行できます。例えば、"[Have I been pwned?](https://haveibeenpwned.com "\';--have i been pwned?")" コンパニオンウェブサイトがあります。
 可能性のあるパスワード候補の SHA-1 ハッシュに基づいて、API は指定されたパスワードのハッシュがサービスにより収集されたさまざまな侵害で見つかった回数を返します。このワークフローは以下のステップで実行します。
 
 1. ユーザー入力を UTF-8 にエンコードします (例: パスワード `test`) 。
