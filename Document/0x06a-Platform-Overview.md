@@ -51,7 +51,7 @@ iOS デバイスの電源を入れると、ブート ROM として知られる�
 
 #### コード署名
 
-Apple は Apple が承認したコード、つまり Apple により署名されたコードだけがデバイス上で動作するように、精巧な DRM システムを実装しています。言い換えれば、Apple が明示的に許可しない限り、脱獄されていない iOS デバイス上で任意のコードを実行することはできません。エンドユーザーは公式の Apple の App Store を通じてのみアプリをインストールするようになっています。この理由 (およびその他) のために、iOS は [crystal prison とみなされています](https://www.eff.org/deeplinks/2012/05/apples-crystal-prison-and-future-open-platforms "Apple's Crystal Prison and the Future of Open Platforms") 。
+Apple は Apple が承認したコード、つまり Apple により署名されたコードだけがデバイス上で動作するように、精巧な DRM システムを実装しています。言い換えれば、Apple が明示的に許可しない限り、脱獄されていない iOS デバイス上で任意のコードを実行することはできません。エンドユーザーは公式の Apple の App Store を通じてのみアプリをインストールするようになっています。この理由 (およびその他) のために、iOS は [crystal prison とみなされています](https://www.eff.org/deeplinks/2012/05/apples-crystal-prison-and-future-open-platforms "Apple\'s Crystal Prison and the Future of Open Platforms") 。
 
 アプリケーションを配布および実行するには開発者プロファイルと Apple 署名証明書が必要です。
 開発者は Apple に登録する必要があります。[Apple Developer Program](https://developer.apple.com/support/compare-memberships/ "Membership for Apple Developer Program") に参加し、年間サブスクリプションを支払うことで開発と配布の可能性を広げます。また、サイドローディングを介してアプリをコンパイルおよび配布できる (但し、App Store では配布できない) フリーの開発者アカウントもあります。
