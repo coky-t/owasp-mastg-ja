@@ -132,7 +132,7 @@ Android 開発者ドキュメントにリファレンス実装と [生体認証�
 
 CryptoObject を使用する際の認証フローは以下の通りです。
 
-- アプリは `setUserAuthenticationRequired` に true をセットし `setInvalidatedByBiometricEnrollment` に -1 をセットして KeyStore に鍵を作成します。
+- アプリは `setUserAuthenticationRequired` および `setInvalidatedByBiometricEnrollment` に true をセットして KeyStore に鍵を作成します。さらに `setInvalidatedByBiometricEnrollment` に -1 をセットする必要があります。
 - この鍵はユーザーを認証している情報 (セッション情報や認証トークンなど) を暗号化するために使用されます。
 - データを復号するために KeyStore から鍵をリリースする前に、有効な生体認証セットを提示する必要があります。これは `authenticate` メソッドと `CryptoObject` を通して妥当性確認されます。
 - このソリューションはルート化デバイスでもバイパスできません。KeyStore からの鍵は生体認証の成功後にのみ使用できるためです。
