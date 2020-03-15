@@ -169,3 +169,4 @@
 - DVIA-v2: 脆弱な iOS アプリです。Swift で書かれ、15以上の脆弱性があります。 - <https://github.com/prateek147/DVIA-v2>
 - iGoat: iOS 開発者 (iPhone, iPad など) およびモバイルアプリペネトレーションテスト技術者のための楽手ツールとして機能する iOS Objective-C アプリです。WebGoat プロジェクトに触発されたもので、同様の概念的な流れを持っています。 - <https://github.com/owasp/igoat>
 - iGoat-Swift: オリジナル iGoat プロジェクトの Swift バージョンです。 - <https://github.com/owasp/igoat-swift>
+- UnSAFE Bank: UnSAFE Bank はサイバーセキュリティリスクとさまざまなテストケースを盛り込むことを目的に設計されたコアな仮想銀行業務アプリケーションです。初心者、開発者、セキュリティアナリストが脆弱性評価とペネトレーションテストスキルを学習、ハック、および臨機応変に対応できるようにします。 - <https://github.com/lucideus-repo/UnSAFE_Bank>
