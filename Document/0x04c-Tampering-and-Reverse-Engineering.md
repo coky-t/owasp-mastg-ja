@@ -94,6 +94,7 @@ Frida は Frida API 上に構築された一連のシンプルなツール群も
 - [Fridump](https://github.com/Nightbringer21/fridump "fridump"): Android と iOS の両方で使えるメモリダンプツール。
 - [Objection](https://github.com/sensepost/objection "objection"): ランタイムモバイルセキュリティ評価フレームワーク。
 - [r2frida](https://github.com/nowsecure/r2frida "r2frida"): radare2 の強力なリバースエンジニアリング機能と Frida の動的計装ツールキットをマージしたプロジェクト。
+- [jnitrace](https://github.com/chame1eon/jnitrace "jnitrace"): ネイティブライブラリによる Android JNI ランタイムメソッドの使用状況をトレースするためのツール。
 
 このガイドではこれらすべてのツールを使用していきます。
 
