@@ -436,7 +436,7 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 - OWASP ZAP や Burp Suite などの傍受プロキシですべての HTTP(S) および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
 - Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") ツールを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
 
-> 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび SSL ピンニングのテスト」を参照してください。
+> 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび証明書ピンニングのテスト」を参照してください。
 
 サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
 
