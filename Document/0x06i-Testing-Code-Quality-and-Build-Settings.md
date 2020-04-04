@@ -273,7 +273,7 @@ $ carthage update --platform iOS
 $ otool -L <Executable>
 ```
 
-但し、これらには使用されているすべてのライブラリが含まれるわけではありません。次に、(Objective-C の場合) class-dump を使用して、使用されているヘッダファイルのサブセットを生成し、どのライブラリが関係しているかを導き出すことができます。しかし、ライブラリのバージョンは検出されません。
+但し、これらには使用されているすべてのライブラリが含まれるわけではありません。次に、class-dump (Objective-C の場合) または最新の dsdump を使用して、使用されているヘッダファイルのサブセットを生成し、どのライブラリが関係しているかを導き出すことができます。しかし、ライブラリのバージョンは検出されません。
 
 ```shell
 $ ./class-dump <Executable> -r
@@ -663,7 +663,7 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 - CocoaPods - <https://CocoaPods.org>
 - OWASP Dependency Checker - <https://jeremylong.github.io/DependencyCheck/>
 - Sourceclear - <https://sourceclear.com>
-- Class-dump - <https://github.com/nygard/class-dump>
+- class-dump - <https://github.com/nygard/class-dump>
 - RetireJS - <https://retirejs.github.io/retire.js/>
 - idb - <https://github.com/dmayer/idb>
 - Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
