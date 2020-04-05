@@ -2,7 +2,22 @@
 
 ほぼすべての iOS アプリは一つ以上のリモートサービスのクライアントとして機能します。このネットワーク通信は通常、公衆 Wi-Fi などの信頼できないネットワークで行われるため、従来のネットワークベースの攻撃が潜在的な問題になります。
 
-ほとんどの最新のモバイルアプリは HTTP ベースのウェブサービスのバリエーションを使用しています。これらのプロトコルは十分に文書化されサポートされています。iOS では、`NSURLConnection` クラスが URL リクエストを非同期および同期的にロードするクラスメソッドを提供します。
+最新のモバイルアプリの多くは HTTP ベースのウェブサービスに類するものを使用しています。これらのプロトコルは十分に文書化されサポートされているためです。
+iOS 12.0 以降 [Network フレームワーク](https://developer.apple.com/documentation/network "API Reference Network") および [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession "API Reference URLSession") クラスは非同期的および同期的にネットワークおよび URL リクエストをロードするメソッドを提供しています。古い iOS バージョンでは [Sockets API](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html "Using Sockets and Socket Streams") を利用できます。
+
+### Network Framework
+
+2018 年の [Apple Worldwide Developers Conference (WWDC)](https://developer.apple.com/videos/play/wwdc2018/715 "Introducing Network.framework: A modern alternative to Sockets") で紹介された Network フレームワークは Sockets API に代わるものです。この低レベルのネットワークフレームワークは動的なネットワーキング、セキュリティ、パフォーマンスサポートが組み込まれた、データを送受信するクラスを提供します。
+
+引数 `using: .tls` が使用されている場合、Network フレームワークでは TLS 1.3 がデフォルトで有効になっています。これは従来の [Secure Transport](https://developer.apple.com/documentation/security/secure_transport "API Reference Secure Transport") フレームワークよりも推奨されるオプションです。
+
+### URLSession
+
+`URLSession` は Network フレームワーク上に構築され、同じトランスポートサービスを利用します。エンドポイントが HTTPS の場合、このクラスもデフォルトで TLS 1.3 を使用します。
+
+`URLSession` は HTTP および HTTPS 接続で Network フレームワークを直接利用する代わりに使用すべきです。このクラスはネイティブに両方の URL スキームをサポートしており、そのような接続に最適化されています。定型コードが少なく済むため、エラーを生みにくくなり、デフォルトでセキュアな接続が確保されます。Network フレームワークは低レベルネットワーキングや高度なネットワーキング要件がある場合にのみ使用すべきです。
+
+Apple の公式ドキュメントには Network フレームワークを使用して [netcat を実装する](https://developer.apple.com/documentation/network/implementing_netcat_with_network_framework "Implementing netcat with Network Framework") 例と、 `URLSession` を使用して [ウェブサイトデータをメモリにフェッチする](https://developer.apple.com/documentation/foundation/url_loading_system/fetching_website_data_into_memory "Fetching Website Data into Memory") 例があります。
 
 ### App Transport Security (MSTG-NETWORK-2)
 
