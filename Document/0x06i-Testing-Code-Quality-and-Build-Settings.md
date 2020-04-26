@@ -219,7 +219,7 @@ $ pod install
 次に、依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
 
 ```shell
-$ sudo gem install CocoaPods-dependencies
+$ sudo gem install cocoapods-dependencies
 $ pod dependencies
 ```
 
