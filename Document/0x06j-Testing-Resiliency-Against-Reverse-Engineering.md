@@ -34,6 +34,7 @@
 /private/var/mobile/Library/SBSettings/Themes
 /private/var/stash
 /private/var/tmp/cydia.log
+/var/tmp/cydia.log
 /usr/bin/sshd
 /usr/libexec/sftp-server
 /usr/libexec/ssh-keysign
@@ -45,6 +46,7 @@
 /usr/bin/cycript
 /usr/local/bin/cycript
 /usr/lib/libcycript.dylib
+/var/log/syslog
 ```
 
 ##### ファイルパーミッションのチェック
@@ -268,29 +270,25 @@ script.load()
 sys.stdin.read()
 ```
 
-### アンチデバッグチェック (MSTG-RESILIENCE-2)
+### アンチデバッグ検出のテスト (MSTG-RESILIENCE-2)
 
 #### 概要
 
-アプリケーションのデバッグや探索はリバース時に役立ちます。リバースエンジニアはデバッガを使用して重要な変数を追跡できるだけではなく、メモリの読み取りと改変もできます。
+デバッガを使用してアプリケーションを探索することはリバース時の非常に強力なテクニックです。機密データを含む変数を追跡し、アプリケーションのコントロールフローを変更するだけでなく、メモリやレジスタの読み取りと改変もできます。
 
-ダメージを与えるためにデバッグが使用できる場合、アプリケーション開発者は多くの技法を使用してそれを防止します。これらはアンチデバッグテクニックと呼ばれます。Android の「リバースエンジニアリングに対する耐性のテスト」の章で説明したように、アンチデバッグテクニックは予防的または対処的です。
+iOS に適用可能なアンチデバッグテクニックがいくつかあり、予防的または対処的に分類できます。それらのいくつかを以下で説明します。防御の第一線として、デバッガがアプリケーションにアタッチすることを完全に妨げる防止テクニックを使用できます。さらに、アプリケーションがデバッガの存在を検出し、通常の動作から逸脱する機会を与える対処的テクニックを適用することもできます。アプリ全体に適切に分散されている場合、これらのテクニックは全体的な耐性を高めるための二次的または支援的な施策として機能します。
 
-予防的テクニックはデバッガがアプリケーションにアタッチすることをすべて防ぎます。また対処的テクニックはデバッガの存在を検証し、アプリケーションが期待された動作から乖離することを可能にします。
+機密性の高いデータを処理するアプリのアプリケーション開発者はデバッグを防ぐことが事実上不可能であることを認識しておくべきです。アプリが公開されている場合、信頼できないデバイスで実行され、それは攻撃者の完全な制御下にあります。決意を固めた攻撃者はアプリバイナリにパッチを適用するか、 Frida などのツールで実行時にアプリの動作を動的に改変することにより、最終的にすべてのアプリのアンチデバッグコントロールをバイパスできます。
 
-アンチデバッグテクニックはいくつかありますが、それらのいくつかを以下で説明します。
+Apple によると、 "[上記のコードの使用をプログラムのデバッグビルドに制限](https://developer.apple.com/library/archive/qa/qa1361/_index.html "Detecting the Debugger")" すべきです。しかし、調査によると [多くの App Store アプリにはこれらのチェックを含むことがよくあります](https://seredynski.com/articles/a-security-review-of-1300-appstore-applications.html "A security review of 1,300 AppStore applications - 5 April 2020") 。
 
 ##### ptrace の使用
 
-iOS は XNU カーネル上で動作します。 XNU カーネルは `ptrace` システムコールを実装していますが、それは Unix や Linux の実装ほど強力ではありません。 XNU カーネルはデバッグを可能にするために Mach IPC を介して別のインタフェースを開示しています。 `ptrace` の iOS 実装は重要な機能を果たしています。プロセスのデバッグを防止することです。この機能は `ptrace` システムコールの PT_DENY_ATTACH オプションとして実装されています。 PT_DENY_ATTACH の使用はかなりよく知られたアンチデバッグテクニックであるため、 iOS ペンテストでよく遭遇することがあります。
+"[iOS の改竄とリバースエンジニアリング](Document/0x06c-Reverse-Engineering-and-Tampering.md#debugging)" の章にあるように、iOS XNU カーネルは `ptrace` システムコールを実装していますが、プロセスを適切にデバッグするために必要となる機能のほとんどを欠如しています (例えば、アタッチやステップ実行は可能ですが、メモリやレジスタの読み取りや書き込みはできません) 。
 
-Mac Hacker's Handbook での PT_DENY_ATTACH の説明を以下に記します。
+ですが、 `ptrace` syscall の iOS 実装には非標準で非常に便利な機能が含まれています。プロセスのデバッグを防止するのです。この機能は `PT_DENY_ATTACH` として実装されており、 [公式の BSD システムコールマニュアル](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/ptrace.2.html "PTRACE(2)") で説明されています。簡単に言うと、他のデバッガが呼び出し側プロセスにアタッチできないことを保証します。デバッガがアタッチしようとすると、そのプロセスは終了します。 `PT_DENY_ATTACH` の使用はかなりよく知られているアンチデバッグテクニックであるため、 iOS ペンテスト時によく遭遇する可能性があります。
 
-> このリクエストはトレースされるプロセスにより使用されるもう一つのオペレーションです。現在トレースされていないプロセスがその親による将来のトレースを拒否できるようにします。他のすべての引数は無視されます。プロセスが現在トレースされている場合には、 ENOTSUP の終了ステータスで終了します。そうでない場合には、将来のトレースを拒否するフラグを設定します。このフラグを設定したプロセスを親がトレースしようとすると、親にセグメンテーション違反が発生します。
-
-つまり、 PT_DENY_ATTACH とともに `ptrace` を使用することで、他のデバッガは呼び出しているプロセスにアタッチできないことが保証されます。デバッガがアタッチしようとすると、そのプロセスは終了します。
-
-詳細に入る前に、 `ptrace` は公開 iOS API の一部ではないことを知っておくことが重要です。非公開 API は禁止されており、 App Store はそれらを含むアプリを拒否する可能性があります。このため、 `ptrace` はコード内で直接呼び出されることはありません。これは `dlsym` を介して `ptrace` 関数ポインタを取得された際に呼び出されます。
+> 詳細に入る前に、 `ptrace` は公開 iOS API の一部ではないことを知っておくことが重要です。非公開 API は禁止されており、 App Store はそれらを含むアプリを拒否する可能性があります。このため、 `ptrace` はコード内で直接呼び出されることはありません。これは `dlsym` を介して `ptrace` 関数ポインタを取得された際に呼び出されます。
 
 以下は上記ロジックの実装例です。
 
@@ -305,23 +303,23 @@ void anti_debug() {
 }
 ```
 
-以下はこのアプローチを実装する逆アセンブルされたバイナリの例です。
+このテクニックをバイパスする方法を示すために、このアプローチを実装する逆アセンブルされたバイナリの例を使用します。
 
 <img src="Images/Chapters/0x06j/ptraceDisassembly.png" width="500px"/>
 
-バイナリで何が起きているかを見てみましょう。第二引数 (レジスタ R1) に `ptrace` を指定して `dlsym` が呼び出されます。レジスタ R0 の戻り値はオフセット *0x1908A* でレジスタ R6 に移動されます。オフセット *0x19098* で、 BLX R6 命令を使用してレジスタ R6 のポインタ値が呼び出されます。 `ptrace` 呼び出しを無効にするには、 BLX R6 命令 (リトルエンディアンで 0xB0 0x47) を NOP 命令 (リトルエンディアンで 0x00 0xBF) に置き換える必要があります。パッチを適用すると、コードは以下のようになります。
+バイナリで何が起きているかを見てみましょう。第二引数 (レジスタ R1) に `ptrace` を指定して `dlsym` が呼び出されます。レジスタ R0 の戻り値はオフセット 0x1908A でレジスタ R6 に移動されます。オフセット 0x19098 で、 BLX R6 命令を使用してレジスタ R6 のポインタ値が呼び出されます。 `ptrace` 呼び出しを無効にするには、 `BLX R6` 命令 (リトルエンディアンで 0xB0 0x47) を `NOP` 命令 (リトルエンディアンで 0x00 0xBF) に置き換える必要があります。パッチを適用すると、コードは以下のようになります。
 
 <img src="Images/Chapters/0x06j/ptracePatched.png" width="500px"/>
 
 [Armconverter.com](http://armconverter.com/ "Armconverter") はバイトコードと命令ニーモニック間の変換を行うための便利なツールです。
 
+他の ptrace ベースのアンチデバッグテクニックに対するバイパスは ["Defeating Anti-Debug Techniques: macOS ptrace variants" by Alexander O'Mara](https://alexomara.com/blog/defeating-anti-debug-techniques-macos-ptrace-variants/ "Defeating Anti-Debug Techniques: macOS ptrace variants") を参照してください。
+
 ##### sysctl の使用
 
-呼び出しているプロセスにアタッチされているデバッガを検出する別のアプローチには `sysctl` があります。 Apple のドキュメントによると以下のとおりです。
+呼び出し側プロセスにアタッチされているデバッガを検出する別のアプローチには `sysctl` があります。 Apple のドキュメントによると、プロセスがシステム情報を設定する (適切な権限を持つ場合) 、または単にシステム情報を取得する (プロセスがデバッグされているかどうかなど) ことが可能です。ただし、アプリが `sysctl` を使用しているという事実だけがアンチデバッグコントロールの指標である可能性があることに注意します。これは [常にそうであるとは限りません](http://www.cocoawithlove.com/blog/2016/03/08/swift-wrapper-for-sysctl.html "Gathering system information in Swift with sysctl") 。
 
-> `sysctl` 関数はシステム情報を取得し、適切な権限を持つプロセスがシステム情報を設定できるようにします。
-
-`sysctl` は現在のプロセスに関する情報 (プロセスがデバッグされているかどうかなど) を取得するためにも使用できます。以下の実装例は ["デバッガの下で実行されているかどうかをどのように判断しますか？"](https://developer.apple.com/library/content/qa/qa1361/_index.html "How do I determine if I\'m being run under the debugger?") にあるものです。
+[Apple ドキュメントアーカイブ](https://developer.apple.com/library/content/qa/qa1361/_index.html "How do I determine if I\'m being run under the debugger?") の以下の例では適切なパラメータを使用して `sysctl` の呼び出しにより返された `info.kp_proc.p_flag` フラグをチェックしています。
 
 ```C
 #include <assert.h>
@@ -364,26 +362,19 @@ static bool AmIBeingDebugged(void)
 }
 ```
 
-上記のコードをコンパイルすると、コードの後半の逆アセンブル版は以下のようになります。
+このチェックをバイパスする方法の一つはバイナリにパッチを適用することです。上記のコードをコンパイルすると、コードの後半の逆アセンブル版は以下のようになります。
 
 <img src="Images/Chapters/0x06j/sysctlOriginal.png" width="550px"/>
 
-オフセット *0xC13C* の MOVNE R0, #1 命令をパッチして MOVNE R0, #0 (バイトコードで 0x00 0x20) に変更した後、パッチされたコードは以下のようになります。
+オフセット 0xC13C の `MOVNE R0, #1` 命令をパッチして `MOVNE R0, #0` (バイトコードで 0x00 0x20) に変更した後、パッチされたコードは以下のようになります。
 
 <img src="Images/Chapters/0x06j/sysctlPatched.png" width="550px"/>
 
-デバッガ自体を使用して `sysctl` の呼び出しにブレークポイントを設定することで `sysctl` チェックをバイパスできます。このアプローチは [iOS アンチデバッグ保護 #2](https://www.coredump.gr/articles/ios-anti-debugging-protections-part-2/ "iOS Anti-Debugging Protections #2") に記されています。
-
-Needle には非特定の脱獄検出実装をバイパスすることを目的としたモジュールが含まれています。 Needle は Frida を使用して、デバイスが脱獄されているかどうかを判断するために使用される可能性のあるネイティブメソッドをフックします。また脱獄検出プロセスで使用される可能性のある関数名を検索し、デバイスが脱獄されている場合には "false" を返します。このモジュールを実行するには以下のコマンドを使用します。
-
-```shell
-[needle] > use dynamic/detection/script_jailbreak-detection-bypass
-[needle][script_jailbreak-detection-bypass] > run
-```
+デバッガ自体を使用して `sysctl` の呼び出しにブレークポイントを設定することで `sysctl` チェックもバイパスできます。このアプローチは [iOS アンチデバッグ保護 #2](https://www.coredump.gr/articles/ios-anti-debugging-protections-part-2/ "iOS Anti-Debugging Protections #2") に記されています。
 
 #### getppid の使用
 
-iOS 上のアプリケーションは親の PID を確認することによりデバッガから起動されたかどうかを検出できます。通常、アプリケーションは [launchd](http://newosxbook.com/articles/Ch07.pdf) プロセスにより起動されます。これは _user モード_ で実行される最初のプロセスであり PID=1 です。しかし、デバッガがアプリケーションを起動すると、 `getppid` が 1 以外の PID を返すことがわかります。この検出技法は以下の方法で実装できます。
+iOS 上のアプリケーションは親の PID を確認することによりデバッガから起動されたかどうかを検出できます。通常、アプリケーションは [launchd](http://newosxbook.com/articles/Ch07.pdf) プロセスにより起動されます。これは _user モード_ で実行される最初のプロセスであり PID=1 です。しかし、デバッガがアプリケーションを起動すると、 `getppid` が 1 以外の PID を返すことがわかります。この検出技法は以下で示すように Objective-C または Swift を使用して、 (syscalls を介して) ネイティブコードで実装できます。
 
 ```swift
 func AmIBeingDebugged() -> Bool {
@@ -391,13 +382,15 @@ func AmIBeingDebugged() -> Bool {
 }
 ```
 
+他のテクニックと同様に、これにも簡単なバイパスがあります (バイナリにパッチを適用する、 Frida フックを使用するなど) 。
+
 ### ファイル整合性チェック (MSTG-RESILIENCE-3 および MSTG-RESILIENCE-11)
 
 #### 概要
 
 ファイル整合性に関連するトピックは二つあります。
 
- 1. _アプリケーションソースコード整合性チェック:_ 「改竄とリバースエンジニアリング」の章では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックを簡単にバイパスできることもわかりました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックする内部ランタイムチェックを追加することです。
+ 1. _アプリケーションソースコード整合性チェック:_ 「改竄とリバースエンジニアリング」の章では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックをバイパスできることもわかりました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックするカスタムチェックを追加することです。
 
  2. _ファイルストレージ整合性チェック:_ キーチェーンのキー・バリューペア、 `UserDefaults`/`NSUserDefaults` 、 SQLite データベース、 Realm データベースなど、ファイルがアプリケーションにより格納される際、これらの整合性を保護する必要があります。
 
@@ -762,7 +755,8 @@ IPA の Mach-O と "Frameworks" ディレクトリに含まれるライブラリ
 
 ### 参考情報
 
-- [#geist] Dana Geist, Marat Nigmatullin: Jailbreak/Root Detection Evasion Study on iOS and Android - <http://delaat.net/rp/2015-2016/p51/report.pdf>
+- [#geist] Dana Geist, Marat Nigmatullin. Jailbreak/Root Detection Evasion Study on iOS and Android - <http://delaat.net/rp/2015-2016/p51/report.pdf>
+- Jan Seredynski. A security review of 1,300 AppStore applications (5 April 2020) - <https://seredynski.com/articles/a-security-review-of-1300-appstore-applications.html>
 
 #### OWASP MASVS
 
