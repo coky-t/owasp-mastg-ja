@@ -132,7 +132,7 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 
 以下の手順はアクセスポイントと追加のネットワークインタフェースを使用して中間者ポジションをセットアップしています。
 
-1. 別のアクセスポイント、外部 USB WiFi カード、またはマシンの内蔵カードのいずれかを使用して WiFi ネットワークを作成します。
+別のアクセスポイント、外部 USB WiFi カード、またはマシンの内蔵カードのいずれかを使用して WiFi ネットワークを作成します。
 
 これは macOS のビルトインユーティリティを使用して実行できます。[Mac のインターネット接続を他のネットワークユーザーと共有する](https://support.apple.com/en-ke/guide/mac-help/mchlp1540/mac "Share the internet connection on Mac with other network users") を使用できます。
 
@@ -153,8 +153,9 @@ $ apt-get install hostapd dnsmasq aircrack-ng
 
 > iptables と wpa_supplicant は Kali Linux にデフォルトでインストールされています。
 
-2. 別のアクセスポイントの場合、トラフィックをマシンにルーティングします。外部 USB WiFi カードまたは内蔵 WiFi カードの場合、トラフィックはすでにマシンで利用可能です。
-3. WiFi からの着信トラフィックを、トラフィックがターゲットネットワークに到達できる追加のネットワークインタフェースにルーティングします。追加のネットワークインタフェースは、セットアップに応じて有線接続または他の WiFi カードにできます。
+別のアクセスポイントの場合、トラフィックをマシンにルーティングします。外部 USB WiFi カードまたは内蔵 WiFi カードの場合、トラフィックはすでにマシンで利用可能です。
+
+WiFi からの着信トラフィックを、トラフィックがターゲットネットワークに到達できる追加のネットワークインタフェースにルーティングします。追加のネットワークインタフェースは、セットアップに応じて有線接続または他の WiFi カードにできます。
 
 ##### 構成
 
@@ -168,7 +169,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 - hostapd.conf
 
-    ```
+    ```text
     # Name of the WiFi interface we use
     interface=wlan1
     # Use the nl80211 driver
@@ -190,7 +191,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 - wpa_supplicant.conf
 
-    ```
+    ```text
     network={
         ssid="NAME_OF_THE_TARGET_NETWORK"
         psk="PASSWORD_OF_THE_TARGET_NETWORK"
@@ -199,7 +200,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 - dnsmasq.conf
 
-    ```
+    ```text
     interface=wlan1
     dhcp-range=10.0.0.10,10.0.0.250,12h
     dhcp-option=3,10.0.0.1
