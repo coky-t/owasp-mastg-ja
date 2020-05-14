@@ -466,7 +466,7 @@ protected void attachBaseContext(Context base) {
 いろいろなアイテムを探してみます。
 
 - ネイティブコードの部分はありますか。もしあれば、一般的なメモリ破損のセクションで与えられた問題をチェックします。ネイティブコードは JNI ラッパー、 .CPP/.H/.C ファイル、 NDK や他のネイティブフレームワークがあれば簡単に発見できます。
-- Java コードや Kotlin コードはありますか。 [Android デシリアライゼーション脆弱性の簡単な歴史](https://lgtm.com/blog/android_deserialization "android deserialization") で説明されているような、シリアライゼーション/デシリアライゼーション問題を探します。
+- Java コードや Kotlin コードはありますか。 [Android デシリアライゼーション脆弱性の簡単な歴史](https://securitylab.github.com/research/android-deserialization-vulnerabilities "android deserialization") で説明されているような、シリアライゼーション/デシリアライゼーション問題を探します。
 
 Java/Kotlin コードでもメモリリークが発生する可能性があることに注意します。未登録ではない BroadcastReceivers 、 `Activity` または `View` クラスへの静的参照、 `Context` への参照をもつシングルトンクラス、内部クラス参照、匿名クラス参照、 AsyncTask 参照、ハンドラ参照、スレッディングの誤り、 TimerTask 参照などさまざまなアイテムを探します。詳細は以下で確認してください。
 
@@ -488,7 +488,7 @@ Java/Kotlin コードでもメモリリークが発生する可能性がある�
 
 Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。ProGuard はコードを縮小および難読化し、 Android Java アプリのバイトコードから不要なデバッグ情報を取り除く簡易な方法を提供します。クラス名、メソッド名、変数名などの識別子を無意味な文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
 
-ほとんどの Android アプリケーションは Java ベースであるため、 [バッファオーバーフロー脆弱性に対する免疫があります](https://www.owasp.org/index.php/Reviewing_Code_for_Buffer_Overruns_and_Overflows#.NET_.26_Java "Java Buffer Overflows") 。とはいえ、 Android NDK を使用している場合には依然としてバッファオーバーフロー脆弱性が存在する可能性がありますので、セキュアなコンパイラ設定を検討します。
+ほとんどの Android アプリケーションは Java ベースであるため、 [バッファオーバーフロー脆弱性に対する免疫があります](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow "Java Buffer Overflows") 。とはいえ、 Android NDK を使用している場合には依然としてバッファオーバーフロー脆弱性が存在する可能性がありますので、セキュアなコンパイラ設定を検討します。
 
 #### 静的解析
 
@@ -601,7 +601,7 @@ class a$b
 
 #### Memory Analysis References
 
-- A brief history of Android deserialization vulnerabilities - <https://lgtm.com/blog/android_deserialization>
+- A brief history of Android deserialization vulnerabilities - <https://securitylab.github.com/research/android-deserialization-vulnerabilities>
 - 9 ways to avoid memory leaks in Android - <https://android.jlelse.eu/9-ways-to-avoid-memory-leaks-in-android-b6d81648e35e>
 - Memory Leak Patterns in Android - <https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570>
 
