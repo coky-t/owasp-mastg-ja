@@ -560,6 +560,9 @@ drwxr-xr-x 11 _installd _installd  352 Nov 19 06:08 ../
 
 Frida が _残した_ これらの _トレース_ を見ると、 Frida を検出することは簡単な作業であると想像できることでしょう。そしてこれらのライブラリを検出することは簡単ですが、そのような検出をバイパスすることも同様に簡単です。ツールの検出はいたちごっこであり、事態はさらに複雑になるかもしれません。以下の表は典型的な Frida 検出方法とその有効性について簡単な説明をまとめたものです。
 
+<div style="page-break-after: always;">
+</div>
+
 > [iOS Security Suite](https://github.com/securing/IOSSecuritySuite "iOS Security Suite") には以下の検出方法の一部が実装されています。
 
 | 手法 | 説明 | 考察 |
@@ -624,16 +627,16 @@ Frida が _残した_ これらの _トレース_ を見ると、 Frida を検�
 
 サンプルの Swift プロジェクトを使用して、 SwiftShield の使い方を示します。
 
-1. <https://github.com/sushi2k/SwiftSecurity> をチェックアウトします。
-2. Xcode でそのプロジェクトを開き、プロジェクトが正常にビルドされることを確認します (Product / Build または Apple-Key + B) 。
-3. SwiftShield の最新リリースを [ダウンロード](https://github.com/rockbruno/swiftshield/releases "SwiftShield Download") して、それを展開します。
-4. SwiftShield をダウンロードしたディレクトリに移動し、 swiftshield 実行可能ファイルを `/usr/local/bin` にコピーします。
+- <https://github.com/sushi2k/SwiftSecurity> をチェックアウトします。
+- Xcode でそのプロジェクトを開き、プロジェクトが正常にビルドされることを確認します (Product / Build または Apple-Key + B) 。
+- SwiftShield の最新リリースを [ダウンロード](https://github.com/rockbruno/swiftshield/releases "SwiftShield Download") して、それを展開します。
+- SwiftShield をダウンロードしたディレクトリに移動し、 swiftshield 実行可能ファイルを `/usr/local/bin` にコピーします。
 
 ```bash
 $ cp swiftshield/swiftshield /usr/local/bin/
 ```
 
-5. terminal で SwiftSecurity ディレクトリ (手順 1 でチェックアウトした場所) に移動し、 swiftshield コマンド (手順 3 でダウンロードしたもの) を実行します。
+- terminal で SwiftSecurity ディレクトリ (手順 1 でチェックアウトした場所) に移動し、 swiftshield コマンド (手順 3 でダウンロードしたもの) を実行します。
 
 ```bash
 $ cd SwiftSecurity
