@@ -107,7 +107,7 @@ isAdmin=True
 
 zxcvbn JavaScript ライブラリを HTML ページに追加した後、ブラウザコンソールで `zxcvbn` を実行して、スコアを含むパスワードをクラックする可能性に関する詳細情報を取得できます。
 
-<img src="Images/Chapters/0x04e/zxcvbn.png" alt="An example of a zxcvbn score" width="500">
+<img src="Images/Chapters/0x04e/zxcvbn.png" alt="An example of a zxcvbn score" width="500" />
 
 スコアは以下のように定義され、例えばパスワード強度バーに使用できます。
 
@@ -170,13 +170,13 @@ Burp Intruder でのワードリストベースのブルートフォース攻撃
 
 すべてを設定しワードリストを選択したら、攻撃を開始する準備が整いました。
 
-<img src="Images/Chapters/0x04e/BurpIntruderInputList.png" alt="List of passwords in Burp Suite" width="450">
+<img src="Images/Chapters/0x04e/BurpIntruderInputList.png" alt="List of passwords in Burp Suite" width="450" />
 
 - **Start attack** ボタンをクリックして認証を攻撃します。
 
 新しいウィンドウが開きます。サイトリクエストは順番に送信され、各リクエストはリストのパスワードに対応します。レスポンスに関する情報 (長さ、ステータスコードなど) が各リクエストに対して提供されるため、成功した試行と失敗した試行を区別できます。
 
-<img src="Images/Chapters/0x04e/BurpIntruderSuccessfulAttack.png" alt="A successful attack in Burp Suite" width="450">
+<img src="Images/Chapters/0x04e/BurpIntruderSuccessfulAttack.png" alt="A successful attack in Burp Suite" width="450" />
 
 この例では、パスワード 12345 を明らかにする、異なる長さと HTTP ステータスコードにより成功した試行を識別できます。
 
@@ -467,7 +467,7 @@ OAuth 2.0 は四つのロールを定義しています。
 
 注意: API はリソース所有者と認可サーバーの両方のロールを果たします。したがって、両方を API と呼んでいます。
 
-<img src="Images/Chapters/0x04e/abstract_oath2_flow.png" alt="Abstract Protocol Flow" width="450">
+<img src="Images/Chapters/0x04e/abstract_oath2_flow.png" alt="Abstract Protocol Flow" width="450" />
 
 図のステップのより [詳細な説明](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2 "An Introduction into OAuth2") は以下のとおりです。
 
