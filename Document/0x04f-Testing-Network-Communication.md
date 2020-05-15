@@ -14,7 +14,7 @@
 
 傍受プロキシを使用するには、それをマシン上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
-<img src="Images/Chapters/0x04f/BURP.png" width="550px"/>
+<img src="Images/Chapters/0x04f/BURP.png" width="550px" />
 
 プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS ごとの「テスト環境構築」の章でこれを行う方法について説明します。
 
@@ -93,7 +93,7 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 
 モバイルフォンでブラウザを起動して `http://example.com` に移動すると、Wireshark を使用している場合には以下のような出力が表示されるはずです。
 
-<img src="Images/Chapters/0x04f/bettercap.png" alt="Wireshark">
+<img src="Images/Chapters/0x04f/bettercap.png" alt="Wireshark" />
 
 それで、モバイルフォンで送受信される完全なネットワークトラフィックを確認できるようになります。これには DNS, DHCP およびその他の形式の通信も含まれるため、非常に「ノイズが多い」かもしれません。したがって、関連するトラフィックだけに集中するために、[Wireshark の DisplayFilter](https://wiki.wireshark.org/DisplayFilters "DisplayFilters") の使い方や [tcpdump でフィルタする方法](https://danielmiessler.com/study/tcpdump/#gs.OVQjKbk "A tcpdump Tutorial and Primer with Examples") を知る必要があります。
 
@@ -126,7 +126,7 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 
 > 別のアクセスポイントがお客様のものである場合、変更を行う前に、すべての変更と構成をエンゲージメントの前に明確にし、バックアップを作成する必要があります。
 
-<img src="Images/Chapters/0x04f/architecture_MITM_AP.png" alt="Network Diagram - MITM with an access point">
+<img src="Images/Chapters/0x04f/architecture_MITM_AP.png" alt="Network Diagram - MITM with an access point" />
 
 ##### インストール
 
@@ -296,7 +296,7 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
     - Redirect to port: 元のポートロケーションを指定します
     - 'Force use of SSL' をセット (HTTPS 使用時) および 'Support invisible proxy' をセットします。
 
-<img width=600px src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location"/>
+<img width=600px src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location" />
 
 <br/>
 <br/>
