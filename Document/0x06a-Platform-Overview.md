@@ -33,7 +33,7 @@ iOS には多くの強みがありますが、iOS アプリ開発者はそれで
 - 暗号化とデータ保護
 - 汎用的なエクスプロイト緩和策
 
-<img src="Images/Chapters/0x06a/iOS_Security_Architecture.png" alt="iOS Security Architecture" width="275">
+<img src="Images/Chapters/0x06a/iOS_Security_Architecture.png" alt="iOS Security Architecture" width="275"/>
 
 #### ハードウェアセキュリティ
 
@@ -127,7 +127,7 @@ language.lproj フォルダはアプリケーションがサポートする言�
 - ストーリーボードは iOS アプリケーションのユーザーインタフェースの視覚的な表現です。スクリーンと、スクリーン間の接続を示しています。
 - 文字列ファイル形式は一つ以上のキー・バリューのペアとオプションのコメントで構成されています。
 
-<img src="Images/Chapters/0x06a/iOS_project_folder.png" alt="iOS App Folder Structure" width="500">
+<img src="Images/Chapters/0x06a/iOS_project_folder.png" alt="iOS App Folder Structure" width="500"/>
 
 脱獄済みデバイスでは、メインのアプリバイナリを復号し IPA ファイルの再構築を可能にするさまざまなツールを使用して、インストールされた iOS アプリの IPA を復元できます。同様に、脱獄済みデバイスでは [IPA Installer](https://github.com/autopear/ipainstaller "IPA Installer") を使用して IPA ファイルをインストールできます。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがよくあります。あなたに実際のファイルを送ったり、[HockeyApp](https://hockeyapp.net/ "HockeyApp") や [Testflight](https://developer.apple.com/testflight/ "Testflight") などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
