@@ -64,7 +64,7 @@ Substrate, Frida, Xposed はモバイル業界で最も広く使用されてい�
 - エージェントはツール (例えば、Frida REPL やカスタム Python スクリプト) への双方向通信チャネルを確立します。
 - ハイジャックされたスレッドは元の状態に復元された後に再開し、プロセスの実行は通常どおり続行します。
 
-<img src="Images/Chapters/0x04/frida.png" alt="Frida Architecture"  width="500">
+<img src="Images/Chapters/0x04/frida.png" alt="Frida Architecture"  width="500" />
 
 - *Frida アーキテクチャ, 参照元: [https://www.frida.re/docs/hacking/](https://www.frida.re/docs/hacking "Frida - Hacking")*
 
@@ -138,27 +138,27 @@ Ghidra は米国の国家安全保障局 (NSA) の研究部門で開発された
 
 使用しているプラットフォームに応じて、 `ghidraRun` (\*nix) または `ghidraRun.bat` (Windows) を使用して Ghidra を起動します。Ghidra が起動したら、プロジェクトディレクトリを指定して新しいプロジェクトを作成します。以下に示すウィンドウが表示されます。
 
-<img src="Images/Chapters/0x04c/Ghidra_new_project.png" alt="Ghidra New Project"  width="500">
+<img src="Images/Chapters/0x04c/Ghidra_new_project.png" alt="Ghidra New Project"  width="500" />
 
 新しい **Active Project** で **File** -> **Import File** に移動して目的のファイルを選択することにより、アプリバイナリをインポートできます。
 
-<img src="Images/Chapters/0x04c/Ghidra_import_binary.png" alt="Ghidra import binary"  width="500">
+<img src="Images/Chapters/0x04c/Ghidra_import_binary.png" alt="Ghidra import binary"  width="500" />
 
 ファイルが適切に処理できる場合には、Ghidra は解析を開始する前にバイナリに関するメタ情報を表示します。
 
-<img src="Images/Chapters/0x04c/Ghidra_elf_import.png" alt="Ghidra ELF file import"  width="350">
+<img src="Images/Chapters/0x04c/Ghidra_elf_import.png" alt="Ghidra ELF file import"  width="350" />
 
 上記で選択したバイナリファイルの逆アセンブルコードを取得するには、 **Active Project** ウィンドウからインポートしたファイルをダブルクリックします。次のウィンドウで自動解析するには **yes** および **analyze** をクリックします。自動解析はバイナリのサイズによっては時間がかかります。コードブラウザウィンドウの右下隅で進行状況を追跡できます。自動解析を完了するとバイナリの調査を開始できます。
 
-<img src="Images/Chapters/0x04c/Ghidra_main_window.png" alt="Ghidra Main Window">
+<img src="Images/Chapters/0x04c/Ghidra_main_window.png" alt="Ghidra Main Window" />
 
 Ghidra でバイナリを調査するために最も重要なウィンドウは **Listing** (Disassembly) ウィンドウ、**Symbol Tree** ウィンドウおよび **Decompiler** ウィンドウです。 **Decompiler** ウィンドウは逆アセンブリ用に選択した関数の逆コンパイルバージョンを表示します。 **Display Function Graph** オプションは選択した関数の制御フローグラフを表示します。
 
-<img src="Images/Chapters/0x04c/Ghidra_function_graph.png" alt="Ghidra Function Graph View">
+<img src="Images/Chapters/0x04c/Ghidra_function_graph.png" alt="Ghidra Function Graph View" />
 
 Ghidra にはほかにも多くの機能が利用可能であり、それらの多くは **Window** メニューを開いて調べることができます。たとえば、バイナリに存在する文字列を調べたい場合には、**Defined Strings** オプションを開きます。以降の章では Android および iOS プラットフォームのさまざまなバイナリを解析しながら、他の高度な機能について説明します。
 
-<img src="Images/Chapters/0x04c/Ghidra_string_window.png" alt="Ghidra strings window">
+<img src="Images/Chapters/0x04c/Ghidra_string_window.png" alt="Ghidra strings window" />
 
 #### デバッグとトレース
 
