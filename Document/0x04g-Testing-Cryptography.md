@@ -124,7 +124,7 @@ Advanced Encryption Standard (AES) はモバイルアプリの対称暗号化の
 
 [ECB (Electronic Codebook)](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_.28ECB.29 "Electronic Codebook (ECB)") は入力を固定サイズのブロックに分割し、同じ鍵を使用して個別に暗号化されます。複数の分割ブロックが同じ平文を含む場合、それらは同じ暗号文ブロックに暗号化され、データ内のパターンを特定しやすくなります。状況によっては、攻撃者が暗号化されたデータを再生できる可能性もあります。
 
-<img src="Images/Chapters/0x07c/EncryptionMode.png" width="550px"/>
+<img src="Images/Chapters/0x07c/EncryptionMode.png" width="550px" />
 
 Cipher Block Chaining (CBC) が ECB の代わりに使用されていることを確認します。CBC モードでは、平文ブロックは前の暗号文ブロックと XOR されます。これにより、ブロックに同じ情報が含まれていても、暗号化された各ブロックは一意でありランダム化されます。パディングオラクル攻撃に対する耐性を高めるために、CBC と HMAC を組み合わせることや、「パディングエラー」、「MAC エラー」、「復号化失敗」などのエラーが発生しないようにすることがベストであることに注意してください。
 
