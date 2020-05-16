@@ -296,7 +296,7 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
     - Redirect to port: 元のポートロケーションを指定します
     - 'Force use of SSL' をセット (HTTPS 使用時) および 'Support invisible proxy' をセットします。
 
-<img width=600px src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location" />
+<img src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location" width="600px" />
 
 <br/>
 <br/>
