@@ -268,7 +268,7 @@ Android 5.1 (API level 22) 以下で動作するデバイスで対称鍵をセ�
 
 Android 9 (API level 28) は鍵を `AndroidKeystore` 内にセキュアにインポートする機能を追加します。最初に `AndroidKeystore` は `PURPOSE_WRAP_KEY` を使用して鍵ペアを生成します。これも認証証明書で保護されるべきです。このペアは `AndroidKeystore` にインポートされる鍵を保護することを目的としています。暗号化された鍵は `SecureKeyWrapper` フォーマットの ASN.1 エンコードメッセージとして生成されます。これにはインポートされた鍵が使用を許される方法の説明も含まれています。その後、鍵はラッピング鍵を生成した特定のデバイスに属する `AndroidKeystore` ハードウェア内で復号化されるため、デバイスのホストメモリに平文で現れることはありません。
 
-<img src="Images/Chapters/0x5e/Android9_secure_key_import_to_keystore.png" alt="Secure key import into Keystore" width="500"/>
+<img src="Images/Chapters/0x5e/Android9_secure_key_import_to_keystore.png" alt="Secure key import into Keystore" width="500" />
 
 ```java
 KeyDescription ::= SEQUENCE {
@@ -394,7 +394,7 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 
 これは `SecretKeySpec` クラスを使用するすべてのクラスをハイライト表示します。ハイライトされたすべてのファイルを調べて、鍵マテリアルを渡すのに使用されているバイトはどれかをトレースします。下の図は出荷準備が完了したアプリケーションでこの評価を行った結果を示しています。読みやすくするため、DEX バイトコードから Java コードにリバースエンジニアしました。静的バイト配列 `Encrypt.keyBytes` にハードコードされ初期化された静的暗号鍵の使用がはっきりとわかります。
 
-<img src="Images/Chapters/0x5e/static_encryption_key.png" width="600px"/>
+<img src="Images/Chapters/0x5e/static_encryption_key.png" width="600px" />
 
 ソースコードにアクセスできる場合には、少なくとも以下について確認します。
 
