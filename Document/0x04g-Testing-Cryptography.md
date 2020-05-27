@@ -9,6 +9,7 @@
 暗号化アルゴリズムは平文のデータから元の内容を隠す暗号文に変換します。平文のデータは復号化により暗号文から復元できます。暗号化には **対称** (共通鍵 (secret-key) 暗号化) と **非対称** (公開鍵 (public-key) 暗号化) があります。一般に、暗号化操作は完全性を保護しませんが、一部の対称暗号化モードでも保護が機能します。
 
 **対称鍵暗号アルゴリズム** は暗号化と復号化の両方に同じ鍵を使用します。このタイプの暗号化は高速でありバルクデータ処理に適しています。鍵にアクセスするすべての人が暗号化されたコンテンツを復号化できるため、この方式では慎重な鍵管理が必要です。
+
 **公開鍵暗号アルゴリズム** は二つの個別の鍵、公開鍵 (public key) と秘密鍵 (private key) で動作します。公開鍵 (public key) は自由に配布できますが、秘密鍵 (private key) は誰とも共有すべきではありません。公開鍵 (public key) で暗号化されたメッセージは秘密鍵 (private key) でのみ解読できます。非対称暗号化は対称操作よりも数倍遅いため、通常はバルク暗号化のための対称鍵などの少量のデータを暗号化するためにのみ使用されます。
 
 **ハッシュ化** は暗号化の形式ではありませんが、暗号化を使用しています。ハッシュ関数は任意のデータを固定長の値に決定論的にマップします。入力からハッシュを計算することは簡単ですが、ハッシュから元の入力を決定することは非常に困難 (つまり実行不可能) です。ハッシュ関数は完全性検証に使用されますが、真正性の保証を提供しません。
@@ -60,8 +61,8 @@
 アルゴリズムの選択とベストプラクティスの詳細については、以下のリソースを参照してください。
 
 - ["Commercial National Security Algorithm Suite and Quantum Computing FAQ"](https://cryptome.org/2016/01/CNSA-Suite-and-Quantum-Computing-FAQ.pdf "Commercial National Security Algorithm Suite and Quantum Computing FAQ")
-- [NIST recommendations (2016)](https://www.keylength.com/en/4/ "NIST recommendations")
-- [BSI recommendations (2017)](https://www.keylength.com/en/8/ "BSI recommendations")
+- [NIST recommendations (2019)](https://www.keylength.com/en/4/ "NIST recommendations")
+- [BSI recommendations (2019)](https://www.keylength.com/en/8/ "BSI recommendations")
 
 ### よくある設定の問題 (MSTG-CRYPTO-1, MSTG-CRYPTO-2 および MSTG-CRYPTO-3)
 
@@ -73,7 +74,13 @@
 
 #### ハードコードされた暗号鍵による対称暗号化
 
-対称暗号化と鍵付きハッシュ (MAC) のセキュリティは鍵の秘密性に大きく依存します。鍵が開示されている場合、暗号化により得られるセキュリティは失われます。これを防ぐには、作成した暗号化データと同じ場所に共通鍵 (secret key) を保存しないことです。開発者は静的でハードコードされた暗号化鍵を使用してローカルに保存されたデータを暗号化したり、アプリに鍵をコンパイルするという間違いをよくします。これにより鍵は逆アセンブラを使用できるすべての人がアクセスできるようになります。
+対称暗号化と鍵付きハッシュ (MAC) のセキュリティは鍵の秘密性に大きく依存します。鍵が開示されている場合、暗号化により得られるセキュリティは失われます。これを防ぐには、作成した暗号化データと同じ場所に共通鍵 (secret key) を保存しないことです。よくある間違いは静的でハードコードされた暗号化鍵を使用してローカルに保存されたデータを暗号化したり、アプリに鍵をコンパイルすることです。これにより鍵は逆アセンブラを使用できるすべての人がアクセスできるようになります。
+
+ハードコードされた暗号化鍵とは鍵が以下のとおりであることを意味します。
+
+- アプリケーションリソースの一部である
+- 既知の値から導出できる値である
+- コードにハードコーディングされている
 
 まず、鍵やパスワードがソースコードに格納されていないことを確認します。これは、ネイティブコード、JavaScript/Dart コード、Android の Java/Kotlin コード、iOS の Objective-C/Swift を確認する必要があることを意味します。ハードコードされた鍵はソースコードが難読化されていたとしても問題であることに注意します。難読化は動的計装により容易にバイパスできるためです。
 
@@ -93,7 +100,7 @@
 - パスワードが鍵よりも小さい場合、鍵空間全体が使用されません。残りの空間は詰められます (パディングには空白を使用することがよくあります) 。
 - ユーザーが入力したパスワードは現実的にはほとんどが表示可能かつ発音可能な文字で構成されます。したがって、可能な 256 の ASCII 文字のいくつかのみが使用され、エントロピーはおよそ四分の一に減少します。
 
-パスワードが暗号化関数に直接渡されないことを確認します。代わりに、ユーザーが入力したパスワードを KDF に渡して暗号鍵を作成すべきです。パスワード導出関数を使用する際には適切な反復回数を選択します。例えば、[NIST は PBKDF2 について少なくとも 10,000 回の反復を推奨しています](https://pages.nist.gov/800-63-3/sp800-63b.html#sec5 "NIST Special Publication 800-63B") 。
+パスワードが暗号化関数に直接渡されないことを確認します。代わりに、ユーザーが入力したパスワードを KDF に渡して暗号鍵を作成すべきです。パスワード導出関数を使用する際には適切な反復回数を選択します。例えば、[NIST は PBKDF2 について少なくとも 10,000 回の反復を推奨](https://pages.nist.gov/800-63-3/sp800-63b.html#sec5 "NIST Special Publication 800-63B") しており、[ユーザーが感じるパフォーマンスがクリティカルではない重要な鍵に対しては少なくとも 10,000,000 回](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf "NIST Special Publication 800-132") としています。重要な鍵については [Argon2](https://github.com/p-h-c/phc-winner-argon2 "Argon2") などの [Password Hashing Competition (PHC)](https://password-hashing.net/ "PHC") で認められたアルゴリズムの実装を検討することをお勧めします。
 
 #### 脆弱な乱数生成器
 
@@ -172,12 +179,16 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 ##### 暗号化の参考情報
 
-- [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
+- [Argon2](https://github.com/p-h-c/phc-winner-argon2 "Argon2")
 - [Breaking RSA with Mangers Attack]( https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Mangers attack")
 - [NIST 800-38d](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
 - [NIST 800-57Rev4](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-4/final "NIST 800-57Rev4")
+- [NIST 800-63b](https://pages.nist.gov/800-63-3/sp800-63b.html "NIST 800-63b")
+- [NIST 800-132](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf "NIST 800-132")
+- [Password Hashing Competition(PHC)](https://password-hashing.net "PHC")
 - [PKCS #1: RSA Encryption Version 1.5](https://tools.ietf.org/html/rfc2313 "PKCS #1: RSA Encryption Version 1.5")
 - [PKCS #1: RSA Cryptography Specifications Version 2.0](https://tools.ietf.org/html/rfc2437 "PKCS #1: RSA Cryptography Specifications Version 2.0")
+- [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
 - [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack "The Padding Oracle Attack")
 - [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem")
 
