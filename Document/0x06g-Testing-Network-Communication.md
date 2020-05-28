@@ -58,7 +58,7 @@ ATS の制限は Info.plist ファイルの `NSAppTransportSecurity` キーに�
 
 ATS 例外はグローバルまたはドメイン単位で適用できます。アプリケーションは ATS をグローバルに無効化できますが、個々のドメインをオプトインできます。Apple Developer ドキュメントの以下のリストでは `[NSAppTransportSecurity](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSAppTransportSecurity "API Reference NSAppTransportSecurity")` Dictionary の構造を示しています。
 
-```objc
+```objectivec
 NSAppTransportSecurity : Dictionary {
     NSAllowsArbitraryLoads : Boolean
     NSAllowsArbitraryLoadsForMedia : Boolean
@@ -128,7 +128,7 @@ NSAppTransportSecurity : Dictionary {
 
 特定のエンドポイントと通信するときに使用できる ATS 設定を検証することが可能です。macOS ではコマンドラインユーティリティ `nscurl` が同じことを確認するために利用できます。このコマンドは以下のように使用できます。
 
-```shell
+```bash
 /usr/bin/nscurl --ats-diagnostics https://www.example.com
 Starting ATS Diagnostics
 
@@ -228,7 +228,7 @@ CA はトラストストアに追加できます。ユーザーを介して手�
 
 デリゲートは `connection:canAuthenticateAgainstProtectionSpace:` と `connection: forAuthenticationChallenge` を実装する必要があります。`connection: forAuthenticationChallenge` では、デリゲートは `SecTrustEvaluate` をコールして一般的な X.509 チェックを実行する必要があります。以下のスニペットは証明書のチェックを実装しています。
 
-```objc
+```objectivec
 
 (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
@@ -303,7 +303,7 @@ SSL ピンニングをバイパスするにはさまざまな方法がありま�
 
 Frida と Objection を使用して、非脱獄済みデバイスで SSL ピンニングをバイパスすることもできます (これは脱獄済みデバイスでも機能します) 。「iOS の基本的なセキュリティテスト」の説明に従って、Objection でアプリケーションを再パッケージ化した後、Objection で以下のコマンドを使用して一般的な SSL ピンニング実装を無効にできます。
 
-```shell
+```bash
 $ ios sslpinning disable
 ```
 
