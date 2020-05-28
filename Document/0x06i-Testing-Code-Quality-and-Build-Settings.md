@@ -12,7 +12,7 @@
 
 以下の `codesign` コマンドを実行して、署名情報を表示します。
 
-```shell
+```bash
 $ codesign -dvvv YOURAPP.app
 Executable=/Users/Documents/YOURAPP/Payload/YOURAPP.app/YOURNAME
 Identifier=com.example.example
@@ -71,7 +71,7 @@ Xcode を使用して、直接デバッガをアタッチできるかどうか�
 
 gobjdump を使用して、メインバイナリとインクルードされた dylib の Stabs および DWARF シンボルを検査します。
 
-```shell
+```bash
 $ gobjdump --stabs --dwarf TargetApp
 In archive MyTargetApp:
 
@@ -105,7 +105,7 @@ gobjdump は [binutils](https://www.gnu.org/s/binutils/ "Binutils") の一部で
 3. いずれか一つを見つけたら、ログ出力されるステートメントのより良いマークアップのために開発者がログ出力関数を囲うラップ関数を使用しているかどうかを判断します。そうであれば、その関数を検索に追加します。
 4. 手順 2 と 3 のすべてのものについて、マクロやデバッグ状態に関連するガードがリリースビルドでログ出力なしにするように設定されているかどうかを判断します。Objective-C がプリプロセッサマクロを使用する方法の変更点に注意します。
 
-```objc
+```objectivec
 #ifdef DEBUG
     // Debug-only code
 #endif
@@ -125,7 +125,7 @@ Swift ではこの動作を有効にする手続きが変更されています�
 
 Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
 
-```objc
+```objectivec
 #ifdef DEBUG
     // Debug-only code
 #endif
@@ -133,7 +133,7 @@ Objective-C では、開発者はプリプロセッサマクロを使用して�
 
 Swift 2 では (Xcode 7 を使用して) 、すべてのターゲットにカスタムコンパイラフラグを設定する必要があります。コンパイラフラグは "-D" で始まる必要があります。したがって、デバッグフラグ `MSTG-DEBUG` を設定されている場合、以下のアノテーションが使用できます。
 
-```swift
+```default
 #if MSTG-DEBUG
     // Debug-only code
 #endif
@@ -141,7 +141,7 @@ Swift 2 では (Xcode 7 を使用して) 、すべてのターゲットにカス
 
 Swift 3 では (Xcode 8 を使用して) 、Build settings/Swift compiler - Custom flags の Active Compilation Conditions を設定できます。プリプロセッサを使用する代わりに、Swift3 は定義済みの条件に基づく [条件付きコンパイルブロック](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34 "Swift conditional compilation blocks") を使用します。
 
-```swift
+```default
 #if DEBUG_LOGGING
     // Debug-only code
 #endif
@@ -193,7 +193,7 @@ iOS アプリケーションではサードパーティライブラリを使用�
 
 最初に、 Package.swift ファイルが置かれているプロジェクトのルートで、以下のように入力します。
 
-```shell
+```bash
 $ swift build
 ```
 
@@ -201,7 +201,7 @@ $ swift build
 
 [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [Swift Package Manager Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/swift.html "dependency-check – SWIFT Package Manager Analyzer") を利用して、すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの Package.swift ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
 
-```shell
+```bash
 $ dependency-check  --enableExperimental --out . --scan Package.swift
 ```
 
@@ -211,14 +211,14 @@ $ dependency-check  --enableExperimental --out . --scan Package.swift
 
 最初に、 Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
 
-``` shell
+```bash
 $ sudo gem install CocoaPods
 $ pod install
 ```
 
 次に、依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
 
-```shell
+```bash
 $ sudo gem install cocoapods-dependencies
 $ pod dependencies
 ```
@@ -234,7 +234,7 @@ $ pod dependencies
 [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [CocoaPods Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/cocoapods.html "dependency-check – CocoaPods Analyzer") を利用して、
 すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの \*.podspec や Podfile.lock ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
 
-```shell
+```bash
 $ dependency-check  --enableExperimental --out . --scan Podfile.lock
 ```
 
@@ -244,7 +244,7 @@ $ dependency-check  --enableExperimental --out . --scan Podfile.lock
 
 最初に、 Cartfile があるプロジェクトのルートで、以下を入力します。
 
-```shell
+```bash
 $ brew install carthage
 $ carthage update --platform iOS
 ```
@@ -279,7 +279,7 @@ $ carthage update --platform iOS
 
 アプリケーションソースが利用可能で Swift Package Manager が使用されている場合、 Package.swift ファイルが置かれているプロジェクトのルートディレクトリで以下のコードを実行します。
 
-```shell
+```bash
 $ swift build
 ```
 
@@ -290,7 +290,7 @@ $ swift build
 アプリケーションソースが利用可能であり、CocoaPods が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
 最初に、 Podfile があるプロジェクトのルートで、以下を実行します。
 
-``` shell
+```bash
 $ sudo gem install CocoaPods
 $ pod install
 ```
@@ -301,7 +301,7 @@ $ pod install
 
 アプリケーションソースが利用可能であり、Carthage が使用されている場合、 Cartfile があるプロジェクトのルートディレクトリで、以下のコードを実行します。
 
-```shell
+```bash
 $ brew install carthage
 $ carthage update --platform iOS
 ```
@@ -323,13 +323,13 @@ $ carthage update --platform iOS
 ライブラリ解析にソースコードが利用可能ではない場合、otool と MobSF を使用して、使用されている一部のフレームワークを見つけることができます。
 ライブラリを取得してそれをクラッチ (例えば DRM を削除) した後、アプリケーションのディレクトリのルートで otool を実行します。
 
-```shell
+```bash
 $ otool -L <Executable>
 ```
 
 但し、これらには使用されているすべてのライブラリが含まれるわけではありません。次に、class-dump (Objective-C の場合) または最新の dsdump を使用して、使用されているヘッダファイルのサブセットを生成し、どのライブラリが関係しているかを導き出すことができます。しかし、ライブラリのバージョンは検出されません。
 
-```shell
+```bash
 $ ./class-dump <Executable> -r
 ```
 
@@ -350,7 +350,7 @@ Objective-C には二種類のエラーがあります。
 `NSException` はプログラミングエラーや低レベルエラー (0 による除算、配列の境界外アクセスなど) を処理するために使用されます。
 `NSException` は `raise` によりレイズされるか、または `@throw` でスローされます。catch されない場合、この例外は unhandled 例外ハンドラを呼び出し、ステートメントをログ出力します (ログ出力はプログラムを停止します) 。`@try`-`@catch` ブロックを使用している場合、`@catch` はその例外から回復できます。
 
-```objc
+```objectivec
  @try {
     //do work here
  }
@@ -375,7 +375,7 @@ Swift (2～5) の例外処理はまったく異なります。try-catch ブロ�
 
 - 関数からその関数を呼び出すコードにエラーを伝えることができます。この場合、`do-catch` はありません。単に実際のエラーを throw する `throw` があるか、throw するメソッドを実行する `try` があります。`try` を含むメソッドには `throws` キーワードも必要です。
 
-```swift
+```default
 func dosomething(argumentx:TypeX) throws {
     try functionThatThrows(argumentx: argumentx)
 }
@@ -383,7 +383,7 @@ func dosomething(argumentx:TypeX) throws {
 
 - `do-catch` 文を使用してエラーを処理します。ここでは以下のパターンを使用できます。
 
-  ```swift
+  ```default
   func doTryExample() {
       do {
           try functionThatThrows(number: 203)
@@ -417,7 +417,7 @@ func dosomething(argumentx:TypeX) throws {
 
 - エラーを optional 値として処理します。
 
-  ```swift
+  ```default
       let x = try? functionThatThrows()
       // In this case the value of x is nil in case of an error.
   ```
@@ -425,7 +425,7 @@ func dosomething(argumentx:TypeX) throws {
 - `try!` 式を使用して、エラーが発生しないことを assert します。
 - 一般的なエラーを `Result` 戻り値として処理します。
 
-```swift
+```default
 enum ErrorType: Error {
     case typeOne
     case typeTwo
@@ -452,7 +452,7 @@ func callResultFunction() {
 
 - ネットワークおよび JSON デコーディングエラーを `Result` タイプで処理します。
 
-```swift
+```default
 struct MSTG: Codable {
     var root: String
     var plugins: [String]
@@ -637,50 +637,50 @@ iOS アプリケーションの ARC 保護を有効にする手順。
 
 - PIE:
 
-```shell
-$ unzip DamnVulnerableiOSApp.ipa
-$ cd Payload/DamnVulnerableIOSApp.app
-$ otool -hv DamnVulnerableIOSApp
-DamnVulnerableIOSApp (architecture armv7):
-Mach header
-magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
-MH_MAGIC ARM V7 0x00 EXECUTE 38 4292 NOUNDEFS DYLDLINK TWOLEVEL
-WEAK_DEFINES BINDS_TO_WEAK PIE
-DamnVulnerableIOSApp (architecture arm64):
-Mach header
-magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
-MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
-WEAK_DEFINES BINDS_TO_WEAK PIE
-```
+    ```bash
+    $ unzip DamnVulnerableiOSApp.ipa
+    $ cd Payload/DamnVulnerableIOSApp.app
+    $ otool -hv DamnVulnerableIOSApp
+    DamnVulnerableIOSApp (architecture armv7):
+    Mach header
+    magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
+    MH_MAGIC ARM V7 0x00 EXECUTE 38 4292 NOUNDEFS DYLDLINK TWOLEVEL
+    WEAK_DEFINES BINDS_TO_WEAK PIE
+    DamnVulnerableIOSApp (architecture arm64):
+    Mach header
+    magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
+    MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
+    WEAK_DEFINES BINDS_TO_WEAK PIE
+    ```
 
 - stack canary:
 
-```shell
-$ otool -Iv DamnVulnerableIOSApp | grep stack
-0x0046040c 83177 ___stack_chk_fail
-0x0046100c 83521 _sigaltstack
-0x004fc010 83178 ___stack_chk_guard
-0x004fe5c8 83177 ___stack_chk_fail
-0x004fe8c8 83521 _sigaltstack
-0x00000001004b3fd8 83077 ___stack_chk_fail
-0x00000001004b4890 83414 _sigaltstack
-0x0000000100590cf0 83078 ___stack_chk_guard
-0x00000001005937f8 83077 ___stack_chk_fail
-0x0000000100593dc8 83414 _sigaltstack
-```
+    ```bash
+    $ otool -Iv DamnVulnerableIOSApp | grep stack
+    0x0046040c 83177 ___stack_chk_fail
+    0x0046100c 83521 _sigaltstack
+    0x004fc010 83178 ___stack_chk_guard
+    0x004fe5c8 83177 ___stack_chk_fail
+    0x004fe8c8 83521 _sigaltstack
+    0x00000001004b3fd8 83077 ___stack_chk_fail
+    0x00000001004b4890 83414 _sigaltstack
+    0x0000000100590cf0 83078 ___stack_chk_guard
+    0x00000001005937f8 83077 ___stack_chk_fail
+    0x0000000100593dc8 83414 _sigaltstack
+    ```
 
 - Automatic Reference Counting:
 
-```shell
-$ otool -Iv DamnVulnerableIOSApp | grep release
-0x0045b7dc 83156 ___cxa_guard_release
-0x0045fd5c 83414 _objc_autorelease
-0x0045fd6c 83415 _objc_autoreleasePoolPop
-0x0045fd7c 83416 _objc_autoreleasePoolPush
-0x0045fd8c 83417 _objc_autoreleaseReturnValue
-0x0045ff0c 83441 _objc_release
-[SNIP]
-```
+    ```bash
+    $ otool -Iv DamnVulnerableIOSApp | grep release
+    0x0045b7dc 83156 ___cxa_guard_release
+    0x0045fd5c 83414 _objc_autorelease
+    0x0045fd6c 83415 _objc_autoreleasePoolPop
+    0x0045fd7c 83416 _objc_autoreleasePoolPush
+    0x0045fd8c 83417 _objc_autoreleaseReturnValue
+    0x0045ff0c 83441 _objc_release
+    [SNIP]
+    ```
 
 ##### idb を使用
 
