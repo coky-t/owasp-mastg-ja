@@ -29,7 +29,7 @@ Android 9 (API level 28) 以上でサポートされている v3 署名により
 
 APK 署名は `apksigner` ツールで検証できます。`[SDK-Path]/build-tools/[version]` にあります。
 
-```shell
+```bash
 $ apksigner verify --verbose Desktop/example.apk
 Verifies
 Verified using v1 scheme (JAR signing): true
@@ -42,7 +42,7 @@ Number of signers: 1
 
 デバッグ証明書で署名された APK の出力は以下のとおりです。
 
-```shell
+```bash
 
 $ jarsigner -verify -verbose -certs example.apk
 
@@ -59,7 +59,7 @@ sm     11116 Fri Nov 11 12:07:48 ICT 2016 AndroidManifest.xml
 
 署名構成は Android Studio または `build.gradle` の `signingConfig` ブロックで管理できます。v1 スキームと v2 スキームの両方をアクティブにするには、以下の値をセットする必要があります。
 
-```groovy
+```default
 v1SigningEnabled true
 v2SigningEnabled true
 ```
@@ -94,7 +94,7 @@ Android マニフェストで定義されている [`Application` 要素](https:
 
 Drozer を使用してアプリケーションがデバッグ可能かどうかを判断できます。Drozer モジュール `app.package.attacksurface` はアプリケーションによりエクスポートされる IPC コンポーネントに関する情報も表示します。
 
-```shell
+```bash
 dz> run app.package.attacksurface com.mwr.dz
 Attack Surface:
   1 activities exported
@@ -106,7 +106,7 @@ Attack Surface:
 
 デバイス上のすべてのデバッグ可能なアプリケーションをスキャンするには、`app.package.debuggable` モジュールを使用します。
 
-```shell
+```bash
 dz> run app.package.debuggable
 Package: com.mwr.dz
   UID: 10083
@@ -120,7 +120,7 @@ Package: com.vulnerable.app
 
 アプリケーションがデバッグ可能である場合、アプリケーションコマンドを実行することは簡単です。`adb` シェルで、バイナリ名にパッケージ名とアプリケーションコマンドを追加して `run-as` を実行します。
 
-```shell
+```bash
 $ run-as com.vulnerable.app id
 uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats) context=u:r:untrusted_app:s0:c512,c768
 ```
@@ -133,7 +133,7 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
 
 1. `adb` と `jdwp` を使用して、デバッグしたいアクティブなアプリケーションの PID を特定します。
 
-    ```shell
+    ```bash
     $ adb jdwp
     2355
     16346  <== last launched, corresponds to our application
@@ -141,14 +141,14 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
 
 2. `adb` を使用してアプリケーションプロセス (PIDを使用) と解析ワークステーションの間に特定のローカルポートを使用した通信チャネルを作成します。
 
-    ```shell
+    ```bash
     # adb forward tcp:[LOCAL_PORT] jdwp:[APPLICATION_PID]
     $ adb forward tcp:55555 jdwp:16346
     ```
 
 3. `jdb` を使用して、デバッガをローカル通信チャネルポートにアタッチし、デバッグセッションを開始します。
 
-    ```shell
+    ```bash
     $ jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=55555
     Set uncaught java.lang.Throwable
     Set deferred uncaught java.lang.Throwable
@@ -176,20 +176,20 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
 
 最初に、Android NDK の `nm` バイナリを見つけてエクスポート (またはエイリアスを作成) します。
 
-```shell
+```bash
 export $NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm
 ```
 
 デバッグシンボルを表示するには:
 
-```shell
+```bash
 $ $NM -a libfoo.so
 /tmp/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm: libfoo.so: no symbols
 ```
 
 動的シンボルを表示するには:
 
-```shell
+```bash
 $ $NM -D libfoo.so
 ```
 
@@ -199,7 +199,7 @@ $ $NM -D libfoo.so
 
 以下が build.gradle に追加されていることを確認します。
 
-```groovy
+```default
 externalNativeBuild {
     cmake {
         cppFlags "-fvisibility=hidden"
@@ -296,7 +296,7 @@ Android アプリは多くの場合サードパーティライブラリを使用
 プラグインを使用するには、以下の手順を適用する必要があります。
 build.gradle に以下のスクリプトを追加して、Maven セントラルリポジトリからプラグインをインストールします。
 
-```groovy
+```default
 buildscript {
     repositories {
         mavenCentral()
@@ -311,7 +311,7 @@ apply plugin: 'org.owasp.dependencycheck'
 
 gradle がプラグインを呼び出したら、以下を実行してレポートを作成できます。
 
-```shell
+```bash
 $ gradle assemble
 $ gradle dependencyCheckAnalyze --info
 ```
@@ -339,7 +339,7 @@ $ gradle dependencyCheckAnalyze --info
 
 `build.gradle` ファイルに以下を追加します。
 
-```groovy
+```default
 plugins {
     id "com.github.hierynomus.license-report" version"{license_plugin_version}"
 }
@@ -347,7 +347,7 @@ plugins {
 
 プラグインがピックアップされたら、以下のコマンドを使用します。
 
-```shell
+```bash
 $ gradle assemble
 $ gradle downloadLicenses
 ```
@@ -500,7 +500,7 @@ Java クラスはデコンパイルが容易であるため、リリースバイ
 
 R8 は Google の新しいコード縮小ツールであり、 Android Studio 3.3 beta で導入されました。デフォルトでは R8 は行番号、ソースファイル名、変数名など、デバッグに役立つ属性を削除します。R8 はフリーの Java クラスファイル縮小ツール、最適化ツール、難読化ツール、事前検証ツールであり、 ProGuard よりも高速です。[詳細については Android 開発者ブログ記事](https://android-developers.googleblog.com/2018/11/r8-new-code-shrinker-from-google-is.html "R8") も参照ください。Android の SDK ツールに同梱されています。リリースビルドで縮小を有効にするには、 build.gradle に以下を追加します。
 
-```groovy
+```default
 android {
     buildTypes {
         release {
@@ -522,7 +522,7 @@ android {
 
 `proguard-rules.pro` ファイルはカスタム ProGuard ルールを定義する場所です。`-keep` フラグで R8 により削除されない特定のコードを保持できます。そうしないとエラーが発生する可能性があります。例えば、一般的な Android クラスを保持するには、以下のサンプル `proguard-rules.pro` 構成ファイルのようにします。
 
-```groovy
+```default
 ...
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -532,7 +532,7 @@ android {
 
 [以下の構文](https://developer.android.com/studio/build/shrink-code#configuration-files "Customize which code to keep") でプロジェクト内の特定クラスやライブラリに対してこれをより詳細に定義できます。
 
-```groovy
+```default
 -keep public class MyClass
 ```
 
