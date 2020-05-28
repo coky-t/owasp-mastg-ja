@@ -98,7 +98,7 @@ Android プラットフォームは生体認証用に三つの異なるクラス
 - Android P / 9 (API レベル 28) および以降: `BiometricPrompt`
 - Android 6.0 (API レベル 23) および以降: `FingerprintManager` (Android 9 で廃止)
 
-<img src="Images/Chapters/0x05f/biometricprompt-architecture.png" width="500" alt="Biometric Auth in Android" />
+<img src="Images/Chapters/0x05f/biometricprompt-architecture.png" width="500" />
 
 [`BiometricManager`](https://developer.android.com/reference/kotlin/android/hardware/biometrics/BiometricManager "BiometricManager") クラスを使用して、そのデバイスでバイオメトリックハードウェアが利用可能かどうか、およびユーザーにより構成されているかどうかを検証できます。そうである場合、[`BiometricPrompt`](https://developer.android.com/reference/kotlin/android/hardware/biometrics/BiometricPrompt "BiometricPrompt") クラスを使用して、システムが提供するバイオメトリックダイアログを表示できます。
 
