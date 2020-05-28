@@ -31,7 +31,7 @@ iOS での指紋認証は *Touch ID* として知られています。指紋 ID 
 
 Apple Developer ウェブサイトでは [Swift](https://developer.apple.com/documentation/localauthentication "LocalAuthentication") と [Objective-C](https://developer.apple.com/documentation/localauthentication?language=objc "LocalAuthentication") の両方のコードサンプルを提供しています。Swift での典型的な実装は以下のようになります。
 
-```swift
+```default
 let context = LAContext()
 var error: NSError?
 
@@ -60,7 +60,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 
 ##### Swift
 
-```swift
+```default
 // 1. 認証設定を表す AccessControl オブジェクトを作成する
 
 var error: Unmanaged<CFError>?
@@ -97,7 +97,7 @@ if status == noErr {
 
 ##### Objective-C
 
-```objc
+```objectivec
 
     // 1. 認証設定を表す AccessControl オブジェクトを作成する
     CFErrorRef *err = nil;
@@ -130,7 +130,7 @@ if status == noErr {
 
 ##### Swift
 
-```swift
+```default
 // 1. クエリを定義する
 var query = [String: Any]()
 query[kSecClass as String] = kSecClassGenericPassword
@@ -155,7 +155,7 @@ if status == noErr {
 
 ##### Objective-C
 
-```objc
+```objectivec
 // 1. クエリを定義する
 NSDictionary *query = @{(__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
     (__bridge id)kSecReturnData: @YES,
@@ -178,13 +178,13 @@ if (status == noErr){
 
 アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによっても検出できます。これは otool を使うことにより行えます。
 
-```shell
+```bash
 $ otool -L <AppName>.app/<AppName>
 ```
 
 `LocalAuthentication.framework` がアプリで使用されている場合、その出力には以下の行が両方含まれます (`LocalAuthentication.framework` は内部で `Security.framework` を使用します) 。
 
-```shell
+```bash
 /System/Library/Frameworks/LocalAuthentication.framework/LocalAuthentication
 /System/Library/Frameworks/Security.framework/Security
 ```
@@ -227,7 +227,7 @@ Needle を使用している場合には、`hooking/frida/script_touch-id-bypass
 
 Needle を使用して iOS プラットフォームの非セキュアな生体認証をバイパスできます。Needle は Frida を利用して、`LocalAuthentication.framework` API を使用して開発されたログインフォームをバイパスします。以下のモジュールを使用して、非セキュアな生体認証をテストできます。
 
-```shell
+```bash
 [needle][container] > use hooking/frida/script_touch-id-bypass
 [needle][script_touch-id-bypass] > run
 ```
