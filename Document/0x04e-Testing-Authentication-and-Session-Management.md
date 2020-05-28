@@ -98,9 +98,6 @@ isAdmin=True
 
 パスワードポリシーの存在を確認し、実装されたパスワードの複雑さの要件を、長さと無制限の文字セットにフォーカスした [OWASP Authentication Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls "Implement Proper Password Strength Controls") に従って検証します。ソースコード内のすべてのパスワード関連機能を特定し、それぞれで検証チェックが行われていることを確認します。パスワード検証機能をレビューし、パスワードポリシーに違反するパスワードを拒否することを確認します。
 
-<br/>
-<br/>
-
 ##### zxcvbn
 
 [zxcvbn](https://github.com/dropbox/zxcvbn "zxcvbn") はパスワード強度を推定するために使用できる一般的なライブラリで、パスワードクラッカーから発想しました。JavaScript で利用可能ですが、サーバー側の他の多くのプログラミング言語でも使用できます。インストールには様々な方法があります。好みの方法については GitHub リポジトリを確認してください。インストールした後、zxcvbn を使用してパスワードをクラックするための複雑さと推定量を計算できます。
@@ -132,7 +129,7 @@ zxcvbn はアプリ開発者が Java (またはその他の) 実装を使用し�
 
 1. ユーザー入力を UTF-8 にエンコードします (例: パスワード `test`) 。
 2. ステップ 1 の結果の SHA-1 ハッシュを取得します (例: `test` のハッシュは `A94A8FE5CCB19BA61C4C0873D391E987982FBBD3` です) 。
-3. 最初の 5 文字 (ハッシュプレフィックス) をコピーし、範囲検索に使用します: `http GET https://api.pwnedpasswords.com/range/A94A8`
+3. 最初の 5 文字 (ハッシュプレフィックス) をコピーし、次の API を使用して範囲検索に使用します: `http GET https://api.pwnedpasswords.com/range/A94A8`
 4. 結果を反復処理し、ハッシュの残りを探します (例 `FE5CCB19BA61C4C0873D391E987982FBBD3` は返されたリストの一部であるか) 。それが返されたリストの一部ではない場合、指定されたハッシュのパスワードは見つかりませんでした。そうでない場合、`FE5CCB19BA61C4C0873D391E987982FBBD3` の場合では、侵害で検出された回数を示すカウンターが返されます (例: `FE5CCB19BA61C4C0873D391E987982FBBD3:76479`) 。
 
 Pwned Passwords API の詳細なドキュメントは [オンライン](https://haveibeenpwned.com/API/v3 "Api Docs V3") にあります。
@@ -337,14 +334,15 @@ OTP 認証が使用されている場合、ほとんどの OTP は短い数値�
 
 JWT トークンはドットで区切られた三つの Base64Url エンコードされたパーツで構成されています。トークン構造の例です。
 
-```plain
+```default
 <base64UrlEncode(header)>.<base64UrlEncode(payload)>.<base64UrlEncode(signature)>
 ```
 
 以下の例は [Base64Url-encoded JSON Web Token](https://jwt.io/#debugger "JWT Example on jwt.io") を示しています。
 
-```base64
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+```default
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva
+G4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
 
 *header* は一般的に二つのパーツで構成されています。トークンタイプ、これは JWT です、および署名の計算に使用されるハッシュアルゴリズムです。上記の例では、header は以下のようにデコードされます。
