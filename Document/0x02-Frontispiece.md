@@ -16,7 +16,7 @@ MSTG の資料を利用してモバイルアプリに対するテストを実行
 
 Copyright © 2018 The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License") に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
 
-<img src="Images/CC-license.png" alt="drawing" width="150" />
+<img src="Images/CC-license.png" alt="drawing" width="200" />
 
 ## ISBN
 
@@ -115,13 +115,13 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 
 ### 名誉後援者
 
-[![NowSecure](Images/Sponsors/NowSecure_logo.png)](https://www.nowsecure.com/ "NowSecure")
-
 [OWASP Bay Area Chapter](https://twitter.com/OWASPBayArea?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor "Twitter Bay Area")
+
+<img src="Images/Sponsors/NowSecure_logo.png" width="250" />
 
 #### 慈善後援者
 
-[![RandoriSec](Images/Sponsors/Randorisec_logo.png)](https://www.randorisec.fr/ "RandoriSec")
+<img src="Images/Sponsors/Randorisec_logo.png" width="225" />
 
 #### 寄付者
 
