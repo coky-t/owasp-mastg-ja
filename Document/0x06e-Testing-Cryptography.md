@@ -38,13 +38,13 @@ Apple CryptoKit には以下のアルゴリズムが含まれています。
 
 対称鍵の生成と解放:
 
-```swift
+```default
 let encryptionKey = SymmetricKey(size: .bits256)
 ```
 
 SHA-2 512-bit digest の計算:
 
-```swift
+```default
 let rawString = "OWASP MTSG"
 let rawData = Data(rawString.utf8)
 let hash = SHA512.hash(data: rawData) // Compute the digest
@@ -136,7 +136,7 @@ CCCryptorStatus CCCryptorCreate(
 
 デバイス上に鍵を保存する方法にはさまざまな手法があります。鍵を全く保存しなければ、鍵マテリアルがダンプできなくなることを確実にします。これは PKBDF-2 などのパスワード鍵導出関数を使用して実現できます。以下の例を参照してください。
 
-```swift
+```default
 func pbkdf2SHA1(password: String, salt: Data, keyByteCount: Int, rounds: Int) -> Data? {
     return pbkdf2(hash: CCPBKDFAlgorithm(kCCPRFHmacAlgSHA1), password: password, salt: salt, keyByteCount: keyByteCount, rounds: rounds)
 }
@@ -235,7 +235,7 @@ Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値�
 
 Swift では、 [`SecRandomCopyBytes` API](https://developer.apple.com/reference/security/1399291-secrandomcopybytes "SecRandomCopyBytes (Swift)") は以下のように定義されています。
 
-```swift
+```default
 func SecRandomCopyBytes(_ rnd: SecRandomRef?,
                       _ count: Int,
                       _ bytes: UnsafeMutablePointer<UInt8>) -> Int32
@@ -243,13 +243,13 @@ func SecRandomCopyBytes(_ rnd: SecRandomRef?,
 
 [Objective-C バージョン](https://developer.apple.com/reference/security/1399291-secrandomcopybytes?language=objc "SecRandomCopyBytes (Objective-C)") は以下の通りです。
 
-```objc
+```objectivec
 int SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
 ```
 
 以下はこの API の使用例です。
 
-```objc
+```objectivec
 int result = SecRandomCopyBytes(kSecRandomDefault, 16, randomBytes);
 ```
 
