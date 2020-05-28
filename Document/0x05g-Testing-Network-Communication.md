@@ -175,13 +175,13 @@ Network Security Configuration を使用して [宣言型証明書](https://deve
 
 設定が存在する場合、以下のイベントがログに表示されることがあります。
 
-```shell
+```bash
 D/NetworkSecurityConfig: Using Network Security Config from resource network_security_config
 ```
 
 証明書ピンニング妥当性確認が失敗した場合、以下のイベントがログ出力されます。
 
-```shell
+```bash
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
@@ -364,13 +364,13 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 プロキシの証明書を追加するには以下のコマンドを使用します。
 
-```shell
+```bash
 $ keytool -importcert -v -trustcacerts -file proxy.cer -alias aliascert -keystore "res/raw/truststore.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "providerpath/bcprov-jdk15on-164.jar" -storetype BKS -storepass password
 ```
 
 BKS トラストストア内の証明書をリストするには以下のコマンドを使用します。
 
-```shell
+```bash
 $ keytool -list -keystore "res/raw/truststore.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "providerpath/bcprov-jdk15on-164.jar"  -storetype BKS -storepass password
 ```
 
