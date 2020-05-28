@@ -10,7 +10,7 @@
 
 以下のような脱獄に関連する典型的なファイルやディレクトリの存在を確認します。
 
-```text
+```default
 /Applications/Cydia.app
 /Applications/FakeCarrier.app
 /Applications/Icy.app
@@ -53,7 +53,7 @@
 
 脱獄メカニズムを確認するもう一つの方法として、アプリケーションのサンドボックス外にある場所に書き込みを試みます。アプリケーションが例えば `/private ディレクトリ` にファイルの作成を試みることでこれを行うことができます。ファイルの作成に成功した場合、デバイスは脱獄されています。
 
-```objc
+```objectivec
 NSError *error;
 NSString *stringToBeWritten = @"This is a test.";
 [stringToBeWritten writeToFile:@"/private/jailbreak.txt" atomically:YES
@@ -71,7 +71,7 @@ if(error==nil){
 
 Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。Cydia アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
 
-```objc
+```objectivec
 if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]){
 ```
 
@@ -98,7 +98,7 @@ if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://
 
 プロセスに Cycript を注入しましょう (`top` で PID を探します) 。
 
-```shell
+```bash
 iOS8-jailbreak:~ root# cycript -p 12345
 cy# [SFAntiPiracy isTheDeviceJailbroken]
 true
@@ -106,14 +106,14 @@ true
 
 ご覧のようにクラスメソッドは直接コールされ "true" を返しました。ここで、 `-[JailbreakDetectionVC isJailbroken]` インスタンスメソッドをコールしてみましょう。まず、`JailbreakDetectionVC` クラスのインスタンスを探すために `choose` 関数をコールする必要があります。
 
-```shell
+```bash
 cy# a=choose(JailbreakDetectionVC)
 []
 ```
 
 残念。戻り値は空の配列です。つまりランタイム内にこのクラスのインスタンスが登録されていないことを意味します。実際、このクラスを初期化する二つ目の "Jailbreak Test" ボタンをクリックしてはいません。
 
-```shell
+```bash
 cy# a=choose(JailbreakDetectionVC)
 [#"<JailbreakDetectionVC: 0x14ee15620>"]
 cy# [a[0] isJailbroken]
@@ -124,7 +124,7 @@ True
 
 アプリケーションを望ましい状態にすることが重要である理由を理解したことでしょう。この時点で Cycript を使用して脱獄検出をバイパスすることは簡単です。この関数はブール値を返すことが分かるので、戻り値を置き換えるだけです。関数の実装を Cycript に置き換えることで、戻り値を置き換えることができます。指定された名前の関数を実際に置き換えるので、関数がアプリケーション内の何かを変更する場合の副作用に注意してください。
 
-```shell
+```bash
 cy# JailbreakDetectionVC.prototype.isJailbroken=function(){return false}
 cy# [a[0] isJailbroken]
 false
@@ -143,7 +143,7 @@ false
 3. iOS デバイスは USB ケーブルで接続する必要があります。
 4. ワークステーション上で `frida-trace` を使用します。
 
-```shell
+```bash
 $ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp  -m "-[JailbreakDetectionVC isJailbroken]"
 ```
 
@@ -159,7 +159,7 @@ $ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp 
 
 これにより以下の結果が得られます。
 
-```shell
+```bash
 $ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp  -m "-[JailbreakDetectionVC isJailbroken]:"
 
 Instrumenting functions...                                           `...
@@ -292,7 +292,7 @@ Apple によると、 "[上記のコードの使用をプログラムのデバ�
 
 以下は上記ロジックの実装例です。
 
-```objc
+```objectivec
 #import <dlfcn.h>
 #import <sys/types.h>
 #import <stdio.h>
@@ -376,7 +376,7 @@ static bool AmIBeingDebugged(void)
 
 iOS 上のアプリケーションは親の PID を確認することによりデバッガから起動されたかどうかを検出できます。通常、アプリケーションは [launchd](http://newosxbook.com/articles/Ch07.pdf) プロセスにより起動されます。これは _user モード_ で実行される最初のプロセスであり PID=1 です。しかし、デバッガがアプリケーションを起動すると、 `getppid` が 1 以外の PID を返すことがわかります。この検出技法は以下で示すように Objective-C または Swift を使用して、 (syscalls を介して) ネイティブコードで実装できます。
 
-```swift
+```default
 func AmIBeingDebugged() -> Bool {
     return getppid() != 1
 }
@@ -467,7 +467,7 @@ CC で HMAC を生成する場合:
 4. ハッシュ値を実データに追加します。
 5. 手順 4. の結果を格納します。
 
-```objc
+```objectivec
     // Allocate a buffer to hold the digest and perform the digest.
     NSMutableData* actualData = [getData];
     //get the key from the keychain
@@ -485,7 +485,7 @@ CC で HMAC を検証する場合、以下の手順で行います:
 2. `NSData` で HMAC を生成する手順 1-3 を繰り返します。
 3. 抽出された HMAC バイトを手順 1 の結果と比較します。
 
-```objc
+```objectivec
   NSData* hmac = [data subdataWithRange:NSMakeRange(data.length - CC_SHA256_DIGEST_LENGTH, CC_SHA256_DIGEST_LENGTH)];
   NSData* actualData = [data subdataWithRange:NSMakeRange(0, (data.length - hmac.length))];
   NSMutableData* digestBuffer = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
@@ -711,11 +711,11 @@ SwiftShield はクラス名とメソッド名を検出し、それらの識別�
 
 元のソースコードですべてのクラスとメソッドの識別子を確認できます。
 
-<img src="Images/Chapters/0x06j/no_obfuscation.png" width="550px" />
+![No Obfuscation](Images/Chapters/0x06j/no_obfuscation.png)
 
 SwiftShield はそれらすべてを暗号化された値に置き換え、クラスやメソッドの元の名前や意図するものを痕跡に残さないようにします。
 
-<img src="Images/Chapters/0x06j/swiftshield_obfuscated.png" width="650px" />
+<img src="Images/Chapters/0x06j/swiftshield_obfuscated.png" alt="swiftshield obfsucated"  width="650px" />
 
 `swiftshield` を実行すると `swiftshield-output` という新しいディレクトリが作成されます。このディレクトリにはフォルダ名にタイムスタンプを付けられた別のディレクトリが作成されます。このディレクトリには暗号化された文字列と元の値をマップしている `conversionMap.txt` というテキストファイルが含まれています。
 
