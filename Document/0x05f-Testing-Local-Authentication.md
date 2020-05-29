@@ -19,16 +19,16 @@ Android では、ローカル認証のために Android Runtime でサポート�
 ロック画面が設定されていることを確認します。
 
 ```java
-   KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-   if (!mKeyguardManager.isKeyguardSecure()) {
-            // Show a message that the user hasn't set up a lock screen.
-   }
+KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+if (!mKeyguardManager.isKeyguardSecure()) {
+    // Show a message that the user hasn't set up a lock screen.
+}
 ```
 
 - ロック画面で保護される鍵を作成します この鍵を使用するには、ユーザーは直近の X 秒間にデバイスをアンロックする必要があります。そうでなければデバイスを再びアンロックする必要があります。この時間が長すぎないように注意します。デバイスをアンロックしたユーザーとアプリを使用しているユーザーが同じであることを確認することが難しくなります。
 
-```java
-  try {
+    ```java
+    try {
         KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
         keyStore.load(null);
         KeyGenerator keyGenerator = KeyGenerator.getInstance(
@@ -50,22 +50,21 @@ Android では、ローカル認証のために Android Runtime でサポート�
             | CertificateException | IOException e) {
         throw new RuntimeException("Failed to create a symmetric key", e);
     }
-
-```
+    ```
 
 - ロック画面をセットアップして確認します。
 
-```java
-  private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1; //used as a number to verify whether this is where the activity results from
-  Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
-        if (intent != null) {
-            startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
-        }
-```
+    ```java
+    private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1; //used as a number to verify whether this is where the activity results from
+    Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
+    if (intent != null) {
+        startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
+    }
+    ```
 
 - ロック画面の後に鍵を使用します。
 
-```java
+    ```java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
@@ -78,7 +77,7 @@ Android では、ローカル認証のために Android Runtime でサポート�
             }
         }
     }
-```
+    ```
 
 アンロックされた鍵がアプリケーションフローの中で使用されていることを確認します。例えば、鍵はローカルストレージやリモートエンドポイントから受信したメッセージを復号化するために使用される可能性があります。アプリケーションはユーザーが鍵をアンロックしたかどうかを単に確認しているだけであれば、そのアプリケーションはローカル認証のバイパスに対して脆弱となる可能性があります。
 
@@ -94,9 +93,9 @@ Android では、ローカル認証のために Android Runtime でサポート�
 
 Android プラットフォームは生体認証用に三つの異なるクラスを提供しています。
 
-- Android Q / 10 (API レベル 29) および以降: `BiometricManager`
-- Android P / 9 (API レベル 28) および以降: `BiometricPrompt`
-- Android 6.0 (API レベル 23) および以降: `FingerprintManager` (Android 9 で廃止)
+- Android 10 (API レベル 29) および以降: `BiometricManager`
+- Android 9 (API レベル 28) および以降: `BiometricPrompt`
+- Android 6.0 (API レベル 23) および以降: `FingerprintManager` (Android 9 (API レベル 28) で廃止)
 
 <img src="Images/Chapters/0x05f/biometricprompt-architecture.png" width="500" />
 
@@ -108,7 +107,7 @@ Android プラットフォームは生体認証用に三つの異なるクラス
 
 Android の Biometric API の非常に詳細な概要と説明は [Android 開発者ブログ](https://android-developers.googleblog.com/2019/10/one-biometric-api-over-all-android.html "One Biometric API Over all Android") に公開されています。
 
-##### FingerprintManager (Android 9 で廃止)
+##### FingerprintManager (Android 9 (API レベル 28) で廃止)
 
 Android 6.0 (API レベル 23) では指紋を介してユーザーを認証する公開 API を導入しましたが、Android 9 (API レベル 28) で廃止されました。指紋ハードウェアへのアクセスは [`FingerprintManager`](https://developer.android.com/reference/android/hardware/fingerprint/ "FingerprintManager") クラスを通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化してその `authenticate` メソッドを呼び出すことで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能な結果 (成功、失敗、エラーなど) を処理します。このメソッドは指紋認証が実際字実行されたという強力な証拠を構成しないことに注意します。例えば、認証ステップが攻撃者によりパッチされたり、「成功」コールバックが動的計装を使用してオーバーロードされる可能性があります。
 
@@ -156,35 +155,35 @@ authenticate メソッドの一環として `CryptoObject` が使用されない
 - パーミッションは Android Manifest でリクエストされる必要があります。
 
     ```xml
-        <uses-permission
-            android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission
+        android:name="android.permission.USE_FINGERPRINT" />
     ```
 
 - 指紋ハードウェアが利用可能である必要があります。
 
-    ```Java
-        FingerprintManager fingerprintManager = (FingerprintManager)
-                        context.getSystemService(Context.FINGERPRINT_SERVICE);
-        fingerprintManager.isHardwareDetected();
+    ```java
+    FingerprintManager fingerprintManager = (FingerprintManager)
+                    context.getSystemService(Context.FINGERPRINT_SERVICE);
+    fingerprintManager.isHardwareDetected();
     ```
 
 - ユーザーは保護されたロックスクリーンを持つ必要があります。
 
-    ```Java
-        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        keyguardManager.isKeyguardSecure();  //note if this is not the case: ask the user to setup a protected lock screen
+    ```java
+    KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+    keyguardManager.isKeyguardSecure();  //note if this is not the case: ask the user to setup a protected lock screen
     ```
 
 - 少なくとも一本の指が登録されている必要があります。
 
     ```java
-        fingerprintManager.hasEnrolledFingerprints();
+    fingerprintManager.hasEnrolledFingerprints();
     ```
 
 - アプリケーションにはユーザーの指紋を要求するパーミッションを持つ必要があります。
 
     ```java
-        context.checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PermissionResult.PERMISSION_GRANTED;
+    context.checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PermissionResult.PERMISSION_GRANTED;
     ```
 
 上記のいずれかのチェックが失敗した場合、指紋認証の選択肢を提供してはいけません。
@@ -193,14 +192,14 @@ authenticate メソッドの一環として `CryptoObject` が使用されない
 
 ```java
 SecretKeyFactory factory = SecretKeyFactory.getInstance(getEncryptionKey().getAlgorithm(), ANDROID_KEYSTORE);
-                KeyInfo secetkeyInfo = (KeyInfo) factory.getKeySpec(yourencryptionkeyhere, KeyInfo.class);
+KeyInfo secetkeyInfo = (KeyInfo) factory.getKeySpec(yourencryptionkeyhere, KeyInfo.class);
 secetkeyInfo.isInsideSecureHardware()
 ```
 
 特定のシステムでは、ハードウェアを使用した生体認証のポリシーを実施することも可能です。これは以下のようにチェックされます。
 
 ```java
-    keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
+keyInfo.isUserAuthenticationRequirementEnforcedBySecureHardware();
 ```
 
 次に対称鍵ペアを使用して指紋認証を行う方法について説明します。
@@ -208,33 +207,33 @@ secetkeyInfo.isInsideSecureHardware()
 指紋認証は `KeyGenerator` クラスを使用して新しい AES 鍵を作成することにより実装できます。`KeyGenParameterSpec.Builder` に `setUserAuthenticationRequired(true)` を追加します。
 
 ```java
-    generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE);
+generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE);
 
-    generator.init(new KeyGenParameterSpec.Builder (KEY_ALIAS,
-            KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-            .setUserAuthenticationRequired(true)
-            .build()
-    );
+generator.init(new KeyGenParameterSpec.Builder (KEY_ALIAS,
+        KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+        .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+        .setUserAuthenticationRequired(true)
+        .build()
+);
 
-    generator.generateKey();
+generator.generateKey();
 ```
 
 保護された鍵で暗号化または復号化を実行するには、`Cipher` オブジェクトを作成しキーエイリアスで初期化します。
 
 ```java
-    SecretKey keyspec = (SecretKey)keyStore.getKey(KEY_ALIAS, null);
+SecretKey keyspec = (SecretKey)keyStore.getKey(KEY_ALIAS, null);
 
-    if (mode == Cipher.ENCRYPT_MODE) {
-        cipher.init(mode, keyspec);
+if (mode == Cipher.ENCRYPT_MODE) {
+    cipher.init(mode, keyspec);
 ```
 
 注意、新しい鍵はすぐには使用できません。最初に `FingerprintManager` で認証する必要があります。これは `Cipher` オブジェクトを `FingerprintManager.CryptoObject` にラップし、認識される前に `FingerprintManager.authenticate` に渡されます。
 
 ```java
-    cryptoObject = new FingerprintManager.CryptoObject(cipher);
-    fingerprintManager.authenticate(cryptoObject, new CancellationSignal(), 0, this, null);
+cryptoObject = new FingerprintManager.CryptoObject(cipher);
+fingerprintManager.authenticate(cryptoObject, new CancellationSignal(), 0, this, null);
 ```
 
 認証が成功すると、その時点でコールバックメソッド `onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)` がコールされ、認証された `CryptoObject` が結果から取得できます。
@@ -253,7 +252,7 @@ public void authenticationSucceeded(FingerprintManager.AuthenticationResult resu
 
 鍵ペアは以下のように生成されます。
 
-```Java
+```java
 KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore");
 keyPairGenerator.initialize(
         new KeyGenParameterSpec.Builder(MY_KEY,
@@ -267,7 +266,7 @@ keyPairGenerator.generateKeyPair();
 
 署名のために鍵を使用するには、CryptoObject をインスタンス化し `FingerprintManager` を通して認証する必要があります。
 
-```Java
+```java
 Signature.getInstance("SHA256withECDSA");
 KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
 keyStore.load(null);
@@ -283,7 +282,7 @@ fingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null)
 
 以下のようにして、バイト配列 `inputBytes` の内容に署名できます。
 
-```Java
+```java
 Signature signature = cryptoObject.getSignature();
 signature.update(inputBytes);
 byte[] signed = signature.sign();
@@ -299,7 +298,7 @@ Android 7.0 (API level 24) は `KeyGenParameterSpec.Builder` に `setInvalidated
 Android 8.0 (API level 26) は二つのエラーコードを追加します。
 
 - `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
-- `FINGERPRINT_ERROR_VENDOR` – ベンダー固有の指紋リーダーエラーが発生した。
+- `FINGERPRINT_ERROR_VENDOR`: ベンダー固有の指紋リーダーエラーが発生した。
 
 ##### サードパーティ SDK
 
