@@ -405,7 +405,7 @@ DecodedJWT decodedToken = verifier.verify(token);
 機密データを処理するアプリの場合、適切な期間が経過した後にリフレッシュトークンが期限切れとなることを確認します。以下のコード例ではリフレッシュトークンの発行日をチェックするリフレッシュトークン API を示しています。トークンが 14 日以上経過していない場合、新しいアクセストークンが発行されます。そうでない場合、アクセスは拒否され、ユーザーは再度ログインするよう求められます。
 
 ```java
- app.post('/renew_access_token', function (req, res) {
+app.post('/renew_access_token', function (req, res) {
   // verify the existing refresh token
   var profile = jwt.verify(req.body.token, secret);
 
