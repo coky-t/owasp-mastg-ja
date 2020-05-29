@@ -127,10 +127,10 @@ zxcvbn はアプリ開発者が Java (またはその他の) 実装を使用し�
 単一要素認証スキーム (たとえばパスワードのみ) に対する辞書攻撃の成功の可能性を減らすために、データ侵害でパスワードが危殆化されているかどうかを検証できます。これは Troy Hunt による Pwned Passwords API (api.pwnedpasswords.com で利用可能) に基づくサービスを使用して実行できます。例えば、"[Have I been pwned?](https://haveibeenpwned.com "\';--have i been pwned?")" コンパニオンウェブサイトがあります。
 可能性のあるパスワード候補の SHA-1 ハッシュに基づいて、API は指定されたパスワードのハッシュがサービスにより収集されたさまざまな侵害で見つかった回数を返します。このワークフローは以下のステップで実行します。
 
-1. ユーザー入力を UTF-8 にエンコードします (例: パスワード `test`) 。
-2. ステップ 1 の結果の SHA-1 ハッシュを取得します (例: `test` のハッシュは `A94A8FE5CCB19BA61C4C0873D391E987982FBBD3` です) 。
-3. 最初の 5 文字 (ハッシュプレフィックス) をコピーし、次の API を使用して範囲検索に使用します: `http GET https://api.pwnedpasswords.com/range/A94A8`
-4. 結果を反復処理し、ハッシュの残りを探します (例 `FE5CCB19BA61C4C0873D391E987982FBBD3` は返されたリストの一部であるか) 。それが返されたリストの一部ではない場合、指定されたハッシュのパスワードは見つかりませんでした。そうでない場合、`FE5CCB19BA61C4C0873D391E987982FBBD3` の場合では、侵害で検出された回数を示すカウンターが返されます (例: `FE5CCB19BA61C4C0873D391E987982FBBD3:76479`) 。
+- ユーザー入力を UTF-8 にエンコードします (例: パスワード `test`) 。
+- ステップ 1 の結果の SHA-1 ハッシュを取得します (例: `test` のハッシュは `A94A8FE5CCB19BA61C4C0873D391E987982FBBD3` です) 。
+- 最初の 5 文字 (ハッシュプレフィックス) をコピーし、次の API を使用して範囲検索に使用します: `http GET https://api.pwnedpasswords.com/range/A94A8`
+- 結果を反復処理し、ハッシュの残りを探します (例 `FE5CCB19BA61C4C0873D391E987982FBBD3` は返されたリストの一部であるか) 。それが返されたリストの一部ではない場合、指定されたハッシュのパスワードは見つかりませんでした。そうでない場合、`FE5CCB19BA61C4C0873D391E987982FBBD3` の場合では、侵害で検出された回数を示すカウンターが返されます (例: `FE5CCB19BA61C4C0873D391E987982FBBD3:76479`) 。
 
 Pwned Passwords API の詳細なドキュメントは [オンライン](https://haveibeenpwned.com/API/v3 "Api Docs V3") にあります。
 
@@ -332,10 +332,10 @@ OTP 認証が使用されている場合、ほとんどの OTP は短い数値�
 
 トークンベース認証は HTTP リクエストごとに (サーバーにより検証済みの) 署名トークンを送信することにより実装されています。最も一般的に使用されるトークン形式は JSON Web Token であり、[RFC7519](https://tools.ietf.org/html/rfc7519 "RFC7519") で定義されています。JWT は完全なセッション状態を JSON オブジェクトとしてエンコードできます。したがって、サーバーはセッションデータや認証情報を保存する必要はありません。
 
-JWT トークンはドットで区切られた三つの Base64Url エンコードされたパーツで構成されています。トークン構造の例です。
+JWT トークンはドットで区切られた三つの Base64Url エンコードされたパーツで構成されています。トークン構造は以下のとおりです。
 
 ```default
-<base64UrlEncode(header)>.<base64UrlEncode(payload)>.<base64UrlEncode(signature)>
+base64UrlEncode(header).base64UrlEncode(payload).base64UrlEncode(signature)
 ```
 
 以下の例は [Base64Url-encoded JSON Web Token](https://jwt.io/#debugger "JWT Example on jwt.io") を示しています。
@@ -404,7 +404,7 @@ DecodedJWT decodedToken = verifier.verify(token);
 
 機密データを処理するアプリの場合、適切な期間が経過した後にリフレッシュトークンが期限切れとなることを確認します。以下のコード例ではリフレッシュトークンの発行日をチェックするリフレッシュトークン API を示しています。トークンが 14 日以上経過していない場合、新しいアクセストークンが発行されます。そうでない場合、アクセスは拒否され、ユーザーは再度ログインするよう求められます。
 
-```Java
+```java
  app.post('/renew_access_token', function (req, res) {
   // verify the existing refresh token
   var profile = jwt.verify(req.body.token, secret);
