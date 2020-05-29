@@ -219,7 +219,7 @@ StrictMode はアプリケーションのメインスレッドでの偶発的な
 
 メインスレッドへのディスクおよびネットワークアクセスに対してポリシーを有効にした [`StrictMode` の例](https://developer.android.com/reference/android/os/StrictMode.html "StrictMode Class") は以下のとおりです。
 
-```Java
+```java
 public void onCreate() {
      if (DEVELOPER_MODE) {
          StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
