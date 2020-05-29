@@ -25,7 +25,7 @@
 
 以下のコードスニペットは開発中に使用されることがあり、`checkClientTrusted`, `checkServerTrusted`, `getAcceptedIssuers` 関数を上書きして、任意の証明書を受け入れます。そのような実装は避けるべきであり、必要であれば、セキュリティ上の欠陥が組み込まれることを避けるために、それらを製品ビルドから明確に分離する必要があります。
 
-```Java
+```java
 TrustManager[] trustAllCerts = new TrustManager[] {
     new X509TrustManager() {
         @Override
@@ -84,7 +84,7 @@ final static HostnameVerifier NO_VERIFY = new HostnameVerifier() {
 
 組み込みの `HostnameVerifier` を使うことで、任意のホスト名を受け入れることが可能です。
 
-```Java
+```java
 HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
                              .ALLOW_ALL_HOSTNAME_VERIFIER;
 ```
@@ -260,7 +260,7 @@ Xamarin で開発されたアプリケーションは一般的に ServicePointMa
 
 通常、証明書をチェックする関数を作成し、ServerCertificateValidationCallback メソッドにブール値を返します。
 
-```c#
+```cs
 [Activity(Label = "XamarinPinning", MainLauncher = true)]
     public class MainActivity : Activity
     {
