@@ -169,7 +169,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 - hostapd.conf
 
-    ```default
+    ```bash
     # Name of the WiFi interface we use
     interface=wlan1
     # Use the nl80211 driver
@@ -191,7 +191,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 - wpa_supplicant.conf
 
-    ```default
+    ```bash
     network={
         ssid="NAME_OF_THE_TARGET_NETWORK"
         psk="PASSWORD_OF_THE_TARGET_NETWORK"
@@ -200,7 +200,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 
 - dnsmasq.conf
 
-    ```default
+    ```bash
     interface=wlan1
     dhcp-range=10.0.0.10,10.0.0.250,12h
     dhcp-option=3,10.0.0.1
@@ -216,23 +216,23 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
 中間者ポジションを取得できるためには上記の構成を実行する必要があります。これは Kali Linux 上で以下のコマンドを使用して実行できます。
 
 ```bash
-    # check if other process is not using WiFi interfaces
-    $ airmon-ng check kill
-    # configure IP address of the AP network interface
-    $ ifconfig wlan1 10.0.0.1 up
-    # start access point
-    $ hostapd hostapd.conf
-    # connect the target network interface
-    $ wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
-    # run DNS server
-    $ dnsmasq -C dnsmasq.conf -d
-    # enable routing
-    $ echo 1 > /proc/sys/net/ipv4/ip_forward
-    # iptables will NAT connections from AP network interface to the target network interface
-    $ iptables --flush
-    $ iptables --table nat --append POSTROUTING --out-interface wlan0 -j MASQUERADE
-    $ iptables --append FORWARD --in-interface wlan1 -j ACCEPT
-    $ iptables -t nat -A POSTROUTING -j MASQUERADE
+# check if other process is not using WiFi interfaces
+$ airmon-ng check kill
+# configure IP address of the AP network interface
+$ ifconfig wlan1 10.0.0.1 up
+# start access point
+$ hostapd hostapd.conf
+# connect the target network interface
+$ wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
+# run DNS server
+$ dnsmasq -C dnsmasq.conf -d
+# enable routing
+$ echo 1 > /proc/sys/net/ipv4/ip_forward
+# iptables will NAT connections from AP network interface to the target network interface
+$ iptables --flush
+$ iptables --table nat --append POSTROUTING --out-interface wlan0 -j MASQUERADE
+$ iptables --append FORWARD --in-interface wlan1 -j ACCEPT
+$ iptables -t nat -A POSTROUTING -j MASQUERADE
 ```
 
 これでモバイルデバイスをアクセスポイントに接続できます。
@@ -258,29 +258,29 @@ Xamarin は Visual Studio と C# をプログラミング言語として使用�
 
 Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は三つあります。
 
-- [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate` または `Main` に以下のコードを追加してアプリを再作成します。
+- 第一の方法: [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate` または `Main` に以下のコードを追加してアプリを再作成します。
 
-    ```csharp
+    ```cs
     WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
     ```
 
-- bettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
+- 第二の方法: bettercap を使用して中間者ポジション (MITM) を取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
 
-```bash
+    ```bash
     $ echo "
     rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
     " | sudo pfctl -ef -
-```
+    ```
 
-  Linux システムでは `iptables` を使用できます。
+- Linux システムでは `iptables` を使用できます。
 
-```bash
+    ```bash
     $ sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080
-```
+    ```
 
-  最後のステップとして、 Burp Suite の listener settings で 'Support invisible proxy' をセットする必要があります。
+- 最後のステップとして、 Burp Suite の listener settings で 'Support invisible proxy' をセットする必要があります。
 
-- bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MiTM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
+- 第三の方法: bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MiTM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
 
 > トラフィックをリダイレクトする際、ノイズとスコープ外のトラフィックを最小限に抑えるために、スコープ内のドメインと IP を狭めるルールを作成する必要があります。
 
@@ -292,8 +292,8 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 2. proxy listeners のリストからリスナーを選択して編集します。
 3. **Request handling** タブに移動して以下をセットします。
 
-    - Redirect to host: 元のトラフィックロケーションを指定します
-    - Redirect to port: 元のポートロケーションを指定します
+    - Redirect to host: 元のトラフィックロケーションを指定します。
+    - Redirect to port: 元のポートロケーションを指定します。
     - 'Force use of SSL' をセット (HTTPS 使用時) および 'Support invisible proxy' をセットします。
 
 <img src="Images/Chapters/0x04f/burp_xamarin.png" alt="Burp redirect to original location" width="600px" />
@@ -335,7 +335,9 @@ TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベ�
 
 ###### 暗号スイートの用語
 
-暗号スイートの構造は次の通りです。 **プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム**
+暗号スイートの構造は以下の通りです。
+
+- **プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム**
 
 この構造を以下で説明します。
 
