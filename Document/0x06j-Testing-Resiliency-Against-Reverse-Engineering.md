@@ -149,7 +149,7 @@ $ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp 
 
 これは DamnVulnerableIOSApp を開始して、`-[JailbreakDetectionVC isJailbroken]` への呼出をトレースし、`onEnter` および `onLeave` コールバック関数で JavaScript フックを作成します。以下の例に示すように、`value.replace` で戻り値を置き換えるのは簡単です。
 
-```JavaScript
+```javascript
     onLeave: function (log, retval, state) {
     console.log("Function [JailbreakDetectionVC isJailbroken] originally returned:"+ retval);
     retval.replace(0);  
@@ -321,7 +321,7 @@ void anti_debug() {
 
 [Apple ドキュメントアーカイブ](https://developer.apple.com/library/content/qa/qa1361/_index.html "How do I determine if I\'m being run under the debugger?") の以下の例では適切なパラメータを使用して `sysctl` の呼び出しにより返された `info.kp_proc.p_flag` フラグをチェックしています。
 
-```C
+```c
 #include <assert.h>
 #include <stdbool.h>
 #include <sys/types.h>
@@ -711,11 +711,11 @@ SwiftShield はクラス名とメソッド名を検出し、それらの識別�
 
 元のソースコードですべてのクラスとメソッドの識別子を確認できます。
 
-![No Obfuscation](Images/Chapters/0x06j/no_obfuscation.png)
+<img src="Images/Chapters/0x06j/no_obfuscation.jpg" width="650" />
 
 SwiftShield はそれらすべてを暗号化された値に置き換え、クラスやメソッドの元の名前や意図するものを痕跡に残さないようにします。
 
-<img src="Images/Chapters/0x06j/swiftshield_obfuscated.png" alt="swiftshield obfsucated"  width="650px" />
+<img src="Images/Chapters/0x06j/swiftshield_obfuscated.jpg" width="650" />
 
 `swiftshield` を実行すると `swiftshield-output` という新しいディレクトリが作成されます。このディレクトリにはフォルダ名にタイムスタンプを付けられた別のディレクトリが作成されます。このディレクトリには暗号化された文字列と元の値をマップしている `conversionMap.txt` というテキストファイルが含まれています。
 
