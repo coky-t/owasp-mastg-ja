@@ -135,7 +135,7 @@ language.lproj フォルダはアプリケーションがサポートする言�
 
 Android アプリ (Android 6.0 (API level 23) 以前) とは異なり、iOS アプリは事前に割り当てられたパーミッションを持ちません。代わりに、アプリが初めてセンシティブな API を使用しようとした際に、実行時にパーミッションを与えるようユーザーに求めます。パーミッションを付与されたアプリは 設定 > プライバシー メニューに表示され、ユーザーはアプリ固有の設定を変更できます。Apple はこのパーミッションコンセプト [プライバシー管理](https://support.apple.com/en-sg/HT203033 "Apple - About privacy and Location Services in iOS 8 and later") を呼び出します。
 
-iOS 開発者はパーミッションを直接設定することはできません。間接的にセンシティブな API で要求します。例えば、ユーザーの連絡先にアクセスすると、ユーザーがアクセスを許可または拒否するよう求められている間、CNContactStore へのコールはアプリをブロックします。iOS 10.0 以降、アプリは要求するパーミッションのタイプとアクセスする必要があるデータについて usage description キーを含む必要があります (NSContactsUsageDescription など)。
+iOS 開発者はパーミッションを直接設定することはできません。センシティブな API にアクセスする際に間接的に要求されます。例えば、ユーザーの連絡先にアクセスすると、ユーザーがアクセスを許可または拒否するよう求められている間、CNContactStore へのコールはアプリをブロックします。iOS 10.0 以降、アプリは要求するパーミッションのタイプとアクセスする必要があるデータについて usage description キーを含む必要があります (NSContactsUsageDescription など)。
 
 以下の API は [ユーザーパーミッションを必要とします](https://www.apple.com/business/docs/iOS_Security_Guide.pdf "iOS Security Guide. Page 62") 。
 
