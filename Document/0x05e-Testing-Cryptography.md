@@ -1,16 +1,69 @@
 ## Android の暗号化 API
 
-「[モバイルアプリの暗号化](0x04g-Testing-Cryptography.md)」の章では、一般的な暗号のベストプラクティスを紹介し、モバイルアプリで暗号が間違って使用される場合に起こりうる典型的な欠陥について説明しました。この章では、Android の暗号化 API について詳しく説明します。ソースコード内でのこれらの API の使用をどのように識別し、構成をどのように解釈するかを示します。コードをレビューする際には、このガイドからリンクされている最新のベストプラクティスで使用されている暗号パラメータを必ず比較します。
+### 概要
 
-### 暗号標準アルゴリズムの構成の検討 (MSTG-CRYPTO-2, MSTG-CRYPTO-3 および MSTG-CRYPTO-4)
+"[モバイルアプリの暗号化](0x04g-Testing-Cryptography.md)" の章では、一般的な暗号のベストプラクティスを紹介し、モバイルアプリで暗号が間違って使用される場合に起こりうる典型的な欠陥について説明しました。この章では、Android の暗号化 API について詳しく説明します。ソースコード内でのこれらの API の使用をどのように識別し、構成をどのように解釈するかを示します。コードをレビューする際には、このガイドからリンクされている最新のベストプラクティスで使用されている暗号パラメータを必ず比較してください。
 
-#### 概要
+Android 内の暗号化システムの主要コンポーネントを特定できます。
 
-Android 暗号化 API は Java Cryptography Architecture (JCA) に基づいています。JCA はインタフェースと実装を分離し、一連の暗号アルゴリズムを実装できる複数の [セキュリティプロバイダ](https://developer.android.com/reference/java/security/Provider.html "Android Security Providers") を組み込むことができます。ほとんどの JCA インタフェースとクラスは `java.security.*` および `javax.crypto.*` パッケージで定義されています。さらに、Android 固有のパッケージ `android.security.*` および `android.security.keystore.*` もあります。
+- [セキュリティプロバイダ](0x05e-Testing-Cryptography.md#security-provider)
+- KeyStore - "データストレージのテスト" の章の [KeyStore](0x05d-Testing-Data-Storage.md#keystore) セクションを参照
+- KeyChain - "データストレージのテスト" の章の [KeyChain](0x05d-Testing-Data-Storage.md#keychain) セクションを参照
 
-Android に含まれるプロバイダのリストは Android のバージョンと OEM 固有のビルドにより異なります。一部の古いバージョンのプロバイダ実装は安全性が低く脆弱であることが知られています。したがって、Android アプリケーションは正しいアルゴリズムを選択して適切な設定を行うだけでなく、場合によっては過去のプロバイダの実装の強度にも注意を払う必要があります。
+Android 暗号化 API は Java Cryptography Architecture (JCA) をベースとしています。JCA はインタフェースと実装を分離し、暗号化アルゴリズムのセットを実装できる複数の [セキュリティプロバイダ](https://developer.android.com/reference/java/security/Provider.html "Android Security Providers") を含めることを可能にしています。 JCA インタフェースのほとんどは `java.security.*` および `javax.crypto.*` パッケージで定義されています。さらに、 Android 固有のパッケージ `android.security.*` および `android.security.keystore.*` があります。
 
-既存のプロバイダのセットは以下のように一覧表示できます。
+KeyStore および KeyChain は鍵を保存および使用するための API を提供しています (裏では、 KeyChain API は KeyStore システムを使用しています) 。これらのシステムは暗号鍵のライフサイクル全体を管理することを可能にします。暗号鍵管理を実装するための要件およびガイダンスは [Key Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html "Key Management Cheat Sheet") に記載されています。以下のフェーズが考えられます。
+
+- 鍵の生成
+- 鍵の使用
+- 鍵の保管
+- 鍵のアーカイブ
+- 鍵の削除
+
+> 鍵の保管については "[データストレージのテスト](0x05d-Testing-Data-Storage.md)" の章で解析していますのでご注意ください。
+
+これらのフェーズは KeyStore/KeyChain システムにより管理されます。ただしシステムの動作はアプリケーション開発者の実装方法により異なります。解析プロセスではアプリケーション開発者が使用する機能に焦点を当てる必要があります。以下の機能を特定および検証する必要があります。
+
+- [鍵生成](0x05e-Testing-Cryptography.md#key-generation)
+- [乱数値生成](0x05e-Testing-Cryptography.md#random-number-generation)
+- 鍵ローテーション
+
+Apps that target modern API levels, went through the following changes:
+
+- Android 7.0 (API level 24) 以上について [Android 開発者ブログでは以下のように記しています](https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html "Security provider Crypto deprecated in Andorid N") 。
+  - セキュリティプロバイダの指定を停止することを推奨します。代わりに、常に [パッチされたセキュリティプロバイダ](0x05e-Testing-Cryptography.md#updating-provider) を使用します。
+  - `Crypto` プロバイダのサポートは中止されており、このプロバイダは非推奨です。同じことがセキュアランダムのための `SHA1PRNG` にも当てはまります。
+- Android 8.1 (API レベル 27) 以上について [開発者ドキュメント](https://developer.android.com/about/versions/oreo/android-8.1 "Cryptography updates") は以下のように記しています。
+  - `AndroidOpenSSL` として知られる Conscrypt は上述の Bouncy Castle を使用することをお勧めします。これは次の新しい実装を有します。 `AlgorithmParameters:GCM` , `KeyGenerator:AES`, `KeyGenerator:DESEDE`, `KeyGenerator:HMACMD5`, `KeyGenerator:HMACSHA1`, `KeyGenerator:HMACSHA224`, `KeyGenerator:HMACSHA256`, `KeyGenerator:HMACSHA384`, `KeyGenerator:HMACSHA512`, `SecretKeyFactory:DESEDE`, `Signature:NONEWITHECDSA`
+  - GCM にはもはや `IvParameterSpec.class` を使用すべきではありません。代わりに `GCMParameterSpec.class` を使用します。
+  - ソケットは `OpenSSLSocketImpl` から `ConscryptFileDescriptorSocket` および `ConscryptEngineSocket` に変更されています。
+  - ヌルパラメータを持つ `SSLSession` は NullPointerException を返します。
+  - 鍵を生成するために入力バイトとして十分な大きさの配列を持つ必要があります。そうでない場合 InvalidKeySpecException がスローされます。
+  - ソケット読み込みが中断された場合は `SocketException` を取得します。
+- Android 9 (API レベル 28) 以上について [Android 開発者ブログ](https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html "Cryptography Changes in Android P") はさらに多くの変更を記しています。
+  - `getInstance` メソッドを使用してセキュリティプロバイダを指定し、 28 未満の API をターゲットにすると、警告が発生します。 Android 9 (API レベル 28) 以上をターゲットにした場合、エラーが発生します。
+  - `Crypto` プロバイダは現在削除されています。これをコールすると `NoSuchProviderException` が返されます。
+- Android 10 (API レベル 29) について [開発者ドキュメント](https://developer.android.com/about/versions/10/behavior-changes-all#security "Security Changes in Android 10") にすべてのネットワークセキュリティの変更がリストされています。
+
+#### 改善方法
+
+アプリ審査の際には以下の推奨事項リストを考慮する必要があります。
+
+- "[モバイルアプリの暗号化](0x04g-Testing-Cryptography.md)" の章で説明されているベストプラクティスが守られていることを確認します。
+- セキュリティプロバイダが最新アップデートであることを確認します - [セキュリティプロバイダの更新](https://developer.android.com/training/articles/security-gms-provider "Updating security provider") 。
+- セキュリティプロバイダの指定を停止し、デフォルト実装 (AndroidOpenSSL, Conscrypt) を使用します。
+- Crypto セキュリティプロバイダとその `SHA1PRNG` は非推奨であるため使用を停止します。
+- Android KeyStore システムに対してのみセキュリティプロバイダを指定します。
+- IV なしでのパスワードベースの暗号化方式の使用を停止します。
+- KeyPairGeneratorSpec の代わりに KeyGenParameterSpec を使用します。
+
+#### セキュリティプロバイダ
+
+Android は Java Security サービスの実装を `provider` に依存しています。これはセキュアなネットワーク通信と、暗号に依存するその他のセキュアな機能を確保するために重要です。
+
+Android に含まれるセキュリティプロバイダのリストは Android のバージョンや OEM 固有のビルドにより異なります。古いバージョンのセキュリティプロバイダの実装の中には安全性が低いものや脆弱性があるものが知られています。したがって、 Android アプリケーションは正しいアルゴリズムを選択して適切な構成を提供するだけでなく、場合によってはレガシーセキュリティプロバイダの実装の強度にも注意を払う必要があります。
+
+以下のコードを使用して既存のセキュリティプロバイダのセットを一覧表示できます。
 
 ```java
 StringBuilder builder = new StringBuilder();
@@ -27,9 +80,9 @@ String providers = builder.toString();
 //now display the string on the screen or in the logs for debugging.
 ```
 
-以下は、セキュリティプロバイダにパッチを当てた後、Google Play API を搭載したエミュレータで実行中の Android 4.4 (API level 19) の出力です。
+以下では、セキュリティプロバイダにパッチを適用した後の、 Google Play API を備えたエミュレータで実行中の Android 4.4 (API レベル 19) の出力を示しています。
 
-```text
+```default
 provider: GmsCore_OpenSSL1.0 (Android's OpenSSL-backed security provider)
 provider: AndroidOpenSSL1.0 (Android's OpenSSL-backed security provider)
 provider: DRLCertFactory1.0 (ASN.1, DER, PkiPath, PKCS7)
@@ -39,31 +92,33 @@ provider: HarmonyJSSE1.0 (Harmony JSSE Provider)
 provider: AndroidKeyStore1.0 (Android AndroidKeyStore security provider)
 ```
 
-古いバージョンの Android (例: Android 7.0 (API level 24) より以前のバージョンのみ使用) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Spongy Castle (Bouncy Castle の再パッケージ版) はこのような状況では一般的な選択肢です。Bouncy Castle は Android SDK に含まれているため、再パッケージ化が必要です。[Spongy Castle](https://rtyley.github.io/spongycastle/ "Spongy Castle") の最新バージョンではAndroid に含まれていた旧バージョンの [Bouncy Castle](https://www.cvedetails.com/vulnerability-list/vendor_id-7637/Bouncycastle.html "CVE Details Bouncy Castle") で発生した問題が修正されている可能性があります。Android にパックされた Bouncy Castle ライブラリは [多くの Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java") の対応ほど完全ではないことがよくあることに注意します。最後に、Spongy Castle のような大きなライブラリをパックすることは、しばしばマルチ dex 化 Android アプリケーションにつながることを心に留めておきます。
+以下では Google Play API を備えたエミュレータで実行中の Android 9 (API レベル 28) の出力を示しています。
 
-最新の API レベルを対象としたアプリは以下の変更を検討します。
+```default
+provider: AndroidNSSP 1.0(Android Network Security Policy Provider)
+provider: AndroidOpenSSL 1.0(Android's OpenSSL-backed security provider)
+provider: CertPathProvider 1.0(Provider of CertPathBuilder and CertPathVerifier)
+provider: AndroidKeyStoreBCWorkaround 1.0(Android KeyStore security provider to work around Bouncy Castle)
+provider: BC 1.57(BouncyCastle Security Provider v1.57)
+provider: HarmonyJSSE 1.0(Harmony JSSE Provider)
+provider: AndroidKeyStore 1.0(Android KeyStore security provider)
+```
 
-- Android 7.0 (API level 24) 以上では [Android 開発者ブログは以下のように記されています](https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html "Security provider Crypto deprecated in Andorid N") 。
-  - セキュリティプロバイダの指定を停止することを推奨します。代わりに、常にパッチされたセキュリティプロバイダを使用します。
-  - `Crypto` プロバイダのサポートは中止されており、このプロバイダは非推奨です。
-  - 安全なランダムのための `SHA1PRNG` のサポートはもはやありませんが、代わりにそのランタイムは `OpenSSLRandom` のインスタンスを提供します。
-- Android 8.1 (API level 27) 以上では [開発者ドキュメント](https://developer.android.com/about/versions/oreo/android-8.1 "Cryptography updates") は以下のように記されています。
-  - `AndroidOpenSSL` として知られる Conscrypt は上述の Bouncy Castle を使用することをお勧めします。これは次の新しい実装を有します。`AlgorithmParameters:GCM` , `KeyGenerator:AES`, `KeyGenerator:DESEDE`, `KeyGenerator:HMACMD5`, `KeyGenerator:HMACSHA1`, `KeyGenerator:HMACSHA224`, `KeyGenerator:HMACSHA256`, `KeyGenerator:HMACSHA384`, `KeyGenerator:HMACSHA512`, `SecretKeyFactory:DESEDE`, `Signature:NONEWITHECDSA`
-  - GCM にはもはや `IvParameterSpec.class` を使用すべきではありません。代わりに `GCMParameterSpec.class` を使用します。
-  - ソケットは `OpenSSLSocketImpl` から `ConscryptFileDescriptorSocket` および `ConscryptEngineSocket` に変更されています。
-  - ヌルパラメータを持つ `SSLSession` は NullPointerException を返します。
-  - 鍵を生成するために入力バイトとして十分な大きさの配列を持つ必要があります。そうでない場合、InvalidKeySpecException がスローされます。
-  - ソケット読み込みが中断された場合は、`SocketException` を取得します。
-- Android 9 (API level 28) 以上では [Android 開発者ブログ](https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html "Cryptography Changes in Android P") はより積極的な変更を記しています。
-  - `getInstance` メソッドを使用してプロバイダを指定し、P より下の任意の API をターゲットにすると、警告を得ます。P 以上をターゲットにすると、エラーを得ます。
-  - `Crypto` プロバイダは現在削除されています。これをコールすると `NoSuchProviderException` が返されます。
-- Android 10 (API level 29) では [開発者ドキュメント](https://developer.android.com/about/versions/10/behavior-changes-all#security "Security Changes in Android 10") にすべてのネットワークセキュリティの変更がリストされています。
+##### セキュリティプロバイダの更新
 
-Android SDK はセキュアな鍵生成および使用を記述するためのメカニズムを提供します。Android 6.0 (API level 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。
+コンポーネントに最新のパッチを適用し続けることはセキュリティ原則の一つです。同じことが `provider` にも当てはまります。アプリケーションは使用されているセキュリティプロバイダが最新かどうかを確認し、最新でない場合には [更新してください](https://developer.android.com/training/articles/security-gms-provider "Updating security provider") 。これは [サードパーティーライブラリの脆弱性の確認 (MSTG-CODE-5)](0x05i-Testing-Code-Quality-and-Build-Settings.md#checking-for-weaknesses-in-third-party-libraries) と関連しています。
+
+##### 旧バージョンの Android
+
+古いバージョンの Android (例: Android 7.0 (API レベル 24) より以前のバージョンのみ使用) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Spongy Castle (Bouncy Castle の再パッケージ版) はこのような状況では一般的な選択肢です。Bouncy Castle は Android SDK に含まれているため、再パッケージ化が必要です。[Spongy Castle](https://rtyley.github.io/spongycastle/ "Spongy Castle") の最新バージョンでは Android に含まれている旧バージョンの [Bouncy Castle](https://www.cvedetails.com/vulnerability-list/vendor_id-7637/Bouncycastle.html "CVE Details Bouncy Castle") で発生した問題が修正されている可能性があります。Android に同梱されている Bouncy Castle ライブラリは [多くの Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java") の対応ほど完全ではないことが多いことに注意します。最後に、 Spongy Castle のような大きなライブラリを同梱と、多くの場合にマルチ dex 化 Android アプリケーションにつながることを心に留めておきます。
+
+#### 鍵生成
+
+Android SDK はセキュアな鍵生成および使用を指定するためのメカニズムを提供します。 Android 6.0 (API レベル 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。
 
 API 23 以降での AES/CBC/PKCS7Padding の使用例を以下に示します。
 
-```Java
+```java
 String keyAlias = "MySecretKey";
 
 KeyGenParameterSpec keyGenParameterSpec = new KeyGenParameterSpec.Builder(keyAlias,
@@ -80,15 +135,15 @@ keyGenerator.init(keyGenParameterSpec);
 SecretKey secretKey = keyGenerator.generateKey();
 ```
 
-`KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的は示しません。さらに、ブロックモード (CBC)、パディング (PKCS #7) を指定し、ランダム化された暗号化が必要であることを明示します (これがデフォルトです) 。`"AndroidKeyStore"` はこの例で使用される暗号化サービスプロバイダの名前です。これにより鍵は鍵の保護のために受益者である `AndroidKeyStore` に格納されることが自動的に保証されます。
+`KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的には使用できません。さらに、ブロックモード (CBC) 、パディング (PKCS #7) を指定し、ランダム化された暗号化が必要である (これがデフォルトです) ことを明示的に指定します。 `"AndroidKeyStore"` はこの例で使用されているセキュリティプロバイダの名前です。これにより鍵の保護に役立つ `AndroidKeyStore` に鍵が自動的に保存されることが保証されます。
 
-GCM はもうひとつの AES ブロックモードであり、他の古いモードよりもセキュリティ上の利点があります。暗号的によりセキュアであることに加えて、認証も提供します。CBC (および他のモード) を使用する場合は、認証は HMAC を使用して別に実行する必要があります ( "[Android の改竄とリバースエンジニアリング](0x05c-Reverse-Engineering-and-Tampering.md)" の章を参照してください) 。GCM は [パディングをサポートしない](https://developer.android.com/training/articles/keystore.html#SupportedCiphers "Supported Ciphers in AndroidKeyStore") AES の唯一のモードであることに注意します。
+GCM はもうひとつの AES ブロックモードであり、他の古いモードよりもセキュリティ上の利点があります。暗号的によりセキュアであることに加えて、認証も提供します。 CBC (および他のモード) を使用する場合は、認証は HMAC を使用して別に実行する必要があります ( "[Android の改竄とリバースエンジニアリング](0x05c-Reverse-Engineering-and-Tampering.md)" の章を参照してください) 。 GCM は [パディングをサポートしていない](https://developer.android.com/training/articles/keystore.html#SupportedCiphers "Supported Ciphers in AndroidKeyStore") AES の唯一のモードであることに注意します。
 
 上記の仕様に違反して生成された鍵の使用を試みるとセキュリティ例外が発生します。
 
-その鍵を使用して復号する例を以下に示します。
+その鍵を使用して暗号化する例を以下に示します。
 
-```Java
+```java
 String AES_MODE = KeyProperties.KEY_ALGORITHM_AES
         + "/" + KeyProperties.BLOCK_MODE_CBC
         + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7;
@@ -105,11 +160,11 @@ byte[] iv = cipher.getIV();
 // save both the IV and the encryptedBytes
 ```
 
-IV (初期化ベクトル) および暗号化されたバイト列の両方を格納する必要があります。さもなければ解読は不可能です。
+IV (初期化ベクトル) および暗号化されたバイト列の両方を保存する必要があります。そうしないと復号はできません。
 
-暗号文を復号する方法を以下に示します。`input` は暗号化されたバイト配列であり、`iv` は暗号ステップからの初期化ベクトルです。
+暗号文を復号する方法を以下に示します。 `input` は暗号化されたバイト配列であり、 `iv` は暗号ステップからの初期化ベクトルです。
 
-```Java
+```java
 // byte[] input
 // byte[] iv
 Key key = AndroidKeyStore.getKey(AES_KEY_ALIAS, null);
@@ -123,11 +178,11 @@ byte[] result = cipher.doFinal(input);
 
 IV は毎回ランダムに生成されるため、後で復号するために暗号文 (`encryptedBytes`) とともに保存する必要があります。
 
-Android 6.0 以前は、AES 鍵の生成はサポートされていませんでした。結果として、多くの実装では RSA を使用することを選択し、`KeyPairGeneratorSpec` を使用して非対称暗号化の公開鍵と秘密鍵のペアを生成しました。あるいは `SecureRandom` を使用して AES 鍵を生成しました。
+Android 6.0 (API レベル 23) より前では AES 鍵の生成はサポートされていませんでした。結果として、多くの実装では RSA を使用することを選択し、 `KeyPairGeneratorSpec` を使用して非対称暗号化用の公開鍵と秘密鍵のペアを生成するか、あるいは `SecureRandom` を使用して AES 鍵を生成していました。
 
 RSA 鍵ペアの作成に使用される `KeyPairGenerator` および `KeyPairGeneratorSpec` の例を以下の示します。
 
-```Java
+```java
 Date startDate = Calendar.getInstance().getTime();
 Calendar endCalendar = Calendar.getInstance();
 endCalendar.add(Calendar.YEAR, 1);
@@ -148,33 +203,165 @@ keyPairGenerator.initialize(keyPairGeneratorSpec);
 KeyPair keyPair = keyPairGenerator.generateKeyPair();
 ```
 
-この例では 4096 ビットの鍵サイズ (すなわち、モジュラスサイズ) で RSA 鍵のペアを作成します。
+この例では 4096 ビットの鍵サイズ (すなわち、モジュラスサイズ) で RSA 鍵ペアを作成します。
 
-注意：NDK を使用して暗号操作とハードコードされた鍵を隠す必要があるとする誤った考えが広まっています。しかし、このメカニズムを使用することは効果的ではありません。攻撃者はツールを使用して、使用されているメカニズムを見つけ出し、メモリ内の鍵のダンプを作成できます。また、radare2 (詳細については「リバースエンジニアリングと改竄」の章の「[ネイティブコードの逆アセンブル](0x05c-Reverse-Engineering-and-Tampering.md#disassembling-native-code "Disassembling Native Code")」セクションを参照) でコントロールフローを解析できます。Android 7.0 (API level 24) 以降では、プライベート API を使用することは許可されません。代わりにパブリック API をコールする必要があります。[Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") に記載されているように、それを隠すことの効果にさらに影響します。
+対称暗号鍵は Password Based Key Derivation Function version 2 (PBKDF2) を使用してパスフレーズから生成できます。この暗号プロトコルは暗号鍵を生成するように設計されており、暗号化の目的で使用できます。アルゴリズムの入力パラメータは [脆弱な鍵生成関数](0x04g-Testing-Cryptography.md#weak-key-generation-functions) セクションに従って調整します。以下のコードはパスワードに基づいて強力な暗号鍵を生成する方法を示しています。
+
+```java
+public static SecretKey generateStrongAESKey(char[] password, int keyLength)
+{
+    //Initiliaze objects and variables for later use
+    int iterationCount = 10000;
+    int saltLength     = keyLength / 8;
+    SecureRandom random = new SecureRandom();
+    //Generate the salt
+    byte[] salt = new byte[saltLength];
+    random.nextBytes(salt);
+    KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, keyLength);
+    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+    byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
+    return new SecretKeySpec(keyBytes, "AES");
+}
+```
+
+上記の手法ではパスワードと必要なビット長の鍵 (例えば 128 または 256 ビットの AES 鍵) を含む文字配列が必要です。 PBKDF2 アルゴリズムにより使用される 10,000 ラウンドの反復回数を定義します。反復回数を増やすことでパスワードに対するブルートフォース攻撃の作業負荷が大幅に増加しますが、鍵導出にはより多くの計算能力が必要になるためパフォーマンスに影響を与える可能性があります。鍵長に等しいソルトサイズを定義し、ビットからバイトへの変換を処理するために 8 で除算します。 `SecureRandom` クラスを使用してランダムにソルトを生成します。同じパスワードが与えられた際には何度でも同じ暗号鍵が生成されることを確実にするために、明らかに、このソルトは一定に保ちたいものです。ソルトを `SharedPreferences` に非公開で格納できることに注意します。リスクの高いデータの場合には同期を防ぐために Android のバックアップメカニズムからソルトを除外することを推奨します。
+
+> ルート化デバイスやパッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、 `AndroidKeystore` に配置された鍵でソルトを暗号化するほうがよいかもしれないことに注意します。 Password-Based Encryption (PBE) 鍵は Android 8.0 (API レベル 26) まで、推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。より高い API レベルでは `PBKDF2withHmacSHA256` を使用することがベストです。これはハッシュ値が長くなります。
+
+注: NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムを使用しても効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを見つけ、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Fridaの助けを借りて抽出された鍵、またはその両方を組み合わせた r2frida (詳細は "Android の改竄とリバースエンジニアリング" の章のセクション "[ネイティブコードの逆アセンブル](0x05c-Reverse-Engineering-and-Tampering.md#disassembling-native-code "Disassembling Native Code")", "[メモリダンプ](0x05c-Reverse-Engineering-and-Tampering.md#memory-dump "Memory Dump")", "[メモリ内検索](0x05c-Reverse-Engineering-and-Tampering.md#in-memory-search "In-Memory Search")" を参照) で解析することができます。 Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されておらず、代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") で説明されているように隠蔽の有効性にさらに影響を与えます。
+
+#### 乱数生成
+
+暗号にはセキュアな擬似乱数生成 (PRNG) が必要です。 `java.util.Random` のような標準の Java クラスは十分なランダム性を提供しないため、実際に攻撃者が生成される次の値を推測し、この推測を使用して別のユーザーになりすましたり機密情報にアクセスしたりするおそれがあります。
+
+一般的に、 `SecureRandom` を使用すべきです。しかし、Android 4.4 (API レベル 19) 以前の Android バージョンをサポートする場合には、 [PRNG を適切に初期化できない](https://android-developers.googleblog.com/2013/08/some-securerandom-thoughts.html "Some SecureRandom Thoughts") Android 4.1-4.3 (API レベル 16-18) バージョンのバグを回避するために更なる注意が必要です。
+
+ほとんどの開発者は引数なしでデフォルトコンストラクタを介して `SecureRandom` をインスタンス化する必要があります。他のコンストラクタはより高度な用途のためにあり、誤って使用されると、ランダム性やセキュリティが低下するおそれがあります。 `SecureRandom` を支援する PRNG プロバイダは `AndroidOpenSSL` (Conscrypt) プロバイダから `SHA1PRNG` を使用します。
+
+### 対称暗号のテスト (MSTG-CRYPTO-1)
+
+#### 概要
+
+このテストケースは唯一の暗号化手法としてハードコードされた対称暗号に焦点を当てています。以下のチェックを行う必要があります。
+
+- 対称暗号のすべてのインスタンスを特定します
+- 特定されたすべてのインスタンスの対称鍵がハードコードされていないかどうかを検証します
+- ハードコードされた対称暗号が唯一の暗号化手法として使用されていないかどうかを検証します
 
 #### 静的解析
 
-コード内の暗号化プリミティブの使用を見つけます。最もよく使用されるクラスとインタフェースのいくつかを以下に示します。
+対称鍵暗号のすべてのインスタンスを特定し、対称鍵をロードまたは提供するメカニズムを探します。以下を探します。
 
-- `Cipher`
-- `Mac`
-- `MessageDigest`
-- `Signature`
-- `Key`, `PrivateKey`, `PublicKey`, `SecretKey`
-- `java.security.*` および `javax.crypto.*` パッケージにあるその他のもの
+- 対称アルゴリズム (`DES`, `AES`, など)
+- 鍵生成器の仕様 (`KeyGenParameterSpec`, `KeyPairGeneratorSpec`, `KeyPairGenerator`, `KeyGenerator`, `KeyProperties`, など)
+- `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` パッケージを使用するクラス
 
-「モバイルアプリの暗号化」の章に記載されているベストプラクティスに従っていることを確認します。使用されている暗号アルゴリズムの構成が [NIST](https://www.keylength.com/en/4/ "NIST recommendations - 2016") および[BSI](https://www.keylength.com/en/8/ "BSI recommendations - 2017") のベストプラクティスと整合し、強力であるとみなされていることを確認します。`SHA1PRNG` は暗号学的にセキュアではないため、もはや使用していないことを確認します。
-最後に、鍵がネイティブコードにハードコードされていないこと、および安全でないメカニズムがこのレベルで使用されていないことを確認します。
+特定されたすべてのインスタンスの対称鍵がハードコードされていないかどうかを検証します。対称鍵が以下でないかどうかをチェックします。
+
+- アプリケーションリソースの一部である
+- 既知の値から導出できる値である
+- コードにハードコードされている
+
+ハードコードされた対称暗号の特定されたすべてのインスタンスが、暗号化の唯一の手法としてセキュリティ上重要なコンテキストで使用されていないことを検証します。
+
+例としてハードコードされた暗号鍵の仕様を特定する方法を示します。最初に ```Baksmali``` を使用して DEX バイトコードを Smali バイトコードファイルのコレクションに逆アセンブルします。
+
+```bash
+$ baksmali d file.apk -o smali_output/
+```
+
+Smali バイトコードファイルのコレクションができたので、 ```SecretKeySpec``` クラスの使用状況についてファイルを検索してみます。これは取得したばかりの Smali ソースコードを再帰的に grep することで実現します。 Smali のクラス記述子は `L` で始まり `;` で終わることに注意してください。
+
+```bash
+$ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
+```
+
+これにより `SecretKeySpec` クラスを使用するすべてのクラスが強調表示されます。ここで強調表示されたすべてのファイルを調べ、鍵マテリアルを渡すために使用されるバイト列を追跡します。以下の図は出荷可能アプリケーションでこの評価を実行した結果を示しています。読みやすくするために DEX バイトコードを Java コードにリバースエンジニアリングしました。静的バイト配列 `Encrypt.keyBytes` にハードコードおよび初期化された静的暗号鍵が使用されていることがわかります。
+
+<img src="Images/Chapters/0x5e/static_encryption_key.png" width="600px"/>
+
+#### 動的解析
+
+暗号化メソッドをフックして、使用されている鍵を解析します。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込むまたは読み取る場所を評価します。
+
+### 暗号標準アルゴリズムのテスト (MSTG-CRYPTO-2, MSTG-CRYPTO-3 および MSTG-CRYPTO-4)
+
+#### 概要
+
+これらのテストケースでは暗号プリミティブの実装と使用に焦点を当てています。以下のチェックを実行する必要があります。
+
+- 暗号プリミティブのすべてのインスタンスとそれらの実装 (ライブラリまたはカスタム実装) を特定します
+- 暗号プリミティブがどのように使用されているかおよびどのように構成されているかを検証します
+- 使用されている暗号プロトコルおよびアルゴリズムがセキュリティ上の目的で非推奨ではないかを検証します
+
+#### 静的解析
+
+コード内の暗号プリミティブのすべてのインスタンスを特定します。すべてのカスタム暗号実装を特定します。以下を探します。
+
+- クラス `Cipher`, `Mac`, `MessageDigest`, `Signature`
+- インタフェース `Key`, `PrivateKey`, `PublicKey`, `SecretKey`
+- 関数 `getInstance`, `generateKey`
+- 例外 `KeyStoreException`, `CertificateException`, `NoSuchAlgorithmException`
+- `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` パッケージを使用するクラス
+
+getInstance へのすべてのコールで、指定しないことによりセキュリティプロバイダのデフォルト `provider` (つまり AndroidOpenSSL 別名 Conscrypt を意味する) を使用することを特定します。 `provider` は `KeyStore` 関連のコードでのみ指定できます (その場合 `KeyStore` は `provider` として提供される必要があります) 。他の `provider` が指定されている場合は、状況とビジネスケース (Android API バージョンなど) にしたがって検証する必要があり、 `provider` は潜在的な脆弱性に対して検査する必要があります。
+
+"[モバイルアプリの暗号化](0x04g-Testing-Cryptography.md)" の章で説明されているベストプラクティスに従っていることを確認します。[非セキュアおよび非推奨のアルゴリズム](0x04g-Testing-Cryptography.md#identifying-insecure-and/or-deprecated-cryptographic-algorithms) および [よくある設定の問題](0x04g-Testing-Cryptography.md#common-configuration-issues) をご覧ください。
+
+#### 動的解析
+
+暗号化メソッドをフックして、使用されている鍵を解析します。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込むまたは読み取る場所を評価します。
+
+### 鍵の目的のテスト (MSTG-CRYPTO-5)
+
+#### 概要
+
+このテストケースは目的の検証と同じ暗号鍵の再利用に焦点を当てています。以下のチェックを実行する必要があります。
+
+- 暗号化が使用されているすべてのインスタンスを特定します
+- 暗号化が使用される目的 (使用時、転送時、保存時のデータを保護するため) を特定します
+- 暗号化のタイプを特定します
+- 目的に応じて暗号化が使用されているかどうかを検証します
+
+#### 静的解析
+
+暗号化が使用されているすべてのインスタンスを特定します。以下を探します。
+
+- クラス `Cipher`, `Mac`, `MessageDigest`, `Signature`
+- インタフェース `Key`, `PrivateKey`, `PublicKey`, `SecretKey`
+- 関数 `getInstance`, `generateKey`
+- 例外 `KeyStoreException`, `CertificateException`, `NoSuchAlgorithmException`
+- `java.security.*`, `javax.crypto.*`, `android.security.*` and `android.security.keystore.*` パッケージを使用するクラス
+
+特定されたすべてのインスタンスについて、暗号化の使用目的とそのタイプを特定します。以下を使用します。
+
+- 暗号化/復号化 - データの機密性を確保するため
+- 署名/検証 - データの完全性を (場合によっては責任追跡性も) 確保するため
+- 保守 - 操作中 (KeyStore へのインポートなど) に鍵を保護するため
+
+さらに、特定された暗号化のインスタンスを使用するビジネスロジックを特定する必要があります。これによりビジネスの観点から暗号化が使用される理由を説明します (保存時に機密性を保護するため、ファイルが Y に属するデバイス X から署名されたことを確認するため、など) 。
+
+検証中には以下のチェックを実行する必要があります。
+
+- 作成時に定義された目的に従って鍵が使用されていることを確認します (KeyProperties を定義できる KeyStore 鍵に関連します)
+- 非対称鍵の場合、秘密鍵 (private key) は署名にのみ使用され、公開鍵 (public key) は暗号化のみに使用されることを確認します。
+- 対称鍵は複数の目的のために再利用されないことを確認します。別のコンテキストで使用する場合には新しい対称鍵を生成する必要があります。
+- 暗号化がビジネスの目的に従って使用されていることを確認します。
+
+#### 動的解析
+
+暗号化メソッドをフックして、使用されている鍵を解析します。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込むまたは読み取る場所を評価します。
 
 ### 乱数生成のテスト (MSTG-CRYPTO-6)
 
 #### 概要
 
-暗号にはセキュアな擬似乱数生成 (PRNG) が必要です。標準の Java クラスは十分なランダム性を提供しないため、実際に攻撃者が生成される次の値を推測し、この推測を使用して別のユーザーになりすましたり機密情報にアクセスしたりする可能性があります。
+このテストケースはアプリケーションで使用される乱数値に焦点を当てています。以下のチェックを実行する必要があります。
 
-一般的に、`SecureRandom` を使用すべきです。しかし、Android 4.4 (API level 19) 以前の Android バージョンをサポートする場合には、[PRNG を適切に初期化できない](https://android-developers.googleblog.com/2013/08/some-securerandom-thoughts.html "Some SecureRandom Thoughts") Android 4.1-4.3 (API level 16-18) バージョンのバグを回避するために更なる注意が必要です。
-
-ほとんどの開発者は引数なしでデフォルトコンストラクタを介して `SecureRandom` をインスタンス化する必要があります。他のコンストラクタはより高度な用途のためにあり、誤って使用されると、ランダム性やセキュリティが低下する可能性があります。`SecureRandom` を支援する PRNG プロバイダは `/dev/urandom` デバイスファイルをデフォルトのランダム性のソースとして使用します [#nelenkov] 。
+- 乱数値が使用されているすべてのインスタンスを特定しており、乱数生成器のすべてのインスタンスは `Securerandom` のものである
+- 乱数生成器が暗号的にセキュアであるとみなされないかどうかを検証する
+- 乱数生成器がどのように使用されたかを検証する
+- アプリケーションにより生成された乱数値のランダム性を検証する
 
 #### 静的解析
 
@@ -182,7 +369,7 @@ KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
 以下のサンプルソースコードは脆弱な乱数生成を示しています。
 
-```Java
+```java
 import java.util.Random;
 // ...
 
@@ -204,7 +391,7 @@ for (int i = 0; i < 20; i++) {
 
 以下のサンプルソースコードはセキュアな乱数の生成を示しています。
 
-```Java
+```java
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
 // ...
@@ -224,231 +411,47 @@ public static void main (String args[]) {
 
 ランダム性をテストしたい場合には、数の大きなセットをキャプチャし Burp の [sequencer](https://portswigger.net/burp/documentation/desktop/tools/sequencer "Burp\'s Sequencer") で確認してランダム性の品質がどれほど良いかを見ます。
 
-### 鍵管理のテスト (MSTG-STORAGE-1, MSTG-CRYPTO-1 および MSTG-CRYPTO-5)
-
-#### 概要
-
-このセクションでは暗号鍵を格納するさまざまな方法とそれらをテストする方法について説明します。私たちは鍵マテリアルの生成および保存の最もセキュアな方法からセキュアではない方法に至るまで説明します。
-
-鍵マテリアルを扱う最もセキュアな方法は単にデバイスにそれを保存しないことです。これはアプリケーションが暗号操作を実行する必要があるたびに、パスフレーズを入力するようにユーザーに指示する必要があることを意味しています。これはユーザーエクスペリエンスの観点からは理想的な実装ではありませんが、鍵マテリアルを扱う最もセキュアな方法です。その理由は鍵マテリアルが使用されている間、メモリ内の配列でのみ利用可能になるためです。その鍵がもはや必要なくなれば、配列をゼロにすることができます。これにより攻撃ウィンドウを可能な限り最小限にします。鍵マテリアルはファイルシステムに触れず、パスフレーズは保存されません。しかし、一部の暗号はそれらのバイト配列を適切にクリーンアップしないことに注意します。例えば、BouncyCastle の AES 暗号は最新の作業鍵を常にクリーンアップするとは限りません。次に、BigInteger ベースの鍵 (秘密鍵 (private key) など) をヒープから削除することも簡単にゼロにすることもできません。最後に、鍵をゼロにしようとするときには注意します。鍵の内容が実際にゼロになっていることを確認する方法については "[Android のデータストレージ](0x05d-Testing-Data-Storage.md)" のセクションを参照してください。
-
-対称暗号鍵は Password Based Key Derivation Function version 2 (PBKDF2) を使用してパスフレーズから生成できます。この暗号プロトコルはセキュアであり、かつブルートフォースできない鍵を生成するように設計されています。以下のコードはパスワードに基づいて強力な暗号鍵を生成する方法を示しています。
-
-```java
-public static SecretKey generateStrongAESKey(char[] password, int keyLength)
-{
-    //Initiliaze objects and variables for later use
-    int iterationCount = 10000;
-    int saltLength     = keyLength / 8;
-    SecureRandom random = new SecureRandom();
-
-    //Generate the salt
-    byte[] salt = new byte[saltLength];
-    random.nextBytes(salt);
-
-    KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, keyLength);
-    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-    byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
-    return new SecretKeySpec(keyBytes, "AES");
-}
-```
-
-上記の手法はパスワードと必要な鍵長をビットに含む文字配列、例えば 128 または 256 ビットの AES 鍵が必要です。PBKDF2 アルゴリズムにより使用される 10000 ラウンドの反復回数を定義します。これによりブルートフォース攻撃の作業負荷が大幅に増加します。鍵長に等しいソルトサイズを定義し、ビットからバイトへの変換に気をつけて 8 で割ります。`SecureRandom` クラスを使用して、ランダムにソルトを生成します。同じパスワードが与えられた後に同じ暗号鍵が生成されることを確実にするために、明らかに、このソルトは固定に保ちたいものです。ソルトを `SharedPreferences` に非公開で格納できることに注意します。リスクの高いデータの場合には Android のバックアップメカニズムからソルトを除外することを推奨します。詳細は「[Android のデータストレージ](0x05d-Testing-Data-Storage.md)」を参照してください。
-ルート化デバイスやパッチされていないデバイス、パッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、`AndroidKeystore` の鍵でソルトを暗号化するほうがよいかもしれないことに注意します。その後、パスワードベースの暗号化 (PBE) 鍵は Android 8.0 (API level 26) まで推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。そこからは `PBKDF2withHmacSHA256` を使用することがベストです。これは鍵サイズが異なります。
-
-今では、定期的にユーザーにパスフレーズを促すことはすべてのアプリケーションにとって機能するものではないことは明らかです。その場合には必ず [Android KeyStore API](https://developer.android.com/reference/java/security/KeyStore.html "Android AndroidKeyStore API") を使用してください。この API は鍵マテリアルにセキュアなストレージを提供するために特別に開発されました。あなたのアプリケーションだけが生成した鍵にアクセスできます。Android 6.0 からは AndroidKeyStore は指紋センサーが存在する場合にハードウェア支援も強制されます。これは鍵マテリアルをセキュアにするために専用の暗号チップまたは Trusted Platform Module (TPM) が使用されていることを意味します。
-
-但し、`AndroidKeyStore` API は Android のさまざまなバージョンで大幅に変更されていることに注意します。以前のバージョンでは `AndroidKeyStore` API は公開鍵と秘密鍵 (private key) のペア (RSA など) の保存のみをサポートしていました。対称鍵のサポートは Android 6.0 (API level 23) 以降でのみ追加されています。結果として、開発者は対称鍵をセキュアに保存するためにさまざまな Android API レベルを処理する必要があります。
-
-Android 5.1 (API level 22) 以下で動作するデバイスで対称鍵をセキュアに保存するには、公開鍵と秘密鍵 (private key) のペアを生成する必要があります。公開鍵を使用して対象鍵を暗号化し、秘密鍵 (private key) を `AndroidKeyStore` に保存します。暗号化された対称鍵は `SharedPreferences` に安全に保存できます。対称鍵が必要なときにはいつでも、アプリケーションは `AndroidKeyStore` から秘密鍵 (private key) を取り出し、対称鍵を復号します。
-
-鍵が `AndroidKeyStore` 内で生成及び使用され `KeyInfo.isinsideSecureHardware` が `true` を返す場合、その鍵をダンプしたり暗号操作を監視したりすることができないことはご存知の通りです。`PBKDF2withHmacSHA256` を使用してまだ到達可能でダンプ可能なメモリに鍵を生成するか、もしくは鍵が決してメモリに入り込まないであろう `AndroidKeyStore` を使用するか、最終的に何がより安全であるかは議論の余地があります。Android 9 (API level 28) では `PBKDF2withHmacSHA256` を使用するよりも有利となるように、TEE と `AndroidKeyStore` を分離するために追加のセキュリティ拡張が実装されています。しかし、近い将来、その議題についてより多くのテストと調査が行われるでしょう。
-
-#### キーストアへのセキュアなキーインポート
-
-Android 9 (API level 28) は鍵を `AndroidKeystore` 内にセキュアにインポートする機能を追加します。最初に `AndroidKeystore` は `PURPOSE_WRAP_KEY` を使用して鍵ペアを生成します。これも認証証明書で保護されるべきです。このペアは `AndroidKeystore` にインポートされる鍵を保護することを目的としています。暗号化された鍵は `SecureKeyWrapper` フォーマットの ASN.1 エンコードメッセージとして生成されます。これにはインポートされた鍵が使用を許される方法の説明も含まれています。その後、鍵はラッピング鍵を生成した特定のデバイスに属する `AndroidKeystore` ハードウェア内で復号化されるため、デバイスのホストメモリに平文で現れることはありません。
-
-<img src="Images/Chapters/0x5e/Android9_secure_key_import_to_keystore.png" alt="Secure key import into Keystore" width="500" />
-
-```java
-KeyDescription ::= SEQUENCE {
-    keyFormat INTEGER,
-    authorizationList AuthorizationList
-}
-
-SecureKeyWrapper ::= SEQUENCE {
-    wrapperFormatVersion INTEGER,
-    encryptedTransportKey OCTET_STRING,
-    initializationVector OCTET_STRING,
-    keyDescription KeyDescription,
-    secureKey OCTET_STRING,
-    tag OCTET_STRING
-}
-```
-
-上記のコードは SecureKeyWrapper フォーマットで暗号化された鍵を生成するときに設定されるさまざまなパラメータを表しています。詳細については [`WrappedKeyEntry`](https://developer.android.com/reference/android/security/keystore/WrappedKeyEntry "WrappedKeyEntry") の Android ドキュメントを確認してください。
-
-KeyDescription AuthorizationList を定義するときに、以下のパラメータが暗号化鍵セキュリティに影響を与えます。
-
-- `algorithm` パラメータは鍵が使用される暗号化アルゴリズムを指定します。
-- `keySize` パラメータは鍵のサイズをビット単位で指定します。鍵のアルゴリズムに対して普通に計測されます。
-- `digest` パラメータは署名および検証オペレーションを実行するために鍵とともに使用できるダイジェストアルゴリズムを指定します。
-
-#### 鍵構成証明
-
-暗号プリミティブによる多要素認証、クライアント側での機密データのセキュアな保管など、ビジネスに不可欠な操作のために Android Keystore に大きく依存しているアプリケーションに対して、Android は [鍵構成証明 (Key Attestation)](https://developer.android.com/training/articles/security-key-attestation "Key Attestation") の機能を提供します。これは Android Keystore を介して管理される暗号マテリアルのセキュリティを分析するのに役立ちます。Android 8.0 (API level 26) 以降、Google スイーツアプリでデバイス認証を取得する必要があるすべての新しい (Android 7.0 以降) デバイスでは鍵構成証明が必須になりました。このようなデバイスでは [Google ハードウェア構成証明ルート証明書](https://developer.android.com/training/articles/security-key-attestation#root_certificate "Google Hardware Attestation Root Certificate") で署名された構成証明鍵を使用し、鍵構成証明プロセスの中で検証されます。
-
-鍵構成証明の中で、鍵ペアのエイリアスを指定し、リターンとして証明書チェーンを取得します。これを使用して、鍵ペアのプロパティを検証できます。チェーンのルート証明書が [Google ハードウェア構成証明ルート証明書](https://developer.android.com/training/articles/security-key-attestation#root_certificate "Google Hardware Attestation Root certificate") であり、ハードウェア内での鍵ペアの保存に関連するチェックが行われた場合、デバイスがハードウェアレベルの鍵構成証明をサポートし、その鍵が Google がセキュアであると信ずるハードウェア支援のキーストアにあることが保証されます。また、構成証明チェーンに他のルート証明書がある場合、Google はそのハードウェアのセキュリティについて一切主張しません。
-
-鍵構成証明プロセスはアプリケーション内で直接実装できますが、セキュリティ上の理由からサーバー側で実装することをお勧めします。以下は鍵構成証明をセキュアに実装するための高レベルのガイドラインです。
-
-- サーバーは CSPRNG (暗号論的にセキュアな乱数生成器) を使用してセキュアに乱数を作成することにより鍵構成証明プロセスを開始しすべきであり、同じものをチャレンジとしてユーザーに送信すべきです。
-- クライアントはサーバーから受信したチャレンジを使用して `setAttestationChallenge` API を呼び出し、それから `KeyStore.getCertificateChain` を使用して構成証明証明書チェーンを検索すべきです。
-- 構成証明レスポンスを検証のためにサーバーに送信し、鍵構成証明レスポンスの検証のために以下のチェックを実行すべきです。
-  - ルートまでの証明書チェーンを検証し、有効性、完全性、信頼性などの証明書のサニティチェックを実行します。
-  - ルート証明書が検証プロセスを信頼できるものにする Google 構成証明ルート鍵で署名されているかどうかを確認します。
-  - 証明書チェーンの最初の要素内に現れる構成証明証明書拡張データを抽出し、以下のチェックを実行します。
-    - 構成証明チャレンジが構成証明プロセスを開始する際にサーバーで生成されたものと同じ値であることを検証します。
-    - 鍵構成証明レスポンスの署名を検証します。
-    - ここで鍵マスターのセキュリティレベルをチェックし、デバイスにセキュアな鍵ストレージメカニズムがあるかどうかを確認します。鍵マスターはセキュリティのコンテキストで動作し、すべてのセキュアなキーストア操作を提供するソフトウェアの一部です。セキュリティレベルは `Software`, `TrustedEnvironment`, `StrongBox` のいずれかになります。
-    - さらに、Software, TrustedEnvironment, StrongBox のいずれかである構成証明セキュリティレベルをチェックし、その構成証明証明書がどのように生成されたかを確認します。また、目的、アクセス時間、認証要件など鍵に関する他のいくつかのチェックを行い、鍵属性を検証します。
-
-Android Keystore 構成証明レスポンスの一般的な例は以下のようになります。
-
-```json
-{
-    "fmt": "android-key",
-    "authData": "9569088f1ecee3232954035dbd10d7cae391305a2751b559bb8fd7cbb229bd...",
-    "attStmt": {
-        "alg": -7,
-        "sig": "304402202ca7a8cfb6299c4a073e7e022c57082a46c657e9e53...",
-        "x5c": [
-            "308202ca30820270a003020102020101300a06082a8648ce3d040302308188310b30090603550406130...",
-            "308202783082021ea00302010202021001300a06082a8648ce3d040302308198310b300906035504061...",
-            "3082028b30820232a003020102020900a2059ed10e435b57300a06082a8648ce3d040302308198310b3..."
-        ]
-    }
-}
-```
-
-上記の JSON スニペット でのキーの意味は以下の通りです。
-        `fmt`: 構成証明ステートメントの書式識別子
-        `authData`: 構成証明用の認証データを表します
-        `alg`: 署名に使用されるアルゴリズム
-        `sig`: 署名
-        `x5c`: 構成証明証明書チェーン
-
-注意: `sig` は _authData_ と `clientDataHash` (サーバーから送信されたチャレンジ) を連結し、alg 署名アルゴリズムを使用して資格情報秘密鍵を介して署名することにより生成されます。最初の証明書の公開鍵を使用して、サーバー側でも同じものが検証されます。
-
-実装ガイドラインの詳細については、 [Google サンプルコード](https://github.com/googlesamples/android-key-attestation/blob/master/server/src/main/java/com/android/example/KeyAttestationExample.java "Google Sample Code For Android Key Attestation") を参照できます。
-
-セキュリティ分析の観点から、アナリストは鍵構成証明のセキュアな実装のために以下のチェックを実行したほうがよいでしょう。
-
-- 鍵構成証明が全体的にクライアント側で実装されているかどうかを確認します。このようなシナリオでは、アプリケーションの改竄、メソッドフックなどにより同じものが簡単に回避される可能性があります。
-- 鍵構成証明を開始する際にサーバーがランダムチャレンジを使用しているかどうかを確認します。これを怠ると、実装がセキュアではなくなり、その結果としてリプレイ攻撃に対して脆弱になります。またチャレンジの無作為性に関するチェックも実行すべきです。
-- サーバーが鍵構成証明レスポンスの完全性を検証しているかどうかを確認します。
-- サーバーがチェーン内の証明書に対して完全性検証、信頼性検証、有効性などの基本的なチェックを実行しているかどうかを確認します。
-
-#### アンロックされたデバイスのみでの復号化
-
-セキュリティを高めるために Android 9 (API level 28) では `unlockedDeviceRequied` フラグを導入しています。`setUnlockedDeviceRequired` メソッドに `true` を渡すことで、アプリはデバイスがロックされたときに `AndroidKeystore` に格納されている鍵が復号化されることを防ぎ、復号化を許可する前にスクリーンをアンロックする必要があります。
-
-#### StrongBox ハードウェアセキュリティモジュール
-
-Android 9 (API level 28) 以降を実行しているデバイスは `StrongBox Keymaster` を持つことができます。これは独自の CPU 、セキュリティストレージ、真正乱数生成器、パッケージ改竄に耐するメカニズムを持つハードウェアセキュリティモジュールにある Keymaster HAL の実装です。この機能を使うには `AndroidKeystore` を使用して鍵を生成またはインポートするときに、`KeyGenParameterSpec.Builder` クラスまたは `KeyProtection.Builder` クラスの `setIsStrongBoxBacked` メソッドに `true` を渡す必要があります。StrongBox が実行時に使用されていることを確認するには、`isInsideSecureHardware` が `true` を返し、鍵に関連付けられた特定のアルゴリズムと鍵サイズで StrongBox Keymaster が利用できない場合にシステムがスローする `StrongBoxUnavailableException` をスローしていないことを確認します。
-
-#### 鍵使用の認可
-
-Android デバイスでの鍵の不正使用を軽減するために、Android KeyStore では鍵を生成またはインポートするときにアプリに鍵の認可された使用を指定できます。一度されると、認可は変更できません。
-
-Android により提供されているもう一つの API は `KeyChain` です。これは認証情報ストレージの 秘密鍵 (private key) とそれに対応する証明書チェーンへのアクセスを提供します。これはキーチェーンの対話の必要性と共有の性質からあまり使用されません。詳細については [開発者ドキュメント](https://developer.android.com/reference/android/security/KeyChain "Keychain") を参照してください。
-
-暗号鍵を保存するあまりセキュアではない方法は Android の SharedPreferences におくことです。[SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences.html "Android SharedPreference API") が [MODE_PRIVATE](https://developer.android.com/reference/android/content/Context.html#MODE_PRIVATE "MODE_PRIVATE") で初期化された場合、そのファイルはそれを作成したアプリケーションによってのみ読み取り可能です。但し、ルート化されたデバイスでは、ルートアクセス権を持つ他のアプリケーションが他のアプリの SharedPreference ファイルを簡単に読み取ることができます。MODE_PRIVATE が使われれているかどうかは関係ありません。AndroidKeyStore についてはそうではありません。AndroidKeyStore のアクセスはカーネルレベルで管理されているため、AndroidKeyStore が鍵をクリアまたは破棄することなくバイパスするにはかなりの作業とスキルが必要です。
-
-最後の三つのオプションはソースコード内にハードコードされた暗号化鍵を使用すること、堅牢な属性に基づく予測可能な鍵導出関数を持つこと、そして `/sdcard/` などのパブリックな場所に生成された鍵を格納することです。明らかに、ハードコードされた鍵は進むべき道ではありません。これはアプリケーションのすべてのインスタンスが同じ暗号化鍵を使用することを意味します。攻撃者は、ネイティブまたは Java/Kotlin のいずれに格納されているかにかかわらず、ソースコードから鍵を抽出するために、一度作業を行うだけで済みます。その結果、攻撃者はアプリケーションにより暗号化された他のデータを復号できます。
-次に、他のアプリケーションからアクセス可能な識別子に基づく予測可能な鍵導出関数がある場合、攻撃者は KDF を見つけて、鍵を見つけるためにデバイスにそれを適用するだけで済みます。最後に、暗号化鍵をパブリックに格納することもあまりお勧めできません。他のアプリケーションがパブリックパーティションを読むパーミッションを持ち、鍵を盗むことができるためです。
-
-#### 静的解析
-
-コードで暗号プリミティブの使用を特定します。最も頻繁に使用されるクラスとインタフェースの一部を以下に示します。
-
-- `Cipher`
-- `Mac`
-- `MessageDigest`
-- `Signature`
-- `AndroidKeyStore`
-- `Key`, `PrivateKey`, `PublicKey`, `SecretKeySpec`, `KeyInfo`
-- `java.security.*` および `javax.crypto.*` パッケージにあるその他のもの
-
-例として、ハードコードされた暗号鍵の使用の特定方法を示します。最初に ```Baksmali``` を使用して Smali バイトコードのコレクションに DEX バイトコードを逆アセンブルします。
-
-```shell
-$ baksmali d file.apk -o smali_output/
-```
-
-Smali バイトコードファイルのコレクションがあるので、```SecretKeySpec``` クラスの使用法についてファイルを検索できます。今取得した Smali ソースコードを単に再帰的に grep することでこれを行います。Smali のクラス記述子は `L` で始まり `;` で終わることに注意してください。
-
-```shell
-$ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
-```
-
-これは `SecretKeySpec` クラスを使用するすべてのクラスをハイライト表示します。ハイライトされたすべてのファイルを調べて、鍵マテリアルを渡すのに使用されているバイトはどれかをトレースします。下の図は出荷準備が完了したアプリケーションでこの評価を行った結果を示しています。読みやすくするため、DEX バイトコードから Java コードにリバースエンジニアしました。静的バイト配列 `Encrypt.keyBytes` にハードコードされ初期化された静的暗号鍵の使用がはっきりとわかります。
-
-<img src="Images/Chapters/0x5e/static_encryption_key.png" width="600px" />
-
-ソースコードにアクセスできる場合には、少なくとも以下について確認します。
-
-- 鍵を格納するためにどのメカニズムが使用されているかチェックします。他のすべてのソリューションよりも `AndroidKeyStore` を推奨します。
-- TEE の使用を確実にするために多層防御メカニズムが使用されているかどうかをチェックします。例えば、時刻有効性は強制されていますか？ハードウェアセキュリティの使用はコードにより評価されていますか？詳細については [KeyInfo のドキュメント](https://developer.android.com/reference/android/security/keystore/KeyInfo "KeyInfo") を参照してください。
-- ホワイトボックス暗号化ソリューションの場合、その有効性を調べるか、その分野の専門家に相談します。
-- 鍵の目的の検証には特に注意します。以下はその例です。
-  - 非対称鍵の場合、秘密鍵 (private key) は署名にのみ使用され、公開鍵 (public key) は暗号化にのみ使用されることを確認します。
-  - 対象鍵が複数の目的に再利用されないことを確認します。別のコンテキストで使用される場合には、新しい対象鍵を生成すべきです。
-
-#### 動的解析
-
-暗号メソッドをフックし、使用されている鍵を解析します。暗号操作が行われている間にファイルシステムへのアクセスを監視して、鍵マテリアルがどこに書き込まれるか、どこから読み取られるかを評価します。
-
 ### 参考情報
 
 - [#nelenkov] - N. Elenkov, Android Security Internals, No Starch Press, 2014, Chapter 5.
 
 #### 暗号についての参考情報
 
-- Android Developer blog: Crypto provider deprecated - <https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html>
-- Android Developer blog: cryptography changes in android P - <https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html>
-- Ida Pro - <https://www.hex-rays.com/products/ida/>
-- Android Developer blog: changes for NDK developers - <https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html>
-- security providers -  <https://developer.android.com/reference/java/security/Provider.html>
-- Spongy Castle  - <https://rtyley.github.io/spongycastle/>
-- Legion of the Bouncy Castle - <https://www.bouncycastle.org/java.html>
+- Android Developer blog: Changes for NDK Developers - <https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html>
+- Android Developer blog: Crypto Provider Deprecated - <https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html>
+- Android Developer blog: Cryptography Changes in Android P - <https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html>
+- Android Developer blog: Some SecureRandom Thoughts - <https://android-developers.googleblog.com/2013/08/some-securerandom-thoughts.html>
 - Android Developer documentation - <https://developer.android.com/guide>
-- NIST keylength recommendations - <https://www.keylength.com/en/4/>
-- BSI recommendations - 2017 - <https://www.keylength.com/en/8/>
+- BSI Recommendations - 2017 - <https://www.keylength.com/en/8/>
+- Ida Pro - <https://www.hex-rays.com/products/ida/>
+- Legion of the Bouncy Castle - <https://www.bouncycastle.org/java.html>
+- NIST Key Length Recommendations - <https://www.keylength.com/en/4/>
+- Security Providers -  <https://developer.android.com/reference/java/security/Provider.html>
+- Spongy Castle  - <https://rtyley.github.io/spongycastle/>
 
 #### SecureRandom についての参考情報
 
-- Proper seeding of SecureRandom - <https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded>
 - Burpproxy its Sequencer - <https://portswigger.net/burp/documentation/desktop/tools/sequencer>
+- Proper Seeding of SecureRandom - <https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded>
 
 #### 鍵管理のテストについての参考情報
 
-- Android KeyStore API - <https://developer.android.com/reference/java/security/KeyStore.html>
 - Android Keychain API - <https://developer.android.com/reference/android/security/KeyChain>
-- SharedPreferences - <https://developer.android.com/reference/android/content/SharedPreferences.html>
-- KeyInfo documentation - <https://developer.android.com/reference/android/security/keystore/KeyInfo>
-- Android Pie features and APIs - <https://developer.android.com/about/versions/pie/android-9.0#secure-key-import>
+- Android KeyStore API - <https://developer.android.com/reference/java/security/KeyStore.html>
 - Android Keystore system - <https://developer.android.com/training/articles/keystore#java>
+- Android Pie features and APIs - <https://developer.android.com/about/versions/pie/android-9.0#secure-key-import>
+- KeyInfo Documentation - <https://developer.android.com/reference/android/security/keystore/KeyInfo>
+- SharedPreferences - <https://developer.android.com/reference/android/content/SharedPreferences.html>
 
 #### 鍵構成証明についての参考情報
 
 - Android Key Attestation - <https://developer.android.com/training/articles/security-key-attestation>
-- W3C Android Key Attestation - <https://www.w3.org/TR/webauthn/#android-key-attestation>
-- Verifying Android Key Attestation - <https://medium.com/@herrjemand/webauthn-fido2-verifying-android-keystore-attestation-4a8835b33e9d>
 - Attestation and Assertion - <https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API/Attestation_and_Assertion>
-- Google Sample Codes - <https://github.com/googlesamples/android-key-attestation/tree/master/server>
-- FIDO Alliance Whitepaper - <https://fidoalliance.org/wp-content/uploads/Hardware-backed_Keystore_White_Paper_June2018.pdf>
 - FIDO Alliance TechNotes - <https://fidoalliance.org/fido-technotes-the-truth-about-attestation/>
+- FIDO Alliance Whitepaper - <https://fidoalliance.org/wp-content/uploads/Hardware-backed_Keystore_White_Paper_June2018.pdf>
+- Google Sample Codes - <https://github.com/googlesamples/android-key-attestation/tree/master/server>
+- Verifying Android Key Attestation - <https://medium.com/@herrjemand/webauthn-fido2-verifying-android-keystore-attestation-4a8835b33e9d>
+- W3C Android Key Attestation - <https://www.w3.org/TR/webauthn/#android-key-attestation>
 
 ##### OWASP MASVS
 
