@@ -249,7 +249,12 @@ else {
 
 上記の証明書ピンニングの例は、証明書ピンニングを使用して、その証明書を変更する場合、そのピンが無効化されるという大きな欠点があることに注意します。サーバーの公開鍵を再利用できる場合は、同じ公開鍵で新しい証明書を作成でき、メンテナンスが容易になります。これを行うにはさまざまな方法があります。
 
-- 公開鍵に基づいて自身のピンを実装します。この例では、比較式 `if ([remoteCertificateData isEqualToData:localCertData]) {` を鍵バイトや証明書サムの比較に変更します。
+- 公開鍵に基づいて自身のピンを実装します。この例では、以下の比較式を鍵バイトや証明書サムの比較に変更します。
+
+```objectivec
+if ([remoteCertificateData isEqualToData:localCertData]) {
+```
+
 - [TrustKit](https://github.com/datatheorem/TrustKit "TrustKit") を使用します。ここでは Info.plist に公開鍵ハッシュを設定するか、辞書にハッシュを提供することでピンニングできます。詳細は readme を見てください。
 - [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire") を使用します。ここではピンニング方法を定義するドメインごとに `ServerTrustPolicy` を定義します。
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking") を使用します。ここではピンニングを構成するために `AFSecurityPolicy` を設定します。
