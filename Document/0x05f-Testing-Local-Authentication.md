@@ -236,7 +236,7 @@ cryptoObject = new FingerprintManager.CryptoObject(cipher);
 fingerprintManager.authenticate(cryptoObject, new CancellationSignal(), 0, this, null);
 ```
 
-認証が成功すると、その時点でコールバックメソッド `onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)` がコールされ、認証された `CryptoObject` が結果から取得できます。
+認証が成功すると、コールバックメソッド `onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result)` がコールされます。認証された `CryptoObject` が結果から取得できます。
 
 ```java
 public void authenticationSucceeded(FingerprintManager.AuthenticationResult result) {
