@@ -319,8 +319,18 @@ Android アプリは複数の上位コンポーネントで構成されていま
 
 フラグメントは Android により提供される Fragment クラスを拡張することにより簡単に実装できます。
 
+Java の例:
+
 ```java
 public class MyFragment extends Fragment {
+    ...
+}
+```
+
+Kotlin の例:
+
+```kotlin
+class MyFragment : Fragment() {
     ...
 }
 ```
@@ -331,8 +341,16 @@ public class MyFragment extends Fragment {
 
 フラグメントマネージャは以下のようにして作成できます。
 
+Java の例:
+
 ```java
 FragmentManager fm = getFragmentManager();
+```
+
+Kotlin の例:
+
+```kotlin
+var fm = fragmentManager
 ```
 
 フラグメントは必ずしもユーザーインタフェースを持つとは限りません。それらはアプリのユーザーインタフェースに関連するバックグラウンド操作を管理するための便利で効率的な方法です。アクティビティ破棄された際、システムがその状態を維持できるように、フラグメントが永続的であると宣言することができます。
@@ -360,8 +378,39 @@ Binder フレームワークではクライアント・サーバー通信モデ�
 
 サービスマネージャはシステムサービスの登録と検索を管理するシステムデーモンです。すべての登録済みサービスの名前と Binder のペアのリストを維持します。サービスは `android.os.ServiceManager` の `addService` メソッドで追加され、静的な `getService` メソッドで名前により取得されます。
 
+Java の例:
+
 ```java
-  public static IBinder getService(String name)
+public static IBinder getService(String name) {
+        try {
+            IBinder service = sCache.get(name);
+            if (service != null) {
+                return service;
+            } else {
+                return getIServiceManager().getService(name);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "error in getService", e);
+        }
+        return null;
+    }
+```
+
+Kotlin の例:
+
+```kotlin
+companion object {
+        private val sCache: Map<String, IBinder> = ArrayMap()
+        fun getService(name: String): IBinder? {
+            try {
+                val service = sCache[name]
+                return service ?: getIServiceManager().getService(name)
+            } catch (e: RemoteException) {
+                Log.e(FragmentActivity.TAG, "error in getService", e)
+            }
+            return null
+        }
+    }
 ```
 
 `service list` コマンドでシステムサービスのリストをクエリできます。
@@ -388,14 +437,30 @@ Found 99 services:
 
 インテントには二つのタイプがあります。明示的インテントは開始されるコンポーネントに名前を付けます (完全修飾クラス名) 。以下に例を示します。
 
+Java の例:
+
 ```java
 Intent intent = new Intent(this, myActivity.myClass);
 ```
 
+Kotlin の例:
+
+```kotlin
+var intent = Intent(this, myActivity.myClass)
+```
+
 暗黙的インテントは OS に送信され、特定のデータセット (以下の例では OWASP ウェブサイトの URL) に対して特定のアクションを実行します。どのアプリまたはクラスが対応するサービスを実行するかを決定するのはシステム次第です。以下に例を示します。
+
+Java の例:
 
 ```java
 Intent intent = new Intent(Intent.MY_ACTION, Uri.parse("https://www.owasp.org"));
+```
+
+Kotlin の例:
+
+```kotlin
+var intent = Intent(Intent.MY_ACTION, Uri.parse("https://www.owasp.org"))
 ```
 
 *インテントフィルタ* はコンポーネントが受け取りたいインテントのタイプを指定する Android Manifest ファイル内の式です。例えば、アクティビティに対するインテントフィルタを宣言することにより、他のアプリが特定の種類のインテントで直接アクティビティを開始できるようになります。同様に、アクティビティのインテントフィルタを宣言しない場合には、明示的インテントでのみアクティビティを開始できます。
@@ -433,9 +498,11 @@ Android はインテントを使用して、アプリへのメッセージ (着�
 
 ブロードキャストレシーバを動的に登録する例です。
 
+Java の例:
+
 ```java
 // Define a broadcast receiver
-myReceiver = new BroadcastReceiver() {
+BroadcastReceiver myReceiver = new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Intent received by myReceiver");
@@ -448,6 +515,24 @@ intentFilter.addAction("com.owasp.myapplication.MY_ACTION");
 registerReceiver(myReceiver, intentFilter);
 // To un-register the broadcast receiver
 unregisterReceiver(myReceiver);
+```
+
+Kotlin の例:
+
+```kotlin
+// Define a broadcast receiver
+val myReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        Log.d(FragmentActivity.TAG, "Intent received by myReceiver")
+    }
+}
+// Define an intent filter with actions that the broadcast receiver listens for
+val intentFilter = IntentFilter()
+intentFilter.addAction("com.owasp.myapplication.MY_ACTION")
+// To register the broadcast receiver
+registerReceiver(myReceiver, intentFilter)
+// To un-register the broadcast receiver
+unregisterReceiver(myReceiver)
 ```
 
 関連したインテントが発生すると、システムは登録されたレシーバでアプリを自動的に起動することに注意します。
