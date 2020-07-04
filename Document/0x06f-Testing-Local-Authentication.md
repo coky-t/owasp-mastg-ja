@@ -207,32 +207,16 @@ $ otool -L <AppName>.app/<AppName>
 
 #### 動的解析
 
-[Swizzler2](https://github.com/vtky/Swizzler2 "Swizzler2") や [Needle](https://github.com/mwrlabs/needle "Needle") などの脱獄済みデバイス用ツールを使用して LocalAuthentication をバイパスできます。いずれのツールも Frida を使用して `evaluatePolicy` 関数を計装し、認証が成功しなくても `True` を返すようにします。Swizzler2 でこの機能を有効にするには以下の手順に従います。
-
-- **Settings** -> **Swizzler**
-- **Inject Swizzler into Apps** を有効にします
-- **Log Everything to Syslog** を有効にします
-- **Log Everything to File** を有効にします
-- サブメニュー **iOS Frameworks** に入ります
-- **LocalAuthentication** を有効にします
-- サブメニュー **Select Target Apps** に入ります
-- ターゲットアプリを有効にします
-- アプリを閉じて再度起動します
-- Touch ID プロンプトが表示されたら **cancel** をクリックします
-- Touch ID を必要とせずにアプリケーションフローが継続する場合、そのバイパスは機能しています。
-
-Needle を使用している場合には、`hooking/frida/script_touch-id-bypass` モジュールを実行してプロンプトに従います。これによりアプリケーションを開始して `evaluatePolicy` 関数を計装します。Touch ID で認証が求められた場合、cancel をタップします。アプリケーションフローが継続する場合、Touch ID のバイパスに成功しています。Frida の代わりに Cycript を使用する同様のモジュール (hooking/cycript/cycript_touchid) も Needle で利用できます。
-
-あるいは、[objection to bypass Touch ID](https://github.com/sensepost/objection/wiki/Understanding-the-TouchID-Bypass "Understanding the TouchID Bypass") (これは非脱獄済みデバイス上でも機能します) を使用したり、アプリにパッチを当てたり、Cycript や同様のツールを使用してプロセスを計装することもできます。
-
-Needle を使用して iOS プラットフォームの非セキュアな生体認証をバイパスできます。Needle は Frida を利用して、`LocalAuthentication.framework` API を使用して開発されたログインフォームをバイパスします。以下のモジュールを使用して、非セキュアな生体認証をテストできます。
+[Objection Biometrics Bypass](https://github.com/sensepost/objection/wiki/Understanding-the-iOS-Biometrics-Bypass "Understanding the iOS Biometrics Bypass") を使用して LocalAuthentication をバイパスできます。 Objection は Frida を使用して `evaluatePolicy` 関数を計装し、認証が成功しなかった場合でも `True` を返します。 `ios ui biometrics_bypass` コマンドを使用して、セキュアではない生体認証をバイパスします。Objection はジョブを登録して `evaluatePolicy` の結果を置き換えます。 Swift と Objective-C の両方の実装で機能します。
 
 ```bash
-[needle][container] > use hooking/frida/script_touch-id-bypass
-[needle][script_touch-id-bypass] > run
+...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios ui biometrics_bypass
+(agent) Registering job 3mhtws9x47q. Type: ios-biometrics-disable
+...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # (agent) [3mhtws9x47q] Localized Reason for auth requirement: Please authenticate yourself
+(agent) [3mhtws9x47q] OS authentication response: false
+(agent) [3mhtws9x47q] Marking OS response as True instead
+(agent) [3mhtws9x47q] Biometrics bypass hook complete
 ```
-
-脆弱である場合、モジュールは自動的にログインフォームをバイパスします。
 
 ### キーチェーン内の鍵の一過性に関する注釈
 
