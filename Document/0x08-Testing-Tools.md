@@ -112,7 +112,6 @@
 - Introspy-iOS: iOS アプリケーションが実行時に何をしているかを理解し、潜在的なセキュリティ問題の特定を支援するブラックボックスツールです。 - <https://github.com/iSECPartners/Introspy-iOS>
 - keychaindumper: iOS デバイスが脱獄された場合に攻撃者が利用可能となるキーチェーンアイテムを確認するためのツールです。 - <https://github.com/ptoomey3/Keychain-Dumper>
 - lldb: iOS アプリケーションをデバッグするために使用される Apple の Xcode に付属するデバッガです。 - <https://lldb.llvm.org/>
-- Needle: バイナリ解析、静的コード解析、実行時操作などの iOS アプリのセキュリティ評価を行うためのモジュラフレームワークです。 - <https://github.com/mwrlabs/needle>
 - Passionfruit: 完全なウェブベースの GUI を備えたシンプルな iOS アプリブラックボックス評価ツールです。frida.re と vuejs により提供されています。 - <https://github.com/chaitin/passionfruit>s
 
 #### 脱獄検出および SSL ピンニングのバイパス
