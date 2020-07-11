@@ -87,7 +87,7 @@ Vikas はモバイルセキュリティの専門知識を持つ経験豊富な�
 
 寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。
 
-Jin Kung Ong, Lukasz Wierzbicki, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, Ryan Teoh, Denis Pilipchuk, José Carlos Andreu, Dharshin De Silva, Anatoly Rosencrantz, Caitlin Andrews, Abhinav Sejpal, Anita Diamond, Raul Siles, Yogesh Sharma, Dominique RIGHETTO, Enrico Verzegnassi, Nick Epson, Anna Szkudlarek, Elie Saad, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Shiv Sahni, Akanksha Bana, Dario Incalza, Murat Karaoz, Jason Doyle, Oguzhan Topgul, Ender IBL, Imani Sherman, magicansk, Sijo Abraham, Pishu Mahtani, Jay Mbolda, Anuruddha E., @legik, Emil Tostrup
+Jin Kung Ong, Lukasz Wierzbicki, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, Ryan Teoh, Denis Pilipchuk, José Carlos Andreu, Dharshin De Silva, Anatoly Rosencrantz, Caitlin Andrews, Abhinav Sejpal, Anita Diamond, Raul Siles, Yogesh Sharma, Dominique RIGHETTO, Enrico Verzegnassi, Nick Epson, Anna Szkudlarek, Elie Saad, Prathan Phongthiproek, Tom Welch, Luander Ribeiro, Heaven L. Hodges, Shiv Sahni, Akanksha Bana, Dario Incalza, Murat Karaoz, Jason Doyle, Oguzhan Topgul, Ender IBL, Imani Sherman, magicansk, Sijo Abraham, Pishu Mahtani, Jay Mbolda, Anuruddha E., Oleg Surnin, Emil Tostrup
 
 ### レビュー担当者
 
