@@ -373,7 +373,7 @@ secret は認証サーバーとバックエンドサービスとの間で共有�
 
 - トークンを含むすべての着信リクエストについて HMAC がチェックされていることを検証します。
 - 秘密署名鍵 (private signing key) または HMAC 秘密鍵 (HMAC secret key) の場所を検証します。鍵はサーバー上に残すべきであり、クライアントと共有すべきではありません。発行者および検証者のみが利用できるようにすべきです。
-- 個人識別情報などの機密データが JWT に埋め込まれていないことを検証します。何らかの理由で、このような情報をトークンで送信する必要があるアーキテクチャの場合、ペイロード暗号化が適用されていることを確認します。[OWASP JWT Cheat Sheet](https://goo.gl/TGzA5z "JSON Web Token (JWT) Cheat Sheet for Java") のサンプル Java 実装を参照してください。
+- 個人識別情報などの機密データが JWT に埋め込まれていないことを検証します。何らかの理由で、このような情報をトークンで送信する必要があるアーキテクチャの場合、ペイロード暗号化が適用されていることを確認します。[OWASP JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html "JSON Web Token for Java Cheat Sheet") のサンプル Java 実装を参照してください。
 - リプレイ攻撃は JWT に一意の識別子を与える `jti` (JWT ID) claim で対処していることを確認します。
 - KeyChain (iOS) や KeyStore (Android) などを使用して、トークンがモバイルフォンにセキュアに保存されていることを検証します。
 
