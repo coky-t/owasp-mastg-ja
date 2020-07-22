@@ -75,10 +75,6 @@ Cydia URL を開くことを試みることでプロトコルハンドラをチ�
 if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]){
 ```
 
-##### システム API のコール
-
-脱獄されていないデバイスで "NULL" 引数を指定して `system` 関数をコールすると "0" を返します。脱獄済みデバイスで同じことをすると "1" を返します。この違いは脱獄済みデバイス上でのみ `/bin/sh` にアクセスできる関数をチェックするためです。
-
 #### 脱獄検出のバイパス
 
 脱獄済みデバイスで脱獄検出が有効であるアプリケーションを起動すると、以下のいずれかのことに気づくでしょう。
