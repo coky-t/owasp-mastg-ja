@@ -1,8 +1,8 @@
-## Android アプリのコード品質とビルド設定
+# Android のコード品質とビルド設定
 
-### アプリが正しく署名されていることの検証 (MSTG-CODE-1)
+## アプリが正しく署名されていることの検証 (MSTG-CODE-1)
 
-#### 概要
+### 概要
 
 Android ではすべての APK はインストールまたは実行する前に証明書でデジタル署名する必要があります。デジタル署名はアプリケーションの更新で所有者の身元を確認するためにも使用されます。このプロセスによりアプリが不正なコードを含むような改竄や改変を防ぐことができます。
 
@@ -23,7 +23,7 @@ Android 9 (API level 28) 以上でサポートされている v3 署名により
 
 それぞれの署名スキームに対して、リリースビルドでは常に以前のすべてのスキームも使用して署名される必要があります。
 
-#### 静的解析
+### 静的解析
 
 リリースビルドは Android 7.0 (API level 24) 以上に対して v1 および v2 の両方のスキームで署名されていること、Android 9 (API level 28) 以上に対して三つのすべてのスキームで署名されていること、および APK のコード署名証明書がその開発者に属していることを確認します。
 
@@ -68,17 +68,17 @@ v2SigningEnabled true
 
 最後になりましたが、アプリケーションは内部テスト証明書でデプロイされることがないことを確認します。
 
-#### 動的解析
+### 動的解析
 
 APK 署名を検証するには静的解析を使用する必要があります。
 
-### アプリがデバッグ可能であるかのテスト (MSTG-CODE-2)
+## アプリがデバッグ可能であるかのテスト (MSTG-CODE-2)
 
-#### 概要
+### 概要
 
 Android マニフェストで定義されている [`Application` 要素](https://developer.android.com/guide/topics/manifest/application-element.html "Application element") の `android:debuggable` 属性はアプリがデバッグできるかどうかを決定します。
 
-#### 静的解析
+### 静的解析
 
 `AndroidManifest.xml` をチェックして `android:debuggable` 属性が設定されているかどうかを判断し、その属性の値を見つけます。
 
@@ -90,7 +90,7 @@ Android マニフェストで定義されている [`Application` 要素](https:
 
 リリースビルドの場合、この属性は常に `"false"` (デフォルト値) に設定すべきです。
 
-#### 動的解析
+### 動的解析
 
 Drozer を使用してアプリケーションがデバッグ可能かどうかを判断できます。Drozer モジュール `app.package.attacksurface` はアプリケーションによりエクスポートされる IPC コンポーネントに関する情報も表示します。
 
@@ -162,15 +162,15 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
 - jdb についての基本的なコマンドの使用方法は [Tutorialspoint](https://www.tutorialspoint.com/jdb/jdb_basic_commands.htm "jdb basic commands") にあります。
 - `jdb` がローカル通信チャネルポートにバインドされている際に "the connection to the debugger has been closed" (デバッガへの接続が閉じられた) というエラーが表示された場合、すべての adb セッションを終了し、新しい一つのセッションを開始します。
 
-### デバッグシンボルに関するテスト (MSTG-CODE-3)
+## デバッグシンボルに関するテスト (MSTG-CODE-3)
 
-#### 概要
+### 概要
 
 一般的に、コンパイルされたコードにはできるだけ説明を付けるべきではありません。デバッグ情報、行番号、説明的な関数名やメソッド名などの一部のメタデータは、リバースエンジニアがバイナリやバイトコードを理解しやすくしますが、これらはリリースビルドでは必要ないため、アプリの機能に影響を与えることなく安全に省略できます。
 
 ネイティブバイナリを検査するには、`nm` や `objdump` などの標準ツールを使用してシンボルテーブルを調査します。リリースビルドには一般的にデバッグシンボルを含めるべきではありません。ライブラリを難読化することが目的の場合には、不要な動的シンボルを削除することもお勧めします。
 
-#### 静的解析
+### 静的解析
 
 シンボルは通常ではビルドプロセス中に削除されるため、不要なメタデータが破棄されたことを確認するにはコンパイルされたバイトコードとライブラリが必要です。
 
@@ -207,13 +207,13 @@ externalNativeBuild {
 }
 ```
 
-#### 動的解析
+### 動的解析
 
 デバッグシンボルを検証するには静的解析を使用する必要があります。
 
-### デバッグコードと詳細エラーログに関するテスト (MSTG-CODE-4)
+## デバッグコードと詳細エラーログに関するテスト (MSTG-CODE-4)
 
-#### 概要
+### 概要
 
 StrictMode はアプリケーションのメインスレッドでの偶発的なディスクやネットワークアクセスなどの違反を検出するための開発者ツールです。効率の良いコード実装など優れたコーディングプラクティスをチェックするためにも使用できます。
 
@@ -241,7 +241,7 @@ public void onCreate() {
 
 `DEVELOPER_MODE` 条件で `if` ステートメントにポリシーを挿入することをお勧めします。`StrictMode` を無効にするには、リリースビルドに対して `DEVELOPER_MODE` を無効にする必要があります。
 
-#### 静的解析
+### 静的解析
 
 `StrictMode` が有効かどうかを判断するには、`StrictMode.setThreadPolicy` または `StrictMode.setVmPolicy` メソッドを探します。ほとんどの場合、`onCreate` メソッドにあります。
 
@@ -263,7 +263,7 @@ penaltyDialog() // Shows a dialog
 
 StrictMode を使用するための [ベストプラクティス](https://code.tutsplus.com/tutorials/android-best-practices-strictmode--mobile-7581 "Android Best Practices: StrictMode") をご覧ください。
 
-#### 動的解析
+### 動的解析
 
 `StrictMode` を検出するにはいくつかの方法があります。最善の選択はポリシーの役割の実装方法により異なります。以下があります。
 
@@ -271,9 +271,9 @@ StrictMode を使用するための [ベストプラクティス](https://code.t
 - 警告ダイアログ
 - アプリケーションクラッシュ
 
-### サードパーティーライブラリの脆弱性の確認 (MSTG-CODE-5)
+## サードパーティーライブラリの脆弱性の確認 (MSTG-CODE-5)
 
-#### 概要
+### 概要
 
 Android アプリは多くの場合サードパーティライブラリを使用します。開発者が問題を解決するために書く必要があるコードがより少なくなるため、これらのサードパーティライブラリは開発を加速します。ライブラリには二つのカテゴリがあります。
 
@@ -288,9 +288,9 @@ Android アプリは多くの場合サードパーティライブラリを使用
 
 この問題は複数のレベルで発生する可能性があることに注意します。WebView 内で JavaScript を実行する WebView を使用すると、その JavaScript ライブラリにもこれらの問題が発生する可能性があります。Cordova, React-native および Xamarin アプリのプラグインやライブラリについても同様です。
 
-#### 静的解析
+### 静的解析
 
-##### サードパーティライブラリの脆弱性の検出
+#### サードパーティライブラリの脆弱性の検出
 
 サードパーティーに依存する脆弱性を検出するには OWASP Dependency checker を使用して実行できます。これは `dependency-check-gradle` などの gradle プラグインを使用することが最適です。
 プラグインを使用するには、以下の手順を適用する必要があります。
@@ -333,7 +333,7 @@ $ gradle dependencyCheckAnalyze --info
 
 アプリケーションがリスクの高いアプリケーションである場合、ライブラリを手動で検査することになります。その場合、ネイティブコードに対する特定の要件があり、 "[コード品質のテスト](0x04h-Testing-Code-Quality.md)" の章にあります。その次に、ソフトウェアエンジニアリングのすべてのベストプラクティスが適用されているかどうかを調査するのが適切です。
 
-##### アプリケーションのライブラリが使用しているライセンスの検出
+#### アプリケーションのライブラリが使用しているライセンスの検出
 
 著作権法が侵害されていないことを確認するには、 `License Gradle Plugin` などの、さまざまなライブラリを繰り返し処理できるプラグインを使用して、依存関係をチェックすることが最善です。このプラグインは以下の手順で使用できます。
 
@@ -364,13 +364,13 @@ $ gradle downloadLicenses
 
 ソースが利用できない場合、アプリを逆コンパイルして JAR ファイルを確認できます。Dexguard や Proguard が正しく適用されていると、ライブラリに関するバージョン情報が失われていることがよくありますが、そうでなければたいていは特定のライブラリの Java ファイルのコメントにあります。MobSF などのツールはアプリケーションに同梱されている可能性のあるライブラリの解析に役立ちます。ライブラリのバージョンをコメントから、または特定のバージョンで使用されている特定のメソッドから取得できる場合には、手作業でそれらのライセンスを調べることができます。
 
-#### 動的解析
+### 動的解析
 
 このセクションの動的解析はライセンスの著作権が遵守されているかどうかを検証することを含んでいます。これは多くの場合アプリケーションが `about` や `EULA` セクションを持つべきであることを意味しています。このセクションにはサードパーティライブラリのライセンスで必要とされる著作権に関する記述が記載されています。
 
-### 例外処理のテスト (MSTG-CODE-6 および MSTG-CODE-7)
+## 例外処理のテスト (MSTG-CODE-6 および MSTG-CODE-7)
 
-#### 概要
+### 概要
 
 例外はアプリケーションが正常ではない状態やエラーのある状態になったときに発生します。 Java と C++ のいずれも例外をスローすることがあります。例外処理のテストとは UI やアプリのログ出力メカニズムを介して機密情報を開示することなく、アプリが例外を処理して安全な状態に遷移することを確認することです。
 
@@ -439,7 +439,7 @@ protected void attachBaseContext(Context base) {
 }
 ```
 
-#### 動的解析
+### 動的解析
 
 動的解析を行うにはいくつかの方法があります。
 
@@ -454,14 +454,14 @@ protected void attachBaseContext(Context base) {
 - 必要に応じて、ユーザーに適切な対応をとるように指示します (そのメッセージは機密情報を漏洩してはいけません) 。
 - アプリケーションで使用されるログ出力メカニズムにはいかなる情報も提供しません。
 
-### メモリ破損バグ (MSTG-CODE-8)
+## メモリ破損バグ (MSTG-CODE-8)
 
 多くの場合 Android アプリケーションはメモリ破損問題のほとんどが対処されている VM 上で実行されます。
 これはメモリ破損バグがないという意味ではありません。たとえば [CVE-2018-9522](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-9522 "CVE in StatsLogEventWrapper") では Parcels を使用したシリアル化の問題に関連しています。また、ネイティブコードでは、一般的なメモリ破損のセクションで説明したのと同じ問題が引き続き発生します。さらに、 [BlackHat で](https://www.blackhat.com/docs/us-15/materials/us-15-Drake-Stagefright-Scary-Code-In-The-Heart-Of-Android.pdf "Stagefright") 示された Stagefright 攻撃のように、サポートサービスにメモリバグが見られます。
 
 メモリリークもよく問題となります。これはたとえば `Context` オブジェクトへの参照が `Activity` 以外のクラスに渡される場合や、 `Activity` クラスへの参照をヘルパークラスに渡す場合に発生することがあります。
 
-#### 静的解析
+### 静的解析
 
 いろいろなアイテムを探してみます。
 
@@ -473,7 +473,7 @@ Java/Kotlin コードでもメモリリークが発生する可能性がある�
 - [Android でメモリリークを回避する9つの方法](https://android.jlelse.eu/9-ways-to-avoid-memory-leaks-in-android-b6d81648e35e "9 ways to avoid memory leaks in Android")
 - [Android のメモリリークパターン](https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570 "Memory Leak Patterns in Android").
 
-#### 動的解析
+### 動的解析
 
 実行にはいろいろな手順があります。
 
@@ -482,15 +482,15 @@ Java/Kotlin コードでもメモリリークが発生する可能性がある�
 - [Android Studio の Memory Profiler](https://developer.android.com/studio/profile/memory-profiler "Memory profiler") でリークがないか確認します。
 - [Android Java Deserialization Vulnerability Tester](https://github.com/modzero/modjoda "Android Java Deserialization Vulnerability Tester") でシリアル化脆弱性がないか確認します。
 
-### フリーのセキュリティ機能が有効であることの確認 (MSTG-CODE-9)
+## フリーのセキュリティ機能が有効であることの確認 (MSTG-CODE-9)
 
-#### 概要
+### 概要
 
 Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。ProGuard はコードを縮小および難読化し、 Android Java アプリのバイトコードから不要なデバッグ情報を取り除く簡易な方法を提供します。クラス名、メソッド名、変数名などの識別子を無意味な文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
 
 ほとんどの Android アプリケーションは Java ベースであるため、 [バッファオーバーフロー脆弱性に対する免疫があります](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow "Java Buffer Overflows") 。とはいえ、 Android NDK を使用している場合には依然としてバッファオーバーフロー脆弱性が存在する可能性がありますので、セキュアなコンパイラ設定を検討します。
 
-#### 静的解析
+### 静的解析
 
 ソースコードが提供されている場合、build.gradle ファイルを確認することで難読化設定が適用されているか分かります。以下の例では、`minifyEnabled` と `proguardFiles` が設定されていることが分かります。一部のクラスを難読化から保護するために (`-keepclassmembers` および `-keep class` を使用して) 例外を作成することが一般的です。したがって、 ProGuard 構成ファイルを監査してどのクラスが除外されているかを確認することが重要です。`getDefaultProguardFile('proguard-android.txt')` メソッドはデフォルトの ProGuard 設定を `<Android SDK>/tools/proguard/` フォルダから取得します。
 
@@ -536,7 +536,7 @@ android {
 -keep public class MyClass
 ```
 
-#### 動的解析
+### 動的解析
 
 ソースコードが提供されていない場合には、 APK を逆コンパイルしてコードベースが難読化されているかどうかを確認できます。DEX コードを JAR ファイルに変換するために利用できるツールがいくつかあります (dex2jar など) 。JAR ファイルは JD-GUI などのツールで開くことができ、クラス名、メソッド名、変数名が人間が判読できるものではないことを確認するために使用できます。
 
@@ -568,9 +568,9 @@ class a$b
 }
 ```
 
-### 参考情報
+## 参考情報
 
-#### OWASP MASVS
+### OWASP MASVS
 
 - MSTG-CODE-1: "アプリは有効な証明書で署名およびプロビジョニングされている。その秘密鍵は適切に保護されている。"
 - MSTG-CODE-2: "アプリはリリースモードでビルドされている。リリースビルドに適した設定である（デバッグ不可など）。"
@@ -582,7 +582,7 @@ class a$b
 - MSTG-CODE-8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
 - MSTG-CODE-9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
 
-#### ツール
+### ツール
 
 - ProGuard - <https://www.guardsquare.com/en/proguard>
 - jarsigner - <http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html>
@@ -599,12 +599,12 @@ class a$b
 - Memory Profiler from Android Studio - <https://developer.android.com/studio/profile/memory-profiler>
 - Android Java Deserialization Vulnerability Tester - <https://github.com/modzero/modjoda>
 
-#### Memory Analysis References
+### Memory Analysis References
 
 - A brief history of Android deserialization vulnerabilities - <https://securitylab.github.com/research/android-deserialization-vulnerabilities>
 - 9 ways to avoid memory leaks in Android - <https://android.jlelse.eu/9-ways-to-avoid-memory-leaks-in-android-b6d81648e35e>
 - Memory Leak Patterns in Android - <https://android.jlelse.eu/memory-leak-patterns-in-android-4741a7fcb570>
 
-#### Android Documentation
+### Android Documentation
 
 - APK signature scheme with key rotation - <https://developer.android.com/about/versions/pie/android-9.0#apk-key-rotation>
