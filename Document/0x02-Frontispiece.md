@@ -1,5 +1,7 @@
 # 扉
 
+<img src="Images/OWASP_logo.png" alt="OWASP Logo" width="350" />
+
 ## OWASP モバイルセキュリティテストガイドについて
 
 OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs "MASVS") に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
