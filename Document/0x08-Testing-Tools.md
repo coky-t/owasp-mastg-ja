@@ -1,36 +1,36 @@
-## テストツール
+# テストツール
 
 セキュリティテストを実行するためにさまざまなツールが利用できます。リクエストやレスポンスを操作したり、アプリを逆コンパイルしたり、実行中のアプリの挙動を調査したり、テストケースを自動化したりできます。
 
 > MSTG プロジェクトには、以下のいずれのツールにこだわりを持ちませんし、いずれのツールの宣伝や販売にもこだわりません。以下のすべてのツールは「現役」であるかどうかを確認しています。つまり最近更新がプッシュされていることを意味しています。それでも、すべてのツールが執筆者により使用やテストされたわけではありませんが、モバイルアプリを解析するときにはおそらく役に立つかもしれません。リストはアルファベット順にソートされています。このリストは商用ツールにも目を向けています。
 > 免責事項: 執筆時点では、MSTG の例で使用しているツールが適切に機能していることを確認しています。但し、ホストコンピュータとテストデバイスの両方の OS バージョンによってはツールが壊れているか正しく動作しない場合があります。ルート化/脱獄済みデバイスを使用しているかどうか、ルート化/脱獄手法の特定バージョンを使用しているかどうか、ツールの特定バージョンを使用しているかどうかによって、ツールの機能はさらに狭まる可能性があります。MSTG はツールの動作状態について一切責任を負いません。壊れたツールや例を見つけた場合には、ツールのオリジナルページ、GitHub issues ページなど、で問題を検索または提出してください。
 
-### モバイルアプリケーションセキュリティテストディストリビューション
+## モバイルアプリケーションセキュリティテストディストリビューション
 
 - Androl4b: Android アプリケーションの評価するための仮想マシンです。リバースエンジニアリングとマルウェア解析を実行します。 - <https://github.com/sh4hin/Androl4b>
 - Android Tamer: Android セキュリティ専門家向けの Debian ベースの仮想／ライブプラットフォームです。 - <https://androidtamer.com/>
 - Mobile Security Toolchain: macOS を実行しているマシンで Android と iOS の両方に対して、このセクションで説明したツールの多くをインストールするために使用されるプロジェクトです。このプロジェクトは Ansible を介してツールをインストールします。 - <https://github.com/xebia/mobilehacktools>
 
-### オールインワンモバイルセキュリティフレームワーク
+## オールインワンモバイルセキュリティフレームワーク
 
 - AppMon: ネイティブ macOS, iOS, android アプリのシステム API コールを監視および改竄するための自動化フレームワークです。 - <https://github.com/dpnishant/appmon/>
 - Mobile Security Framework (MobSF): 静的解析および動的解析を実行できるモバイルペンテストフレームワークです。 - <https://github.com/ajinabraham/Mobile-Security-Framework-MobSF>
 - objection: iOS および Android の両方に対応し、Frida を使用することにより、脱獄済みデバイスやルート化デバイスを必要としない実行時モバイルセキュリティ評価フレームワークです。 - <https://github.com/sensepost/objection>
 
-### 静的ソースコード解析 (商用ツール)
+## 静的ソースコード解析 (商用ツール)
 
 - Checkmarx: Android および iOS 用のソースコードもスキャンする静的ソースコードスキャナです。 - <https://www.checkmarx.com/technology/static-code-analysis-sca/>
 - Fortify: Android および iOS 用のソースコードもスキャンする静的ソースコードスキャナです。 - <https://saas.hpe.com/en-us/software/fortify-on-demand/mobile-security>
 - Veracode: Android および iOS 用のバイナリもスキャンする静的ソースコードスキャナです。 - <https://www.veracode.com/products/binary-static-analysis-sast>
 
-### 動的解析および実行時解析
+## 動的解析および実行時解析
 
 - Frida: 開発者、リバースエンジニア、セキュリティ研究者向けの動的計装ツールキットです。クライアントサーバーモデルを使用して動作し、Android および iOS の上で実行中のプロセスにインジェクトします。 - <https://www.frida.re>
 - Frida CodeShare: Frida スクリプトを公開しているプロジェクトで、モバイルアプリのクライアント側のセキュリティコントロール (SSL ピンニングなど) をバイパスするのに役立ちます。 - <https://codeshare.frida.re/>
 - NowSecure Workstation (商用ツール): モバイルアプリの脆弱性評価およびペネトレーションテスト用に事前設定されたハードウェアおよびソフトウェアキットです。 - <https://www.nowsecure.com/solutions/power-tools-for-security-analysts/>
 - r2frida: radare2 の強力なリバースエンジニアリング機能と Frida の動的計装ツールキットをマージしたプロジェクトです。 - <https://github.com/nowsecure/r2frida>
 
-### リバースエンジニアリングおよび静的解析
+## リバースエンジニアリングおよび静的解析
 
 - Binary ninja: 複数の実行可能ファイル形式に対して使用できるマルチプラットフォーム逆アセンブラです。IR (中間表現) リフティングが可能です。 - <https://binary.ninja/>
 - Ghidra: 国家安全保障局 (NSA) により開発されたツールのオープンソースリバースエンジニアリングスイートです。主な機能として逆アセンブリ、アセンブリ、逆コンパイル、グラフ表示、スクリプティングに対応しています。 - <https://ghidra-sre.org/>
@@ -39,9 +39,9 @@
 - radare2: radare2 は Unix ライクなリバースエンジニアリングフレームワークおよびコマンドラインツールです。 - <https://www.radare.org/r/>
 - Retargetable Decompiler (RetDec): LLVM をベースとするオープンソースマシンコード逆コンパイラです。スタンドアロンプログラムとしても、IDA Pro や radare2 のプラグインとしても使用できます。 - <https://retdec.com/>
 
-### Android 用ツール
+## Android 用ツール
 
-#### リバースエンジニアリングおよび静的解析
+### リバースエンジニアリングおよび静的解析
 
 - Androguard: python ベースのツールで、Android アプリの逆アセンブルや逆コンパイルに使用できます。 - <https://github.com/androguard/androguard>
 - Android Backup Extractor: adb backup (ICS 以降) で作成された Android バックアップを抽出および再パックするユーティリティです。主に AOSP の BackupManagerService.java をベースとしています。 - <https://github.com/nelenkov/android-backup-extractor>
@@ -59,7 +59,7 @@
 - SUPER: Windows, macOS, Linux で使用できるコマンドラインアプリケーションで、APK ファイルを解析して脆弱性を探します。 - <https://github.com/SUPERAndroidAnalyzer/super>
 - SpotBugs: Java 用の静的解析ツールです。 - <https://spotbugs.github.io/>
 
-#### 動的解析および実行時解析
+### 動的解析および実行時解析
 
 - Android Tcpdump: Android 用のコマンドラインパケットキャプチャユーティリティです。 - <https://www.androidtcpdump.com>
 - Drozer: アプリの役割を想定し、Dalvik VM と他のアプリの IPC エンドポイントや基礎をなす OS とのやり取りを行うことで、アプリやデバイスのセキュリティ脆弱性を検索できるツールです。 - <https://www.mwrinfosecurity.com/products/drozer/>
@@ -69,16 +69,16 @@
 - VirtualHook: Android ART(>=5.0) のアプリケーション用のフッキングツールです。VirtualApp をベースにしており、フックを挿入するためにルート権限は必要ありません。 - <https://github.com/rk700/VirtualHook>
 - Xposed Framework: Android アプリケーションパッケージ (APK) の改変や再フラッシュを行わずに、実行時にシステムやアプリケーションのアスペクトや動作を変更できるフレームワークです。 - <https://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053>
 
-#### ルート検出と証明書ピンニングのバイパス
+### ルート検出と証明書ピンニングのバイパス
 
 - Android SSL Trust Killer (Cydia Substrate Module): デバイス上で動作するほとんどのアプリケーションの SSL 証明書ピンニングをバイパスするブラックボックスツールです。 - <https://github.com/iSECPartners/Android-SSL-TrustKiller>
 - JustTrustMe (Xposed Module): SSL 証明書ピンニングをバイパスする Xposed モジュールです。 - <https://github.com/Fuzion24/JustTrustMe>
 - RootCloak Plus (Cydia Substrate Module): 一般的に知られているルートの兆候に対するルートチェックにパッチを適用します。 - <https://github.com/devadvance/rootcloakplus>
 - SSLUnpinning (Xposed Module): SSL 証明書ピンニングをバイパスする Xposed モジュールです。 - <https://github.com/ac-pm/SSLUnpinning_Xposed>
 
-### iOS 用ツール
+## iOS 用ツール
 
-#### iDevice 上のファイルシステムへのアクセス
+### iDevice 上のファイルシステムへのアクセス
 
 - iFunbox: iPhone, iPad, iPod Touch 向けのファイルおよびアプリ管理ツールです。 - <http://www.i-funbox.com>
 - iProxy: USB 経由で脱獄済み iPhone に SSH 接続するために使用されるツールです。 - <https://github.com/tcurdt/iProxy>
@@ -89,7 +89,7 @@
 - Cyberduck: Mac および Windows 向けの Libre FTP, SFTP, WebDAV, S3, Azure & OpenStack Swift ブラウザです。 - <https://cyberduck.io>
 - FileZilla: FTP, SFTP, FTPS (FTP over SSL/TLS) をサポートしているソリューションです。 - <https://filezilla-project.org/download.php?show_all=1>
 
-#### リバースエンジニアリングおよび静的解析
+### リバースエンジニアリングおよび静的解析
 
 - class-dump: Mach-O ファイルに格納されている Objective-C ランタイム情報を調べるためのコマンドラインユーティリティです。 - <http://stevenygard.com/projects/class-dump/>
 - Clutch: アプリケーションを解読し、バイナリや IPA ファイル内に指定された bundleID をダンプします。 - <https://github.com/KJCracks/Clutch>
@@ -99,7 +99,7 @@
 - Plutil: .plist ファイルをバイナリバージョンと XML バージョンの間で変換できるプログラムです。 - <https://www.theiphonewiki.com/wiki/Plutil>
 - Weak Classdump: 関数に渡されるクラスのヘッダファイルを生成する Cycript スクリプトです。classdump や dumpdecrypted を使用できない場合やバイナリが暗号化されている場合などにとても便利です。 - <https://github.com/limneos/weak_classdump>
 
-#### 動的解析および実行時解析
+### 動的解析および実行時解析
 
 - bfinject: 任意の dylib を実行中の App Store アプリにロードするツールです。App Store アプリの復号化のサポートが組み込まれており、iSpy と Cycript がバンドルされています。 - <https://github.com/BishopFox/bfinject>
 - BinaryCookieReader: バイナリ Cookies.binarycookies ファイルからすべてのクッキーをダンプするツールです。 - <https://securitylearn.net/wp-content/uploads/tools/iOS/BinaryCookieReader.py>
@@ -114,13 +114,13 @@
 - lldb: iOS アプリケーションをデバッグするために使用される Apple の Xcode に付属するデバッガです。 - <https://lldb.llvm.org/>
 - Passionfruit: 完全なウェブベースの GUI を備えたシンプルな iOS アプリブラックボックス評価ツールです。frida.re と vuejs により提供されています。 - <https://github.com/chaitin/passionfruit>s
 
-#### 脱獄検出および SSL ピンニングのバイパス
+### 脱獄検出および SSL ピンニングのバイパス
 
 - SSL Kill Switch 2: iOS および macOS アプリ内の SSL 証明書検証 (証明書ピンニングを含む) を無効にするブラックボックスツールです。 - <https://github.com/nabla-c0d3/ssl-kill-switch2>
 - tsProtector: 脱獄検出をバイパスするためのツールです。 - <http://cydia.saurik.com/package/kr.typostudio.tsprotector8>
 - Xcon: 脱獄検出をバイパスするためのツールです。 - <http://cydia.saurik.com/package/com.n00neimp0rtant.xcon/>
 
-### ネットワーク傍受および監視用ツール
+## ネットワーク傍受および監視用ツール
 
 - bettercap: セキュリティ研究者やリバースエンジニアに、Wi-Fi, Bluetooth Low Energy, ワイヤレス HID ハイジャック、イーサネットネットワークの偵察および MITM 攻撃のための使いやすいオールインワンソリューションを提供することを目的とした強力なフレームワークです。 - <https://www.bettercap.org/>
 - Canape: 任意のプロトコル用のネットワークテストツールです。 - <https://github.com/ctxis/canape>
@@ -129,7 +129,7 @@
 - tcpdump: コマンドラインパケットキャプチャユーティリティです。 - <https://www.tcpdump.org/>
 - Wireshark: オープンソースのパケットアナライザです。 - <https://www.wireshark.org/download.html>
 
-### 傍受プロキシ
+## 傍受プロキシ
 
 - Burp Suite: アプリケーションのセキュリティテストを実行するための統合プラットフォームです。 - <https://portswigger.net/burp/download.html>
 - Charles Proxy: 開発者がマシンとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。 - <https://www.charlesproxy.com>
@@ -137,18 +137,18 @@
 - OWASP Zed Attack Proxy (ZAP): ウェブアプリケーションやウェブサービスのセキュリティ脆弱性を自動的に発見するのに役立つフリーのセキュリティツールです。 - <https://github.com/zaproxy/zaproxy>
 - Proxydroid: Android システム用のグローバルプロキシアプリです。 - <https://github.com/madeye/proxydroid
 
-### IDE
+## IDE
 
 - Android Studio: Google の Android オペレーティングシステム向けの公式の統合開発環境 (IDE) です。JetBrains の IntelliJ IDEA ソフトウェアで構築されており、特に Android 開発向けに設計されています。 - <https://developer.android.com/studio/index.html>
 - IntelliJ IDEA: コンピュータソフトウェアを開発するための Java IDE です。 - <https://www.jetbrains.com/idea/download/>
 - Eclipse: Eclipse はコンピュータプログラミングに使用される IDE であり、最も広く使用されている Java IDE です。 - <https://eclipse.org/>
 - Xcode: iOS, watchOS, tvOS, macOS 用のアプリを作成するための公式の IDE です。 macOS でのみ利用できます。 - <https://developer.apple.com/xcode/>
 
-### 脆弱なアプリケーション
+## 脆弱なアプリケーション
 
 下記のアプリケーションはトレーニング教材として使用できます。注意：MSTG アプリと Crackmes のみが MSTG プロジェクトでテストおよび保守されています。
 
-#### Android
+### Android
 
 - Crackmes: Android アプリのハッキングスキルをテストするためのアプリのセットです。 - <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes>
 - AndroGoat: Kotlin を使用したオープンソースの脆弱であり、セキュアではないアプリ。このアプリには証明書ピンニング、カスタム URL スキーム、Android Network Security Configuration、WebView、ルート検出、その他 20 を超える脆弱性に関連する幅広い脆弱性があります。 - <https://github.com/satishpatnayak/AndroGoat>
@@ -160,7 +160,7 @@
 - MSTG Android app: Java - このドキュメントで説明されているテストケースと同様の脆弱性を持つ脆弱な Android アプリです。 - <https://github.com/OWASP/MSTG-Hacking-Playground/tree/master/Android/MSTG-Android-Java-App>
 - MSTG Android app: Kotlin - このドキュメントで説明されているテストケースと同様の脆弱性を持つ脆弱な Android アプリです。 - <https://github.com/OWASP/MSTG-Hacking-Playground/tree/master/Android/MSTG-Android-Kotlin-App>
 
-#### iOS
+### iOS
 
 - Crackmes: iOS アプリケーションのハッキングスキルをテストするアプリケーションのセットです。 - <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes>
 - Myriam: iOS セキュリティの課題を持つ脆弱な iOS アプリです。 - <https://github.com/GeoSn0w/Myriam>
