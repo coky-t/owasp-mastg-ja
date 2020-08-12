@@ -1,8 +1,8 @@
-## ネットワーク通信のテスト
+# モバイルアプリのネットワーク通信
 
 ネットワークに接続されたすべてのモバイルアプリは Hypertext Transfer Protocol (HTTP) または HTTP over Transport Layer Security (TLS), HTTPS を使用してリモートエンドポイントとの間でデータを送受信します。その結果、ネットワークベースの攻撃 (パケットスニッフィングや中間者攻撃など) が問題になります。この章ではモバイルアプリとエンドポイント間のネットワーク通信に関する潜在的な脆弱性、テスト技法、ベストプラクティスについて説明します。
 
-### HTTP(S) トラフィックの傍受
+## HTTP(S) トラフィックの傍受
 
 多くの場合、HTTP(S) トラフィックがホストマシン上で実行されている *傍受プロキシ* 経由でリダイレクトされるように、モバイルデバイス上にシステムプロキシを設定することが最も実用的です。モバイルアプリクライアントとバックエンドの間のリクエストを監視することにより、利用可能なサーバーサイド API を簡単にマップし、通信プロトコルの情報を得ることができます。さらに、サーバー側の脆弱性をテストするためにリクエストを再生および操作できます。
 
@@ -18,7 +18,7 @@
 
 プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS ごとの「テスト環境構築」の章でこれを行う方法について説明します。
 
-### 非 HTTP トラフィックを処理するための Burp プラグイン
+## 非 HTTP トラフィックを処理するための Burp プラグイン
 
 Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
 
@@ -29,7 +29,7 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 このセットアップは非常に面倒になることがあり、HTTP をテストするほど簡単ではないことに注意します。
 
-### ネットワーク層でのトラフィックの傍受
+## ネットワーク層でのトラフィックの傍受
 
 傍受プロキシを使用することによる動的解析は、標準ライブラリがアプリで使用され、すべての通信が HTTP 経由で行われる場合には簡単です。しかしこれが動作しないいくつかのケースがあります。
 
@@ -50,9 +50,9 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 - macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
 
-#### bettercap による中間者攻撃のシミュレーション
+### bettercap による中間者攻撃のシミュレーション
 
-##### ネットワークのセットアップ
+#### ネットワークのセットアップ
 
 中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにマシンがある必要があります。これが完了するとモバイルフォンの IP アドレスが必要です。
 
@@ -60,7 +60,7 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 モバイルアプリの完全な動的解析には、すべてのネットワークトラフィックを傍受する必要があります。メッセージを傍受できるようにするには、準備としていくつかの手順を検討する必要があります。
 
-##### bettercap のインストール
+#### bettercap のインストール
 
 bettercap はすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。中間者としての役割を果たすマシンにそれをインストールする必要があります。macOS では brew を使用してインストールできます。
 
@@ -77,7 +77,7 @@ $ apt-get install bettercap
 
 [LinuxHint](https://linuxhint.com/install-bettercap-on-ubuntu-18-04-and-use-the-events-stream/ "Install Bettercap on Ubuntu 18.04") には Ubuntu Linux 18.04 のインストール手順もあります。
 
-#### bettercap による ARP ポイズニング
+### bettercap による ARP ポイズニング
 
 まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて bettercap を実行します。
 
@@ -99,9 +99,9 @@ bettercap は自動的にパケットを (ワイヤレス) ネットワークの
 
 > 中間者攻撃は ARP スプーフィングを通じて OSI レイヤ 2 上で攻撃が実行されるため、あらゆるデバイスやオペレーティングシステムに対して機能します。あなたが MITM である場合、通過するデータは TLS を使用して暗号化されている可能性があるため、平文データを見ることができないかもしれません。しかし、それは関与するホスト、使用されるプロトコルおよびアプリが通信しているポートに関する貴重な情報をあなたに提供します。
 
-#### アクセスポイントを使用した中間者攻撃のシミュレーション
+### アクセスポイントを使用した中間者攻撃のシミュレーション
 
-##### ネットワークのセットアップ
+#### ネットワークのセットアップ
 
 中間者 (MITM) 攻撃をシミュレートする簡単な方法は、スコープ内のデバイスとターゲットネットワーク間のすべてのパケットがマシンを通過するネットワークを構成することです。モバイルペネトレーションテストでは、モバイルデバイスとマシンが接続されているアクセスポイントを使用して実現できます。そうしてマシンがルータおよびアクセスポイントになります。
 
@@ -128,7 +128,7 @@ $ iw list | grep AP
 
 <img src="Images/Chapters/0x04f/architecture_MITM_AP.png" alt="Network Diagram - MITM with an access point" />
 
-##### インストール
+#### インストール
 
 以下の手順はアクセスポイントと追加のネットワークインタフェースを使用して中間者ポジションをセットアップしています。
 
@@ -157,7 +157,7 @@ $ apt-get install hostapd dnsmasq aircrack-ng
 
 WiFi からの着信トラフィックを、トラフィックがターゲットネットワークに到達できる追加のネットワークインタフェースにルーティングします。追加のネットワークインタフェースは、セットアップに応じて有線接続または他の WiFi カードにできます。
 
-##### 構成
+#### 構成
 
 Kali Linux の構成ファイルにフォーカスします。以下の値を定義する必要があります。
 
@@ -211,7 +211,7 @@ Kali Linux の構成ファイルにフォーカスします。以下の値を定
     listen-address=127.0.0.1
     ```
 
-##### MITM 攻撃
+#### MITM 攻撃
 
 中間者ポジションを取得できるためには上記の構成を実行する必要があります。これは Kali Linux 上で以下のコマンドを使用して実行できます。
 
@@ -237,7 +237,7 @@ $ iptables -t nat -A POSTROUTING -j MASQUERADE
 
 これでモバイルデバイスをアクセスポイントに接続できます。
 
-#### ネットワーク解析ツール
+### ネットワーク解析ツール
 
 マシンにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。もっとも一般的な二つのネットワーク監視 (またはキャプチャ) ツールは以下の通りです。
 
@@ -246,11 +246,11 @@ $ iptables -t nat -A POSTROUTING -j MASQUERADE
 
 Wireshark には GUI があり、コマンドラインに慣れていないのであれば簡単です。コマンドラインツールを探しているのであれば TShark または tcpdump を使用する必要があります。これらのツールはいずれも、すべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部です。
 
-#### 実行時計装によるプロキシの設定
+### 実行時計装によるプロキシの設定
 
 ルート化または脱獄済みデバイスでは、ランタイムフックを使用して、新しいプロキシを設定したりネットワークトラフィックをリダイレクトすることが可能です。これは [Inspeckage](https://github.com/ac-pm/Inspeckage "Inspeckage") などのフックツールや [Frida](https://www.frida.re "Frida") および [cycript](http://www.cycript.org "cycript") などのコードインジェクションフレームワークで実現できます。実行時計装についての詳細はこのガイドの「リバースエンジニアリングと改竄」の章で参照できます。
 
-#### 例 - Xamarin の扱い
+### 例 - Xamarin の扱い
 
 例として、すべてのリクエストを Xamarin アプリから傍受プロキシにリダイレクトしてみます。
 
@@ -301,7 +301,7 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 <br/>
 <br/>
 
-##### CA 証明書
+#### CA 証明書
 
 まだ行われていなければ、HTTPS リクエストの傍受を許可するモバイルデバイスに CA 証明書をインストールします。
 
@@ -309,21 +309,21 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
     > Android 7.0 (API level 24) 以降、アプリで指定されていない限り、OS はもはやユーザー指定の CA 証明書を信頼しないことに注意します。このセキュリティ対策の回避については、「セキュリティテスト入門」の章で説明します。
 - [iOS フォンに傍受プロキシの CA 証明書をインストールする](https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp "Configuring an iOS Device to Work With Burp")
 
-##### トラフィックの傍受
+#### トラフィックの傍受
 
 アプリの使用を開始し、その機能を動かします。傍受プロキシに HTTP メッセージが表示されるはずです。
 
 > bettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
 
-### ネットワーク上のデータ暗号化の検証 (MSTG-NETWORK-1 および MSTG-NETWORK-2)
+## ネットワーク上のデータ暗号化の検証 (MSTG-NETWORK-1 および MSTG-NETWORK-2)
 
-#### 概要
+### 概要
 
 コアとなるモバイルアプリの機能のひとつはインターネットなどの信頼できないネットワーク上でデータを送受信することです。データが転送中に正しく保護されない場合、ネットワークインフラストラクチャの任意の部分 (Wi-Fi アクセスポイントなど) にアクセスできる攻撃者は、傍受、読み取り、改変の可能性があります。これが平文のネットワークプロトコルがほとんど推奨されない理由です。
 
 大部分のアプリはバックエンドとの通信に HTTP に依存しています。HTTPS は暗号化された接続で HTTP をラップします (略語の HTTPS はもともと HTTP over Secure Socket Layer (SSL) と呼ばれていました。SSL は TLS の前身で非推奨です) 。TLS はバックエンドサービスの認証を可能にし、ネットワークデータの機密性と完全性を保証します。
 
-##### 推奨される TLS 設定
+#### 推奨される TLS 設定
 
 サーバー側で適切な TLS 設定を確保することも重要です。SSL プロトコルは非推奨であり、もはや使用すべきではありません。
 また TLS v1.0 および TLS v1.1 には [既知の脆弱性](https://portswigger.net/daily-swig/the-end-is-nigh-browser-makers-ditch-support-for-aging-tls-1-0-1-1-protocols "Browser-makers ditch support for aging TLS 1.0, 1.1 protocols") があり、2020年までにすべての主要なブラウザでその使用が非推奨になりました。
@@ -333,7 +333,7 @@ TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベ�
 
 モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
 
-###### 暗号スイートの用語
+##### 暗号スイートの用語
 
 暗号スイートの構造は以下の通りです。
 
@@ -424,7 +424,7 @@ Android 10 では以下の [SHA-2 CBC 暗号スイートが削除された](http
 
 一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#cipher-suites "Cipher suites") および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc "SSL Cipher Suite Values") バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
 
-#### 静的解析
+### 静的解析
 
 ソースコード内のすべての API やウェブサービスリクエストを特定し、プレーンの HTTP URL が使用されていないことを確認します。機密情報は [HttpsURLConnection](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [SSLSocket](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
 
@@ -432,7 +432,7 @@ Android 10 では以下の [SHA-2 CBC 暗号スイートが削除された](http
 
 HTTPS 接続の終端となるサーバーや終端プロキシがベストプラクティスに従って構成されていることを確認します。[OWASP Transport Layer Protection チートシート](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
-#### 動的解析
+### 動的解析
 
 テストされるアプリの着信および発信するネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
@@ -446,9 +446,9 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 - nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
 - [testssl.sh](https://github.com/drwetter/testssl.sh "mitm-relay") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
-### クリティカルな操作がセキュアな通信チャネルを使用することの確認 (MSTG-NETWORK-5)
+## クリティカルな操作がセキュアな通信チャネルを使用することの確認 (MSTG-NETWORK-5)
 
-#### 概要
+### 概要
 
 銀行業務アプリなどの機密性の高いアプリケーションでは、[OWASP MASVS](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md "The Mobile Application Security Verification Standard") では「多層防御」検証レベルを導入しています。そのようなアプリケーションのクリティカルな操作 (ユーザー登録やアカウント回復など) は攻撃者にとって最も魅力的なターゲットです。 SMS や電子メールに頼ることなくユーザー操作を確認するための追加のチャネルなど、高度なセキュリティコントロールを実装する必要があります。
 
@@ -458,7 +458,7 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 
 また電子メールの使用をセキュアな通信チャネルとみなすべきではありません。電子メールの暗号化は通常ではサービスプロバイダにより提供されてはいませんし、利用可能な場合でも平均的なユーザーにより使用されてはいないため、電子メールを使用する際の機密性は保証できません。なりすまし、(スピア|ダイナマイト) フィッシング、スパムは電子メールを悪用してユーザーをだますためのさらなる方法です。したがって、SMS や電子メール以外に他のセキュアな通信チャネルを検討する必要があります。
 
-#### 静的解析
+### 静的解析
 
 コードをレビューして、クリティカルな操作を参照する部分を特定します。そのような操作に追加のチャネルを使用していることを確認します。追加の検証チャネルの例には以下があります。
 
@@ -469,19 +469,19 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 
 クリティカルな操作ではユーザーの操作を確認するために少なくとも一つの追加チャネルの使用を強制することを確認します。クリティカルな操作を実行する際にこれらのチャネルがバイパスされてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、[Google Authenticator](https://github.com/google/google-authenticator-android "Google Authenticator for Android") を介したワンタイムパスコード (OTP) も検討してください。
 
-#### 動的解析
+### 動的解析
 
 テストされるアプリケーションのクリティカルな操作 (ユーザー登録、アカウント回復、金融取引など) をすべて特定します。それぞれのクリティカルな操作に少なくとも一つの追加チャネルが必要であることを確認します。関数を直接呼び出すことでこれらのチャネルの使用をバイパスしないことを確認します。
 
-### 参考情報
+## 参考情報
 
-#### OWASP MASVS
+### OWASP MASVS
 
 - MSTG-NETWORK-1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）単方向のセキュアでない通信チャネルに依存していない。"
 
-#### ツール
+### ツール
 
 - bettercap - <https://www.bettercap.org>
 - Burp Suite - <https://portswigger.net/burp/>
@@ -490,33 +490,33 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 - Testssl.sh - <https://github.com/drwetter/testssl.sh>
 - Wireshark - <https://www.wireshark.org/>
 
-#### Android
+### Android
 
 - Android supported Cipher suites - <https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites>
 - Android documentation: Android 10 Changes - <https://developer.android.com/about/versions/10/behavior-changes-all>
 
-#### iOS
+### iOS
 
 - iOS supported Cipher suites - <https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc>
 
-#### IANA Transport Layer Security (TLS) Parameters
+### IANA Transport Layer Security (TLS) Parameters
 
 - TLS Cipher Suites - <https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4>
 
-#### OWASP TLS Cipher String Cheat Sheet
+### OWASP TLS Cipher String Cheat Sheet
 
 - Recommendations for a cipher string - <https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md>
 
-#### SIM Swapping attacks
+### SIM Swapping attacks
 
 - The SIM Hijackers - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
 - SIM swapping: how the mobile security feature can lead to a hacked bank account - <https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/>
 
-#### NIST
+### NIST
 
 - FIPS PUB 186 - Digital Signature Standard (DSS)
 
-#### SIM Swap Fraud
+### SIM Swap Fraud
 
 - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
 - How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
@@ -524,7 +524,7 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 <br/>
 <br/>
 
-#### IETF
+### IETF
 
 - RFC 6176 - <https://tools.ietf.org/html/rfc6176>
 - RFC 6101 - <https://tools.ietf.org/html/rfc6101>
