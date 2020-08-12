@@ -6,8 +6,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### はじめに
 
-- [ヘッダ](Document/0x00-Header.md)
-- [序文](Document/Foreword.md)
+- [序文](Document/0x01-Foreword.md)
 - [扉](Document/0x02-Frontispiece.md)
 - [モバイルセキュリティテストガイドの序文](Document/0x03-Overview.md)
 - [モバイルアプリの分類](Document/0x04a-Mobile-App-Taxonomy.md)
