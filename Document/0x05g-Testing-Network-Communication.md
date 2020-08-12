@@ -1,6 +1,6 @@
-## Android のネットワーク API
+# Android のネットワーク API
 
-### エンドポイント同一性検証のテスト (MSTG-NETWORK-3)
+## エンドポイント同一性検証のテスト (MSTG-NETWORK-3)
 
 ネットワーク上で機密情報を転送するために TLS を使用することはセキュリティにとって不可欠です。しかし、モバイルアプリケーションとバックエンド API との間の通信を暗号化することは簡単ではありません。開発者は開発プロセスを容易にするために、よりシンプルではあるもののセキュアではない (任意の証明書を受け入れるなどの) ソリューションを選ぶことが多く、時にはこれらの脆弱なソリューションが [製品バージョンとなり](https://saschafahl.de/static/paper/androidssl2012.pdf "Hunting Down Broken SSL in Android Apps") 、潜在的にユーザーを [中間者攻撃](https://cwe.mitre.org/data/definitions/295.html "CWE-295: Improper Certificate Validation") に晒す可能性があります。
 
@@ -13,9 +13,9 @@
 
 > Android 8.0 (API level 26) 以降、SSLv3 はサポートされなくなり、HttpsURLConnection はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しないことに注意します。
 
-#### 静的解析
+### 静的解析
 
-##### サーバー証明書の検証
+#### サーバー証明書の検証
 
 `TrustManager` は Android で信頼できる接続を確立するために必要な条件を検証する手段です。この点について以下の条件を確認する必要があります。
 
@@ -49,7 +49,7 @@ TrustManager[] trustAllCerts = new TrustManager[] {
 context.init(null, trustAllCerts, new SecureRandom());
 ```
 
-##### WebView サーバー証明書検証
+#### WebView サーバー証明書検証
 
 場合によってアプリケーションは WebView を使用して、アプリケーションに関連付けられたウェブサイトを表示します。これはアプリケーションのやり取りに内部 WebView を使用する Apache Cordova などの HTML/JavaScript ベースのフレームワークに当てはまります。WebView を使用すると、モバイルブラウザがサーバー証明書の検証を実行します。WebView がリモートウェブサイトに接続しようとしたときに発生する TLS エラーを無視するのはバッドプラクティスです。
 
@@ -66,11 +66,11 @@ myWebView.setWebViewClient(new WebViewClient(){
 });
 ```
 
-##### Apache Cordova 証明書検証
+#### Apache Cordova 証明書検証
 
 アプリケーションマニフェストで `android:debuggable` フラグが有効になっている場合、Apache Cordova フレームワークの内部 WebView 使用の実装は `onReceivedSslError` メソッドの [TLS エラー](https://github.com/apache/cordova-android/blob/master/framework/src/org/apache/cordova/engine/SystemWebViewClient.java "TLS errors ignoring by Apache Cordova in WebView") を無視します。したがって、アプリがデバッグ可能ではないことを確認します。テストケース「アプリがデバッグ可能かどうかのテスト」を参照してください。
 
-##### ホスト名検証
+#### ホスト名検証
 
 クライアントサイドの TLS 実装におけるもう一つのセキュリティ上の欠陥はホスト名検証の欠如です。開発環境では通常有効なドメイン名ではなく内部アドレスを使用するため、開発者はホスト名検証を無効化 (またはアプリケーションに任意のホスト名を許可するよう強制) したり、アプリケーションを実稼働環境に移行する際に変更することを忘れたりします。以下のコードはホスト名検証を無効化します。
 
@@ -91,7 +91,7 @@ HostnameVerifier NO_VERIFY = org.apache.http.conn.ssl.SSLSocketFactory
 
 信頼できる接続を設定する前にアプリケーションがホスト名を検証していることを確認します。
 
-#### 動的解析
+### 動的解析
 
 動的解析には傍受プロキシが必要です。不適切な証明書の検証をテストするには、以下のコントロールを確認します。
 
@@ -109,15 +109,15 @@ Burp で **Proxy** タブに移動し、**Options** タブを選択し、**Proxy
 
 さらに MITM 解析を行う場合や傍受プロキシの設定に問題がある場合には、[Tapioca](https://insights.sei.cmu.edu/cert/2014/08/-announcing-cert-tapioca-for-mitm-analysis.html "Announcing CERT Tapioca for MITM Analysis") の使用を検討します。これは MITM ソフトウェア解析のために CERT が事前設定した [VM アプライアンス](http://www.cert.org/download/mitm/CERT_Tapioca.ova "CERT Tapioca Virtual Machine Download") です。行うべきことは [テストされるアプリケーションをエミュレータにデプロイしてトラフィックのキャプチャを開始する](https://insights.sei.cmu.edu/cert/2014/09/-finding-android-ssl-vulnerabilities-with-cert-tapioca.html "Finding Android SSL vulnerabilities with CERT Tapioca") だけです。
 
-### カスタム証明書ストアおよび証明書ピンニングのテスト (MSTG-NETWORK-4)
+## カスタム証明書ストアおよび証明書ピンニングのテスト (MSTG-NETWORK-4)
 
-#### 概要
+### 概要
 
 証明書ピンニングは信頼できる認証局により署名された証明書を受け入れる代わりに、バックエンドサーバーを特定の X.509 証明書または公開鍵に関連付けるプロセスです。サーバー証明書または公開鍵を格納 (「ピンニング」) した後、モバイルアプリはその既知のサーバーにのみ接続します。外部認証局からの信頼を取り下げることで、アタックサーフェイスを縮小します (結局のところ、認証局が侵害されたり、偽者に証明書を発行するよう騙されたりという既知の事例が多くあります) 。
 
 証明書はアプリにピン留めおよびハードコードされるか、またはアプリが最初にバックエンドに接続するときに取り出されます。後者の場合には、ホストが最初に参照されるときに証明書がホストに関連付け (「ピン留め」) られます。この方法はあまりセキュアではありません。最初の接続を傍受する攻撃者が自身の証明書を注入できるためです。
 
-##### ピンが失敗する場合
+#### ピンが失敗する場合
 
 失敗したピンに対処する場合にはさまざまなオプションがあることに注意します。
 
@@ -132,9 +132,9 @@ Burp で **Proxy** タブに移動し、**Options** タブを選択し、**Proxy
 
 ごく少数のピン失敗のみが報告された場合、ネットワークは正常であり、TLS 終端エンドポイントの設定も正常でしょう。代わりに、ピンが失敗しているアプリインスタンスで中間者攻撃が進行している可能性があります。
 
-#### 静的解析
+### 静的解析
 
-##### Network Security Configuration
+#### Network Security Configuration
 
 ネットワークセキュリティ設定を安全な宣言型設定ファイルでアプリコードの修正なしにカスタマイズするには、Android がバージョン 7.0 およびそれ以降で提供している [Network Security Configuration](https://developer.android.com/training/articles/security-config.html "Network Security Configuration documentation") を使用できます。
 
@@ -187,7 +187,7 @@ I/X509Util: Failed to validate the certificate chain, error: Pin verification fa
 
 逆コンパイラ (jadx や apktool など) や apktool を使用することで、/res/xml/ フォルダにある network_security_config.xml ファイルに `<pin>` エントリが存在するかどうかを確認できます。
 
-##### TrustManager
+#### TrustManager
 
 証明書ピンニングの実装には主に三つのステップがあります。
 
@@ -216,7 +216,7 @@ sslContext.init(null, tmf.getTrustManagers(), null);
 
 アプリの実装は証明書の公開鍵のみに対してピンニング、証明書全体に対して、証明書チェーン全体に対してとさまざまです。
 
-##### ネットワークライブラリと WebView
+#### ネットワークライブラリと WebView
 
 サードパーティーネットワークライブラリを使用するアプリケーションはライブラリの証明書ピンニング機能を利用できます。例えば、[okhttp](https://github.com/square/okhttp/wiki/HTTPS "okhttp library") では `CertificatePinner` を使用して以下のようにセットアップできます。
 
@@ -254,7 +254,7 @@ myWebView.setWebViewClient(new WebViewClient(){
 
 あるいは、設定されたピンで OkHttpClient を使用し、それを `WebViewClient` の `shouldInterceptRequest` をオーバーライドするプロキシとして機能させるのがよいでしょう。
 
-##### Xamarin アプリケーション
+#### Xamarin アプリケーション
 
 Xamarin で開発されたアプリケーションは一般的に ServicePointManager を使用してピンニングを実装します。
 
@@ -296,7 +296,7 @@ Xamarin で開発されたアプリケーションは一般的に ServicePointMa
 
 APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用状況を確認します。
 
-##### Cordova アプリケーション
+#### Cordova アプリケーション
 
 Cordova ベースのハイブリッドアプリケーションはネイティブに証明書ピンニングをサポートしていないため、プラグインを使用してこれを達成します。もっとも一般的なものは PhoneGap SSL Certificate Checker です。`check` メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
 
@@ -330,11 +330,11 @@ Cordova ベースのハイブリッドアプリケーションはネイティブ
 
 APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/www フォルダに置かれます。'plugins' フォルダに使用するプラグインがあります。アプリケーションの JavaScript コードでこのメソッドを検索して、その使用状況を確認する必要があります。
 
-#### 動的解析
+### 動的解析
 
 動的解析は好みの傍受プロキシを使用して MITM 攻撃を開始することで実行できます。これにより、クライアント (モバイルアプリケーション) とバックエンドサーバー間のトラフィックを監視できます。プロキシが HTTP リクエストおよびレスポンスを傍受できない場合、SSL ピンニングは正しく実装されています。
 
-##### 証明書ピンニングのバイパス
+#### 証明書ピンニングのバイパス
 
 デバイスで利用可能なフレームワークに応じて、ブラックボックステストのために証明書ピンニングをバイパスする方法がいくつかあります。
 
@@ -345,7 +345,7 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 ほとんどのアプリケーションでは、証明書ピンニングは数秒以内にバイパスできますが、これはアプリがこれらのツールでカバーしている API 関数を使用している場合に限られます。アプリがカスタムフレームワークまたはカスタムライブラリを使用して SSL ピンニングを実装している場合には、SSL ピンニングを手動でパッチ適用および無効化する必要があるため、時間がかかります。
 
-###### カスタム証明書ピンニングの静的なバイパス
+##### カスタム証明書ピンニングの静的なバイパス
 
 アプリケーション内のどこかで、エンドポイントと証明書 (またはそのハッシュ) の両方を定義する必要があります。アプリケーションを逆コンパイルした後、以下のものを検索します。
 
@@ -378,7 +378,7 @@ $ keytool -list -keystore "res/raw/truststore.bks" -provider org.bouncycastle.jc
 
 アプリケーションがネットワーク通信を実装するためにネイティブライブラリを使用する場合は、さらにリバースエンジニアリングが必要です。このようなアプローチの例がブログ記事 [smali コードでの SSL ピンニングロジックの識別、パッチ適用、および APK の再構築](https://serializethoughts.wordpress.com/2016/08/18/bypassing-ssl-pinning-in-android-applications/ "Bypassing SSL Pinning in Android Applications")  にあります。
 
-###### カスタム証明書ピンニングの動的なバイパス
+##### カスタム証明書ピンニングの動的なバイパス
 
 ピンニングロジックを動的にバイパスすると、整合性チェックをバイパスする必要がなくなり、試行錯誤の実施がはるかに高速になるため、より便利になります。
 
@@ -395,19 +395,19 @@ Builder.add メソッドの場合、次の grep コマンド `grep -ri java/lang
 
 Frida で各メソッドをフックして引数を出力します。そのうちの一つはドメイン名と証明書ハッシュを表示します。その後、実装されたピンニングを回避するために引数を改変できます。
 
-### Network Security Configuration 設定のテスト (MSTG-NETWORK-4)
+## Network Security Configuration 設定のテスト (MSTG-NETWORK-4)
 
-#### 概要
+### 概要
 
 Network Security Configuration は Android 7.0 (API level 24) で導入され、カスタムトラストアンカーや証明書ピンニングなどのアプリのネットワークセキュリティ設定をカスタマイズできます。
 
-##### トラストアンカー
+#### トラストアンカー
 
 Android 7.0 (API level 24) 以降で実行している場合、これらの API レベルをターゲットとするアプリはデフォルトの Network Security Configuration を使用します。それはユーザーが提供する CA を信頼せず、ユーザーに悪意のある CA をインストールさせることによる MITM 攻撃の可能性を減らします。
 
 この保護はカスタムの Network Security Configuration を使用することでバイパスできます。アプリはユーザーが提供する CA を信頼することを示すカスタムトラストアンカーを用います。
 
-#### 静的解析
+### 静的解析
 
 ターゲット SDK のバージョンを確認するには逆コンパイラ (jadx や apktool など) を使用します。アプリをデコードした後、出力フォルダに作成された apktool.yml ファイルに存在する `targetSDK` の存在を探します。
 
@@ -475,7 +475,7 @@ Android 6.0 (API レベル 23) 以下をターゲットとするアプリのデ�
 </base-config>
 ```
 
-#### 動的解析
+### 動的解析
 
 動的なアプローチを使用することにより、通常は Burp などの傍受プロキシを使用して、ターゲットアプリの Network Security Configuration 設定をテストできます。但し、例えば、Android 7.0 (API level 24) 以上をターゲットとし、Network Security Configuration を効果的に適用するアプリをテストする場合には、最初はトラフィックを見ることができない可能性があります。そのような状況では、Network Security Configuration ファイルにパッチを適用する必要があります。必要な手順は「Android セキュリティテスト入門」の章の「[Network Security Configuration のバイパス](0x05b-Basic-Security_Testing.md#bypassing-the-network-security-configuration "Bypassing the Network Security Configuration")」のセクションにあります。
 
@@ -484,15 +484,15 @@ Android 6.0 (API レベル 23) 以下をターゲットとするアプリのデ�
 - Android 7.0 (API level 24) 以降の Android デバイス上でアプリが実行されているが、アプリが 24 未満の API レベルをターゲットにしている場合、Network Security Configuration ファイルを使用しません。代わりに、アプリはユーザー提供の CA を信頼します。
 - Android 7.0 (API level 24) 以降の Android デバイス上でアプリが実行されており、アプリにカスタム Network Security Configuration が実装されていない場合。
 
-### セキュリティプロバイダのテスト (MSTG-NETWORK-6)
+## セキュリティプロバイダのテスト (MSTG-NETWORK-6)
 
-#### 概要
+### 概要
 
 Android はセキュリティプロバイダに依存して SSL/TLS ベースの接続を提供しています。この種のセキュリティプロバイダの問題 (一例では [OpenSSL](https://www.openssl.org/news/vulnerabilities.html "OpenSSL Vulnerabilities")) は、デバイスに付随するもので、多くの場合バグや脆弱性があります。
 既知の脆弱性を回避するために、開発者はアプリケーションが適切なセキュリティプロバイダをインストールすることを確認する必要があります。
 2016年7月11日以降、Google は脆弱なバージョンの OpenSSL を使用する [Play ストアのアプリケーション提出を拒否しています](https://support.google.com/faqs/answer/6376725?hl=en "How to address OpenSSL vulnerabilities in your apps") (新規アプリケーションおよび更新の両方) 。
 
-#### 静的解析
+### 静的解析
 
 Android SDK をベースとするアプリケーションは GooglePlayServices に依存する必要があります。例えば、gradle ビルドファイルには、dependencies ブロックに `compile 'com.google.android.gms:play-services-gcm:x.x.x'` があります。`ProviderInstaller` クラスは `installIfNeeded` または `installIfNeededAsync` のどちらかで呼び出されていることを確認する必要があります。`ProviderInstaller` はできるだけ早期にアプリケーションのコンポーネントにより呼び出される必要があります。これらのメソッドによりスローされる例外は正しく捕捉および処理されるべきです。
 アプリケーションがそのセキュリティプロバイダにパッチを適用することができない場合、そのセキュアではない状態の API を通知するかユーザー操作を制限します (すべての HTTPS トラフィックがこの状況ではより危険であるとみなすべきであるため) 。
@@ -633,7 +633,7 @@ public class MainActivity extends Activity
 
 NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新の正しくパッチ適用されたライブラリにのみバインドすることを確認します。
 
-#### 動的解析
+### 動的解析
 
 ソースコードがある場合:
 
@@ -647,25 +647,25 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 - Xposed を使用して `java.security` パッケージにフックし、`java.security.Security` の `getProviders` メソッド (引数なし) にフックします。戻り値は `Provider` の配列になります。
 - 最初のプロバイダが `GmsCore_OpenSSL` であるかどうかを判断します。
 
-#### 参考情報
+### 参考情報
 
-##### OWASP MASVS
+#### OWASP MASVS
 
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を検証している。信頼されたCAにより署名された証明書のみが受け入れられている。"
 - MSTG-NETWORK-4: "アプリは自身の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵をピンニングしている。信頼されたCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
 - MSTG-NETWORK-6: "アプリは最新の接続ライブラリとセキュリティライブラリにのみ依存している。"
 
-##### Android 開発者ドキュメント
+#### Android 開発者ドキュメント
 
 - Network Security Config - <https://developer.android.com/training/articles/security-config>
 - Network Security Config (cached alternative) - <https://webcache.googleusercontent.com/search?q=cache:hOONLxvMTwYJ:https://developer.android.com/training/articles/security-config+&cd=10&hl=nl&ct=clnk&gl=nl>
 
-##### Xamarin 証明書ピンニング
+#### Xamarin 証明書ピンニング
 
 - Certificate and Public Key Pinning with Xamarin - <https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin>
 - ServicePointManager - <https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx>
 
-##### Cordova 証明書ピンニング
+#### Cordova 証明書ピンニング
 
 - PhoneGap SSL Certificate Checker plugin - <https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin>
