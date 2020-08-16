@@ -320,17 +320,30 @@ $ carthage update --platform iOS
 
 ライセンスの著作権が守られているかどうかを検証する必要があります。これは通常、サードパーティライブラリのライセンスにより要求されるものとして、著作権表示が記されている `about` や `EULA` セクションをアプリケーションが持つべきであることを意味しています。
 
-ライブラリ解析にソースコードが利用可能ではない場合、otool と MobSF を使用して、使用されている一部のフレームワークを見つけることができます。
-ライブラリを取得してそれをクラッチ (例えば DRM を削除) した後、アプリケーションのディレクトリのルートで otool を実行します。
+#### アプリケーションライブラリの一覧表示
+
+アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](https://github.com/sensepost/objection), [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF), otool などのツールを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
+
+`list_bundles` コマンドはフレームワークに関係しないアプリケーションのすべてのバンドルを一覧表示します。出力には実行可能ファイル名、バンドル ID 、ライブラリのバージョン、ライブラリのパスが含まれます。
 
 ```bash
-$ otool -L <Executable>
+...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios bundles list_bundles
+Executable    Bundle                                       Version  Path
+------------  -----------------------------------------  ---------  -------------------------------------------
+DVIA-v2       com.highaltitudehacks.DVIAswiftv2.develop          2  ...-1F0C-4DB1-8C39-04ACBFFEE7C8/DVIA-v2.app
+CoreGlyphs    com.apple.CoreGlyphs                               1  ...m/Library/CoreServices/CoreGlyphs.bundle
 ```
 
-但し、これらには使用されているすべてのライブラリが含まれるわけではありません。次に、class-dump (Objective-C の場合) または最新の dsdump を使用して、使用されているヘッダファイルのサブセットを生成し、どのライブラリが関係しているかを導き出すことができます。しかし、ライブラリのバージョンは検出されません。
+`list_frameworks` コマンドはフレームワークを表すアプリケーションのすべてのバンドルを一覧表示します。
 
 ```bash
-$ ./class-dump <Executable> -r
+...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios bundles list_frameworks
+Executable      Bundle                                     Version    Path
+--------------  -----------------------------------------  ---------  -------------------------------------------
+Bolts           org.cocoapods.Bolts                        1.9.0      ...8/DVIA-v2.app/Frameworks/Bolts.framework
+RealmSwift      org.cocoapods.RealmSwift                   4.1.1      ...A-v2.app/Frameworks/RealmSwift.framework
+                                                                      ...ystem/Library/Frameworks/IOKit.framework
+...
 ```
 
 ## 例外処理のテスト (MSTG-CODE-6)
