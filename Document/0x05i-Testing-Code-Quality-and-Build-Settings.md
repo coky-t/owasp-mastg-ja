@@ -139,7 +139,7 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
     16346  <== last launched, corresponds to our application
     ```
 
-2. `adb` を使用してアプリケーションプロセス (PIDを使用) と解析ワークステーションの間に特定のローカルポートを使用した通信チャネルを作成します。
+2. `adb` を使用してアプリケーションプロセス (PIDを使用) とホストコンピュータの間に特定のローカルポートを使用した通信チャネルを作成します。
 
     ```bash
     # adb forward tcp:[LOCAL_PORT] jdwp:[APPLICATION_PID]
