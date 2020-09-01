@@ -104,8 +104,6 @@ NSAppTransportSecurity : Dictionary {
 - `NSExceptionAllowsInsecureHTTPLoads`
 - `NSExceptionMinimumTLSVersion`
 
-しかし、この不同意は延期されました。後に Apple は [「準備期間を増やすためにこの期限を延長し、新しい締め切りが確定したときに別のアップデートを提供する」](https://developer.apple.com/news/?id=12212016b "Apple Developer Portal Announcement - Supporting App Transport Security") と述べています。
-
 ### ATS 設定の解析
 
 ソースコードが利用可能である場合、アプリケーションバンドルディレクトリの `Info.plist` ファイルを開き、アプリケーション開発者が設定した例外を探します。このファイルはアプリケーションコンテキストを考慮して調べる必要があります。
