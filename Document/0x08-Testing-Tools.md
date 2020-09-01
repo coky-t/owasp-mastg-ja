@@ -9,7 +9,7 @@
 
 - Androl4b: Android アプリケーションの評価するための仮想マシンです。リバースエンジニアリングとマルウェア解析を実行します。 - <https://github.com/sh4hin/Androl4b>
 - Android Tamer: Android セキュリティ専門家向けの Debian ベースの仮想／ライブプラットフォームです。 - <https://androidtamer.com/>
-- Mobile Security Toolchain: macOS を実行しているマシンで Android と iOS の両方に対して、このセクションで説明したツールの多くをインストールするために使用されるプロジェクトです。このプロジェクトは Ansible を介してツールをインストールします。 - <https://github.com/xebia/mobilehacktools>
+- Mobile Security Toolchain: macOS を実行しているホストコンピュータで Android と iOS の両方に対して、このセクションで説明したツールの多くをインストールするために使用されるプロジェクトです。このプロジェクトは Ansible を介してツールをインストールします。 - <https://github.com/xebia/mobilehacktools>
 
 ## オールインワンモバイルセキュリティフレームワーク
 
@@ -107,7 +107,7 @@
 - Cycript: 構文強調表示とタブ補完機能を備えた対話型コンソールを通じて Objective-C および JavaScript 構文をハイブリッドに使用して、開発者が iOS もしくは macOS 上で実行中のアプリケーションを探索および改変できるツールです。 - <http://www.cycript.org>
 - Frida-cycript: Frida が提供する新しいランタイム Mjølner を有する Cycript のフォークです。これにより frida-cycript は frida-core によりメンテされているすべてのプラットフォームおよびアーキテクチャ上で実行できます。 - <https://github.com/nowsecure/frida-cycript>
 - Fridpa: iOS アプリケーション (IPA ファイル) にパッチを適用するための自動ラッパースクリプトであり、非脱獄済みデバイスで動作します。 - <https://github.com/tanprathan/Fridpa>
-- gdb: iOS アプリケーションの実行時解析を行うためのツールです。 - <http://cydia.radare.org/debs/>
+- gdb: iOS アプリケーションの実行時解析を行うためのツールです。 - <https://cydia.radare.org/pool/main/g/gdb/>
 - idb: iOS ペネトレーションテストおよび研究のための一般的なタスクを簡素化するツールです。 - <https://github.com/dmayer/idb>
 - Introspy-iOS: iOS アプリケーションが実行時に何をしているかを理解し、潜在的なセキュリティ問題の特定を支援するブラックボックスツールです。 - <https://github.com/iSECPartners/Introspy-iOS>
 - keychaindumper: iOS デバイスが脱獄された場合に攻撃者が利用可能となるキーチェーンアイテムを確認するためのツールです。 - <https://github.com/ptoomey3/Keychain-Dumper>
@@ -132,7 +132,7 @@
 ## 傍受プロキシ
 
 - Burp Suite: アプリケーションのセキュリティテストを実行するための統合プラットフォームです。 - <https://portswigger.net/burp/download.html>
-- Charles Proxy: 開発者がマシンとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。 - <https://www.charlesproxy.com>
+- Charles Proxy: 開発者がホストコンピュータとインターネットの間のすべての HTTP および SSL / HTTPS トラフィックを表示することができる HTTP プロキシ / HTTP モニタ / リバースプロキシです。 - <https://www.charlesproxy.com>
 - Fiddler: HTTP および HTTPS トラフィックをキャプチャしてユーザーが確認するためにログに記録できる HTTP デバッグプロキシサーバーアプリケーションです。 - <https://www.telerik.com/fiddler>
 - OWASP Zed Attack Proxy (ZAP): ウェブアプリケーションやウェブサービスのセキュリティ脆弱性を自動的に発見するのに役立つフリーのセキュリティツールです。 - <https://github.com/zaproxy/zaproxy>
 - Proxydroid: Android システム用のグローバルプロキシアプリです。 - <https://github.com/madeye/proxydroid
