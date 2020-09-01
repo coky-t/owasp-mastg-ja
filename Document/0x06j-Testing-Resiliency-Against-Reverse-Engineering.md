@@ -135,9 +135,9 @@ false
 脱獄検出をバイパスするために使用する Frida の機能はいわゆる早期計装です。つまり、起動時に関数実装を置き換えます。
 
 1. `frida-server` が iOS デバイス上で動作していることを確認します。
-2. ワークステーションに `Frida` が [インストール]( https://www.frida.re/docs/installation/ "Frida Installation") されていることを確認します。
+2. ホストコンピュータに `Frida` が [インストール](https://www.frida.re/docs/installation/ "Frida Installation") されていることを確認します。
 3. iOS デバイスは USB ケーブルで接続する必要があります。
-4. ワークステーション上で `frida-trace` を使用します。
+4. ホストコンピュータ上で `frida-trace` を使用します。
 
 ```bash
 $ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp  -m "-[JailbreakDetectionVC isJailbroken]"
@@ -184,7 +184,7 @@ try:
     session = frida.get_usb_device().attach("Target Process")
 except frida.ProcessNotFoundError:
     print "Failed to attach to the target process. Did you launch the app?"
-    sys.exit(0);
+    sys.exit(0)
 
 script = session.create_script("""
 
