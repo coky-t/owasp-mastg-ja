@@ -258,7 +258,7 @@ Burp Intruder でのワードリストベースのブルートフォース攻撃
 - [Ruby on Rails](https://guides.rubyonrails.org/security.html "Ruby on Rails")
 - [PHP](https://php.net/manual/en/function.session-destroy.php "PHP")
 
-ステートレス認証でアクセストークンおよびリフレッシュトークンを使用する場合、それらをモバイルデバイスから削除すべきです。[サーバー上でリフレッシュトークンを無効にすべきです](https://auth0.com/blog/blacklist-json-web-token-api-keys/ "Invalidating JSON Web Token API Keys") 。
+ステートレス認証でアクセストークンおよびリフレッシュトークンを使用する場合、それらをモバイルデバイスから削除すべきです。[サーバー上でリフレッシュトークンを無効にすべきです](https://auth0.com/blog/denylist-json-web-token-api-keys/ "Invalidating JSON Web Token API Keys") 。
 
 ### 動的解析
 
