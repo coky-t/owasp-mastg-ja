@@ -314,6 +314,12 @@ $ ios sslpinning disable
 
 詳細情報として [iOS の SSL ピンニング無効化に関する Objection の文書](https://github.com/sensepost/objection#ssl-pinning-bypass-running-for-an-ios-application "Disable SSL Pinning in iOS" ) もご覧ください。
 
+ただし、テクノロジとシステムは時間とともに変化するため、このバイパス技法はいずれ機能しなくなる可能性があります。したがって、すべてのツールが OS バージョンに十分迅速に対応できるわけではないため、調査を行うことはテスト担当者の作業の一部です。
+
+たとえば、この執筆時点では Objection バイパスは iOS 10 以降では機能していません。ただし、Frida CodeShare などのリポジトリを調べると、@dki による iOS 10 および 11 で実際に機能する ["ios10-ssl-bypass"](https://codeshare.frida.re/@dki/ios10-ssl-bypass/) など、特定のバージョンをバイパスするスクリプトを見つけることができます。
+
+一部のアプリはカスタム SSL ピンニング手法を実装している可能性があるため、テスト担当者は [Frida](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06b-Basic-Security-Testing.md#frida) と、["iOS リバースエンジニアリング"](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06c-Reverse-Engineering-and-Tampering.md) で説明されている技法を使用して新しいバイパススクリプトを開発することもできます。
+
 ホワイトボックステストと典型的なコードパターンについてもっと知りたい場合には、[#thiel] を参照してください。これには最も一般的な証明書ピンニング技法を説明する記述とコードスニペットが含まれています。
 
 ### 参考情報
