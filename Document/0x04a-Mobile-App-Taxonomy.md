@@ -14,7 +14,13 @@ Android や iOS などのモバイルオペレーシングシステムには OS 
 
 Android の *ネイティブアプリ* について議論する際にはいくらかあいまいさがあります。このプラットフォームは二つの開発キット Android SDK と Android NDK を提供しています。SDK は Java および Kotlin プログラミング言語をベースとしており、アプリ開発のデフォルトです。NDK (またはネイティブ開発キット) は C/C++ 開発キットで、低レベル API (OpenGL など) に直接アクセスできるバイナリライブラリを開発するために使用されます。これらのライブラリは SDK で構築された通常のアプリに含めることができます。したがって私たちは、Android *ネイティブアプリ* (つまり、SDK を使用して構築されている) は NDK を使用して構築された *ネイティブ* コードを持つ可能性がある、と表現します。
 
-*ネイティブアプリ* の最も明白な欠点はひとつの特定のプラットフォームのみをターゲットとしていることです。Android と iOS の両方に対して同じアプリをビルドするには、二つの独立したコードベースを維持するか、二つのプラットフォームを一つのコードベースに移植するために複合開発ツールを導入します (例、[Xamarin](https://www.xamarin.com/ "Xamarin")) 。
+*ネイティブアプリ* の最も明白な欠点はひとつの特定のプラットフォームのみをターゲットとしていることです。Android と iOS の両方に対して同じアプリをビルドするには、二つの独立したコードベースを維持するか、二つのプラットフォームを一つのコードベースに移植するために複合開発ツールを導入します。以下のフレームワークは後者の例であり、Android と iOS の両方で単一のコードベースをコンパイルできます。
+
+- [Xamarin](https://www.xamarin.com/ "Xamarin")
+- [Google Flutter](https://flutter.dev/ "Google Flutter")
+- [React Native](https://reactnative.dev/ "React Native")
+
+これらのフレームワークを使用して開発されたアプリケーションは、システムにネイティブな API を内部的に使用し、ネイティブアプリケーションと同等のパフォーマンスを提供します。また、これらのアプリは GPS、加速度計、カメラ、通知システムなど、すべてのデバイス機能を利用できます。最終的な出力は前述の *ネイティブアプリ* と非常に似ているため、これらのフレームワークを使用して開発されたアプリも *ネイティブアプリ* とみなすことができます。
 
 ## ウェブアプリ
 
@@ -34,10 +40,8 @@ Android の *ネイティブアプリ* について議論する際にはいく�
 - [Framework 7](https://framework7.io/ "Framework 7")
 - [Ionic](https://ionicframework.com/ "Ionic")
 - [jQuery Mobile](https://jquerymobile.com/ "jQuery Mobile")
-- [Google Flutter](https://flutter.dev/ "Google Flutter")
 - [Native Script](https://www.nativescript.org/ "Native Script")
 - [Onsen UI](https://onsen.io/ "Onsen UI")
-- [React Native](https://www.reactnative.com/ "React Native")
 - [Sencha Touch](https://www.sencha.com/products/touch/ "Sencha Touch")
 
 ## プログレッシブウェブアプリ
