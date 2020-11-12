@@ -153,7 +153,7 @@ Pwned Passwords API の詳細なドキュメントは [オンライン](https://
 
 自動パスワード推測攻撃は多くのツールを使用して実行できます。HTTP(S) サービスでは、傍受プロキシを使用することが実行可能な選択肢です。例えば、[Burp Suite Intruder](https://portswigger.net/burp/help/intruder_using.html "Using Burp Suite Intruder") を使用して、ワードリストベースの攻撃とブルートフォース攻撃の両方を実行できます。
 
-> Burp Suite Community Edition にはプロジェクトを保存できないこととは別に重要な制限があることに注意してください。例えば、スロットリングメカニズムは Burp Intruder での攻撃を劇的に遅くするいくつかのリクエストの後にアクティブになります。また、このバージョンではビルトインのパスワードリストは利用できません。リアルなブルートフォース攻撃を実行したい場合には Burp Suite Professional か OWASP ZAP のいずれかを使用します。
+> Burp Suite Community Edition にはプロジェクトを保存できないこととは別に重要な制限があることに注意してください。例えば、スロットリングメカニズムは Burp Intruder での攻撃を劇的に遅くするいくつかのリクエストの後にアクティブになります。また、このバージョンではビルトインのパスワードリストは利用できません。リアルなブルートフォース攻撃を実行したい場合には [Burp Suite](0x08-Testing-Tools.md#burp-suite) Professional か [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap) のいずれかを使用します。
 
 Burp Intruder でのワードリストベースのブルートフォース攻撃には以下の手順を実行します。
 
@@ -591,12 +591,3 @@ Android では、開発者は Android 8.0 (API レベル 26) まで `Settings.Se
 - [#mulliner] Mulliner, Collin, et al. "SMS-based one-time passwords: attacks and defense." International Conference on Detection of Intrusions and Malware, and Vulnerability Assessment. Springer, Berlin, Heidelberg, 2013.
 - [#siadati] Siadati, Hossein, et al. "Mind your SMSes: Mitigating social engineering in second factor authentication." Computers & Security 65 (2017): 14-28.
 - [#siadati2] Siadati, Hossein, Toan Nguyen, and Nasir Memon. "Verification code forwarding attack (short paper)." International Conference on Passwords. Springer, Cham, 2015.
-
-#### ツール
-
-- Burp Suite - <https://portswigger.net/burp/>
-- Using Burp Intruder - <https://portswigger.net/burp/documentation/desktop/tools/intruder/using>
-- OWASP ZAP - <https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project>
-- jwtbrute - <https://github.com/jmaxxz/jwtbrute>
-- crackjwt - <https://github.com/Sjord/jwtcrack/blob/master/crackjwt.py>
-- John the ripper - <https://github.com/magnumripper/JohnTheRipper>
