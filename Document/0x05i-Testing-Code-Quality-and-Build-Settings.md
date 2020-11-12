@@ -292,7 +292,7 @@ Android アプリは多くの場合サードパーティライブラリを使用
 
 #### サードパーティライブラリの脆弱性の検出
 
-サードパーティーに依存する脆弱性を検出するには OWASP Dependency checker を使用して実行できます。これは `dependency-check-gradle` などの gradle プラグインを使用することが最適です。
+サードパーティーに依存する脆弱性を検出するには OWASP Dependency checker を使用して実行できます。これは [`dependency-check-gradle`](https://github.com/jeremylong/dependency-check-gradle "dependency-check-gradle") などの gradle プラグインを使用することが最適です。
 プラグインを使用するには、以下の手順を適用する必要があります。
 build.gradle に以下のスクリプトを追加して、Maven セントラルリポジトリからプラグインをインストールします。
 
@@ -320,7 +320,7 @@ $ gradle dependencyCheckAnalyze --info
 
 プラグインは脆弱性フィードをダウンロードする必要があることに注意してください。プラグインで問題が発生した場合にはドキュメントを参照します。
 
-あるいは SourceClear や Blackduck などの、使用されているライブラリに見られる依存関係をより適切にカバーできる商用ツールがあります。OWASP Dependency Checker や別のツールを使用した実際の結果は (NDK 関連または SDK 関連の) ライブラリの種類により異なります。
+あるいは [Sonatype Nexus IQ](https://www.sonatype.com/nexus/iqserver "Nexus IQ"), [Sourceclear](https://www.sourceclear.com/ "Sourceclear"), [Snyk](https://snyk.io/ "Snyk") や [Blackduck](https://www.blackducksoftware.com/ "Blackduck") などの、使用されているライブラリに見られる依存関係をより適切にカバーできる商用ツールがあります。OWASP Dependency Checker や別のツールを使用した実際の結果は (NDK 関連または SDK 関連の) ライブラリの種類により異なります。
 
 最後に、ハイブリッドアプリケーションの場合には、RetireJS で JavaScript の依存関係を確認する必要があることに注意します。同様に Xamarin の場合には C# の依存関係を確認する必要があります。
 
@@ -329,7 +329,7 @@ $ gradle dependencyCheckAnalyze --info
 - ライブラリがアプリケーションにパッケージされている場合、ライブラリに脆弱性が修正されたバージョンがあるかどうかを確認します。ない場合、脆弱性が実際にアプリケーションに影響するかどうかを確認します。その場合または将来そうなる可能性がある場合、同様の機能を提供するが脆弱性のない代替手段を探します。
 - ライブラリがアプリケーションにパッケージされていない場合、脆弱性が修正されたパッチ適用バージョンがあるかどうかを確認します。そうでない場合には、ビルドプロセスに対する脆弱性の影響を確認します。脆弱性がビルドを妨げるかビルドパイプラインのセキュリティを弱める可能性がある場合、脆弱性が修正されている代替手段を探してみます。
 
-ソースが利用できない場合、アプリを逆コンパイルして JAR ファイルを確認します。Dexguard や Proguard が適切に適用されている場合、ライブラリに関するバージョン情報は難読化されていることが多く、そのため失われています。そうでない場合には特定のライブラリの Java ファイルのコメントに非常に多くの情報を見つけることができます。MobSF などのツールはアプリケーションに同梱されている可能性のあるライブラリの解析に役立ちます。コメントや特定のバージョンで使用されている特定のメソッドを介して、ライブラリのバージョンを取得できる場合には、手動で CVE を検索します。
+ソースが利用できない場合、アプリを逆コンパイルして JAR ファイルを確認します。Dexguard や [ProGuard](0x08-Testing-Tools.md#proguard) が適切に適用されている場合、ライブラリに関するバージョン情報は難読化されていることが多く、そのため失われています。そうでない場合には特定のライブラリの Java ファイルのコメントに非常に多くの情報を見つけることができます。MobSF などのツールはアプリケーションに同梱されている可能性のあるライブラリの解析に役立ちます。コメントや特定のバージョンで使用されている特定のメソッドを介して、ライブラリのバージョンを取得できる場合には、手動で CVE を検索します。
 
 アプリケーションがリスクの高いアプリケーションである場合、ライブラリを手動で検査することになります。その場合、ネイティブコードに対する特定の要件があり、 "[コード品質のテスト](0x04h-Testing-Code-Quality.md)" の章にあります。その次に、ソフトウェアエンジニアリングのすべてのベストプラクティスが適用されているかどうかを調査するのが適切です。
 
@@ -354,7 +354,7 @@ $ gradle downloadLicenses
 
 これでライセンスレポートが生成されます。これを使用してサードパーティライブラリが使用するライセンスを調べることができます。使用許諾契約をチェックして、著作権表示をアプリに含める必要があるかどうか、およびライセンスの種類がアプリケーションのコードをオープンソースにする必要があるかどうかを確認します。
 
-依存関係チェックと同様に、 SourceClear, Snyk, Blackduck など、ライセンスもチェックできる商用ツールがあります。
+依存関係チェックと同様に、 [Sonatype Nexus IQ](https://www.sonatype.com/nexus/iqserver "Nexus IQ"), [Sourceclear](https://www.sourceclear.com/ "Sourceclear"), [Snyk](https://snyk.io/ "Snyk"), [Blackduck](https://www.blackducksoftware.com/ "Blackduck") など、ライセンスもチェックできる商用ツールがあります。
 
 > 注: サードパーティライブラリで使用されているライセンスモデルの意味合いについて不明な点がある場合には、法律の専門家に相談してください。
 
@@ -362,7 +362,7 @@ $ gradle downloadLicenses
 
 注: ハイブリッドアプリの場合は、使用しているビルドツールを確認してください。ほとんどのツールには使用されているライセンスを見つけるためのライセンス列挙プラグインがあります。
 
-ソースが利用できない場合、アプリを逆コンパイルして JAR ファイルを確認できます。Dexguard や Proguard が正しく適用されていると、ライブラリに関するバージョン情報が失われていることがよくありますが、そうでなければたいていは特定のライブラリの Java ファイルのコメントにあります。MobSF などのツールはアプリケーションに同梱されている可能性のあるライブラリの解析に役立ちます。ライブラリのバージョンをコメントから、または特定のバージョンで使用されている特定のメソッドから取得できる場合には、手作業でそれらのライセンスを調べることができます。
+ソースが利用できない場合、アプリを逆コンパイルして JAR ファイルを確認できます。Dexguard や [ProGuard](0x08-Testing-Tools.md#proguard) が正しく適用されていると、ライブラリに関するバージョン情報が失われていることがよくありますが、そうでなければたいていは特定のライブラリの Java ファイルのコメントにあります。MobSF などのツールはアプリケーションに同梱されている可能性のあるライブラリの解析に役立ちます。ライブラリのバージョンをコメントから、または特定のバージョンで使用されている特定のメソッドから取得できる場合には、手作業でそれらのライセンスを調べることができます。
 
 ### 動的解析
 
@@ -486,7 +486,7 @@ Java/Kotlin コードでもメモリリークが発生する可能性がある�
 
 ### 概要
 
-Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。ProGuard はコードを縮小および難読化し、 Android Java アプリのバイトコードから不要なデバッグ情報を取り除く簡易な方法を提供します。クラス名、メソッド名、変数名などの識別子を無意味な文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
+Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。[ProGuard](0x08-Testing-Tools.md#proguard) はコードを縮小および難読化し、 Android Java アプリのバイトコードから不要なデバッグ情報を取り除く簡易な方法を提供します。クラス名、メソッド名、変数名などの識別子を無意味な文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
 
 ほとんどの Android アプリケーションは Java ベースであるため、 [バッファオーバーフロー脆弱性に対する免疫があります](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow "Java Buffer Overflows") 。とはいえ、 Android NDK を使用している場合には依然としてバッファオーバーフロー脆弱性が存在する可能性がありますので、セキュアなコンパイラ設定を検討します。
 
@@ -581,23 +581,6 @@ class a$b
 - MSTG-CODE-7: "セキュリティコントロールのエラー処理ロジックはデフォルトでアクセスを拒否している。"
 - MSTG-CODE-8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
 - MSTG-CODE-9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
-
-### ツール
-
-- ProGuard - <https://www.guardsquare.com/en/proguard>
-- jarsigner - <http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html>
-- Xposed - <http://repo.xposed.info/>
-- Drozer - <https://labs.mwrinfosecurity.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf>
-- GNU nm - <https://ftp.gnu.org/old-gnu/Manuals/binutils-2.12/html_node/binutils_4.html>
-- Black Duck - <https://www.blackducksoftware.com/>
-- Sourceclear - <https://www.sourceclear.com/>
-- Snyk - <https://snyk.io/>
-- Gradle license plugn - <https://github.com/hierynomus/license-gradle-plugin>
-- Dependency-check-gradle - <https://github.com/jeremylong/dependency-check-gradle>
-- MobSF - <https://www.github.com/MobSF/Mobile-Security-Framework-MobSF>
-- Squares leak canary - <https://github.com/square/leakcanary>
-- Memory Profiler from Android Studio - <https://developer.android.com/studio/profile/memory-profiler>
-- Android Java Deserialization Vulnerability Tester - <https://github.com/modzero/modjoda>
 
 ### Memory Analysis References
 
