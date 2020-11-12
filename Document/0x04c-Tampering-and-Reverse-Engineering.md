@@ -46,70 +46,11 @@
 
 コードインジェクションは非常に強力な技法であり、実行時にプロセスを探索および改変できます。インジェクションはさまざまな方法で実装されますが、自由に利用でき十分に文書化されたプロセスを自動化するツールのおかげで、すべての詳細を知らなくても使用できます。これらのツールは、アプリによりインスタンス化されたライブオブジェクトなどの、プロセスメモリや重要な構造体に直接アクセスできます。また、ロードされたライブラリの解決、メソッドやネイティブ関数のフックなどに役立つ多くのユーティリティ関数があります。プロセスメモリの改竄はファイルにパッチを適用するよりも検出が難しく、大半の場合に推奨される方法です。
 
-Substrate, Frida, Xposed はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
+Substrate, [Frida](0x08-Testing-Tools.md#frida), [Xposed](0x08-Testing-Tools.md#xposed) はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
 
-それだけでなく、Cycript をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も ["frida-cycript"](https://github.com/nowsecure/frida-cycript "Cycript fork powered by Frida") と呼ばれる Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で保守されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (この時点で混乱しても、心配ありません) 。frida-cycript のリリースには Frida の開発者 Ole によるブログ記事 "Cycript on Steroids" が付いていました。このタイトルは [Saurik はあまり好きではありませんでした](https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/ "Cycript on steroids: Pumping up portability and performance with Frida") 。
+それだけでなく、[Cycript](0x08-Testing-Tools.md#cycript) をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も ["frida-cycript"](https://github.com/nowsecure/frida-cycript "Cycript fork powered by Frida") と呼ばれる Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で保守されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (この時点で混乱しても、心配ありません) 。frida-cycript のリリースには Frida の開発者 Ole によるブログ記事 "Cycript on Steroids" が付いていました。このタイトルは [Saurik はあまり好きではありませんでした](https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/ "Cycript on steroids: Pumping up portability and performance with Frida") 。
 
 三つすべてのフレームワークについて例を紹介します。私たちは Frida で始めることをお勧めします。これは三つの中で最も汎用性が高いからです (このため、Frida の詳細と事例が多く紹介されています) 。特に、Frida は Android と iOS の両方のプロセスに JavaScript VM をインジェクトできます。一方で Substrate での Cycript インジェクションは iOS でのみ動作します。しかし最終的には、いずれのフレームワークでも多くの同じ目標に到達できます。
-
-#### Frida
-
-[Frida](https://www.frida.re "Frida") は Ole André Vadla Ravnås により Vala で書かれたフリーでオープンソースの動的コード計装ツールキットです。JavaScript エンジン ([Duktape](https://duktape.org/ "Duktape JavaScript Engine") および [V8](https://v8.dev/docs "V8 JavaScript Engine")) を計装化プロセスにインジェクトすることにより機能します。Frida では Android や iOS (および [その他のプラットフォーム](https://www.frida.re/docs/home/ "So what is Frida, exactly?")) のネイティブアプリ内で JavaScript のスニペットを実行することができます。
-
-コードはいくつかの方法でインジェクトできます。例えば、Xposed は Android アプリローダーを恒久的に改変し、新しいプロセスが開始されるたびに独自のコードを実行するフックを提供します。
-対照的に、Frida は直接プロセスメモリにコードを書くことでコードインジェクションを実装しています。実行中のアプリにアタッチされている場合には、
-
-- Frida は実行中プロセスのスレッドをハイジャックするために ptrace を使用します。このスレッドはメモリのチャンクを割り当てるために使用され、それにミニブートストラップを投入します。
-- ブートストラップは新しいスレッドを起動し、デバイス上で実行されている Frida デバッグサーバーに接続し、Frida エージェント (`frida-agent.so`) を含む共有ライブラリをロードします。
-- エージェントはツール (例えば、Frida REPL やカスタム Python スクリプト) への双方向通信チャネルを確立します。
-- ハイジャックされたスレッドは元の状態に復元された後に再開し、プロセスの実行は通常どおり続行します。
-
-<img src="Images/Chapters/0x04/frida.png" alt="Frida Architecture" width="500" />
-
-- *Frida アーキテクチャ, 参照元: [https://www.frida.re/docs/hacking/](https://www.frida.re/docs/hacking "Frida - Hacking")*
-
-Frida には三つの動作モードがあります。
-
-1. Injected: これは frida-server が iOS または Android デバイスでデーモンとして実行されているときの最も一般的なシナリオです。frida-core は TCP 上で公開され、デフォルトでは localhost:27042 で待機しています。このモードでの実行はルート化されていないデバイスや脱獄されていないデバイスでは不可能です。
-2. Embedded: これはあなたのデバイスがルート化や脱獄済みではない (あなたは非特権ユーザーとして ptrace を使用できない) 場合のものです。あなたにはアプリに [frida-gadget](https://www.frida.re/docs/gadget/ "Frida Gadget") ライブラリを埋め込むことによるインジェクションの責任があります。
-3. Preloaded: `LD_PRELOAD` や `DYLD_INSERT_LIBRARIES` に似ています。frida-gadget を自律的に実行し、ファイルシステム (Gadget バイナリが存在する場所からの相対パスなど) からスクリプトをロードするように設定できます。
-
-選択したモードに関係なく、[Frida JavaScript API](https://www.frida.re/docs/javascript-api/ "Frida JavaScript APIs") を使用して、実行中のプロセスとそのメモリと対話できます。基本的な API の一部を以下に示します。
-
-- [Interceptor](https://www.frida.re/docs/javascript-api/#interceptor "Interceptor"): Interceptor API を使用する場合、Frida は関数プロローグにトランポリン (別名インラインフック) を注入し、カスタムコードへのリダイレクトを引き起こし、そのコードを実行して、元の関数に戻ります。私たちの目的には非常に効果的ですが、かなりのオーバーヘッドをもたらし (トランポリン関連のジャンプとコンテキストスイッチのため) 、元のコードを上書きしデバッガと同様に動作する (ブレークポイントを置く) ため透過的であるとはみなせず、したがって例えば定期的に自身のコードを定期的にチェックサムするアプリケーションにより、同様の方法で検出されることに注意します。
-- [Stalker](https://www.frida.re/docs/javascript-api/#stalker "Stalker"): トレース要件に透明性、パフォーマンス、高粒度が含まれる場合、Stalker が選択すべき API となります。Stalker API でコードをトレースする際、Frida はジャストインタイムの動的再コンパイルを活用します ([Capstone](http://www.capstone-engine.org/ "Capstone") を使用) 。スレッドが次の命令を実行しようとすると、Stalker はメモリを割り当て、元のコードをコピーし、そのコピーをインストルメンテーション用のカスタムコードとインターレースします。最後に、そのコピーを実行します (元のコードには手を加えません。したがって、アンチデバッグチェックを回避します) 。このアプローチによりインストルメンテーションのパフォーマンスは大幅に向上し、トレース時に非常に高い粒度が可能になります (例えば CALL や RET 命令のみをトレースします) 。詳細については [Frida の作者である Ole によるブログ記事 "Anatomy of a code tracer"](https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8 "Anatomy of a code tracer") [#vadla] で学ぶことができます。Stalker の使用例には、例えば [who-does-it-call](https://codeshare.frida.re/@oleavr/who-does-it-call/ "who-does-it-call") や [diff-calls](https://github.com/frida/frida-presentations/blob/master/R2Con2017/01-basics/02-diff-calls.js "diff-calls") があります。
-- [Java](https://www.frida.re/docs/javascript-api/#java "Java"): Android 上で作業している場合、この API を使用してロードされたクラスの列挙、クラスローダーの列挙、特定のクラスインスタンスの作成および使用、ヒープをスキャンすることによるクラスのライブインスタンスの列挙などが可能です。
-- [ObjC](https://www.frida.re/docs/javascript-api/#objc "ObjC"): iOS 上で作業している場合、この API を使用して登録されたすべてのクラスのマッピングの取得、特定のクラスまたはプロトコルインスタンスの登録または使用、ヒープをスキャンすることによるクラスのライブインスタンスの列挙などが可能です。
-
-Frida は Frida API 上に構築された一連のシンプルなツール群も提供します。pip を介して frida-tools をインストールした後で端末から直接利用できます。例を示します。
-
-- 迅速なスクリプトプロトタイピングやトライ＆エラーシナリオには [Frida CLI](https://www.frida.re/docs/frida-cli/ "Frida CLI") (`frida`) を使うことができます。
-- [`frida-ps`](https://www.frida.re/docs/frida-ps/ "frida-ps") はデバイス上で実行されているすべてのアプリ (またはプロセス) の名前と PDI を含むリストを取得します。
-- [`frida-ls-devices`](https://www.frida.re/docs/frida-ls-devices/ "frida-ls-devices") は接続しているデバイスを一覧表示します。
-- [`frida-trace`](https://www.frida.re/docs/frida-trace/ "frida-trace") は、iOS アプリの一部であるメソッドや Android ネイティブライブラリ内で実装されているメソッドを迅速にトレースします。
-
-さらに、Frida ベースのオープンソースツールもいくつかあります。例を示します。
-
-- [Passionfruit](https://github.com/chaitin/passionfruit "Passionfruit"): iOS アプリのブラックボックス評価ツール。
-- [Fridump](https://github.com/Nightbringer21/fridump "fridump"): Android と iOS の両方で使えるメモリダンプツール。
-- [Objection](https://github.com/sensepost/objection "objection"): ランタイムモバイルセキュリティ評価フレームワーク。
-- [r2frida](https://github.com/nowsecure/r2frida "r2frida"): radare2 の強力なリバースエンジニアリング機能と Frida の動的計装ツールキットをマージしたプロジェクト。
-- [jnitrace](https://github.com/chame1eon/jnitrace "jnitrace"): ネイティブライブラリによる Android JNI ランタイムメソッドの使用状況をトレースするためのツール。
-
-このガイドではこれらすべてのツールを使用していきます。
-
-これらのツールはそのまま使用することも、ニーズに合わせて調整することも、API の使用方法に関する優れた例として使用することもできます。例としてそれらを持つことは、あなたが自身のフックスクリプトを書くときやイントロスペクションツールを構築するとき、リバースエンジニアリングワークフローをサポートするために非常に役立ちます。
-
-もうひとつ、Frida CodeShare プロジェクト (<https://codeshare.frida.re>) について説明します。すぐに実行可能な Frida スクリプトのコレクションがあります。Android と iOS の両方で具体的なタスクを実行するときだけでなく、独自のスクリプトを作成するためのインスピレーションとしても役立ちます。代表的な二つの例を示します。
-
-- Universal Android SSL Pinning Bypass with Frida - <https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/>
-- ObjC method observer - <https://codeshare.frida.re/@mrmacete/objc-method-observer/>
-
-使い方は簡単です。Frida CLI を使用するときに `--codeshare <handler>` フラグとハンドラを含めます。例えば、"ObjC method observer" を使用するには、以下のように入力します。
-
-```bash
-$ frida --codeshare mrmacete/objc-method-observer -f YOUR_BINARY
-```
 
 ## 静的および動的バイナリ解析
 
@@ -131,34 +72,6 @@ $ frida --codeshare mrmacete/objc-method-observer -f YOUR_BINARY
 同様に、逆コンパイルは非常に複雑なプロセスであり、多くの決定論的および発見的アプローチに基づいています。結果として、逆コンパイルは一般的に実際には正確ではありませんが、それでも解析対象の関数をすばやく理解するのに非常に役立ちます。逆コンパイルの精度は逆コンパイルされるコードで利用可能な情報の量と逆コンパイラの洗練度に依存します。さらに、多くのコンパイルおよびポストコンパイルツールは理解や逆コンパイル自体の難しさを増すためにコンパイルされたコードをさらに複雑にします。そのようなコードを _難読化コード_ と呼びます。
 
 長年にわたり多くのツールが逆アセンブリと逆コンパイルのプロセスを完成させ、高い忠実度で出力を作成しています。なにかしらの利用可能なツールの高度な使用手順は多くの場合それ自体の本を簡単に埋めてしまいます。開始する最善の方法はニーズと予算にあったツールを選択して十分にレビューされたユーザーガイドを取得することです。このセクションでは、これらのツールの一部を紹介し、以降の Android および iOS の「リバースエンジニアリングと改竄」の章では、特に身近にあるプラットフォームに固有のテクニック自体にフォーカスします。
-
-#### Ghidra
-
-Ghidra は米国の国家安全保障局 (NSA) の研究部門で開発されたツールのオープンソースのソフトウェアリバースエンジニアリング (SRE) スイートです。Ghidra は逆アセンブラ、逆コンパイラおよび高度な使用のための組込みスクリプティングエンジンで構成される汎用性の高いツールです。インストール方法については [インストールガイド](https://ghidra-sre.org/InstallationGuide.html "Ghidra Installation Guide") を参照してください。また、 [チートシート](https://ghidra-sre.org/CheatSheet.html "Cheat Sheet") で利用可能なコマンドおよびショートカットの概要も確認できます。このセクションでは、プロジェクトの作成方法、バイナリの逆アセンブリおよび逆コンパイルされたコードの閲覧方法について説明します。
-
-使用しているプラットフォームに応じて、 `ghidraRun` (\*nix) または `ghidraRun.bat` (Windows) を使用して Ghidra を起動します。Ghidra が起動したら、プロジェクトディレクトリを指定して新しいプロジェクトを作成します。以下に示すウィンドウが表示されます。
-
-<img src="Images/Chapters/0x04c/Ghidra_new_project.png" alt="Ghidra New Project" width="450" />
-
-新しい **Active Project** で **File** -> **Import File** に移動して目的のファイルを選択することにより、アプリバイナリをインポートできます。
-
-<img src="Images/Chapters/0x04c/Ghidra_import_binary.png" alt="Ghidra import binary" width="450" />
-
-ファイルが適切に処理できる場合には、Ghidra は解析を開始する前にバイナリに関するメタ情報を表示します。
-
-<img src="Images/Chapters/0x04c/Ghidra_elf_import.png" alt="Ghidra ELF file import" width="300" />
-
-上記で選択したバイナリファイルの逆アセンブルコードを取得するには、 **Active Project** ウィンドウからインポートしたファイルをダブルクリックします。次のウィンドウで自動解析するには **yes** および **analyze** をクリックします。自動解析はバイナリのサイズによっては時間がかかります。コードブラウザウィンドウの右下隅で進行状況を追跡できます。自動解析を完了するとバイナリの調査を開始できます。
-
-<img src="Images/Chapters/0x04c/Ghidra_main_window.png" alt="Ghidra Main Window" />
-
-Ghidra でバイナリを調査するために最も重要なウィンドウは **Listing** (Disassembly) ウィンドウ、**Symbol Tree** ウィンドウおよび **Decompiler** ウィンドウです。 **Decompiler** ウィンドウは逆アセンブリ用に選択した関数の逆コンパイルバージョンを表示します。 **Display Function Graph** オプションは選択した関数の制御フローグラフを表示します。
-
-<img src="Images/Chapters/0x04c/Ghidra_function_graph.png" alt="Ghidra Function Graph View" />
-
-Ghidra にはほかにも多くの機能が利用可能であり、それらの多くは **Window** メニューを開いて調べることができます。たとえば、バイナリに存在する文字列を調べたい場合には、**Defined Strings** オプションを開きます。以降の章では Android および iOS プラットフォームのさまざまなバイナリを解析しながら、他の高度な機能について説明します。
-
-<img src="Images/Chapters/0x04c/Ghidra_string_window.png" alt="Ghidra strings window" />
 
 ### デバッグとトレース
 
@@ -195,7 +108,7 @@ Android 用 QEMU ベースのエミュレータはアプリケーションの実
 
 ### リバースエンジニアリングフレームワークを使用したカスタムツール
 
-ほとんどのプロフェッショナルな GUI ベースの逆アセンブラはスクリプト機能と拡張性を備えていますが、特定の問題を解決するにはあまり適していないことがあります。リバースエンジニアリングフレームワークは重量のある GUI に依存することなくある種のリバースエンジニアリングタスクを実行および自動化できます。特に、ほとんどのリバーシングフレームワークはオープンソースであるか、フリーで利用可能です。モバイルアーキテクチャをサポートする一般的なフレームワークには [Radare2](https://github.com/radare/radare2 "radare2") と [Angr](https://github.com/angr/angr "Angr") があります。
+ほとんどのプロフェッショナルな GUI ベースの逆アセンブラはスクリプト機能と拡張性を備えていますが、特定の問題を解決するにはあまり適していないことがあります。リバースエンジニアリングフレームワークは重量のある GUI に依存することなくある種のリバースエンジニアリングタスクを実行および自動化できます。特に、ほとんどのリバーシングフレームワークはオープンソースであるか、フリーで利用可能です。モバイルアーキテクチャをサポートする一般的なフレームワークには [radare2](0x08-Testing-Tools.md#radare2) と [Angr](0x08-Testing-Tools.md#angr) があります。
 
 #### 例：シンボリック実行やコンコリック実行を使用したプログラム解析
 
@@ -228,21 +141,3 @@ Android のセクションでは、シンボリック実行を使用して Andro
 
 - [#vadla] Ole André Vadla Ravnås, Anatomy of a code tracer - <https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8>
 - [#salwan] Jonathan Salwan and Romain Thomas, How Triton can help to reverse virtual machine based software protections - <https://triton.quarkslab.com/files/csaw2016-sos-rthomas-jsalwan.pdf>
-
-### ツール
-
-- Angr - <https://github.com/angr/angr>
-- Cycript - <http://www.cycript.org/>
-- Frida - <https://www.frida.re/>
-- Frida CLI - <https://www.frida.re/docs/frida-cli/>
-- frida-ls-devices - <https://www.frida.re/docs/frida-ls-devices/>
-- frida-ps - <https://www.frida.re/docs/frida-ps/>
-- frida-trace - <https://www.frida.re/docs/frida-trace/>
-- Fridump - <https://github.com/Nightbringer21/fridump>
-- Objection - <https://github.com/sensepost/objection>
-- Passionfruit - <https://github.com/chaitin/passionfruit>
-- Ghidra - <https://github.com/NationalSecurityAgency/ghidra>
-- Radare2 - <https://github.com/radare/radare2>
-- r2frida - <https://github.com/nowsecure/r2frida>
-- Substrate - <http://www.cydiasubstrate.com/>
-- Xposed - <https://www.xda-developers.com/xposed-framework-hub/>
