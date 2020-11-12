@@ -267,7 +267,7 @@ $ carthage update --platform iOS
 
 コピー＆ペーストされたソースの場合、(Objective-C を使用する場合) ヘッダファイルを検索し、あるいは既存のライブラリの既存のメソッド名の Swift ファイルを検索します。
 
-次に、ハイブリッドアプリケーションでは、JavaScript の依存関係を RetireJS で確認する必要があることに注意します。同様に Xamarin では、C# の依存関係を確認する必要があります。
+次に、ハイブリッドアプリケーションでは、JavaScript の依存関係を [RetireJS](https://retirejs.github.io/retire.js/ "RetireJS") で確認する必要があることに注意します。同様に Xamarin では、C# の依存関係を確認する必要があります。
 
 最後に、アプリケーションがリスクの高いアプリケーションである場合、ライブラリを手動で検査することになります。その場合、ネイティブコードには特定の要件があります。これはアプリケーション全体に対して MASVS により確立された要件に似ています。その次に、ソフトウェアエンジニアリングのすべてのベストプラクティスが適用されているかどうかを吟味することをお勧めします。
 
@@ -697,7 +697,7 @@ iOS アプリケーションの ARC 保護を有効にする手順。
 
 #### idb を使用
 
-IDB は stack canary と PIE サポートの両方をチェックするプロセスを自動化します。IDB GUI でターゲットバイナリを選択し、"Analyze Binary..." ボタンをクリックします。
+[IDB](0x08-Testing-Tools.md#idb) は stack canary と PIE サポートの両方をチェックするプロセスを自動化します。IDB GUI でターゲットバイナリを選択し、"Analyze Binary..." ボタンをクリックします。
 
 <img src="Images/Chapters/0x06i/idb.png" alt="IDB Analyze Binary" width="350px" />
 
@@ -706,6 +706,8 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 動的解析はツールチェーンにより提供されるセキュリティ機能を見つけるためには適用できません。
 
 ## 参考情報
+
+- Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
 
 ### メモリ管理 - 動的解析事例
 
@@ -723,15 +725,3 @@ IDB は stack canary と PIE サポートの両方をチェックするプロセ
 - MSTG-CODE-6: "アプリは可能性のある例外をキャッチし処理している。"
 - MSTG-CODE-8: "アンマネージドコードでは、メモリはセキュアに割り当て、解放、使用されている。"
 - MSTG-CODE-9: "バイトコードの軽量化、スタック保護、PIEサポート、自動参照カウントなどツールチェーンにより提供されるフリーのセキュリティ機能が有効化されている。"
-
-### ツール
-
-- Swift Package Manager - <https://swift.org/package-manager/>
-- Carthage - <https://github.com/carthage/carthage>
-- CocoaPods - <https://CocoaPods.org>
-- OWASP Dependency Check - <https://jeremylong.github.io/DependencyCheck/>
-- Sourceclear - <https://sourceclear.com>
-- class-dump - <https://github.com/nygard/class-dump>
-- RetireJS - <https://retirejs.github.io/retire.js/>
-- idb - <https://github.com/dmayer/idb>
-- Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
