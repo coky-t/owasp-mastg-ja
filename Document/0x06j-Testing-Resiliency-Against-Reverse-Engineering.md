@@ -69,7 +69,7 @@ if(error==nil){
 
 #### プロトコルハンドラのチェック
 
-Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。Cydia アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
+Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。[Cydia](0x08-Testing-Tools.md#cydia) アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
 
 ```objectivec
 if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]){
@@ -792,7 +792,7 @@ IPA の Mach-O と "Frameworks" ディレクトリに含まれるライブラリ
 3. 脱獄済みデバイスからデータを取得します。
     - デバイスに SSH してデータを抽出します (シミュレータの場合と同様に、デバッグを使用するか、 `find /private/var/mobile/Containers/Data/Application/ |grep <name of app>` を使用します) 。ディレクトリは `/private/var/mobile/Containers/Data/Application/<Application uuid>` にあります。
     - SSH を使用して、指定されたコマンドの出力で示されたディレクトリに移動するか、 SCP (`scp <ipaddress>:/<folder_found_in_previous_step> targetfolder`) を使用して、そのフォルダとデータをコピーします。 Filezilla などの FTP クライアントを使うこともできます。
-    - キーチェーンからデータを取得します。 `/private/var/Keychains/keychain-2.db` に格納されており、 [keychain dumper](https://github.com/ptoomey3/Keychain-Dumper "Keychain Dumper") を使用して取得できます。まずキーチェーンを world-readable に (`chmod +r /private/var/Keychains/keychain-2.db`) して、それからそれを実行 (`./keychain_dumper -a`) します。
+    - キーチェーンからデータを取得します。 `/private/var/Keychains/keychain-2.db` に格納されており、 [Keychain-dumper](0x08-Testing-Tools.md#keychain-dumper) を使用して取得できます。
 4. 二代目の脱獄済みデバイスにアプリケーションをインストールします。
 5. 手順 3 で抽出したアプリケーションデータを上書きします。キーチェーンデータは手動で追加する必要があります。
 6. 認証された状態で継続できますか。そうである場合、バインディングが正しく機能していない可能性があります。
@@ -822,9 +822,3 @@ IPA の Mach-O と "Frameworks" ディレクトリに含まれるライブラリ
 - MSTG-RESILIENCE-9: "難読化はプログラムの防御に適用されており、動的解析による逆難読化を妨げている。"
 - MSTG-RESILIENCE-10: "アプリはデバイスに固有の複数のプロパティから由来するデバイスフィンガープリントを使用して「デバイスバインディング」機能を実装している。"
 - MSTG-RESILIENCE-11: "アプリに属するすべての実行可能ファイルとライブラリはファイルレベルで暗号化されているか、実行可能ファイル内の重要なコードやデータセグメントが暗号化またはパック化されている。簡単な静的解析では重要なコードやデータは明らかにならない。"
-
-### ツール
-
-- Appsync Unified - <https://cydia.angelxwind.net/?page/net.angelxwind.appsyncunified>
-- Frida - <http://frida.re/>
-- Keychain Dumper - <https://github.com/ptoomey3/Keychain-Dumper>
