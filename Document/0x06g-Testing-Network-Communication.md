@@ -291,8 +291,8 @@ SSL ピンニングをバイパスするにはさまざまな方法がありま�
 
 脱獄済みデバイスを持っているのであれば、自動的に SSL ピンニングを無効にできる以下のツールのいずれかを試してみます。
 
-- "[SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2 "SSL Kill Switch 2")" は証明書ピンニングを無効にする方法の一つです。Cydia ストアからインストールできます。すべての高レベル API コールにフックし、証明書ピンニングをバイパスします。
-- Burp Suite アプリ "[Mobile Assistant](https://portswigger.net/burp/help/mobile_testing_using_mobile_assistant.html "Using Burp Suite Mobile Assistant")" でも証明書ピンニングをバイパスするために使うことができます。
+- "[SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2 "SSL Kill Switch 2")" は証明書ピンニングを無効にする方法の一つです。[Cydia](0x08-Testing-Tools.md#cydia) ストアからインストールできます。すべての高レベル API コールにフックし、証明書ピンニングをバイパスします。
+- [Burp Suite Mobile Assistant](0x08-Testing-Tools.md#burp-suite-mobile-assistant) アプリでも証明書ピンニングをバイパスするために使うことができます。
 
 場合によっては、証明書ピンニングをバイパスすることが難しくなります。ソースコードにアクセスしてアプリを再コンパイルできる場合には、以下を確認します。
 
