@@ -8,9 +8,8 @@
 
 フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
 
-- [Burp Suite](https://portswigger.net/burp "Burp Suite")
-- [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project "OWASP ZAP")
-- [Charles Proxy](https://www.charlesproxy.com "Charles Proxy")
+- [Burp Suite](0x08-Testing-Tools.md#burp-suite)
+- [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap)
 
 傍受プロキシを使用するには、それをホストコンピュータ上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
@@ -40,46 +39,20 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 このような場合は、次に何をすべきかを決めるために、まずネットワークトラフィックを監視および解析する必要があります。幸いにも、ネットワーク通信をリダイレクトおよび傍受するための選択肢がいくつかあります。
 
-- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](https://www.wireshark.org "Wireshark") を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
-
-- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](https://github.com/bettercap/bettercap "bettercap") または独自のアクセスポイントを検討する必要があります (下図参照) 。
-
-> bettercap は MITM 攻撃を実行するための強力なツールであり、現在では ettercap の代わりとして優先すべきです。bettercap サイトの [Why another MITM tool?](https://www.bettercap.org/legacy/#why-another-mitm-tool "Why another MITM tool?") もご覧ください。
-
+- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](0x08-Testing-Tools.md#wireshark) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
+- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](0x08-Testing-Tools.md#bettercap) または独自のアクセスポイントを検討する必要があります (下図参照) 。
 - ルート化デバイスでは、フックやコードインジェクションを使用して、ネットワーク関連の API コール (HTTP リクエストなど) を傍受したり、これらのコールの引数をダンプしたり操作することも可能です。これにより実際のネットワークデータを検査する必要がなくなります。これらの技法については「リバースエンジニアリングと改竄」の章で詳しく説明します。
-
 - macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
 
 ### bettercap による中間者攻撃のシミュレーション
 
 #### ネットワークのセットアップ
 
-中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにホストコンピュータがある必要があります。これが完了するとモバイルフォンの IP アドレスが必要です。
+中間者のポジションを得るには、モバイルフォンおよびそれと通信するゲートウェイと同じワイヤレスネットワークにホストコンピュータがある必要があります。これが完了するとモバイルフォンの IP アドレスが必要です。モバイルアプリの完全な動的解析には、すべてのネットワークトラフィックを傍受する必要があります。
 
-[bettercap](https://github.com/bettercap/bettercap "bettercap") はネットワークペネトレーションテストの中で使用して、中間者攻撃 (MITM) をシミュレートします。これは [ARP ポイズニングやスプーフィング](https://en.wikipedia.org/wiki/ARP_spoofing "ARP poisoning/spoofing") をターゲットコンピュータに実行することで実現します。このような攻撃が成功すると、二つのコンピュータ間のすべてのパケットは第三のコンピュータにリダイレクトされます。これは中間者の役割を果たし、解析のためにトラフィックを傍受できます。
+### MITM 攻撃
 
-モバイルアプリの完全な動的解析には、すべてのネットワークトラフィックを傍受する必要があります。メッセージを傍受できるようにするには、準備としていくつかの手順を検討する必要があります。
-
-#### bettercap のインストール
-
-bettercap はすべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部である必要があります。中間者としての役割を果たすホストコンピュータにそれをインストールする必要があります。macOS では brew を使用してインストールできます。
-
-```bash
-$ brew install bettercap
-```
-
-Kali Linux では `apt-get` で bettercap をインストールできます。
-
-```bash
-$ apt-get update
-$ apt-get install bettercap
-```
-
-[LinuxHint](https://linuxhint.com/install-bettercap-on-ubuntu-18-04-and-use-the-events-stream/ "Install Bettercap on Ubuntu 18.04") には Ubuntu Linux 18.04 のインストール手順もあります。
-
-### bettercap による ARP ポイズニング
-
-まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて bettercap を実行します。
+まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて [bettercap](0x08-Testing-Tools.md#bettercap) を実行します。
 
 ```bash
 $ sudo bettercap -eval "set arp.spoof.targets X.X.X.X; arp.spoof on; set arp.spoof.internal true; set arp.spoof.fullduplex true;"
@@ -436,15 +409,15 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 
 テストされるアプリの着信および発信するネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
-- OWASP ZAP や Burp Suite などの傍受プロキシですべての HTTP(S) および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
+- [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap) や [Burp Suite](0x08-Testing-Tools.md#burp-suite) などの傍受プロキシですべての HTTP(S) および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
 - Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") ツールを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
 
-> 一部のアプリケーションでは証明書ピンニングのために Burp や ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび証明書ピンニングのテスト」を参照してください。
+> 一部のアプリケーションでは証明書ピンニングのために Burp や OWASP ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび証明書ピンニングのテスト」を参照してください。
 
 サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
 
 - nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
-- [testssl.sh](https://github.com/drwetter/testssl.sh "mitm-relay") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
+- [testssl.sh](https://github.com/drwetter/testssl.sh "testssl.sh") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
 ## クリティカルな操作がセキュアな通信チャネルを使用することの確認 (MSTG-NETWORK-5)
 
@@ -480,15 +453,6 @@ HTTPS 接続の終端となるサーバーや終端プロキシがベストプ�
 - MSTG-NETWORK-1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）単方向のセキュアでない通信チャネルに依存していない。"
-
-### ツール
-
-- bettercap - <https://www.bettercap.org>
-- Burp Suite - <https://portswigger.net/burp/>
-- OWASP ZAP - <https://www.owasp.org/index.php/>
-- tcpdump - <https://www.androidtcpdump.com/>
-- Testssl.sh - <https://github.com/drwetter/testssl.sh>
-- Wireshark - <https://www.wireshark.org/>
 
 ### Android
 
