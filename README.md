@@ -2,6 +2,13 @@
 
 This is the unofficial Japanese translation of the [OWASP Mobile Security Testing Guide (MSTG)](https://github.com/OWASP/owasp-mstg).
 
+### Originator
+
+- Project Site - <https://owasp.org/www-project-mobile-security-testing-guide>
+- Project Repository - <https://github.com/OWASP/www-project-mobile-security-testing-guide>
+- Document Site - <https://mobile-security.gitbook.io/mobile-security-testing-guide>
+- Document Repository - <https://github.com/OWASP/owasp-mstg>
+
 ## OWASP モバイルセキュリティテストガイド 日本語版
 
 ### はじめに
