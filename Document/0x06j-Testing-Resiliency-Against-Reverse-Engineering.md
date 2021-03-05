@@ -53,7 +53,22 @@
 
 脱獄メカニズムを確認するもう一つの方法として、アプリケーションのサンドボックス外にある場所に書き込みを試みます。アプリケーションが例えば `/private ディレクトリ` にファイルの作成を試みることでこれを行うことができます。ファイルの作成に成功した場合、デバイスは脱獄されています。
 
-```objectivec
+Swift:
+
+```swift
+do {
+    let pathToFileInRestrictedDirectory = "/private/jailbreak.txt"
+    try "This is a test.".write(toFile: pathToFileInRestrictedDirectory, atomically: true, encoding: String.Encoding.utf8)
+    try FileManager.default.removeItem(atPath: pathToFileInRestrictedDirectory)
+    // Device is jailbroken
+} catch {
+    // Device is not jailbroken
+}
+```
+
+Objective-C:
+
+```objc
 NSError *error;
 NSString *stringToBeWritten = @"This is a test.";
 [stringToBeWritten writeToFile:@"/private/jailbreak.txt" atomically:YES
@@ -61,18 +76,30 @@ NSString *stringToBeWritten = @"This is a test.";
 if(error==nil){
    //Device is jailbroken
    return YES;
- } else {
+} else {
    //Device is not jailbroken
    [[NSFileManager defaultManager] removeItemAtPath:@"/private/jailbreak.txt" error:nil];
- }
+}
 ```
 
 #### プロトコルハンドラのチェック
 
 Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。[Cydia](0x08-Testing-Tools.md#cydia) アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
 
-```objectivec
+Swift:
+
+```swift
+if let url = URL(string: "cydia://package/com.example.package"), UIApplication.shared.canOpenURL(url) {
+    // Device is jailbroken
+}
+```
+
+Objective-C:
+
+```objc
 if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]){
+    // Device is jailbroken
+}
 ```
 
 ### 脱獄検出のバイパス
