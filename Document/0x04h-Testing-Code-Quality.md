@@ -51,7 +51,7 @@ Mark Woods は QNAP NAS ストレージアプライアンス上で動作する "
 
 *XML インジェクション* 攻撃では、攻撃者は XML メタキャラクタを注入して XML コンテンツを構造的に変更します。これは XML ベースのアプリケーションやサービスのロジックを侵害するために使用される可能性があり、攻撃者がコンテンツを処理する XML パーサーの操作を悪用する可能性もあります。
 
-この攻撃の一般的な変種には [XML eXternal Entity (XXE)](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing "XML eXternal Entity attack (XXE)") があります。ここでは、攻撃者が URI を含む外部エンティティ定義を入力 XML に注入します。解析時に、XML パーサーは URI で指定されたリソースにアクセスして攻撃者が定義したエンティティを展開します。解析アプリケーションの完全性により最終的に攻撃者にもたらす能力を決定します。悪意のあるユーザーが次の一部 (または全て) を行う可能性があります。ローカルファイルにアクセスしたり、任意のホストおよびポートへの HTTP リクエストをトリガしたり、[クロスサイトリクエストフォージェリ (CSRF)](https://goo.gl/UknMCj "Cross-Site Request Forgery (CSRF)") 攻撃を実行したり、サービス拒否状態を引き起こしたりします。OWASP ウェブテストガイドには [XXE の以下の例](https://goo.gl/QGQkEX "Testing for XML Injection (OTG-INPVAL-008)") があります。
+この攻撃の一般的な変種には [XML eXternal Entity (XXE)](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing "XML eXternal Entity attack (XXE)") があります。ここでは、攻撃者が URI を含む外部エンティティ定義を入力 XML に注入します。解析時に、XML パーサーは URI で指定されたリソースにアクセスして攻撃者が定義したエンティティを展開します。解析アプリケーションの完全性により最終的に攻撃者にもたらす能力を決定します。悪意のあるユーザーが次の一部 (または全て) を行う可能性があります。ローカルファイルにアクセスしたり、任意のホストおよびポートへの HTTP リクエストをトリガしたり、[クロスサイトリクエストフォージェリ (CSRF)](https://owasp.org/www-community/attacks/csrf "Cross-Site Request Forgery (CSRF)") 攻撃を実行したり、サービス拒否状態を引き起こしたりします。OWASP ウェブテストガイドには [XXE の以下の例](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection "Testing for XML Injection (OTG-INPVAL-008)") があります。
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -196,13 +196,13 @@ WebView を使用してリモートウェブサイトを表示する場合、HTM
 | ' | &amp;#x27;|
 | / | &amp;#x2F;|
 
-エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://goo.gl/motVKX "OWASP XSS Prevention Cheat Sheet") を参照してください。
+エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html "OWASP XSS Prevention Cheat Sheet") を参照してください。
 
 ### 動的解析
 
 XSS の問題は手動や自動の入力ファジングを使用すると最も良く検出できます。すなわち、利用可能なすべての入力フィールドに HTML タグや特殊文字を注入して、ウェブアプリケーションが無効な入力を拒否するか、その出力に HTML メタキャラクタをエスケープすることを確認します。
 
-[反射型 XSS 攻撃](https://goo.gl/eqqiHV "Testing for Reflected Cross site scripting (OTG-INPVAL-001)") は悪意のあるコードが悪意のあるリンクを介して注入される攻撃を指します。これらの攻撃をテストするためには、自動化された入力ファジングが効果的な方法であると考えられています。例えば、[BURP Scanner](https://portswigger.net/burp/ "Burp Suite") は反射型 XSS 脆弱性の特定に非常に効果的です。自動解析の常として、すべての入力ベクトルがテストパラメータの手動レビューでカバーされていることを確認します。
+[反射型 XSS 攻撃](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/01-Testing_for_Reflected_Cross_Site_Scripting.html "Testing for Reflected Cross site scripting") は悪意のあるコードが悪意のあるリンクを介して注入される攻撃を指します。これらの攻撃をテストするためには、自動化された入力ファジングが効果的な方法であると考えられています。例えば、[BURP Scanner](https://portswigger.net/burp/ "Burp Suite") は反射型 XSS 脆弱性の特定に非常に効果的です。自動解析の常として、すべての入力ベクトルがテストパラメータの手動レビューでカバーされていることを確認します。
 
 ## メモリ破損バグ (MSTG-CODE-8)
 
