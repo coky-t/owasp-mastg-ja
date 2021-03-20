@@ -280,7 +280,7 @@ $ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
 
 ### 動的解析
 
-暗号化メソッドで [メソッドトレース](Document\0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
+暗号化メソッドで [メソッドトレース](0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
 
 ## 暗号標準アルゴリズムのテスト (MSTG-CRYPTO-2, MSTG-CRYPTO-3 および MSTG-CRYPTO-4)
 
@@ -308,7 +308,7 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 
 ### 動的解析
 
-暗号化メソッドで [メソッドトレース](Document\0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
+暗号化メソッドで [メソッドトレース](0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
 
 ## 鍵の目的のテスト (MSTG-CRYPTO-5)
 
@@ -348,7 +348,7 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 
 ### 動的解析
 
-暗号化メソッドで [メソッドトレース](Document\0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
+暗号化メソッドで [メソッドトレース](0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
 
 ## 乱数生成のテスト (MSTG-CRYPTO-6)
 
