@@ -227,7 +227,7 @@ Wireshark には GUI があり、コマンドラインに慣れていないの�
 
 例として、すべてのリクエストを Xamarin アプリから傍受プロキシにリダイレクトしてみます。
 
-Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://developer.xamarin.com/guides/android/getting_started/ "Getting Started with Android") および [iOS アプリ](https://developer.xamarin.com/guides/ios/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
+Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://docs.microsoft.com/en-us/xamarin/android/get-started/ "Getting Started with Android") および [iOS アプリ](https://docs.microsoft.com/en-us/xamarin/ios/get-started/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
 
 Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は三つあります。
 
