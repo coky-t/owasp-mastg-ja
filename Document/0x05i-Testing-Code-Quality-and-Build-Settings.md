@@ -378,7 +378,7 @@ $ gradle downloadLicenses
 
 ソースコードをレビューしてアプリケーションを理解し、さまざまな種類のエラー (IPC 通信、リモートサービス呼び出しなど) を処理する方法を特定します。この段階で確認すべきことの例をいくつか以下に示します。
 
-- アプリケーションが正しく設計され統一されたスキームを使用して [例外を処理する](https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=18581047 "Exceptional Behavior (ERR)") ことを確認します。
+- アプリケーションが正しく設計され統一されたスキームを使用して [例外を処理する](https://wiki.sei.cmu.edu/confluence/pages/viewpage.action?pageId=88487665 "Exceptional Behavior (ERR)") ことを確認します。
 - 適切なヌルチェック、境界チェックなどを作成して、標準的な `RuntimeException` 群 (`NullPointerException`, `IndexOutOfBoundsException`, `ActivityNotFoundException`, `CancellationException`, `SQLException` など) に対応します。 [`RuntimeException` の利用可能なサブクラスの概要](https://developer.android.com/reference/java/lang/RuntimeException.html "Runtime Exception Class") は Android 開発者ドキュメントにあります。 `RuntimeException` の子は意図的にスローされるべきであり、そのインテントは呼び出し側のメソッドで処理されるべきです。
 - すべての非実行時 `Throwable` には適切な catch ハンドラが存在し、実際の例外を適切に処理することを確認します。
 - 例外がスローされたとき、アプリケーションが同様の動作を引き起こす例外のための集中化されたハンドラを持っていることを確認します。これは静的クラスにすることができます。メソッドに固有の例外については、特定の catch ブロックを提供します。
