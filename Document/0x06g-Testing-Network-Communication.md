@@ -222,40 +222,17 @@ CA はトラストストアに追加できます。ユーザーを介して手�
 2. 証明書発行者を例えば一つのエンティティに制限し、中間 CA の公開鍵をアプリケーションにバンドルします。このようにして攻撃面を制限し、有効な証明書を取得します。
 3. 独自の PKI を所有および管理します。アプリケーションには中間 CA の公開鍵が含まれます。これにより、例えば期限切れのために、サーバー上の証明書を変更するごとにアプリケーションを更新することがなくなります。独自の CA を使用すると証明書が自己署名されることに注意します。
 
-以下に示すコードはサーバーによって提供された証明書がアプリに格納されている証明書と一致しているかどうかを確認する方法を示しています。以下のメソッドは接続認証を実装して、接続が認証チャレンジの要求を送信することをデリゲートに通知します。
+Apple が推奨する最新のアプローチは `Info.plist` ファイルの App Transport Security Settings にピン留めされた CA 公開鍵を指定することです。記事 [Identity Pinning: How to configure server certificates for your app](https://developer.apple.com/news/?id=g9ejcf8y "Identity Pinning: How to configure server certificates for your app") に例があります。
 
-デリゲートは `connection:canAuthenticateAgainstProtectionSpace:` と `connection: forAuthenticationChallenge` を実装する必要があります。`connection: forAuthenticationChallenge` では、デリゲートは `SecTrustEvaluate` をコールして一般的な X.509 チェックを実行する必要があります。以下のスニペットは証明書のチェックを実装しています。
+もう一つの一般的なアプローチは `NSURLConnectionDelegate` の [`connection:willSendRequestForAuthenticationChallenge:`](https://developer.apple.com/documentation/foundation/nsurlconnectiondelegate/1414078-connection?language=objc "connection:willSendRequestForAuthenticationChallenge:") メソッドを使用して、サーバーから提供された証明書が有効で、アプリに保存されている証明書と一致するかどうかを確認することです。詳細については [HTTPS Server Trust Evaluation](https://developer.apple.com/library/archive/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECNSURLCONNECTION "HTTPS Server Trust Evaluation") テクニカルノートをご覧ください。
 
-```objectivec
+ローカルとリモートの証明書を比較する場合、リモートの証明書が変更されるときにアプリを更新する必要があることに注意します。予備の証明書をアプリに保存しておくと移行がスムーズに行えます。また、ピンを公開鍵比較ベースとすることもできます。この場合、リモートの証明書が変更されても、公開鍵は同じままです。
 
-(void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
-{
-  SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
-  SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, 0);
-  NSData *remoteCertificateData = CFBridgingRelease(SecCertificateCopyData(certificate));
-  NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"MyLocalCertificate" ofType:@"cer"];
-  NSData *localCertData = [NSData dataWithContentsOfFile:cerPath];
-  The control below can verify if the certificate received by the server is matching the one pinned in the client.
-  if ([remoteCertificateData isEqualToData:localCertData]) {
-  NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
-  [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-}
-else {
-  [[challenge sender] cancelAuthenticationChallenge:challenge];
-}
-```
+以下のサードパーティライブラリにはピンニング機能が含まれています。
 
-上記の証明書ピンニングの例は、証明書ピンニングを使用して、その証明書を変更する場合、そのピンが無効化されるという大きな欠点があることに注意します。サーバーの公開鍵を再利用できる場合は、同じ公開鍵で新しい証明書を作成でき、メンテナンスが容易になります。これを行うにはさまざまな方法があります。
-
-- 公開鍵に基づいて自身のピンを実装します。この例では、以下の比較式を鍵バイトや証明書サムの比較に変更します。
-
-```objectivec
-if ([remoteCertificateData isEqualToData:localCertData]) {
-```
-
-- [TrustKit](https://github.com/datatheorem/TrustKit "TrustKit") を使用します。ここでは Info.plist に公開鍵ハッシュを設定するか、辞書にハッシュを提供することでピンニングできます。詳細は readme を見てください。
-- [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire") を使用します。ここではピンニング方法を定義するドメインごとに `ServerTrustPolicy` を定義します。
-- [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking") を使用します。ここではピンニングを構成するために `AFSecurityPolicy` を設定します。
+- [TrustKit](https://github.com/datatheorem/TrustKit "TrustKit"): ここでは Info.plist に公開鍵ハッシュを設定するか、辞書にハッシュを提供することでピンニングできます。詳細は readme を見てください。
+- [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire"): ここではピンニング方法を定義するドメインごとに `ServerTrustPolicy` を定義します。
+- [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking"): ここではピンニングを構成するために `AFSecurityPolicy` を設定します。
 
 ### 動的解析
 
