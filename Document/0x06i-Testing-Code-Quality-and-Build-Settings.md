@@ -695,12 +695,6 @@ iOS アプリケーションの ARC 保護を有効にする手順。
     [SNIP]
     ```
 
-#### idb を使用
-
-[IDB](0x08-Testing-Tools.md#idb) は stack canary と PIE サポートの両方をチェックするプロセスを自動化します。IDB GUI でターゲットバイナリを選択し、"Analyze Binary..." ボタンをクリックします。
-
-<img src="Images/Chapters/0x06i/idb.png" alt="IDB Analyze Binary" width="350px" />
-
 ### 動的解析
 
 動的解析はツールチェーンにより提供されるセキュリティ機能を見つけるためには適用できません。
