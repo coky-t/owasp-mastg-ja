@@ -112,21 +112,25 @@ Jin Kung Ong, Sjoerd Langkemper, Gerhard Wagner, Michael Helwig, Pece Milosev, R
 
 他の多くの寄稿者が単一の単語や文章など (追加数が 50 件未満) の少量のコンテンツをコミットしています。寄稿者の完全なリストは [GitHub](https://github.com/OWASP/owasp-mstg/graphs/contributors "contributors") にあります。
 
-## スポンサー
+### 支援者
 
-MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供したスポンサーに感謝します。彼らのスポンサーシップは MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。スポンサーシップパッケージは [OWASP Project Wiki](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide#tab=Sponsorship_Packages "OWASP Mobile Security Testing Guide Sponsorship Packages") に記載されています。
+MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは [OWASP Project Wiki](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide#tab=Sponsorship_Packages "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
 
-### 名誉後援者
+### 特別栄誉支援者 (God Mode Donators)
 
 [OWASP Bay Area Chapter](https://twitter.com/OWASPBayArea?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor "Twitter Bay Area")
 
-<img src="Images/Sponsors/NowSecure_logo.png" width="250" />
+#### 名誉後援者 (Honorable Benefactor)
 
-#### 慈善後援者
+<img src="Images/Donators/NowSecure_logo.png" width="250" />
 
-<img src="Images/Sponsors/Randorisec_logo.png" width="225" />
+<img src="Images/Donators/SEC_Consult_logo.png" width="205" />
 
-#### 寄付者
+#### 慈善後援者 (Good Samaritan Benefactor)
+
+<img src="Images/Donators/Randorisec_logo.png" width="150" />
+
+#### 他の支援者
 
 次の人々や企業は Leanpub や他の方法を使用して 25 ドル以上を寄付しました:
 
