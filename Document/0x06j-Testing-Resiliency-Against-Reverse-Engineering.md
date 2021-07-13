@@ -157,7 +157,7 @@ false
 
 このケースではアプリケーションの脱獄検出をバイパスしました。
 
-ここで、デバイスが脱獄済みであることを検出すると、アプリケーションがすぐに終了すると想像してみます。Cycript を起動して関数の実装を置き換える時間はありません。代わりに、CydiaSubstrate を使用し、 `MSHookMessageEx` などの適切なフック関数を使用して、改変をコンパイルする必要があります。これを実行する方法についての [良い情報源](http://delaat.net/rp/2015-2016/p51/report.pdf "Jailbreak/Root Detection Evasion Study on iOS and Android") がありますが、 Frida を使用することにより、早期計装をより簡単に実行でき、以前のテストから収集したスキルを活用できます。
+ここで、デバイスが脱獄済みであることを検出すると、アプリケーションがすぐに終了すると想像してみます。Cycript を起動して関数の実装を置き換える時間はありません。代わりに、CydiaSubstrate を使用し、 `MSHookMessageEx` などの適切なフック関数を使用して、改変をコンパイルする必要があります。これを実行する方法についての [良い情報源](https://manualzz.com/doc/26490749/jailbreak-root-detection-evasion-study-on-ios-and-android "Jailbreak/Root Detection Evasion Study on iOS and Android") がありますが、 Frida を使用することにより、早期計装をより簡単に実行でき、以前のテストから収集したスキルを活用できます。
 
 脱獄検出をバイパスするために使用する Frida の機能はいわゆる早期計装です。つまり、起動時に関数実装を置き換えます。
 
