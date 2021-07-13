@@ -151,7 +151,7 @@ Pwned Passwords API の詳細なドキュメントは [オンライン](https://
 
 ### 動的テスト (MSTG-AUTH-6)
 
-自動パスワード推測攻撃は多くのツールを使用して実行できます。HTTP(S) サービスでは、傍受プロキシを使用することが実行可能な選択肢です。例えば、[Burp Suite Intruder](https://portswigger.net/burp/help/intruder_using.html "Using Burp Suite Intruder") を使用して、ワードリストベースの攻撃とブルートフォース攻撃の両方を実行できます。
+自動パスワード推測攻撃は多くのツールを使用して実行できます。HTTP(S) サービスでは、傍受プロキシを使用することが実行可能な選択肢です。例えば、[Burp Suite Intruder](https://portswigger.net/burp/documentation/desktop/tools/intruder/using "Using Burp Suite Intruder") を使用して、ワードリストベースの攻撃とブルートフォース攻撃の両方を実行できます。
 
 > Burp Suite Community Edition にはプロジェクトを保存できないこととは別に重要な制限があることに注意してください。例えば、スロットリングメカニズムは Burp Intruder での攻撃を劇的に遅くするいくつかのリクエストの後にアクティブになります。また、このバージョンではビルトインのパスワードリストは利用できません。リアルなブルートフォース攻撃を実行したい場合には [Burp Suite](0x08-Testing-Tools.md#burp-suite) Professional か [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap) のいずれかを使用します。
 
@@ -213,7 +213,7 @@ Burp Intruder でのワードリストベースのブルートフォース攻撃
 - [Laravel (PHP)](https://laravel.com/docs/5.4/authentication "Laravel (PHP)")
 - [Ruby on Rails](https://guides.rubyonrails.org/security.html "Ruby on Rails")
 
-サーバー側認証のテストについての優れたリソースには OWASP Web Testing Guide があり、特に [Testing Authentication](https://www.owasp.org/index.php/Testing_for_authentication) および [Testing Session Management](https://www.owasp.org/index.php/Testing_for_Session_Management) の章をご覧ください。
+サーバー側認証のテストについての優れたリソースには OWASP Web Testing Guide があり、特に [Testing Authentication](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/04-Authentication_Testing/README) および [Testing Session Management](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/README) の章をご覧ください。
 
 ## セッションタイムアウトのテスト (MSTG-AUTH-7)
 
@@ -326,7 +326,7 @@ OTP 認証が使用されている場合、ほとんどの OTP は短い数値�
 
 > OTP は特定の時間 (通常 30 秒) のみ有効とすべきであり、OTP に誤って数回 (通常 3 回) キー入力した後には提供された OTP は無効にすべきであり、ユーザーはランディングページにリダイレクトされるかログアウトされるべきです。
 
-セッション管理のテストについての詳細情報は [OWASP Testing Guide](https://www.owasp.org/index.php/Testing_for_Session_Management "OWASP Testing Guide V4 (Testing for Session Management)") を参照ください。
+セッション管理のテストについての詳細情報は [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/01-Testing_for_Session_Management_Schema "OWASP Testing Guide V4 (Testing for Session Management)") を参照ください。
 
 ## ステートレス (トークンベース) 認証のテスト (MSTG-AUTH-3)
 
