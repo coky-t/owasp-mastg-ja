@@ -55,7 +55,7 @@
 
 Swift:
 
-```swift
+```objectivec
 do {
     let pathToFileInRestrictedDirectory = "/private/jailbreak.txt"
     try "This is a test.".write(toFile: pathToFileInRestrictedDirectory, atomically: true, encoding: String.Encoding.utf8)
@@ -68,7 +68,7 @@ do {
 
 Objective-C:
 
-```objc
+```objectivec
 NSError *error;
 NSString *stringToBeWritten = @"This is a test.";
 [stringToBeWritten writeToFile:@"/private/jailbreak.txt" atomically:YES
@@ -88,7 +88,7 @@ Cydia URL を開くことを試みることでプロトコルハンドラをチ�
 
 Swift:
 
-```swift
+```objectivec
 if let url = URL(string: "cydia://package/com.example.package"), UIApplication.shared.canOpenURL(url) {
     // Device is jailbroken
 }
@@ -96,7 +96,7 @@ if let url = URL(string: "cydia://package/com.example.package"), UIApplication.s
 
 Objective-C:
 
-```objc
+```objectivec
 if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]){
     // Device is jailbroken
 }
@@ -113,9 +113,9 @@ if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://
 
 例として再度 Damn Vulnerable iOS アプリケーションを使用して、脱獄検出のバイパスを見てみます。 Hopper にバイナリをロードした後、アプリケーションが完全に逆アセンブルされるまで待つ必要があります (トップバーを見てステータスを確認します) 。それから検索ボックスで "jail" 文字列を探します。`SFAntiPiracy` と `JailbreakDetectionVC` の2つのクラスがあります。関数を逆コンパイルして、それらが何をしているか、特に何を返すのかを確認することもできます。
 
-<img src="Images/Chapters/0x06b/HopperDisassembling.png" width="350px" />
+![OWASP MSTG](Images/Chapters/0x06b/HopperDisassembling.png) \
 
-<img src="Images/Chapters/0x06b/HopperDecompile.png" width="350px" />
+![OWASP MSTG](Images/Chapters/0x06b/HopperDecompile.png) \
 
 ご覧のとおり、クラスメソッド `+[SFAntiPiracy isTheDeviceJailbroken]` とインスタンスメソッド `-[JailbreakDetectionVC isJailbroken]` があります。主な相違点は、Cycript をアプリに注入してクラスメソッドを直接コールできるのに対して、インスタンスメソッドではまず対象クラスのインスタンスを探す必要があるということです。関数 `choose` はメモリヒープ内で与えられたクラスの既知のシグネチャを探して、インスタンスの配列を返します。アプリケーションを望ましい状態にする (クラスを実際にインスタンス化されるようにする) ことが重要です。
 
@@ -143,7 +143,7 @@ cy# [a[0] isJailbroken]
 True
 ```
 
-<img src="Images/Chapters/0x06j/deviceISjailbroken.png" width="250px" />
+![OWASP MSTG](Images/Chapters/0x06j/deviceISjailbroken.png) \
 
 アプリケーションを望ましい状態にすることが重要である理由を理解したことでしょう。この時点で Cycript を使用して脱獄検出をバイパスすることは簡単です。この関数はブール値を返すことが分かるので、戻り値を置き換えるだけです。関数の実装を Cycript に置き換えることで、戻り値を置き換えることができます。指定された名前の関数を実際に置き換えるので、関数がアプリケーション内の何かを変更する場合の副作用に注意してください。
 
@@ -153,7 +153,7 @@ cy# [a[0] isJailbroken]
 false
 ```
 
-<img src="Images/Chapters/0x06j/deviceisNOTjailbroken.png" width="250px" />
+![OWASP MSTG](Images/Chapters/0x06j/deviceisNOTjailbroken.png) \
 
 このケースではアプリケーションの脱獄検出をバイパスしました。
 
@@ -328,11 +328,11 @@ void anti_debug() {
 
 このテクニックをバイパスする方法を示すために、このアプローチを実装する逆アセンブルされたバイナリの例を使用します。
 
-<img src="Images/Chapters/0x06j/ptraceDisassembly.png" width="500px" />
+![OWASP MSTG](Images/Chapters/0x06j/ptraceDisassembly.png) \
 
 バイナリで何が起きているかを見てみましょう。第二引数 (レジスタ R1) に `ptrace` を指定して `dlsym` が呼び出されます。レジスタ R0 の戻り値はオフセット 0x1908A でレジスタ R6 に移動されます。オフセット 0x19098 で、 BLX R6 命令を使用してレジスタ R6 のポインタ値が呼び出されます。 `ptrace` 呼び出しを無効にするには、 `BLX R6` 命令 (リトルエンディアンで `0xB0 0x47`) を `NOP` 命令 (リトルエンディアンで `0x00 0xBF`) に置き換える必要があります。パッチを適用すると、コードは以下のようになります。
 
-<img src="Images/Chapters/0x06j/ptracePatched.png" width="500px" />
+![OWASP MSTG](Images/Chapters/0x06j/ptracePatched.png) \
 
 [Armconverter.com](http://armconverter.com/ "Armconverter") はバイトコードと命令ニーモニック間の変換を行うための便利なツールです。
 
@@ -387,11 +387,11 @@ static bool AmIBeingDebugged(void)
 
 このチェックをバイパスする方法の一つはバイナリにパッチを適用することです。上記のコードをコンパイルすると、コードの後半の逆アセンブル版は以下のようになります。
 
-<img src="Images/Chapters/0x06j/sysctlOriginal.png" width="550px" />
+![OWASP MSTG](Images/Chapters/0x06j/sysctlOriginal.png) \
 
 オフセット 0xC13C の `MOVNE R0, #1` 命令をパッチして `MOVNE R0, #0` (バイトコードで 0x00 0x20) に変更した後、パッチされたコードは以下のようになります。
 
-<img src="Images/Chapters/0x06j/sysctlPatched.png" width="550px" />
+![OWASP MSTG](Images/Chapters/0x06j/sysctlPatched.png) \
 
 デバッガ自体を使用して `sysctl` の呼び出しにブレークポイントを設定することで `sysctl` チェックもバイパスできます。このアプローチは [iOS アンチデバッグ保護 #2](https://www.coredump.gr/articles/ios-anti-debugging-protections-part-2/ "iOS Anti-Debugging Protections #2") に記されています。
 
@@ -680,7 +680,7 @@ mov        rbp, rsp
 
 制御フローの平坦化は元のコードをより複雑な表現に置き換えます。この変換は関数の本体を基本ブロックに分割し、プログラムフローを制御する switch ステートメントを使用して、それらすべてを単一の無限ループ内に配置します。これにより、通常はコードが読みやすくなる自然な条件構造が削除されるため、プログラムフローをたどることが著しく困難になります。
 
-![control-flow-flattening](./Images/Chapters/0x06j/control-flow-flattening.png)
+![control-flow-flattening](./Images/Chapters/0x06j/control-flow-flattening.png) \
 
 この画像は制御フローの平坦化がコードをどのように変更するかを示しています ("[制御フローの平坦化による C++ プログラムの難読化](http://ac.inf.elte.hu/Vol_030_2009/003.pdf)" を参照)
 
@@ -734,11 +734,11 @@ SwiftShield はクラス名とメソッド名を検出し、それらの識別�
 
 元のソースコードですべてのクラスとメソッドの識別子を確認できます。
 
-<img src="Images/Chapters/0x06j/no_obfuscation.jpg" width="650" />
+![OWASP MSTG](Images/Chapters/0x06j/no_obfuscation.jpg) \
 
 SwiftShield はそれらすべてを暗号化された値に置き換え、クラスやメソッドの元の名前や意図するものを痕跡に残さないようにします。
 
-<img src="Images/Chapters/0x06j/swiftshield_obfuscated.jpg" width="650" />
+![OWASP MSTG](Images/Chapters/0x06j/swiftshield_obfuscated.jpg) \
 
 `swiftshield` を実行すると `swiftshield-output` という新しいディレクトリが作成されます。このディレクトリにはフォルダ名にタイムスタンプを付けられた別のディレクトリが作成されます。このディレクトリには暗号化された文字列と元の値をマップしている `conversionMap.txt` というテキストファイルが含まれています。
 
