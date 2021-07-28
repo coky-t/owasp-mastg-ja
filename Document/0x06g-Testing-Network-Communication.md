@@ -81,7 +81,7 @@ NSAppTransportSecurity : Dictionary {
 以下の表はグローバル ATS 例外をまとめたものです。これらの例外の詳細については、[公式の Apple Developer ドキュメントの Table 2](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW34 "App Transport Security dictionary primary keys") を参照してください。
 
 | キー | 説明 |
-| -----| -----|
+| --------------| ------------|
 | `NSAllowsArbitraryLoads` | `NSExceptionDomains` の下に指定された個々のドメインを除いてグローバルに ATS 制限を無効化する |
 | `NSAllowsArbitraryLoadsInWebContent` | WebView から作成されたすべての接続に対して ATS 制限を無効化する |
 | `NSAllowsLocalNetworking` | 非修飾ドメイン名と .local ドメインへの接続を許可する |
@@ -90,7 +90,7 @@ NSAppTransportSecurity : Dictionary {
 以下の表はドメインごとの ATS 例外をまとめたものです。これらの例外の詳細については、[公式の Apple Developer ドキュメントの Table 3](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW44 "App Transport Security dictionary primary keys") を参照してください。
 
 | キー | 説明 |
-| -----| -----|
+| --------------| ------------|
 | `NSIncludesSubdomains` | ATS 例外を名前付きドメインのサブドメインに適用すべきかどうかを示す |
 | `NSExceptionAllowsInsecureHTTPLoads` | 名前付きドメインへの HTTP 接続を許可するが、TLS 要件には影響しない |
 | `NSExceptionMinimumTLSVersion` | TLS バージョン 1.2 未満のサーバーへの接続を許可する |
@@ -224,7 +224,7 @@ CA はトラストストアに追加できます。ユーザーを介して手�
 
 Apple が推奨する最新のアプローチは `Info.plist` ファイルの App Transport Security Settings にピン留めされた CA 公開鍵を指定することです。記事 [Identity Pinning: How to configure server certificates for your app](https://developer.apple.com/news/?id=g9ejcf8y "Identity Pinning: How to configure server certificates for your app") に例があります。
 
-もう一つの一般的なアプローチは `NSURLConnectionDelegate` の [`connection:willSendRequestForAuthenticationChallenge:`](https://developer.apple.com/documentation/foundation/nsurlconnectiondelegate/1414078-connection?language=objc "connection:willSendRequestForAuthenticationChallenge:") メソッドを使用して、サーバーから提供された証明書が有効で、アプリに保存されている証明書と一致するかどうかを確認することです。詳細については [HTTPS Server Trust Evaluation](https://developer.apple.com/library/archive/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECNSURLCONNECTION "HTTPS Server Trust Evaluation") テクニカルノートをご覧ください。
+もう一つの一般的なアプローチは `NSURLConnectionDelegate` の [`connection:willSendRequest ForAuthenticationChallenge:`](https://developer.apple.com/documentation/foundation/nsurlconnectiondelegate/1414078-connection?language=objc "connection:willSendRequestForAuthenticationChallenge:") メソッドを使用して、サーバーから提供された証明書が有効で、アプリに保存されている証明書と一致するかどうかを確認することです。詳細については [HTTPS Server Trust Evaluation](https://developer.apple.com/library/archive/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECNSURLCONNECTION "HTTPS Server Trust Evaluation") テクニカルノートをご覧ください。
 
 ローカルとリモートの証明書を比較する場合、リモートの証明書が変更されるときにアプリを更新する必要があることに注意します。予備の証明書をアプリに保存しておくと移行がスムーズに行えます。また、ピンを公開鍵比較ベースとすることもできます。この場合、リモートの証明書が変更されても、公開鍵は同じままです。
 
