@@ -157,7 +157,7 @@ Network Security Configuration を使用して [宣言型証明書](https://deve
   <?xml version="1.0" encoding="utf-8"?>
   <network-security-config>
       <domain-config>
-          <!-- Use certificate pinning for OWASP website access including sub domains -->
+          Use certificate pinning for OWASP website access including sub domains
           <domain includeSubdomains="true">owasp.org</domain>
           <pin-set expiration="2018/8/10">
               <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
