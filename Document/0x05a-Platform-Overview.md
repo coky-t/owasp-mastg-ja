@@ -16,13 +16,13 @@ Android は Google が開発した Linux ベースのオープンソースプラ
 
 Android のソフトウェアスタックはいくつかの異なるレイヤで構成されています。各レイヤはインタフェースを定義し、特定のサービスを提供します。
 
-<img src="Images/Chapters/0x05a/android_software_stack.png" alt="Android Software Stack" width="400" />
+![OWASP MSTG](Images/Chapters/0x05a/android_software_stack.png) \
 
 最も低いレベルでは、 Android は Linux カーネルのバリエーションをベースにしています。カーネルの上では、 ハードウェア抽象化レイヤ (HAL) が組み込みハードウェアコンポーネントとやり取りするための標準インタフェースを定義します。いくつかの HAL 実装は Android システムが必要な時に呼び出す共有ライブラリモジュールにパッケージ化されています。これはアプリケーションがデバイスのハードウェアとやり取りするための基礎となります。たとえば、ストックフォンアプリケーションがデバイスのマイクとスピーカーを使用できるようにします。
 
 Android アプリは通常 Java で記述され Dalvik バイトコードにコンパイルされます。これは従来の Java バイトコードとは若干異なります。 Dalvik バイトコードは最初に Java コードを .class ファイルにコンパイルしてから、 `d8` ツールで JVM バイトコードを Dalvik .dex フォーマットに変換することにより作成されます。
 
-<img src="Images/Chapters/0x05a/java_vs_dalvik.png" alt="Java vs Dalvik" width="350" />
+![OWASP MSTG](Images/Chapters/0x05a/java_vs_dalvik.png) \
 
 現在のバージョンの Android では Android ランタイム (ART) 上でこのバイトコードを実行します。 ART は Android のオリジナルランタイムである Dalvik 仮想マシン (DVM) の後継です。 Dalvik と ART の主な違いはバイトコードの実行方法です。
 
@@ -169,7 +169,7 @@ API 仕様は Android の新しいリリースごとに変更されます。重�
 
 新しいアプリをインストールすると、アプリパッケージから名付けられた新しいディレクトリが作成され、次のパス `/data/data/[package-name]` になります。このディレクトリはアプリのデータを保持します。 Linux ディレクトリパーミッションはディレクトリがアプリの一意の UID でのみ読み書きできるように設定されています。
 
-<img src="Images/Chapters/0x05a/Selection_003.png" alt="Sandbox" width="400" />
+![OWASP MSTG](Images/Chapters/0x05a/Selection_003.png) \
 
 これは `/data/data` フォルダのファイルシステムパーミッションを見ることで確認できます。例えば、 Google Chrome と Calendar にはそれぞれ一つのディレクトリが割り当てられており、異なるユーザーアカウントの下で実行されていることがわかります。
 
@@ -410,7 +410,7 @@ SQLite は別のプロセスとして実行されるのではなく、アプリ�
 
 Binder フレームワークではクライアント・サーバー通信モデルが含まれています。 IPC を使用するには、アプリがプロキシオブジェクトの IPC メソッドを呼び出します。プロキシオブジェクトは呼び出しパラメータを透過的に *parcel* に *marshall* し、 Binder サーバーにトランザクションを送信します。これはキャラクタードライバ (/dev/binder) として実装されています。サーバーは着信要求を処理するためのスレッドプールを保持し、宛先オブジェクトにメッセージを配信します。クライアントアプリの視点から見ると、これらはすべて通常のメソッド呼び出しのように見えますが、すべての重い作業は Binder フレームワークにより行われています。
 
-<img src="Images/Chapters/0x05a/binder.jpg" alt="Binder Overview" width="400" />
+![OWASP MSTG](Images/Chapters/0x05a/binder.jpg) \
 
 *Binder Overview - Image source: [Android Binder by Thorsten Schreiber](https://www.nds.rub.de/media/attachments/files/2011/10/main.pdf "Android Binder")*
 
@@ -614,7 +614,7 @@ Android は三つのアプリケーション署名スキームをサポートし
 
 APK 署名スキームでは、完全な APK がハッシュおよび署名され、 APK 署名ブロックが作成されて APK に挿入されます。検証時には、 v2 スキームは APK ファイル全体の署名をチェックします。この形式の APK 検証はより高速で、改変に対するより包括的な保護を提供します。以下の [v2 スキームの APK 署名検証プロセス](https://source.android.com/security/apksigning/v2#verification "APK Signature verification process") をご覧ください。
 
-<img src="Images/Chapters/0x05a/apk-validation-process.png" alt="Android Software Stack" width="450" />
+![OWASP MSTG](Images/Chapters/0x05a/apk-validation-process.png) \
 
 #### APK 署名スキーム (v3 スキーム)
 
@@ -623,7 +623,7 @@ v3 APK 署名ブロックフォーマットは v2 と同じです。 v3 はサ�
 署名ブロックの signed-data 内の proof-of-rotation 属性は単一リンクリストで構成され、各ノードにはアプリの以前のバージョンを署名するために使用された署名証明書を含んでいます。後方互換を機能させるために、古い署名証明書は新しい証明書のセットに署名するため、新しい鍵ごとに古い鍵と同じくらい信頼できるはすであるという証跡を提供します。
 proof-of-rotation 構造には、一つずつ署名するのではなく、古い署名証明書が新しい証明書のセットに署名する必要があるため、 APK に個別に署名することができなくなりました。以下の [APK 署名 v3 スキーム検証プロセス](https://source.android.com/security/apksigning/v3 "APK Signature v3 scheme verification process") をご覧ください。
 
-<img src="Images/Chapters/0x05a/apk-validation-process-v3-scheme.png" alt="apk-validation-process-v3-scheme" width="450" />
+![OWASP MSTG](Images/Chapters/0x05a/apk-validation-process-v3-scheme.png) \
 
 #### 証明書の作成
 
