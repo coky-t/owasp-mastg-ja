@@ -33,7 +33,7 @@ iOS には多くの強みがありますが、iOS アプリ開発者はそれで
 - 暗号化とデータ保護
 - 汎用的なエクスプロイト緩和策
 
-<img src="Images/Chapters/0x06a/iOS_Security_Architecture.png" alt="iOS Security Architecture" width="275" />
+![OWASP MSTG](Images/Chapters/0x06a/iOS_Security_Architecture.png) \
 
 ### ハードウェアセキュリティ
 
@@ -72,7 +72,7 @@ Apple は iPhone 3GS のリリース以降 iOS デバイスのハードウェア
 
 サンドボックスは iOS の最初のリリースから主要なセキュリティ機能です。すべてのサードパーティアプリは同じユーザー (`mobile`) の下で実行されますが、ほんの一部のシステムアプリケーションやサービルは `root` (または他の特定のシステムユーザー) として実行されます。ファイル、ネットワークソケット、IPC、共有メモリなどのすべてのリソースへのアクセスはサンドボックスによってコントロールされます。通常の iOS アプリは *コンテナ* に限定されています。アプリ自身のファイルへのアクセスと非常に限られた数のシステム API に制限されています。すべてのリソース (ファイル、ネットワークソケット、IPC、共有メモリなど) へのアクセスはサンドボックスにより制御されています。これらの制限は以下のように機能します。 [#levin]
 
-- アプリプロセスは chroot のようなプロセスを介して自身のディレクトリ (/var/mobile/Containers/Bundle/Application/ または /var/containers/Bundle/Application/ の下、iOS バージョンに依存します) に制限されています。
+- アプリプロセスは chroot のようなプロセスを介して自身のディレクトリ (/var/mobile/Containers/ Bundle/Application/ または /var/containers/Bundle/Application/ の下、iOS バージョンに依存します) に制限されています。
 - `mmap` および `mmprotect` システムコールは修正されています。アプリが書き込み可能なメモリページを実行可能にすることを防ぎ、動的に生成されたコードを実行するプロセスを停止します。コード署名と FairPlay を組み合わせることで、特定の条件下で実行できるコードを厳しく制限します (例えば、App Store を介して配布されるアプリ内のすべてのコードは Apple により承認されています) 。
 - プロセスはオペレーティングシステムレベルで同じ UID により所有されているとしても、互いに分離されています。
 - ハードウェアドライバに直接的にアクセスすることはできません。代わりに、Apple の公開フレームワークを通じてアクセスする必要があります。
@@ -127,7 +127,7 @@ language.lproj フォルダはアプリケーションがサポートする言�
 - ストーリーボードは iOS アプリケーションのユーザーインタフェースの視覚的な表現です。スクリーンと、スクリーン間の接続を示しています。
 - 文字列ファイル形式は一つ以上のキー・バリューのペアとオプションのコメントで構成されています。
 
-<img src="Images/Chapters/0x06a/iOS_project_folder.png" alt="iOS App Folder Structure" width="500" />
+![OWASP MSTG](Images/Chapters/0x06a/iOS_project_folder.png) \
 
 脱獄済みデバイスでは、メインのアプリバイナリを復号し IPA ファイルの再構築を可能にするさまざまなツールを使用して、インストールされた iOS アプリの IPA を復元できます。同様に、脱獄済みデバイスでは [IPA Installer](https://github.com/autopear/ipainstaller "IPA Installer") を使用して IPA ファイルをインストールできます。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがよくあります。あなたに実際のファイルを送ったり、[HockeyApp](https://hockeyapp.net/ "HockeyApp") や [Testflight](https://developer.apple.com/testflight/ "Testflight") などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
