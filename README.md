@@ -58,3 +58,11 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 - [テストツール](Document/0x08-Testing-Tools.md)
 - [さらに学ぶための資料](Document/0x09-Suggested-Reading.md)
+
+## License
+
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
+
+## Author (日本語訳)
+
+[Koki Takeyama](https://github.com/coky-t)
