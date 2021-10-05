@@ -480,7 +480,7 @@ int xyz(char *dst) {
 #### サンプル実装 - ストレージ
 
 アプリケーションストレージ自体に整合性を確保する場合は、指定されたキー・バリューペア上またはデバイスに保存されたファイル上のいずれかに HMAC や署名を作成できます。 HMAC を作成するには CommonCrypto 実装が最適です。
-暗号化が必要な場合には、 [Authenticated Encryption](https://cseweb.ucsd.edu/~mihir/papers/oem.html "Authenticated Encryption: Relations among notions and analysis of the generic composition paradigm") で説明されているように暗号化してから HMAC にすることを確認します。
+暗号化が必要な場合には、 [Authenticated Encryption](https://web.archive.org/web/20210804035343/https://cseweb.ucsd.edu/~mihir/papers/oem.html "Authenticated Encryption: Relations among notions and analysis of the generic composition paradigm") で説明されているように暗号化してから HMAC にすることを確認します。
 
 CC で HMAC を生成する場合:
 
