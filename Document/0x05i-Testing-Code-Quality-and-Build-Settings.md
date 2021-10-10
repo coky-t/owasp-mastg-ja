@@ -88,34 +88,32 @@ Android マニフェストで定義されている [`Application` 要素](https:
     ...
 ```
 
+以下のコマンドラインで Android SDK の `aapt` ツールを使用すると、`android:debuggable="true"` ディレクティブが存在するかどうかをすばやく確認できます。
+
+```bash
+# If the command print 1 then the directive is present
+# The regex search for this line: android:debuggable(0x0101000f)=(type 0x12)0xffffffff
+$ aapt d xmltree sieve.apk AndroidManifest.xml | grep -Ec "android:debuggable\(0x[0-9a-f]+\)=\(type\s0x[0-9a-f]+\)0xffffffff"
+1
+```
+
 リリースビルドの場合、この属性は常に `"false"` (デフォルト値) に設定すべきです。
 
 ### 動的解析
 
-Drozer を使用してアプリケーションがデバッグ可能かどうかを判断できます。Drozer モジュール `app.package.attacksurface` はアプリケーションによりエクスポートされる IPC コンポーネントに関する情報も表示します。
+`adb` を使用して、アプリケーションがデバッグ可能かどうかを判断できます。
+
+以下のコマンドを使用します。
 
 ```bash
-dz> run app.package.attacksurface com.mwr.dz
-Attack Surface:
-  1 activities exported
-  1 broadcast receivers exported
-  0 content providers exported
-  0 services exported
-    is debuggable
-```
-
-デバイス上のすべてのデバッグ可能なアプリケーションをスキャンするには、`app.package.debuggable` モジュールを使用します。
-
-```bash
-dz> run app.package.debuggable
-Package: com.mwr.dz
-  UID: 10083
-  Permissions:
-   - android.permission.INTERNET
-Package: com.vulnerable.app
-  UID: 10084
-  Permissions:
-   - android.permission.INTERNET
+# If the command print a number superior to zero then the application have the debug flag
+# The regex search for these lines:
+# flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+# pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+$ adb shell dumpsys package com.mwr.example.sieve | grep -c "DEBUGGABLE"
+2
+$ adb shell dumpsys package com.nondebuggableapp | grep -c "DEBUGGABLE"
+0
 ```
 
 アプリケーションがデバッグ可能である場合、アプリケーションコマンドを実行することは簡単です。`adb` シェルで、バイナリ名にパッケージ名とアプリケーションコマンドを追加して `run-as` を実行します。
