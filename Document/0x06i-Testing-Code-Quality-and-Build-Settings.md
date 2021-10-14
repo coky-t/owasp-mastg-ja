@@ -63,28 +63,30 @@ Xcode を使用して、直接デバッガをアタッチできるかどうか�
 
 ### 概要
 
-一般的に、コンパイルされたコードとともに提供される説明情報は可能な限り少なくすべきです。一部のメタデータ (デバッグ情報、行番号、記述的な関数名やメソッド名など) はリバースエンジニアがバイナリやバイトコードを理解しやすくしますが、リリースビルドには必要ありません。したがって、このメタデータはアプリの機能に影響を与えることなく破棄できます。
+良い習慣として、コンパイルされたバイナリで提供される説明情報はできる限り少なくするべきです。デバッグシンボルなどの付加的なメタデータの存在はコードに関する貴重な情報を提供する可能性があります。例えば、関数名は関数が何をするかについての情報を漏洩します。このメタデータはバイナリの実行には必要ありませんので、リリースビルド時に破棄しても問題ありません。これは適切なコンパイラ設定を使用して実行できます。テスト担当者としてはアプリで配布されるすべてのバイナリを検査し、デバッグシンボルが存在しないことを確認するべきです (少なくともデバッグシンボルはコードに関する貴重な情報を漏洩します) 。
 
-これらのシンボルは "Stabs" 形式か DWARF 形式で保存できます。Stabs 形式では、他のシンボルと同様にデバッグシンボルが通常のシンボルテーブルに格納されます。DWARF 形式では、デバッグシンボルはバイナリ内の特別な "\_\_DWARF" セグメントに格納されます。DWARF デバッグシンボルは別のデバッグ情報ファイルとして保存することもできます。このテストケースでは、デバッグシンボルがリリースバイナリ自体に (シンボルテーブルと \_\_DWARF セグメントのいずれにも) 含まれていないことを確認します。
+iOS アプリケーションがコンパイルされると、コンパイラはアプリ内の各バイナリファイル (メインアプリ実行可能ファイル、フレームワーク、アプリ拡張機能) のデバッグシンボルのリストを生成します。これらのシンボルにはクラス名、グローバル変数、メソッド名や関数名が含まれ、それらが定義されている特定のファイルと行番号にマップされます。アプリのデバッグビルドはデフォルトでコンパイル済みバイナリにデバッグシンボルを配置しますが、アプリのリリースビルドは配布するアプリのサイズを縮小するためにコンパニオン _Debug Symbol ファイル_ (dSYM) に配置します。
 
 ### 静的解析
 
-gobjdump を使用して、メインバイナリとインクルードされた dylib の Stabs および DWARF シンボルを検査します。
+デバッグシンボルの存在を検証するには [binutils](https://www.gnu.org/s/binutils/ "Binutils") の objdump または [llvm-objdump](https://llvm.org/docs/CommandGuide/llvm-objdump.html "llvm-objdump") を使用してすべてのアプリバイナリを検査できます。
+
+以下のスニペットでは `TargetApp` (iOS メインアプリ実行可能ファイル) に対して objdump を実行して `d` (debug) フラグでマークされたデバッグシンボルを含むバイナリの典型的な出力を示しています。その他のさまざまなシンボルフラグ文字については [objdump man page](https://www.unix.com/man-page/osx/1/objdump/ "objdump man page") を確認してください。
 
 ```bash
-$ gobjdump --stabs --dwarf TargetApp
-In archive MyTargetApp:
+$ objdump --syms TargetApp
 
-armv5te:     file format mach-o-arm
-
-aarch64:     file format mach-o-arm64
+0000000100007dc8 l    d  *UND* -[ViewController handleSubmitButton:]
+000000010000809c l    d  *UND* -[ViewController touchesBegan:withEvent:]
+0000000100008158 l    d  *UND* -[ViewController viewDidLoad]
+...
+000000010000916c l    d  *UND* _disable_gdb
+00000001000091d8 l    d  *UND* _detect_injected_dylds
+00000001000092a4 l    d  *UND* _isDebugged
+...
 ```
 
-gobjdump は [binutils](https://www.gnu.org/s/binutils/ "Binutils") の一部であり、Homebrew 経由で macOS にインストールできます。
-
-アプリケーションが本番用にビルドされているときは、デバッグシンボルが削除されていることを確認します。デバッグシンボルを削除するとバイナリのサイズが小さくなり、リバースエンジニアリングの難しさが増します。デバッグシンボルを削除するには、プロジェクトの build settings で `Strip Debug Symbols During Copy` を `YES` に設定します。
-
-システムはアプリケーションバイナリにシンボルを必要としないため、適切な [Crash Reporter System](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AnalyzingCrashReports/AnalyzingCrashReports.html "Crash Reporter System") が可能です。
+デバッグシンボルが含まれないようにするには、 XCode プロジェクトのビルド設定で `Strip Debug Symbols During Copy` を `YES` に設定します。デバッグシンボルを削除するとバイナリサイズが小さくなるだけでなく、リバースエンジニアリングの難易度が上がります。
 
 ### 動的解析
 
@@ -613,20 +615,24 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 Xcode ではデフォルトですべてのバイナリセキュリティが有効ですが、古いアプリケーションでの検証やコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用可能です。
 
 - **ARC** - Automatic Reference Counting - メモリ管理機能 - 必要に応じてメッセージ保持および解放します
-- **Stack Canary** - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
-- **PIE** - Position Independent Executable - バイナリに対し完全な ASLR を有効にします
+- **Stack Canary** - スタックスマッシュ保護 - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
+- **PIE** - Position Independent Executable - 実行可能バイナリに対し完全な ASLR を有効にします (ライブラリには適用されません) 。
+
+これらの保護メカニズムの存在を検出するためのテストは、アプリケーション開発に使用される言語に大きく依存します。例えば、スタックカナリアの存在を検出するための既存の技法は純粋な Swift アプリでは機能しません。詳細については、オンライン記事 "[On iOS Binary Protections](https://sensepost.com/blog/2021/on-ios-binary-protections/ "On iOS Binary Protection")" を確認してください。
 
 ### 静的解析
 
 #### Xcode プロジェクト設定
 
-- スタックスマッシュ保護
+##### Stack Canary 保護
 
-iOS アプリケーションでスタックスマッシュ保護を有効にする手順。
+iOS アプリケーションで Stack Canary 保護を有効にする手順。
 
 1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
 2. "Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
 3. Position Independent Executables (PIE) support が有効になっていることを確認します。
+
+##### PIE 保護
 
 iOS アプリケーションを PIE としてビルドする手順。
 
@@ -635,9 +641,9 @@ iOS アプリケーションを PIE としてビルドする手順。
 3. "Generate Position-Dependent Code" がデフォルト値 ("NO") に設定されていることを確認します。
 4. "Don't Create Position Independent Executables" がデフォルト値 ("NO") に設定されていることを確認します。
 
-- ARC 保護
+##### ARC 保護
 
-iOS アプリケーションの ARC 保護を有効にする手順。
+Swift アプリでは `swiftc` コンパイラによって ARC が自動的に有効になります。一方 Objective-C アプリでは以下の手順で有効になっていることを確認します。
 
 1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
 2. "Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
@@ -666,7 +672,9 @@ iOS アプリケーションの ARC 保護を有効にする手順。
     WEAK_DEFINES BINDS_TO_WEAK PIE
     ```
 
-- stack canary:
+    この出力結果は `PIE` の Mach-O フラグが設定されていることを示しています。このチェックは Objective-C, Swift, ハイブリッドアプリのすべてに適用されますが、メインの実行可能ファイルにのみ適用されます。
+
+- Stack canary:
 
     ```bash
     $ otool -Iv DamnVulnerableIOSApp | grep stack
@@ -682,7 +690,9 @@ iOS アプリケーションの ARC 保護を有効にする手順。
     0x0000000100593dc8 83414 _sigaltstack
     ```
 
-- Automatic Reference Counting:
+    上記の出力結果で `__stack_chk_fail` の存在はスタックカナリアが使用されていることを示しています。このチェックは純粋な Objective-C アプリとハイブリッドアプリに適用できますが、純粋な Swift アプリには適用できません (つまり Swift は設計上、メモリセーフであるため無効と表示されていても問題ありません) 。
+
+- ARC:
 
     ```bash
     $ otool -Iv DamnVulnerableIOSApp | grep release
@@ -695,13 +705,26 @@ iOS アプリケーションの ARC 保護を有効にする手順。
     [SNIP]
     ```
 
+    このチェックは自動的に有効になる純粋な Swift アプリを含むすべてのケースに適用できます。
+
 ### 動的解析
 
-動的解析はツールチェーンにより提供されるセキュリティ機能を見つけるためには適用できません。
+これらのチェックは [objection](0x08-Testing-Tools.md#objection) を使用して動的に実行できます。以下はその一例です。
+
+```bash
+com.yourcompany.PPClient on (iPhone: 13.2.3) [usb] # ios info binary
+Name                  Type     Encrypted    PIE    ARC    Canary    Stack Exec    RootSafe
+--------------------  -------  -----------  -----  -----  --------  ------------  ----------
+PayPal                execute  True         True   True   True      False         False
+CardinalMobile        dylib    False        False  True   True      False         False
+FraudForce            dylib    False        False  True   True      False         False
+...
+```
 
 ## 参考情報
 
 - Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
+- Building Your App to Include Debugging Information - <https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information>
 
 ### メモリ管理 - 動的解析事例
 
