@@ -130,6 +130,8 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 
 ![OWASP MSTG](Images/Donators/SEC_Consult_logo.png) \
 
+![OWASP MSTG](Images/Donators/ZIMPERIUM_logo.png) \
+
 #### 慈善後援者 (Good Samaritan Benefactor)
 
 ![OWASP MSTG](Images/Donators/Randorisec_logo.png) \
