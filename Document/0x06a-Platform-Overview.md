@@ -129,7 +129,7 @@ language.lproj フォルダはアプリケーションがサポートする言�
 
 ![OWASP MSTG](Images/Chapters/0x06a/iOS_project_folder.png) \
 
-脱獄済みデバイスでは、メインのアプリバイナリを復号し IPA ファイルの再構築を可能にするさまざまなツールを使用して、インストールされた iOS アプリの IPA を復元できます。同様に、脱獄済みデバイスでは [IPA Installer](https://github.com/autopear/ipainstaller "IPA Installer") を使用して IPA ファイルをインストールできます。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがよくあります。あなたに実際のファイルを送ったり、[HockeyApp](https://hockeyapp.net/ "HockeyApp") や [Testflight](https://developer.apple.com/testflight/ "Testflight") などの開発用配布プラットフォームへのアクセスを提供することがあります。
+脱獄済みデバイスでは、メインのアプリバイナリを復号し IPA ファイルの再構築を可能にするさまざまなツールを使用して、インストールされた iOS アプリの IPA を復元できます。同様に、脱獄済みデバイスでは [IPA Installer](https://github.com/autopear/ipainstaller "IPA Installer") を使用して IPA ファイルをインストールできます。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがよくあります。あなたに実際のファイルを送ったり、[Testflight](https://developer.apple.com/testflight/ "Testflight") などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
 ### アプリパーミッション
 
