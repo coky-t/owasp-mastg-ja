@@ -214,7 +214,7 @@ $ dependency-check  --enableExperimental --out . --scan Package.swift
 最初に、 Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
 
 ```bash
-$ sudo gem install CocoaPods
+$ sudo gem install cocoapods
 $ pod install
 ```
 
