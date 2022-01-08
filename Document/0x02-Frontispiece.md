@@ -122,11 +122,11 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 
 ### 特別栄誉支援者 (God Mode Donators)
 
+![OWASP MSTG](Images/Donators/NowSecure_logo.png) \
+
 [OWASP Bay Area Chapter](https://twitter.com/OWASPBayArea?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor "Twitter Bay Area")
 
 #### 名誉後援者 (Honorable Benefactor)
-
-![OWASP MSTG](Images/Donators/NowSecure_logo.png) \
 
 ![OWASP MSTG](Images/Donators/SEC_Consult_logo.png) \
 
@@ -135,15 +135,6 @@ MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成�
 #### 慈善後援者 (Good Samaritan Benefactor)
 
 ![OWASP MSTG](Images/Donators/Randorisec_logo.png) \
-
-#### 他の支援者
-
-次の人々や企業は Leanpub や他の方法を使用して 25 ドル以上を寄付しました:
-
-- eShard
-
-<br/>
-<br/>
 
 ### 旧版
 
