@@ -526,9 +526,9 @@ OAuth2 認証は外部ユーザーエージェント (Chrome や Safari など) 
 
 追加のベストプラクティスと詳細情報については以下のソースドキュメントを参照してください。
 
-- [RFC6749 - The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749 "RFC6749: The OAuth 2.0 Authorization Framework (October 2012)")
-- [DRAFT - OAuth 2.0 for Native Apps](https://tools.ietf.org/html/draft-ietf-oauth-native-apps-12 "draft_ietf-oauth-native-apps-12: OAuth 2.0 for Native Apps (June 2017)")
-- [RFC6819 - OAuth 2.0 Threat Model and Security Considerations](https://tools.ietf.org/html/rfc6819 "RFC6819: OAuth 2.0 Threat Model and Security Considerations (January 2013)")
+- [RFC6749 - The OAuth 2.0 Authorization Framework (October 2012)](https://tools.ietf.org/html/rfc6749)
+- [RFC8252 - OAuth 2.0 for Native Apps (October 2017)](https://tools.ietf.org/html/rfc8252)
+- [RFC6819 - OAuth 2.0 Threat Model and Security Considerations (January 2013)](https://tools.ietf.org/html/rfc6819)
 
 ## ログインアクティビティとデバイスブロッキングのテスト (MSTG-AUTH-11)
 
