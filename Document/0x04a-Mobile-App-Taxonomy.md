@@ -1,6 +1,6 @@
 # モバイルアプリの分類
 
-用語「モバイルアプリ」はモバイルデバイス上で動作するように設計された自己完結型コンピュータプログラムを指します。今日、Android および iOS オペレーティングシステムは累積的に [モバイル OS 市場シェアの99%以上](https://www.idc.com/promo/smartphone-market-share/os "Smartphone Market Share") を占めています。さらに、モバイルインターネットの使用率は歴史上初めてデスクトップ使用率を上回り、モバイルブラウジングとアプリは [最も広く普及しているインターネット対応アプリケーション](https://www.idc.com/promo/smartphone-market-share/os "Smartphone Market Share") となっています。
+用語「モバイルアプリ」はモバイルデバイス上で動作するように設計された自己完結型コンピュータプログラムを指します。今日、Android および iOS オペレーティングシステムは累積的に [モバイル OS 市場シェアの99%以上](https://www.idc.com/promo/smartphone-market-share/os) を占めています。さらに、モバイルインターネットの使用率は歴史上初めてデスクトップ使用率を上回り、モバイルブラウジングとアプリは [最も広く普及しているインターネット対応アプリケーション](https://www.idc.com/promo/smartphone-market-share/os) となっています。
 
 > このガイドでは、一般的なモバイル OS 上で動作するあらゆる種類のアプリケーションを指す一般用語として用語「アプリ」を使用しています。
 
