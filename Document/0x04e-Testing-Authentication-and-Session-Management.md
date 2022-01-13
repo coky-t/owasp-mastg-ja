@@ -1,6 +1,6 @@
 # モバイルアプリの認証アーキテクチャ
 
-認証と認可の問題はよくあるセキュリティ脆弱性です。実際、それらは [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project "OWASP Top Ten Project") で一貫して二位という高いランクをつけています。
+認証と認可の問題はよくあるセキュリティ脆弱性です。実際、それらは [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) で一貫して二位という高いランクをつけています。
 
 ほとんどのモバイルアプリは何かしらのユーザー認証を実装しています。認証および状態管理ロジックの一部はバックエンドサービスで実行されますが、認証はほとんどのモバイルアプリアーキテクチャに不可欠な要素であるため、一般的な実装を理解することが重要です。
 
