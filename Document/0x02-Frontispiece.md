@@ -120,21 +120,7 @@ jonasw234, zehuanli, jadeboer, Isopach, prabhant, jhscheer, meetinthemiddle-be, 
 
 MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは [OWASP Project Wiki](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide#tab=Sponsorship_Packages "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
 
-### 特別栄誉支援者 (God Mode Donators)
-
-![OWASP MSTG](Images/Donators/NowSecure_logo.png) \
-
-[OWASP Bay Area Chapter](https://twitter.com/OWASPBayArea?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor "Twitter Bay Area")
-
-#### 名誉後援者 (Honorable Benefactor)
-
-![OWASP MSTG](Images/Donators/SEC_Consult_logo.png) \
-
-![OWASP MSTG](Images/Donators/ZIMPERIUM_logo.png) \
-
-#### 慈善後援者 (Good Samaritan Benefactor)
-
-![OWASP MSTG](Images/Donators/Randorisec_logo.png) \
+![OWASP MSTG](Images/Donators/donators.png) \
 
 ### 旧版
 
