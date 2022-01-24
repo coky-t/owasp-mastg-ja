@@ -223,7 +223,7 @@ Burp Intruder でのワードリストベースのブルートフォース攻撃
 
 最も著名なフレームワークでは、構成オプションを介してセッションタイムアウトを設定できます。このパラメータはそのフレームワークのドキュメントで指定されているベストプラクティスに従って設定すべきです。推奨されるタイムアウトは 10 分から二時間の間で、アプリの機密さによります。セッションタイムアウト設定の例についてはフレームワークのドキュメントを参照します。
 
-- [Spring (Java)](https://docs.spring.io/spring-session/docs/current/reference/html5/ "Spring (Java)")
+- [Spring (Java)](https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web.spring-session "Spring (Java)")
 - [Ruby on Rails](https://guides.rubyonrails.org/security.html#session-expiry "Ruby on Rails")
 - [PHP](https://php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime "PHP")
 - [ASP.Net](https://docs.microsoft.com/en-us/dotnet/api/system.web.sessionstate.httpsessionstate.timeout "ASP.NET")
@@ -270,7 +270,7 @@ Burp Intruder でのワードリストベースのブルートフォース攻撃
 4. ステップ 2 からのリクエストを再送信して、データへのアクセスを再試行します。
 
 ログアウトがサーバー上で正しく実装されている場合、エラーメッセージまたはログインページへのリダイレクトがクライアントに送り返されます。一方で、ステップ 2 で得たものと同じレスポンスを受信した場合、トークンやセッション ID は依然として有効であり、サーバー上で正しく終了していません。
-OWASP Web Testing Guide ([OTG-SESS-006](https://www.owasp.org/index.php/Testing_for_logout_functionality_%28OTG-SESS-006%29 "OTG-SESS-006")) には詳細な説明と多くのテストケースがあります。
+OWASP Web Testing Guide ([WSTG-SESS-06](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management_Testing/06-Testing_for_Logout_Functionality "WSTG-SESS-006")) には詳細な説明と多くのテストケースがあります。
 
 ## 二要素認証およびステップアップ認証のテスト (MSTG-AUTH-9 および MSTG-AUTH-10)
 
