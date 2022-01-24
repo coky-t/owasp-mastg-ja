@@ -412,7 +412,7 @@ Binder フレームワークではクライアント・サーバー通信モデ�
 
 ![OWASP MSTG](Images/Chapters/0x05a/binder.jpg) \
 
-*Binder Overview - Image source: [Android Binder by Thorsten Schreiber](https://www.nds.rub.de/media/attachments/files/2011/10/main.pdf "Android Binder")*
+*Binder Overview - Image source: [Android Binder by Thorsten Schreiber](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.710.6498&rep=rep1&type=pdf "Android Binder")*
 
 他のアプリケーションがそれらにバインドできるようにするサービスは *バインドされたサービス* と呼ばれます。これらのサービスはクライアントに IBinder インタフェースを提供する必要があります。開発者は Android Interface Descriptor Language (AIDL) を使用して、リモートサービスのインタフェースを記述します。
 
