@@ -243,7 +243,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 このテストケースは唯一の暗号化手法としてハードコードされた対称暗号に焦点を当てています。以下のチェックを行う必要があります。
 
 - 対称暗号のすべてのインスタンスを特定します
-- 特定されたすべてのインスタンスの対称鍵がハードコードされていないかどうかを検証します
+- 特定された各インスタンスについて、ハードコードされた対称鍵があるかどうかを検証します
 - ハードコードされた対称暗号が唯一の暗号化手法として使用されていないかどうかを検証します
 
 ### 静的解析
@@ -252,29 +252,25 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 - 対称アルゴリズム (`DES`, `AES`, など)
 - 鍵生成器の仕様 (`KeyGenParameterSpec`, `KeyPairGeneratorSpec`, `KeyPairGenerator`, `KeyGenerator`, `KeyProperties`, など)
-- `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` パッケージを使用するクラス
+- `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` をインポートしているクラス
 
-特定されたすべてのインスタンスの対称鍵がハードコードされていないかどうかを検証します。対称鍵が以下でないかどうかをチェックします。
+特定された各インスタンスについて、対称鍵が使用されているかどうかを検証します。
 
-- アプリケーションリソースの一部である
-- 既知の値から導出できる値である
-- コードにハードコードされている
+- アプリケーションリソースの一部ではないこと
+- 既知の値から導出することができないこと
+- コードにハードコードされていないこと
 
-ハードコードされた対称暗号の特定されたすべてのインスタンスが、暗号化の唯一の手法としてセキュリティ上重要なコンテキストで使用されていないことを検証します。
+ハードコードされた各対称鍵について、セキュリティ上重要なコンテキストで唯一の暗号化方法として使用されていないことを検証します。
 
-例としてハードコードされた暗号鍵の仕様を特定する方法を示します。最初に ```Baksmali``` を使用して DEX バイトコードを Smali バイトコードファイルのコレクションに逆アセンブルします。
+例として、ハードコードされた暗号化鍵の使用箇所を見つける方法を説明します。まず、アプリを [逆アセンブルおよびデコンパイル](0x05c-Reverse-Engineering-and-Tampering.md#disassembling-and-decompiling) して Java コードを入手します。例えば [jadx](0x08-Testing-Tools.md#jadx) を使用します。
 
-```bash
-$ baksmali d file.apk -o smali_output/
-```
-
-Smali バイトコードファイルのコレクションができたので、 ```SecretKeySpec``` クラスの使用状況についてファイルを検索してみます。これは取得したばかりの Smali ソースコードを再帰的に grep することで実現します。 Smali のクラス記述子は `L` で始まり `;` で終わることに注意してください。
+ここで `SecretKeySpec` クラスが使われているファイルを検索します。例えば、再帰的に grep するか、jadx 検索機能を使用するだけです。
 
 ```bash
-$ grep -r "Ljavax\crypto\spec\SecretKeySpec;"
+$ grep -r "SecretKeySpec"
 ```
 
-これにより `SecretKeySpec` クラスを使用するすべてのクラスが強調表示されます。ここで強調表示されたすべてのファイルを調べ、鍵マテリアルを渡すために使用されるバイト列を追跡します。以下の図は出荷可能アプリケーションでこの評価を実行した結果を示しています。読みやすくするために DEX バイトコードを Java コードにリバースエンジニアリングしました。静的バイト配列 `Encrypt.keyBytes` にハードコードおよび初期化された静的暗号鍵が使用されていることがわかります。
+これにより `SecretKeySpec` クラスを使用しているすべてのクラスを返します。次にこれらのファイルを調べて、鍵マテリアルを渡すために使用される変数を追跡します。以下の図は出荷可能アプリケーションでこの評価を実行した結果を示しています。静的な暗号鍵が使用されていることがはっきりとわかります。この鍵はハードコードされており、静的なバイト配列 `Encrypt.keyBytes` に初期化されます。
 
 <img src="Images/Chapters/0x5e/static_encryption_key.png" width="600px"/>
 
@@ -317,7 +313,7 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 このテストケースは目的の検証と同じ暗号鍵の再利用に焦点を当てています。以下のチェックを実行する必要があります。
 
 - 暗号化が使用されているすべてのインスタンスを特定します
-- 暗号化が使用される目的 (使用時、転送時、保存時のデータを保護するため) を特定します
+- 暗号化マテリアルの目的 (使用時、転送時、保存時のデータを保護するため) を特定します
 - 暗号化のタイプを特定します
 - 目的に応じて暗号化が使用されているかどうかを検証します
 
@@ -329,22 +325,22 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 - インタフェース `Key`, `PrivateKey`, `PublicKey`, `SecretKey`
 - 関数 `getInstance`, `generateKey`
 - 例外 `KeyStoreException`, `CertificateException`, `NoSuchAlgorithmException`
-- `java.security.*`, `javax.crypto.*`, `android.security.*` and `android.security.keystore.*` パッケージを使用するクラス
+- `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` をインポートしているクラス
 
-特定されたすべてのインスタンスについて、暗号化の使用目的とそのタイプを特定します。以下を使用します。
+特定された各インスタンスについて、その目的とタイプを特定します。以下を使用します。
 
 - 暗号化/復号化 - データの機密性を確保するため
 - 署名/検証 - データの完全性を (場合によっては責任追跡性も) 確保するため
-- 保守 - 操作中 (KeyStore へのインポートなど) に鍵を保護するため
+- 保守 - 特定の重要な操作 (KeyStore へのインポートなど) を行う際に鍵を保護するため
 
-さらに、特定された暗号化のインスタンスを使用するビジネスロジックを特定する必要があります。これによりビジネスの観点から暗号化が使用される理由を説明します (保存時に機密性を保護するため、ファイルが Y に属するデバイス X から署名されたことを確認するため、など) 。
+さらに、特定された暗号化のインスタンスを使用するビジネスロジックを特定する必要があります。
 
-検証中には以下のチェックを実行する必要があります。
+検証の際には以下のチェックを実行する必要があります。
 
-- 作成時に定義された目的に従って鍵が使用されていることを確認します (KeyProperties を定義できる KeyStore 鍵に関連します)
-- 非対称鍵の場合、秘密鍵 (private key) は署名にのみ使用され、公開鍵 (public key) は暗号化のみに使用されることを確認します。
-- 対称鍵は複数の目的のために再利用されないことを確認します。別のコンテキストで使用する場合には新しい対称鍵を生成する必要があります。
-- 暗号化がビジネスの目的に従って使用されていることを確認します。
+- すべての鍵が作成時に定義された目的に従って使用されていますか？ (KeyStore 鍵は KeyProperties を定義できます)
+- 非対称鍵の場合、秘密鍵 (private key) は署名にのみ使用され、公開鍵 (public key) は暗号化のみに使用されていますか？
+- 対称鍵は複数の目的のために使用されていますか？別のコンテキストで使用する場合には新しい対称鍵を生成する必要があります。
+- 暗号化がビジネスの目的に応じて使用されていますか？
 
 ### 動的解析
 
@@ -356,58 +352,27 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 
 このテストケースはアプリケーションで使用される乱数値に焦点を当てています。以下のチェックを実行する必要があります。
 
-- 乱数値が使用されているすべてのインスタンスを特定しており、乱数生成器のすべてのインスタンスは `Securerandom` のものである
+- 乱数値が使用されているすべてのインスタンスを特定する
 - 乱数生成器が暗号的にセキュアであるとみなされないかどうかを検証する
-- 乱数生成器がどのように使用されたかを検証する
-- アプリケーションにより生成された乱数値のランダム性を検証する
+- 乱数生成器がどのように使用されるかを検証する
+- 生成された乱数値のランダム性を検証する
 
 ### 静的解析
 
-乱数生成器のインスタンスをすべて特定して、カスタムまたは既知のセキュアでない `java.util.Random` クラスを探します。このクラスは与えられた各シード値に対して同じ一連の番号を生成します。その結果、一連の数は予測可能となります。
-
-以下のサンプルソースコードは脆弱な乱数生成を示しています。
-
-```java
-import java.util.Random;
-// ...
-
-Random number = new Random(123L);
-//...
-for (int i = 0; i < 20; i++) {
-  // Generate another random integer in the range [0, 20]
-  int n = number.nextInt(21);
-  System.out.println(n);
-}
-```
-
-代わりに、その分野の専門家により現時点で強力であると考えられている十分に検証されたアルゴリズムを使用し、適切な長さのシードを持つ十分にテストされた実装を選択すべきです。
+乱数生成器のインスタンスをすべて特定して、カスタムまたは既知のセキュアでないクラスを探します。例えば、`java.util.Random` は与えられた各シード値に対して同じ一連の番号を生成します。その結果、一連の数は予測可能となります。代わりに、その分野の専門家により現時点で強力であると考えられている十分に検証されたアルゴリズムを選択し、適切な長さのシードを持つ十分にテストされた実装を使用すべきです。
 
 デフォルトコンストラクタを使用して作成されていない `SecureRandom` のすべてのインスタンスを特定します。シード値を指定するとランダム性が低下する可能性があります。システム指定のシード値を使用して 128 バイト長の乱数を生成する [`SecureRandom` の引数なしコンストラクタ](https://www.securecoding.cert.org/confluence/display/java/MSC02-J.+Generate+strong+random+numbers "Generation of Strong Random Numbers") を選択します。
 
 一般的に、PRNG が暗号的にセキュアであると宣言されていない場合 (`java.util.Random` など) 、それはおそらく統計的 PRNG であり、セキュリティ上機密であるコンテキストに使用すべきではありません。
 擬似乱数生成器が既知であり、シードが推定できる場合、その生成器は [予測可能な数値を生成します](https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded "Proper seeding of SecureRandom") 。128 ビットシードは「十分にランダムな」数値を生成するためのよい出発点です。
 
-以下のサンプルソースコードはセキュアな乱数の生成を示しています。
-
-```java
-import java.security.SecureRandom;
-import java.security.NoSuchAlgorithmException;
-// ...
-
-public static void main (String args[]) {
-  SecureRandom number = new SecureRandom();
-  // Generate 20 integers 0..20
-  for (int i = 0; i < 20; i++) {
-    System.out.println(number.nextInt(21));
-  }
-}
-```
-
-### 動的解析
-
 攻撃者はどのタイプの脆弱な疑似乱数生成器 (PRNG) が使用されているかを知ることで、[Java Random で行われたように](https://franklinta.com/2014/08/31/predicting-the-next-math-random-in-java/ "Predicting the next Math.random() in Java") 、以前に観測された値に基づいて次の乱数値を生成する概念実証を書くことは簡単です。非常に脆弱なカスタム乱数生成器の場合にはパターンを統計的に観測することが可能かもしれません。推奨される方法はとにかく APK を逆コンパイルしてアルゴリズムを検査することです (静的解析を参照してください) 。
 
 ランダム性をテストしたい場合には、数の大きなセットをキャプチャし Burp の [sequencer](https://portswigger.net/burp/documentation/desktop/tools/sequencer "Burp\'s Sequencer") で確認してランダム性の品質がどれほど良いかを見ます。
+
+### 動的解析
+
+上記のクラスやメソッドに [method tracing](0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている入出力値を判別できます。
 
 ## 参考情報
 
@@ -420,16 +385,16 @@ public static void main (String args[]) {
 - Android Developer blog: Cryptography Changes in Android P - <https://android-developers.googleblog.com/2018/03/cryptography-changes-in-android-p.html>
 - Android Developer blog: Some SecureRandom Thoughts - <https://android-developers.googleblog.com/2013/08/some-securerandom-thoughts.html>
 - Android Developer documentation - <https://developer.android.com/guide>
-- BSI Recommendations - 2017 - <https://www.keylength.com/en/8/>
+- BSI Recommendations - <https://www.keylength.com/en/8/>
 - Ida Pro - <https://www.hex-rays.com/products/ida/>
 - Legion of the Bouncy Castle - <https://www.bouncycastle.org/java.html>
 - NIST Key Length Recommendations - <https://www.keylength.com/en/4/>
-- Security Providers -  <https://developer.android.com/reference/java/security/Provider.html>
-- Spongy Castle  - <https://rtyley.github.io/spongycastle/>
+- Security Providers - <https://developer.android.com/reference/java/security/Provider.html>
+- Spongy Castle - <https://rtyley.github.io/spongycastle/>
 
 ### SecureRandom についての参考情報
 
-- Burpproxy its Sequencer - <https://portswigger.net/burp/documentation/desktop/tools/sequencer>
+- BurpProxy Sequencer - <https://portswigger.net/burp/documentation/desktop/tools/sequencer>
 - Proper Seeding of SecureRandom - <https://www.securecoding.cert.org/confluence/display/java/MSC63-J.+Ensure+that+SecureRandom+is+properly+seeded>
 
 ### 鍵管理のテストについての参考情報
