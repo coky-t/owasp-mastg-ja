@@ -399,11 +399,20 @@ Android 10 では以下の [SHA-2 CBC 暗号スイートが削除された](http
 
 ### 静的解析
 
-ソースコード内のすべての API やウェブサービスリクエストを特定し、プレーンの HTTP URL が使用されていないことを確認します。機密情報は [HttpsURLConnection](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [SSLSocket](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
+最初に、ソースコード内のすべてのネットワークリクエストを特定し、プレーンの HTTP URL が使用されていないことを確認します。機密情報は [`HttpsURLConnection`](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [`SSLSocket`](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
 
-`SSLSocket` はホスト名を検証 **しない** ことに注意します。ホスト名を検証するには `getDefaultHostnameVerifier` を使用します。Android 開発者ドキュメントには [コード例](https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket "Warnings About Using SSLSocket Directly") があります。
+次に、アプリがクリアテキスト HTTP トラフィックを許可していないことを確認する必要があります。Android 9 (API レベル 28) 以降、クリアテキスト HTTP トラフィックはデフォルトでブロックされますが、アプリケーションがそれを送信する方法は複数存在します。
 
-HTTPS 接続の終端となるサーバーや終端プロキシがベストプラクティスに従って構成されていることを確認します。[OWASP Transport Layer Protection チートシート](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
+- AndroidManifest.xml ファイルの `<application>` タグの [`android:usesCleartextTraffic`](https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic "Android documentation - usesCleartextTraffic flag") 属性を設定します。なお [Network Security Configuration](https://developer.android.com/training/articles/security-config.html) が構成されている場合には、このフラグは無視されます。
+- Network Security Configuration を構成して、`<domain-config>` 要素の `cleartextTrafficPermitted` 属性を true に設定し、クリアテキストトラフィックを有効にします。
+- 低レベル API ([`Socket`](https://developer.android.com/reference/java/net/Socket "Socket class") など) を使用して、カスタム HTTP 接続を設定します。
+- クロスプラットフォームフレームワーク (Flutter, Xamarin など) を使用します。これらは一般的に HTTP ライブラリ実装を独自に備えています。
+
+上記のすべてのケースは全体として注意深く分析する必要があります。例えば、アプリが Android Manifest や Network Security Configuration でクリアテキストトラフィックを許可していなくても、実際には HTTP トラフィックを送信している可能性があります。低レベル API を使用している (Network Security Configuration は無視される) 場合やクロスプラットフォームフレームワークが適切に設定されていない場合に当てはまります。
+
+次に、セキュアな接続を確立することを前提とした低レベル API (`SSLSocket` など) を使用する場合でも、セキュアに実装する必要があることに注意します。例えば、`SSLSocket` はホスト名を検証 **しません** 。ホスト名の検証には `getDefaultHostnameVerifier` を使用します。Android 開発者ドキュメントに [コード例](https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket "Warnings About Using SSLSocket Directly") があります。
+
+最後に、HTTPS 接続の終端となるサーバーや終端プロキシがベストプラクティスに従って構成されていることを検証します。[OWASP Transport Layer Protection チートシート](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
 ### 動的解析
 
