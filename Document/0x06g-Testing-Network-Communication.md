@@ -165,7 +165,7 @@ Result : FAIL
 
 > nscurl の出力に不合格がある場合には、クライアント側の ATS の構成を弱くするのではなく、サーバー側をよりセキュアにするために TLS のサーバー側構成を変更してください。
 
-このトピックに関する詳細は [ATS に関する NowSecure によるブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
+ATS に関する詳細はこの [ブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
 
 一般に以下のように要約できます。
 
