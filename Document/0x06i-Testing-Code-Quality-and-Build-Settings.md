@@ -640,8 +640,8 @@ iOS アプリケーションを PIE としてビルドする手順。
 
 1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
 2. iOS Deployment Target を iOS 4.3 以降に設定します。
-3. "Generate Position-Dependent Code" がデフォルト値 ("NO") に設定されていることを確認します。
-4. "Don't Create Position Independent Executables" がデフォルト値 ("NO") に設定されていることを確認します。
+3. "Generate Position-Dependent Code" ("Apple Clang - Code Generation" セクション) がデフォルト値 ("NO") に設定されていることを確認します。
+4. "Generate Position-Dependent Executable" ("Linking" セクション) がデフォルト値 ("NO") に設定されていることを確認します。
 
 ##### ARC 保護
 
