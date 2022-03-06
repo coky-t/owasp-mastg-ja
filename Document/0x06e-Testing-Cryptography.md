@@ -59,7 +59,7 @@ Apple CryptoKit の詳細については、以下のリソースを参照して�
 - [WWDC 2019 session 709 | Cryptography and Your Apps](https://developer.apple.com/videos/play/wwdc19/709/ "Cryptography and Your Apps from WWDC 2019 session 709")
 - [How to calculate the SHA hash of a String or Data instance | Hacking with Swift](https://www.hackingwithswift.com/example-code/cryptokit/how-to-calculate-the-sha-hash-of-a-string-or-data-instance "How to calculate the SHA hash of a String or Data instance from Hacking with Swift")
 
-#### CommonCrypto, SecKeyEncrypt および Wrapper ライブラリ
+#### CommonCrypto, SecKey および Wrapper ライブラリ
 
 暗号化操作で最も一般的に使用されるクラスは iOS ランタイムに同梱されている CommonCrypto です。CommonCrypto オブジェクトにより提供される機能は [ヘッダーファイルのソースコード](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h.auto.html "CommonCrypto.h") を参照することが分析に最適です。
 
@@ -71,7 +71,7 @@ Apple CryptoKit の詳細については、以下のリソースを参照して�
 
 残念ながら、CommonCryptor のパブリック API には次のようないくつかのタイプの操作がありません。GCM モードはプライベート API でのみ利用可能です。[そのソースコード](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-60074/include/CommonCryptorSPI.h "GCM in CC") を参照してください。これには追加のバインディングヘッダーが必要です。または他のラッパーライブラリを使用できます。
 
-次に、非対称操作のために、Apple は [SecKey](https://opensource.apple.com/source/Security/Security-57740.51.3/keychain/SecKey.h.auto.html "SecKey") を提供します。Apple は [開発者ドキュメント](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/using_keys_for_encryption "Using keys for encryption") でこれを使用する方法に関する素晴らしいガイドを提供しています。
+次に、非対称操作のために、Apple は [SecKey](https://developer.apple.com/documentation/security/seckey "SecKey") を提供します。Apple は [開発者ドキュメント](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/using_keys_for_encryption "Using keys for encryption") でこれを使用する方法に関する素晴らしいガイドを提供しています。
 
 前述のように、利便性を提供するために両方に対するラッパーライブラリがいくつか存在します。使用される典型的なライブラリには例えば以下のものがあります。
 
