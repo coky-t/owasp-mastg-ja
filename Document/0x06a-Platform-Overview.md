@@ -56,6 +56,20 @@ Apple は Apple が承認したコード、つまり Apple により署名され
 アプリケーションを配布および実行するには開発者プロファイルと Apple 署名証明書が必要です。
 開発者は Apple に登録する必要があります。[Apple Developer Program](https://developer.apple.com/support/compare-memberships/ "Membership for Apple Developer Program") に参加し、年間サブスクリプションを支払うことで開発と配布の可能性を広げます。また、サイドローディングを介してアプリをコンパイルおよび配布できる (但し、App Store では配布できない) フリーの開発者アカウントもあります。
 
+![OWASP MSTG](Images/Chapters/0x06a/code_signing.png) \
+
+[アーカイブされた Apple 開発者ドキュメント](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/AboutCS/AboutCS.html#//apple_ref/doc/uid/TP40005929-CH3-SW3) によると、コード署名は三つのパーツで構成されているようです。
+
+- 印章。これはコード署名ソフトウェアによって作成された、コードのさまざまなパーツのチェックサムまたはハッシュのコレクションです。印章は検証時に改竄を検出するために使用できます。
+- デジタル署名。コード署名ソフトウェアは署名者の ID を使用して印章を暗号化し、デジタル署名を作成します。これにより印章の完全性が保証されます。
+- コード要件。コード署名の検証に関するルールです。目標に応じて、検証者に固有のものもあれば、署名者が指定して、コードの残りの部分と一緒に封印するものもあります。
+
+詳しくはこちら。
+
+- [Code Signing Guide (Archived Apple Developer Documentation)](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Introduction/Introduction.html)
+- [Code Signing (Apple Developer Documentation)](https://developer.apple.com/support/code-signing/)
+- [Demystifying iOS Code Signature](https://medium.com/csit-tech-blog/demystifying-ios-code-signature-309d52c2ff1d)
+
 ### 暗号化とデータ保護
 
 _FairPlay コード暗号化_ は App Store からダウンロードしたアプリに適用されます。FairPlay はマルチメディアコンテンツを購入する際の DRM として開発されました。もともと、FairPlay の暗号化は MPEG や QuickTime ストリームに適用されていましたが、同じ基本概念を実行可能ファイルにも適用できます。基本的な考え方は次の通りです。新しい Apple ユーザーアカウントまたは Apple ID を登録すると、公開鍵と秘密鍵 (private key) のペアが作成され、アカウントに割り当てられます。その秘密鍵 (private key) はデバイス上にセキュアに格納されます。つまり FairPlay で暗号化されたコードはアカウントに関連付けられたデバイス上でのみ復号できます。FairPlay 暗号のリバースは通常、デバイス上でアプリを実行し、メモリから復号されたコードをダンプして取得します (「iOS アプリのテスト環境構築」も参照してください) 。
