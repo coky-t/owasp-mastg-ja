@@ -326,6 +326,10 @@ OTP 認証が使用されている場合、ほとんどの OTP は短い数値�
 
 > OTP は特定の時間 (通常 30 秒) のみ有効とすべきであり、OTP に誤って数回 (通常 3 回) キー入力した後には提供された OTP は無効にすべきであり、ユーザーはランディングページにリダイレクトされるかログアウトされるべきです。
 
+アプリ内部の機密データや機能へのアクセスを許可するために、アプリがリモートエンドポイントからの `"message":"Success"` などの静的な応答に依存しているかどうかを確認すべきです。その場合、攻撃者はサーバーレスポンスを操作することで 2FA 実装を簡単にバイパスできます。例えば [Burp Suite](0x08-Testing-Tools.md#burp-suite) などの傍受プロキシを使用して、レスポンスを `"message":"Success"` に改変します。
+
+このような攻撃を防ぐには、アプリケーションは常に何らかのユーザートークンや、事前にセキュアに (Keychain/KeyStore などに) 保存されたユーザーに関する動的な情報を検証する必要があります。
+
 セッション管理のテストについての詳細情報は [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/01-Testing_for_Session_Management_Schema "OWASP Testing Guide V4 (Testing for Session Management)") を参照ください。
 
 ## ステートレス (トークンベース) 認証のテスト (MSTG-AUTH-3)
