@@ -10,6 +10,14 @@ OWASP は多くの執筆者、レビュー担当者、編集者がこのガイ�
 
 > 招待状の有効期限が切れている場合は私たちの GitHub Repo で issue を開いてください。
 
+## OWASP MASVS と MSTG の採用について
+
+OWASP MASVS と MSTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。 [詳細はこちらをご覧ください](0x02b-MASVS-MSTG-Adoption.md) 。
+
+<a href="0x02b-MASVS-MSTG-Adoption.md">
+<img src="Images/Other/trusted-by-logos.png"/>
+</a>
+
 ## 免責事項
 
 MSTG の資料を利用してモバイルアプリに対するテストを実行する前に、お住まいの国の法律を参照してください。MSTG に記載されているもので法律に違反してはいけません。
@@ -18,7 +26,7 @@ MSTG の資料を利用してモバイルアプリに対するテストを実行
 
 ## 著作権とライセンス
 
-Copyright © 2021 The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License") に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
+Copyright © The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License") に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
 
 ![OWASP MSTG](Images/CC-license.png) \
 
