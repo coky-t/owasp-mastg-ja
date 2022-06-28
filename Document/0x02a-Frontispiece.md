@@ -1,6 +1,6 @@
 # 扉
 
-![OWASP MSTG](Images/OWASP_logo.png) \
+<img src="Images/OWASP_logo.png" width="100%" />
 
 ## OWASP モバイルセキュリティテストガイドについて
 
@@ -28,7 +28,7 @@ MSTG の資料を利用してモバイルアプリに対するテストを実行
 
 Copyright © The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License") に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
 
-![OWASP MSTG](Images/CC-license.png) \
+<img src="Images/CC-license.png" width="300px" />
 
 ## ISBN
 
@@ -128,7 +128,7 @@ jonasw234, zehuanli, jadeboer, Isopach, prabhant, jhscheer, meetinthemiddle-be, 
 
 MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは [OWASP Project Wiki](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide#tab=Sponsorship_Packages "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
 
-![OWASP MSTG](Images/Donators/donators.png) \
+<img src="Images/Donators/donators.png" width="100%" />
 
 ### 旧版
 
