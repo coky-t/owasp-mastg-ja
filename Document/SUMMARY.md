@@ -1,7 +1,7 @@
 # 一覧
 
 - [更新履歴](CHANGELOG.md)
-- [扉](0x02-Frontispiece.md)
+- [扉](0x02a-Frontispiece.md)
 
 ## 概要
 
