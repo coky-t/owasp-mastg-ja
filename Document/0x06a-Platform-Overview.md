@@ -33,7 +33,7 @@ iOS には多くの強みがありますが、iOS アプリ開発者はそれで
 - 暗号化とデータ保護
 - 汎用的なエクスプロイト緩和策
 
-![OWASP MSTG](Images/Chapters/0x06a/iOS_Security_Architecture.png) \
+<img src="Images/Chapters/0x06a/iOS_Security_Architecture.png" width="200px" />
 
 ### ハードウェアセキュリティ
 
@@ -56,7 +56,7 @@ Apple は Apple が承認したコード、つまり Apple により署名され
 アプリケーションを配布および実行するには開発者プロファイルと Apple 署名証明書が必要です。
 開発者は Apple に登録する必要があります。[Apple Developer Program](https://developer.apple.com/support/compare-memberships/ "Membership for Apple Developer Program") に参加し、年間サブスクリプションを支払うことで開発と配布の可能性を広げます。また、サイドローディングを介してアプリをコンパイルおよび配布できる (但し、App Store では配布できない) フリーの開発者アカウントもあります。
 
-![OWASP MSTG](Images/Chapters/0x06a/code_signing.png) \
+<img src="Images/Chapters/0x06a/code_signing.png" width="400px" />
 
 [アーカイブされた Apple 開発者ドキュメント](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/AboutCS/AboutCS.html#//apple_ref/doc/uid/TP40005929-CH3-SW3) によると、コード署名は三つのパーツで構成されているようです。
 
@@ -141,7 +141,7 @@ language.lproj フォルダはアプリケーションがサポートする言�
 - ストーリーボードは iOS アプリケーションのユーザーインタフェースの視覚的な表現です。スクリーンと、スクリーン間の接続を示しています。
 - 文字列ファイル形式は一つ以上のキー・バリューのペアとオプションのコメントで構成されています。
 
-![OWASP MSTG](Images/Chapters/0x06a/iOS_project_folder.png) \
+<img src="Images/Chapters/0x06a/iOS_project_folder.png" width="400px" />
 
 脱獄済みデバイスでは、メインのアプリバイナリを復号し IPA ファイルの再構築を可能にするさまざまなツールを使用して、インストールされた iOS アプリの IPA を復元できます。同様に、脱獄済みデバイスでは [IPA Installer](https://github.com/autopear/ipainstaller "IPA Installer") を使用して IPA ファイルをインストールできます。モバイルセキュリティアセスメントでは、開発者が IPA を直接提供することがよくあります。あなたに実際のファイルを送ったり、[TestFlight](https://developer.apple.com/testflight/ "TestFlight") や [Visual Studio App Center](https://appcenter.ms/ "Visual Studio App Center") などの開発用配布プラットフォームへのアクセスを提供することがあります。
 
