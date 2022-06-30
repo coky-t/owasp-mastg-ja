@@ -681,7 +681,7 @@ Android アプリケーションのアタックサーフェイスはアプリケ
 
 - IPC 通信や URL スキームを使用したすべての入力を妥当性確認している。以下も参照。
   - [IPC による機密性の高い機能の開示のテスト](0x05h-Testing-Platform-Interaction.md#testing-for-sensitive-functionality-exposure-through-ipc-mstg-platform-4 "Testing for Sensitive Functionality Exposure Through IPC")
-  - [カスタム URL スキームのテスト](0x05h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3 "Testing Custom URL Schemes")
+  - [ディープリンクのテスト](0x05h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3 "Testing Deep Links")
 - 入力フィールドでのユーザーによるすべての入力を妥当性確認している。
 - WebView 内でロードされたコンテンツを妥当性確認している。以下も参照。
   - [WebView での JavaScript 実行のテスト](0x05h-Testing-Platform-Interaction.md#testing-javascript-execution-in-webviews-mstg-platform-5 "Testing JavaScript Execution in WebViews")
