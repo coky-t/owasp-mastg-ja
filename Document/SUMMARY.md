@@ -2,6 +2,8 @@
 
 - [更新履歴](CHANGELOG.md)
 - [扉](0x02a-Frontispiece.md)
+- [OWASP MASVS と MSTG の採用](0x02b-MASVS-MSTG-Adoption.md)
+- [謝辞](0x02c-Acknowledgements.md)
 
 ## 概要
 
