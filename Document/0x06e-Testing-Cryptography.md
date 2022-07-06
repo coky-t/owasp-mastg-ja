@@ -10,29 +10,32 @@ Apple は最も一般的な暗号化アルゴリズムの実装を含むライ�
 
 #### CryptoKit
 
-Apple CryptoKit は iOS 13 でリリースされ、Apple のネイティブ暗号化ライブラリ `corecrypto` の上に構築されています。Swift フレームワークは厳密に型付けされた API インタフェースを提供し、効果的なメモリ管理を行い、比較可能 (eauatable) に適応し、ジェネリックをサポートします。CryptoKit にはハッシュ、対称鍵暗号化、公開鍵暗号化のためのセキュアなアルゴリズムが含まれています。このフレームワークでは Secure Enclave のハードウェアベースの鍵マネージャも利用できます。
+Apple CryptoKit は iOS 13 でリリースされ、Apple のネイティブ暗号化ライブラリ corecrypto の上に構築されています。Swift フレームワークは厳密に型付けされた API インタフェースを提供し、効果的なメモリ管理を行い、比較可能 (eauatable) に適応し、ジェネリックをサポートします。CryptoKit にはハッシュ、対称鍵暗号化、公開鍵暗号化のためのセキュアなアルゴリズムが含まれています。このフレームワークでは Secure Enclave のハードウェアベースの鍵マネージャも利用できます。
 
 Apple CryptoKit には以下のアルゴリズムが含まれています。
 
-*ハッシュ*
-    - MD5 (Insecure Module)
-        - SHA1 (Insecure Module)
-        - SHA-2 256-bit digest
-        - SHA-2 384-bit digest
-        - SHA-2 512-bit digest
+**ハッシュ:**
 
-*対称鍵*
-    - Message Authentication Codes (HMAC)
-    - Authenticated Encryption
-        - AES-GCM
-        - ChaCha20-Poly1305
+- MD5 (Insecure Module)
+- SHA1 (Insecure Module)
+- SHA-2 256-bit digest
+- SHA-2 384-bit digest
+- SHA-2 512-bit digest
 
-*公開鍵*
-    - Key Agreement
-        - Curve25519
-        - NIST P-256
-        - NIST P-384
-        - NIST P-512
+**対称鍵:**
+
+- Message Authentication Codes (HMAC)
+- Authenticated Encryption
+  - AES-GCM
+  - ChaCha20-Poly1305
+
+**公開鍵:**
+
+- Key Agreement
+  - Curve25519
+  - NIST P-256
+  - NIST P-384
+  - NIST P-512
 
 例:
 
@@ -183,8 +186,7 @@ func testKeyDerivation() {
 }
 ```
 
- *出典: [https://stackoverflow.com/questions/8569555/pbkdf2-using-commoncrypto-on-ios](https://stackoverflow.com/questions/8569555/pbkdf2-using-commoncrypto-on-ios "PBKDF2 using CommonCrypto on iOS
-"), `Arcane` ライブラリのテストスイートでテスト済み*
+- _出典: [https://stackoverflow.com/questions/8569555/pbkdf2-using-commoncrypto-on-ios](https://stackoverflow.com/questions/8569555/pbkdf2-using-commoncrypto-on-ios "PBKDF2 using CommonCrypto on iOS"), `Arcane` ライブラリのテストスイートでテスト済み_
 
 鍵を保存する必要がある場合、選択した保護クラスが `kSecAttrAccessibleAlways` でない限り、キーチェーンを使用することをお勧めします。`NSUserDefaults`、プロパティリストファイル、または Core Data や Realm からの他のシンクなど、他の場所に鍵を保存することは一般的にキーチェーンを使用するよりセキュアではなくなります。
 Core Data や Realm からのシンクが `NSFileProtectionComplete` データ保護クラスを使用して保護されている場合でも、キーチェーンを使用することをお勧めします。詳細については "[iOS のデータストレージ](0x06d-Testing-Data-Storage.md)" の章を参照してください。
