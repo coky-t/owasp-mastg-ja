@@ -21,7 +21,7 @@
   - **最小権限の原則** ("システムのすべてのプログラムとすべてのユーザーは、ジョブを完了するために最小限の権限セットを使用して操作すべきである。")
 - **ユーザーの教育**: ユーザーは機密性の高いデータについての教育を受け、(情報の安全な取り扱いと処理を確実にするために) アプリケーションを適切に使用する方法について通知を受ける必要があります。
 
-> 注: アプリが特定のデータを扱うと謳っていても、実際にはそうではないことがよくあります。IEEE の論文 ["Engineering Privacy in Smartphone Apps: A Technical Guideline Catalog for App Developers" by Majid Hatamian](https://www.researchgate.net/publication/339349349_Engineering_Privacy_in_Smartphone_Apps_A_Technical_Guideline_Catalog_for_App_Developers) はこのトピックについて非常に優れた紹介をしています。
+> 注: アプリが特定のデータを扱うと謳っていても、実際にはそうではないことがよくあります。IEEE の論文 ["Engineering Privacy in Smartphone Apps: A Technical Guideline Catalog for App Developers" by Majid Hatamian](https://drive.google.com/file/d/1cp7zrqJuVkftJ0DARNN40Ga_m_tEhIrQ/view?usp=sharing) はこのトピックについて非常に優れた紹介をしています。
 
 ### データ保護における保護目標
 
