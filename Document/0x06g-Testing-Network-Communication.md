@@ -284,7 +284,7 @@ SSL ピンニングをバイパスするにはさまざまな方法がありま�
 Frida と Objection を使用して、非脱獄済みデバイスで SSL ピンニングをバイパスすることもできます (これは脱獄済みデバイスでも機能します) 。「iOS の基本的なセキュリティテスト」の説明に従って、Objection でアプリケーションを再パッケージ化した後、Objection で以下のコマンドを使用して一般的な SSL ピンニング実装を無効にできます。
 
 ```bash
-$ ios sslpinning disable
+ios sslpinning disable
 ```
 
 [pinning.ts](https://github.com/sensepost/objection/blob/master/agent/src/ios/pinning.ts "pinning.ts") を調べてバイパスの仕組みを理解できます。
