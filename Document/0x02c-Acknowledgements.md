@@ -23,7 +23,7 @@ MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一�
      - その他
 3. **情報を広めること** 毎年の多くのプレゼンテーション、公開トレーニング、ソーシャルメディアへの高い関与 (プロジェクトを宣伝するために、いいね、再共有、独自の投稿を行うなど) でプロジェクトを宣伝します。
 
-*注釈: すべての箇条書きを満たす必要はありません (あくまで例です) 。ただし、プロジェクトへの貢献の継続性と高い影響力を明確に示すことができなければなりません。たとえば、"2." を満たすには最初の 6 か月間に影響力の大きいプルリクエストを送信しており、今後も継続するつもりであることを示します。*
+_注釈: すべての箇条書きを満たす必要はありません (あくまで例です) 。ただし、プロジェクトへの貢献の継続性と高い影響力を明確に示すことができなければなりません。たとえば、"2." を満たすには最初の 6 か月間に影響力の大きいプルリクエストを送信しており、今後も継続するつもりであることを示します。_
 
 ### 🎁 メリット
 
@@ -35,11 +35,11 @@ MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一�
 
 ### 📝 応募方法
 
-応募したい場合はプロジェクトリーダーにご連絡ください。 [Sven Schleier](mailto:sven.schleier@owasp.org) と [Carlos Holguera](mailto:carlos.holguera@owasp.org) に電子メールを送ると、あなたのアプリケーションを検証します。上記の三つのカテゴリに沿った 6 か月間の成果を示す十分な証跡 (通常、対応する要素にリンクする URL を含む *contribution report* の形式で) を必ず含めてください。
+応募したい場合はプロジェクトリーダーにご連絡ください。 [Sven Schleier](mailto:sven.schleier@owasp.org) と [Carlos Holguera](mailto:carlos.holguera@owasp.org) に電子メールを送ると、あなたのアプリケーションを検証します。上記の三つのカテゴリに沿った 6 か月間の成果を示す十分な証跡 (通常、対応する要素にリンクする URL を含む _contribution report_ の形式で) を必ず含めてください。
 
 ### ❗ 重要な免責事項
 
-- "MSTG 支持者" ステータスが付与され、それを維持したい場合には、最初の期間以降も前述の貢献が一貫していなければなりません。この証跡を収集し、毎年 *contribution report* をお送りください。
+- "MSTG 支持者" ステータスが付与され、それを維持したい場合には、最初の期間以降も前述の貢献が一貫していなければなりません。この証跡を収集し、毎年 _contribution report_ をお送りください。
 - [金銭的な寄付](https://owasp.org/www-project-mobile-security-testing-guide/#div-donate) は資格基準の一部ではありませんが業績としてリストされます。
 - MSTG テキストにリンクされる再共有された出版物やブログ投稿は **教育的** であり、モバイルセキュリティや MASVS/MSTG に焦点を当て、 **会社の製品やサービスを推奨していない** ことが必要です。
 - 支持企業はコミュニケーションの一環としてロゴや MASVS/MSTG へのリンクを使用できますが、ソフトウェアやサービスの選定プロバイダとして OWASP が推奨しているものとして使用することはできません。
@@ -90,7 +90,7 @@ MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一�
 - 各カテゴリの提案に対するフィードバック
 - 内部分析による統計
 
-過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[UnCrackable App for Android Level 4: Radare2 Pay](Crackmes/Android/Level_04/) を寄贈しています。
+過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[UnCrackable App for Android Level 4: Radare2 Pay](https://github.com/OWASP/owasp-mstg/tree/master/Crackmes/Android/Level_04) を寄贈しています。
 
 **情報を広めること:**
 
@@ -165,6 +165,6 @@ jonasw234, zehuanli, jadeboer, Isopach, prabhant, jhscheer, meetinthemiddle-be, 
 
 ### 支援者
 
-MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは [OWASP Project Wiki](https://www.owasp.org/index.php/OWASP_Mobile_Security_Testing_Guide#tab=Sponsorship_Packages "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
+MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは [OWASP Project Wiki](https://owasp.org/www-project-mobile-security-testing-guide/#donation-packagess "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
 
 <img src="Images/Donators/donators.png"/>
