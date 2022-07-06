@@ -306,7 +306,7 @@ Android 8.0 (API level 26) は二つのエラーコードを追加します。
 
 ### 動的解析
 
-この詳細な [Android KeyStore と生体認証に関するブログ記事](https://labs.f-secure.com/blog/how-secure-is-your-android-keystore-authentication "How Secure is your Android Keystore Authentication ?") をご覧ください。この調査には生体認証のセキュアではない実装をテストし、バイパスできるかどうかを試みることができる二つの Frida スクリプトが含まれています。
+この詳細な [Android KeyStore と生体認証に関するブログ記事](https://labs.withsecure.com/blog/how-secure-is-your-android-keystore-authentication "How Secure is your Android Keystore Authentication ?") をご覧ください。この調査には生体認証のセキュアではない実装をテストし、バイパスできるかどうかを試みることができる二つの Frida スクリプトが含まれています。
 
 - [Fingerprint bypass](https://github.com/FSecureLABS/android-keystore-audit/blob/master/frida-scripts/fingerprint-bypass.js "Fingerprint Bypass"): この Frida スクリプトは `CryptoObject` が `BiometricPrompt` クラスの `authenticate` メソッドで使用されていない場合に認証をバイパスします。認証の実装はコールされる `onAuthenticationSucceded` コールバックに依存しています。
 - [Fingerprint bypass via exception handling](https://github.com/FSecureLABS/android-keystore-audit/blob/master/frida-scripts/fingerprint-bypass-via-exception-handling.js "Fingerprint bypass via exception handling"): この Frida スクリプトは `CryptoObject` が使用されているが正しくない方法で使用されている場合に認証のバイパスを試みます。詳細な説明はブログ記事の "Crypto Object Exception Handling" セクションにあります。
