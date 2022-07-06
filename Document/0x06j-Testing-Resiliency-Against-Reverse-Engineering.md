@@ -53,9 +53,9 @@
 
 脱獄メカニズムを確認するもう一つの方法として、アプリケーションのサンドボックス外にある場所に書き込みを試みます。アプリケーションが例えば `/private ディレクトリ` にファイルの作成を試みることでこれを行うことができます。ファイルの作成に成功した場合、デバイスは脱獄されています。
 
-Swift:
+**Swift:**
 
-```objectivec
+```swift
 do {
     let pathToFileInRestrictedDirectory = "/private/jailbreak.txt"
     try "This is a test.".write(toFile: pathToFileInRestrictedDirectory, atomically: true, encoding: String.Encoding.utf8)
@@ -66,7 +66,7 @@ do {
 }
 ```
 
-Objective-C:
+**Objective-C:**
 
 ```objectivec
 NSError *error;
@@ -86,15 +86,15 @@ if(error==nil){
 
 Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。[Cydia](0x08-Testing-Tools.md#cydia) アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
 
-Swift:
+**Swift:**
 
-```objectivec
+```swift
 if let url = URL(string: "cydia://package/com.example.package"), UIApplication.shared.canOpenURL(url) {
     // Device is jailbroken
 }
 ```
 
-Objective-C:
+**Objective-C:**
 
 ```objectivec
 if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://package/com.example.package"]]){
@@ -104,14 +104,14 @@ if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://
 
 ### 脱獄検出のバイパス
 
-脱獄済みデバイスで脱獄検出が有効であるアプリケーションを起動すると、以下のいずれかのことに気づくでしょう。
+脱獄済みデバイスで脱獄検出が有効であるアプリケーションを起動すると、以下のいずれかのことに気づくかもしれません。
 
 1. アプリケーションは通知なしで直ちに終了します。
 2. 脱獄済みデバイス上ではアプリケーションが実行されないことを示すポップアップウィンドウが表示されます。
 
 最初のケースでは、アプリケーションが脱獄なしのデバイスで完全に機能していることを確認します。アプリケーションがクラッシュしているか終了する原因となるバグがある可能性があります。これは試作版のアプリケーションをテストしているときに発生する可能性があります。
 
-例として再度 Damn Vulnerable iOS アプリケーションを使用して、脱獄検出のバイパスを見てみます。 Hopper にバイナリをロードした後、アプリケーションが完全に逆アセンブルされるまで待つ必要があります (トップバーを見てステータスを確認します) 。それから検索ボックスで "jail" 文字列を探します。`SFAntiPiracy` と `JailbreakDetectionVC` の2つのクラスがあります。関数を逆コンパイルして、それらが何をしているか、特に何を返すのかを確認することもできます。
+例として再度 Damn Vulnerable iOS アプリケーションを使用して、脱獄検出のバイパスを見てみます。 [Hopper](0x08-Testing-Tools.md#hopper-commercial-tool) (商用ツール) にバイナリをロードした後、アプリケーションが完全に逆アセンブルされるまで待つ必要があります (トップバーを見てステータスを確認します) 。それから検索ボックスで "jail" 文字列を探します。`SFAntiPiracy` と `JailbreakDetectionVC` の2つのクラスがあります。関数を逆コンパイルして、それらが何をしているか、特に何を返すのかを確認することもできます。
 
 <img src="Images/Chapters/0x06b/HopperDisassembling.png" width="300px" />
 <img src="Images/Chapters/0x06b/HopperDecompile.png" width="300px" />
@@ -166,7 +166,7 @@ false
 4. ホストコンピュータ上で `frida-trace` を使用します。
 
 ```bash
-$ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp  -m "-[JailbreakDetectionVC isJailbroken]"
+frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp  -m "-[JailbreakDetectionVC isJailbroken]"
 ```
 
 これは DamnVulnerableIOSApp を開始して、`-[JailbreakDetectionVC isJailbroken]` への呼出をトレースし、`onEnter` および `onLeave` コールバック関数で JavaScript フックを作成します。以下の例に示すように、`value.replace` で戻り値を置き換えるのは簡単です。
@@ -198,7 +198,7 @@ Changing the return value to:0x0
 
 `-[JailbreakDetectionVC isJailbroken]` へのコールが二回あることに注意します。これはアプリの GUI 上での二回の物理的なタップに相当します。
 
-ファイルシステムチェックに依存する脱獄検出メカニズムをバイパスするもう一つの方法は objection です。脱獄バイパスの実装は [jailbreak.ts スクリプト](https://github.com/sensepost/objection/blob/master/agent/src/ios/jailbreak.ts "jailbreak.ts") にあります。
+ファイルシステムチェックに依存する脱獄検出メカニズムをバイパスするもう一つの方法は [objection](0x08-Testing-Tools.md#objection) です。脱獄バイパスの実装は [jailbreak.ts スクリプト](https://github.com/sensepost/objection/blob/master/agent/src/ios/jailbreak.ts "jailbreak.ts") にあります。
 
 Objective-C メソッドやネイティブ関数をフックするための Python スクリプトは以下を参照します。
 
@@ -531,7 +531,8 @@ CC で HMAC を検証する場合、以下の手順で行います:
 
 ### 有効性評価
 
-*アプリケーションソースコード整合性チェックについて*
+**アプリケーションソースコード整合性チェック:**
+
 改変していない状態でデバイス上でアプリを実行し、すべてが機能することを確認します。それから optool を使用して実行可能ファイルにパッチを適用し、「セキュリティテスト入門」の章に説明されているようにアプリを再署名し、実行します。
 アプリは改変を検出して何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したりアプリを終了する必要があります。防御のバイパスが機能するか、以下の質問に答えてください。
 
@@ -540,7 +541,8 @@ CC で HMAC を検証する場合、以下の手順で行います:
 - 防御を無効化するためにカスタムコードを書く必要はありますか。どのくらいの時間を投じる必要がありますか。
 - メカニズムをバイパスすることの難しさについてあなたの評価はどうですか。
 
-*ストレージ整合性チェックについて*
+**ストレージ整合性チェック:**
+
 同様のアプローチが機能します。以下の質問に答えてください。
 
 - メカニズムを簡単にバイパスできますか (ファイルやキー・バリューペアの内容を変更するなど) 。
@@ -710,7 +712,7 @@ mov        rbp, rsp
 - SwiftShield をダウンロードしたディレクトリに移動し、 swiftshield 実行可能ファイルを `/usr/local/bin` にコピーします。
 
 ```bash
-$ cp swiftshield/swiftshield /usr/local/bin/
+cp swiftshield/swiftshield /usr/local/bin/
 ```
 
 - terminal で SwiftSecurity ディレクトリ (手順 1 でチェックアウトした場所) に移動し、 swiftshield コマンド (手順 3 でダウンロードしたもの) を実行します。
