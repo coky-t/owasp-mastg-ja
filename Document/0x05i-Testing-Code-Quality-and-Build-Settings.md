@@ -175,20 +175,20 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
 最初に、Android NDK の `nm` バイナリを見つけてエクスポート (またはエイリアスを作成) します。
 
 ```bash
-export $NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm
+export NM = $ANDROID_NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm
 ```
 
 デバッグシンボルを表示するには:
 
 ```bash
-$ $NM -a libfoo.so
+$NM -a libfoo.so
 /tmp/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-nm: libfoo.so: no symbols
 ```
 
 動的シンボルを表示するには:
 
 ```bash
-$ $NM -D libfoo.so
+$NM -D libfoo.so
 ```
 
 あるいは、お気に入りの逆アセンブラでファイルを開いて手動でシンボルテーブルをチェックします。
@@ -310,8 +310,8 @@ apply plugin: 'org.owasp.dependencycheck'
 gradle がプラグインを呼び出したら、以下を実行してレポートを作成できます。
 
 ```bash
-$ gradle assemble
-$ gradle dependencyCheckAnalyze --info
+gradle assemble
+gradle dependencyCheckAnalyze --info
 ```
 
 特に設定しない限り、レポートは `build/reports` にあります。見つかった脆弱性を分析するにはレポートを使用します。ライブラリで見つかった脆弱性を考慮して対処方法を確認します。
@@ -346,8 +346,8 @@ plugins {
 プラグインがピックアップされたら、以下のコマンドを使用します。
 
 ```bash
-$ gradle assemble
-$ gradle downloadLicenses
+gradle assemble
+gradle downloadLicenses
 ```
 
 これでライセンスレポートが生成されます。これを使用してサードパーティライブラリが使用するライセンスを調べることができます。使用許諾契約をチェックして、著作権表示をアプリに含める必要があるかどうか、およびライセンスの種類がアプリケーションのコードをオープンソースにする必要があるかどうかを確認します。
