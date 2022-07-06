@@ -198,7 +198,7 @@ iOS アプリケーションではサードパーティライブラリを使用�
 最初に、 Package.swift ファイルが置かれているプロジェクトのルートで、以下のように入力します。
 
 ```bash
-$ swift build
+swift build
 ```
 
 次に、 Package.resolved ファイルで実際に使用されているバージョンを確認し、特定のライブラリに既知の脆弱性がないか検査します。
@@ -206,7 +206,7 @@ $ swift build
 [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [Swift Package Manager Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/swift.html "dependency-check - SWIFT Package Manager Analyzer") を利用して、すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの Package.swift ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
 
 ```bash
-$ dependency-check  --enableExperimental --out . --scan Package.swift
+dependency-check  --enableExperimental --out . --scan Package.swift
 ```
 
 ##### CocoaPods
@@ -216,15 +216,15 @@ $ dependency-check  --enableExperimental --out . --scan Package.swift
 最初に、 Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
 
 ```bash
-$ sudo gem install cocoapods
-$ pod install
+sudo gem install cocoapods
+pod install
 ```
 
 次に、依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
 
 ```bash
-$ sudo gem install cocoapods-dependencies
-$ pod dependencies
+sudo gem install cocoapods-dependencies
+pod dependencies
 ```
 
 上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
@@ -239,7 +239,7 @@ $ pod dependencies
 すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの \*.podspec や Podfile.lock ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
 
 ```bash
-$ dependency-check  --enableExperimental --out . --scan Podfile.lock
+dependency-check  --enableExperimental --out . --scan Podfile.lock
 ```
 
 ##### Carthage
@@ -249,8 +249,8 @@ $ dependency-check  --enableExperimental --out . --scan Podfile.lock
 最初に、 Cartfile があるプロジェクトのルートで、以下を入力します。
 
 ```bash
-$ brew install carthage
-$ carthage update --platform iOS
+brew install carthage
+carthage update --platform iOS
 ```
 
 次に、 Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
@@ -284,7 +284,7 @@ $ carthage update --platform iOS
 アプリケーションソースが利用可能で Swift Package Manager が使用されている場合、 Package.swift ファイルが置かれているプロジェクトのルートディレクトリで以下のコードを実行します。
 
 ```bash
-$ swift build
+swift build
 ```
 
 これで各依存関係のソースがプロジェクトの `/.build/checkouts/` フォルダにダウンロードされました。ここで各ライブラリのライセンスをそれぞれのフォルダに見つけることができます。
@@ -295,8 +295,8 @@ $ swift build
 最初に、 Podfile があるプロジェクトのルートで、以下を実行します。
 
 ```bash
-$ sudo gem install CocoaPods
-$ pod install
+sudo gem install CocoaPods
+pod install
 ```
 
 これにより、すべてのライブラリがインストールされている Pods フォルダが作成されます。ライブラリは各自のフォルダにあります。各フォルダのライセンスファイルを調べることで、各ライブラリのライセンスを確認できます。
@@ -306,8 +306,8 @@ $ pod install
 アプリケーションソースが利用可能であり、Carthage が使用されている場合、 Cartfile があるプロジェクトのルートディレクトリで、以下のコードを実行します。
 
 ```bash
-$ brew install carthage
-$ carthage update --platform iOS
+brew install carthage
+carthage update --platform iOS
 ```
 
 各依存関係のソースはプロジェクトの `Carthage/Checkouts` フォルダにダウンロードされます。ここで各ライブラリのそれぞれのフォルダにライセンスを見つけることができます。
