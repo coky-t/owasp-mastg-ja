@@ -8,7 +8,7 @@
 
 iOS にはアプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication "Local Authentication framework") では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html "Keychain Services") を利用することが可能であり (および推奨され) ます。
 
-iOS での指紋認証は *Touch ID* として知られています。指紋 ID センサーは [SecureEnclave security coprocessor](https://www.blackhat.com/docs/us-16/materials/us-16-Mandt-Demystifying-The-Secure-Enclave-Processor.pdf "Demystifying the Secure Enclave Processor by Tarjei Mandt, Mathew Solnik, and David Wang") により操作され、指紋データをシステムの他の部分に開示することはありません。Touch ID の次に、Apple は顔認識に基づく認証を可能にする *Face ID* を導入しました。いずれもアプリケーションレベルで、データを格納し、データを格納する実際の手法として、似たような API を使用します (例えば、顔データと指紋関連データが異なります) 。
+iOS での指紋認証は _Touch ID_ として知られています。指紋 ID センサーは [SecureEnclave security coprocessor](https://www.blackhat.com/docs/us-16/materials/us-16-Mandt-Demystifying-The-Secure-Enclave-Processor.pdf "Demystifying the Secure Enclave Processor by Tarjei Mandt, Mathew Solnik, and David Wang") により操作され、指紋データをシステムの他の部分に開示することはありません。Touch ID の次に、Apple は顔認識に基づく認証を可能にする _Face ID_ を導入しました。いずれもアプリケーションレベルで、データを格納し、データを格納する実際の手法として、似たような API を使用します (例えば、顔データと指紋関連データが異なります) 。
 
 開発者には Touch ID/FaceID 認証を組み込むために二つの選択肢があります。
 
@@ -48,7 +48,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 }
 ```
 
-*ローカル認証フレームワークを使用した Swift での Touch ID 認証 (Apple の公式コードサンプル)*
+- _ローカル認証フレームワークを使用した Swift での Touch ID 認証 (Apple の公式コードサンプル)_
 
 ### ローカル認証にキーチェーンサービスを使用する
 
@@ -60,7 +60,7 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 
 #### Swift
 
-```default
+```swift
 // 1. 認証設定を表す AccessControl オブジェクトを作成する
 
 var error: Unmanaged<CFError>?
@@ -93,45 +93,10 @@ if status == noErr {
 } else {
     // error while saving
 }
-```
 
-#### Objective-C
+// 4. これで保存したアイテムをキーチェーンからリクエストできます。キーチェーンサービスはユーザーに認証ダイアログを表示し、適切な指紋が提供されたかどうかに応じてデータまたは nil を返します。
 
-```objectivec
-
-    // 1. 認証設定を表す AccessControl オブジェクトを作成する
-    CFErrorRef *err = nil;
-
-    SecAccessControlRef sacRef = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-        kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-        kSecAccessControlUserPresence,
-        err);
-
-    // 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
-    NSDictionary* query = @{
-        (_ _bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
-        (__bridge id)kSecAttrLabel: @"com.me.myapp.password",
-        (__bridge id)kSecAttrAccount: @"OWASP Account",
-        (__bridge id)kSecValueData: [@"test_strong_password" dataUsingEncoding:NSUTF8StringEncoding],
-        (__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacRef
-    };
-
-    // 3. アイテムを保存する
-    OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, nil);
-
-    if (status == noErr) {
-        // successfully saved
-    } else {
-        // error while saving
-    }
-```
-
-これで保存したアイテムをキーチェーンからリクエストできます。キーチェーンサービスはユーザーに認証ダイアログを表示し、適切な指紋が提供されたかどうかに応じてデータまたは nil を返します。
-
-#### Swift
-
-```default
-// 1. クエリを定義する
+// 5. クエリを定義する
 var query = [String: Any]()
 query[kSecClass as String] = kSecClassGenericPassword
 query[kSecReturnData as String] = kCFBooleanTrue
@@ -139,7 +104,7 @@ query[kSecAttrAccount as String] = "My Name" as CFString
 query[kSecAttrLabel as String] = "com.me.myapp.password" as CFString
 query[kSecUseOperationPrompt as String] = "Please, pass authorisation to enter this area" as CFString
 
-// 2. アイテムを取得する
+// 6. アイテムを取得する
 var queryResult: AnyObject?
 let status = withUnsafeMutablePointer(to: &queryResult) {
     SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
@@ -151,19 +116,48 @@ if status == noErr {
 } else {
     // 認証がパスしなかった
 }
+
 ```
 
 #### Objective-C
 
 ```objectivec
-// 1. クエリを定義する
+// 1. 認証設定を表す AccessControl オブジェクトを作成する
+CFErrorRef *err = nil;
+
+SecAccessControlRef sacRef = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+    kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+    kSecAccessControlUserPresence,
+    err);
+
+// 2. キーチェーンサービスクエリを定義する。kSecAttrAccessControl は kSecAttrAccessible 属性と相互排他的であることに注意する
+NSDictionary* query = @{
+    (_ _bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+    (__bridge id)kSecAttrLabel: @"com.me.myapp.password",
+    (__bridge id)kSecAttrAccount: @"OWASP Account",
+    (__bridge id)kSecValueData: [@"test_strong_password" dataUsingEncoding:NSUTF8StringEncoding],
+    (__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacRef
+};
+
+// 3. アイテムを保存する
+OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, nil);
+
+if (status == noErr) {
+    // successfully saved
+} else {
+    // error while saving
+}
+
+// 4. これで保存したアイテムをキーチェーンからリクエストできます。キーチェーンサービスはユーザーに認証ダイアログを表示し、適切な指紋が提供されたかどうかに応じてデータまたは nil を返します。
+
+// 5. クエリを定義する
 NSDictionary *query = @{(__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
     (__bridge id)kSecReturnData: @YES,
     (__bridge id)kSecAttrAccount: @"My Name1",
     (__bridge id)kSecAttrLabel: @"com.me.myapp.password",
     (__bridge id)kSecUseOperationPrompt: @"Please, pass authorisation to enter this area" };
 
-// 2. アイテムを取得する
+// 6. アイテムを取得する
 CFTypeRef queryResult = NULL;
 OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &queryResult);
 
@@ -176,10 +170,10 @@ if (status == noErr){
 }
 ```
 
-アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによっても検出できます。これは otool を使うことにより行えます。
+アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによっても検出できます。これは [otool](0x08-Testing-Tools.md#otool) を使うことにより行えます。
 
 ```bash
-$ otool -L <AppName>.app/<AppName>
+otool -L <AppName>.app/<AppName>
 ```
 
 `LocalAuthentication.framework` がアプリで使用されている場合、その出力には以下の行が両方含まれます (`LocalAuthentication.framework` は内部で `Security.framework` を使用します) 。
