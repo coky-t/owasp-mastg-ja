@@ -267,7 +267,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 ここで `SecretKeySpec` クラスが使われているファイルを検索します。例えば、再帰的に grep するか、jadx 検索機能を使用するだけです。
 
 ```bash
-$ grep -r "SecretKeySpec"
+grep -r "SecretKeySpec"
 ```
 
 これにより `SecretKeySpec` クラスを使用しているすべてのクラスを返します。次にこれらのファイルを調べて、鍵マテリアルを渡すために使用される変数を追跡します。以下の図は出荷可能アプリケーションでこの評価を実行した結果を示しています。静的な暗号鍵が使用されていることがはっきりとわかります。この鍵はハードコードされており、静的なバイト配列 `Encrypt.keyBytes` に初期化されます。
