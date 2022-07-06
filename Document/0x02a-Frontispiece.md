@@ -22,9 +22,9 @@ OWASP MASVS と MSTG は以下のプラットフォームプロバイダ、標�
 
 ## 🥇 MSTG 支持者
 
-MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02a-Acknowledgements.md#our-mstg-advocates) 。
+MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02c-Acknowledgements.md#our-mstg-advocates) 。
 
-<a href="0x02a-Acknowledgements.md#our-mstg-advocates">
+<a href="0x02c-Acknowledgements.md#our-mstg-advocates">
 <img src="Images/Other/nowsecure-logo.png" width="200px;"/>
 </a>
 
