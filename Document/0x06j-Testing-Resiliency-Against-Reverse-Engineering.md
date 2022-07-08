@@ -641,7 +641,7 @@ Frida が _残した_ これらの _トレース_ を見ると、 Frida を検�
 
 ### 概要
 
-難読化はコードを変換して逆アセンブルや理解を困難にするプロセスであり、すべてのソフトウェア保護スキームに不可欠なものです。アプリケーションは難読化後も元の機能を維持します。理解するうえで重要なのは、難読化は単にオンまたはオフにできるものではないということです。プログラムは全体的または部分的に、多くの方法で、程度の差はあるものの理解しづらくすることができます。
+["モバイルアプリの改竄とリバースエンジニアリング"](0x04c-Tampering-and-Reverse-Engineering.md#obfuscation) の章では一般的にモバイルアプリで使用できるよく知られた難読化技法をいくつか紹介しています。
 
 > 以下に示すすべての技法でリバースエンジニアを止められるとは限りませんが、これらの技法をすべて組み合わせることで作業が大幅に難しくなります。これらの技法の目的はリバースエンジニアがそれ以上の解析を行わないようにすることです。
 
@@ -698,7 +698,9 @@ mov        rbp, rsp
 - [SwiftShield](https://github.com/rockbruno/swiftshield) を使用して名前の難読化を実行できます。 Xcode プロジェクトのソースコードを読み取り、コンパイラが使用される前にクラス、メソッド、フィールドのすべての名前をランダムな値に置き換えます。
 - [obfuscator-llvm](https://github.com/obfuscator-llvm) は中間表現 (Intermediate Representation, IR) で動作します。シンボルの難読化、文字列の暗号化、制御フローの平坦化に使用できます。 IR をベースとしているため、 SwiftShield と比較してアプリケーションの情報を大幅に隠すことができます。
 
-### SwiftShield の使い方
+iOS の難読化技法については [こちら](https://faculty.ist.psu.edu/wu/papers/obf-ii.pdf) をご覧ください。
+
+#### SwiftShield の使い方
 
 > 警告: SwiftShield はすべてのソースファイルを非可逆的に上書きします。理想的には、 CI サーバーとリリースビルドのみで実行すべきです。
 
@@ -764,7 +766,7 @@ Button_Emulator ===> akcVscrZFdBBYqYrcmhhyXAevNdXOKeG
 
 SwiftShield の [Github リポジトリ](https://github.com/rockbruno/swiftshield/tree/master/ExampleProject "SwiftShieldExample") には別のサンプルプロジェクトがあり、 SwiftShield の実行をテストするために使用できます。
 
-### 有効性評価
+### 静的解析
 
 IPA の Mach-O と "Frameworks" ディレクトリに含まれるライブラリファイル (.dylib または .framework ファイル) を逆アセンブルして、静的解析を実行してみます。少なくとも、アプリのコア機能 (つまり、難読化されるべき機能) は容易には判別できるべきではありません。それを検証します。
 
