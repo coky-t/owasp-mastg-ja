@@ -10,7 +10,7 @@ Apple は最も一般的な暗号化アルゴリズムの実装を含むライ�
 
 #### CryptoKit
 
-Apple CryptoKit は iOS 13 でリリースされ、Apple のネイティブ暗号化ライブラリ corecrypto の上に構築されています。Swift フレームワークは厳密に型付けされた API インタフェースを提供し、効果的なメモリ管理を行い、比較可能 (eauatable) に適応し、ジェネリックをサポートします。CryptoKit にはハッシュ、対称鍵暗号化、公開鍵暗号化のためのセキュアなアルゴリズムが含まれています。このフレームワークでは Secure Enclave のハードウェアベースの鍵マネージャも利用できます。
+Apple CryptoKit は iOS 13 でリリースされ、[FIPS 140-2 認証](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3856) の Apple のネイティブ暗号化ライブラリ corecrypto の上に構築されています。Swift フレームワークは厳密に型付けされた API インタフェースを提供し、効果的なメモリ管理を行い、比較可能 (eauatable) に適応し、ジェネリックをサポートします。CryptoKit にはハッシュ、対称鍵暗号化、公開鍵暗号化のためのセキュアなアルゴリズムが含まれています。このフレームワークでは Secure Enclave のハードウェアベースの鍵マネージャも利用できます。
 
 Apple CryptoKit には以下のアルゴリズムが含まれています。
 
