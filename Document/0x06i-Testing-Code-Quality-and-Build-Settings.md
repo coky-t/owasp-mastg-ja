@@ -614,15 +614,26 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 
 ### 概要
 
-Xcode ではデフォルトですべてのバイナリセキュリティが有効ですが、古いアプリケーションでの検証やコンパイルオプションの設定ミスのチェックには関係するかもしれません。以下の機能が適用可能です。
+[バイナリ保護メカニズム](0x04h-Testing-Code-Quality.md#binary-protection-mechanisms) の存在を検出するために使用されるテストはアプリケーションの開発に使用された言語に大きく依存します。
 
-- **ARC** - Automatic Reference Counting - メモリ管理機能 - 必要に応じてメッセージ保持および解放します
-- **Stack Canary** - スタックスマッシュ保護 - リターンポインタの前に小さな整数を持つことでバッファオーバーフロー攻撃の防止に役立ちます。バッファオーバーフロー攻撃はリターンポインタを上書きしてプロセスコントロールを引き継ぐために、メモリ領域を上書きすることがよくあります。その場合、カナリアも上書きされます。したがって、ルーチンがスタック上のリターンポインタを使用する前に、カナリアの値を常にチェックして変更されていないことを確認します。
-- **PIE** - Position Independent Executable - 実行可能バイナリに対し完全な ASLR を有効にします (ライブラリには適用されません) 。
+Xcode はデフォルトですべてのバイナリセキュリティ機能を有効にしますが、古いアプリケーションに対してこれを検証したり、コンパイラフラグの設定ミスをチェックすることが適切な場合があります。以下の機能が適用可能です。
 
-これらの保護メカニズムの存在を検出するためのテストは、アプリケーション開発に使用される言語に大きく依存します。例えば、スタックカナリアの存在を検出するための既存の技法は純粋な Swift アプリでは機能しません。詳細については、オンライン記事 "[On iOS Binary Protections](https://sensepost.com/blog/2021/on-ios-binary-protections/ "On iOS Binary Protection")" を確認してください。
+- [**PIE (Position Independent Executable)**](0x04h-Testing-Code-Quality.md#position-independent-code):
+  - PIE は実行形式バイナリ (Mach-O タイプ `MH_EXECUTE`) に適用されます。
+  - ただし、ライブラリ (Mach-O タイプ `MH_DYLIB`) には適用されません。
+- [**メモリ管理**](0x04h-Testing-Code-Quality.md#memory-management):
+  - 純粋な Objective-C、Swift、ハイブリッドバイナリのいずれも ARC (Automatic Reference Counting) を有効にすべきです。
+  - C/C++ ライブラリでは、開発者は適切な [手動メモリ管理](0x04h-Testing-Code-Quality.md#manual-memory-management) を行う責任があります。 ["メモリ破損バグ (MSTG-CODE-8)"](#memory-corruption-bugs-mstg-code-8) を参照してください。
+- [**スタックスマッシュ保護**](0x04h-Testing-Code-Quality.md#stack-smashing-protection): 純粋な Objective-C バイナリでは、これは常に有効にすべきです。Swift はメモリセーフに設計されているので、ライブラリが純粋に Swift で書かれていれば、スタックカナリアが有効にされていなくても、リスクは最小限に抑えられます。
 
-### 静的解析
+詳しくはこちら。
+
+- [OS X ABI Mach-O File Format Reference](https://github.com/aidansteele/osx-abi-macho-file-format-reference)
+- [On iOS Binary Protections](https://sensepost.com/blog/2021/on-ios-binary-protections/)
+- [Security of runtime process in iOS and iPadOS](https://support.apple.com/en-gb/guide/security/sec15bfe098e/web)
+- [Mach-O Programming Topics - Position-Independent Code](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/MachOTopics/1-Articles/dynamic_code.html)
+
+これらの保護メカニズムの存在を検出するためのテストはアプリケーションの開発に使用される言語に大きく依存します。たとえば、スタックカナリアの存在を検出するための既存の技法は純粋な Swift アプリでは機能しません。
 
 #### Xcode プロジェクト設定
 
@@ -652,9 +663,9 @@ Swift アプリでは `swiftc` コンパイラによって ARC が自動的に�
 
 [Technical Q&A QA1788 Building a Position Independent Executable](https://developer.apple.com/library/mac/qa/qa1788/_index.html "Technical Q&A QA1788 Building a Position Independent Executable") を参照してください。
 
-#### otool を使用
+### 静的解析
 
-以下は上記のバイナリセキュリティ機能をチェックする手順です。これらの例ではすべての機能が有効になっています。
+[otool](0x08-Testing-Tools.md#otool) を使用して上記のバイナリセキュリティ機能をチェックできます。これらの例ではすべての機能が有効になっています。
 
 - PIE:
 
