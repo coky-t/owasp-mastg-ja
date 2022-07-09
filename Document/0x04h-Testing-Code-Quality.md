@@ -271,6 +271,38 @@ Android アプリは大部分が Java で実装されています。これは設
 
 ファジングの詳細については、[OWASP ファジングガイド](https://owasp.org/www-community/Fuzzing "OWASP Fuzzing Guide") を参照してください。
 
+## バイナリ保護メカニズム
+
+### 位置独立コード (Position Independent Code)
+
+[PIC (Position Independent Code)](https://en.wikipedia.org/wiki/Position-independent_code) は一次メモリのどこかに配置され、その絶対アドレスに関係なく適切に実行されるコードです。PIC は共有ライブラリによく使用されるため、同じライブラリコードを各プログラムアドレス空間の使用中の他のメモリ (例えば、他の共有ライブラリ) と重ならない場所にロードできます。
+
+PIE (Position Independent Executable) はすべて PIC から作られた実行可能バイナリです。PIE バイナリは実行可能ファイルのベースやスタック、ヒープ、ライブラリの位置など、プロセスの重要なデータ領域のアドレス空間位置をランダムに配置する [ASLR (Address Space Layout Randomization)](https://en.wikipedia.org/wiki/Address_space_layout_randomization) を有効にするために使用されます。
+
+### メモリ管理
+
+#### 自動参照カウント (Automatic Reference Counting)
+
+[ARC (Automatic Reference Counting)](https://en.wikipedia.org/wiki/Automatic_Reference_Counting) は [Objective-C](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html) および [Swift](https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html) 専用の Clang コンパイラのメモリ管理機能です。ARC はクラスインスタンスが不要になると、そのインスタンスが使用していたメモリを自動的に解放します。ARC はトレーシングガベージコレクションとは異なり、実行時に非同期にオブジェクトを解放するバックグラウンドプロセスが存在しません。
+
+トレーシングガベージコレクションとは異なり、ARC は参照サイクルを自動的には処理しません。つまり、あるオブジェクトへの「強い」参照がある限り、そのオブジェクトは解放されないということです。強い相互参照によりデッドロックやメモリリークが発生する可能性があります。弱い参照を使用してサイクルを断つかどうかは開発者次第です。ガベージコレクションとの違いについて詳しくは [こちら](https://fragmentedpodcast.com/episodes/064/) をご覧ください。
+
+#### ガベージコレクション (Garbage Collection)
+
+[Garbage Collection (GC)](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) は Java/Kotlin/Dart などの一部の言語の自動メモリ管理機能です。ガベージコレクタはプログラムによって割り当てられたがもはや参照されないメモリ (ガベージとも呼ばれます) を再利用しようとします。Android ランタイム (ART) は [改良版 GC](https://source.android.com/devices/tech/dalvik#Improved_GC) を使用しています。ARC との違いについて詳しくは [こちら](https://fragmentedpodcast.com/episodes/064/) をご覧ください。
+
+#### 手動メモリ管理 (Manual Memory Management)
+
+ARC や GC が適用されない C/C++ で書かれたネイティブライブラリでは一般的に [手動メモリ管理](https://en.wikipedia.org/wiki/Manual_memory_management) を必要とします。開発者は適切なメモリ管理を行う責任があります。手動メモリ管理は間違って使用された場合、プログラムに主要なクラスのバグ、特に [メモリセーフティ](https://en.wikipedia.org/wiki/Memory_safety) の違反や [メモリリーク](https://en.wikipedia.org/wiki/Memory_leak) を引き起こすことが知られています。
+
+詳細については ["メモリ破損バグ (MSTG-CODE-8)"](#memory-corruption-bugs-mstg-code-8) をご覧ください。
+
+### スタックスマッシュ保護 (Stack Smashing Protection)
+
+[スタックカナリア](https://en.wikipedia.org/wiki/Stack_buffer_overflow#Stack_canaries) はリターンポインタの直前のスタックに隠された整数値を格納することでバッファオーバーフロー攻撃を防ぐのに役立ちます。この値は関数の return 文が実行される前に検証されます。バッファオーバーフロー攻撃は多くの場合メモリ領域を上書きし、リターンポインタを上書きしてプログラムフローを乗っ取ります。スタックカナリアが有効な場合、それらも上書きされるため、CPU はメモリが改竄されたことを認識します。
+
+スタックオーバーフローは [バッファオーバーフロー](https://en.wikipedia.org/wiki/Buffer_overflow) (またはバッファオーバーラン) として知られる、より一般的なプログラミング脆弱性の一種です。スタックにはすべてのアクティブな関数呼び出しのリターンアドレスが含まれているため、スタック上のバッファをオーバーフィルすると、ヒープ上のバッファをオーバーフィルするよりも **プログラムの実行に失敗する** 可能性が高くなります。
+
 ## 参考情報
 
 ### OWASP MASVS
