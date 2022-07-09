@@ -484,87 +484,58 @@ Java/Kotlin コードでもメモリリークが発生する可能性がある�
 
 ### 概要
 
-Java クラスはデコンパイルが容易であるため、リリースバイトコードに基本的な難読化を適用することをお勧めします。[ProGuard](0x08-Testing-Tools.md#proguard) はコードを縮小および難読化し、 Android Java アプリのバイトコードから不要なデバッグ情報を取り除く簡易な方法を提供します。クラス名、メソッド名、変数名などの識別子を無意味な文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響を与えない点で「フリー」です。
+[バイナリ保護メカニズム](0x04h-Testing-Code-Quality.md#binary-protection-mechanisms) の存在を検出するために使用されるテストはアプリケーションの開発に使用された言語に大きく依存します。
 
-ほとんどの Android アプリケーションは Java ベースであるため、 [バッファオーバーフロー脆弱性に対する免疫があります](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow "Java Buffer Overflows") 。とはいえ、 Android NDK を使用している場合には依然としてバッファオーバーフロー脆弱性が存在する可能性がありますので、セキュアなコンパイラ設定を検討します。
+一般的にはすべてのバイナリをテストすべきです。これにはメインのアプリ実行可能ファイルだけでなくすべてのライブラリや依存関係が含まれます。しかし、Android では次に説明するようにメインの実行可能ファイルは安全であると考えられるため、ネイティブライブラリに焦点を当てます。
+
+Android は アプリの DEX ファイル (classes.dex など) から Dalvik バイトコードを最適化し、ネイティブコードを含む新しいファイルを生成します。通常、拡張子は .odex, .oat です。この [Android コンパイル済みバイナリ](0x05b-Basic-Security_Testing.md#compiled-app-binary) は Linux や Android がアセンブリコードをパッケージ化するために使用するフォーマットである [ELF フォーマット](https://refspecs.linuxfoundation.org/elf/gabi4+/contents.html) を使用してラップされています。
+
+アプリの [NDK ネイティブライブラリ](0x05b-Basic-Security_Testing.md#native-libraries) も [ELF フォーマットを使用](https://developer.android.com/ndk/guides/abis) しています。
+
+- [**PIE (Position Independent Executable)**](0x04h-Testing-Code-Quality.md#position-independent-code):
+  - Android 7.0 (API レベル 24) 以降、メインの実行可能ファイルに対して PIC コンパイルは [デフォルトで有効](https://source.android.com/devices/tech/dalvik/configure) になっています。
+  - Android 5.0 (API レベル 21) で PIE 非対応のネイティブライブラリのサポートは [廃止](https://source.android.com/security/enhancements/enhancements50) され、それ以降 PIE は [リンカーによって強制](https://cs.android.com/android/platform/superproject/+/master:bionic/linker/linker_main.cpp;l=430) されるようになりました。
+- [**メモリ管理**](0x04h-Testing-Code-Quality.md#memory-management):
+  - ガベージコレクションはメインのバイナリに対して実行されるだけで、バイナリ自体は何もチェックされません。
+  - ガベージコレクションは Android ネイティブライブラリには適用されません。開発者は適切な [手動メモリ管理](0x04h-Testing-Code-Quality.md#manual-memory-management) を行う責任があります。 ["メモリ破損バグ (MSTG-CODE-8)"](#memory-corruption-bugs-mstg-code-8) を参照してください。
+- [**スタックスマッシュ保護**](0x04h-Testing-Code-Quality.md#stack-smashing-protection):
+  - Android アプリはメモリセーフと考えられる (少なくともバッファオーバーフローを軽減する) Dalvik バイトコードにコンパイルされます。Flutter などの他のフレームワークはその言語 (この場合は Dart) がバッファーオーバーフローを軽減する方法であるため、スタックカナリアを使用したコンパイルは行われません。
+  - Android ネイティブライブラリは有効にしなければなりませんが、それを完全に判断するのは難しいかもしれません。
+    - NDK ライブラリはコンパイラがデフォルトでそれを行うため有効になっているはずです。
+    - 他のカスタム C/C++ ライブラリは有効になっていない可能性があります。
+
+詳しくはこちら。
+
+- [Android executable formats](https://lief-project.github.io/doc/latest/tutorials/10_android_formats.html)
+- [Android runtime (ART)](https://source.android.com/devices/tech/dalvik/configure#how_art_works)
+- [Android NDK](https://developer.android.com/ndk/guides)
+- [Android linker changes for NDK developers](https://android.googlesource.com/platform/bionic/+/master/android-changes-for-ndk-developers.md)
 
 ### 静的解析
 
-ソースコードが提供されている場合、build.gradle ファイルを確認することで難読化設定が適用されているか分かります。以下の例では、`minifyEnabled` と `proguardFiles` が設定されていることが分かります。一部のクラスを難読化から保護するために (`-keepclassmembers` および `-keep class` を使用して) 例外を作成することが一般的です。したがって、 ProGuard 構成ファイルを監査してどのクラスが除外されているかを確認することが重要です。`getDefaultProguardFile('proguard-android.txt')` メソッドはデフォルトの ProGuard 設定を `<Android SDK>/tools/proguard/` フォルダから取得します。
+アプリのネイティブライブラリをテストして、PIE とスタックスマッシュ保護が有効になっているかどうかを確認します。
 
-アプリを縮小、難読化、最適化する方法の詳細は [Android 開発者ドキュメント](https://developer.android.com/studio/build/shrink-code "Shrink, obfuscate, and optimize your app") にあります。
+[radare2 の rabin2](0x08-Testing-Tools.md#radare2) を使用してバイナリ情報を取得できます。例として [r2pay-v1.0.apk](https://github.com/OWASP/owasp-mstg/blob/master/Crackmes/Android/Level_04/r2pay-v1.0.apk) を使用します。
 
-> Android Studio 3.4 または Android Gradle plugin 3.4.0 以降を使用してプロジェクトをビルドする場合、プラグインはコード最適化を実行するために ProGuard を使用しなくなりました。代わりに、プラグインは R8 コンパイラで動作します。R8 は既存のすべての ProGuard ルールファイルで機能するため、 R8 を使用するように Android Gradle plugin を更新しても既存のルールを変更する必要はありません。
+すべてのネイティブライブラリは `canary` と `pic` が両方とも `true` に設定されていなければなりません。
 
-R8 は Google の新しいコード縮小ツールであり、 Android Studio 3.3 beta で導入されました。デフォルトでは R8 は行番号、ソースファイル名、変数名など、デバッグに役立つ属性を削除します。R8 はフリーの Java クラスファイル縮小ツール、最適化ツール、難読化ツール、事前検証ツールであり、 ProGuard よりも高速です。[詳細については Android 開発者ブログ記事](https://android-developers.googleblog.com/2018/11/r8-new-code-shrinker-from-google-is.html "R8") も参照ください。Android の SDK ツールに同梱されています。リリースビルドで縮小を有効にするには、 build.gradle に以下を追加します。
+これは `libnative-lib.so` のケースです。
 
-```default
-android {
-    buildTypes {
-        release {
-            // Enables code shrinking, obfuscation, and optimization for only
-            // your project's release build type.
-            minifyEnabled true
-
-            // Includes the default ProGuard rules files that are packaged with
-            // the Android Gradle plugin. To learn more, go to the section about
-            // R8 configuration files.
-            proguardFiles getDefaultProguardFile(
-                    'proguard-android-optimize.txt'),
-                    'proguard-rules.pro'
-        }
-    }
-    ...
-}
+```sh
+rabin2 -I lib/x86_64/libnative-lib.so | grep -E "canary|pic"
+canary   true
+pic      true
 ```
 
-`proguard-rules.pro` ファイルはカスタム ProGuard ルールを定義する場所です。`-keep` フラグで R8 により削除されない特定のコードを保持できます。そうしないとエラーが発生する可能性があります。例えば、一般的な Android クラスを保持するには、以下のサンプル `proguard-rules.pro` 構成ファイルのようにします。
+しかし `libtool-checker.so` はそうではありません。
 
-```default
-...
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
-...
+```sh
+rabin2 -I lib/x86_64/libtool-checker.so | grep -E "canary|pic"
+canary   false
+pic      true
 ```
 
-[以下の構文](https://developer.android.com/studio/build/shrink-code#configuration-files "Customize which code to keep") でプロジェクト内の特定クラスやライブラリに対してこれをより詳細に定義できます。
-
-```default
--keep public class MyClass
-```
-
-### 動的解析
-
-ソースコードが提供されていない場合には、 APK を逆コンパイルしてコードベースが難読化されているかどうかを確認できます。DEX コードを JAR ファイルに変換するために利用できるツールがいくつかあります (dex2jar など) 。JAR ファイルは JD-GUI などのツールで開くことができ、クラス名、メソッド名、変数名が人間が判読できるものではないことを確認するために使用できます。
-
-以下に難読化されたコードブロックのサンプルを示します。
-
-```java
-package com.a.a.a;
-
-import com.a.a.b.a;
-import java.util.List;
-
-class a$b
-  extends a
-{
-  public a$b(List paramList)
-  {
-    super(paramList);
-  }
-
-  public boolean areAllItemsEnabled()
-  {
-    return true;
-  }
-
-  public boolean isEnabled(int paramInt)
-  {
-    return true;
-  }
-}
-```
+この例では `libtool-checker.so` はスタックスマッシュ保護サポートありで再コンパイルしなければなりません。
 
 ## 参考情報
 
