@@ -53,9 +53,21 @@
 これらの課題に対処し、ユーザーが自分のデータをどのように収集、処理、共有されているかを容易に理解できるようにするため、Google と Apple は新しいプライバシーラベリングシステムを導入しました ([Consumer Software Cybersecurity Labeling](https://www.nist.gov/system/files/documents/2021/11/01/Draft%20Consumer%20Software%20Labeling.pdf) に関する NIST の提案に沿ったものです) 。
 
 - App Store [Nutrition Labels](https://www.apple.com/privacy/labels/) (since 2020).
-- Google Play [Data Safety Labels](https://android-developers.googleblog.com/2021/05/new-safety-section-in-google-play-will.html) (since 2021).
+- Google Play [Data Safety Section](https://android-developers.googleblog.com/2021/05/new-safety-section-in-google-play-will.html) (since 2021).
 
 両プラットフォームの新しい要件として、ユーザー保証を提供し、不正使用を軽減するために、これらのラベルは正確であることが重要です。
+
+### Google ADA MASA プログラム
+
+定期的なセキュリティテストを実施することで、開発者はアプリの主要な脆弱性を特定できます。Google Play では自主的なセキュリティ検証を完了した開発者がデータセーフティセクションでこれを紹介できます。これによりユーザーはセキュリティとプライバシーへのアプリの責任を信じられます。
+
+アプリのセキュリティアーキテクチャの透明性を高めるため、Google は [App Defense Alliance (ADA)](https://appdefensealliance.dev/) の一環として [MASA (Mobile Application Security Assessment)](https://appdefensealliance.dev/masa) プログラムを導入しています。MASA により、Google はモバイルアプリエコシステムにモバイルアプリセキュリティに関する世界的に認められた標準を活用することの重要性を認識しています。開発者は Authorized Lab パートナーと直接連携してセキュリティ評価を開始できます。Google は一連の MASVS レベル 1 の要件に対してアプリケーションを自主的に検証した開発者を評価し、データセーフティセクションでこれを紹介します。
+
+<img src="Images/Chapters/0x04i/masa_framework.png" width="100%"/>
+
+> 開発者の方で参加を希望される場合は、こちらの [フォーム](https://docs.google.com/forms/d/e/1FAIpQLSdBl_eCNcUeUVDiB2duiJLZ5s4AV5AhDVuOz_1u8S9qhcXF5g/viewform) に記入する必要があります。
+
+テストの性質が限定的であるため、アプリケーションの完全な安全性を保障するものではないことに注意してください。この自主的なレビューは開発者のデータセーフティ宣言の正確性と完全性を検証するために行われるものではありません。開発者はアプリの Play ストアリストで完全かつ正確な宣言を行う責任を単独で負います。
 
 ### これが他の MASVS カテゴリのテストとどのように関係するか
 
@@ -79,6 +91,7 @@
 - [iOS Privacy Best Practices](https://developer.apple.com/documentation/uikit/protecting_the_user_s_privacy)
 - [Android App Privacy Policy](https://support.google.com/googleplay/android-developer/answer/9859455#privacy_policy)
 - [Android Data Safety Section on Google Play](https://support.google.com/googleplay/android-developer/answer/10787469)
+- [Preparing your app for the new Data safety section in Google Play](https://www.youtube.com/watch?v=J7TM0Yy0aTQ)
 - [Android Privacy Best Practices](https://developer.android.com/privacy/best-practices)
 
 ## ユーザー教育のテスト (MSTG-STORAGE-12)
