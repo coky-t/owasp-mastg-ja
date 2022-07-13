@@ -173,15 +173,15 @@ iOS 開発者はパーミッションを直接設定することはできませ�
 iOS アプリケーション攻撃領域はそのアプリケーションのすべてのコンポーネントで構成されます。アプリをリリースおよびその機能をサポートするために必要なサポートマテリアルを含みます。iOS アプリケーションは以下を行っていない場合、攻撃に対して脆弱である可能性があります。
 
 - IPC 通信や URL スキームによるすべての入力を検証します。以下も参照してください。
-  - [カスタム URL スキームのテスト](0x06h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3 "Testing Custom URL Schemes")
+  - [カスタム URL スキームのテスト](0x06h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3)
 - ユーザーによる入力フィールドへのすべての入力を検証します。
 - WebView 内にロードされるコンテンツを検証します。以下も参照してください。
-  - [iOS WebView のテスト](0x06h-Testing-Platform-Interaction.md#testing-ios-webviews-mstg-platform-5 "Testing iOS webviews")
-  - [ネイティブメソッドが WebView を通じて公開されているかどうかを判断する](0x06h-Testing-Platform-Interaction.md#determining-whether-native-methods-are-exposed-through-webviews-mstg-platform-7 "Determining Whether Native Methods Are Exposed Through WebViews")
+  - [iOS WebView のテスト](0x06h-Testing-Platform-Interaction.md#testing-ios-webviews-mstg-platform-5)
+  - [ネイティブメソッドが WebView を通じて公開されているかどうかを判断する](0x06h-Testing-Platform-Interaction.md#determining-whether-native-methods-are-exposed-through-webviews-mstg-platform-7)
 - バックエンドサーバーとセキュアに通信しています。そうでなければサーバーとモバイルアプリケーションの間で中間者攻撃 (MITM) の影響を受けます。以下も参照してください。
-  - [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#testing-network-communication "Testing Network Communication")
-  - [iOS ネットワーク API](0x06g-Testing-Network-Communication.md#ios-network-apis "iOS Network APIs")
+  - [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#testing-network-communication)
+  - [iOS ネットワーク通信](0x06g-Testing-Network-Communication.md#ios-network-apis)
 - すべてのローカルデータをセキュアに保存しています。そうでなければストレージから信頼できないデータをロードします。以下も参照してください。
-  - [iOS のデータストレージ](0x06d-Testing-Data-Storage.md#data-storage-on-ios "Data Storage on iOS")
+  - [iOS のデータストレージ](0x06d-Testing-Data-Storage.md#data-storage-on-ios)
 - 危殆化した環境、再パッケージ化あるいはその他のローカル攻撃から自身を保護しています。以下も参照してください。
-  - [iOS アンチリバース防御](0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#ios-anti-reversing-defenses "iOS Anti-Reversing Defenses")
+  - [iOS アンチリバース防御](0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#ios-anti-reversing-defenses)
