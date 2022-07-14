@@ -12,27 +12,37 @@ Android プラットフォームの詳細については [Android 開発者ド�
 
 ## Android アーキテクチャ
 
-Android は Google が開発した Linux ベースのオープンソースプラットフォームであり、モバイルオペレーティングシステム (OS) として機能します。現在、このプラットフォームはモバイルフォン、タブレット、ウェアラブル技術、テレビ、その他の「スマート」デバイスなど、さまざまな最新テクノロジの基盤となっています。典型的な Android ビルドにはさまざまなプリインストール (「ストック」) アプリが付属しており、 Google Play ストアや他のマーケットプレイスを通じてサードパーティアプリのインストールをサポートしています。
+[Android](https://en.wikipedia.org/wiki/Android_(operating_system)) は [Open Handset Alliance](https://www.openhandsetalliance.com/) (Google を中心としたコンソーシアム) が開発した Linux ベースのオープンソースプラットフォームであり、モバイルオペレーティングシステム (OS) として機能します。現在、このプラットフォームはモバイルフォン、タブレット、ウェアラブル技術、テレビ、その他の「スマート」デバイスなど、さまざまな最新テクノロジの基盤となっています。典型的な Android ビルドにはさまざまなプリインストール (「ストック」) アプリが付属しており、 Google Play ストアや他のマーケットプレイスを通じてサードパーティアプリのインストールをサポートしています。
 
 Android のソフトウェアスタックはいくつかの異なるレイヤで構成されています。各レイヤはインタフェースを定義し、特定のサービスを提供します。
 
 <img src="Images/Chapters/0x05a/android_software_stack.png" width="400px" />
 
-最も低いレベルでは、 Android は Linux カーネルのバリエーションをベースにしています。カーネルの上では、 ハードウェア抽象化レイヤ (HAL) が組み込みハードウェアコンポーネントとやり取りするための標準インタフェースを定義します。いくつかの HAL 実装は Android システムが必要な時に呼び出す共有ライブラリモジュールにパッケージ化されています。これはアプリケーションがデバイスのハードウェアとやり取りするための基礎となります。たとえば、ストックフォンアプリケーションがデバイスのマイクとスピーカーを使用できるようにします。
+**カーネル:** 最下層では、Android は [Low Memory Killer](https://source.android.com/devices/tech/perf/lmkd) 、ウェイクロック、 [Binder IPC](https://source.android.com/devices/architecture/hidl/binder-ipc) ドライバなどの重要な追加機能を含む [Linux カーネルのバリエーション](https://source.android.com/devices/architecture/kernel) をベースにしています。 MSTG では、Android が一般的な Linux ディストリビューションと大きく異なる、OS のユーザーモード部分に焦点を当てます。私たちにとって最も重要なコンポーネントはアプリケーションで使用されるマネージドランタイム (ART/Dalvik) と、glibc (GNU C ライブラリ) の Android 版である [Bionic](https://en.wikipedia.org/wiki/Bionic_(software)) の二つです。
 
-Android アプリは通常 Java で記述され Dalvik バイトコードにコンパイルされます。これは従来の Java バイトコードとは若干異なります。 Dalvik バイトコードは最初に Java コードを .class ファイルにコンパイルしてから、 `d8` ツールで JVM バイトコードを Dalvik .dex フォーマットに変換することにより作成されます。
+**HAL:** カーネルの上には、ハードウェア抽象化レイヤ (Hardware Abstraction Layer, HAL) がビルトインのハードウェアコンポーネントと対話するための標準インタフェースを定義します。いくつかの HAL 実装では Android システムが必要に応じて呼び出す共有ライブラリモジュールにパッケージ化されています。これはアプリケーションがデバイスのハードウェアと対話できるようにするための基礎となります。たとえば、純正の電話アプリケーションがデバイスのマイクとスピーカーを使用できるようにします。
+
+**ランタイム環境:** Android アプリは Java や Kotlin で書かれて [Dalvik バイトコード](https://source.android.com/devices/tech/dalvik/dalvik-bytecode) にコンパイルされます。バイトコード命令を解釈してターゲットデバイス上で実行するランタイムを使用して実行できます。Android では、これは [Android Runtime (ART)](https://source.android.com/devices/tech/dalvik/configure#how_art_works) です。これは Java アプリケーションの [JVM (Java Virtual Machine)](https://en.wikipedia.org/wiki/Java_virtual_machine) や .NET アプリケーションの Mono ランタイムに似ています。
+
+Dalvik バイトコードは Java バイトコードの最適化バージョンです。作成にはまず Java または Kotlin コードをそれぞれ javac や kotlinc コンパイラを使用して Java バイトコードにコンパイルし .class ファイルを生成します。最後に、Java バイトコードは d8 ツールを使用して Dalvik バイトコードに変換されます。 Dalvik バイトコードは .dex ファイルの形で APK や AAB ファイルにパックされ、Android のマネージドランタイムによってデバイス上で実行されます。
 
 <img src="Images/Chapters/0x05a/java_vs_dalvik.png" width="400px" />
 
-現在のバージョンの Android では Android ランタイム (ART) 上でこのバイトコードを実行します。 ART は Android のオリジナルランタイムである Dalvik 仮想マシン (DVM) の後継です。 Dalvik と ART の主な違いはバイトコードの実行方法です。
+Android 5.0 (API レベル 21) 以前は、Android は Dalvik Virtual Machine (DVM) 上でバイトコードを実行し、実行時にマシンコードに変換していました。 *ジャストインタイム* (JIT) コンパイルと呼ばれる処理です。これによりランタイムはコード解釈の柔軟性を維持しながら、コンパイルされたコードの速度の恩恵を受けられます。
 
-DVM では、バイトコードは実行時にマシンコードに変換されます。これは _ジャストインタイム_ (JIT) コンパイルと呼ばれるプロセスです。これによりランタイムはコード解釈の柔軟性を維持しながら、コンパイルされたコードの速度の恩恵を受けることができます。さらにパフォーマンスを向上させるために、Android は DVM に代わって [Android Runtime (ART)](https://source.android.com/devices/tech/dalvik/configure#how_art_works) を導入しました。ART は _ahead-of-time_ (AOT), JIT およびプロファイルガイド付きコンパイルをハイブリッドに組み合わせて使用します。アプリはインストール時、または OS のメジャーアップデート時にデバイス上で再コンパイルされます。コードの再コンパイル時に、デバイス固有の高度なコード最適化技術を適用することができます。最終的に再コンパイルされたコードはその後のすべての実行に使用されます。AOT はデバイス固有の最適化により、消費電力を削減しながらパフォーマンスを二倍に向上させます。
+Android 5.0 (API レベル 21) 以降、Android は DVM の後継である Android Runtime (ART) 上でバイトコードを実行するようになりました。ART は Java とネイティブスタック情報の両方を含めることで、パフォーマンスを向上させ、アプリのネイティブクラッシュレポートのコンテキスト情報を提供します。後方互換性を維持するために同じ Dalvik バイトコードを入力に使用します。しかし、ART は Dalvik バイトコードを異なる方法で実行します。 *事前* (ahead-of-time, AOT) コンパイル、 *ジャストインタイム* (just-in-time, JIT) コンパイル、プロファイルガイドに基づくコンパイルを組み合わせたハイブリッドコンパイルを使用します。
 
-![OWASP MSTG](Images/Chapters/0x05a/java2oat.png) \
+- **AOT** は Dalvik バイトコードをネイティブコードにプリコンパイルし、生成されたコードはディスク上に .oat 拡張子 (ELF バイナリ) で保存されます。 dex2oat ツールはコンパイルの実行に使用され、Android デバイスの /system/bin/dex2oat にあります。 AOT コンパイルはアプリのインストール時に実行されます。これによりコンパイルが不要になるため、アプリケーションの起動が速くなります。しかし、これは JIT コンパイルに比べてインストール時間が長くなることも意味します。さらに、アプリケーションは常に OS の現行バージョンに対して最適化されているため、ソフトウェアのアップデートによって以前にコンパイルされたアプリケーションはすべて再コンパイルすることになり、システムアップデート時間が大幅に増加することを意味します。最後に、AOT コンパイルはユーザーが使用しない部分があってもアプリケーション全体をコンパイルします。
+- **JIT** は実行時に発生します。
+- **プロファイルガイドに基づくコンパイル** は AOT の欠点に対処するために Android 7 (API レベル 24) で導入されたハイブリッドアプローチです。最初に、アプリケーションは JIT コンパイルを使用し、Android はアプリケーションで頻繁に使用される部分すべてを追跡します。この情報はアプリケーションプロファイルに保存され、デバイスがアイドル状態のときにコンパイル (dex2oat) デーモンが実行され、プロファイルから特定された頻繁に使用されるコードパスを AOT コンパイルします。
+
+<img src="Images/Chapters/0x05a/java2oat.png" width="100%" />
 
 入手元: <https://lief-project.github.io/doc/latest/tutorials/10_android_formats.html>
 
-Android アプリはハードウェアリソースに直接アクセスできず、各アプリはそれ自身の仮想マシンまたはサンドボックス内で動作します。これにより OS はデバイス上のリソースとメモリアクセスを正確に制御できます。例えば、アプリがクラッシュしてもその同じデバイス上で実行中の他のアプリには影響しません。 Android はアプリに割り当てられるシステムリソースの最大数を制御し、一つのアプリが多すぎるリソースを独占することを防ぎます。同時に、このサンドボックス設計は Android のグローバルな多層防御戦略における多くの原則の一つとみなすことができます。権限の低い悪意のあるサードパーティアプリケーションは自身のランタイムを抜け出して、同じデバイス上で狙ったアプリケーションのメモリを読み取ることはできなはずです。次のセクションでは Android オペレーティングシステムのさまざまな防御層について詳しく見ていきます。
+**サンドボックス化:** Android アプリはハードウェアリソースに直接アクセスできず、各アプリはそれ自身の仮想マシンまたはサンドボックス内で動作します。これにより OS はデバイス上のリソースとメモリアクセスを正確に制御できます。例えば、アプリがクラッシュしてもその同じデバイス上で実行中の他のアプリには影響しません。 Android はアプリに割り当てられるシステムリソースの最大数を制御し、一つのアプリが多すぎるリソースを独占することを防ぎます。同時に、このサンドボックス設計は Android のグローバルな多層防御戦略における多くの原則の一つとみなすことができます。権限の低い悪意のあるサードパーティアプリケーションは自身のランタイムを抜け出して、同じデバイス上で狙ったアプリケーションのメモリを読み取ることはできないはずです。次のセクションでは Android オペレーティングシステムのさまざまな防御層について詳しく見ていきます。 ["ソフトウェアの分離"](#software-isolation) セクションで詳しく説明します。
+
+より詳しい情報については Google Source 記事 ["Android Runtime (ART)"](https://source.android.com/devices/tech/dalvik/configure#how_art_works) 、 [Jonathan Levin による "Android Internals"](http://newandroidbook.com/) 、 [@_qaz_qaz によるブログ投稿 "Android 101"](https://secrary.com/android-reversing/android101/) をご覧ください。
 
 ## Android セキュリティ: 多層防御アプローチ
 
@@ -153,7 +163,7 @@ Android アプリは Android Framework を介してシステムサービスと�
 
 このフレームワークは暗号化などの一般的なセキュリティ機能も提供しています。
 
-API 仕様は Android の新しいリリースごとに変更されます。重要なバグ修正とセキュリティパッチは通常、以前のバージョンにも適用されます。執筆時点でサポートされている最も古い Android バージョンは Android 8.1 (API レベル 27) で、現在の Android バージョンは Android 10 (API レベル 29) です。
+API 仕様は Android の新しいリリースごとに変更されます。重要なバグ修正とセキュリティパッチは通常、以前のバージョンにも適用されます。
 
 注目すべき API バージョン:
 
@@ -165,7 +175,25 @@ API 仕様は Android の新しいリリースごとに変更されます。重�
 - Android 7.0 (API レベル 24-25) 2016年8月 (ART 上の新しい JIT コンパイラ)
 - Android 8.0 (API レベル 26-27) 2017年8月 (多くのセキュリティ改善点)
 - Android 9 (API レベル 28) 2018年8月 (マイクやカメラのバックグラウンド使用の制限、ロックダウンモードの導入、すべてのアプリに対するデフォルト HTTPS)
-- Android 10 (API レベル 29) 2019年9月 (通知バブル、プロジェクト Mainline)
+- **Android 10 (API レベル 29)** 2019年9月 (「アプリ使用時のみ」位置情報へのアクセス、デバイス追跡防止、セキュア外部ストレージの改善)
+  - プライバシー ([概要](https://developer.android.com/about/versions/10/highlights#privacy_for_users), [詳細 1](https://developer.android.com/about/versions/10/privacy), [詳細 2](https://developer.android.com/about/versions/10/privacy/changes))
+  - セキュリティ ([概要](https://developer.android.com/about/versions/10/highlights#security), [詳細](https://developer.android.com/about/versions/10/behavior-changes-all#security))
+- **Android 11 (API レベル 30)** 2020年9月 (スコープ付きストレージの適用、パーミッション自動リセット、 [パッケージ可視性の抑制](https://developer.android.com/training/package-visibility) 、 APK 署名スキーム v4)
+  - プライバシー ([概要](https://developer.android.com/about/versions/11/privacy))
+  - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all)
+  - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all#security)
+  - [プライバシー動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#privacy)
+  - [セキュリティ動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#security)
+- **Android 12 (API レベル 31-32)** 2021年8月 (Material You、ウェブインテントの解決、プライバシーダッシュボード)
+  - [セキュリティとプライバシー](https://developer.android.com/about/versions/12/features#security-privacy)
+  - [動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/12/behavior-changes-all#security-privacy)
+  - [動作の変更 (バージョン 12 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/12/behavior-changes-12#security-privacy)
+- [BETA] **Android 13 (API レベル 33)** 2022年 (コンテキスト登録されたレシーバーの安全なエクスポート、新しい写真ピッカー)
+  - [セキュリティとプライバシー](https://developer.android.com/about/versions/13/features#privacy-security)
+  - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#privacy)
+  - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#security)
+  - [プライバシー動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#privacy)
+  - [セキュリティ動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#security)
 
 ### アプリサンドボックス
 
@@ -631,7 +659,7 @@ proof-of-rotation 構造には、一つずつ署名するのではなく、古�
 
 #### APK 署名スキーム (v4 スキーム)
 
-APK 署名スキーム v4 は Android 11.0 (API レベル 30) で導入されたもので、これを使用して起動するすべてのデバイスではデフォルトで [fs-verity](https://kernel.org/doc/html/latest/filesystems/fsverity.html) が有効になっている必要があります。 fs-verity は Linux カーネル機能で、ファイルのハッシュ計算を非常に効率的に行うことができるため、主にファイル認証 (悪意のある改変の検出) に使用されています。読み取り要求はブート時にカーネルキーリングにロードされた信頼できるデジタル証明書に対してコンテンツが検証された場合にのみ成功します。
+APK 署名スキーム v4 は Android 11 (API レベル 30) で導入されたもので、これを使用して起動するすべてのデバイスではデフォルトで [fs-verity](https://kernel.org/doc/html/latest/filesystems/fsverity.html) が有効になっている必要があります。 fs-verity は Linux カーネル機能で、ファイルのハッシュ計算を非常に効率的に行うことができるため、主にファイル認証 (悪意のある改変の検出) に使用されています。読み取り要求はブート時にカーネルキーリングにロードされた信頼できるデジタル証明書に対してコンテンツが検証された場合にのみ成功します。
 
 v4 署名は補完する v2 または v3 署名が必要であり、以前の署名スキームとは対照的に、 v4 署名では別のファイル `<apk name>.apk.idsig` に保存されます。 v4 署名された APK を `apksigner verify` で検証する際には `--v4-signature-file` フラグを使用してこのファイルを指定することを忘れないでください。
 
@@ -684,17 +712,17 @@ Android エコシステムはオープンであるため、どこから (自身�
 Android アプリケーションのアタックサーフェイスはアプリケーションのすべてのコンポーネントで構成されます。これにはアプリのリリースやその機能をサポートするために必要なサポートマテリアルが含まれます。以下を満たさない場合には Android アプリケーションは脆弱である可能性があります。
 
 - IPC 通信や URL スキームを使用したすべての入力を妥当性確認している。以下も参照。
-  - [IPC による機密性の高い機能の開示のテスト](0x05h-Testing-Platform-Interaction.md#testing-for-sensitive-functionality-exposure-through-ipc-mstg-platform-4 "Testing for Sensitive Functionality Exposure Through IPC")
-  - [ディープリンクのテスト](0x05h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3 "Testing Deep Links")
+  - [IPC による機密性の高い機能の開示のテスト](0x05h-Testing-Platform-Interaction.md#testing-for-sensitive-functionality-exposure-through-ipc-mstg-platform-4)
+  - [カスタム URL スキームのテスト](0x05h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3)
 - 入力フィールドでのユーザーによるすべての入力を妥当性確認している。
 - WebView 内でロードされたコンテンツを妥当性確認している。以下も参照。
-  - [WebView での JavaScript 実行のテスト](0x05h-Testing-Platform-Interaction.md#testing-javascript-execution-in-webviews-mstg-platform-5 "Testing JavaScript Execution in WebViews")
-  - [WebView プロトコルハンドラのテスト](0x05h-Testing-Platform-Interaction.md#testing-webview-protocol-handlers-mstg-platform-6 "Testing WebView Protocol Handlers")
-  - [Java オブジェクトが WebView を介して公開されているかのテスト](0x05h-Testing-Platform-Interaction.md#determining-whether-java-objects-are-exposed-through-webviews-mstg-platform-7 "Determining Whether Java Objects Are Exposed Through WebViews")
+  - [WebView での JavaScript 実行のテスト](0x05h-Testing-Platform-Interaction.md#testing-javascript-execution-in-webviews-mstg-platform-5)
+  - [WebView プロトコルハンドラのテスト](0x05h-Testing-Platform-Interaction.md#testing-webview-protocol-handlers-mstg-platform-6)
+  - [Java オブジェクトが WebView を介して公開されているかのテスト](0x05h-Testing-Platform-Interaction.md#determining-whether-java-objects-are-exposed-through-webviews-mstg-platform-7)
 - バックエンドサーバーとセキュアに通信している、もしくはサーバーとモバイルアプリケーション間の中間者攻撃を受けやすい。以下も参照。
-  - [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#testing-network-communication "Testing Network Communication")
-  - [Android のネットワーク API](0x05g-Testing-Network-Communication.md#android-network-apis "Android Network APIs")
+  - [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#testing-network-communication)
+  - [Android のネットワーク通信](0x05g-Testing-Network-Communication.md)
 - すべてのローカルデータをセキュアに保存している、もしくは信頼できないデータをストレージからロードしている。以下も参照。
-  - [Android のデータストレージ](0x05d-Testing-Data-Storage.md#data-storage-on-android "Data Storage on Android")
+  - [Android のデータストレージ](0x05d-Testing-Data-Storage.md#data-storage-on-android)
 - 危殆化された環境、再パッケージ化、またはその他のローカル攻撃から自身を保護している。以下も参照。
-  - [Android のアンチリバース防御](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#android-anti-reversing-defenses "Android Anti-Reversing Defenses")
+  - [Android のアンチリバース防御](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#android-anti-reversing-defenses)
