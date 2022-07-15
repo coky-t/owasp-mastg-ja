@@ -1,6 +1,97 @@
 # モバイルアプリのネットワーク通信
 
-ネットワークに接続されたすべてのモバイルアプリは Hypertext Transfer Protocol (HTTP) または HTTP over Transport Layer Security (TLS), HTTPS を使用してリモートエンドポイントとの間でデータを送受信します。その結果、ネットワークベースの攻撃 (パケットスニッフィングや中間者攻撃など) が問題になります。この章ではモバイルアプリとエンドポイント間のネットワーク通信に関する潜在的な脆弱性、テスト技法、ベストプラクティスについて説明します。
+事実上、ネットワークに接続されたすべてのモバイルアプリは Hypertext Transfer Protocol (HTTP) または HTTP over Transport Layer Security (TLS), HTTPS を使用してリモートエンドポイントとの間でデータを送受信します。その結果、ネットワークベースの攻撃 (パケットスニッフィングや中間者攻撃など) が問題になります。この章ではモバイルアプリとエンドポイント間のネットワーク通信に関する潜在的な脆弱性、テスト技法、ベストプラクティスについて説明します。
+
+## セキュア接続
+
+平文の HTTP を単独で使用することが合理的であった時代は過ぎ去り、HTTPS を使用して HTTP 接続を保護することは一般的にありふれたものとなりました。HTTPS は基本的に Transport Layer Security (TLS) と呼ばれる別のプロトコルの上に HTTP を重ねたものです。そして TLS は公開鍵暗号を使用してハンドシェイクを実行し、セキュア接続を作成します。
+
+HTTPS 接続は以下の三つの性質によってセキュアであると考えられています。
+
+- **機密性 (Confidentiality):** TLS はネットワーク上に送信する前にデータを暗号化するため、仲介者が読み取ることはできません。
+- **完全性 (Integrity):** 検出されずにデータを改変することはできません。
+- **認証 (Authentication):** クライアントはサーバーの同一性を検証して、正しいサーバーとの接続を確立していることを確認できます。
+
+## サーバーの信頼性評価
+
+認証局 (Certificate Authority, CA) はセキュアなクライアントサーバー通信に不可欠な要素であり、各オペレーティングシステムのトラストストアにあらかじめ定義されています。たとえば、iOS では 200 のルート証明書がインストールされています ([Apple ドキュメント - Available trusted root certificates for Apple operating systems](https://support.apple.com/en-gb/HT204132 "Lists of available trusted root certificates in iOS") を参照ください) 。
+
+CA はユーザーが手動で、エンタープライズデバイスを管理する MDM によって、またはマルウェアを介して、トラストストアに追加できます。問題は「これらの CA をすべて信頼でき、アプリはデフォルトトラストストアに依存すべきか？」ということです。結局のところ、認証局が侵害されたり、騙されて偽物に証明書を発行するケースはよく知られています。CA の侵害や不備の詳細なタイムラインが [sslmate.com](https://sslmate.com/certspotter/failures "Timeline of PKI Security Failures") にあります。
+
+Android と iOS のいずれもユーザーが追加の CA やトラストアンカーをインストールできます。
+
+アプリはプラットフォームのデフォルトではなく、CA のカスタムセットを信頼したいことがあります。これについて最も一般的な理由は以下のとおりです。
+
+- 自己署名された認証局や会社内で発行された認証局など、カスタム認証局 (システムでまだ認識または信頼されていない CA) でホストに接続すること。
+- CA のセットを特定の信頼できる CA のリストに限定すること。
+- システムに含まれていない追加の CA を信頼すること。
+
+### トラストストアについて
+
+### 信頼の拡張
+
+アプリが自己署名証明書やシステムにとって未知の証明書を持つサーバーに接続すると、セキュア接続は失敗します。これは一般的にたとえば政府、企業、教育機関などの組織が独自に発行するような非公開 CA の場合に当てはまります。
+
+Android と iOS のいずれも信頼を拡張する手段を提供しています。つまり、アプリがシステムにビルトインされているものとカスタムのものを信頼するように、追加の CA を組み込めます。
+
+しかし、デバイスユーザーは常に追加の CA を組み込めることを忘れないでください。したがって、アプリの脅威モデルによってはユーザートラストストアに追加されたすべての証明書を信頼しない、あるいはあらかじめ定義された特定の証明書または証明書セットのみを信頼することが必要な場合があります。
+
+多くのアプリでは、モバイルプラットフォームが提供する「デフォルトの動作」がユースケースに対して十分セキュアです (システムが信頼する CA が侵害されるようなまれなケースでは、アプリが扱うデータは機密とはみなされないか、CA 侵害などに耐性がある他のセキュリティ対策がとられます) 。しかし、金融や医療アプリなどの他のアプリでは、たとえまれなケースであっても CA 侵害のリスクを考慮しなければなりません。
+
+### 信頼の制限: 同一性ピンニング
+
+アプリによっては信頼する CA の数を制限することでセキュリティをさらに高める必要があるかもしれません。一般的には開発者が使用する CA のみを明示的に信頼し、その他はすべて無視します。この信頼の制限は _同一性ピンニング (Identity Pinning)_ と呼ばれ、通常は _証明書ピンニング (Certificate Pinning)_ や _公開鍵ピンニング (Public Key Pinning)_ として実装されます。
+
+> OWASP MSTG ではこの用語を "同一性ピンニング (Identity Pinning)", "証明書ピンニング (Certificate Pinning)", "公開鍵ピンニング (Public Key Pinning)" あるいは単に "ピンニング (Pinning)" と呼びます。
+
+ピンニングとは信頼された CA によって署名された任意の証明書を受け入れる代わりに、X.509 証明書や公開鍵などの特定の同一性とリモートエンドポイントを関連付けるプロセスです。サーバー同一性 (または特定のセット、別名 _pinset_) をピン留めすると、その後モバイルアプリはその同一性が一致した場合にのみそれらのリモートエンドポイントに接続します。不要な ＣＡ から信頼を取り除くことで、アプリの攻撃対象領域が減少します。
+
+#### 一般的なガイドライン
+
+[OWASP Certificate Pinning Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html) では以下のような重要なガイダンスを提供しています。
+
+- ピンニングを推奨する場合と例外を適用する可能性がある場合。
+- ピン留めする時期: 開発時 (プリロード) または初回遭遇時 (初回使用時の信頼) 。
+- ピン留めするもの: 証明書、公開鍵、ハッシュ。
+
+Android と iOS の推奨事項はどちらも以下の「ベストケース」と合致しています。
+
+- 開発者がコントロールできるエンドポイントにのみピン留めする。
+- 開発時に (NSC/ATS) 経由で。
+- SPKI `subjectPublicKeyInfo` のハッシュをピン留めする。
+
+数年前に導入されて以来、ピンニングには悪い評判が広まっています。少なくともモバイルアプリケーションのセキュリティに有効なポイントをいくつか明らかにしたいと思います。
+
+- 評判が悪いのはセキュリティの欠如ではなく、運用上の理由 (実装やピン管理の複雑さなど) によるものです。
+- アプリがピンニングを実装していない場合、これは脆弱性として報告すべきではありません。ただし、MASVS-L2 に対する検証を行わなければならない場合には実装しなければなりません。
+- Android と iOS のいずれもピンニングの実装は非常に簡単であり、ベストプラクティスに沿っています。
+- ピンニングはデバイスにインストールされている侵害された CA や悪意のある CA から保護します。そのようなケースでは、ピンニングは OS が悪意のあるサーバーとセキュア接続を確立することを防ぎます。しかし、攻撃者がデバイスをコントロールしている場合、簡単にピンニングロジックを無効して、接続を行うことが依然として可能です。結果として、攻撃者がバックエンドにアクセスして、サーバー側の脆弱性を悪用することを防ぐことはできません。
+- モバイルアプリのピンニングは HTTP Public Key Pinning (HPKP) と同じではありません。HPKP ヘッダはユーザーがウェブサイトからロックアウトされ、ロックアウトを解除する方法がないことから、ウェブサイトでは推奨されなくなりました。モバイルアプリでは、なんらかの問題があっても帯域外チャネル (つまりアプリストア) を通じて常にアプリを更新できるため、これは問題ではありません。
+
+#### Android 開発者のピンニング推奨事項について
+
+[Android Developers](https://developer.android.com/training/articles/security-ssl#Pinning) サイトには以下の警告が記されています。
+
+> 注意: 証明書ピンニングは別の認証局に変更するなどの将来的なサーバー構成の変更により、クライアントソフトウェアの更新を受けることなくアプリケーションがサーバーに接続できなくなるリスクが高いため、Android アプリケーションには推奨されません。
+
+またこのような [注釈](https://developer.android.com/training/articles/security-config#CertificatePinning) もあります。
+
+> 証明書のピン留めを使用するときは、必ずバックアップの鍵を含めてください。そうすれば、新しい鍵に切り替えたり、CA を変更したりする必要が生じた場合に（CA 証明書またはその CA の中間証明書にピン留めしていても）、アプリの接続が影響を受けることはありません。そうしないと、接続を復元するためにアプリにアップデートをプッシュしなければならなくなります。
+
+最初の文は「証明書ピンニングを推奨しない」と言っているものと誤解される可能性があります。二つ目の文でこれを明らかにしています。実際の推奨事項は、開発者がピンニングを実装したい場合には必要な予防措置を講じなければならない、ということです。
+
+#### Apple 開発者のピンニング推奨事項について
+
+Apple は [長期的に考えること](https://developer.apple.com/news/?id=g9ejcf8y) と [適切なサーバー認証戦略を立てること](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge/performing_manual_server_trust_authentication#2956135) を推奨しています。
+
+#### OWASP MSTG の推奨事項
+
+特に MASVS-L2 アプリで、ピンニングをお勧めします。ただし、開発者は自分の管理下にあるエンドポイントに限定して実装し、バックアップ鍵 (別名、バックアップピン) を含めるようにし、適切なアプリ更新戦略を持つようにしなければなりません。
+
+#### さらに学ぶために
+
+- ["Android Security: SSL Pinning"](https://appmattus.medium.com/android-security-ssl-pinning-1db8acb6621e)
+- [OWASP Certificate Pinning Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html)
 
 ## HTTP(S) トラフィックの傍受
 
@@ -17,7 +108,7 @@
 
 プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS ごとの「テスト環境構築」の章でこれを行う方法について説明します。
 
-## 非 HTTP トラフィックを処理するための Burp プラグイン
+## 非 HTTP トラフィックの傍受
 
 Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
 
@@ -27,6 +118,24 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 これらのプラグインは非 HTTP プロトコルを視覚化することができ、トラフィックを傍受および操作することもできます。
 
 このセットアップは非常に面倒になることがあり、HTTP をテストするほど簡単ではないことに注意します。
+
+## アプリプロセスからのトラフィックの傍受
+
+アプリのテスト時の目的によりますが、ネットワーク層に届く前やアプリでレスポンスを受信する際のトラフィックを監視すれば十分なこともあります。
+
+特定の機密データがネットワークに転送されているかどうかを知りたいだけなら、本格的な MITM 攻撃を展開する必要はありません。この場合、もし実装されていても、ピンニングをバイパスする必要はありません。openssl の `SSL_write` and `SSL_read` などの適切な関数をフックしなければならないだけです。
+
+これは標準 API ライブラリ関数やクラスを使用するアプリではかなりうまく機能しますが、いくつかの欠点があります。
+
+- アプリがカスタムネットワークスタックを実装している可能性がある場合、使用できる API を見つけるためにアプリの解析に時間を費やさなければならないかもしれません ([このブログ投稿](https://hackmag.com/security/ssl-sniffing/) の "Searching for OpenSSL traces with signature analysis" セクションを参照してください ) 。
+- (多くのメソッドコールと実行スレッドにまたがる) HTTP レスポンスペアを再アセンブルするための適切なフックスクリプトを作成するのは非常に時間がかかることがあります。 [既製のスクリプト](https://github.com/fanxs-t/Android-SSL_read-write-Hook/blob/master/frida-hook.py) や [代替ネットワークスタック](https://codeshare.frida.re/@owen800q/okhttp3-interceptor/) もありますが、アプリやプラットフォームによってはこれらのスクリプトは多くのメンテナンスが必要かもしれず、 _常に機能する_ とは限りません。
+
+例をいくつかご覧ください。
+
+- ["Universal interception. How to bypass SSL Pinning and monitor traffic of any application"](https://hackmag.com/security/ssl-sniffing/), "Grabbing payload prior to transmission" および "Grabbing payload prior to encryption" のセクション
+- ["Frida as an Alternative to Network Tracing"](https://gaiaslastlaugh.medium.com/frida-as-an-alternative-to-network-tracing-5173cfbd7a0b)
+
+> この技法は BLE, NFC など MITM 攻撃の展開に非常にコストがかかったり複雑になる可能性がある他のタイプのトラフィックにも有効です。
 
 ## ネットワーク層でのトラフィックの傍受
 
@@ -288,15 +397,20 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 
 > bettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
 
-## ネットワーク上のデータ暗号化の検証 (MSTG-NETWORK-1 および MSTG-NETWORK-2)
+## ネットワーク上のデータ暗号化の検証 (MSTG-NETWORK-1)
 
-### 概要
+詳細については対応する章を参照してください。
+
+- [Android ネットワーク通信](0x05g-Testing-Network-Communication.md#testing-data-encryption-on-the-network-mstg-network-1)
+- [iOS ネットワーク通信](0x06g-Testing-Network-Communication.md#testing-data-encryption-on-the-network-mstg-network-1)
+
+## TLS 設定の検証 (MSTG-NETWORK-2)
 
 コアとなるモバイルアプリの機能のひとつはインターネットなどの信頼できないネットワーク上でデータを送受信することです。データが転送中に正しく保護されない場合、ネットワークインフラストラクチャの任意の部分 (Wi-Fi アクセスポイントなど) にアクセスできる攻撃者は、傍受、読み取り、改変の可能性があります。これが平文のネットワークプロトコルがほとんど推奨されない理由です。
 
 大部分のアプリはバックエンドとの通信に HTTP に依存しています。HTTPS は暗号化された接続で HTTP をラップします (略語の HTTPS はもともと HTTP over Secure Socket Layer (SSL) と呼ばれていました。SSL は TLS の前身で非推奨です) 。TLS はバックエンドサービスの認証を可能にし、ネットワークデータの機密性と完全性を保証します。
 
-#### 推奨される TLS 設定
+### 推奨される TLS 設定
 
 サーバー側で適切な TLS 設定を確保することも重要です。SSL プロトコルは非推奨であり、もはや使用すべきではありません。
 また TLS v1.0 および TLS v1.1 には [既知の脆弱性](https://portswigger.net/daily-swig/the-end-is-nigh-browser-makers-ditch-support-for-aging-tls-1-0-1-1-protocols "Browser-makers ditch support for aging TLS 1.0, 1.1 protocols") があり、2020年までにすべての主要なブラウザでその使用が非推奨になりました。
@@ -306,18 +420,20 @@ TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベ�
 
 モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
 
-##### 暗号スイートの用語
+### 暗号スイートの用語
 
 暗号スイートの構造は以下の通りです。
 
-- **プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム**
+```txt
+プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム
+```
 
-この構造を以下で説明します。
+この構造は以下のとおりです。
 
-- プロトコル: 暗号が使用するプロトコル
-- 鍵交換アルゴリズム: TLS ハンドシェイク時の認証にサーバーおよびクライアントで使用される鍵交換アルゴリズム
-- グロック暗号: メッセージストリームを暗号化するために使用されるブロック暗号
-- 完全性チェックアルゴリズム: メッセージを認証するために使用される完全性チェックアルゴリズム
+- **プロトコル** は暗号に使用されます
+- **鍵交換アルゴリズム** は TLS ハンドシェイク時の認証にサーバーおよびクライアントで使用されます
+- **ブロック暗号** はメッセージストリームを暗号化するために使用されます
+- **完全性チェックアルゴリズム** はメッセージを認証するために使用されます
 
 例: `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
 
@@ -332,7 +448,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 以下のリストでは、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
 
-プロトコル:
+**プロトコル:**
 
 - `SSLv1`
 - `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176 "RFC 6176")
@@ -342,7 +458,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246 "RFC 5246")
 - `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446 "RFC 8446")
 
-鍵交換アルゴリズム:
+**鍵交換アルゴリズム:**
 
 - `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
 - `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
@@ -358,7 +474,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `ECDHE_PSK`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")  - [RFC 5489](https://tools.ietf.org/html/rfc5489 "RFC 5489")
 - `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
 
-ブロック暗号:
+**ブロック暗号:**
 
 - `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772 "RFC 4772")
 - `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829 "RFC 1829")
@@ -372,7 +488,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
 - `CHACHA20_POLY1305`  - [RFC 7905](https://tools.ietf.org/html/rfc7905 "RFC 7905")  - [RFC 7539](https://tools.ietf.org/html/rfc7539 "RFC 7539")
 
-完全性チェックアルゴリズム:
+**完全性チェックアルゴリズム:**
 
 - `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151 "RFC 6151")
 - `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
@@ -381,52 +497,19 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 暗号スイートの性能はそのアルゴリズムの性能に依存することに注意します。
 
-以下では、TLS で使用する最新の推奨暗号スイートリストを提示します。これらの暗号スイートは IANA の TLS パラメータドキュメントと OWASP TLS Cipher String Cheat Sheet の両方で推奨されています。
+以下のリソースには TLS で使用する最新の推奨暗号スイートがあります。
 
 - IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4 "TLS Cipher Suites") にあります。
 - OWASP 推奨暗号スイートは [TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md "OWASP TLS Cipher String Cheat Sheet") にあります。
 
-Android 10 では以下の [SHA-2 CBC 暗号スイートが削除された](https://developer.android.com/about/versions/10/behavior-changes-all#sha2-cbc-cipher-suites "SHA-2 CBC cipher suites removed") ことに注意します。
-
-- `TLS_RSA_WITH_AES_128_CBC_SHA256`
-- `TLS_RSA_WITH_AES_256_CBC_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`
-- `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`
-
 一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#cipher-suites "Cipher suites") および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc "SSL Cipher Suite Values") バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
-
-### 静的解析
-
-最初に、ソースコード内のすべてのネットワークリクエストを特定し、プレーンの HTTP URL が使用されていないことを確認します。機密情報は [`HttpsURLConnection`](https://developer.android.com/reference/javax/net/ssl/HttpsURLConnection.html "HttpsURLConnection") や [`SSLSocket`](https://developer.android.com/reference/javax/net/ssl/SSLSocket.html "SSLSocket") (TLS を使用したソケットレベル通信用) を使用することによりセキュアなチャネルを介して送信されていることを確認します。
-
-次に、アプリがクリアテキスト HTTP トラフィックを許可していないことを確認する必要があります。Android 9 (API レベル 28) 以降、クリアテキスト HTTP トラフィックはデフォルトでブロックされますが、アプリケーションがそれを送信する方法は複数存在します。
-
-- AndroidManifest.xml ファイルの `<application>` タグの [`android:usesCleartextTraffic`](https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic "Android documentation - usesCleartextTraffic flag") 属性を設定します。なお [Network Security Configuration](https://developer.android.com/training/articles/security-config.html) が構成されている場合には、このフラグは無視されます。
-- Network Security Configuration を構成して、`<domain-config>` 要素の `cleartextTrafficPermitted` 属性を true に設定し、クリアテキストトラフィックを有効にします。
-- 低レベル API ([`Socket`](https://developer.android.com/reference/java/net/Socket "Socket class") など) を使用して、カスタム HTTP 接続を設定します。
-- クロスプラットフォームフレームワーク (Flutter, Xamarin など) を使用します。これらは一般的に HTTP ライブラリ実装を独自に備えています。
-
-上記のすべてのケースは全体として注意深く分析する必要があります。例えば、アプリが Android Manifest や Network Security Configuration でクリアテキストトラフィックを許可していなくても、実際には HTTP トラフィックを送信している可能性があります。低レベル API を使用している (Network Security Configuration は無視される) 場合やクロスプラットフォームフレームワークが適切に設定されていない場合に当てはまります。
-
-次に、セキュアな接続を確立することを前提とした低レベル API (`SSLSocket` など) を使用する場合でも、セキュアに実装する必要があることに注意します。例えば、`SSLSocket` はホスト名を検証 **しません** 。ホスト名の検証には `getDefaultHostnameVerifier` を使用します。Android 開発者ドキュメントに [コード例](https://developer.android.com/training/articles/security-ssl.html#WarningsSslSocket "Warnings About Using SSLSocket Directly") があります。
-
-最後に、HTTPS 接続の終端となるサーバーや終端プロキシがベストプラクティスに従って構成されていることを検証します。[OWASP Transport Layer Protection チートシート](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
-
-### 動的解析
-
-テストされるアプリの着信および発信するネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
-
-- [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap) や [Burp Suite](0x08-Testing-Tools.md#burp-suite) などの傍受プロキシですべての HTTP(S) および Websocket トラフィックをキャプチャし、すべてにリクエストが HTTP ではなく HTTPS 経由で行われていることを確認します。
-- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") ツールを使用すると、XMPP や他のプロトコルによる通信をデコードおよび視覚化できます。
-
-> 一部のアプリケーションでは証明書ピンニングのために Burp や OWASP ZAP などのプロキシでは動作しない可能性があります。このようなシナリオでは、「カスタム証明書ストアおよび証明書ピンニングのテスト」を参照してください。
 
 サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
 
-- nscurl - 詳細については iOS のネットワーク通信のテストを参照してください。
+- nscurl - 詳細については [iOS のネットワーク通信](0x06g-Testing-Network-Communication.md) を参照してください。
 - [testssl.sh](https://github.com/drwetter/testssl.sh "testssl.sh") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
+
+最後に、HTTPS 接続が終了するサーバーや終端プロキシがベストプラクティスにしたがって構成されていることを検証します。 [OWASP Transport Layer Protection cheat sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
 ## クリティカルな操作がセキュアな通信チャネルを使用することの確認 (MSTG-NETWORK-5)
 
