@@ -170,7 +170,7 @@ if (status == noErr){
 }
 ```
 
-アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによっても検出できます。これは [otool](0x08-Testing-Tools.md#otool) を使うことにより行えます。
+アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによっても検出できます。これは [otool](0x08a-Testing-Tools.md#otool) を使うことにより行えます。
 
 ```bash
 otool -L <AppName>.app/<AppName>
