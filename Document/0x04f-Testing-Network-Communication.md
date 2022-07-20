@@ -99,8 +99,8 @@ Apple は [長期的に考えること](https://developer.apple.com/news/?id=g9e
 
 フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
 
-- [Burp Suite](0x08-Testing-Tools.md#burp-suite)
-- [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap)
+- [Burp Suite](0x08a-Testing-Tools.md#burp-suite)
+- [OWASP ZAP](0x08a-Testing-Tools.md#owasp-zap)
 
 傍受プロキシを使用するには、それをホストコンピュータ上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
@@ -110,7 +110,7 @@ Apple は [長期的に考えること](https://developer.apple.com/news/?id=g9e
 
 ## 非 HTTP トラフィックの傍受
 
-Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
+[Burp](0x08a-Testing-Tools.md#burp-suite) や [OWASP ZAP](0x08a-Testing-Tools.md#owasp-zap) などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
 
 - [Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension")
 - [Mitm-relay](https://github.com/jrmdev/mitm_relay "Mitm-relay")
@@ -148,8 +148,8 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 このような場合は、次に何をすべきかを決めるために、まずネットワークトラフィックを監視および解析する必要があります。幸いにも、ネットワーク通信をリダイレクトおよび傍受するための選択肢がいくつかあります。
 
-- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](0x08-Testing-Tools.md#wireshark) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
-- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](0x08-Testing-Tools.md#bettercap) または独自のアクセスポイントを検討する必要があります (下図参照) 。
+- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](0x08a-Testing-Tools.md#wireshark) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
+- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](0x08a-Testing-Tools.md#bettercap) または独自のアクセスポイントを検討する必要があります (下図参照) 。
 - ルート化デバイスでは、フックやコードインジェクションを使用して、ネットワーク関連の API コール (HTTP リクエストなど) を傍受したり、これらのコールの引数をダンプしたり操作することも可能です。これにより実際のネットワークデータを検査する必要がなくなります。これらの技法については「リバースエンジニアリングと改竄」の章で詳しく説明します。
 - macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
 
@@ -161,7 +161,7 @@ Burp や OWASP ZAP などの傍受プロキシは非 HTTP トラフィックを�
 
 ### MITM 攻撃
 
-まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて [bettercap](0x08-Testing-Tools.md#bettercap) を実行します。
+まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて [bettercap](0x08a-Testing-Tools.md#bettercap) を実行します。
 
 ```bash
 $ sudo bettercap -eval "set arp.spoof.targets X.X.X.X; arp.spoof on; set arp.spoof.internal true; set arp.spoof.fullduplex true;"
@@ -360,7 +360,7 @@ Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロ�
     sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080
     ```
 
-- 最後のステップとして、 Burp Suite の listener settings で 'Support invisible proxy' をセットする必要があります。
+- 最後のステップとして、 [Burp Suite](0x08a-Testing-Tools.md#burp-suite) の listener settings で 'Support invisible proxy' をセットする必要があります。
 
 - 第三の方法: bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MiTM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
 
@@ -368,7 +368,7 @@ Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロ�
 
 傍受プロキシは上記のポートフォワーディングルールで指定されたポート 8080 をリッスンする必要があります。
 
-Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy` を使用) するように設定されている場合、トラフィックを傍受プロキシにリダイレクトした後、次にトラフィックを送信すべき場所を指定する必要があります。そのトラフィックを元のロケーションにリダイレクトする必要があります。以下の手順は Burp で元のロケーションへのリダイレクトを設定しています。
+Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy` を使用) するように設定されている場合、トラフィックを傍受プロキシにリダイレクトした後、次にトラフィックを送信すべき場所を指定する必要があります。そのトラフィックを元のロケーションにリダイレクトする必要があります。以下の手順は [Burp](0x08a-Testing-Tools.md#burp-suite) で元のロケーションへのリダイレクトを設定しています。
 
 1. **Proxy** タブに移動し、**Options** をクリックします。
 2. proxy listeners のリストからリスナーを選択して編集します。
