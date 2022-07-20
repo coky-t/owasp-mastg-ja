@@ -153,7 +153,7 @@ Pwned Passwords API の詳細なドキュメントは [オンライン](https://
 
 自動パスワード推測攻撃は多くのツールを使用して実行できます。HTTP(S) サービスでは、傍受プロキシを使用することが実行可能な選択肢です。例えば、[Burp Suite Intruder](https://portswigger.net/burp/documentation/desktop/tools/intruder/using "Using Burp Suite Intruder") を使用して、ワードリストベースの攻撃とブルートフォース攻撃の両方を実行できます。
 
-> Burp Suite Community Edition にはプロジェクトを保存できないこととは別に重要な制限があることに注意してください。例えば、スロットリングメカニズムは Burp Intruder での攻撃を劇的に遅くするいくつかのリクエストの後にアクティブになります。また、このバージョンではビルトインのパスワードリストは利用できません。リアルなブルートフォース攻撃を実行したい場合には [Burp Suite](0x08-Testing-Tools.md#burp-suite) Professional か [OWASP ZAP](0x08-Testing-Tools.md#owasp-zap) のいずれかを使用します。
+> Burp Suite Community Edition にはプロジェクトを保存できないこととは別に重要な制限があることに注意してください。例えば、スロットリングメカニズムは Burp Intruder での攻撃を劇的に遅くするいくつかのリクエストの後にアクティブになります。また、このバージョンではビルトインのパスワードリストは利用できません。リアルなブルートフォース攻撃を実行したい場合には [Burp Suite](0x08a-Testing-Tools.md#burp-suite) Professional か [OWASP ZAP](0x08a-Testing-Tools.md#owasp-zap) のいずれかを使用します。
 
 Burp Intruder でのワードリストベースのブルートフォース攻撃には以下の手順を実行します。
 
@@ -326,7 +326,7 @@ OTP 認証が使用されている場合、ほとんどの OTP は短い数値�
 
 > OTP は特定の時間 (通常 30 秒) のみ有効とすべきであり、OTP に誤って数回 (通常 3 回) キー入力した後には提供された OTP は無効にすべきであり、ユーザーはランディングページにリダイレクトされるかログアウトされるべきです。
 
-アプリ内部の機密データや機能へのアクセスを許可するために、アプリがリモートエンドポイントからの `"message":"Success"` などの静的な応答に依存しているかどうかを確認すべきです。その場合、攻撃者はサーバーレスポンスを操作することで 2FA 実装を簡単にバイパスできます。例えば [Burp Suite](0x08-Testing-Tools.md#burp-suite) などの傍受プロキシを使用して、レスポンスを `"message":"Success"` に改変します。
+アプリ内部の機密データや機能へのアクセスを許可するために、アプリがリモートエンドポイントからの `"message":"Success"` などの静的な応答に依存しているかどうかを確認すべきです。その場合、攻撃者はサーバーレスポンスを操作することで 2FA 実装を簡単にバイパスできます。例えば [Burp Suite](0x08a-Testing-Tools.md#burp-suite) などの傍受プロキシを使用して、レスポンスを `"message":"Success"` に改変します。
 
 このような攻撃を防ぐには、アプリケーションは常に何らかのユーザートークンや、事前にセキュアに (Keychain/KeyStore などに) 保存されたユーザーに関する動的な情報を検証する必要があります。
 
