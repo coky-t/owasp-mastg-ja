@@ -84,7 +84,7 @@ if(error==nil){
 
 #### プロトコルハンドラのチェック
 
-Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。[Cydia](0x08-Testing-Tools.md#cydia) アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
+Cydia URL を開くことを試みることでプロトコルハンドラをチェックできます。[Cydia](0x08a-Testing-Tools.md#cydia) アプリストアは事実上すべての脱獄ツールによりデフォルトでインストールされ、 cydia:// プロトコルハンドラをインストールします。
 
 **Swift:**
 
@@ -111,7 +111,7 @@ if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://
 
 最初のケースでは、アプリケーションが脱獄なしのデバイスで完全に機能していることを確認します。アプリケーションがクラッシュしているか終了する原因となるバグがある可能性があります。これは試作版のアプリケーションをテストしているときに発生する可能性があります。
 
-例として再度 Damn Vulnerable iOS アプリケーションを使用して、脱獄検出のバイパスを見てみます。 [Hopper](0x08-Testing-Tools.md#hopper-commercial-tool) (商用ツール) にバイナリをロードした後、アプリケーションが完全に逆アセンブルされるまで待つ必要があります (トップバーを見てステータスを確認します) 。それから検索ボックスで "jail" 文字列を探します。`SFAntiPiracy` と `JailbreakDetectionVC` の2つのクラスがあります。関数を逆コンパイルして、それらが何をしているか、特に何を返すのかを確認することもできます。
+例として再度 [Damn Vulnerable iOS アプリケーション](0x08b-Reference-Apps.md#dvia-v2) を使用して、脱獄検出のバイパスを見てみます。 [Hopper](0x08a-Testing-Tools.md#hopper-commercial-tool) (商用ツール) にバイナリをロードした後、アプリケーションが完全に逆アセンブルされるまで待つ必要があります (トップバーを見てステータスを確認します) 。それから検索ボックスで "jail" 文字列を探します。`SFAntiPiracy` と `JailbreakDetectionVC` の2つのクラスがあります。関数を逆コンパイルして、それらが何をしているか、特に何を返すのかを確認することもできます。
 
 <img src="Images/Chapters/0x06b/HopperDisassembling.png" width="300px" />
 <img src="Images/Chapters/0x06b/HopperDecompile.png" width="300px" />
@@ -198,7 +198,7 @@ Changing the return value to:0x0
 
 `-[JailbreakDetectionVC isJailbroken]` へのコールが二回あることに注意します。これはアプリの GUI 上での二回の物理的なタップに相当します。
 
-ファイルシステムチェックに依存する脱獄検出メカニズムをバイパスするもう一つの方法は [objection](0x08-Testing-Tools.md#objection) です。脱獄バイパスの実装は [jailbreak.ts スクリプト](https://github.com/sensepost/objection/blob/master/agent/src/ios/jailbreak.ts "jailbreak.ts") にあります。
+ファイルシステムチェックに依存する脱獄検出メカニズムをバイパスするもう一つの方法は [objection](0x08a-Testing-Tools.md#objection) です。脱獄バイパスの実装は [jailbreak.ts スクリプト](https://github.com/sensepost/objection/blob/master/agent/src/ios/jailbreak.ts "jailbreak.ts") にあります。
 
 Objective-C メソッドやネイティブ関数をフックするための Python スクリプトは以下を参照します。
 
@@ -655,7 +655,7 @@ Frida が _残した_ これらの _トレース_ を見ると、 Frida を検�
 
 ### 名前の難読化
 
-標準コンパイラはソースコードのクラス名と関数名に基づいてバイナリシンボルを生成します。したがって、難読化が適用されない場合には、シンボル名は意味を持ち、アプリバイナリから直接簡単に読み取ることができます。例えば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは Damn Vulnerable iOS App (DVIA-v2) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
+標準コンパイラはソースコードのクラス名と関数名に基づいてバイナリシンボルを生成します。したがって、難読化が適用されない場合には、シンボル名は意味を持ち、アプリバイナリから直接簡単に読み取ることができます。例えば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは Damn Vulnerable iOS App ([DVIA-v2](0x08b-Reference-Apps.md#dvia-v2)) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
 
 ```assembly
 __T07DVIA_v232JailbreakDetectionViewControllerC20jailbreakTest4TappedyypF:
@@ -822,7 +822,7 @@ IPA の Mach-O と "Frameworks" ディレクトリに含まれるライブラリ
 3. 脱獄済みデバイスからデータを取得します。
     - デバイスに SSH してデータを抽出します (シミュレータの場合と同様に、デバッグを使用するか、 `find /private/var/mobile/Containers/Data/Application/ |grep <name of app>` を使用します) 。ディレクトリは `/private/var/mobile/Containers/Data/Application/<Application uuid>` にあります。
     - SSH を使用して、指定されたコマンドの出力で示されたディレクトリに移動するか、 SCP (`scp <ipaddress>:/<folder_found_in_previous_step> targetfolder`) を使用して、そのフォルダとデータをコピーします。 Filezilla などの FTP クライアントを使うこともできます。
-    - キーチェーンからデータを取得します。 `/private/var/Keychains/keychain-2.db` に格納されており、 [Keychain-dumper](0x08-Testing-Tools.md#keychain-dumper) を使用して取得できます。
+    - キーチェーンからデータを取得します。 `/private/var/Keychains/keychain-2.db` に格納されており、 [Keychain-dumper](0x08a-Testing-Tools.md#keychain-dumper) を使用して取得できます。
 4. 二代目の脱獄済みデバイスにアプリケーションをインストールします。
 5. 手順 3 で抽出したアプリケーションデータを上書きします。キーチェーンデータは手動で追加する必要があります。
 6. 認証された状態で継続できますか。そうである場合、バインディングが正しく機能していない可能性があります。
