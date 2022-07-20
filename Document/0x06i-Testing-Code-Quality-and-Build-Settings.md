@@ -665,7 +665,7 @@ Swift アプリでは `swiftc` コンパイラによって ARC が自動的に�
 
 ### 静的解析
 
-[otool](0x08-Testing-Tools.md#otool) を使用して上記のバイナリセキュリティ機能をチェックできます。これらの例ではすべての機能が有効になっています。
+[otool](0x08a-Testing-Tools.md#otool) を使用して上記のバイナリセキュリティ機能をチェックできます。これらの例ではすべての機能が有効になっています。
 
 - PIE:
 
@@ -722,7 +722,7 @@ Swift アプリでは `swiftc` コンパイラによって ARC が自動的に�
 
 ### 動的解析
 
-これらのチェックは [objection](0x08-Testing-Tools.md#objection) を使用して動的に実行できます。以下はその一例です。
+これらのチェックは [objection](0x08a-Testing-Tools.md#objection) を使用して動的に実行できます。以下はその一例です。
 
 ```bash
 com.yourcompany.PPClient on (iPhone: 13.2.3) [usb] # ios info binary
