@@ -58,7 +58,8 @@ This is the unofficial Japanese translation of the [OWASP Mobile Security Testin
 
 ### 付録
 
-- [テストツール](Document/0x08-Testing-Tools.md)
+- [テストツール](Document/0x08a-Testing-Tools.md)
+- [リファレンスアプリケーション](Document/0x08b-Reference-Apps.md)
 - [さらに学ぶための資料](Document/0x09-Suggested-Reading.md)
 
 ## License
