@@ -90,7 +90,7 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 - 各カテゴリの提案に対するフィードバック
 - 内部分析による統計
 
-過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[UnCrackable App for Android Level 4: Radare2 Pay](https://github.com/OWASP/owasp-mstg/tree/master/Crackmes/Android/Level_04) を寄贈しています。
+過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[UnCrackable App for Android Level 4: Radare2 Pay](0x08b-Reference-Apps.md#uncrackable-app-for-android-level-4) を寄贈しています。
 
 **情報を広めること:**
 
