@@ -48,5 +48,6 @@
 
 ## 付録
 
-- [テストツール](0x08-Testing-Tools.md)
+- [テストツール](0x08a-Testing-Tools.md)
+- [リファレンスアプリケーション](0x08b-Reference-Apps.md)
 - [さらに学ぶための資料](0x09-Suggested-Reading.md)
