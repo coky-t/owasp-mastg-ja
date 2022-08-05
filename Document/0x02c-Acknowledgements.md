@@ -165,6 +165,6 @@ jonasw234, zehuanli, jadeboer, Isopach, prabhant, jhscheer, meetinthemiddle-be, 
 
 ### 支援者
 
-MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは [OWASP Project Wiki](https://owasp.org/www-project-mobile-security-testing-guide/#donation-packagess "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
+MASVS と MSTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MSTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは私たちの [OWASP Project Wiki](https://owasp.org/www-project-mobile-security-testing-guide/#div-donate "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
 
 <img src="Images/Donators/donators.png"/>
