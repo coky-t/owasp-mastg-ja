@@ -14,6 +14,22 @@ MASA により、Google は世界的に認められたモバイルアプリセ�
 
 Google、ADA、およびそのすべてのメンバーの支援と、モバイルアプリエコシステムを保護するための優れた取り組みに感謝します。
 
+## 認証機関
+
+### CREST
+
+<img src="Images/Other/crest_logo.jpg" width="250px"/>
+
+CREST は国際的な非営利団体であり、会員機関の品質保証を行い、サイバーセキュリティ業界に専門的な認証を提供しています。CREST は世界中の政府、規制当局、学術機関、トレーニングパートナー、専門機関、その他の関係者と協力しています。
+
+2022 年 8 月、CREST は OWASP Verification Standard (OVS) プログラムを開始しました。CREST OVS はアプリケーションセキュリティの新しい標準を設定します。OWASP のアプリケーションセキュリティ検証標準 (ASVS) とモバイルアプリケーションセキュリティ検証標準 (MASVS) に支えられ、CREST はオープンソースコミュニティを活用して、グローバルな標準を構築および維持し、グローバルなウェブおよびモバイルアプリケーションセキュリティフレームワークを提供しています。これにより CREST OVS 認定プロバイダを利用する開発者は、OWASP ASVS および MASVS 標準を活用することにより、熟練し能力があるセキュリティテスト担当者を有する倫理的で有能な組織との取引であることを常に知ることができることを購入コミュニティに保証します。
+
+- [CREST OVS Programme](https://www.crest-approved.org/membership/crest-ovs-programme/)
+- [CREST OVS Accreditation Process](https://www.crest-approved.org/membership/crest-ovs-programme/ovs-programme-accreditation-process/)
+- [CREST OVS Introductory Video](https://www.youtube.com/watch?v=th1l6-e4hcg)
+
+CREST の OVS プログラムに関するコンサルテーションとグローバルなサイバーセキュリティ標準を構築および維持するためのオープンソースコミュニティへの支援に感謝します。
+
 ## 標準化機関
 
 ### NIST (米国国立標準技術研究所)
