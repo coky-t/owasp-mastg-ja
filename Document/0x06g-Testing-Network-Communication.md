@@ -1,59 +1,67 @@
-# iOS のネットワーク API
+# iOS のネットワーク通信
 
-ほぼすべての iOS アプリは一つ以上のリモートサービスのクライアントとして機能します。このネットワーク通信は通常、公衆 Wi-Fi などの信頼できないネットワークで行われるため、従来のネットワークベースの攻撃が潜在的な問題になります。
+ほぼすべての iOS アプリは一つ以上のリモートサービスのクライアントとして動作します。このネットワーク通信は一般的に公衆 Wi-Fi などの信頼できないネットワーク上で行われるため、従来のネットワークベースの攻撃が潜在的な問題になります。
 
-最新のモバイルアプリの多くは HTTP ベースのウェブサービスに類するものを使用しています。これらのプロトコルは十分に文書化されサポートされているためです。
-iOS 12.0 以降 [Network フレームワーク](https://developer.apple.com/documentation/network "API Reference Network") および [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession "API Reference URLSession") クラスは非同期的および同期的にネットワークおよび URL リクエストをロードするメソッドを提供しています。古い iOS バージョンでは [Sockets API](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html "Using Sockets and Socket Streams") を利用できます。
+最近のモバイルアプリの多くはさまざまな HTTP ベースのウェブサービスを使用しています。これらのプロトコルは十分に文書化されており、サポートされているからです。
 
-## Network Framework
+## 概要
 
-2018 年の [Apple Worldwide Developers Conference (WWDC)](https://developer.apple.com/videos/play/wwdc2018/715 "Introducing Network.framework: A modern alternative to Sockets") で紹介された Network フレームワークは Sockets API に代わるものです。この低レベルのネットワークフレームワークは動的なネットワーキング、セキュリティ、パフォーマンスサポートが組み込まれた、データを送受信するクラスを提供します。
+### iOS App Transport Security
 
-引数 `using: .tls` が使用されている場合、Network フレームワークでは TLS 1.3 がデフォルトで有効になっています。これは従来の [Secure Transport](https://developer.apple.com/documentation/security/secure_transport "API Reference Secure Transport") フレームワークよりも推奨されるオプションです。
+iOS 9 以降、Apple は [App Transport Security (ATS)](https://developer.apple.com/documentation/bundleresources/information_property_list/nsapptransportsecurity) を導入しました。これは [URL Loading System](https://developer.apple.com/documentation/foundation/url_loading_system) を使用して行われる接続 (通常 `URLSession` 経由) に対して常に HTTPS を使うようにオペレーティングシステムが強制する一連のセキュリティチェックです。アプリは [Apple のベストプラクティス](https://developer.apple.com/news/?id=jxky8h89) に従って、適切に接続を保護すべきです。
 
-## URLSession
+> [Apple WWDC 2015 の ATS 紹介ビデオをご覧ください](https://developer.apple.com/videos/play/wwdc2015/711/?time=321) 。
 
-`URLSession` は Network フレームワーク上に構築され、同じトランスポートサービスを利用します。エンドポイントが HTTPS の場合、このクラスもデフォルトで TLS 1.3 を使用します。
+ATS はデフォルトのサーバー信頼性評価を行い、最低限のセキュリティ要件を要求します。
 
-`URLSession` は HTTP および HTTPS 接続で Network フレームワークを直接利用する代わりに使用すべきです。このクラスはネイティブに両方の URL スキームをサポートしており、そのような接続に最適化されています。定型コードが少なく済むため、エラーを生みにくくなり、デフォルトでセキュアな接続が確保されます。Network フレームワークは低レベルネットワーキングや高度なネットワーキング要件がある場合にのみ使用すべきです。
+**デフォルトのサーバー信頼性評価:**
 
-Apple の公式ドキュメントには Network フレームワークを使用して [netcat を実装する](https://developer.apple.com/documentation/network/implementing_netcat_with_network_framework "Implementing netcat with Network Framework") 例と、 `URLSession` を使用して [ウェブサイトデータをメモリにフェッチする](https://developer.apple.com/documentation/foundation/url_loading_system/fetching_website_data_into_memory "Fetching Website Data into Memory") 例があります。
+アプリがリモートサーバーに接続する際、サーバーは X.509 デジタル証明書を使用してそのアイデンティティを提供します。ATS のデフォルトのサーバー信頼性評価には以下に示す証明書の妥当性確認も含まれています。
 
-## App Transport Security (MSTG-NETWORK-2)
+- 有効期限が切れていないこと。
+- サーバーの DNS 名と一致する名前を持っていること。
+- 有効な (改竄されていない) デジタル署名を持ち、[オペレーティングシステムの Trust Store](https://support.apple.com/en-us/HT209143) に含まれる信頼できる認証局 (Certificate Authority, CA) にさかのぼることができるか、ユーザーもしくはシステム管理者がクライアントにインストールしたものであること。
 
-### 概要
+**接続に必要な最低限のセキュリティ要件:**
 
-[App Transport Security (ATS)](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html "Information Property List Key Reference: Cocoa Keys") は [NSURLConnection](https://developer.apple.com/reference/foundation/nsurlconnection "API Reference NSURLConnection"), [NSURLSession](https://developer.apple.com/reference/foundation/urlsession "API Reference NSURLSession"), [CFURL](https://developer.apple.com/reference/corefoundation/cfurl-rd7 "API Reference CFURL") でパブリックホスト名に接続する際にオペレーティングシステムが強制する一連のセキュリティチェックです。iOS SDK 9 および以降のアプリケーションビルドでは ATS がデフォルトで有効になっています。
+さらに ATS は以下に示す一連の [最低限のセキュリティ要件](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138464) を満たさない接続をブロックします。
 
-ATS はパブリックホスト名に接続する際にのみ強制されます。したがって、IP アドレス、不完全なドメイン名、.local の TLD への接続は ATS で保護されません。
+- TLS バージョン 1.2 以上。
+- AES-128 または AES-256 でのデータ暗号化。
+- 証明書は RSA 鍵 (2048 ビット以上)、ECC 鍵 (256 ビット以上) で署名されていなければならない。
+- 証明書のフィンガープリントは SHA-256 以上を使用しなければならない。
+- リンクは Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) 鍵交換による Perfect Forward Secrecy (PFS) をサポートしなければならない。
 
-以下は [App Transport Security Requirements](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html "Information Property List Key Reference: Cocoa Keys") の要約リストです。
+**証明書の有効性チェック:**
 
-- HTTP 接続は許可されない。
-- X.509 証明書には SHA256 フィンガープリントがあり、少なくとも 2048 ビットの RSA 鍵または 256 ビットの楕円曲線暗号 (ECC) 鍵で署名する必要がある。
-- Transport Layer Security (TLS) バージョンは 1.2 もしくは以降が必要であり、Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) 鍵交換および AES-128 もしくは AES-256 対称暗号により Perfect Forward Secrecy (PFS) をサポートする必要がある。
+[Apple によると](https://support.apple.com/en-gb/guide/security/sec100a75d12/web#sec8b087b1f7) 、「TLS 証明書の信頼ステータスの評価は RFC 5280 で規定されているように確立された業界標準に従って行われ、RFC 6962 (Certificate Transparency) などの新しい標準も取り入れられています。iOS 11 以降では、Apple デバイスは定期的に失効した証明書と制約のある証明書の最新リストで更新されます。このリストは Apple が信頼するビルトインの各ルート認証局およびその下位の CA 発行者が発行する証明書失効リスト (CRL) から集約されています。このリストには Apple の裁量で他の制約が含まれていることもあります。この情報はネットワーク API 関数を使用してセキュア接続を行う際に参照されます。CA から失効した証明書が多すぎて個別にリストアップできない場合、信頼性評価では代わりにオンライン証明書ステータス応答 (Online Certificate Status Response, OCSP) が必要となり、応答が得られない場合には信頼性評価は失敗します。」
 
-暗号スイートは以下のいずれかが必要である。
+#### ATS が適用されないのはどのような場合か？
 
-- `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`
-- `TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`
-- `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
-- `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`
-- `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`
-- `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`
+- **低レベル API を使用する場合:** ATS は [URLSession](https://developer.apple.com/reference/foundation/urlsession) に含まれる [URL Loading System](https://developer.apple.com/documentation/foundation/url_loading_system) とその上にレイヤー化された API にのみ適用されます。低レベル API (BSD ソケットなど) を使用するアプリには適用されません。その低レベル API 上に TLS を実装しているものも同様です (アーカイブされた Apple Developer ドキュメントの ["Using ATS in Apple Frameworks"](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW55) セクションを参照してください) 。
+
+- **IP アドレス、非修飾ドメイン名、ローカルホストに接続する場合:** ATS はパブリックホスト名に対して行われた接続にのみ適用されます (アーカイブされた Apple Developer ドキュメントの ["Availability of ATS for Remote and Local Connections"](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW54) セクションを参照してください) 。システムは以下に示す接続に対して ATS 保護を提供しません。
+
+  - インターネットプロトコル (Internet Protocol, IP) アドレス
+  - 非修飾ホスト名
+  - .local トップレベルドメイン (Top-Level Domain, TLD) を使用するローカルホスト
+
+- **ATS 例外を含む場合:** アプリが ATS 互換 API を使用する際、[ATS 例外](#ats-exceptions) を使用して特定のシナリオで ATS を無効にできます。
+
+さらに学ぶために:
+
+- ["ATS and iOS enterprise apps with private networks"](https://developer.apple.com/forums/thread/79662)
+- ["ATS and local IP addresses"](https://developer.apple.com/forums/thread/66417)
+- ["ATS impact on apps use 3rd party libraries"](https://developer.apple.com/forums/thread/69197)
+- ["ATS and SSL pinning / own CA"](https://developer.apple.com/forums/thread/53314)
 
 #### ATS 例外
 
-ATS の制限は Info.plist ファイルの `NSAppTransportSecurity` キーに例外を設定することで無効にできます。これらの例外には以下を適用できます。
+ATS の制限は `Info.plist` ファイルの `NSAppTransportSecurity` キーに例外を設定することで無効にできます。これらの例外には以下を適用できます。
 
 - セキュアではない接続 (HTTP) の許可
 - 最小 TLS バージョンの引き下げ
-- PFS の無効化
+- Perfect Forward Secrecy (PFS) の無効化
 - ローカルドメインへの接続の許可
 
 ATS 例外はグローバルまたはドメイン単位で適用できます。アプリケーションは ATS をグローバルに無効化できますが、個々のドメインをオプトインできます。Apple Developer ドキュメントの以下のリストでは [`NSAppTransportSecurity`](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSAppTransportSecurity "API Reference NSAppTransportSecurity") Dictionary の構造を示しています。
@@ -76,7 +84,7 @@ NSAppTransportSecurity : Dictionary {
 }
 ```
 
-情報源: [Apple Developer Documentation](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html "Information Property List Key Reference: Cocoa Keys").
+出典: [Apple Developer Documentation](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html "Information Property List Key Reference: Cocoa Keys").
 
 以下の表はグローバル ATS 例外をまとめたものです。これらの例外の詳細については、[公式の Apple Developer ドキュメントの Table 2](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW34 "App Transport Security dictionary primary keys") を参照してください。
 
@@ -96,7 +104,9 @@ NSAppTransportSecurity : Dictionary {
 | `NSExceptionMinimumTLSVersion` | TLS バージョン 1.2 未満のサーバーへの接続を許可する |
 | `NSExceptionRequiresForwardSecrecy` | Perfect Forward Secrecy (PFS) を無効化する |
 
-2017年1月1日から Apple App Store レビューでは以下の ATS 例外の一つが定義されている場合に正当な理由を要求します。
+**例外の正当性:**
+
+2017年1月1日から Apple App Store レビューでは以下の ATS 例外の一つが定義されている場合に [正当な理由を要求](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) します。
 
 - `NSAllowsArbitraryLoads`
 - `NSAllowsArbitraryLoadsForMedia`
@@ -104,79 +114,15 @@ NSAppTransportSecurity : Dictionary {
 - `NSExceptionAllowsInsecureHTTPLoads`
 - `NSExceptionMinimumTLSVersion`
 
-### ATS 設定の解析
+これはアプリが意図した目的の一部であるかどうかを判断して、慎重に修正しなければなりません。Apple はアプリのセキュリティを低下させる例外について警告し、ATS の障害に直面した場合には **必要な場合にのみ例外を設定し、サーバーの修正を優先する** ようにアドバイスしています。
 
-ソースコードが利用可能である場合、アプリケーションバンドルディレクトリの `Info.plist` ファイルを開き、アプリケーション開発者が設定した例外を探します。このファイルはアプリケーションコンテキストを考慮して調べる必要があります。
+**例:**
 
-以下のリストは ATS 制限をグローバルに無効化するように設定された例外の例です。
-
-```xml
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-```
-
-ソースコードが利用可能ではない場合、`Info.plist` ファイルは脱獄済みデバイスから取得するか、アプリケーション IPA ファイルから抽出する必要があります。「iOS セキュリティテスト入門」の章の「Info.plist ファイル」のセクションで説明されているように、必要であれば人間が読める形式に変換します (例えば `plutil -convert xml1 Info.plist`) 。
-
-アプリケーションには通常の機能を許可するために ATS 例外が定義されている場合があります。例えば、Firefox iOS アプリケーションでは ATS がグローバルに無効化されています。さもないとアプリケーションがすべての ATS 要件を満たしていない任意の HTTP ウェブサイトに接続できなくなるため、この例外は許容されます。
-
-### ATS の使用に関する推奨事項
-
-特定のエンドポイントと通信するときに使用できる ATS 設定を検証することが可能です。macOS ではコマンドラインユーティリティ `nscurl` が同じことを確認するために利用できます。このコマンドは以下のように使用できます。
-
-```bash
-/usr/bin/nscurl --ats-diagnostics https://www.example.com
-Starting ATS Diagnostics
-
-Configuring ATS Info.plist keys and displaying the result of HTTPS loads to https://www.example.com.
-A test will "PASS" if URLSession:task:didCompleteWithError: returns a nil error.
-Use '--verbose' to view the ATS dictionaries used and to display the error received in URLSession:task:didCompleteWithError:.
-================================================================================
-
-Default ATS Secure Connection
----
-ATS Default Connection
-Result : PASS
----
-
-================================================================================
-
-Allowing Arbitrary Loads
-
----
-Allow All Loads
-Result : PASS
----
-
-================================================================================
-
-Configuring TLS exceptions for www.example.com
-
----
-TLSv1.3
-2019-01-15 09:39:27.892 nscurl[11459:5126999] NSURLSession/NSURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9800)
-Result : FAIL
----
-```
-
-上記の出力は nscurl の最初のいくつかの結果のみを示しています。指定されたエンドポイントに対してさまざまな設定の組み合わせが実行および検証されます。デフォルトの ATS セキュア接続テストに合格した場合、ATS をデフォルトのセキュア構成で使用できます。
-
-> nscurl の出力に不合格がある場合には、クライアント側の ATS の構成を弱くするのではなく、サーバー側をよりセキュアにするために TLS のサーバー側構成を変更してください。
-
-ATS に関する詳細はこの [ブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
-
-一般に以下のように要約できます。
-
-- ATS は Apple のベストプラクティスに従って設定し、特定の状況下でのみ無効化する必要があります。
-- アプリケーションはアプリケーション所有者が管理する定義された数のドメインに接続する場合、ATS 要件をサポートするようにサーバーを構成し、アプリ内の ATS 要件をオプトインします。以下の例では、`example.com` はアプリケーション所有者が所有し、そのドメインに対して ATS が有効になっています。
+以下の例では、ATS はグローバルに有効 (グローバルな `NSAllowsArbitraryLoads` は定義されていない) ですが、 `example.com` ドメイン (とそのサブドメイン) に対して例外が **明示的に設定** されています。このドメインをアプリケーション開発者が所有し、適切な正当性があることを考慮すると、他のすべてのドメインに対して ATS のすべての利点を維持しているため、この例外は許容されるでしょう。しかし、上記のようにサーバーを修正することが常に望ましいと思われます。
 
 ```xml
 <key>NSAppTransportSecurity</key>
 <dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
     <key>NSExceptionDomains</key>
     <dict>
         <key>example.com</key>
@@ -186,7 +132,7 @@ ATS に関する詳細はこの [ブログ投稿](https://www.nowsecure.com/blog
             <key>NSExceptionMinimumTLSVersion</key>
             <string>TLSv1.2</string>
             <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <false/>
+            <true/>
             <key>NSExceptionRequiresForwardSecrecy</key>
             <true/>
         </dict>
@@ -194,121 +140,208 @@ ATS に関する詳細はこの [ブログ投稿](https://www.nowsecure.com/blog
 </dict>
 ```
 
-- (アプリ所有者の管理下にない) サードパーティのドメインとの接続が行われる場合、サードパーティのドメインでサポートされていない ATS 設定と、それらが無効化できるかどうかを評価する必要があります。
-- アプリケーションが WebView でサードパーティのウェブサイトを開く場合、iOS 10 以降では NSAllowsArbitraryLoadsInWebContent を使用して、WebView でロードされるコンテンツの ATS 制限を無効化できます。
+ATS 例外の詳細については [Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138482) の記事 "Preventing Insecure Network Connections" のセクション "Configure Exceptions Only When Needed; Prefer Server Fixes" および [ATS に関するブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
 
-## カスタム証明書ストアと証明書ピンニングのテスト (MSTG-NETWORK-3 および MSTG-NETWORK-4)
+### iOS ネットワーク API
 
-### 概要
+iOS 12.0 以降、[Network](https://developer.apple.com/documentation/network) フレームワークと [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) クラスはネットワークおよび URL リクエストを非同期および同期でロードするメソッドを提供します。古いバージョンの iOS では [Sockets API](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html) を利用できます。
 
-認証局はセキュアなクライアントサーバー通信に不可欠な要素であり、各オペレーティングシステムのトラストストアに事前定義されています。iOS では自動的に膨大な量の証明書を信頼しています。これらは Apple のドキュメント [iOS バージョンごとの利用可能な信頼されたルート証明書のリスト](https://support.apple.com/en-gb/HT204132 "Lists of available trusted root certificates in iOS") で詳細を調べることができます。
+#### Network フレームワーク
 
-CA はトラストストアに追加できます。ユーザーを介して手動で、エンタープライズデバイスを管理する MDM により、もしくはマルウェアを介して行われます。問題はそれらのすべての CA を信頼できるかどうか、そしてアプリはトラストストアに頼るべきかどうかということです。
+`Network` フレームワークは 2018 年の [Apple Worldwide Developers Conference (WWDC)](https://developer.apple.com/videos/play/wwdc2018/715 "Introducing Network.framework: A modern alternative to Sockets") で紹介された、 Sockets API に代わるものです。この低レベルネットワークフレームワークは動的ネットワーク、セキュリティ、パフォーマンスのサポートが組み込まれたデータ送受信のためのクラスを提供します。
 
-このリスクに対処するために、証明書ピンニングを使用できます。証明書ピンニングは、信頼できる認証局により署名された任意の証明書を受け入れる代わりに、モバイルアプリをサーバーの特定の X.509 証明書に関連付けるプロセスです。サーバー証明書や公開鍵を格納するモバイルアプリは、その後、既知のサーバーへの接続のみを確立し、それによりサーバーを「ピンニング」します。外部の認証局 (CA) への信頼を排除することで、攻撃対象となる面が少なくなります。結局のところ、認証局が侵害されたり、偽者に証明書を発行するよう騙されたりという既知の事例が多くあります。CA 違反や失敗の詳細なタイムラインは [sslmate.com](https://sslmate.com/certspotter/failures "Timeline of PKI Security Failures") で見つけることができます。
+`Network` フレームワークでは引数 `using: .tls` が使用されている場合、デフォルトで TLS 1.3 が有効になっています。これは従来の [Secure Transport](https://developer.apple.com/documentation/security/secure_transport "API Reference Secure Transport") フレームワークよりも優先されるオプションです。
 
-証明書は開発中またはアプリが最初にバックエンドに接続するときにピン留めできます。
-その場合、証明書は初回に見たときにホストに関連付けられるか「ピン留め」されます。この二つ目のバリエーションはあまりセキュアではなくなります。攻撃者は最初の接続を傍受して自身の証明書を注入する可能性があるためです。
+#### URLSession
 
-#### ピンが失敗する場合
+`URLSession` は `Network` フレームワーク上に構築されており、同じトランスポートサービスを利用します。また、エンドポイントが HTTPS の場合、このクラスはデフォルトで TLS 1.3 を使用します。
 
-ピンニングの失敗はさまざまな理由で発生する可能性があります。サーバーやロードバランサーが提供するものとは別の鍵または証明書をアプリが期待しているか、中間者攻撃が行われている可能性があります。どちらの場合でも Android の場合と同様に、このような状況に対応するさまざまな方法があります。「Android のネットワーク API」の章の "[ピンが失敗する場合](0x05g-Testing-Network-Communication.md#when-the-pin-fails)" セクションを参照ください。
+**HTTP および HTTPS の接続には `Network` フレームワークを直接利用するのではなく `URLSession` を使用すべきです。** `URLSession` クラスは両方の URL スキームをネイティブにサポートし、そのような接続のために最適化されています。定型コードをあまり必要としないため、エラーの可能性を減らし、デフォルトでセキュアな接続を確保できます。 `Network` フレームワークは低レベルや高度なネットワーク要件がある場合にのみ使用すべきです。
+
+Apple の公式ドキュメントには `Network` フレームワークを使用して [netcat を実装する](https://developer.apple.com/documentation/network/implementing_netcat_with_network_framework "Implementing netcat with Network Framework") 例や、`URLSession` で [ウェブサイトのデータをメモリに取り込む](https://developer.apple.com/documentation/foundation/url_loading_system/fetching_website_data_into_memory "Fetching Website Data into Memory") 例が掲載されています。
+
+## ネットワーク上のデータ暗号化のテスト (MSTG-NETWORK-1)
+
+提示されたすべてのケースは全体として注意深く解析しなければなりません。たとえば、アプリが Info.plist でクリアテキストトラフィックを許可していないとしても、実際にはまだ HTTP トラフィックを送信している可能性があります。これは低レベルの API を使用している (ATS が無視される) 場合や、不適切に設定されたクロスプラットフォームフレームワークを使用している場合に当てはまります。
+
+> 重要: これらのテストはアプリのメインコードだけでなく、アプリ内に組み込まれたアプリの拡張機能、フレームワーク、Watch アプリにも適用すべきです。
+
+詳細については Apple Developer ドキュメントの記事 ["Preventing Insecure Network Connections"](https://developer.apple.com/documentation/security/preventing_insecure_network_connections) および ["Fine-tune your App Transport Security settings"](https://developer.apple.com/news/?id=jxky8h89) を参照してください。
 
 ### 静的解析
 
-サーバー証明書がピン留めされていることを確認します。サーバーにより提示された証明書ツリーに関して、ピンニングはさまざまなレベルで実装できます。
+#### セキュアプロトコルでのネットワークリクエストのテスト
 
-1. サーバーの証明書をアプリケーションバンドルに含め、各接続で検証を実行します。これにはサーバーの証明書が更新されるたびに更新メカニズムが必要です。
-2. 証明書発行者を例えば一つのエンティティに制限し、中間 CA の公開鍵をアプリケーションにバンドルします。このようにして攻撃面を制限し、有効な証明書を取得します。
-3. 独自の PKI を所有および管理します。アプリケーションには中間 CA の公開鍵が含まれます。これにより、例えば期限切れのために、サーバー上の証明書を変更するごとにアプリケーションを更新することがなくなります。独自の CA を使用すると証明書が自己署名されることに注意します。
+まず、ソースコードのすべてのネットワークリクエストを特定し、プレーンな HTTP URL が使用されていないことを確認します。[`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) (標準の [iOS の URL Loading System](https://developer.apple.com/documentation/foundation/url_loading_system) を使用する) または [`Network`](https://developer.apple.com/documentation/network) (TLS を使用して TCP および UDP にアクセスするソケットレベル通信) を使用して、機密情報がセキュアチャネルで送信されることを確認します。
 
-Apple が推奨する最新のアプローチは `Info.plist` ファイルの App Transport Security Settings にピン留めされた CA 公開鍵を指定することです。記事 [Identity Pinning: How to configure server certificates for your app](https://developer.apple.com/news/?id=g9ejcf8y "Identity Pinning: How to configure server certificates for your app") に例があります。
+#### 低レベルネットワーク API の使用状況のチェック
 
-もう一つの一般的なアプローチは `NSURLConnectionDelegate` の [`connection:willSendRequest ForAuthenticationChallenge:`](https://developer.apple.com/documentation/foundation/nsurlconnectiondelegate/1414078-connection?language=objc "connection:willSendRequestForAuthenticationChallenge:") メソッドを使用して、サーバーから提供された証明書が有効で、アプリに保存されている証明書と一致するかどうかを確認することです。詳細については [HTTPS Server Trust Evaluation](https://developer.apple.com/library/archive/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECNSURLCONNECTION "HTTPS Server Trust Evaluation") テクニカルノートをご覧ください。
+アプリが使用するネットワーク API を特定し、低レベルネットワーク API を使用しているかどうかを確認します。
 
-ローカルとリモートの証明書を比較する場合、リモートの証明書が変更されるときにアプリを更新する必要があることに注意します。予備の証明書をアプリに保存しておくと移行がスムーズに行えます。また、ピンを公開鍵比較ベースとすることもできます。この場合、リモートの証明書が変更されても、公開鍵は同じままです。
+> **Apple の推奨事項: アプリでは高レベルフレームワークを優先すること**: 「ATS はアプリが Network フレームワークや CFNetwork などの低レベルネットワークインタフェースに対して行う呼び出しには適用されません。これらの場合、接続のセキュリティを確保するのはあなたの責任です。この方法でセキュア接続を構築できますが、ミスを犯しやすく、コストもかかります。代わりに Loading System を使用するのが通常はもっとも安全です ([出典](https://developer.apple.com/documentation/security/preventing_insecure_network_connections) を参照) 。」
 
-以下のサードパーティライブラリにはピンニング機能が含まれています。
+アプリが [`Network`](https://developer.apple.com/documentation/network) や [`CFNetwork`](https://developer.apple.com/documentation/cfnetwork) などの低レベル API を使用している場合、それらがセキュアに使用されているかどうかを注意深く調査すべきです。クロスプラットフォームフレームワーク (Flutter, Xamarin など) やサードパーティフレームワーク (Alamofire など) を使用するアプリでは、それらがベストプラクティスに沿ってセキュアに設定され使用されているかどうかを解析すべきです。
 
-- [TrustKit](https://github.com/datatheorem/TrustKit "TrustKit"): ここでは Info.plist に公開鍵ハッシュを設定するか、辞書にハッシュを提供することでピンニングできます。詳細は readme を見てください。
-- [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire"): ここではピンニング方法を定義するドメインごとに `ServerTrustPolicy` を定義します。
-- [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking"): ここではピンニングを構成するために `AFSecurityPolicy` を設定します。
+アプリについて以下を確認します。
+
+- サーバー信頼性評価の実行時にチャレンジタイプとホスト名と資格情報を検証している。
+- TLS エラーを無視していない。
+- セキュアでない TLS 設定を使用していない (["TLS 設定のテスト (MSTG-NETWORK-2)"](#testing-the-tls-settings-mstg-network-2) を参照)
+
+これらのチェックは方向性を示すものであり、アプリごとに異なるフレームワークを使用している可能性があるため、特定の API を挙げることはできません。コードを調査する際の参考情報としてください。
+
+#### クリアテキストトラフィックのテスト
+
+アプリがクリアテキスト HTTP トラフィックを許可していないことを確認します。iOS 9.0 以降、クリアテキスト HTTP トラフィックはデフォルトで (App Transport Security (ATS) により) ブロックされますが、アプリケーションがそれを送信できる方法はいくつかあります。
+
+- アプリの `Info.plist` にある `NSAppTransportSecurity` で `NSAllowsArbitraryLoads` 属性を `true` (または `YES`) にセットしてクリアテキストトラフィックを有効にするよう ATS を設定する。
+- [`Info.plist` の取得](0x06b-Basic-Security-Testing.md#the-infoplist-file)
+- どのドメインでも `NSAllowsArbitraryLoads` がグローバルに `true` にセットされていないことをチェックする。
+
+- アプリケーションがサードパーティのウェブサイトを WebView で開く際、iOS 10 以降では `NSAllowsArbitraryLoadsInWebContent` を使用して WebView にロードされるコンテンツの ATS 制限を無効にできる。
+
+> **Apple の警告:** ATS を無効にすると、セキュアではない HTTP 接続が許可されます。HTTPS 接続も許可され、依然としてデフォルトのサーバー信頼性評価の対象となります。しかし、最低限の Transport Layer Security (TLS) プロトコルを要求するなどの拡張セキュリティチェックは無効になります。ATS を使用しない場合、 ["Performing Manual Server Trust Authentication"](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge/performing_manual_server_trust_authentication) で説明されているように、デフォルトのサーバー信頼性要件を自由に緩めることもできます。
+
+以下のスニペットは ATS 制限をグローバルに無効化するアプリの **脆弱な例** を示しています。
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+</dict>
+```
+
+ATS はアプリケーションのコンテキストを考慮して検討すべきです。アプリケーションはその意図する目的を達するために ATS 例外を定義する _必要がある_ かもしれません。たとえば、 [Firefox iOS アプリケーションはグローバルに ATS を無効にしています](https://github.com/mozilla-mobile/firefox-ios/blob/v97.0/Client/Info.plist#L82) 。この例外は受け入れられます。そうしないと、すべての ATS 要件を満たしていない HTTP ウェブサイトに接続できなくなるためです。場合によっては、アプリはグローバルに ATS を無効にするかもしれませんが、例えば、メタデータをセキュアにロードしたり、セキュアログインを可能にするため、特定のドメインでは有効にすることがあります。
+
+ATS にはこれを [正当化する文字列](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) が含まれているべきです (例: 「このアプリはセキュアな接続をサポートしてない別のエンティティで管理されているサーバーに接続しなければなりません」) 。
 
 ### 動的解析
 
-#### サーバー証明書の妥当性確認
+テスト対象のアプリの送受信ネットワークトラフィックを傍受して、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
+
+- [OWASP ZAP](0x08a-Testing-Tools.md#owasp-zap) や [Burp Suite](0x08a-Testing-Tools.md#burp-suite) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS 経由で行われることを確認します。
+- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。ただし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して XMPP や他のプトロコルを介した通信をデコードして可視化できます。
+
+> 一部のアプリケーションでは証明書ピンニングが原因で Burp や OWASP ZAP などのプロキシで動作しないことがあります。そのようなシナリオでは ["カスタム証明書ストアおよび証明書ピンニングのテスト"](#testing-custom-certificate-stores-and-certificate-pinning-mstg-network-4) を確認してください。
+
+詳細については以下を参照してください。
+
+- ["ネットワーク通信のテスト"](0x04f-Testing-Network-Communication.md#intercepting-traffic-on-the-network-layer) の章の "ネットワーク層でのトラフィックの傍受"
+- [iOS のセキュリティテスト入門](0x06b-Basic-Security-Testing.md#setting-up-a-network-testing-environment) の章の "ネットワークテスト環境のセットアップ"
+
+## TLS 設定のテスト (MSTG-NETWORK-2)
+
+アプリの意図した目的の一部である可能性があることを捨て去るために [対応する正当性を検査する](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) ことを忘れないでください。
+
+特定のエンドポイントとの通信する際に、どの ATS 設定を使用できるかを検証できます。macOS ではコマンドラインユーティリティ `nscurl` を使用できます。指定されたエンドポイントに対してさまざまな設定の並びを実行して検証します。デフォルトの ATS セキュア接続テストに合格していれば、ATS はデフォルトのセキュア設定で使用できます。nscurl の出力に不合格がある場合には、クライアント側の ATS 設定を弱めるのではなく、サーバー側の TLS 設定を変更してサーバー側をよりセキュアにしてください。詳細については [Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections/identifying_the_source_of_blocked_connections) の記事 "Identifying the Source of Blocked Connections" を参照してください。
+
+詳細については [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#verifying-the-tls-settings-mstg-network-2) の章の "TLS 設定の検証" セクションを参照してください。
+
+## エンドポイント同一性検証のテスト (MSTG-NETWORK-3)
+
+### 概要
+
+ATS は Transport Layer Security (TLS) プロトコルで規定されたデフォルトのサーバー信頼性評価を補完する拡張セキュリティチェックを課します。アプリのセキュリティが低下するため、アプリが ATS 制限を緩めているかどうかをテストすべきです。アプリは ATS 例外を追加する前に、サーバーセキュリティを向上させる別の方法を優先させるべきです。
+
+[Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections) ではアプリは `URLSession` を使用してサーバー信頼性評価を自動的に処理できると説明しています。しかし、アプリはそのプロセスをカスタマイズすることもできます。たとえば、以下のことができます。
+
+- 証明書の有効期限をバイパスまたはカスタマイズする。
+- 信頼性を緩める/広げる: システムによって拒否されるようなサーバー資格情報を受け入れる。たとえば、アプリに埋め込まれた自己署名証明書を使用して開発サーバーにセキュア接続を行う。
+- 信頼性を強める: システムによって受け入れられるサーバー資格証明を拒否します (["カスタム証明書ストアおよび証明書ピンニングのテスト"](#testing-custom-certificate-stores-and-certificate-pinning-mstg-network-4) を参照) 。
+- その他
+
+<img src="Images/Chapters/0x06g/manual-server-trust-evaluation.png" width="100%" />
+
+参考情報:
+
+- [Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing_insecure_network_connections)
+- [Performing Manual Server Trust Authentication](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge/performing_manual_server_trust_authentication)
+- [Certificate, Key, and Trust Services](https://developer.apple.com/documentation/security/certificate_key_and_trust_services)
+
+### 静的解析
+
+このセクションでは静的解析チェックをいくつか紹介します。しかし、動的解析でそれらをサポートすることを強くお勧めします。ソースコードがない場合やリバースエンジニアリングが困難なアプリの場合、堅実な動的解析戦略が必ず役立ちます。その場合、アプリが低レベル API や高レベル API を使用しているかどうかはわかりませんが、依然としてさまざまな信頼性評価シナリオをテストできます (例: 「アプリは自己署名証明書を受け入れるか？」) 。
+
+#### OS バージョンのチェック
+
+アプリが iOS 9.0 より古い SDK とリンクしている場合、アプリが動作する OS のバージョンに関係なく、ATS は無効となります。
+
+### 動的解析
 
 私たちのテストアプローチは SSL ハンドシェイクネゴシエーションのセキュリティを少しずつ緩めて、どのセキュリティメカニズムが有効であるかを確認することです。
 
 1. Burp をプロキシとして設定した後、トラストストア (**Settings** -> **General** -> **Profiles**) に証明書が追加されていないこと、および SSL キルスイッチなどのツールが無効であることを確認します。アプリケーションを起動して、Burp にトラフィックが表示されるかどうかを確認します。問題がある場合は 'Alerts' タブに報告されます。トラフィックが見える場合、証明書検証がまったく実行されていないことを意味します。そうではなく、トラフィックを見ることができず、SSL ハンドシェイクの失敗に関する情報がある場合には、次の項目に従います。
 2. 次に、[Burp のユーザードキュメント](https://support.portswigger.net/customer/portal/articles/1841109-installing-burp-s-ca-certificate-in-an-ios-device "Installing Burp\'s CA Certificate in an iOS Device") で説明されているように、Burp 証明書をインストールします。ハンドシェイクが成功して Burp でトラフィックを見ることができる場合、デバイスのトラストストアに対して証明書が検証されているが、ピンニングが実行されていないことを意味します。
-3. 前のステップでの指示を実行してもトラフィックが burp 経由でプロキシされない場合、証明書は実際にピン留めされ、すべてのセキュリティ対策が実行されていることを意味します。但し、アプリケーションをテストするには依然としてピンニングをバイパスする必要があります。この詳細については以下の "[証明書ピンニングのバイパス](#bypassing-certificate-pinning "Bypassing Certificate Pinning")" のセクションを参照してください。
 
-#### クライアント証明書の妥当性確認
+前のステップの手順を実行してもトラフィックがプロキシされない場合は、証明書ピンニングが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。しかし、アプリケーションをテストするには依然としてピンニングをバイパスする必要があります。この詳細については ["証明書ピンニングのバイパス"](0x06b-Basic-Security-Testing.md#bypassing-certificate-pinning) セクションを参照してください。
 
-アプリケーションによっては双方向 SSL ハンドシェイクを使用するものがあります。つまり、アプリケーションがサーバーの証明書を検証し、サーバーがクライアントの証明書を検証します。Burp 'Alerts' タブにクライアントが接続のネゴシエーションに失敗したことを示すエラーがあるかどうかを確認します。
+## カスタム証明書ストアおよび証明書ピンニングのテスト (MSTG-NETWORK-4)
 
-注目すべきことがいくつかあります。
+### 概要
+
+このテストではアイデンティティピンニング (証明書または公開鍵ピンニング) を適切に実装しているかどうかを検証します。
+
+詳細については "モバイルアプリのネットワーク通信" の章の ["同一性ピンニング (Identity Pinning)"](0x04f-Testing-Network-Communication.md#identity-pinning) のセクションを参照してください。
+
+### 静的解析
+
+サーバー証明書がピン留めされていることを検証します。ピンニングはサーバーが提示する証明書ツリーに関してさまざまなレベルで実装できます。
+
+1. アプリケーションバンドルにサーバーの証明書を含め、接続のたびに検証を行います。これにはサーバー上の証明書を更新するごとに更新メカニズムを必要とします。
+2. 証明書発行者をたとえば一つのエンティティに限定し、中間 CA の公開鍵をアプリケーションにバンドルします。こうすることで攻撃対象領域を限定し、有効な証明書を持てます。
+3. 独自の PKI を所有し管理します。アプリケーションには中間 CA の公開鍵を含めます。これにより期限切れなどでサーバー上の証明書を変更するたびにアプリケーションを更新する必要がなくなります。独自の CA を使用すると証明書は自己署名となることに注意してください。
+
+Apple が推奨する最新のアプローチは `Info.plist` ファイルの  App Transport Security Settings の下にピン留めされた CA 公開鍵を指定することです。Apple の記事 [Identity Pinning: How to configure server certificates for your app](https://developer.apple.com/news/?id=g9ejcf8y "Identity Pinning: How to configure server certificates for your app") に例があります。
+
+もう一つのアプローチは `NSURLConnectionDelegate` の [`connection:willSendRequestForAuthenticationChallenge:`](https://developer.apple.com/documentation/foundation/nsurlconnectiondelegate/1414078-connection?language=objc "connection:willSendRequestForAuthenticationChallenge:") メソッドを使用して、サーバーから提供された証明書が有効であり、アプリに格納されている証明書と一致するかをチェックすることです。詳細については [HTTPS Server Trust Evaluation](https://developer.apple.com/library/archive/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECNSURLCONNECTION "HTTPS Server Trust Evaluation") テクニカルノートを参照してください。
+
+以下のサードパーティライブラリにはピンニング機能が含まれています。
+
+- [TrustKit](https://github.com/datatheorem/TrustKit "TrustKit"): ここでは Info.plist に公開鍵ハッシュを設定するか、辞書にハッシュを提供することでピン留めできます。詳細については README を参照してください。
+- [AlamoFire](https://github.com/Alamofire/Alamofire "AlamoFire"): ここではドメインごとに `ServerTrustPolicy` を定義し、それに対して `PinnedCertificatesTrustEvaluator` を定義できます。詳細についてはその [ドキュメント](https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#security) を参照してください。
+- [AFNetworking](https://github.com/AFNetworking/AFNetworking "AfNetworking"): ここでは `AFSecurityPolicy` をセットして、ピンニングを設定できます。
+
+### 動的解析
+
+#### サーバー証明書ピンニング
+
+["エンドポイント同一性検証のテスト > 動的解析 > サーバー証明書バリデーション"](#server-certificate-validation) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピンニングが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。すべてのドメインで同じことが起こるでしょうか？
+
+簡単なスモークテストとしては、["証明書ピンニングのバイパス"](0x06b-Basic-Security-Testing.md#bypassing-certificate-pinning) で説明しているように [objection](0x08a-Testing-Tools.md#objection) を使用して証明書ピンニングをバイパスしてみることができます。 objection によってフックされているピンニング関連の API が objection の出力に表示されるはずです。
+
+<img src="Images/Chapters/0x06b/ios_ssl_pinning_bypass.png" width="100%" />
+
+ただし、以下に注意してください。
+
+- API は完全ではないかもしれません。
+- 何もフックされていないとしても、必ずしもアプリがピンニングを実装していないとは限りません。
+
+いずれの場合にも、アプリやそのコンポーネントの一部が [objection の対応](https://github.com/sensepost/objection/blob/master/agent/src/ios/pinning.ts) の方法でカスタムピンニングを実装している可能性があります。具体的なピンニングの指標やより詳細なテストについては静的解析のセクションをご確認ください。
+
+#### クライアント証明書バリデーション
+
+アプリケーションによっては mTLS (mutual TLS) を使用します。これはアプリケーションがサーバーの証明書を検証し、サーバーがクライアントの証明書を検証するものです。Burp **Alerts** タブにクライアントが接続のネゴシエーションに失敗したことを示すエラーがあればこれに気づくことができます。
+
+注目すべき点がいくつかあります。
 
 1. クライアント証明書には鍵交換で使用される秘密鍵 (private key) が含まれています。
-2. 一般的にこの証明書は使用 (復号) するためにパスワードも必要です。
-3. 証明書はバイナリ自体、データディレクトリ、もしくはキーチェーンに格納できます。
+2. 一般的に証明書を使用 (復号) するにはパスワードも必要です。
+3. 証明書はバイナリ本体、データディレクトリ、またはキーチェーンに格納できます。
 
-双方向ハンドシェイクを行う最も一般的で不適切な方法は、アプリケーションバンドル内にクライアント証明書を格納し、パスワードをハードコードすることです。すべてのクライアントが同じ証明書を共有するため、これはほとんどセキュリティをもたらさないことが明らかです。
+mTLS を使用する最もありがちで不適切な方法は、クライアント証明書をアプリケーションバンドル内に格納し、パスワードをハードコードすることです。これはすべてのクライアントが同じ証明書を共有することになるため、ほとんど明らかにセキュリティをもたらしません。
 
-証明書 (および場合によってはパスワード) を格納する第二の方法はキーチェーンを使用するものです。最初のログイン時に、アプリケーションは個人証明書をダウンロードし、キーチェーンにセキュアに格納する必要があります。
+二つ目の方法は証明書 (と場合によってはパスワード) を保存するのにキーチェーンを使用することです。最初のログイン時に、アプリケーションは個人証明書をダウンロードし、キーチェーンにセキュアに保存する必要があります。
 
-アプリケーションにはハードコードされ最初のログイン時に使用される一つの証明書を持ち、それから個人証明書がダウンロードされることがあります。この場合、サーバーに接続するために「汎用」証明書を使用できるかどうかを確認します。
+アプリケーションにはハードコードされた証明書があり、最初のログイン時にそれを使用し、その後、個人証明書がダウンロードされるものがあります。この場合、サーバー接続に '汎用的な' 証明書が依然として使用できるかどうかをチェックしてください。
 
-(Cycript や Frida を使用して) アプリケーションから証明書を抽出し、Burp のクライアント証明書としてそれを追加すると、トラフィックを傍受することが可能となります。
+アプリケーションから (Frida を使用するなどして) 証明書を抽出したら、それをクライアント証明書として Burp に追加すると、トラフィックを傍受できるようになります。
 
-#### 証明書ピンニングのバイパス
+## 参考情報
 
-SSL ピンニングをバイパスするにはさまざまな方法があります。以下のセクションでは脱獄済みデバイスと非脱獄済みデバイス向けに説明します。
+### OWASP MASVS
 
-脱獄済みデバイスを持っているのであれば、自動的に SSL ピンニングを無効にできる以下のツールのいずれかを試してみます。
-
-- "[SSL Kill Switch 2](https://github.com/nabla-c0d3/ssl-kill-switch2 "SSL Kill Switch 2")" は証明書ピンニングを無効にする方法の一つです。[Cydia](0x08-Testing-Tools.md#cydia) ストアからインストールできます。すべての高レベル API コールにフックし、証明書ピンニングをバイパスします。
-- [Burp Suite Mobile Assistant](0x08-Testing-Tools.md#burp-suite-mobile-assistant) アプリでも証明書ピンニングをバイパスするために使うことができます。
-
-場合によっては、証明書ピンニングをバイパスすることが難しくなります。ソースコードにアクセスしてアプリを再コンパイルできる場合には、以下を確認します。
-
-- API コール `NSURLSession`, `CFStream`, `AFNetworking`
-- "pinning", "X.509", "Certificate" などの単語を含むメソッドや文字列
-
-ソースにアクセスできない場合は、バイナリパッチを試してみます。
-
-- OpenSSL 証明書ピンニングが使用されている場合、[バイナリパッチ](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2015/january/bypassing-openssl-certificate-pinning-in-ios-apps/ "Bypassing OpenSSL Certificate Pinning in iOS Apps") を試してみます。
-- 多くの場合、証明書はアプリケーションバンドル内のファイルです。証明書を Burp の証明書で置き換えることで十分なこともありますが、証明書の SHA sum には注意します。バイナリにハードコードされている場合、それも置き換えなければなりません。
-
-Frida と Objection を使用して、非脱獄済みデバイスで SSL ピンニングをバイパスすることもできます (これは脱獄済みデバイスでも機能します) 。「iOS の基本的なセキュリティテスト」の説明に従って、Objection でアプリケーションを再パッケージ化した後、Objection で以下のコマンドを使用して一般的な SSL ピンニング実装を無効にできます。
-
-```bash
-ios sslpinning disable
-```
-
-[pinning.ts](https://github.com/sensepost/objection/blob/master/agent/src/ios/pinning.ts "pinning.ts") を調べてバイパスの仕組みを理解できます。
-
-詳細情報として [iOS の SSL ピンニング無効化に関する Objection の文書](https://github.com/sensepost/objection#ssl-pinning-bypass-running-for-an-ios-application "Disable SSL Pinning in iOS" ) もご覧ください。
-
-ただし、テクノロジとシステムは時間とともに変化するため、このバイパス技法はいずれ機能しなくなる可能性があります。したがって、すべてのツールが OS バージョンに十分迅速に対応できるわけではないため、調査を行うことはテスト担当者の作業の一部です。
-
-たとえば、この執筆時点では Objection バイパスは iOS 10 以降では機能していません。ただし、Frida CodeShare などのリポジトリを調べると、@dki による iOS 10 および 11 で実際に機能する ["ios10-ssl-bypass"](https://codeshare.frida.re/@dki/ios10-ssl-bypass/) など、特定のバージョンをバイパスするスクリプトを見つけることができます。
-
-一部のアプリはカスタム SSL ピンニング手法を実装している可能性があるため、テスト担当者は [Frida](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06b-Basic-Security-Testing.md#frida) と、["iOS リバースエンジニアリング"](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06c-Reverse-Engineering-and-Tampering.md) で説明されている技法を使用して新しいバイパススクリプトを開発することもできます。
-
-ホワイトボックステストと典型的なコードパターンについてもっと知りたい場合には、[#thiel] を参照してください。これには最も一般的な証明書ピンニング技法を説明する記述とコードスニペットが含まれています。
-
-### 参考情報
-
-- [#thiel] - David Thiel. iOS Application Security, No Starch Press, 2015
-
-#### OWASP MASVS
-
+- MSTG-NETWORK-1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨された標準をサポートしていない場合には可能な限り近い状態である。"
 - MSTG-NETWORK-3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を確認している。信頼されたCAにより署名された証明書のみが受け入れられている。"
 - MSTG-NETWORK-4: "アプリは自身の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵をピンニングしている。信頼されたCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
-
-#### Nscurl
-
-- ATS のガイド - NowSecure によるブログ投稿 - <https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/>
