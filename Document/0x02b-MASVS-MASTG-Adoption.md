@@ -1,6 +1,6 @@
-# OWASP MASVS と MSTG の採用
+# OWASP MASVS と MASTG の採用
 
-OWASP MASVS と MSTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。
+OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。
 
 ## モバイルプラットフォームプロバイダ
 
@@ -8,7 +8,7 @@ OWASP MASVS と MSTG は以下のプラットフォームプロバイダ、標�
 
 <img src="Images/Other/android-logo.png" width="300px"/>
 
-2021 年以降、Google は OWASP Mobile Security プロジェクト (MSTG/MASVS) への支援を表明し、[App Defense Alliance (ADA)](https://appdefensealliance.dev/) とその [MASA (Mobile Application Security Assessment) プログラム](https://appdefensealliance.dev/masa) を通じて MASVS リファクタリングプロセスへの継続的で価値の高いフィードバックの提供を開始しました。
+2021 年以降、Google は OWASP Mobile Security プロジェクト (MASTG/MASVS) への支援を表明し、[App Defense Alliance (ADA)](https://appdefensealliance.dev/) とその [MASA (Mobile Application Security Assessment) プログラム](https://appdefensealliance.dev/masa) を通じて MASVS リファクタリングプロセスへの継続的で価値の高いフィードバックの提供を開始しました。
 
 MASA により、Google は世界的に認められたモバイルアプリセキュリティ標準をモバイルアプリエコシステムに活用することの重要性を認識しました。開発者は Authorized Lab パートナーと直接連携してセキュリティ評価を開始できます。Google は一連の MASVS レベル 1 の要件に対してアプリケーションを自主的に検証した開発者を評価し、データセーフティセクションでこれを紹介します。
 
