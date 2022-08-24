@@ -42,7 +42,7 @@ Android と iOS のいずれも信頼を拡張する手段を提供していま�
 
 アプリによっては信頼する CA の数を制限することでセキュリティをさらに高める必要があるかもしれません。一般的には開発者が使用する CA のみを明示的に信頼し、その他はすべて無視します。この信頼の制限は _同一性ピンニング (Identity Pinning)_ と呼ばれ、通常は _証明書ピンニング (Certificate Pinning)_ や _公開鍵ピンニング (Public Key Pinning)_ として実装されます。
 
-> OWASP MSTG ではこの用語を "同一性ピンニング (Identity Pinning)", "証明書ピンニング (Certificate Pinning)", "公開鍵ピンニング (Public Key Pinning)" あるいは単に "ピンニング (Pinning)" と呼びます。
+> OWASP MASTG ではこの用語を "同一性ピンニング (Identity Pinning)", "証明書ピンニング (Certificate Pinning)", "公開鍵ピンニング (Public Key Pinning)" あるいは単に "ピンニング (Pinning)" と呼びます。
 
 ピンニングとは信頼された CA によって署名された任意の証明書を受け入れる代わりに、X.509 証明書や公開鍵などの特定の同一性とリモートエンドポイントを関連付けるプロセスです。サーバー同一性 (または特定のセット、別名 _pinset_) をピン留めすると、その後モバイルアプリはその同一性が一致した場合にのみそれらのリモートエンドポイントに接続します。不要な ＣＡ から信頼を取り除くことで、アプリの攻撃対象領域が減少します。
 
@@ -84,7 +84,7 @@ Android と iOS の推奨事項はどちらも以下の「ベストケース」�
 
 Apple は [長期的に考えること](https://developer.apple.com/news/?id=g9ejcf8y) と [適切なサーバー認証戦略を立てること](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge/performing_manual_server_trust_authentication#2956135) を推奨しています。
 
-#### OWASP MSTG の推奨事項
+#### OWASP MASTG の推奨事項
 
 特に MASVS-L2 アプリで、ピンニングをお勧めします。ただし、開発者は自分の管理下にあるエンドポイントに限定して実装し、バックアップ鍵 (別名、バックアップピン) を含めるようにし、適切なアプリ更新戦略を持つようにしなければなりません。
 
