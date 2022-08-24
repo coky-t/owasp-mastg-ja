@@ -2,29 +2,29 @@
 
 <img src="Images/OWASP_logo.png" width="100%" />
 
-## OWASP モバイルセキュリティテストガイドについて
+## OWASP モバイルアプリケーションセキュリティテストガイドについて
 
-OWASP モバイルセキュリティテストガイド (MSTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs) に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
+OWASP モバイルアプリケーションセキュリティテストガイド (MASTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs) に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
 
-OWASP は多くの執筆者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/ "OWASP Mobile Security Project Slack Channel") に参加して MASVS や MSTG の議論に参加してください。あなたは [この URL](https://owasp.slack.com/join/shared_invite/zt-g398htpy-AZ40HOM1WUOZguJKbblqkw# "Slack channel sign up") を使用して自分で Slack チャネルにサインアップできます。
+OWASP は多くの執筆者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/ "OWASP Mobile Security Project Slack Channel") に参加して MASVS や MASTG の議論に参加してください。あなたは [この URL](https://owasp.slack.com/join/shared_invite/zt-g398htpy-AZ40HOM1WUOZguJKbblqkw# "Slack channel sign up") を使用して自分で Slack チャネルにサインアップできます。
 
 > 招待状の有効期限が切れている場合は私たちの GitHub Repo で issue を開いてください。
 
-## OWASP MASVS と MSTG の採用
+## OWASP MASVS と MASTG の採用
 
-OWASP MASVS と MSTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。 [詳細はこちらをご覧ください](0x02b-MASVS-MSTG-Adoption.md) 。
+OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。 [詳細はこちらをご覧ください](0x02b-MASVS-MASTG-Adoption.md) 。
 
-<a href="0x02b-MASVS-MSTG-Adoption.md">
+<a href="0x02b-MASVS-MASTG-Adoption.md">
 <img src="Images/Other/trusted-by-logos.png"/>
 </a>
 
 <br>
 
-## 🥇 MSTG 支持者
+## 🥇 MAS 支持者
 
-MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02c-Acknowledgements.md#our-mstg-advocates) 。
+MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02c-Acknowledgements.md#our-mstg-advocates) 。
 
-<a href="0x02c-Acknowledgements.md#our-mstg-advocates">
+<a href="0x02c-Acknowledgements.md#our-mastg-advocates">
 <img src="Images/Other/nowsecure-logo.png" width="200px;"/>
 </a>
 
@@ -32,7 +32,7 @@ MSTG 支持者は OWASP MASVS および MSTG の業界採用者であり、一�
 
 ## 免責事項
 
-MSTG の資料を利用してモバイルアプリに対するテストを実行する前に、お住まいの国の法律を参照してください。MSTG に記載されているもので法律に違反してはいけません。
+MASTG の資料を利用してモバイルアプリに対するテストを実行する前に、お住まいの国の法律を参照してください。MASTG に記載されているもので法律に違反してはいけません。
 
 [行動規範](https://github.com/OWASP/owasp-mstg/blob/master/CODE_OF_CONDUCT.md) に詳細があります。
 
@@ -44,7 +44,7 @@ Copyright © The OWASP Foundation. 本書は [Creative Commons Attribution-Share
 
 ## ISBN
 
-ISBN 番号は 978-1-257-96636-3 です。 MSTG のハードコピーは [lulu.com](https://www.lulu.com/search?adult_audience_rating=00&page=1&pageSize=10&q=mobile+security+testing+guide) で注文できます。
+ISBN 番号は 978-1-257-96636-3 です。 MASTG のハードコピーは [lulu.com](https://www.lulu.com/search?adult_audience_rating=00&page=1&pageSize=10&q=mobile+security+testing+guide) で注文できます。
 
 ## 執筆者
 
