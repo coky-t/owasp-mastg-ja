@@ -18,7 +18,7 @@ Android のソフトウェアスタックはいくつかの異なるレイヤで
 
 <img src="Images/Chapters/0x05a/android_software_stack.png" width="400px" />
 
-**カーネル:** 最下層では、Android は [Low Memory Killer](https://source.android.com/devices/tech/perf/lmkd) 、ウェイクロック、 [Binder IPC](https://source.android.com/devices/architecture/hidl/binder-ipc) ドライバなどの重要な追加機能を含む [Linux カーネルのバリエーション](https://source.android.com/devices/architecture/kernel) をベースにしています。 MSTG では、Android が一般的な Linux ディストリビューションと大きく異なる、OS のユーザーモード部分に焦点を当てます。私たちにとって最も重要なコンポーネントはアプリケーションで使用されるマネージドランタイム (ART/Dalvik) と、glibc (GNU C ライブラリ) の Android 版である [Bionic](https://en.wikipedia.org/wiki/Bionic_(software)) の二つです。
+**カーネル:** 最下層では、Android は [Low Memory Killer](https://source.android.com/devices/tech/perf/lmkd) 、ウェイクロック、 [Binder IPC](https://source.android.com/devices/architecture/hidl/binder-ipc) ドライバなどの重要な追加機能を含む [Linux カーネルのバリエーション](https://source.android.com/devices/architecture/kernel) をベースにしています。 MASTG では、Android が一般的な Linux ディストリビューションと大きく異なる、OS のユーザーモード部分に焦点を当てます。私たちにとって最も重要なコンポーネントはアプリケーションで使用されるマネージドランタイム (ART/Dalvik) と、glibc (GNU C ライブラリ) の Android 版である [Bionic](https://en.wikipedia.org/wiki/Bionic_(software)) の二つです。
 
 **HAL:** カーネルの上には、ハードウェア抽象化レイヤ (Hardware Abstraction Layer, HAL) がビルトインのハードウェアコンポーネントと対話するための標準インタフェースを定義します。いくつかの HAL 実装では Android システムが必要に応じて呼び出す共有ライブラリモジュールにパッケージ化されています。これはアプリケーションがデバイスのハードウェアと対話できるようにするための基礎となります。たとえば、純正の電話アプリケーションがデバイスのマイクとスピーカーを使用できるようにします。
 
