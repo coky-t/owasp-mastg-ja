@@ -1,6 +1,6 @@
 # リファレンスアプリケーション
 
-下記のアプリケーションはトレーニング教材として使用できます。注: MSTG プロジェクトでテスト及び保守されているのは MSTG アプリと Crackmes のみです。
+下記のアプリケーションはトレーニング教材として使用できます。注: MAS プロジェクトでテスト及び保守されているのは MASTG アプリと Crackmes のみです。
 
 ## Android
 
@@ -52,15 +52,15 @@ Kotlin を使用したオープンソースの脆弱で、セキュアではな�
 
 セキュリティ愛好家や開発者が脆弱なアプリケーションをテストすることで Android の非セキュリティを学ぶために作られた脆弱な Android アプリ。 2018 年に更新があり、多くの脆弱性を含んでいます - <https://github.com/dineshshetty/Android-InsecureBankv2>
 
-### MSTG Hacking Playground
+### MASTG Hacking Playground
 
 このドキュメントで説明しているテストケースと同様の脆弱性がある Android アプリ
 
-#### MSTG Hacking Playground (Java)
+#### MASTG Hacking Playground (Java)
 
 入手先はこちら <https://github.com/OWASP/MSTG-Hacking-Playground/tree/master/Android/MSTG-Android-Java-App>
 
-### MSTG Hacking Playground (Kotlin)
+### MASTG Hacking Playground (Kotlin)
 
 入手先はこちら <https://github.com/OWASP/MSTG-Hacking-Playground/tree/master/Android/MSTG-Android-Kotlin-App>
 
