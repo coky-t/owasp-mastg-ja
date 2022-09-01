@@ -6,27 +6,27 @@
 
 ### Android Crackmes
 
-Android アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes>
+Android アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes>
 
 #### UnCrackable App for Android Level 1
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/blob/master/Crackmes/Android/Level_01>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_01>
 
 #### UnCrackable App for Android Level 2
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/blob/master/Crackmes/Android/Level_02>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_02>
 
 #### UnCrackable App for Android Level 3
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/blob/master/Crackmes/Android/Level_03>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_03>
 
 #### UnCrackable App for Android Level 4
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/blob/master/Crackmes/Android/Level_04>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_04>
 
 #### Android License Validator
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/blob/master/Crackmes/Android/License_01>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/License_01>
 
 ### AndroGoat
 
@@ -58,25 +58,25 @@ Kotlin を使用したオープンソースの脆弱で、セキュアではな�
 
 #### MASTG Hacking Playground (Java)
 
-入手先はこちら <https://github.com/OWASP/MSTG-Hacking-Playground/tree/master/Android/MSTG-Android-Java-App>
+入手先はこちら <https://github.com/OWASP/MASTG-Hacking-Playground/tree/master/Android/MSTG-Android-Java-App>
 
 ### MASTG Hacking Playground (Kotlin)
 
-入手先はこちら <https://github.com/OWASP/MSTG-Hacking-Playground/tree/master/Android/MSTG-Android-Kotlin-App>
+入手先はこちら <https://github.com/OWASP/MASTG-Hacking-Playground/tree/master/Android/MSTG-Android-Kotlin-App>
 
 ## iOS
 
 ### iOS Crackmes
 
-iOS アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes>
+iOS アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes>
 
 #### UnCrackable App for iOS Level 1
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes/iOS/Level_01>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes/iOS/Level_01>
 
 #### UnCrackable App for iOS Level 2
 
-入手先はこちら <https://github.com/OWASP/owasp-mstg/tree/master/Crackmes/iOS/Level_02>
+入手先はこちら <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes/iOS/Level_02>
 
 ### Myriam
 
