@@ -22,7 +22,7 @@ OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標�
 
 ## 🥇 MAS 支持者
 
-MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02c-Acknowledgements.md#our-mstg-advocates) 。
+MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02c-Acknowledgements.md#our-mastg-advocates) 。
 
 <a href="0x02c-Acknowledgements.md#our-mastg-advocates">
 <img src="Images/Other/nowsecure-logo.png" width="200px;"/>
@@ -34,7 +34,7 @@ MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一�
 
 MASTG の資料を利用してモバイルアプリに対するテストを実行する前に、お住まいの国の法律を参照してください。MASTG に記載されているもので法律に違反してはいけません。
 
-[行動規範](https://github.com/OWASP/owasp-mstg/blob/master/CODE_OF_CONDUCT.md) に詳細があります。
+[行動規範](https://github.com/OWASP/owasp-mastg/blob/master/CODE_OF_CONDUCT.md) に詳細があります。
 
 ## 著作権とライセンス
 
