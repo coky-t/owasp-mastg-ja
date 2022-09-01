@@ -79,7 +79,7 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 
 **影響力の大きな貢献 (時間と専用のリソース):**
 
-- [コンテンツ PRs](https://github.com/OWASP/owasp-mstg/pulls?q=is%3Apr+%22%28by+%40NowSecure%29%22)
+- [コンテンツ PRs](https://github.com/OWASP/owasp-mastg/pulls?q=is%3Apr+%22%28by+%40NowSecure%29%22)
 - PR に対するテクニカルレビュー
 - GitHub ディスカッションへの参加
 
@@ -109,7 +109,7 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 
 ## 寄稿者
 
-**注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mstg/graphs/contributors "GitHub contribution statistics") に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mstg/blob/master/README.md "GitHub Repository README") を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
+**注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mastg/graphs/contributors "GitHub contribution statistics") に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mastg/blob/master/README.md "GitHub Repository README") を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
 
 ### 主要寄稿者
 
