@@ -22,7 +22,7 @@ OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標�
 
 ## 🥇 MAS 支持者
 
-MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちらLearn more](0x02c-Acknowledgements.md#our-mastg-advocates) 。
+MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちら](0x02c-Acknowledgements.md#our-mastg-advocates) 。
 
 <a href="0x02c-Acknowledgements.md#our-mastg-advocates">
 <img src="Images/Other/nowsecure-logo.png" width="200px;"/>
@@ -44,7 +44,7 @@ Copyright © The OWASP Foundation. 本書は [Creative Commons Attribution-Share
 
 ## ISBN
 
-ISBN 番号は 978-1-257-96636-3 です。 MASTG のハードコピーは [lulu.com](https://www.lulu.com/search?adult_audience_rating=00&page=1&pageSize=10&q=mobile+security+testing+guide) で注文できます。
+ISBN 番号は 978-1-257-96636-3 です。 MASTG のハードコピーは [lulu.com](https://www.lulu.com/shop/jeroen-willemsen-and-sven-schleier-and-bernhard-müller-and-carlos-holguera/owasp-mobile-security-testing-guide/paperback/product-1kw4dp4k.html) で注文できます。
 
 ## 執筆者
 
