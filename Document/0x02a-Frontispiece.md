@@ -1,50 +1,16 @@
 # 扉
 
-<img src="Images/OWASP_logo.png" width="100%" />
+<img src="Images/owasp_mas_header.png" width="100%" />
 
 ## OWASP モバイルアプリケーションセキュリティテストガイドについて
 
-OWASP モバイルアプリケーションセキュリティテストガイド (MASTG) はモバイルアプリのセキュリティをテストするための包括的なマニュアルです。[モバイルアプリケーションセキュリティ検証標準 (MASVS)](https://github.com/OWASP/owasp-masvs) に記載される要件を検証するためのプロセスと技法について説明し、完全かつ一貫したセキュリティテストのベースラインを提供します。
-
-OWASP は多くの執筆者、レビュー担当者、編集者がこのガイドの開発に熱心に取り組んでくれたことに感謝しています。モバイルセキュリティテストガイドにコメントや提案がある場合は、[OWASP Mobile Security Project Slack Channel](https://owasp.slack.com/messages/project-mobile_omtg/details/ "OWASP Mobile Security Project Slack Channel") に参加して MASVS や MASTG の議論に参加してください。あなたは [この URL](https://owasp.slack.com/join/shared_invite/zt-g398htpy-AZ40HOM1WUOZguJKbblqkw# "Slack channel sign up") を使用して自分で Slack チャネルにサインアップできます。
-
-> 招待状の有効期限が切れている場合は私たちの GitHub Repo で issue を開いてください。
-
-## OWASP MASVS と MASTG の採用
+[OWASP モバイルアプリケーションセキュリティ (Mobile Application Security, MAS)](https://mas.owasp.org/) フラグシッププロジェクトの一部である [OWASP モバイルアプリケーションセキュリティテストガイド (Mobile Application Security Testing Guide, MASTG)](https://mas.owasp.org/MASTG/0x01-Foreword) はモバイルアプリケーションセキュリティ解析時に使用されるプロセス、技法、ツールを網羅する包括的なマニュアルです。 [OWASP モバイルアプリケーションセキュリティ検証標準 (Mobile Application Security Verification Standard, MASVS)](https://mas.owasp.org/MASVS/0x01-Foreword) に記載されている要件を検証するための一連のテストケースを網羅し、完全かつ一貫したセキュリティテストのためのベースラインを提供します。
 
 OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。 [詳細はこちらをご覧ください](0x02b-MASVS-MASTG-Adoption.md) 。
 
 <a href="0x02b-MASVS-MASTG-Adoption.md">
 <img src="Images/Other/trusted-by-logos.png"/>
 </a>
-
-<br>
-
-## 🥇 MAS 支持者
-
-MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。 [詳細はこちら](0x02c-Acknowledgements.md#our-mastg-advocates) 。
-
-<a href="0x02c-Acknowledgements.md#our-mastg-advocates">
-<img src="Images/Other/nowsecure-logo.png" width="200px;"/>
-</a>
-
-<br>
-
-## 免責事項
-
-MASTG の資料を利用してモバイルアプリに対するテストを実行する前に、お住まいの国の法律を参照してください。MASTG に記載されているもので法律に違反してはいけません。
-
-[行動規範](https://github.com/OWASP/owasp-mastg/blob/master/CODE_OF_CONDUCT.md) に詳細があります。
-
-## 著作権とライセンス
-
-Copyright © The OWASP Foundation. 本書は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License") に基づいて公開されています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
-
-<img src="Images/CC-license.png" width="150px" />
-
-## ISBN
-
-ISBN 番号は 978-1-257-96636-3 です。 MASTG のハードコピーは [lulu.com](https://www.lulu.com/shop/jeroen-willemsen-and-sven-schleier-and-bernhard-müller-and-carlos-holguera/owasp-mobile-security-testing-guide/paperback/product-1kw4dp4k.html) で注文できます。
 
 ## 執筆者
 
@@ -95,3 +61,27 @@ Vikas はモバイルセキュリティの専門知識を持つ経験豊富な�
 | 執筆者 | レビュー担当者 | 主寄稿者 |
 | --- | --- | --- |
 | Milan Singh Thakur, Abhinav Sejpal, Pragati Singh, Mohammad Hamed Dadpour, David Fern, Mirza Ali, Rahil Parikh | Andrew Muller, Jonathan Carter | Jim Manico, Paco Hope, Yair Amit, Amin Lalji, OWASP Mobile Team  |
+
+<!-- \pagebreak -->
+
+## 更新履歴
+
+すべての更新履歴は OWASP MASTG GitHub リポジトリからオンラインで入手できます。 Releases ページを参照してください。
+
+<https://github.com/OWASP/owasp-mastg/releases>
+
+## 免責事項
+
+MASTG の資料を利用してモバイルアプリに対するテストを実行する場合はに、事前に各国の法律をご確認ください。MASTG に記載されている内容で法律に違反することはお控えください。
+
+[行動規範] に詳細があります: <https://github.com/OWASP/owasp-mastg/blob/master/CODE_OF_CONDUCT.md>
+
+OWASP はこのガイドの作成に尽力された多くの著者、レビュー担当者、編集者に感謝します。ご意見やご提案がありましたら <https://mas.owasp.org/#connect-with-us> までご連絡ください。
+
+矛盾や誤植を見つけた場合は、OWASP MASTG Github リポジトリ <https://github.com/OWASP/owasp-mastg> で issue を開いてください。
+
+## 著作権とライセンス
+
+Copyright © The OWASP Foundation. 本著作物は [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License") の下でライセンスされています。再使用または配布する場合は、他者に対し本著作物のライセンス条項を明らかにする必要があります。
+
+<img src="Images/CC-license.png" width="150px" />
