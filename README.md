@@ -19,9 +19,9 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 - [扉](Document/0x02a-Frontispiece.md)
 - [OWASP MASVS と MASTG の採用](Document/0x02b-MASVS-MASTG-Adoption.md)
 - [謝辞](Document/0x02c-Acknowledgements.md)
-- [モバイルセキュリティテストガイドの序文](Document/0x03-Overview.md)
-- [モバイルアプリの分類](Document/0x04a-Mobile-App-Taxonomy.md)
-- [モバイルアプリのセキュリティテスト](Document/0x04b-Mobile-App-Security-Testing.md)
+- [OWASP モバイルアプリケーションセキュリティプロジェクトの序文](Document/0x03-Overview.md)
+- [モバイルアプリケーションの分類](Document/0x04a-Mobile-App-Taxonomy.md)
+- [モバイルアプリケーションのセキュリティテスト](Document/0x04b-Mobile-App-Security-Testing.md)
 
 ### 総合テストガイド
 
