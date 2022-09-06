@@ -1,6 +1,6 @@
 # 謝辞
 
-## MAS 支持者 (MAS Advocates)
+## 🥇 MAS 支持者 (MAS Advocates)
 
 MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。
 
@@ -40,30 +40,24 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 ### ❗ 重要な免責事項
 
 - "MAS 支持者" ステータスが付与され、それを維持したい場合には、最初の期間以降も前述の貢献が一貫していなければなりません。この証跡を収集し、毎年 _contribution report_ をお送りください。
-- [金銭的な寄付](https://owasp.org/www-project-mobile-security-testing-guide/#div-donate) は資格基準の一部ではありませんが業績としてリストされます。
+- [金銭的な寄付](https://mas.owasp.org/donate/) は資格基準の一部ではありませんが業績としてリストされます。
 - MASTG テキストにリンクされる再共有された出版物やブログ投稿は **教育的** であり、モバイルセキュリティや MASVS/MASTG に焦点を当て、 **会社の製品やサービスを推奨していない** ことが必要です。
 - 支持企業はコミュニケーションの一環としてロゴや MASVS/MASTG へのリンクを使用できますが、ソフトウェアやサービスの選定プロバイダとして OWASP が推奨しているものとして使用することはできません。
   - OK であるものの例: "MAS 支持者" ステータスをウェブサイトのホームページ、販売プレゼンテーションの会社スライド、販売資料に記載すること。
   - OK ではないものの例: "MAS 支持者" は OWASP の認定を受けていると主張することはできません。
-- これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x04-Assessment_and_Certification.md#owasps-stance-on-masvs-certifications-and-trust-marks) 。
+- これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://mas.owasp.org/MASVS/0x04-Assessment_and_Certification/#owasps-stance-on-masvs-certifications-and-trust-marks) 。
 
 > OWASP Foundation はリストに記載されている個人および組織によるサポートに非常に感謝しています。ただし、OWASP Foundation は厳格にベンダー中立であり、サポーターを推奨するものではないこと注意してください。MAS 支持者は MASVS や MASTG のコンテンツにいかなる方法であっても影響をあたえることはありません。
 
 ## 私たちの MAS 支持者
 
-<br>
-
-<a href="https://www.nowsecure.com">
-<img src="Images/Other/nowsecure-logo.png" width="200px;"/>
-</a>
-
-<br>
+<img src="Images/Other/nowsecure-logo.png" width="350px" />
 
 [NowSecure](https://www.nowsecure.com) はプロジェクトに一貫して影響力のある貢献を提供し、普及の支援に成功しています。
 
 **プロジェクトを後押ししたい他の潜在的な貢献者に対する青写真を示す模範的な貢献に対して NowSecure に感謝します。**
 
-### MASVS/MASTG 採用者
+### MASVS/MASTG 採用者としての NowSecure
 
 - サービス / 製品:
   - [NowSecure Debuts New OWASP MASVS Mobile Pen Tests](https://www.nowsecure.com/blog/2022/03/22/nowsecure-debuts-new-owasp-masvs-mobile-pen-tests/)
@@ -75,7 +69,7 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
   - [OWASP MASVS & MASTG Updates](https://academy.nowsecure.com/owasp-masvs-mstg-updates)
   - [Intro to Mobile App Security](https://academy.nowsecure.com/intro-to-mobile-app-security)
 
-### MASVS/MASTG への貢献
+### NowSecure の MAS プロジェクトへの貢献
 
 **影響力の大きな貢献 (時間と専用のリソース):**
 
@@ -105,8 +99,6 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
   - [Insiders Guide to Mobile AppSec with OWASP MASVS (OWASP Northern Virginia Chapter, Oct 8 2021)](https://www.youtube.com/watch?v=fuLo64WH3SU)
   - その他いろいろ
 
-<br><br>
-
 ## 寄稿者
 
 **注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mastg/graphs/contributors "GitHub contribution statistics") に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mastg/blob/master/README.md "GitHub Repository README") を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
@@ -131,9 +123,6 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 - Slawomir Kosowski
 - Bolot Kerimbaev
 - Lukasz Wierzbicki
-
-<br/>
-<br/>
 
 ### 寄稿者
 
@@ -165,6 +154,6 @@ jonasw234, zehuanli, jadeboer, Isopach, prabhant, jhscheer, meetinthemiddle-be, 
 
 ### 支援者
 
-MASVS と MASTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MASTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは私たちの [OWASP Project Wiki](https://owasp.org/www-project-mobile-security-testing-guide/#div-donate "OWASP Mobile Security Testing Guide Donation Packages") に記載されています。
+MASVS と MASTG のいずれもコミュニティにより無償奉仕で作成および維持されていますが、時にはいくらかの外的支援が必要となることもあります。したがって、テクニカルエディタを雇うことができる資金を提供した支援者に感謝します。彼らの支援は MASVS や MASTG の内容にいかなる形であれ影響を与えないことに注意します。支援パッケージは私たちの [OWASP Project ページ](https://mas.owasp.org/donate/ "OWASP MAS Donation Packages") に記載されています。
 
 <img src="Images/Donators/donators.png"/>
