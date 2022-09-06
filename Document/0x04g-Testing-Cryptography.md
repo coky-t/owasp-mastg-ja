@@ -20,10 +20,6 @@
 
 **鍵導出関数** (KDF) は (パスワードなどの) 秘密の値から共通鍵 (secret key) を導出し、鍵を他の形式に変換したり長さを増やしたりするために使用されます。KDF はハッシュ関数に似ていますが、他の用途もあります (例えば、マルチパーティ鍵共有プロトコルのコンポーネントとして使用されています) 。ハッシュ関数と KDF は両方ともリバースすることは困難である必要がありますが、KDF には生成する鍵にランダム性が必要であるという追加要件があります。
 
-<br/>
-<br/>
-<br/>
-
 ## 非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズムの特定 (MSTG-CRYPTO-4)
 
 モバイルアプリを評価する際には、重大な既知の脆弱性や現代のセキュリティ要件には不十分な暗号アルゴリズムを使用していないことを確認する必要があります。過去にセキュアであると考えられていたアルゴリズムが時間と共にセキュアではなくなる可能性があります。したがって、現在のベストプラクティスを定期的に確認し、それに応じて設定を調整することが重要です。
@@ -220,4 +216,4 @@ App Store や Google Play にアプリをアップロードする場合、一般
 - [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
 - [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack "The Padding Oracle Attack")
 - [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem")
-- [@veorq's Cryptocoding Guidelines](https://github.com/veorq/cryptocoding "The Cryptocoding Guidelines by @veorq")
+- [Cryptocoding Guidelines by veorq](https://github.com/veorq/cryptocoding "The Cryptocoding Guidelines by veorq")
