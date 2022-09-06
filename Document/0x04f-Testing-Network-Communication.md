@@ -380,9 +380,6 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 
 <img src="Images/Chapters/0x04f/burp_xamarin.png" width="100%" />
 
-<br/>
-<br/>
-
 #### CA 証明書
 
 まだ行われていなければ、HTTPS リクエストの傍受を許可するモバイルデバイスに CA 証明書をインストールします。
@@ -576,9 +573,6 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
 - How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
-
-<br/>
-<br/>
 
 ### IETF
 
