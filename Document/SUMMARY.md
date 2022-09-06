@@ -1,15 +1,14 @@
 # 一覧
 
-- [更新履歴](CHANGELOG.md)
 - [扉](0x02a-Frontispiece.md)
 - [OWASP MASVS と MASTG の採用](0x02b-MASVS-MASTG-Adoption.md)
 - [謝辞](0x02c-Acknowledgements.md)
 
 ## 概要
 
-- [モバイルセキュリティテストガイドの序文](0x03-Overview.md)
-- [モバイルアプリの分類](0x04a-Mobile-App-Taxonomy.md)
-- [モバイルアプリのセキュリティテスト](0x04b-Mobile-App-Security-Testing.md)
+- [OWASP モバイルアプリケーションセキュリティプロジェクトの序文](0x03-Overview.md)
+- [モバイルアプリケーションの分類](0x04a-Mobile-App-Taxonomy.md)
+- [モバイルアプリケーションのセキュリティテスト](0x04b-Mobile-App-Security-Testing.md)
 
 ## 総合モバイルアプリテストガイド
 
