@@ -55,7 +55,7 @@
 
 **Swift:**
 
-```swift
+```default
 do {
     let pathToFileInRestrictedDirectory = "/private/jailbreak.txt"
     try "This is a test.".write(toFile: pathToFileInRestrictedDirectory, atomically: true, encoding: String.Encoding.utf8)
@@ -88,7 +88,7 @@ Cydia URL を開くことを試みることでプロトコルハンドラをチ�
 
 **Swift:**
 
-```swift
+```default
 if let url = URL(string: "cydia://package/com.example.package"), UIApplication.shared.canOpenURL(url) {
     // Device is jailbroken
 }
