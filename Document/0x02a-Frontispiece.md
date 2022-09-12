@@ -4,7 +4,7 @@
 
 ## OWASP モバイルアプリケーションセキュリティテストガイドについて
 
-[OWASP モバイルアプリケーションセキュリティ (Mobile Application Security, MAS)](https://mas.owasp.org/) フラグシッププロジェクトの一部である [OWASP モバイルアプリケーションセキュリティテストガイド (Mobile Application Security Testing Guide, MASTG)](https://mas.owasp.org/MASTG/0x01-Foreword) はモバイルアプリケーションセキュリティ解析時に使用されるプロセス、技法、ツールを網羅する包括的なマニュアルです。 [OWASP モバイルアプリケーションセキュリティ検証標準 (Mobile Application Security Verification Standard, MASVS)](https://mas.owasp.org/MASVS/0x01-Foreword) に記載されている要件を検証するための一連のテストケースを網羅し、完全かつ一貫したセキュリティテストのためのベースラインを提供します。
+[OWASP モバイルアプリケーションセキュリティ (Mobile Application Security, MAS)](https://mas.owasp.org/) フラグシッププロジェクトの一部である [OWASP モバイルアプリケーションセキュリティテストガイド (Mobile Application Security Testing Guide, MASTG)](https://mas.owasp.org/MASTG/) はモバイルアプリケーションセキュリティ解析時に使用されるプロセス、技法、ツールを網羅する包括的なマニュアルです。 [OWASP モバイルアプリケーションセキュリティ検証標準 (Mobile Application Security Verification Standard, MASVS)](https://mas.owasp.org/MASVS/) に記載されている要件を検証するための一連のテストケースを網羅し、完全かつ一貫したセキュリティテストのためのベースラインを提供します。
 
 OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標準化機関、政府機関、教育機関から信頼を得ています。 [詳細はこちらをご覧ください](0x02b-MASVS-MASTG-Adoption.md) 。
 
@@ -76,7 +76,7 @@ MASTG の資料を利用してモバイルアプリに対するテストを実�
 
 [行動規範] に詳細があります: <https://github.com/OWASP/owasp-mastg/blob/master/CODE_OF_CONDUCT.md>
 
-OWASP はこのガイドの作成に尽力された多くの著者、レビュー担当者、編集者に感謝します。ご意見やご提案がありましたら <https://mas.owasp.org/#connect-with-us> までご連絡ください。
+OWASP はこのガイドの作成に尽力された多くの著者、レビュー担当者、編集者に感謝します。ご意見やご提案がありましたら <https://mas.owasp.org/contact> までご連絡ください。
 
 矛盾や誤植を見つけた場合は、OWASP MASTG Github リポジトリ <https://github.com/OWASP/owasp-mastg> で issue を開いてください。
 
