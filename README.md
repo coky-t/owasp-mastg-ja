@@ -7,7 +7,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 - Official Site - <https://mas.owasp.org/>
 - Project Site - <https://owasp.org/www-project-mobile-app-security/>
 - Project Repository - <https://github.com/OWASP/www-project-mobile-app-security>
-- Document Site (Official Site) - <https://mas.owasp.org/MASTG/0x01-Foreword/>
+- Document Site (Official Site) - <https://mas.owasp.org/MASTG/>
 - Document Site (gitbook) - <https://mobile-security.gitbook.io/mobile-security-testing-guide>
 - Document Repository - <https://github.com/OWASP/owasp-mastg>
 
