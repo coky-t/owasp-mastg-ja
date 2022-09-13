@@ -45,7 +45,7 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 - 支持企業はコミュニケーションの一環としてロゴや MASVS/MASTG へのリンクを使用できますが、ソフトウェアやサービスの選定プロバイダとして OWASP が推奨しているものとして使用することはできません。
   - OK であるものの例: "MAS 支持者" ステータスをウェブサイトのホームページ、販売プレゼンテーションの会社スライド、販売資料に記載すること。
   - OK ではないものの例: "MAS 支持者" は OWASP の認定を受けていると主張することはできません。
-- これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://mas.owasp.org/MASVS/0x04-Assessment_and_Certification/#owasps-stance-on-masvs-certifications-and-trust-marks) 。
+- これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://mas.owasp.org/MASVS/Intro/0x04-Assessment_and_Certification/#owasps-stance-on-masvs-certifications-and-trust-marks) 。
 
 > OWASP Foundation はリストに記載されている個人および組織によるサポートに非常に感謝しています。ただし、OWASP Foundation は厳格にベンダー中立であり、サポーターを推奨するものではないこと注意してください。MAS 支持者は MASVS や MASTG のコンテンツにいかなる方法であっても影響をあたえることはありません。
 
