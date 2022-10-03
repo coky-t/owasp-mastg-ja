@@ -515,7 +515,7 @@ Android は アプリの DEX ファイル (classes.dex など) から Dalvik バ
 
 アプリのネイティブライブラリをテストして、PIE とスタックスマッシュ保護が有効になっているかどうかを確認します。
 
-[radare2 の rabin2](0x08a-Testing-Tools.md#radare2) を使用してバイナリ情報を取得できます。例として [UnCrackable App for Android Level 4](0x08b-Reference-Apps.md#uncrackable-app-for-android-level-4) v1.0 APK を使用します。
+[radare2 の rabin2](0x08a-Testing-Tools.md#radare2) を使用してバイナリ情報を取得できます。例として [UnCrackable App for Android Level 4](0x08b-Reference-Apps.md#android-uncrackable-l4) v1.0 APK を使用します。
 
 すべてのネイティブライブラリは `canary` と `pic` が両方とも `true` に設定されていなければなりません。
 
