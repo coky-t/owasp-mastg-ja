@@ -6,27 +6,27 @@
 
 ### Android Crackmes
 
-Android アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes>
+Android アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://mas.owasp.org/crackmes>
 
-#### UnCrackable App for Android Level 1
+#### Android UnCrackable L1
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_01>
+入手先はこちら <https://mas.owasp.org/crackmes/Android#android-uncrackable-l1>
 
-#### UnCrackable App for Android Level 2
+#### Android UnCrackable L2
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_02>
+入手先はこちら <https://mas.owasp.org/crackmes/Android#android-uncrackable-l2>
 
-#### UnCrackable App for Android Level 3
+#### Android UnCrackable L3
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_03>
+入手先はこちら <https://mas.owasp.org/crackmes/Android#android-uncrackable-l3>
 
-#### UnCrackable App for Android Level 4
+#### Android UnCrackable L4
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/Level_04>
+入手先はこちら <https://mas.owasp.org/crackmes/Android#android-uncrackable-l4>
 
 #### Android License Validator
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/blob/master/Crackmes/Android/License_01>
+入手先はこちら <https://mas.owasp.org/crackmes/Android#android-license-validator>
 
 ### AndroGoat
 
@@ -68,15 +68,15 @@ Kotlin を使用したオープンソースの脆弱で、セキュアではな�
 
 ### iOS Crackmes
 
-iOS アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes>
+iOS アプリケーションのハッキングスキルをテストするための一連のアプリ - <https://mas.owasp.org/crackmes>
 
-#### UnCrackable App for iOS Level 1
+#### iOS UnCrackable L1
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes/iOS/Level_01>
+入手先はこちら <https://mas.owasp.org/crackmes/iOS#ios-uncrackable-l1>
 
-#### UnCrackable App for iOS Level 2
+#### iOS UnCrackable L2
 
-入手先はこちら <https://github.com/OWASP/owasp-mastg/tree/master/Crackmes/iOS/Level_02>
+入手先はこちら <https://mas.owasp.org/crackmes/iOS#ios-uncrackable-l2>
 
 ### Myriam
 
