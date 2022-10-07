@@ -75,10 +75,10 @@ BSI は "Federal Office for Information Security" の略で、ドイツにおけ
 
 | 名称 | 文書 | 年号 |
 | -------------- | -------------------- | -- |
+| Leibniz Fachhochschule Hannover, Germany | [Sicherheitsüberprüfung von mobilen iOS Apps nach OWASP (German)](https://leibniz-fh.de/content/uploads/2022/09/27_Arbeitspapier_OWASP.pdf) | 2022 |
 | University of Florida, Florida Institute for Cybersecurity Research, United States | ["SO{U}RCERER : Developer-Driven Security Testing Framework for Android Apps"](https://arxiv.org/pdf/2111.01631.pdf) | 2021 |
 | University of Adelaide, Australia and Queen Mary University of London, United Kingdom | [An Empirical Assessment of Global COVID-19 Contact Tracing Applications](https://arxiv.org/pdf/2006.10933.pdf) | 2021 |
 | School of Information Technology, Mapúa University, Philippines | [A Vulnerability Assessment on the Parental Control Mobile Applications Security: Status based on the OWASP Security Requirements](http://www.ieomsociety.org/singapore2021/papers/1104.pdf) | 2021 |
-| Leibniz Fachhochschule Hannover, Germany | [Sicherheitsüberprüfung von mobilen iOS Apps nach OWASP (German)](https://leibniz-fh.de/content/uploads/2022/09/27_Arbeitspapier_OWASP.pdf) | 2022 |
 
 ## 科学研究への応用
 
