@@ -43,8 +43,8 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
 - [金銭的な寄付](https://mas.owasp.org/donate/) は資格基準の一部ではありませんが業績としてリストされます。
 - MASTG テキストにリンクされる再共有された出版物やブログ投稿は **教育的** であり、モバイルセキュリティや MASVS/MASTG に焦点を当て、 **会社の製品やサービスを推奨していない** ことが必要です。
 - 支持企業はコミュニケーションの一環としてロゴや MASVS/MASTG へのリンクを使用できますが、ソフトウェアやサービスの選定プロバイダとして OWASP が推奨しているものとして使用することはできません。
-  - OK であるものの例: "MAS 支持者" ステータスをウェブサイトのホームページ、販売プレゼンテーションの会社スライド、販売資料に記載すること。
-  - OK ではないものの例: "MAS 支持者" は OWASP の認定を受けていると主張することはできません。
+  - OK であるものの例: MAS 支持者ステータスをウェブサイトのホームページ、販売プレゼンテーションの「会社概要」スライド、販売資料に記載すること。
+  - OK ではないものの例: MAS 支持者は OWASP の認定を受けていると主張することはできません。
 - これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://mas.owasp.org/MASVS/Intro/0x04-Assessment_and_Certification/#owasps-stance-on-masvs-certifications-and-trust-marks) 。
 
 > OWASP Foundation はリストに記載されている個人および組織によるサポートに非常に感謝しています。ただし、OWASP Foundation は厳格にベンダー中立であり、サポーターを推奨するものではないこと注意してください。MAS 支持者は MASVS や MASTG のコンテンツにいかなる方法であっても影響をあたえることはありません。
@@ -93,8 +93,8 @@ _注釈: すべての箇条書きを満たす必要はありません (あくま
   - [Integrate security into the mobile app software development lifecycle](https://www.scmagazine.com/perspective/devops/integrate-security-into-the-mobile-app-software-development-lifecycle)
   - [OWASP Mobile Security Testing Checklist Aids Compliance](https://www.nowsecure.com/blog/2022/02/23/owasp-mobile-security-testing-checklist-aids-compliance/)
 - **プレゼンテーション**:
-  - “Mobile Wanderlust”! Our journey to Version 2.0! (OWASP AppSec EU, Jun 10 2022
-  - [Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Toronto Chapter, Feb 10 2022)](https://www.meetup.com/owasp-toronto/events/283383269/)
+  - "Mobile Wanderlust"! Our journey to Version 2.0! (OWASP AppSec EU, Jun 10 2022)
+  - Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Toronto Chapter, Feb 10 2022)
   - [Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Virtual AppSec 2021, Nov 11 2021)](https://www.youtube.com/watch?v=TcYtpUIIMYw)
   - [Insiders Guide to Mobile AppSec with OWASP MASVS (OWASP Northern Virginia Chapter, Oct 8 2021)](https://www.youtube.com/watch?v=fuLo64WH3SU)
   - その他いろいろ
