@@ -354,15 +354,15 @@ Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロ�
     " | sudo pfctl -ef -
     ```
 
-- Linux システムでは `iptables` を使用できます。
+    Linux システムでは `iptables` を使用できます。
 
     ```bash
     sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080
     ```
 
-- 最後のステップとして、 [Burp Suite](0x08a-Testing-Tools.md#burp-suite) の listener settings で 'Support invisible proxy' をセットする必要があります。
+    最後のステップとして、 [Burp Suite](0x08a-Testing-Tools.md#burp-suite) の listener settings で 'Support invisible proxy' をセットする必要があります。
 
-- 第三の方法: bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MiTM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
+- 第三の方法: bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MITM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
 
 > トラフィックをリダイレクトする際、ノイズとスコープ外のトラフィックを最小限に抑えるために、スコープ内のドメインと IP を狭めるルールを作成する必要があります。
 
@@ -450,7 +450,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - `SSLv1`
 - `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176 "RFC 6176")
 - `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101 "RFC 6101")
-- `TLSv1.0` - [RFC 2246](https://www.ietf.org/rfc/rfc2246 "RFC 2246")
+- `TLSv1.0` - [RFC 2246](https://tools.ietf.org/rfc/rfc2246 "RFC 2246")
 - `TLSv1.1` - [RFC 4346](https://tools.ietf.org/html/rfc4346 "RFC 4346")
 - `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246 "RFC 5246")
 - `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446 "RFC 8446")
@@ -560,25 +560,21 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 - Recommendations for a cipher string - <https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md>
 
-### SIM Swapping attacks
+### SIM Swap Fraud
 
 - The SIM Hijackers - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
 - SIM swapping: how the mobile security feature can lead to a hacked bank account - <https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/>
+- How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
 
 ### NIST
 
 - FIPS PUB 186 - Digital Signature Standard (DSS)
 
-### SIM Swap Fraud
-
-- <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
-- How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
-
 ### IETF
 
 - RFC 6176 - <https://tools.ietf.org/html/rfc6176>
 - RFC 6101 - <https://tools.ietf.org/html/rfc6101>
-- RFC 2246 - <https://www.ietf.org/rfc/rfc2246>
+- RFC 2246 - <https://tools.ietf.org/rfc/rfc2246>
 - RFC 4346 - <https://tools.ietf.org/html/rfc4346>
 - RFC 5246 - <https://tools.ietf.org/html/rfc5246>
 - RFC 8446 - <https://tools.ietf.org/html/rfc8446>
@@ -601,4 +597,4 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - RFC 7539 - <https://tools.ietf.org/html/rfc7539>
 - RFC 6151 - <https://tools.ietf.org/html/rfc6151>
 - RFC 6234 - <https://tools.ietf.org/html/rfc6234>
-- RFC 8447 - <https://tools.ietf.org/html/rfc8447#section-8>
+- RFC 8447 - <https://tools.ietf.org/html/rfc8447>
