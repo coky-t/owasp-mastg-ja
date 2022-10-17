@@ -64,6 +64,10 @@ Kotlin を使用したオープンソースの脆弱で、セキュアではな�
 
 入手先はこちら <https://github.com/OWASP/MASTG-Hacking-Playground/tree/master/Android/MSTG-Android-Kotlin-App>
 
+### OVAA
+
+プラットフォームの既知のセキュリティ脆弱性と一般的なセキュリティ脆弱性をすべて集約した Android アプリ - <https://github.com/oversecured/ovaa>
+
 ## iOS
 
 ### iOS Crackmes
@@ -97,6 +101,10 @@ iOS 開発者 (iPhone, iPad など) やモバイルアプリのペネトレー�
 ### iGoat-Swift
 
 オリジナル iGoat プロジェクトの Swift 版 - <https://github.com/owasp/igoat-swift>
+
+### OVIA
+
+プラットフォームの既知のセキュリティ脆弱性と一般的なセキュリティ脆弱性をすべて集約した iOS アプリ - <https://github.com/oversecured/ovia>
 
 ### UnSAFE Bank
 
