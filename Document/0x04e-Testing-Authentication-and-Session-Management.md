@@ -207,10 +207,10 @@ Burp Intruder でのワードリストベースのブルートフォース攻撃
 
 - [Spring (Java)](https://projects.spring.io/spring-security "Spring (Java)")
 - [Struts (Java)](https://struts.apache.org/security/ "Struts (Java)")
-- [Laravel (PHP)](https://laravel.com/docs/5.4/authentication "Laravel (PHP)")
+- [Laravel (PHP)](https://laravel.com/docs/9.x/authentication "Laravel (PHP)")
 - [Ruby on Rails](https://guides.rubyonrails.org/security.html "Ruby on Rails")
 
-サーバー側認証のテストについての優れたリソースには OWASP Web Testing Guide があり、特に [Testing Authentication](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/04-Authentication_Testing/README) および [Testing Session Management](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/README) の章をご覧ください。
+サーバー側認証のテストについての優れたリソースには OWASP Web Testing Guide があり、特に [Testing Authentication](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/README) および [Testing Session Management](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/06-Session_Management_Testing/README) の章をご覧ください。
 
 ## セッションタイムアウトのテスト (MSTG-AUTH-7)
 
@@ -327,7 +327,7 @@ OTP 認証が使用されている場合、ほとんどの OTP は短い数値�
 
 このような攻撃を防ぐには、アプリケーションは常に何らかのユーザートークンや、事前にセキュアに (Keychain/KeyStore などに) 保存されたユーザーに関する動的な情報を検証する必要があります。
 
-セッション管理のテストについての詳細情報は [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/01-Testing_for_Session_Management_Schema "OWASP Testing Guide V4 (Testing for Session Management)") を参照ください。
+セッション管理のテストについての詳細情報は [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/06-Session_Management_Testing/01-Testing_for_Session_Management_Schema "OWASP Testing Guide V4 (Testing for Session Management)") を参照ください。
 
 ## ステートレス (トークンベース) 認証のテスト (MSTG-AUTH-3)
 
@@ -558,15 +558,7 @@ L2 保護を必要とするアプリケーションでは、MASVS は特定の�
 
 さらに、特定のトランザクションが実際に (完全性) および誰により (真正性) 実行されたかを証明するために、否認防止メカニズムを機密性の高いトランザクション (例、有料コンテンツアクセス、利用規約条項への同意、など) に適用すべきです。
 
-すべての場合において、異なるデバイスが正しく検出されているかどうかを検証すべきです。したがって、アプリケーションを実際のデバイスにバインディングするテストをすべきです。
-iOS では、開発者はバンドル ID に関連する `identifierForVendor` を使用できます。バンドル ID を変更すると、このメソッドは異なる値を返します。アプリを始めて実行した際、`identifierForVendor` により返された値を KeyChain に保存することを確認します。これにより変更は早い段階で検出できます。
-
-Android では、開発者は Android 8.0 (API レベル 26) まで `Settings.Secure.ANDROID_ID` を使用してアプリケーションインスタンスを識別できます。Android 8.0 (API レベル 26) 以降、`ANDROID_ID` はデバイス固有 ID ではないことに注意します。代わりに、アプリ署名鍵、ユーザーおよびデバイスの組み合わせによりスコープが設定されます。そのためこれらの Android バージョンではデバイスブロッキングに対して `ANDROID_ID` を妥当性確認することは困難となることがあります。アプリが署名鍵を変更した場合、`ANDROID_ID` が変更され古いユーザーのデバイスを認識できなくなるためです。したがって、`AndroidKeyStore` からランダムに生成された鍵と、できれば AES_GCM 暗号化を使用して、暗号化された `ANDROID_ID` をプライベートな共有リファレンスにプライベートに保存することをお勧めします。アプリ署名が変更された際に、アプリケーションはデルタをチェックし新しい  `ANDROID_ID` を登録できます。新しいアプリケーション署名鍵なしでこの新しい ID が変更された場合、他の何かが間違いであることを示すべきです。
-次に、iOS の `Keychain` および Android の `KeyStore` に保存された鍵でリクエストに署名することによりデバイスバインディングを拡張でき、強力なデバイスバインディングを再保証できます。
-また、さまざまな IP 、さまざまな位置情報やさまざまなタイムスロットを使用して、すべてのシナリオで適切なタイプの情報がトリガーされるかどうかをテストすべきです。
-
-最後に、アプリの登録済みインスタンスをブロックし、認証が許可されなくなることを確認して、デバイスのブロッキングをテストすべきです。
-注意: L2 保護を必要とするアプリケーションの場合、新しいデバイスでの最初の認証を行う前でもユーザーに警告することをお勧めします。代わりとして、アプリの二番目のインスタンスが登録された際にユーザーに警告します。
+最後に、特定のオープンセッションをユーザーがログアウトできるようにすべきです。場合によっては、デバイス識別子を使用して特定のデバイスを完全にブロックするのもよいかもしれません。詳細については ["デバイスバイディングのテスト (Android)"](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#testing-device-binding-mstg-resilience-10) および ["デバイスバインディング (iOS)"](0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#device-binding-mstg-resilience-10) のセクションを参照してください。
 
 ## 参考情報
 
