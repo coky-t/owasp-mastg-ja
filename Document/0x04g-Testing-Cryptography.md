@@ -125,7 +125,7 @@ Advanced Encryption Standard (AES) はモバイルアプリの対称暗号化の
 
 ブロックベースの暗号化は離散入力ブロック (例えば、AES は 128 ビットブロックを有する) に対して実行されます。平文がブロックサイズよりも大きい場合、その平文は与えられた入力サイズのブロックに内部的に分割され、各ブロックで暗号化が実行されます。ブロック暗号利用モード (またはブロックモード) は前のブロックを暗号化した結果が次のブロックに影響するかどうかを決定します。
 
-[ECB (Electronic Codebook)](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_.28ECB.29 "Electronic Codebook (ECB)") は入力を固定サイズのブロックに分割し、同じ鍵を使用して個別に暗号化されます。複数の分割ブロックが同じ平文を含む場合、それらは同じ暗号文ブロックに暗号化され、データ内のパターンを特定しやすくなります。状況によっては、攻撃者が暗号化されたデータを再生できる可能性もあります。
+[ECB (Electronic Codebook)](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_Codebook_%28ECB%29 "Electronic Codebook (ECB)") は入力を固定サイズのブロックに分割し、同じ鍵を使用して個別に暗号化されます。複数の分割ブロックが同じ平文を含む場合、それらは同じ暗号文ブロックに暗号化され、データ内のパターンを特定しやすくなります。状況によっては、攻撃者が暗号化されたデータを再生できる可能性もあります。
 
 <img src="Images/Chapters/0x07c/EncryptionMode.png" width="550px" />
 
@@ -157,7 +157,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 そのため、デバイスに鍵がまだ必要とされる場合には、以下を考慮することがベストです。
 
 - **リモートサーバー内の鍵**: Amazon KMS や Azure Key Vault などのリモート Key Valut を使用できます。一部のユースケースでは、アプリとリモートリソースの間にオーケストレーションレイヤを開発することが適切な選択肢となることがあります。例えば、Function as a Service (FaaS) システム (AWS Lambda や Google Cloud Functions など) 上で動作するサーバーレス関数が API キーやシークレットを取得するためにリクエストを転送するような場合です。Amazon Cognito, Google Identity Platform, Azure Active Directory などの他の選択肢があります。
-- **セキュアハードウェア支援のストレージ内の鍵**: すべての暗号化アクションおよびその鍵自体が Trusted Execution Environment (例、 [Android Keystore](https://developer.android.com/training/articles/keystore.html "Android keystore system") を使用する) や [Secure Enclave](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/storing_keys_in_the_secure_enclave "Storing Keys in the Secure Enclave") (例、キーチェーンを使用する) にあることを確認します。詳細については [Android のデータストレージ](0x05d-Testing-Data-Storage.md#storing-a-key---example) や [iOS のデータストレージ](0x06d-Testing-Data-Storage.md#the-keychain) の章を参照してください。
+- **セキュアハードウェア支援のストレージ内の鍵**: すべての暗号化アクションおよびその鍵自体が Trusted Execution Environment (例、 [Android Keystore](https://developer.android.com/training/articles/keystore.html "Android keystore system") を使用する) や [Secure Enclave](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/storing_keys_in_the_secure_enclave "Storing Keys in the Secure Enclave") (例、キーチェーンを使用する) にあることを確認します。詳細については [Android のデータストレージ](0x05d-Testing-Data-Storage.md#storing-keys-using-hardware-backed-android-keystore) や [iOS のデータストレージ](0x06d-Testing-Data-Storage.md#the-keychain) の章を参照してください。
 - **エンベロープ暗号化によって保護される鍵**: 鍵が TEE / SE の外部に保存される場合、多層暗号化の使用を検討してください。 _エンベロープ暗号化_ アプローチ ([OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#encrypting-stored-keys "OWASP Cryptographic Storage Cheat Sheet: Encrypting Stored Keys"), [Google Cloud Key management guide](https://cloud.google.com/kms/docs/envelope-encryption?hl=en "Google Cloud Key management guide: Envelope encryption"), [AWS Well-Architected Framework guide](https://docs.aws.amazon.com/wellarchitected/latest/financial-services-industry-lens/use-envelope-encryption-with-customer-master-keys.html "AWS Well-Architected Framework")), [a HPKE approach](https://tools.ietf.org/html/draft-irtf-cfrg-hpke-08 "Hybrid Public Key Encryption") を参照) でデータ暗号鍵を鍵暗号鍵で暗号化します。
 - **メモリ内の鍵**: 鍵がメモリ内にある時間をできる限り短くし、暗号化操作に成功した後やエラーの場合に鍵をゼロ埋めして無効にすることを検討します。一般的な暗号化ガイドラインについては、 [Clean memory of secret data](https://github.com/veorq/cryptocoding#clean-memory-of-secret-data/ "The Cryptocoding Guidelines by @veorq: Clean memory of secret data") を参照してください。詳細について、Android の場合は [Testing Memory for Sensitive Data](0x05d-Testing-Data-Storage.md#testing-memory-for-sensitive-data-mstg-storage-10) 、iOS の場合は [Testing Memory for Sensitive Data](0x06d-Testing-Data-Storage.md#testing-memory-for-sensitive-data-mstg-storage-10) のセクションを参照してください。
 
@@ -173,7 +173,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 ## 暗号化ポリシー
 
-大規模な組織で、または高リスクのアプリケーションが作成される場合、[NIST 鍵管理における推奨事項](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf "NIST 800-57 Rev4") のようなフレームワークに基づいて、暗号化ポリシーを作成することがよくあります。暗号化の適用に基本的な誤りが見つかった場合、学んだ教訓や暗号鍵管理方針を設定する良い出発点となります。
+大規模な組織で、または高リスクのアプリケーションが作成される場合、[NIST 鍵管理における推奨事項](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf "NIST 800-57 Rev5") のようなフレームワークに基づいて、暗号化ポリシーを作成することがよくあります。暗号化の適用に基本的な誤りが見つかった場合、学んだ教訓や暗号鍵管理方針を設定する良い出発点となります。
 
 ## 暗号技術に関する規制
 
