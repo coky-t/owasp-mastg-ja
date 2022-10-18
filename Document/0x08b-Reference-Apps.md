@@ -60,7 +60,7 @@ Kotlin を使用したオープンソースの脆弱で、セキュアではな�
 
 入手先はこちら <https://github.com/OWASP/MASTG-Hacking-Playground/tree/master/Android/MSTG-Android-Java-App>
 
-### MASTG Hacking Playground (Kotlin)
+#### MASTG Hacking Playground (Kotlin)
 
 入手先はこちら <https://github.com/OWASP/MASTG-Hacking-Playground/tree/master/Android/MSTG-Android-Kotlin-App>
 
