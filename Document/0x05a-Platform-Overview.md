@@ -91,17 +91,18 @@ Android デバイスで実行されているコードが信頼できるソース
 
 Android オペレーティングシステムは Linux をベースにしていますが、他の Unix ライクなシステムと同じようにユーザーアカウントを実装してはいません。 Android では Linux カーネルのマルチユーザーサポートを使用してアプリをサンドボックス化しています。一部の例外を除いて、各アプリは別々の Linux ユーザーの下で実行しており、他のアプリやオペレーティングシステムの他の部分から実質的に分離されています。
 
-ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/7.1.1_r6/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。詳細については、 Bin Chen の Android サンドボックスに関する [ブログ記事](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html "Bin Chen - AProgrammer Blog - Android Security: An Overview Of Application Sandbox") をご覧ください。
+ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/9.0.0_r3/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。詳細については、 Bin Chen の Android サンドボックスに関する [ブログ記事](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html "Bin Chen - AProgrammer Blog - Android Security: An Overview Of Application Sandbox") をご覧ください。
 
-例えば、 Android 7.0 (API レベル 24) では以下のシステムユーザーが定義されています。
+例えば、 Android 9.0 (API レベル 28) では以下のシステムユーザーが定義されています。
 
 ```c
     #define AID_ROOT             0  /* traditional unix root user */
+    #...
     #define AID_SYSTEM        1000  /* system server */
     #...
     #define AID_SHELL         2000  /* adb and debug shell user */
     #...
-    #define AID_APP          10000  /* first app user */
+    #define AID_APP_START          10000  /* first app user */
     ...
 ```
 
@@ -232,7 +233,7 @@ uid=10188(u0_a188) gid=10188(u0_a188) groups=10188(u0_a188),3003(inet),
 
 グループ ID とパーミッションの関係は以下のファイルで定義されています。
 
-[frameworks/base/data/etc/platform.xml](http://androidxref.com/7.1.1_r6/xref/frameworks/base/data/etc/platform.xml "platform.xml")
+[frameworks/base/data/etc/platform.xml](http://androidxref.com/9.0.0_r3/xref/frameworks/base/data/etc/platform.xml "platform.xml")
 
 ```xml
 <permission name="android.permission.INTERNET" >
@@ -444,7 +445,7 @@ Binder フレームワークではクライアント・サーバー通信モデ�
 
 <img src="Images/Chapters/0x05a/binder.jpg" width="400px" />
 
-- _Binder Overview - Image source: [Android Binder by Thorsten Schreiber](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.710.6498&rep=rep1&type=pdf "Android Binder")_
+- _Binder Overview - Image source: [Android Binder by Thorsten Schreiber](https://1library.net/document/z33dd47z-android-android-interprocess-communication-thorsten-schreiber-somorovsky-bussmeyer.html "Android Binder")_
 
 他のアプリケーションがそれらにバインドできるようにするサービスは _バインドされたサービス_ と呼ばれます。これらのサービスはクライアントに IBinder インタフェースを提供する必要があります。開発者は Android Interface Descriptor Language (AIDL) を使用して、リモートサービスのインタフェースを記述します。
 
