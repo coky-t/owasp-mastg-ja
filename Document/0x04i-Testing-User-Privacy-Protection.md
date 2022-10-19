@@ -50,10 +50,10 @@
 
 ### 新しいアプローチ (Google と Apple の考え方)
 
-これらの課題に対処し、ユーザーが自分のデータをどのように収集、処理、共有されているかを容易に理解できるようにするため、Google と Apple は新しいプライバシーラベリングシステムを導入しました ([Consumer Software Cybersecurity Labeling](https://www.nist.gov/system/files/documents/2021/11/01/Draft%20Consumer%20Software%20Labeling.pdf) に関する NIST の提案に沿ったものです) 。
+これらの課題に対処し、ユーザーが自分のデータをどのように収集、処理、共有されているかを容易に理解できるようにするため、Google と Apple は新しいプライバシーラベリングシステムを導入しました ([Consumer Software Cybersecurity Labeling](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.02042022-1.pdf) に関する NIST の提案に沿ったものです) 。
 
 - App Store [Nutrition Labels](https://www.apple.com/privacy/labels/) (since 2020).
-- Google Play [Data Safety Section](https://android-developers.googleblog.com/2021/05/new-safety-section-in-google-play-will.html) (since 2021).
+- Google Play [Data Safety Section](https://developer.android.com/guide/topics/data/collect-share) (since 2021).
 
 両プラットフォームの新しい要件として、ユーザー保証を提供し、不正使用を軽減するために、これらのラベルは正確であることが重要です。
 
@@ -74,7 +74,7 @@
 以下はあなたがセキュリティテスト担当者として報告すべき [一般的なプライバシー違反](https://support.google.com/googleplay/android-developer/answer/10144311?hl=en-GB#1&2&3&4&5&6&7&87&9&zippy=%2Cexamples-of-common-violations) のリストです (ただしすべてを網羅したリストではありません) 。
 
 - 例 1: ユーザーのインストール済みアプリのインベントリにアクセスするアプリで、このデータを個人データや機密データとして扱わず、ネットワーク経由で送信 (MSTG-STORAGE-4 に違反) したり、IPC メカニズムを介して他のアプリに送信 (MSTG-STORAGE-6 に違反) する場合。
-- 例 2: アプリが生体情報などを介したユーザー認可なしにクレジットカードの詳細やユーザーパスワードなどの機密データを表示 (MSTG-AUTH-10 に違反) する場合。
+- 例 2: アプリが生体情報などのユーザー認可なしにクレジットカードの詳細やユーザーパスワードなどの機密データを表示 (MSTG-AUTH-10 に違反) する場合。
 - 例 3: ユーザーの電話や連絡帳のデータにアクセスするアプリがこのデータを個人データや機密データとして扱わず、さらに安全でないネットワーク接続を介して送信 (MSTG-NETWORK-1 に違反) する場合。
 - 例 4: アプリが (おそらく適切に機能するには必要ではない) デバイスの位置情報を収集し、どの機能がこのデータを使用するかを説明する明確な開示がない (MSTG-PLATFORM-1 に違反) 場合。
 
@@ -107,7 +107,7 @@
 以下の手順で行います。
 
 1. 対応するアプリマーケットプレイス (Google Play, App Store など) でアプリを検索します。
-2. ["Privacy Details"](https://developer.apple.com/app-store/app-privacy-details/) (App Store) または ["Safety Section"](https://android-developers.googleblog.com/2021/05/new-safety-section-in-google-play-will.html) (Google Play) のセクションに移動します。
+2. ["Privacy Details"](https://developer.apple.com/app-store/app-privacy-details/) (App Store) または ["Safety Section"](https://developer.android.com/guide/topics/data/collect-share) (Google Play) のセクションに移動します。
 3. 利用可能な情報があるかどうかを検証します。
 
 開発者がアプリマーケットプレイスのガイドラインに準拠し、必要なラベルと説明を記載していればテストは合格です。アプリマーケットプレイスから得た情報を証跡として保存および提供して、後でプライバシーやデータ保護に対する違反の可能性を評価するために使用できるようにします。
