@@ -660,7 +660,7 @@ proof-of-rotation 構造には、一つずつ署名するのではなく、古�
 
 #### APK 署名スキーム (v4 スキーム)
 
-APK 署名スキーム v4 は Android 11 (API レベル 30) で導入されたもので、これを使用して起動するすべてのデバイスではデフォルトで [fs-verity](https://kernel.org/doc/html/latest/filesystems/fsverity.html) が有効になっている必要があります。 fs-verity は Linux カーネル機能で、ファイルのハッシュ計算を非常に効率的に行うことができるため、主にファイル認証 (悪意のある改変の検出) に使用されています。読み取り要求はブート時にカーネルキーリングにロードされた信頼できるデジタル証明書に対してコンテンツが検証された場合にのみ成功します。
+APK 署名スキーム v4 は Android 11 (API レベル 30) で導入され、Android 11 以上で起動するすべてのデバイスではデフォルトで [fs-verity](https://www.kernel.org/doc/html/latest/filesystems/fsverity.html) が有効になっている必要があります。 fs-verity は Linux カーネル機能で、ファイルのハッシュ計算を非常に効率的に行うことができるため、主にファイル認証 (悪意のある改変の検出) に使用されています。読み取り要求はブート時にカーネルキーリングにロードされた信頼できるデジタル証明書に対してコンテンツが検証された場合にのみ成功します。
 
 v4 署名は補完する v2 または v3 署名が必要であり、以前の署名スキームとは対照的に、 v4 署名では別のファイル `<apk name>.apk.idsig` に保存されます。 v4 署名された APK を `apksigner verify` で検証する際には `--v4-signature-file` フラグを使用してこのファイルを指定することを忘れないでください。
 
@@ -668,7 +668,7 @@ v4 署名は補完する v2 または v3 署名が必要であり、以前の署
 
 #### 証明書の作成
 
-Android はパブリック/プライベート証明書を使用して Android アプリ (.apk ファイル) に署名します。証明書は情報の集合体であり、セキュリティの観点から鍵が最も重要な情報です。パブリック証明書はユーザーの公開鍵を含み、プライベート証明書はユーザーの秘密鍵を含みます。パブリック証明書とプライベート証明書リンクされています。証明書は一意であり、再生成することはできません。証明書が失われた場合、それを復元することはできないため、その証明書で署名されていたアプリを更新することは不可能になることに注意してください。
+Android はパブリック/プライベート証明書を使用して Android アプリ (.apk ファイル) に署名します。証明書は情報の集合体であり、セキュリティの観点から鍵がその集合体の中で最も重要な部分です。パブリック証明書はユーザーの公開鍵を含み、プライベート証明書はユーザーの秘密鍵を含みます。パブリック証明書とプライベート証明書はリンクされています。証明書は一意であり、再生成することはできません。証明書が失われた場合、それを復元することはできないため、その証明書で署名されていたアプリを更新することは不可能になることに注意してください。
 アプリの作成者は、利用可能な KeyStore にある既存の秘密鍵と公開鍵のペアを再利用するか、新しいペアを生成することができます。
 Android SDK では、新しい鍵ペアは `keytool` コマンドで生成されます。以下のコマンドは鍵長 2048 ビットおよび有効期限 7300 日 = 20 年の RSA 鍵ペアを作成します。生成された鍵はカレントディレクトリのファイル 'myKeyStore.jks' に保存されます。
 
@@ -706,7 +706,7 @@ Android エコシステムはオープンであるため、どこから (自身�
 
 他のベンダーでは実際に公開する前にアプリのレビューおよび承認をする可能性がありますが、 Google では既知のマルウェアシグネチャをスキャンするだけです。これにより、公開プロセスを開始してからアプリが公に利用できるまでの時間を最小限に抑えます。
 
-アプリの公開は非常に簡単であり、主な操作は署名付き APK ファイル自体をダウンロード可能にすることです。 Google Play では、公開はアカウントの作成から始まり、専用のインタフェースを通じてアプリを配信します。詳細は [Android 公式ドキュメント](https://developer.android.com/distribute/googleplay/start.html "Review the checklists to plan your launch") でご覧いただけます。
+アプリの公開は非常に簡単であり、主な操作は署名付き APK ファイル自体をダウンロード可能にすることです。 Google Play では、公開はアカウントの作成から始まり、専用のインタフェースを通じてアプリを配信します。詳細は [Android 公式ドキュメント](https://play.google.com/console/about/guides/releasewithconfidence/ "Review the checklists to plan your launch") でご覧いただけます。
 
 ## Android アプリケーションのアタックサーフェイス
 
@@ -714,7 +714,7 @@ Android アプリケーションのアタックサーフェイスはアプリケ
 
 - IPC 通信や URL スキームを使用したすべての入力を妥当性確認している。以下も参照。
   - [IPC による機密性の高い機能の開示のテスト](0x05h-Testing-Platform-Interaction.md#testing-for-sensitive-functionality-exposure-through-ipc-mstg-platform-4)
-  - [カスタム URL スキームのテスト](0x05h-Testing-Platform-Interaction.md#testing-custom-url-schemes-mstg-platform-3)
+  - [ディープリンクのテスト](0x05h-Testing-Platform-Interaction.md#testing-deep-links-mstg-platform-3)
 - 入力フィールドでのユーザーによるすべての入力を妥当性確認している。
 - WebView 内でロードされたコンテンツを妥当性確認している。以下も参照。
   - [WebView での JavaScript 実行のテスト](0x05h-Testing-Platform-Interaction.md#testing-javascript-execution-in-webviews-mstg-platform-5)
@@ -724,6 +724,6 @@ Android アプリケーションのアタックサーフェイスはアプリケ
   - [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#testing-network-communication)
   - [Android のネットワーク通信](0x05g-Testing-Network-Communication.md)
 - すべてのローカルデータをセキュアに保存している、もしくは信頼できないデータをストレージからロードしている。以下も参照。
-  - [Android のデータストレージ](0x05d-Testing-Data-Storage.md#data-storage-on-android)
+  - [Android のデータストレージ](0x05d-Testing-Data-Storage.md)
 - 危殆化された環境、再パッケージ化、またはその他のローカル攻撃から自身を保護している。以下も参照。
-  - [Android のアンチリバース防御](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#android-anti-reversing-defenses)
+  - [Android のアンチリバース防御](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md)
