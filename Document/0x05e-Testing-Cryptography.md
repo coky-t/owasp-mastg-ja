@@ -108,7 +108,21 @@ provider: AndroidKeyStore 1.0(Android KeyStore security provider)
 
 #### 旧バージョンの Android
 
-古いバージョンの Android (例: Android 7.0 (API レベル 24) より以前のバージョンのみ使用) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Spongy Castle (Bouncy Castle の再パッケージ版) はこのような状況では一般的な選択肢です。Bouncy Castle は Android SDK に含まれているため、再パッケージ化が必要です。[Spongy Castle](https://rtyley.github.io/spongycastle/ "Spongy Castle") の最新バージョンでは Android に含まれている旧バージョンの [Bouncy Castle](https://www.cvedetails.com/vulnerability-list/vendor_id-7637/Bouncycastle.html "CVE Details Bouncy Castle") で発生した問題が修正されている可能性があります。Android に同梱されている Bouncy Castle ライブラリは [多くの Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java") の対応ほど完全ではないことが多いことに注意します。最後に、 Spongy Castle のような大きなライブラリを同梱と、多くの場合にマルチ dex 化 Android アプリケーションにつながることを心に留めておきます。
+古いバージョンの Android (例: Android 7.0 (API レベル 24) より以前のバージョンのみ使用) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Conscrypt ライブラリはさまざまな API レベルで暗号化の一貫性を保ち、より重いライブラリである [Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java") をインポートする必要がないようにするため、この状況では適切な選択といえます。
+
+[Conscrypt for Android](https://github.com/google/conscrypt#android "Conscrypt - A Java Security Provider") は以下の方法でインポートできます。
+
+```groovy
+dependencies {
+  implementation 'org.conscrypt:conscrypt-android:last_version'
+}
+```
+
+次に、以下を呼び出してプロバイダを登録する必要があります。
+
+```kotlin
+Security.addProvider(Conscrypt.newProvider())
+```
 
 ### 鍵生成
 
