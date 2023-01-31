@@ -42,18 +42,63 @@ Internal requirements count=1 size=176
 
 ### 概要
 
-iOS アプリケーションのデバッグは lldb と呼ばれる強力なデバッガを組み込んだ Xcode を使用して行うことができます。lldb は Xcode5 以降のデフォルトデバッガであり、gdb などの GNU ツールを置き換え、開発環境に完全に統合されています。デバッグはアプリを開発する際には便利な機能ですが、App Store やエンタープライズプログラムにリリースする前にオフにする必要があります。
+アプリが [デバッグ可能](0x06c-Reverse-Engineering-and-Tampering.md#debugging) であるかどうかをテストするには、アプリのエンタイトルメントを調べて [`get-task-allow`](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/resolving_common_notarization_issues "Resolving common notarization issues") キーの値が `true` に設定されているかを確認します。
 
-ビルドモードまたはリリースモードでのアプリケーションの生成は Xcode のビルド設定に依存します。アプリがデバッグモードで生成されると、DEBUG フラグが生成されたファイルに挿入されます。
-
-### 静的解析
-
-まず環境内のフラグをチェックするために、アプリを生成するモードを決定する必要があります。
+デバッグはアプリを開発する際に便利な機能ですが、App Store やエンタープライズプログラム内にアプリをリリースする前にオフにしなければなりません。そのためにはアプリを生成するモードを決定して、環境内のフラグを確認する必要があります。
 
 - プロジェクトのビルド設定を選択します。
 - 'Apple LVM - Preprocessing' と 'Preprocessor Macros' で、'DEBUG' または 'DEBUG_MODE' が選択されていないことを確認します (Objective-C) 。
 - "Debug executable" オプションが選択されていないことを確認します。
 - もしくは 'Swift Compiler - Custom Flags' セクションの 'Other Swift Flags' で、'-D DEBUG' エントリが存在しないことを確認します。
+
+### 静的解析
+
+アプリのエンタイトルメントを調べて `get-task-allow` キーの値を確認します。 `true` に設定されていれば、そのアプリはデバッグ可能です。
+
+codesign を使用する場合:
+
+```bash
+$ codesign -d --entitlements - iGoat-Swift.app
+
+Executable=/Users/owasp/iGoat-Swift/Payload/iGoat-Swift.app/iGoat-Swift
+[Dict]
+    [Key] application-identifier
+    [Value]
+        [String] TNAJ496RHB.OWASP.iGoat-Swift
+    [Key] com.apple.developer.team-identifier
+    [Value]
+        [String] TNAJ496RHB
+    [Key] get-task-allow
+    [Value]
+        [Bool] true
+    [Key] keychain-access-groups
+    [Value]
+        [Array]
+            [String] TNAJ496RHB.OWASP.iGoat-Swift
+````
+
+ldid を使用する場合:
+
+```xml
+$ ldid -e iGoat-Swift.app/iGoat-Swift
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>application-identifier</key>
+    <string>TNAJ496RHB.OWASP.iGoat-Swift</string>
+    <key>com.apple.developer.team-identifier</key>
+    <string>TNAJ496RHB</string>
+    <key>get-task-allow</key>
+    <true/>
+    <key>keychain-access-groups</key>
+    <array>
+        <string>TNAJ496RHB.OWASP.iGoat-Swift</string>
+    </array>
+</dict>
+</plist>
+```
 
 ### 動的解析
 
