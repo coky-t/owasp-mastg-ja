@@ -371,7 +371,7 @@ carthage update --platform iOS
 
 #### アプリケーションライブラリの一覧表示
 
-アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](https://github.com/sensepost/objection), [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF), otool などのツールを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
+アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](https://github.com/sensepost/objection), [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF) などのツールや `otool -L` コマンドを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
 
 `list_bundles` コマンドはフレームワークに関係しないアプリケーションのすべてのバンドルを一覧表示します。出力には実行可能ファイル名、バンドル ID 、ライブラリのバージョン、ライブラリのパスが含まれます。
 
