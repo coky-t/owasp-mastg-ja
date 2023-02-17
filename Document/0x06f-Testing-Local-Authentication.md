@@ -1,12 +1,12 @@
 # iOS のローカル認証
 
+## 概要
+
 ローカル認証では、アプリはデバイス上でローカルに保存された資格情報に対してユーザーを認証します。言い換えると、ユーザーはローカルデータを参照することにより検証される PIN、パスワード、または顔や指紋などの生体特性を提供することで、アプリや機能の何かしらの内部層を「アンロック」します。一般的に、これはユーザーがより便利にリモートサービスでの既存のセッションを再開するため、またはある重要な機能を保護するためのステップアップ認証の手段として行われます。
 
 "[モバイルアプリの認証アーキテクチャ](0x04e-Testing-Authentication-and-Session-Management.md)" の章で前述しているように、テスト技術者はローカル認証が常にリモートエンドポイントで実行されることや暗号プリミティブに基づいている必要があることに注意します。認証プロセスからデータが返らない場合、攻撃者は簡単にローカル認証をバイパスできます。
 
-## ローカル認証のテスト (MSTG-AUTH-8 および MSTG-STORAGE-11)
-
-iOS にはアプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication "Local Authentication framework") では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html "Keychain Services") を利用することが可能であり (および推奨され) ます。
+アプリにローカル認証を統合するためのさまざまな方法が用意されています。[Local Authentication framework](https://developer.apple.com/documentation/localauthentication "Local Authentication framework") では開発者がユーザーへの認証ダイアログを拡張するための一連の API が提供されています。リモートサービスに接続するコンテキストでは、ローカル認証を実装するに [キーチェーン](https://developer.apple.com/library/content/documentation/Security/Conceptual/keychainServConcepts/01introduction/introduction.html "Keychain Services") を利用することが可能であり (および推奨され) ます。
 
 iOS での指紋認証は _Touch ID_ として知られています。指紋 ID センサーは [SecureEnclave security coprocessor](https://www.blackhat.com/docs/us-16/materials/us-16-Mandt-Demystifying-The-Secure-Enclave-Processor.pdf "Demystifying the Secure Enclave Processor by Tarjei Mandt, Mathew Solnik, and David Wang") により操作され、指紋データをシステムの他の部分に開示することはありません。Touch ID の次に、Apple は顔認識に基づく認証を可能にする _Face ID_ を導入しました。いずれもアプリケーションレベルで、データを格納し、データを格納する実際の手法として、似たような API を使用します (例えば、顔データと指紋関連データが異なります) 。
 
@@ -31,7 +31,7 @@ iOS での指紋認証は _Touch ID_ として知られています。指紋 ID 
 
 Apple Developer ウェブサイトでは [Swift](https://developer.apple.com/documentation/localauthentication "LocalAuthentication") と [Objective-C](https://developer.apple.com/documentation/localauthentication?language=objc "LocalAuthentication") の両方のコードサンプルを提供しています。Swift での典型的な実装は以下のようになります。
 
-```default
+```swift
 let context = LAContext()
 var error: NSError?
 
@@ -48,8 +48,6 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 }
 ```
 
-- _ローカル認証フレームワークを使用した Swift での Touch ID 認証 (Apple の公式コードサンプル)_
-
 ### ローカル認証にキーチェーンサービスを使用する
 
 ローカル認証を実装するには iOS keychain API を使用できます (そして、使用すべきです) 。このプロセスでは、アプリは秘密の認証トークンかキーチェーンでユーザーを識別する別の秘密データを格納します。リモートサービスを認証するには、ユーザーは秘密のデータを取得するためにパスフレーズまたは指紋を使用してキーチェーンをアンロックする必要があります。
@@ -58,9 +56,9 @@ context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Please, pas
 
 以下の例では、文字列 "test_strong_password" をキーチェーンに保存します。この文字列は、パスコードが設定されている間 (`kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` パラメータ)、かつ現在登録されている指のみでの Touch ID 認証後 (`SecAccessControlCreateFlags.biometryCurrentSet パラメータ`) に、現在のデバイス上でのみアクセス可能です。
 
-#### Swift
+### Swift
 
-```default
+```swift
 // 1. 認証設定を表す AccessControl オブジェクトを作成する
 
 var error: Unmanaged<CFError>?
@@ -119,7 +117,7 @@ if status == noErr {
 
 ```
 
-#### Objective-C
+### Objective-C
 
 ```objectivec
 // 1. 認証設定を表す AccessControl オブジェクトを作成する
@@ -170,7 +168,13 @@ if (status == noErr){
 }
 ```
 
-アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによっても検出できます。これは [otool](0x08a-Testing-Tools.md#otool) を使うことにより行えます。
+## キーチェーン内の鍵の一過性に関する注釈
+
+macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのアイテムのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
+
+## ローカル認証のテスト (MSTG-AUTH-8 および MSTG-STORAGE-11)
+
+アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによって検出できます。これは [otool](0x08a-Testing-Tools.md#otool) を使うことにより行えます。
 
 ```bash
 otool -L <AppName>.app/<AppName>
@@ -213,10 +217,6 @@ otool -L <AppName>.app/<AppName>
 ```
 
 脆弱な場合、モジュールはログインフォームを自動的にバイパスします。
-
-## キーチェーン内の鍵の一過性に関する注釈
-
-macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのアイテムのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
 
 ## 参考情報
 
