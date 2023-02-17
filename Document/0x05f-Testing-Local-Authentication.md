@@ -1,93 +1,20 @@
 # Android のローカル認証
 
+## 概要
+
 ローカル認証では、アプリはデバイス上でローカルに保存された資格情報に対してユーザーを認証します。言い換えると、ユーザーはローカルデータを参照することにより検証される PIN、パスワード、または顔や指紋などの生体特性を提供することで、アプリや機能の何かしらの内部層を「アンロック」します。一般的に、これはユーザーがより便利にリモートサービスでの既存のセッションを再開するため、またはある重要な機能を保護するためのステップアップ認証の手段として行われます。
 
 "[モバイルアプリの認証アーキテクチャ](0x04e-Testing-Authentication-and-Session-Management.md)" の章で前述しているように、テスト技術者はローカル認証が常にリモートエンドポイントで実行されることや暗号プリミティブに基づいている必要があることに注意します。認証プロセスからデータが返らない場合、攻撃者は簡単にローカル認証をバイパスできます。
 
 Android では、ローカル認証のために Android Runtime でサポートされている二つのメカニズムがあります。資格情報の確認フローと生体認証フローです。
 
-## 資格情報の確認のテスト (MSTG-AUTH-1 および MSTG-STORAGE-11)
-
-### 概要
+### 資格情報の確認フロー
 
 資格情報の確認フローは Android 6.0 以降で利用できます。ユーザーがロック画面の保護機能とともにアプリ固有のパスワードを入力する必要がないようにするために使用されます。代わりに、ユーザーがデバイスに直近でログインしている場合には、資格情報の確認は `AndroidKeystore` から暗号マテリアルをアンロックするために使用できます。つまり、ユーザーが設定された制限時間 (`setUserAuthenticationValidityDurationSeconds`) 内にデバイスをアンロックしたか、もしくは再度デバイスをアンロックする必要があります。
 
 資格情報の確認のセキュリティはロック画面で設定されている保護と同程度の強度しかないことに注意します。これは単純な予測としてロック画面パターンがよく使用されることを意味しています。したがって、L2 のセキュリティコントロールを要求するアプリに資格情報の確認を使用することは推奨しません。
 
-### 静的解析
-
-ロック画面が設定されていることを確認します。
-
-```java
-KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-if (!mKeyguardManager.isKeyguardSecure()) {
-    // Show a message that the user hasn't set up a lock screen.
-}
-```
-
-- ロック画面で保護される鍵を作成します この鍵を使用するには、ユーザーは直近の X 秒間にデバイスをアンロックする必要があります。そうでなければデバイスを再びアンロックする必要があります。この時間が長すぎないように注意します。デバイスをアンロックしたユーザーとアプリを使用しているユーザーが同じであることを確認することが難しくなります。
-
-    ```java
-    try {
-        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
-        keyStore.load(null);
-        KeyGenerator keyGenerator = KeyGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
-
-        // Set the alias of the entry in Android KeyStore where the key will appear
-        // and the constrains (purposes) in the constructor of the Builder
-        keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
-                KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                .setUserAuthenticationRequired(true)
-                        // Require that the user has unlocked in the last 30 seconds
-                .setUserAuthenticationValidityDurationSeconds(30)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                .build());
-        keyGenerator.generateKey();
-    } catch (NoSuchAlgorithmException | NoSuchProviderException
-            | InvalidAlgorithmParameterException | KeyStoreException
-            | CertificateException | IOException e) {
-        throw new RuntimeException("Failed to create a symmetric key", e);
-    }
-    ```
-
-- ロック画面をセットアップして確認します。
-
-    ```java
-    private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1; //used as a number to verify whether this is where the activity results from
-    Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
-    if (intent != null) {
-        startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
-    }
-    ```
-
-- ロック画面の後に鍵を使用します。
-
-    ```java
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
-            // Challenge completed, proceed with using cipher
-            if (resultCode == RESULT_OK) {
-                //use the key for the actual authentication flow
-            } else {
-                // The user canceled or didn’t complete the lock screen
-                // operation. Go to error/cancellation flow.
-            }
-        }
-    }
-    ```
-
-アンロックされた鍵がアプリケーションフローの中で使用されていることを確認します。例えば、鍵はローカルストレージやリモートエンドポイントから受信したメッセージを復号化するために使用される可能性があります。アプリケーションはユーザーが鍵をアンロックしたかどうかを単に確認しているだけであれば、そのアプリケーションはローカル認証のバイパスに対して脆弱となる可能性があります。
-
-### 動的解析
-
-ユーザーが正常に認証された後、鍵の使用が認可されている期間 (秒) を妥当性確認します。これは `setUserAuthenticationRequired` が使用されている場合にのみ必要です。
-
-## 生体認証のテスト (MSTG-AUTH-8)
-
-### 概要
+### 生体認証フロー
 
 生体認証は認証に便利なメカニズムですが、使用時にさらなる攻撃領域をもらたします。Android 開発者ドキュメントでは [生体認証アンロックセキュリティの測定](https://source.android.com/security/biometric/measure#strong-weak-unlocks "Measuring Biometric Unlock Security") に興味深い概要と指標が記載されています。
 
@@ -107,7 +34,7 @@ Android プラットフォームは生体認証用に三つの異なるクラス
 
 Android の Biometric API の非常に詳細な概要と説明は [Android 開発者ブログ](https://android-developers.googleblog.com/2019/10/one-biometric-api-over-all-android.html "One Biometric API Over all Android") に公開されています。
 
-#### FingerprintManager (Android 9 (API レベル 28) で廃止)
+### FingerprintManager (Android 9 (API レベル 28) で廃止)
 
 Android 6.0 (API レベル 23) では指紋を介してユーザーを認証する公開 API を導入しましたが、Android 9 (API レベル 28) で廃止されました。指紋ハードウェアへのアクセスは [`FingerprintManager`](https://developer.android.com/reference/android/hardware/fingerprint/ "FingerprintManager") クラスを通じて提供されます。アプリは `FingerprintManager` オブジェクトをインスタンス化してその `authenticate` メソッドを呼び出すことで指紋認証を要求できます。呼び出し元はコールバックメソッドを登録して、認証プロセスの可能な結果 (成功、失敗、エラーなど) を処理します。このメソッドは指紋認証が実際字実行されたという強力な証拠を構成しないことに注意します。例えば、認証ステップが攻撃者によりパッチされたり、「成功」コールバックが動的計装を使用してオーバーロードされる可能性があります。
 
@@ -115,13 +42,7 @@ Android `KeyGenerator` クラスと組み合わせて指紋 API を使用する�
 
 さらにセキュアな選択肢は非対称暗号化を使用することです。ここで、モバイルアプリは KeyStore に非対称鍵ペアを作成し、サーバーバックエンドに公開鍵を登録します。そのあと、後のトランザクションは秘密鍵 (private key) で署名され、公開鍵を使用してサーバーにより検証されます。
 
-### 静的解析
-
-バイオメトリックサポートを提供するベンダーやサードパーティーの SDK はかなりありますが、個別の危険性があることに注意します。サードパーティー SDK を使用して機密認証ロジックを処理する場合は十分に気を付けてください。
-
-次のセクションではさまざまな生体認証クラスについて説明します。
-
-#### Biometric ライブラリ
+### Biometric ライブラリ
 
 Android は [Biometric](https://developer.android.com/jetpack/androidx/releases/biometric "Biometric library for Android")  というライブラリを提供します。これは `BiometricPrompt` および `BiometricManager` API の互換バージョンを提供します。Android 10 に実装されており、Android 6.0 (API 23) に完全対応する機能を備えています。
 
@@ -140,7 +61,7 @@ authenticate メソッドの一環として `CryptoObject` が使用されない
 
 開発者は Android が提供するいくつかの [validation クラス](https://source.android.com/security/biometric#validation "Validation of Biometric Auth") を使用して、アプリでの生体認証の実装をテストできます。
 
-#### FingerprintManager
+### FingerprintManager
 
 > このセクションでは `FingerprintManager` クラスを使用して生体認証を実装する方法について説明します。このクラスは非推奨であり、ベストプラクティスとして [Biometric ライブラリ](https://developer.android.com/jetpack/androidx/releases/biometric "Biometric library for Android") を代わりにしようすべきであることに気を付けてください。このセクションはそのような実装に遭遇し解析する必要がある場合に参照するためのものです。
 
@@ -291,7 +212,7 @@ byte[] signed = signature.sign();
 - トランザクションを署名する場合には、ランダムなノンスを生成し、署名されるデータに追加することに注意します。そうしなければ、攻撃者はトランザクションをリプレイできる可能性があります。
 - 対称指紋認証を使用して認証を実装するには、チャレンジレスポンスプロトコルを使用します。
 
-#### その他のセキュリティ機能
+### その他のセキュリティ機能
 
 Android 7.0 (API level 24) は `KeyGenParameterSpec.Builder` に `setInvalidatedByBiometricEnrollment(boolean invalidateKey)` メソッドを追加します。`invalidateKey` 値が `true` (デフォルト) に設定されている場合、指紋認証に有効な鍵は新しい指紋が登録された際に不可逆的に無効になります。これにより、たとえ攻撃者が追加の指紋を登録できたとしても、鍵を取得できなくなります。
 
@@ -300,9 +221,90 @@ Android 8.0 (API level 26) は二つのエラーコードを追加します。
 - `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`: ユーザーは過度の回数、指紋リーダーを使用してデバイスをアンロックしようと試みた。
 - `FINGERPRINT_ERROR_VENDOR`: ベンダー固有の指紋リーダーエラーが発生した。
 
-#### サードパーティ SDK
+### 生体認証の実装
+
+ロック画面が設定されていることを確認します。
+
+```java
+KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+if (!mKeyguardManager.isKeyguardSecure()) {
+    // Show a message that the user hasn't set up a lock screen.
+}
+```
+
+- ロック画面で保護される鍵を作成します この鍵を使用するには、ユーザーは直近の X 秒間にデバイスをアンロックする必要があります。そうでなければデバイスを再びアンロックする必要があります。この時間が長すぎないように注意します。デバイスをアンロックしたユーザーとアプリを使用しているユーザーが同じであることを確認することが難しくなります。
+
+    ```java
+    try {
+        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+        keyStore.load(null);
+        KeyGenerator keyGenerator = KeyGenerator.getInstance(
+                KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+
+        // Set the alias of the entry in Android KeyStore where the key will appear
+        // and the constrains (purposes) in the constructor of the Builder
+        keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
+                KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                .setUserAuthenticationRequired(true)
+                        // Require that the user has unlocked in the last 30 seconds
+                .setUserAuthenticationValidityDurationSeconds(30)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                .build());
+        keyGenerator.generateKey();
+    } catch (NoSuchAlgorithmException | NoSuchProviderException
+            | InvalidAlgorithmParameterException | KeyStoreException
+            | CertificateException | IOException e) {
+        throw new RuntimeException("Failed to create a symmetric key", e);
+    }
+    ```
+
+- ロック画面をセットアップして確認します。
+
+    ```java
+    private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1; //used as a number to verify whether this is where the activity results from
+    Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
+    if (intent != null) {
+        startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
+    }
+    ```
+
+- ロック画面の後に鍵を使用します。
+
+    ```java
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
+            // Challenge completed, proceed with using cipher
+            if (resultCode == RESULT_OK) {
+                //use the key for the actual authentication flow
+            } else {
+                // The user canceled or didn’t complete the lock screen
+                // operation. Go to error/cancellation flow.
+            }
+        }
+    }
+    ```
+
+### サードパーティ SDK
 
 指紋認証やその種類の生体認証はもっぱら Android SDK とその API に基づいていることを確認します。そうでない場合、代替 SDK があらゆる脆弱性に対して適切に検証されていることを確認します。その SDK は TEE/SE がバックにあり、生体認証に基づいて (暗号) 機密をアンロックすることを確認します。この機密は他のものによりアンロックされるべきではなく、有効な生体エントリによってアンロックされるべきです。そのようにして、指紋ロジックがバイパスできることがあってはいけません。
+
+## 資格情報の確認のテスト (MSTG-AUTH-1 および MSTG-STORAGE-11)
+
+### 静的解析
+
+アンロックされた鍵がアプリケーションフローの中で使用されていることを確認します。例えば、鍵はローカルストレージやリモートエンドポイントから受信したメッセージを復号化するために使用される可能性があります。アプリケーションはユーザーが鍵をアンロックしたかどうかを単に確認しているだけであれば、そのアプリケーションはローカル認証のバイパスに対して脆弱となる可能性があります。
+
+### 動的解析
+
+ユーザーが正常に認証された後、鍵の使用が認可されている期間 (秒) を妥当性確認します。これは `setUserAuthenticationRequired` が使用されている場合にのみ必要です。
+
+## 生体認証のテスト (MSTG-AUTH-8)
+
+### 静的解析
+
+バイオメトリックサポートを提供するベンダーやサードパーティーの SDK はかなりありますが、個別の危険性があることに注意します。サードパーティー SDK を使用して機密認証ロジックを処理する場合は十分に気を付けてください。
 
 ### 動的解析
 
