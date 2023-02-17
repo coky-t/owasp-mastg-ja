@@ -1,213 +1,12 @@
 # iOS のコード品質とビルド設定
 
-## アプリが正しく署名されていることの確認 (MSTG-CODE-1)
+## 概要
 
-### 概要
+### アプリ署名
 
 アプリを [コード署名](0x06a-Platform-Overview.md#code-signing) することで、アプリが既知のソースを持ち、最後に署名されてから改変されていないことをユーザーに保証します。アプリは、アプリサービスを統合する前、脱獄していないデバイスにインストールされるか、App Store に提出する前に、Apple により発行された証明書で署名される必要があります。証明書をリクエストしてアプリにコード署名する方法の詳細については、[アプリ配布ガイド](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/Introduction/Introduction.html "App Distribution Guide") をご覧ください。
 
-### 静的解析
-
-アプリが [最新のコード署名形式を使用している](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format) ことを確認する必要があります。[codesign](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html "Code Signing Tasks") でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
-
-アプリケーションの IPA ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
-
-以下の `codesign` コマンドを実行して、署名情報を表示します。
-
-```bash
-$ codesign -dvvv YOURAPP.app
-Executable=/Users/Documents/YOURAPP/Payload/YOURAPP.app/YOURNAME
-Identifier=com.example.example
-Format=app bundle with Mach-O universal (armv7 arm64)
-CodeDirectory v=20200 size=154808 flags=0x0(none) hashes=4830+5 location=embedded
-Hash type=sha256 size=32
-CandidateCDHash sha1=455758418a5f6a878bb8fdb709ccfca52c0b5b9e
-CandidateCDHash sha256=fd44efd7d03fb03563b90037f92b6ffff3270c46
-Hash choices=sha1,sha256
-CDHash=fd44efd7d03fb03563b90037f92b6ffff3270c46
-Signature size=4678
-Authority=iPhone Distribution: Example Ltd
-Authority=Apple Worldwide Developer Relations Certification Authority
-Authority=Apple Root CA
-Signed Time=4 Aug 2017, 12:42:52
-Info.plist entries=66
-TeamIdentifier=8LAMR92KJ8
-Sealed Resources version=2 rules=12 files=1410
-Internal requirements count=1 size=176
-```
-
-[Apple ドキュメント](https://developer.apple.com/business/distribute/ "Apple Business") で説明されているように、アプリを配布するにはいくつかの方法があります。App Store を使用する方法や、カスタムディストリビューションや組織内ディストリビューション向けに Apple Business Manager を使用する方法があります。組織内ディストリビューションスキームの場合、ディストリビューション用にアプリに署名する際にアドホック証明書が使用されていないことを確認します。
-
-## アプリがデバッグ可能かどうかの判断 (MSTG-CODE-2)
-
-### 概要
-
-アプリが [デバッグ可能](0x06c-Reverse-Engineering-and-Tampering.md#debugging) であるかどうかをテストするには、アプリのエンタイトルメントを調べて [`get-task-allow`](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/resolving_common_notarization_issues "Resolving common notarization issues") キーの値が `true` に設定されているかを確認します。
-
-デバッグはアプリを開発する際に便利な機能ですが、App Store やエンタープライズプログラム内にアプリをリリースする前にオフにしなければなりません。そのためにはアプリを生成するモードを決定して、環境内のフラグを確認する必要があります。
-
-- プロジェクトのビルド設定を選択します。
-- 'Apple LVM - Preprocessing' と 'Preprocessor Macros' で、'DEBUG' または 'DEBUG_MODE' が選択されていないことを確認します (Objective-C) 。
-- "Debug executable" オプションが選択されていないことを確認します。
-- もしくは 'Swift Compiler - Custom Flags' セクションの 'Other Swift Flags' で、'-D DEBUG' エントリが存在しないことを確認します。
-
-### 静的解析
-
-アプリのエンタイトルメントを調べて `get-task-allow` キーの値を確認します。 `true` に設定されていれば、そのアプリはデバッグ可能です。
-
-codesign を使用する場合:
-
-```bash
-$ codesign -d --entitlements - iGoat-Swift.app
-
-Executable=/Users/owasp/iGoat-Swift/Payload/iGoat-Swift.app/iGoat-Swift
-[Dict]
-    [Key] application-identifier
-    [Value]
-        [String] TNAJ496RHB.OWASP.iGoat-Swift
-    [Key] com.apple.developer.team-identifier
-    [Value]
-        [String] TNAJ496RHB
-    [Key] get-task-allow
-    [Value]
-        [Bool] true
-    [Key] keychain-access-groups
-    [Value]
-        [Array]
-            [String] TNAJ496RHB.OWASP.iGoat-Swift
-````
-
-ldid を使用する場合:
-
-```xml
-$ ldid -e iGoat-Swift.app/iGoat-Swift
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>application-identifier</key>
-    <string>TNAJ496RHB.OWASP.iGoat-Swift</string>
-    <key>com.apple.developer.team-identifier</key>
-    <string>TNAJ496RHB</string>
-    <key>get-task-allow</key>
-    <true/>
-    <key>keychain-access-groups</key>
-    <array>
-        <string>TNAJ496RHB.OWASP.iGoat-Swift</string>
-    </array>
-</dict>
-</plist>
-```
-
-### 動的解析
-
-Xcode を使用して、直接デバッガをアタッチできるかどうかを確認します。次に、脱獄済みデバイスで Clutch を行った後にアプリをデバッグできるかどうかを確認します。これは Cydia の BigBoss リポジトリにある debug-server を使用して行われます。
-
-注意: アプリケーションにアンチリバースエンジニアリングコントロールが装備されている場合、デバッガを検出して停止することがあります。
-
-## デバッグシンボルの検索 (MSTG-CODE-3)
-
-### 概要
-
-良い習慣として、コンパイルされたバイナリで提供される説明情報はできる限り少なくするべきです。デバッグシンボルなどの付加的なメタデータの存在はコードに関する貴重な情報を提供する可能性があります。例えば、関数名は関数が何をするかについての情報を漏洩します。このメタデータはバイナリの実行には必要ありませんので、リリースビルド時に破棄しても問題ありません。これは適切なコンパイラ設定を使用して実行できます。テスト担当者としてはアプリで配布されるすべてのバイナリを検査し、デバッグシンボルが存在しないことを確認するべきです (少なくともデバッグシンボルはコードに関する貴重な情報を漏洩します) 。
-
-iOS アプリケーションがコンパイルされると、コンパイラはアプリ内の各バイナリファイル (メインアプリ実行可能ファイル、フレームワーク、アプリ拡張機能) のデバッグシンボルのリストを生成します。これらのシンボルにはクラス名、グローバル変数、メソッド名や関数名が含まれ、それらが定義されている特定のファイルと行番号にマップされます。アプリのデバッグビルドはデフォルトでコンパイル済みバイナリにデバッグシンボルを配置しますが、アプリのリリースビルドは配布するアプリのサイズを縮小するためにコンパニオン _Debug Symbol ファイル_ (dSYM) に配置します。
-
-### 静的解析
-
-デバッグシンボルの存在を検証するには [binutils](https://www.gnu.org/s/binutils/ "Binutils") の objdump または [llvm-objdump](https://llvm.org/docs/CommandGuide/llvm-objdump.html "llvm-objdump") を使用してすべてのアプリバイナリを検査できます。
-
-以下のスニペットでは `TargetApp` (iOS メインアプリ実行可能ファイル) に対して objdump を実行して `d` (debug) フラグでマークされたデバッグシンボルを含むバイナリの典型的な出力を示しています。その他のさまざまなシンボルフラグ文字については [objdump man page](https://www.unix.com/man-page/osx/1/objdump/ "objdump man page") を確認してください。
-
-```bash
-$ objdump --syms TargetApp
-
-0000000100007dc8 l    d  *UND* -[ViewController handleSubmitButton:]
-000000010000809c l    d  *UND* -[ViewController touchesBegan:withEvent:]
-0000000100008158 l    d  *UND* -[ViewController viewDidLoad]
-...
-000000010000916c l    d  *UND* _disable_gdb
-00000001000091d8 l    d  *UND* _detect_injected_dylds
-00000001000092a4 l    d  *UND* _isDebugged
-...
-```
-
-デバッグシンボルが含まれないようにするには、 XCode プロジェクトのビルド設定で `Strip Debug Symbols During Copy` を `YES` に設定します。デバッグシンボルを削除するとバイナリサイズが小さくなるだけでなく、リバースエンジニアリングの難易度が上がります。
-
-### 動的解析
-
-動的解析はデバッグシンボルの検索には適用できません。
-
-## デバッグコードと詳細エラーログの検索 (MSTG-CODE-4)
-
-### 概要
-
-検証をスピードアップしエラーの理解を深めるために、開発者は API からのレスポンスやアプリケーションの状況や状態について (`NSLog`, `println`, `print`, `dump`, `debugPrint` を使用して) 詳細なログ出力文などのデバッグコードをしばしば埋め込みます。さらに、アプリケーションの状態や API からの疑似応答を設定するために開発者が使用する「管理機能」と呼ばれるデバッグコードが存在する可能性があります。リバースエンジニアはこの情報を使用してアプリケーションで起こっていることを簡単に追跡できます。したがって、デバッグコードはアプリケーションのリリースバージョンから削除する必要があります。
-
-### 静的解析
-
-ログ出力文について以下の静的解析アプローチをとることができます。
-
-1. Xcode にアプリケーションのコードをインポートします。
-2. 次の出力関数についてコードを検索します: `NSLog`, `println`, `print`, `dump`, `debugPrint`.
-3. いずれか一つを見つけたら、ログ出力されるステートメントのより良いマークアップのために開発者がログ出力関数を囲うラップ関数を使用しているかどうかを判断します。そうであれば、その関数を検索に追加します。
-4. 手順 2 と 3 のすべてのものについて、マクロやデバッグ状態に関連するガードがリリースビルドでログ出力なしにするように設定されているかどうかを判断します。Objective-C がプリプロセッサマクロを使用する方法の変更点に注意します。
-
-```objectivec
-#ifdef DEBUG
-    // Debug-only code
-#endif
-```
-
-Swift ではこの動作を有効にする手続きが変更されています。スキームで環境変数を設定するか、ターゲットのビルド設定でカスタムフラグとして設定する必要があります。Xcode 8 および Swift3 ではサポートされていないため、(アプリが Swift 2.1 のリリース構成でビルドされているかどうかを判断できる) 次の関数は推奨されていないことに注意します。
-
-- `_isDebugAssertConfiguration`
-- `_isReleaseAssertConfiguration`
-- `_isFastAssertConfiguration`.
-
-アプリケーションの設定に応じて、より多くのログ出力関数が存在する可能性があります。例えば、[CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack "CocoaLumberjack") を使用する場合、静的解析は多少異なります。
-
-(ビルトインの) 「デバッグ管理」コードについて、ストーリーボードを調査して、アプリケーションがサポートすべき機能とは異なる機能を提供するフローやビューコントローラがあるかどうかを確認します。この機能には、デバッグビューからエラーメッセージ出力まで、カスタムスタブレスポンス構成からアプリケーション上のファイルシステムやリモートサーバーへのログ出力まで、いろいろあります。
-
-一人の開発者として、アプリケーションのデバッグバージョンにデバッグステートメントを組み込むことは、デバッグステートメントがアプリケーションのリリースバージョンに存在しないことを確認していれば問題ありません。
-
-Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
-
-```objectivec
-#ifdef DEBUG
-    // Debug-only code
-#endif
-```
-
-Swift 2 では (Xcode 7 を使用して) 、すべてのターゲットにカスタムコンパイラフラグを設定する必要があります。コンパイラフラグは "-D" で始まる必要があります。したがって、デバッグフラグ `MSTG-DEBUG` を設定されている場合、以下のアノテーションが使用できます。
-
-```default
-#if MSTG-DEBUG
-    // Debug-only code
-#endif
-```
-
-Swift 3 では (Xcode 8 を使用して) 、Build settings/Swift compiler - Custom flags の Active Compilation Conditions を設定できます。プリプロセッサを使用する代わりに、Swift3 は定義済みの条件に基づく [条件付きコンパイルブロック](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34 "Swift conditional compilation blocks") を使用します。
-
-```default
-#if DEBUG_LOGGING
-    // Debug-only code
-#endif
-```
-
-### 動的解析
-
-動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードを実行するために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あるためです。
-
-1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールで出力を確認します。
-2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールで出力を確認します。
-
-他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、アプリのプロファイルをプリセットできる機能、実サーバーを選択する機能、API からのレスポンスを選択する機能があるかどうかを確認します。
-
-## サードパーティライブラリの脆弱性のチェック (MSTG-CODE-5)
-
-### 概要
+### サードパーティライブラリ
 
 iOS アプリケーションではサードパーティライブラリを使用することがよくあります。これらのサードパーティライブラリは開発者が問題を解決するためのコード記述を少なくし、開発を加速します。しかし、サードパーティライブラリには脆弱性、互換性のないライセンス、または悪意のあるコンテンツが含まれている可能性があります。さらに、ライブラリリリースの監視や利用可能なセキュリティパッチの適用など、組織や開発者はアプリケーションの依存関係を管理することが困難となります。
 
@@ -230,174 +29,89 @@ iOS アプリケーションではサードパーティライブラリを使用�
 
 この問題は複数のレベルで発生する可能性があることに注意します。WebView を使用し、WebView で JavaScript を実行する場合、JavaScript ライブラリにもこれらの問題があります。同じことが Cordova, React-native, Xamarin アプリのプラグインやライブラリにも当てはまります。
 
-### 静的解析
+### メモリ破損バグ
 
-#### サードパーティライブラリの脆弱性の検出
+iOS アプリケーションはさまざまな状況で [メモリ破損バグ](0x04h-Testing-Code-Quality.md#memory-corruption-bugs) に遭遇します。まず、一般的なメモリ破損バグのセクションで言及されているネイティブコードの問題があります。次に、Objective-C と Swift のいずれにも問題を引き起こす可能性のあるネイティブコードを実際にラップするさまざまな危険な操作があります。最後に、Swift と Objective-C の実装はいずれも使用されなくなったオブジェクトを保持するためにメモリリークが発生する可能性があります。
 
-アプリにより使用されるライブラリに脆弱性がないようにするためには、CocoaPods や Carthage によりインストールされた依存関係を確認することがベストです。
+詳しくはこちら。
 
-##### Swift Package Manager
+- <https://developer.ibm.com/tutorials/mo-ios-memory/>
+- <https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html>
+- <https://medium.com/zendesk-engineering/ios-identifying-memory-leaks-using-the-xcode-memory-graph-debugger-e84f097b9d15>
 
-サードパーティ依存関係の管理に [Swift Package Manager](https://swift.org/package-manager "Swift Package Manager on Swift.org") を使用する場合、以下の手順を実行してサードパーティライブラリを解析し、脆弱性がないか確認できます。
+### バイナリ保護メカニズム
 
-最初に、 Package.swift ファイルが置かれているプロジェクトのルートで、以下のように入力します。
+[バイナリ保護メカニズム](0x04h-Testing-Code-Quality.md#binary-protection-mechanisms) の存在を検出するためにはアプリケーションの開発に使用された言語に大きく依存します。
 
-```bash
-swift build
-```
+Xcode はデフォルトですべてのバイナリセキュリティ機能を有効にしますが、古いアプリケーションに対してこれを検証したり、コンパイラフラグの設定ミスをチェックすることが適切な場合があります。以下の機能が適用可能です。
 
-次に、 Package.resolved ファイルで実際に使用されているバージョンを確認し、特定のライブラリに既知の脆弱性がないか検査します。
+- [**PIE (Position Independent Executable)**](0x04h-Testing-Code-Quality.md#position-independent-code):
+  - PIE は実行形式バイナリ (Mach-O タイプ `MH_EXECUTE`) に適用されます。
+  - ただし、ライブラリ (Mach-O タイプ `MH_DYLIB`) には適用されません。
+- [**メモリ管理**](0x04h-Testing-Code-Quality.md#memory-management):
+  - 純粋な Objective-C、Swift、ハイブリッドバイナリのいずれも ARC (Automatic Reference Counting) を有効にすべきです。
+  - C/C++ ライブラリでは、開発者は適切な [手動メモリ管理](0x04h-Testing-Code-Quality.md#manual-memory-management) を行う責任があります。 ["メモリ破損バグ (MSTG-CODE-8)"](#memory-corruption-bugs-mstg-code-8) を参照してください。
+- [**スタックスマッシュ保護**](0x04h-Testing-Code-Quality.md#stack-smashing-protection): 純粋な Objective-C バイナリでは、これは常に有効にすべきです。Swift はメモリセーフに設計されているので、ライブラリが純粋に Swift で書かれていれば、スタックカナリアが有効にされていなくても、リスクは最小限に抑えられます。
 
-[OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [Swift Package Manager Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/swift.html "dependency-check - SWIFT Package Manager Analyzer") を利用して、すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの Package.swift ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
+詳しくはこちら。
 
-```bash
-dependency-check  --enableExperimental --out . --scan Package.swift
-```
+- [OS X ABI Mach-O File Format Reference](https://github.com/aidansteele/osx-abi-macho-file-format-reference)
+- [On iOS Binary Protections](https://sensepost.com/blog/2021/on-ios-binary-protections/)
+- [Security of runtime process in iOS and iPadOS](https://support.apple.com/en-gb/guide/security/sec15bfe098e/web)
+- [Mach-O Programming Topics - Position-Independent Code](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/MachOTopics/1-Articles/dynamic_code.html)
 
-##### CocoaPods
+これらの保護メカニズムの存在を検出するためのテストはアプリケーションの開発に使用される言語に大きく依存します。たとえば、スタックカナリアの存在を検出するための既存の技法は純粋な Swift アプリでは機能しません。
 
-サードパーティ依存関係の管理に [CocoaPods](https://cocoapods.org "CocoaPods.org") を使用する場合、以下の手順を実行してサードパーティライブラリを解析し、脆弱性がないか確認できます。
+#### Xcode プロジェクト設定
 
-最初に、 Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
+##### Stack Canary 保護
 
-```bash
-sudo gem install cocoapods
-pod install
-```
+iOS アプリケーションで Stack Canary 保護を有効にする手順。
 
-次に、依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. "Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
+3. Position Independent Executables (PIE) support が有効になっていることを確認します。
 
-```bash
-sudo gem install cocoapods-dependencies
-pod dependencies
-```
+##### PIE 保護
 
-上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
+iOS アプリケーションを PIE としてビルドする手順。
 
-> 注釈:
->
-> 1. 開発者が .podspec ファイルを使用して自身のサポートライブラリに関してすべての依存関係をパックする場合、この .podspec ファイルを実験的な CocoaPods podspec checker で確認できます。
-> 2. プロジェクトで CocoaPods を Objective-C と組み合わせて使用する場合、SourceClear を使用できます。
-> 3. HTTPS ではなく HTTP ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に中間者攻撃を許す可能性があり、攻撃者はライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に HTTPS を使用します。
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. iOS Deployment Target を iOS 4.3 以降に設定します。
+3. "Generate Position-Dependent Code" ("Apple Clang - Code Generation" セクション) がデフォルト値 ("NO") に設定されていることを確認します。
+4. "Generate Position-Dependent Executable" ("Linking" セクション) がデフォルト値 ("NO") に設定されていることを確認します。
 
-[OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [CocoaPods Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/cocoapods.html "dependency-check - CocoaPods Analyzer") を利用して、
-すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの \*.podspec や Podfile.lock ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
+##### ARC 保護
 
-```bash
-dependency-check  --enableExperimental --out . --scan Podfile.lock
-```
+Swift アプリでは `swiftc` コンパイラによって ARC が自動的に有効になります。一方 Objective-C アプリでは以下の手順で有効になっていることを確認します。
 
-##### Carthage
+1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
+2. "Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
 
-サードパーティ依存関係の管理に [Carthage](https://github.com/Carthage/Carthage "Carthage on GitHub") を使用する場合、以下の手順を実行してサードパーティライブラリを解析し、脆弱性がないか確認できます。
+[Technical Q&A QA1788 Building a Position Independent Executable](https://developer.apple.com/library/mac/qa/qa1788/_index.html "Technical Q&A QA1788 Building a Position Independent Executable") を参照してください。
 
-最初に、 Cartfile があるプロジェクトのルートで、以下を入力します。
+### デバッグ可能アプリ
 
-```bash
-brew install carthage
-carthage update --platform iOS
-```
+アプリが [デバッグ可能](0x06c-Reverse-Engineering-and-Tampering.md#debugging) であるかどうかをテストするには、アプリのエンタイトルメントを調べて [`get-task-allow`](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/resolving_common_notarization_issues "Resolving common notarization issues") キーの値が `true` に設定されているかを確認します。
 
-次に、 Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
+デバッグはアプリを開発する際に便利な機能ですが、App Store やエンタープライズプログラム内にアプリをリリースする前にオフにしなければなりません。そのためにはアプリを生成するモードを決定して、環境内のフラグを確認する必要があります。
 
-> 注釈、この章の執筆時点では、執筆者に知られている Carthage ベースの依存関係解析の自動サポートはありません。少なくとも、この機能は OWASP DependencyCheck ツールですでにリクエストされていますがまだ実装されていません ([GitHub issue](https://github.com/jeremylong/DependencyCheck/issues/962 "Add Carthage Analyze for Swift") を参照) 。
+- プロジェクトのビルド設定を選択します。
+- 'Apple LVM - Preprocessing' と 'Preprocessor Macros' で、'DEBUG' または 'DEBUG_MODE' が選択されていないことを確認します (Objective-C) 。
+- "Debug executable" オプションが選択されていないことを確認します。
+- もしくは 'Swift Compiler - Custom Flags' セクションの 'Other Swift Flags' で、'-D DEBUG' エントリが存在しないことを確認します。
 
-##### 発見されたライブラリ脆弱性
+### デバッグシンボル
 
-ライブラリに脆弱性が含まれていることが判明した場合、以下の推論を適用します。
+良い習慣として、コンパイルされたバイナリで提供される説明情報はできる限り少なくするべきです。デバッグシンボルなどの付加的なメタデータの存在はコードに関する貴重な情報を提供する可能性があります。例えば、関数名は関数が何をするかについての情報を漏洩します。このメタデータはバイナリの実行には必要ありませんので、リリースビルド時に破棄しても問題ありません。これは適切なコンパイラ設定を使用して実行できます。テスト担当者としてはアプリで配布されるすべてのバイナリを検査し、デバッグシンボルが存在しないことを確認するべきです (少なくともデバッグシンボルはコードに関する貴重な情報を漏洩します) 。
 
-- ライブラリがアプリケーションにパッケージされている場合、それからライブラリに脆弱性がパッチされているバージョンがあるか確認します。ない場合、脆弱性が実際にアプリケーションに影響を及ぼすかどうかを確認します。それが当てはまる場合、または将来そうなる可能性がある場合、同様の機能を提供する、脆弱性のない代替手段を探します。
-- ライブラリはアプリケーションにはパッケージされていない場合、脆弱性が修正されているパッチされたバージョンがあるかどうかを確認します。これがない場合、ビルドプロセスに対する脆弱性の影響を調べます。脆弱性がビルドを邪魔したり、ビルドパイプラインのセキュリティを弱めたりする場合、脆弱性が修正される代替案を探してみます。
+iOS アプリケーションがコンパイルされると、コンパイラはアプリ内の各バイナリファイル (メインアプリ実行可能ファイル、フレームワーク、アプリ拡張機能) のデバッグシンボルのリストを生成します。これらのシンボルにはクラス名、グローバル変数、メソッド名や関数名が含まれ、それらが定義されている特定のファイルと行番号にマップされます。アプリの [デバッグビルド](https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information "Building Your App to Include Debugging Information") はデフォルトでコンパイル済みバイナリにデバッグシンボルを配置しますが、アプリのリリースビルドは配布するアプリのサイズを縮小するためにコンパニオン _Debug Symbol ファイル_ (dSYM) に配置します。
 
-リンクされるライブラリとしてフレームワークを手動で追加する場合。
+### デバッグコードとエラーログ
 
-1. xcodeproj ファイルを開き、プロジェクトのプロパティを確認します。
-2. **Build Phases** タブに移動して、いずれかのライブラリの **Link Binary With Libraries** のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
+検証をスピードアップしエラーの理解を深めるために、開発者は API からのレスポンスやアプリケーションの状況や状態について (`NSLog`, `println`, `print`, `dump`, `debugPrint` を使用して) 詳細なログ出力文などのデバッグコードをしばしば埋め込みます。 さらに、アプリケーションの状態や API からの疑似応答を設定するために開発者が使用する「管理機能」と呼ばれるデバッグコードが存在する可能性があります。リバースエンジニアはこの情報を使用してアプリケーションで起こっていることを簡単に追跡できます。したがって、デバッグコードはアプリケーションのリリースバージョンから削除する必要があります。
 
-コピー＆ペーストされたソースの場合、(Objective-C を使用する場合) ヘッダファイルを検索し、あるいは既存のライブラリの既存のメソッド名の Swift ファイルを検索します。
-
-次に、ハイブリッドアプリケーションでは、JavaScript の依存関係を [RetireJS](https://retirejs.github.io/retire.js/ "RetireJS") で確認する必要があることに注意します。同様に Xamarin では、C# の依存関係を確認する必要があります。
-
-最後に、アプリケーションがリスクの高いアプリケーションである場合、ライブラリを手動で検査することになります。その場合、ネイティブコードには特定の要件があります。これはアプリケーション全体に対して MASVS により確立された要件に似ています。その次に、ソフトウェアエンジニアリングのすべてのベストプラクティスが適用されているかどうかを吟味することをお勧めします。
-
-#### アプリケーションのライブラリで使用されるライセンスの検出
-
-著作権法が侵害されないようにするには、Swift Packager Manager, CocoaPods または Carthage によりインストールされた依存関係を確認することがベストです。
-
-##### Swift Package Manager
-
-アプリケーションソースが利用可能で Swift Package Manager が使用されている場合、 Package.swift ファイルが置かれているプロジェクトのルートディレクトリで以下のコードを実行します。
-
-```bash
-swift build
-```
-
-これで各依存関係のソースがプロジェクトの `/.build/checkouts/` フォルダにダウンロードされました。ここで各ライブラリのライセンスをそれぞれのフォルダに見つけることができます。
-
-##### CocoaPods
-
-アプリケーションソースが利用可能であり、CocoaPods が使用されている場合、以下の手順を実行してそれぞれのライセンスを取得します。
-最初に、 Podfile があるプロジェクトのルートで、以下を実行します。
-
-```bash
-sudo gem install CocoaPods
-pod install
-```
-
-これにより、すべてのライブラリがインストールされている Pods フォルダが作成されます。ライブラリは各自のフォルダにあります。各フォルダのライセンスファイルを調べることで、各ライブラリのライセンスを確認できます。
-
-##### Carthage
-
-アプリケーションソースが利用可能であり、Carthage が使用されている場合、 Cartfile があるプロジェクトのルートディレクトリで、以下のコードを実行します。
-
-```bash
-brew install carthage
-carthage update --platform iOS
-```
-
-各依存関係のソースはプロジェクトの `Carthage/Checkouts` フォルダにダウンロードされます。ここで各ライブラリのそれぞれのフォルダにライセンスを見つけることができます。
-
-##### ライブラリライセンスの問題
-
-ライブラリがアプリの知的財産をオープンソース化する必要があるライセンスを含む場合、同様の機能を提供するために使用できるライブラリの代替があるかどうかを確認します。
-
-注釈：ハイブリッドアプリの場合、使用のビルドツールを確認してください。それらの多くは使用されているライセンスを見つけるためのライセンス列挙プラグインを持っています。
-
-### 動的解析
-
-このセクションの動的解析は二つのパートで構成されています。実際のライセンスの検証と、ソースが見つからない場合にどのライブラリが関与しているかの確認です。
-
-ライセンスの著作権が守られているかどうかを検証する必要があります。これは通常、サードパーティライブラリのライセンスにより要求されるものとして、著作権表示が記されている `about` や `EULA` セクションをアプリケーションが持つべきであることを意味しています。
-
-#### アプリケーションライブラリの一覧表示
-
-アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](https://github.com/sensepost/objection), [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF) などのツールや `otool -L` コマンドを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
-
-`list_bundles` コマンドはフレームワークに関係しないアプリケーションのすべてのバンドルを一覧表示します。出力には実行可能ファイル名、バンドル ID 、ライブラリのバージョン、ライブラリのパスが含まれます。
-
-```bash
-...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios bundles list_bundles
-Executable    Bundle                                       Version  Path
-------------  -----------------------------------------  ---------  -------------------------------------------
-DVIA-v2       com.highaltitudehacks.DVIAswiftv2.develop          2  ...-1F0C-4DB1-8C39-04ACBFFEE7C8/DVIA-v2.app
-CoreGlyphs    com.apple.CoreGlyphs                               1  ...m/Library/CoreServices/CoreGlyphs.bundle
-```
-
-`list_frameworks` コマンドはフレームワークを表すアプリケーションのすべてのバンドルを一覧表示します。
-
-```bash
-...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios bundles list_frameworks
-Executable      Bundle                                     Version    Path
---------------  -----------------------------------------  ---------  -------------------------------------------
-Bolts           org.cocoapods.Bolts                        1.9.0      ...8/DVIA-v2.app/Frameworks/Bolts.framework
-RealmSwift      org.cocoapods.RealmSwift                   4.1.1      ...A-v2.app/Frameworks/RealmSwift.framework
-                                                                      ...ystem/Library/Frameworks/IOKit.framework
-...
-```
-
-## 例外処理のテスト (MSTG-CODE-6)
-
-### 概要
+### 例外処理
 
 例外はアプリケーションが正常ではない状態やエラーのある状態になった場合によく発生します。
 例外処理のテストとは、ログ出力メカニズムや UI を介して機密情報を開示することなく、アプリケーションが例外を処理して安全な状態になることを確認することです。
@@ -408,7 +122,8 @@ RealmSwift      org.cocoapods.RealmSwift                   4.1.1      ...A-v2.ap
 
 Objective-C には二種類のエラーがあります。
 
-**NSException**
+**NSException:**
+
 `NSException` はプログラミングエラーや低レベルエラー (0 による除算、配列の境界外アクセスなど) を処理するために使用されます。
 `NSException` は `raise` によりレイズされるか、または `@throw` でスローされます。catch されない場合、この例外は unhandled 例外ハンドラを呼び出し、ステートメントをログ出力します (ログ出力はプログラムを停止します) 。`@try`-`@catch` ブロックを使用している場合、`@catch` はその例外から回復できます。
 
@@ -427,13 +142,14 @@ Objective-C には二種類のエラーがあります。
 
 `NSException` の使用にはメモリ管理の落とし穴があることに気をつけます。[finally ブロック](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/HandlingExceptions.html "Handling Exceptions") 内で try ブロックでの [割り当てをクリーンアップする](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Exceptions/Tasks/RaisingExceptions.html#//apple_ref/doc/uid/20000058-BBCCFIBF "Raising exceptions") 必要があります。`@catch` ブロックで `NSError` をインスタンス化することにより `NSException` オブジェクトを `NSError` に変換できることに注意します。
 
-**NSError**
+**NSError:**
+
 `NSError` は他のすべてのタイプの [エラー](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/ErrorHandling/ErrorHandling.html "Dealing with Errors") に使用されます。Cocoa フレームワークの一部の API では何らかの問題が発生した場合に失敗時コールバックのオブジェクトしてエラーを提供します。それらを提供しないものは `NSError` オブジェクトへのポインタを参照渡しします。成功または失敗を示す `NSError` オブジェクトへのポインタを取るメソッドに、`BOOL` の戻り値型を提供することはよい習慣です。戻り値の型がある場合、エラーの場合に `nil` を戻すことを確認します。`NO` または `nil` が戻される場合には、エラーや失敗の理由を調べることができます。
 
 #### Swift の例外処理
 
 Swift (2～5) の例外処理はまったく異なります。try-catch ブロックは `NSException` を処理するためのものではありません。そのブロックは `Error` (Swift3) または `ErrorType` (Swift2) プロトコルに準拠するエラーを処理するために使用されます。一つのアプリケーション内で Objective-C と Swift コードを組み合わせる場合、これは困難になることがあります。したがって、両方の言語で書かれたプログラムでは `NSException` よりも `NSError` が好まれます。さらに、Objective-C ではエラー処理はオプトインですが、Swift では明示的に `throws` を処理する必要があります。エラーを throw する際の変換には、[Apple のドキュメント](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html "Adopting Cocoa Design Patterns") をご覧ください。
-エラーを throw するメソッドは `throws` キーワードを使用します。`Result` タイプは成功または失敗を表します。[Result](https://developer.apple.com/documentation/swift/result), [Swift 5 での Result の使用方法](https://www.hackingwithswift.com/articles/161/how-to-use-result-in-swift), [Swift での Result タイプの威力](https://www.swiftbysundell.com/posts/the-power-of-result-types-in-swift) を参照してください。。[Swift でエラーを処理する](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html "Error Handling in Swift") 方法は四つあります。
+エラーを throw するメソッドは `throws` キーワードを使用します。`Result` タイプは成功または失敗を表します。[Result](https://developer.apple.com/documentation/swift/result), [Swift 5 での Result の使用方法](https://www.hackingwithswift.com/articles/161/how-to-use-result-in-swift), [Swift での Result タイプの威力](https://www.swiftbysundell.com/posts/the-power-of-result-types-in-swift) を参照してください。[Swift でエラーを処理する](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html "Error Handling in Swift") 方法は四つあります。
 
 - 関数からその関数を呼び出すコードにエラーを伝えることができます。この場合、`do-catch` はありません。単に実際のエラーを throw する `throw` があるか、throw するメソッドを実行する `try` があります。`try` を含むメソッドには `throws` キーワードも必要です。
 
@@ -577,6 +293,312 @@ func request(url: URL, completion: @escaping (Result<MSTG, RequestError>) -> Voi
 }
 ```
 
+## アプリが正しく署名されていることの確認 (MSTG-CODE-1)
+
+### 静的解析
+
+アプリが [最新のコード署名形式を使用している](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format) ことを確認する必要があります。[codesign](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html "Code Signing Tasks") でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
+
+アプリケーションの IPA ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
+
+以下の `codesign` コマンドを実行して、署名情報を表示します。
+
+```bash
+$ codesign -dvvv YOURAPP.app
+Executable=/Users/Documents/YOURAPP/Payload/YOURAPP.app/YOURNAME
+Identifier=com.example.example
+Format=app bundle with Mach-O universal (armv7 arm64)
+CodeDirectory v=20200 size=154808 flags=0x0(none) hashes=4830+5 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha1=455758418a5f6a878bb8fdb709ccfca52c0b5b9e
+CandidateCDHash sha256=fd44efd7d03fb03563b90037f92b6ffff3270c46
+Hash choices=sha1,sha256
+CDHash=fd44efd7d03fb03563b90037f92b6ffff3270c46
+Signature size=4678
+Authority=iPhone Distribution: Example Ltd
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=4 Aug 2017, 12:42:52
+Info.plist entries=66
+TeamIdentifier=8LAMR92KJ8
+Sealed Resources version=2 rules=12 files=1410
+Internal requirements count=1 size=176
+```
+
+[Apple ドキュメント](https://developer.apple.com/business/distribute/ "Apple Business") で説明されているように、アプリを配布するにはいくつかの方法があります。App Store を使用する方法や、カスタムディストリビューションや組織内ディストリビューション向けに Apple Business Manager を使用する方法があります。組織内ディストリビューションスキームの場合、ディストリビューション用にアプリに署名する際にアドホック証明書が使用されていないことを確認します。
+
+## アプリがデバッグ可能かどうかのテスト (MSTG-CODE-2)
+
+### 静的解析
+
+アプリのエンタイトルメントを調べて `get-task-allow` キーの値を確認します。 `true` に設定されていれば、そのアプリはデバッグ可能です。
+
+codesign を使用する場合:
+
+```bash
+$ codesign -d --entitlements - iGoat-Swift.app
+
+Executable=/Users/owasp/iGoat-Swift/Payload/iGoat-Swift.app/iGoat-Swift
+[Dict]
+    [Key] application-identifier
+    [Value]
+        [String] TNAJ496RHB.OWASP.iGoat-Swift
+    [Key] com.apple.developer.team-identifier
+    [Value]
+        [String] TNAJ496RHB
+    [Key] get-task-allow
+    [Value]
+        [Bool] true
+    [Key] keychain-access-groups
+    [Value]
+        [Array]
+            [String] TNAJ496RHB.OWASP.iGoat-Swift
+````
+
+ldid を使用する場合:
+
+```xml
+$ ldid -e iGoat-Swift.app/iGoat-Swift
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>application-identifier</key>
+    <string>TNAJ496RHB.OWASP.iGoat-Swift</string>
+    <key>com.apple.developer.team-identifier</key>
+    <string>TNAJ496RHB</string>
+    <key>get-task-allow</key>
+    <true/>
+    <key>keychain-access-groups</key>
+    <array>
+        <string>TNAJ496RHB.OWASP.iGoat-Swift</string>
+    </array>
+</dict>
+</plist>
+```
+
+### 動的解析
+
+Xcode を使用して、直接デバッガをアタッチできるかどうかを確認します。次に、脱獄済みデバイスで Clutch を行った後にアプリをデバッグできるかどうかを確認します。これは Cydia の BigBoss リポジトリにある debug-server を使用して行われます。
+
+注意: アプリケーションにアンチリバースエンジニアリングコントロールが装備されている場合、デバッガを検出して停止することがあります。
+
+## デバッグシンボルのテスト (MSTG-CODE-3)
+
+### 静的解析
+
+デバッグシンボルの存在を検証するには [binutils](https://www.gnu.org/s/binutils/ "Binutils") の objdump または [llvm-objdump](https://llvm.org/docs/CommandGuide/llvm-objdump.html "llvm-objdump") を使用してすべてのアプリバイナリを検査できます。
+
+以下のスニペットでは `TargetApp` (iOS メインアプリ実行可能ファイル) に対して objdump を実行して `d` (debug) フラグでマークされたデバッグシンボルを含むバイナリの典型的な出力を示しています。その他のさまざまなシンボルフラグ文字については [objdump man page](https://www.unix.com/man-page/osx/1/objdump/ "objdump man page") を確認してください。
+
+```bash
+$ objdump --syms TargetApp
+
+0000000100007dc8 l    d  *UND* -[ViewController handleSubmitButton:]
+000000010000809c l    d  *UND* -[ViewController touchesBegan:withEvent:]
+0000000100008158 l    d  *UND* -[ViewController viewDidLoad]
+...
+000000010000916c l    d  *UND* _disable_gdb
+00000001000091d8 l    d  *UND* _detect_injected_dylds
+00000001000092a4 l    d  *UND* _isDebugged
+...
+```
+
+デバッグシンボルが含まれないようにするには、 XCode プロジェクトのビルド設定で `Strip Debug Symbols During Copy` を `YES` に設定します。デバッグシンボルを削除するとバイナリサイズが小さくなるだけでなく、リバースエンジニアリングの難易度が上がります。
+
+### 動的解析
+
+動的解析はデバッグシンボルの検索には適用できません。
+
+## デバッグコードと詳細エラーログのテスト (MSTG-CODE-4)
+
+### 静的解析
+
+ログ出力文について以下の静的解析アプローチをとることができます。
+
+1. Xcode にアプリケーションのコードをインポートします。
+2. 次の出力関数についてコードを検索します: `NSLog`, `println`, `print`, `dump`, `debugPrint`.
+3. いずれか一つを見つけたら、ログ出力されるステートメントのより良いマークアップのために開発者がログ出力関数を囲うラップ関数を使用しているかどうかを判断します。そうであれば、その関数を検索に追加します。
+4. 手順 2 と 3 のすべてのものについて、マクロやデバッグ状態に関連するガードがリリースビルドでログ出力なしにするように設定されているかどうかを判断します。Objective-C がプリプロセッサマクロを使用する方法の変更点に注意します。
+
+```objectivec
+#ifdef DEBUG
+    // Debug-only code
+#endif
+```
+
+Swift ではこの動作を有効にする手続きが変更されています。スキームで環境変数を設定するか、ターゲットのビルド設定でカスタムフラグとして設定する必要があります。Xcode 8 および Swift3 ではサポートされていないため、(アプリが Swift 2.1 のリリース構成でビルドされているかどうかを判断できる) 次の関数は推奨されていないことに注意します。
+
+- `_isDebugAssertConfiguration`
+- `_isReleaseAssertConfiguration`
+- `_isFastAssertConfiguration`.
+
+アプリケーションの設定に応じて、より多くのログ出力関数が存在する可能性があります。例えば、[CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack "CocoaLumberjack") を使用する場合、静的解析は多少異なります。
+
+(ビルトインの) 「デバッグ管理」コードについて、ストーリーボードを調査して、アプリケーションがサポートすべき機能とは異なる機能を提供するフローやビューコントローラがあるかどうかを確認します。この機能には、デバッグビューからエラーメッセージ出力まで、カスタムスタブレスポンス構成からアプリケーション上のファイルシステムやリモートサーバーへのログ出力まで、いろいろあります。
+
+一人の開発者として、アプリケーションのデバッグバージョンにデバッグステートメントを組み込むことは、デバッグステートメントがアプリケーションのリリースバージョンに存在しないことを確認していれば問題ありません。
+
+Objective-C では、開発者はプリプロセッサマクロを使用してデバッグコードを除外できます。
+
+```objectivec
+#ifdef DEBUG
+    // Debug-only code
+#endif
+```
+
+Swift 2 では (Xcode 7 を使用して) 、すべてのターゲットにカスタムコンパイラフラグを設定する必要があります。コンパイラフラグは "-D" で始まる必要があります。したがって、デバッグフラグ `MSTG-DEBUG` を設定されている場合、以下のアノテーションが使用できます。
+
+```default
+#if MSTG-DEBUG
+    // Debug-only code
+#endif
+```
+
+Swift 3 では (Xcode 8 を使用して) 、Build settings/Swift compiler - Custom flags の Active Compilation Conditions を設定できます。プリプロセッサを使用する代わりに、Swift3 は定義済みの条件に基づく [条件付きコンパイルブロック](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34 "Swift conditional compilation blocks") を使用します。
+
+```default
+#if DEBUG_LOGGING
+    // Debug-only code
+#endif
+```
+
+### 動的解析
+
+動的解析はシミュレータとデバイスの両方で実行すべきです。開発者はデバッグコードを実行するために (リリース/デバッグモードベースの関数の代わりに) ターゲットベースの関数を使用することが時折あるためです。
+
+1. シミュレータ上でアプリケーションを実行して、アプリの実行中にコンソールで出力を確認します。
+2. デバイスを Mac に接続して、Xcode 経由でデバイス上のアプリケーションを実行し、アプリの実行中にコンソールで出力を確認します。
+
+他の「マネージャベース」のデバッグコードでは、シミュレータとデバイスの両方でアプリケーションをクリックして、アプリのプロファイルをプリセットできる機能、実サーバーを選択する機能、API からのレスポンスを選択する機能があるかどうかを確認します。
+
+## サードパーティライブラリの脆弱性のチェック (MSTG-CODE-5)
+
+### 静的解析
+
+#### サードパーティライブラリの脆弱性の検出
+
+アプリにより使用されるライブラリに脆弱性がないようにするためには、CocoaPods や Carthage によりインストールされた依存関係を確認することがベストです。
+
+##### Swift Package Manager
+
+サードパーティ依存関係の管理に [Swift Package Manager](https://swift.org/package-manager "Swift Package Manager on Swift.org") を使用する場合、以下の手順を実行してサードパーティライブラリを解析し、脆弱性がないか確認できます。
+
+最初に、 Package.swift ファイルが置かれているプロジェクトのルートで、以下のように入力します。
+
+```bash
+swift build
+```
+
+次に、 Package.resolved ファイルで実際に使用されているバージョンを確認し、特定のライブラリに既知の脆弱性がないか検査します。
+
+[OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [Swift Package Manager Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/swift.html "dependency-check - SWIFT Package Manager Analyzer") を利用して、すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの Package.swift ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
+
+```bash
+dependency-check  --enableExperimental --out . --scan Package.swift
+```
+
+##### CocoaPods
+
+サードパーティ依存関係の管理に [CocoaPods](https://cocoapods.org "CocoaPods.org") を使用する場合、以下の手順を実行してサードパーティライブラリを解析し、脆弱性がないか確認できます。
+
+最初に、 Podfile があるプロジェクトのルートで、以下のコマンドを実行します。
+
+```bash
+sudo gem install cocoapods
+pod install
+```
+
+次に、依存関係ツリーが構築されたので、以下のコマンドを実行して依存関係とそのバージョンの概要を作成します。
+
+```bash
+sudo gem install cocoapods-dependencies
+pod dependencies
+```
+
+上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
+
+> 注釈:
+>
+> 1. 開発者が .podspec ファイルを使用して自身のサポートライブラリに関してすべての依存関係をパックする場合、この .podspec ファイルを実験的な CocoaPods podspec checker で確認できます。
+> 2. プロジェクトで CocoaPods を Objective-C と組み合わせて使用する場合、SourceClear を使用できます。
+> 3. HTTPS ではなく HTTP ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に中間者攻撃を許す可能性があり、攻撃者はライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に HTTPS を使用します。
+
+[OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [CocoaPods Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/cocoapods.html "dependency-check - CocoaPods Analyzer") を利用して、
+すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの \*.podspec や Podfile.lock ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
+
+```bash
+dependency-check  --enableExperimental --out . --scan Podfile.lock
+```
+
+##### Carthage
+
+サードパーティ依存関係の管理に [Carthage](https://github.com/Carthage/Carthage "Carthage on GitHub") を使用する場合、以下の手順を実行してサードパーティライブラリを解析し、脆弱性がないか確認できます。
+
+最初に、 Cartfile があるプロジェクトのルートで、以下を入力します。
+
+```bash
+brew install carthage
+carthage update --platform iOS
+```
+
+次に、 Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
+
+> 注釈、この章の執筆時点では、執筆者に知られている Carthage ベースの依存関係解析の自動サポートはありません。少なくとも、この機能は OWASP DependencyCheck ツールですでにリクエストされていますがまだ実装されていません ([GitHub issue](https://github.com/jeremylong/DependencyCheck/issues/962 "Add Carthage Analyze for Swift") を参照) 。
+
+#### 発見されたライブラリ脆弱性
+
+ライブラリに脆弱性が含まれていることが判明した場合、以下の推論を適用します。
+
+- ライブラリがアプリケーションにパッケージされている場合、それからライブラリに脆弱性がパッチされているバージョンがあるか確認します。ない場合、脆弱性が実際にアプリケーションに影響を及ぼすかどうかを確認します。それが当てはまる場合、または将来そうなる可能性がある場合、同様の機能を提供する、脆弱性のない代替手段を探します。
+- ライブラリはアプリケーションにはパッケージされていない場合、脆弱性が修正されているパッチされたバージョンがあるかどうかを確認します。これがない場合、ビルドプロセスに対する脆弱性の影響を調べます。脆弱性がビルドを邪魔したり、ビルドパイプラインのセキュリティを弱めたりする場合、脆弱性が修正される代替案を探してみます。
+
+リンクされるライブラリとしてフレームワークを手動で追加する場合。
+
+1. xcodeproj ファイルを開き、プロジェクトのプロパティを確認します。
+2. **Build Phases** タブに移動して、いずれかのライブラリの **Link Binary With Libraries** のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
+
+コピー＆ペーストされたソースの場合、(Objective-C を使用する場合) ヘッダファイルを検索し、あるいは既存のライブラリの既存のメソッド名の Swift ファイルを検索します。
+
+次に、ハイブリッドアプリケーションでは、JavaScript の依存関係を [RetireJS](https://retirejs.github.io/retire.js/ "RetireJS") で確認する必要があることに注意します。同様に Xamarin では、C# の依存関係を確認する必要があります。
+
+最後に、アプリケーションがリスクの高いアプリケーションである場合、ライブラリを手動で検査することになります。その場合、ネイティブコードには特定の要件があります。これはアプリケーション全体に対して MASVS により確立された要件に似ています。その次に、ソフトウェアエンジニアリングのすべてのベストプラクティスが適用されているかどうかを吟味することをお勧めします。
+
+### 動的解析
+
+このセクションの動的解析は二つのパートで構成されています。実際のライセンスの検証と、ソースが見つからない場合にどのライブラリが関与しているかの確認です。
+
+ライセンスの著作権が守られているかどうかを検証する必要があります。これは通常、サードパーティライブラリのライセンスにより要求されるものとして、著作権表示が記されている `about` や `EULA` セクションをアプリケーションが持つべきであることを意味しています。
+
+#### アプリケーションライブラリの一覧表示
+
+アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](https://github.com/sensepost/objection), [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF) などのツールや `otool -L` コマンドを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
+
+`list_bundles` コマンドはフレームワークに関係しないアプリケーションのすべてのバンドルを一覧表示します。出力には実行可能ファイル名、バンドル ID 、ライブラリのバージョン、ライブラリのパスが含まれます。
+
+```bash
+...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios bundles list_bundles
+Executable    Bundle                                       Version  Path
+------------  -----------------------------------------  ---------  -------------------------------------------
+DVIA-v2       com.highaltitudehacks.DVIAswiftv2.develop          2  ...-1F0C-4DB1-8C39-04ACBFFEE7C8/DVIA-v2.app
+CoreGlyphs    com.apple.CoreGlyphs                               1  ...m/Library/CoreServices/CoreGlyphs.bundle
+```
+
+`list_frameworks` コマンドはフレームワークを表すアプリケーションのすべてのバンドルを一覧表示します。
+
+```bash
+...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios bundles list_frameworks
+Executable      Bundle                                     Version    Path
+--------------  -----------------------------------------  ---------  -------------------------------------------
+Bolts           org.cocoapods.Bolts                        1.9.0      ...8/DVIA-v2.app/Frameworks/Bolts.framework
+RealmSwift      org.cocoapods.RealmSwift                   4.1.1      ...A-v2.app/Frameworks/RealmSwift.framework
+                                                                      ...ystem/Library/Frameworks/IOKit.framework
+...
+```
+
+## 例外処理のテスト (MSTG-CODE-6)
+
 ### 静的解析
 
 ソースコードをレビューして、アプリケーションがさまざまなタイプのエラー (IPC 通信、リモートサービス呼び出しなど) をどのように処理するか理解します。以下のセクションでは言語ごとにこのステージでチェックするものの例を示します。
@@ -630,8 +652,6 @@ func request(url: URL, completion: @escaping (Result<MSTG, RequestError>) -> Voi
 
 ## メモリ破損バグ (MSTG-CODE-8)
 
-iOS アプリケーションはさまざまな状況でメモリ破損バグに遭遇します。まず、一般的なメモリ破損バグのセクションで言及されているネイティブコードの問題があります。次に、Objective-C と Swift のいずれにも問題を引き起こす可能性のあるネイティブコードを実際にラップするさまざまな危険な操作があります。最後に、Swift と Objective-C の実装はいずれも使用されなくなったオブジェクトを保持するためにメモリリークが発生する可能性があります。
-
 ### 静的解析
 
 ネイティブコードの部分はありますか。もしそうなら、一般的なメモリ破損のセクションで与えられた問題を確認します。ネイティブコードはコンパイル時に見つけることは少々困難です。ソースがある場合は C ファイルでは .c ソースファイルと .h ヘッダファイルを使用し、C++ では .cpp ファイルと .h ファイルを使用します。これは Swift および Objective-C の .swift および .m ソースファイルとは少し異なります。これらのファイルはソースの一部、またはサードパーティライブラリの一部であり、フレームワークとして登録され、Carthage, Swift Package Manager, Cocoapods などのさまざまなツールを介してインポートされます。
@@ -656,57 +676,6 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 メモリ管理の面倒を見る手助けとなるさまざまなうまくまとめられた解説があります。これらは本章の参考情報リストにあります。
 
 ## フリーなセキュリティ機能が有効であることの確認 (MSTG-CODE-9)
-
-### 概要
-
-[バイナリ保護メカニズム](0x04h-Testing-Code-Quality.md#binary-protection-mechanisms) の存在を検出するために使用されるテストはアプリケーションの開発に使用された言語に大きく依存します。
-
-Xcode はデフォルトですべてのバイナリセキュリティ機能を有効にしますが、古いアプリケーションに対してこれを検証したり、コンパイラフラグの設定ミスをチェックすることが適切な場合があります。以下の機能が適用可能です。
-
-- [**PIE (Position Independent Executable)**](0x04h-Testing-Code-Quality.md#position-independent-code):
-  - PIE は実行形式バイナリ (Mach-O タイプ `MH_EXECUTE`) に適用されます。
-  - ただし、ライブラリ (Mach-O タイプ `MH_DYLIB`) には適用されません。
-- [**メモリ管理**](0x04h-Testing-Code-Quality.md#memory-management):
-  - 純粋な Objective-C、Swift、ハイブリッドバイナリのいずれも ARC (Automatic Reference Counting) を有効にすべきです。
-  - C/C++ ライブラリでは、開発者は適切な [手動メモリ管理](0x04h-Testing-Code-Quality.md#manual-memory-management) を行う責任があります。 ["メモリ破損バグ (MSTG-CODE-8)"](#memory-corruption-bugs-mstg-code-8) を参照してください。
-- [**スタックスマッシュ保護**](0x04h-Testing-Code-Quality.md#stack-smashing-protection): 純粋な Objective-C バイナリでは、これは常に有効にすべきです。Swift はメモリセーフに設計されているので、ライブラリが純粋に Swift で書かれていれば、スタックカナリアが有効にされていなくても、リスクは最小限に抑えられます。
-
-詳しくはこちら。
-
-- [OS X ABI Mach-O File Format Reference](https://github.com/aidansteele/osx-abi-macho-file-format-reference)
-- [On iOS Binary Protections](https://sensepost.com/blog/2021/on-ios-binary-protections/)
-- [Security of runtime process in iOS and iPadOS](https://support.apple.com/en-gb/guide/security/sec15bfe098e/web)
-- [Mach-O Programming Topics - Position-Independent Code](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/MachOTopics/1-Articles/dynamic_code.html)
-
-これらの保護メカニズムの存在を検出するためのテストはアプリケーションの開発に使用される言語に大きく依存します。たとえば、スタックカナリアの存在を検出するための既存の技法は純粋な Swift アプリでは機能しません。
-
-#### Xcode プロジェクト設定
-
-##### Stack Canary 保護
-
-iOS アプリケーションで Stack Canary 保護を有効にする手順。
-
-1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2. "Other C Flags" セクションで "-fstack-protector-all" オプションが選択されていることを確認します。
-3. Position Independent Executables (PIE) support が有効になっていることを確認します。
-
-##### PIE 保護
-
-iOS アプリケーションを PIE としてビルドする手順。
-
-1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2. iOS Deployment Target を iOS 4.3 以降に設定します。
-3. "Generate Position-Dependent Code" ("Apple Clang - Code Generation" セクション) がデフォルト値 ("NO") に設定されていることを確認します。
-4. "Generate Position-Dependent Executable" ("Linking" セクション) がデフォルト値 ("NO") に設定されていることを確認します。
-
-##### ARC 保護
-
-Swift アプリでは `swiftc` コンパイラによって ARC が自動的に有効になります。一方 Objective-C アプリでは以下の手順で有効になっていることを確認します。
-
-1. Xcode の "Targets" セクションでターゲットを選択し、"Build Settings" タブをクリックしてターゲットの設定を表示します。
-2. "Objective-C Automatic Reference Counting" がデフォルト値 ("YES") に設定されていることを確認します。
-
-[Technical Q&A QA1788 Building a Position Independent Executable](https://developer.apple.com/library/mac/qa/qa1788/_index.html "Technical Q&A QA1788 Building a Position Independent Executable") を参照してください。
 
 ### 静的解析
 
@@ -780,15 +749,6 @@ FraudForce            dylib    False        False  True   True      False       
 ```
 
 ## 参考情報
-
-- Codesign - <https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html>
-- Building Your App to Include Debugging Information - <https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information>
-
-### メモリ管理 - 動的解析事例
-
-- <https://developer.ibm.com/tutorials/mo-ios-memory/>
-- <https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html>
-- <https://medium.com/zendesk-engineering/ios-identifying-memory-leaks-using-the-xcode-memory-graph-debugger-e84f097b9d15>
 
 ### OWASP MASVS
 
