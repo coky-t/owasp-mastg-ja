@@ -142,6 +142,25 @@ NSAppTransportSecurity : Dictionary {
 
 ATS 例外の詳細については [Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138482) の記事 "Preventing Insecure Network Connections" のセクション "Configure Exceptions Only When Needed; Prefer Server Fixes" および [ATS に関するブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
 
+### サーバー信頼性評価
+
+ATS は Transport Layer Security (TLS) プロトコルで規定されたデフォルトのサーバー信頼性評価を補完する拡張セキュリティチェックを課します。ATS 制限を緩めているとアプリのセキュリティが低下します。アプリは ATS 例外を追加する前に、サーバーセキュリティを向上させる別の方法を優先させるべきです。
+
+[Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections) ではアプリは `URLSession` を使用してサーバー信頼性評価を自動的に処理できると説明しています。しかし、アプリはそのプロセスをカスタマイズすることもできます。たとえば、以下のことができます。
+
+- 証明書の有効期限をバイパスまたはカスタマイズする。
+- 信頼性を緩める/広げる: システムによって拒否されるようなサーバー資格情報を受け入れる。たとえば、アプリに埋め込まれた自己署名証明書を使用して開発サーバーにセキュア接続を行う。
+- 信頼性を強める: システムによって受け入れられるサーバー資格証明を拒否します (["カスタム証明書ストアおよび証明書ピンニングのテスト"](#testing-custom-certificate-stores-and-certificate-pinning-mstg-network-4) を参照) 。
+- その他
+
+<img src="Images/Chapters/0x06g/manual-server-trust-evaluation.png" width="100%" />
+
+参考情報:
+
+- [Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing_insecure_network_connections)
+- [Performing Manual Server Trust Authentication](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge/performing_manual_server_trust_authentication)
+- [Certificate, Key, and Trust Services](https://developer.apple.com/documentation/security/certificate_key_and_trust_services)
+
 ### iOS ネットワーク API
 
 iOS 12.0 以降、[Network](https://developer.apple.com/documentation/network) フレームワークと [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) クラスはネットワークおよび URL リクエストを非同期および同期でロードするメソッドを提供します。古いバージョンの iOS では [Sockets API](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/UsingSocketsandSocketStreams.html) を利用できます。
@@ -236,36 +255,23 @@ ATS にはこれを [正当化する文字列](https://developer.apple.com/docum
 
 特定のエンドポイントとの通信する際に、どの ATS 設定を使用できるかを検証できます。macOS ではコマンドラインユーティリティ `nscurl` を使用できます。指定されたエンドポイントに対してさまざまな設定の並びを実行して検証します。デフォルトの ATS セキュア接続テストに合格していれば、ATS はデフォルトのセキュア設定で使用できます。nscurl の出力に不合格がある場合には、クライアント側の ATS 設定を弱めるのではなく、サーバー側の TLS 設定を変更してサーバー側をよりセキュアにしてください。詳細については [Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections/identifying_the_source_of_blocked_connections) の記事 "Identifying the Source of Blocked Connections" を参照してください。
 
-詳細については [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#verifying-the-tls-settings-mstg-network-2) の章の "TLS 設定の検証" セクションを参照してください。
+詳細については [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#verifying-the-tls-settings) の章の "TLS 設定の検証" セクションを参照してください。
 
 ## エンドポイント同一性検証のテスト (MSTG-NETWORK-3)
 
-### 概要
-
-ATS は Transport Layer Security (TLS) プロトコルで規定されたデフォルトのサーバー信頼性評価を補完する拡張セキュリティチェックを課します。アプリのセキュリティが低下するため、アプリが ATS 制限を緩めているかどうかをテストすべきです。アプリは ATS 例外を追加する前に、サーバーセキュリティを向上させる別の方法を優先させるべきです。
-
-[Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections) ではアプリは `URLSession` を使用してサーバー信頼性評価を自動的に処理できると説明しています。しかし、アプリはそのプロセスをカスタマイズすることもできます。たとえば、以下のことができます。
-
-- 証明書の有効期限をバイパスまたはカスタマイズする。
-- 信頼性を緩める/広げる: システムによって拒否されるようなサーバー資格情報を受け入れる。たとえば、アプリに埋め込まれた自己署名証明書を使用して開発サーバーにセキュア接続を行う。
-- 信頼性を強める: システムによって受け入れられるサーバー資格証明を拒否します (["カスタム証明書ストアおよび証明書ピンニングのテスト"](#testing-custom-certificate-stores-and-certificate-pinning-mstg-network-4) を参照) 。
-- その他
-
-<img src="Images/Chapters/0x06g/manual-server-trust-evaluation.png" width="100%" />
-
-参考情報:
-
-- [Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing_insecure_network_connections)
-- [Performing Manual Server Trust Authentication](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge/performing_manual_server_trust_authentication)
-- [Certificate, Key, and Trust Services](https://developer.apple.com/documentation/security/certificate_key_and_trust_services)
-
 ### 静的解析
 
-このセクションでは静的解析チェックをいくつか紹介します。しかし、動的解析でそれらをサポートすることを強くお勧めします。ソースコードがない場合やリバースエンジニアリングが困難なアプリの場合、堅実な動的解析戦略が必ず役立ちます。その場合、アプリが低レベル API や高レベル API を使用しているかどうかはわかりませんが、依然としてさまざまな信頼性評価シナリオをテストできます (例: 「アプリは自己署名証明書を受け入れるか？」) 。
+TLS を使用して機密情報をネットワーク上で転送することはセキュリティにとって不可欠です。しかし、モバイルアプリケーションとバックエンド API 間の通信を暗号化することは簡単ではありません。開発者は開発プロセスを容易にするためにより単純だがセキュアとはいい難いソリューション (例えば、任意の証明書を受け入れるもの) を決定することがよくあり、時にはこれらの弱いソリューションが製品版に組み込まれることがあり、ユーザーを [中間者攻撃](https://cwe.mitre.org/data/definitions/295.html "CWE-295: Improper Certificate Validation") にさらす可能性があります。
 
-#### OS バージョンのチェック
+これらは対処すべき問題の一部です。
 
-アプリが iOS 9.0 より古い SDK とリンクしている場合、アプリが動作する OS のバージョンに関係なく、ATS は無効となります。
+- アプリが iOS 9.0 より古い SDK に対してリンクされているかどうかを確認します。この場合、アプリがどのバージョンの OS で実行されても ATS は無効になります。
+- 証明書が信頼するソース、すなわち信頼できる CA (認証局) からのものであることを検証する。
+- エンドポイントサーバーが正しい証明書を提示しているかどうかを判断します。
+
+ホスト名と証明書自体が正しく検証されていることを確認します。例やよくある落とし穴は [Apple 公式ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections "Preventing Insecure Network Connections") に掲載されています。
+
+動的解析で静的解析をサポートすることを強くお勧めします。ソースコードがない場合やリバースエンジニアリングが困難なアプリの場合、堅実な動的解析戦略が必ず役立ちます。その場合、アプリが低レベル API や高レベル API を使用しているかどうかはわかりませんが、依然としてさまざまな信頼性評価シナリオをテストできます (例: 「アプリは自己署名証明書を受け入れるか？」) 。
 
 ### 動的解析
 
@@ -277,12 +283,6 @@ ATS は Transport Layer Security (TLS) プロトコルで規定されたデフ�
 前のステップの手順を実行してもトラフィックがプロキシされない場合は、証明書ピンニングが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。しかし、アプリケーションをテストするには依然としてピンニングをバイパスする必要があります。この詳細については ["証明書ピンニングのバイパス"](0x06b-Basic-Security-Testing.md#bypassing-certificate-pinning) セクションを参照してください。
 
 ## カスタム証明書ストアおよび証明書ピンニングのテスト (MSTG-NETWORK-4)
-
-### 概要
-
-このテストではアイデンティティピンニング (証明書または公開鍵ピンニング) を適切に実装しているかどうかを検証します。
-
-詳細については "モバイルアプリのネットワーク通信" の章の ["同一性ピンニング (Identity Pinning)"](0x04f-Testing-Network-Communication.md#identity-pinning) のセクションを参照してください。
 
 ### 静的解析
 
@@ -306,7 +306,7 @@ Apple が推奨する最新のアプローチは `Info.plist` ファイルの  A
 
 #### サーバー証明書ピンニング
 
-["エンドポイント同一性検証のテスト > 動的解析 > サーバー証明書バリデーション"](#server-certificate-validation) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピンニングが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。すべてのドメインで同じことが起こるでしょうか？
+["エンドポイント同一性検証のテスト"](#testing-endpoint-identity-verification-mstg-network-3) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピンニングが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。すべてのドメインで同じことが起こるでしょうか？
 
 簡単なスモークテストとしては、["証明書ピンニングのバイパス"](0x06b-Basic-Security-Testing.md#bypassing-certificate-pinning) で説明しているように [objection](0x08a-Testing-Tools.md#objection) を使用して証明書ピンニングをバイパスしてみることができます。 objection によってフックされているピンニング関連の API が objection の出力に表示されるはずです。
 
