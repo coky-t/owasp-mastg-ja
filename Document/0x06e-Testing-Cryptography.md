@@ -1,14 +1,12 @@
 # iOS の暗号化 API
 
+## 概要
+
 ["モバイルアプリの暗号化"](0x04g-Testing-Cryptography.md) の章では、一般的な暗号化のベストプラクティスを紹介し、暗号化が正しく使用されない場合に起こりうる典型的な問題について説明しました。この章では、iOS の暗号化 API についてさらに詳しく説明します。ソースコードでそれらの API の使用を特定する方法とその暗号設定を判断する方法を示します。コードをレビューする際には、使用されている暗号パラメータをこのガイドからリンクされている現行のベストプラクティスと比較するようにしてください。
-
-## 暗号化標準アルゴリズムの構成の検証 (MSTG-CRYPTO-2 and MSTG-CRYPTO-3)
-
-### 概要
 
 Apple は最も一般的な暗号化アルゴリズムの実装を含むライブラリを提供しています。[Apple's Cryptographic Services Guide](https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/GeneralPurposeCrypto/GeneralPurposeCrypto.html "Apple Cryptographic Services Guide") は素晴らしいリファレンスです。標準ライブラリを使用して暗号化プリミティブを初期化および使用する方法に関する汎用的なドキュメントがあり、この情報はソースコード解析に役立ちます。
 
-#### CryptoKit
+### CryptoKit
 
 Apple CryptoKit は iOS 13 でリリースされ、[FIPS 140-2 認証](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3856) の Apple のネイティブ暗号化ライブラリ corecrypto の上に構築されています。Swift フレームワークは厳密に型付けされた API インタフェースを提供し、効果的なメモリ管理を行い、比較可能 (eauatable) に適応し、ジェネリックをサポートします。CryptoKit にはハッシュ、対称鍵暗号化、公開鍵暗号化のためのセキュアなアルゴリズムが含まれています。このフレームワークでは Secure Enclave のハードウェアベースの鍵マネージャも利用できます。
 
@@ -62,7 +60,7 @@ Apple CryptoKit の詳細については、以下のリソースを参照して�
 - [WWDC 2019 session 709 | Cryptography and Your Apps](https://developer.apple.com/videos/play/wwdc19/709/ "Cryptography and Your Apps from WWDC 2019 session 709")
 - [How to calculate the SHA hash of a String or Data instance | Hacking with Swift](https://www.hackingwithswift.com/example-code/cryptokit/how-to-calculate-the-sha-hash-of-a-string-or-data-instance "How to calculate the SHA hash of a String or Data instance from Hacking with Swift")
 
-#### CommonCrypto, SecKey および Wrapper ライブラリ
+### CommonCrypto, SecKey および Wrapper ライブラリ
 
 暗号化操作で最も一般的に使用されるクラスは iOS ランタイムに同梱されている CommonCrypto です。CommonCrypto オブジェクトにより提供される機能は [ヘッダーファイルのソースコード](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h.auto.html "CommonCrypto.h") を参照することが分析に最適です。
 
@@ -84,7 +82,7 @@ Apple CryptoKit の詳細については、以下のリソースを参照して�
 - [RNCryptor](https://github.com/RNCryptor/RNCryptor "RNCryptor")
 - [Arcane](https://github.com/onmyway133/Arcane "Arcane")
 
-#### サードパーティーライブラリ
+### サードパーティーライブラリ
 
 以下のようなさまざまなサードパーティーライブラリが利用可能です。
 
@@ -97,44 +95,7 @@ Apple CryptoKit の詳細については、以下のリソースを参照して�
 - **その他**: [CocoaSecurity](https://github.com/kelp404/CocoaSecurity "CocoaSecurity"), [Objective-C-RSA](https://github.com/ideawu/Objective-C-RSA "Objective-C-RSA"), [aerogear-ios-crypto](https://github.com/aerogear/aerogear-ios-crypto "Aerogera-ios-crypto") など、他にも多くのライブラリがあります。これらの一部はもはや保守されておらず、セキュリティレビューが行われていない可能性があります。いつものように、サポートおよび保守されているライブラリを探すことをお勧めします。
 - **DIY**: まずます多くの開発者が暗号または暗号化機能の独自実装を作成しています。このプラクティスは _まったく_ 推奨されておらず、もし使用するのであれば暗号化の専門家により非常に綿密な精査を行うべきです。
 
-### 静的解析
-
-非推奨のアルゴリズムおよび暗号化設定について「モバイルアプリの暗号化」セクションで多くのことが言及されています。いうまでもなく、この章で言及されている各ライブラリについてそれらを検証すべきです。
-鍵を保持するデータ構造の削除方法とプレーンテキストデータ構造が定義されていることに注意します。キーワード `let` が使用されている場合、メモリから消去するのが難しい不変 (immutable) 構造を作成します。メモリから簡単に削除できる  (たとえば、一時的に存在する `struct` などの) 親構造の一部であることを確認します。
-
-#### CommonCryptor
-
-アプリが Apple により提供されている標準暗号化実装を使用する場合、関連するアルゴリズムのステータスを判断する最も簡単な方法は `CCCrypt` や `CCCryptorCreate` など、`CommonCryptor` からの関数呼び出しをチェックすることです。[ソースコードe](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h "CommonCryptor.h") には CommonCryptor.h のすべての関数のシグネチャが含まれています。例えば、`CCCryptorCreate` は以下のシグネチャを持ちます。
-
-```c
-CCCryptorStatus CCCryptorCreate(
-    CCOperation op,             /* kCCEncrypt, etc. */
-    CCAlgorithm alg,            /* kCCAlgorithmDES, etc. */
-    CCOptions options,          /* kCCOptionPKCS7Padding, etc. */
-    const void *key,            /* raw key material */
-    size_t keyLength,
-    const void *iv,             /* optional initialization vector */
-    CCCryptorRef *cryptorRef);  /* RETURNED */
-```
-
-それからすべての `enum` タイプを比較して、使用されているアルゴリズム、パディング、鍵マテリアルを確定します。鍵マテリアルに注意します。鍵は鍵導出関数または乱数生成関数を使用してセキュアに生成されるべきです。
-「モバイルアプリの暗号化」の章で非推奨として記載されている機能は、依然としてプログラムでサポートされていることに注意します。それらを使用すべきではありません。
-
-#### サードパーティーライブラリ
-
-すべてのサードパーティーライブラリの継続的な進化を考えると、これは静的解析の観点から各ライブラリを評価する適切な機会ではありません。まだ注意点がいくつかあります。
-
-- **利用されているライブラリを見つける**: これは以下の手法を使用して実行できます。
-  - [cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile "cartfile") をチェックします (Carthage が使用されている場合) 。
-  - [podfile](https://guides.cocoapods.org/syntax/podfile.html "podfile") をチェックします (Cocoapods が使用されている場合) 。
-  - リンクされたライブラリをチェックします。codeproj ファイルを開き、プロジェクトのプロパティをチェックします。**Build Phases** タブに移動し、いずれかのライブラリの **Link Binary With Libraries** のエントリをチェックします。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については以前のセクションを参照してください。
-  - ソースをコピー＆ペーストした場合、既知のライブラリの既知のメソッド名でヘッダファイル (Objective-C を使用している場合) およびその他の Swift ファイルを検索します。
-- **使用しているバージョンを確定する**: 使用しているライブラリのバージョンを常にチェックし、考えられる脆弱性または不具合が修正された新しいバージョンが利用可能かどうかをチェックします。ライブラリの新しいバージョンがない場合でも、暗号化機能はまだレビューされていない場合があります。そのため、妥当性確認されたライブラリを使用することを常にお勧めします。もしくはあなた自身に妥当性確認を行う能力、知識、経験があることを確認します。
-- **手製か？**: 独自の暗号を動かしたり、既存の暗号化機能を自分自身で実装したりしないことをお勧めします。
-
-## 鍵管理のテスト (MSTG-CRYPTO-1 および MSTG-CRYPTO-5)
-
-### 概要
+### 鍵管理
 
 デバイス上に鍵を保存する方法にはさまざまな手法があります。鍵を全く保存しなければ、鍵マテリアルがダンプできなくなることを確実にします。これは PKBDF-2 などのパスワード鍵導出関数を使用して実現できます。以下の例を参照してください。
 
@@ -201,6 +162,54 @@ Core Data や Realm からのシンクが `NSFileProtectionComplete` データ�
 1. 常に公開鍵で暗号化や検証を行い、常に秘密鍵 (private key) で復号化や署名をします。
 2. 鍵(ペア)を別の目的に再利用してはいけません。これによりその鍵に関する情報が漏洩する可能性があります。署名用に別の鍵ペアと暗号化用に別の鍵(ペア)が必要です。
 
+### 乱数生成
+
+Apple は [Randomization Services](https://developer.apple.com/reference/security/randomization_services "Randomization Services") API を提供しており、暗号論的にセキュアな乱数を生成します。
+
+Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値を生成します。これは `/dev/random` デバイスファイルのラッパー関数であり、0 から 255 までの暗号論的にセキュアな擬似乱数値を提供します。すべての乱数がこの API で生成されることを確認します。開発者が別のものを使用する理由はありません。
+
+## 暗号化標準アルゴリズムの構成の検証 (MSTG-CRYPTO-2 および MSTG-CRYPTO-3)
+
+### 静的解析
+
+アプリケーションで使用される各ライブラリについて、使用されるアルゴリズムや暗号化構成を検証し、それらが非推奨ではなく、正しく使用されていることを確認する必要があります。
+
+鍵を保持するデータ構造の削除方法とプレーンテキストデータ構造が定義されていることに注意します。キーワード `let` が使用されている場合、メモリから消去するのが難しい不変 (immutable) 構造を作成します。メモリから簡単に削除できる  (たとえば、一時的に存在する `struct` などの) 親構造の一部であることを確認します。
+
+"[モバイルアプリの暗号化](0x04g-Testing-Cryptography.md)" の章で説明されているベストプラクティスに従っていることを確認します。[非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズム](0x04g-Testing-Cryptography.md#identifying-insecure-and/or-deprecated-cryptographic-algorithms) および [よくある設定の問題](0x04g-Testing-Cryptography.md#common-configuration-issues) を見直しましょう。
+
+#### CommonCryptor
+
+アプリが Apple により提供されている標準暗号化実装を使用する場合、関連するアルゴリズムのステータスを判断する最も簡単な方法は `CCCrypt` や `CCCryptorCreate` など、`CommonCryptor` からの関数呼び出しをチェックすることです。[ソースコードe](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h "CommonCryptor.h") には CommonCryptor.h のすべての関数のシグネチャが含まれています。例えば、`CCCryptorCreate` は以下のシグネチャを持ちます。
+
+```c
+CCCryptorStatus CCCryptorCreate(
+    CCOperation op,             /* kCCEncrypt, etc. */
+    CCAlgorithm alg,            /* kCCAlgorithmDES, etc. */
+    CCOptions options,          /* kCCOptionPKCS7Padding, etc. */
+    const void *key,            /* raw key material */
+    size_t keyLength,
+    const void *iv,             /* optional initialization vector */
+    CCCryptorRef *cryptorRef);  /* RETURNED */
+```
+
+それからすべての `enum` タイプを比較して、使用されているアルゴリズム、パディング、鍵マテリアルを確定します。鍵マテリアルに注意します。鍵は鍵導出関数または乱数生成関数を使用してセキュアに生成されるべきです。
+「モバイルアプリの暗号化」の章で非推奨として記載されている機能は、依然としてプログラムでサポートされていることに注意します。それらを使用すべきではありません。
+
+#### サードパーティーライブラリ
+
+すべてのサードパーティーライブラリの継続的な進化を考えると、これは静的解析の観点から各ライブラリを評価する適切な機会ではありません。まだ注意点がいくつかあります。
+
+- **利用されているライブラリを見つける**: これは以下の手法を使用して実行できます。
+  - [cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile "cartfile") をチェックします (Carthage が使用されている場合) 。
+  - [podfile](https://guides.cocoapods.org/syntax/podfile.html "podfile") をチェックします (Cocoapods が使用されている場合) 。
+  - リンクされたライブラリをチェックします。codeproj ファイルを開き、プロジェクトのプロパティをチェックします。**Build Phases** タブに移動し、いずれかのライブラリの **Link Binary With Libraries** のエントリをチェックします。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については以前のセクションを参照してください。
+  - ソースをコピー＆ペーストした場合、既知のライブラリの既知のメソッド名でヘッダファイル (Objective-C を使用している場合) およびその他の Swift ファイルを検索します。
+- **使用しているバージョンを確定する**: 使用しているライブラリのバージョンを常にチェックし、考えられる脆弱性または不具合が修正された新しいバージョンが利用可能かどうかをチェックします。ライブラリの新しいバージョンがない場合でも、暗号化機能はまだレビューされていない場合があります。そのため、妥当性確認されたライブラリを使用することを常にお勧めします。もしくはあなた自身に妥当性確認を行う能力、知識、経験があることを確認します。
+- **手製か？**: 独自の暗号を動かしたり、既存の暗号化機能を自分自身で実装したりしないことをお勧めします。
+
+## 鍵管理のテスト (MSTG-CRYPTO-1 および MSTG-CRYPTO-5)
+
 ### 静的解析
 
 探すべきさまざまなキーワードがあります。鍵がどのように格納されているかを最もよく確認できるキーワードについては「暗号化標準アルゴリズムの構成の検証」セクションの概要と静的解析で言及されているライブラリをチェックします。
@@ -214,6 +223,8 @@ Core Data や Realm からのシンクが `NSFileProtectionComplete` データ�
 - 鍵が低レベル言語 (C/C++ など) の使用により隠されていないこと。
 - 鍵が安全でない場所からインポートされていないこと。
 
+[よくある暗号化設定の問題のリスト](0x04g-Testing-Cryptography.md#common-configuration-issues) も確認してください。
+
 静的解析に関する推奨事項のほとんどは「iOS のデータストレージのテスト」の章にすでに記載されています。次に、以下のページで読むことができます。
 
 - [Apple 開発者ドキュメント: 証明書と鍵](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys "Certificates and keys")
@@ -225,12 +236,6 @@ Core Data や Realm からのシンクが `NSFileProtectionComplete` データ�
 暗号化メソッドをフックし、使用されている鍵を解析します。暗号化操作が実行される際にファイルシステムへのアクセスを監視し、鍵マテリアルが書き込みまたは読み取りされる場所を評価します。
 
 ## 乱数生成のテスト (MSTG-CRYPTO-6)
-
-### 概要
-
-Apple は [Randomization Services](https://developer.apple.com/reference/security/randomization_services "Randomization Services") API を提供しており、暗号論的にセキュアな乱数を生成します。
-
-Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値を生成します。これは `/dev/random` デバイスファイルのラッパー関数であり、0 から 255 までの暗号論的にセキュアな擬似乱数値を提供します。すべての乱数がこの API で生成されることを確認します。開発者が別のものを使用する理由はありません。
 
 ### 静的解析
 
