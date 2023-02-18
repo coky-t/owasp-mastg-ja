@@ -1,10 +1,10 @@
 # Android のネットワーク通信
 
+## 概要
+
 ほとんどすべての Android アプリは一つ以上のリモートサービスのクライアントとして動作します。このネットワーク通信は一般的に公衆 Wi-Fi などの信頼できないネットワーク上で行われるため、従来のネットワークベースの攻撃が潜在的な問題になります。
 
 最近のモバイルアプリの多くはさまざまな HTTP ベースのウェブサービスを使用しています。これらのプロトコルは十分に文書化されており、サポートされているからです。
-
-## 概要
 
 ### Android Network Security Configuration
 
@@ -83,6 +83,44 @@ Android 6.0 (API レベル 23) 以下を対象とするアプリのデフォル�
 </base-config>
 ```
 
+#### 証明書ピンニング
+
+Network Security Configuration は特定のドメインに [宣言型証明書](https://developer.android.com/training/articles/security-config.html#CertificatePinning "Certificate Pinning using Network Security Configuration") をピン留めするためにも使用できます。対応する X.509 証明書の公開鍵 (`SubjectPublicKeyInfo`) のダイジェスト (ハッシュ) のセットを Network Security Configuration の `<pin-set>` で提供することによって行えます。
+
+リモートエンドポイントへの接続を確立しようとする際、システムは以下を行います。
+
+- 受信した証明書を取得して検証する。
+- 公開鍵を抽出する。
+- 抽出した公開鍵からダイジェストを計算する。
+- ダイジェストをローカルピンのセットと比較する。
+
+ピン留めされたダイジェストのうち少なくとも一つと一致すれば、証明書チェーンが有効であるとみなし、接続を続行します。
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config>
+        Use certificate pinning for OWASP website access including sub domains
+        <domain includeSubdomains="true">owasp.org</domain>
+        <pin-set expiration="2018/8/10">
+            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
+            the Intermediate CA of the OWASP website server certificate -->
+            <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
+            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
+            the Root CA of the OWASP website server certificate -->
+            <pin digest="SHA-256">Vjs8r4z+80wjNcr1YKepWQboSIRi63WsWXhIMN+eWys=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
+```
+
+### セキュリティプロバイダ
+
+Android は [セキュリティプロバイダ](https://developer.android.com/training/articles/security-gms-provider.html "Update your security provider to protect against SSL exploits") に依存して SSL/TLS ベースの接続を提供しています。この種のセキュリティプロバイダの問題 (一例では [OpenSSL](https://www.openssl.org/news/vulnerabilities.html "OpenSSL Vulnerabilities")) は、デバイスに付随するもので、多くの場合バグや脆弱性があります。
+
+既知の脆弱性を回避するために、開発者はアプリケーションが適切なセキュリティプロバイダをインストールすることを確認する必要があります。
+2016年7月11日以降、Google は脆弱なバージョンの OpenSSL を使用する [Play ストアのアプリケーション提出を拒否しています](https://support.google.com/faqs/answer/6376725?hl=en "How to address OpenSSL vulnerabilities in your apps") (新規アプリケーションおよび更新の両方) 。
+
 ## ネットワーク上のデータ暗号化のテスト (MSTG-NETWORK-1)
 
 ### 静的解析
@@ -124,9 +162,11 @@ Android 6.0 (API レベル 23) 以下を対象とするアプリのデフォル�
 
 ## TLS 設定のテスト (MSTG-NETWORK-2)
 
-詳しくは "モバイルアプリのネットワーク通信" の章の ["TLS 設定の検証"](0x04f-Testing-Network-Communication.md#verifying-the-tls-settings-mstg-network-2) セクションを参照してください。
+詳しくは "モバイルアプリのネットワーク通信" の章の ["TLS 設定の検証"](0x04f-Testing-Network-Communication.md#verifying-the-tls-settings) セクションを参照してください。
 
 ## エンドポイント同一性検証のテスト (MSTG-NETWORK-3)
+
+### 静的解析
 
 ネットワーク上で機密情報を転送するために TLS を使用することはセキュリティにとって不可欠です。しかし、モバイルアプリケーションとバックエンド API との間の通信を暗号化することは簡単ではありません。開発者は開発プロセスを容易にするために、よりシンプルではあるもののセキュアではない (任意の証明書を受け入れるなどの) ソリューションを選ぶことが多く、時にはこれらの脆弱なソリューションが [製品バージョンとなり](https://saschafahl.de/static/paper/androidssl2012.pdf "Hunting Down Broken SSL in Android Apps") 、潜在的にユーザーを [中間者攻撃](https://cwe.mitre.org/data/definitions/295.html "CWE-295: Improper Certificate Validation") に晒す可能性があります。
 
@@ -138,8 +178,6 @@ Android 6.0 (API レベル 23) 以下を対象とするアプリのデフォル�
 ホスト名と証明書自体が正しく検証されていることを確認します。事例と一般的な落とし穴が [Android の公式ドキュメント](https://developer.android.com/training/articles/security-ssl.html "Android Documentation - SSL") にあります。`TrustManager` および `HostnameVerifier` の使用例のコードを探します。下記のセクションには、あなたが探しているようなセキュアではない事例があります。
 
 > Android 8.0 (API level 26) 以降、SSLv3 はサポートされなくなり、HttpsURLConnection はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しないことに注意します。
-
-### 静的解析
 
 #### ターゲット SDK バージョンの検証
 
@@ -288,46 +326,11 @@ Android 7.0 (API レベル 24) 以降をターゲットとするアプリをテ�
 
 ## カスタム証明書ストアおよび証明書ピンニングのテスト (MSTG-NETWORK-4)
 
-### 概要
-
-このテストではアイデンティティピンニング (証明書または公開鍵ピンニング) を適切に実装しているかどうかを検証します。
-
-詳細については "モバイルアプリのネットワーク通信" の章の ["同一性ピンニング (Identity Pinning)"](0x04f-Testing-Network-Communication.md#identity-pinning) のセクションを参照してください。
-
 ### 静的解析
 
-#### Network Security Configuration での証明書ピンニング
+#### 証明書ピンニング
 
-[Network Security Configuration](#android-network-security-configuration) は特定のドメインに [宣言型証明書](https://developer.android.com/training/articles/security-config.html#CertificatePinning "Certificate Pinning using Network Security Configuration") をピン留めするためにも使用できます。対応する X.509 証明書の公開鍵 (`SubjectPublicKeyInfo`) のダイジェスト (ハッシュ) のセットを Network Security Configuration の `<pin-set>` で提供することによって行えます。
-
-リモートエンドポイントへの接続を確立しようとする際、システムは以下を行います。
-
-- 受信した証明書を取得して検証する。
-- 公開鍵を抽出する。
-- 抽出した公開鍵からダイジェストを計算する。
-- ダイジェストをローカルピンのセットと比較する。
-
-ピン留めされたダイジェストのうち少なくとも一つと一致すれば、証明書チェーンが有効であるとみなし、接続を続行します。
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config>
-        Use certificate pinning for OWASP website access including sub domains
-        <domain includeSubdomains="true">owasp.org</domain>
-        <pin-set expiration="2018/8/10">
-            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
-            the Intermediate CA of the OWASP website server certificate -->
-            <pin digest="SHA-256">YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=</pin>
-            <!-- Hash of the public key (SubjectPublicKeyInfo of the X.509 certificate) of
-            the Root CA of the OWASP website server certificate -->
-            <pin digest="SHA-256">Vjs8r4z+80wjNcr1YKepWQboSIRi63WsWXhIMN+eWys=</pin>
-        </pin-set>
-    </domain-config>
-</network-security-config>
-```
-
-`<pin-set>` 要素に `expiration` の日付がないか調べます。有効期限が切れると、影響を受けるドメインでは証明書ピンニングが無効になります。
+Network Security Configuration を調べて `<pin-set>` 要素を探します。 `expiration` の日付がないか調べます。有効期限が切れると、影響を受けるドメインでは証明書ピンニングが無効になります。
 
 > **テストのヒント**: 証明書ピンニングバリデーションチェックが失敗した場合、以下のイベントが [システムログ](0x05b-Basic-Security_Testing.md#monitoring-system-logs) にログ記録されるはずです。
 
@@ -404,9 +407,9 @@ myWebView.setWebViewClient(new WebViewClient(){
 
 #### Xamarin アプリケーション
 
-Xamarin で開発されたアプリケーションは一般的に ServicePointManager を使用してピンニングを実装します。
+Xamarin で開発されたアプリケーションは一般的に `ServicePointManager` を使用してピンニングを実装します。
 
-通常、証明書をチェックする関数を作成し、ServerCertificateValidationCallback メソッドにブール値を返します。
+通常、証明書をチェックする関数を作成し、 `ServerCertificateValidationCallback` メソッドにブール値を返します。
 
 ```cs
 [Activity(Label = "XamarinPinning", MainLauncher = true)]
@@ -440,13 +443,18 @@ Xamarin で開発されたアプリケーションは一般的に ServicePointMa
 
 この例では証明書チェーンの中間 CA をピンニングしています。HTTP レスポンスの出力はシステムログにあります。
 
-前述の例のサンプル Xamarin アプリは [MSTG リポジトリ](https://github.com/OWASP/owasp-mastg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk "Xamarin app with certificate pinning") から入手できます。
+前述の例のサンプル Xamarin アプリは [MASTG リポジトリ](https://github.com/OWASP/owasp-mastg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk "Xamarin app with certificate pinning") から入手できます。
 
 APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用状況を確認します。
 
+詳しくはこちら。
+
+- Certificate and Public Key Pinning with Xamarin - <https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin>
+- ServicePointManager - <https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx>
+
 #### Cordova アプリケーション
 
-Cordova ベースのハイブリッドアプリケーションはネイティブに証明書ピンニングをサポートしていないため、プラグインを使用してこれを達成します。もっとも一般的なものは PhoneGap SSL Certificate Checker です。`check` メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
+Cordova ベースのハイブリッドアプリケーションはネイティブに証明書ピンニングをサポートしていないため、プラグインを使用してこれを達成します。もっとも一般的なものは [PhoneGap SSL Certificate Checker](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin "PhoneGap SSL Certificate Checker plugin") です。`check` メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
 
 ```javascript
   // Endpoint to verify against certiticate pinning.
@@ -495,152 +503,13 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 ## セキュリティプロバイダのテスト (MSTG-NETWORK-6)
 
-### 概要
-
-Android はセキュリティプロバイダに依存して SSL/TLS ベースの接続を提供しています。この種のセキュリティプロバイダの問題 (一例では [OpenSSL](https://www.openssl.org/news/vulnerabilities.html "OpenSSL Vulnerabilities")) は、デバイスに付随するもので、多くの場合バグや脆弱性があります。
-既知の脆弱性を回避するために、開発者はアプリケーションが適切なセキュリティプロバイダをインストールすることを確認する必要があります。
-2016年7月11日以降、Google は脆弱なバージョンの OpenSSL を使用する [Play ストアのアプリケーション提出を拒否しています](https://support.google.com/faqs/answer/6376725?hl=en "How to address OpenSSL vulnerabilities in your apps") (新規アプリケーションおよび更新の両方) 。
-
 ### 静的解析
 
-Android SDK をベースとするアプリケーションは GooglePlayServices に依存する必要があります。例えば、gradle ビルドファイルには、dependencies ブロックに `compile 'com.google.android.gms:play-services-gcm:x.x.x'` があります。`ProviderInstaller` クラスは `installIfNeeded` または `installIfNeededAsync` のどちらかで呼び出されていることを確認する必要があります。`ProviderInstaller` はできるだけ早期にアプリケーションのコンポーネントにより呼び出される必要があります。これらのメソッドによりスローされる例外は正しく捕捉および処理されるべきです。
-アプリケーションがそのセキュリティプロバイダにパッチを適用することができない場合、そのセキュアではない状態の API を通知するかユーザー操作を制限します (すべての HTTPS トラフィックがこの状況ではより危険であるとみなすべきであるため) 。
+Android SDK をベースとするアプリケーションは GooglePlayServices に依存する必要があります。例えば、gradle ビルドファイルには、dependencies ブロックに `compile 'com.google.android.gms:play-services-gcm:x.x.x'` があります。`ProviderInstaller` クラスは `installIfNeeded` または `installIfNeededAsync` のどちらかで呼び出されていることを確認する必要があります。`ProviderInstaller` はできるだけ早期にアプリケーションのコンポーネントにより呼び出される必要があります。これらのメソッドによりスローされる例外は正しく捕捉および処理されるべきです。アプリケーションがそのセキュリティプロバイダにパッチを適用することができない場合、そのセキュアではない状態の API を通知するかユーザー操作を制限します (すべての HTTPS トラフィックがこの状況ではより危険であるとみなすべきであるため) 。
 
-SSL エクスプロイトを防ぐためにセキュリティプロバイダをアップデートする方法を示す二つの [Android 開発者ドキュメントの例](https://developer.android.com/training/articles/security-gms-provider.html "Updating Your Security Provider to Protect Against SSL Exploits") があります。どちらの場合でも、開発者は例外を適切に処理する必要があり、アプリケーションがパッチを適用されていないセキュリティプロバイダで動作している場合にはバックエンドに報告することが賢明かもしれません。
+ソースコードにアクセスできる場合は、セキュリティプロバイダのアップデートに関連する例外をアプリが適切に処理するかどうか、および、アプリケーションがパッチされていないセキュリティプロバイダで動作している場合にバックエンドに報告されるかどうかを確認します。Android 開発者ドキュメントでは [SSL エクスプロイトを防ぐためにセキュリティプロバイダをアップデートする方法](https://developer.android.com/training/articles/security-gms-provider.html "Updating Your Security Provider to Protect Against SSL Exploits") を示すさまざまな例を提供しています。
 
-同期的なパッチ適用:
-
-```java
-//this is a sync adapter that runs in the background, so you can run the synchronous patching.
-public class SyncAdapter extends AbstractThreadedSyncAdapter {
-
-  ...
-
-  // This is called each time a sync is attempted; this is okay, since the
-  // overhead is negligible if the security provider is up-to-date.
-  @Override
-  public void onPerformSync(Account account, Bundle extras, String authority,
-      ContentProviderClient provider, SyncResult syncResult) {
-    try {
-      ProviderInstaller.installIfNeeded(getContext());
-    } catch (GooglePlayServicesRepairableException e) {
-
-      // Indicates that Google Play services is out of date, disabled, etc.
-
-      // Prompt the user to install/update/enable Google Play services.
-      GooglePlayServicesUtil.showErrorNotification(
-          e.getConnectionStatusCode(), getContext());
-
-      // Notify the SyncManager that a soft error occurred.
-      syncResult.stats.numIOExceptions++;
-      return;
-
-    } catch (GooglePlayServicesNotAvailableException e) {
-      // Indicates a non-recoverable error; the ProviderInstaller is not able
-      // to install an up-to-date Provider.
-
-      // Notify the SyncManager that a hard error occurred.
-      //in this case: make sure that you inform your API of it.
-      syncResult.stats.numAuthExceptions++;
-      return;
-    }
-
-    // If this is reached, you know that the provider was already up-to-date,
-    // or was successfully updated.
-  }
-}
-```
-
-非同期的なパッチ適用:
-
-```java
-//This is the mainactivity/first activity of the application that's there long enough to make the async installing of the securityprovider work.
-public class MainActivity extends Activity
-    implements ProviderInstaller.ProviderInstallListener {
-
-  private static final int ERROR_DIALOG_REQUEST_CODE = 1;
-
-  private boolean mRetryProviderInstall;
-
-  //Update the security provider when the activity is created.
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    ProviderInstaller.installIfNeededAsync(this, this);
-  }
-
-  /**
-   * This method is only called if the provider is successfully updated
-   * (or is already up-to-date).
-   */
-  @Override
-  protected void onProviderInstalled() {
-    // Provider is up-to-date, app can make secure network calls.
-  }
-
-  /**
-   * This method is called if updating fails; the error code indicates
-   * whether the error is recoverable.
-   */
-  @Override
-  protected void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
-    if (GooglePlayServicesUtil.isUserRecoverableError(errorCode)) {
-      // Recoverable error. Show a dialog prompting the user to
-      // install/update/enable Google Play services.
-      GooglePlayServicesUtil.showErrorDialogFragment(
-          errorCode,
-          this,
-          ERROR_DIALOG_REQUEST_CODE,
-          new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-              // The user chose not to take the recovery action
-              onProviderInstallerNotAvailable();
-            }
-          });
-    } else {
-      // Google Play services is not available.
-      onProviderInstallerNotAvailable();
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode,
-      Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
-      // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
-      // before the instance state is restored throws an error. So instead,
-      // set a flag here, which will cause the fragment to delay until
-      // onPostResume.
-      mRetryProviderInstall = true;
-    }
-  }
-
-  /**
-   * On resume, check to see if we flagged that we need to reinstall the
-   * provider.
-   */
-  @Override
-  protected void onPostResume() {
-    super.onPostResult();
-    if (mRetryProviderInstall) {
-      // We can now safely retry installation.
-      ProviderInstall.installIfNeededAsync(this, this);
-    }
-    mRetryProviderInstall = false;
-  }
-
-  private void onProviderInstallerNotAvailable() {
-    // This is reached if the provider cannot be updated for some reason.
-    // App should consider all HTTP communication to be vulnerable, and take
-    // appropriate action (e.g. inform backend, block certain high-risk actions, etc.).
-  }
-}
-
-```
-
-NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新の正しくパッチ適用されたライブラリにのみバインドすることを確認します。
+最後に、NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新の正しくパッチ適用されたライブラリにのみバインドすることを確認します。
 
 ### 動的解析
 
@@ -665,17 +534,3 @@ NDK ベースのアプリケーションは SSL/TLS 機能を提供する最新�
 - MSTG-NETWORK-3: "セキュアチャネルが確立されたときに、アプリはリモートエンドポイントのX.509証明書を検証している。信頼されたCAにより署名された証明書のみが受け入れられている。"
 - MSTG-NETWORK-4: "アプリは自身の証明書ストアを使用するか、エンドポイント証明書もしくは公開鍵をピンニングしている。信頼されたCAにより署名された場合でも、別の証明書や鍵を提供するエンドポイントとの接続を確立していない。"
 - MSTG-NETWORK-6: "アプリは最新の接続ライブラリとセキュリティライブラリにのみ依存している。"
-
-### Android 開発者ドキュメント
-
-- Network Security Configuration - <https://developer.android.com/training/articles/security-config>
-- Network Security Configuration (cached alternative) - <https://webcache.googleusercontent.com/search?q=cache:hOONLxvMTwYJ:https://developer.android.com/training/articles/security-config+&cd=10&hl=nl&ct=clnk&gl=nl>
-
-### Xamarin 証明書ピンニング
-
-- Certificate and Public Key Pinning with Xamarin - <https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin>
-- ServicePointManager - <https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx>
-
-### Cordova 証明書ピンニング
-
-- PhoneGap SSL Certificate Checker plugin - <https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin>
