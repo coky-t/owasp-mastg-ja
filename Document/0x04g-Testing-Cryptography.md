@@ -20,7 +20,7 @@
 
 **鍵導出関数** (KDF) は (パスワードなどの) 秘密の値から共通鍵 (secret key) を導出し、鍵を他の形式に変換したり長さを増やしたりするために使用されます。KDF はハッシュ関数に似ていますが、他の用途もあります (例えば、マルチパーティ鍵共有プロトコルのコンポーネントとして使用されています) 。ハッシュ関数と KDF は両方ともリバースすることは困難である必要がありますが、KDF には生成する鍵にランダム性が必要であるという追加要件があります。
 
-## 非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズムの特定 (MSTG-CRYPTO-4)
+## 非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズムの特定
 
 モバイルアプリを評価する際には、重大な既知の脆弱性や現代のセキュリティ要件には不十分な暗号アルゴリズムを使用していないことを確認する必要があります。過去にセキュアであると考えられていたアルゴリズムが時間と共にセキュアではなくなる可能性があります。したがって、現在のベストプラクティスを定期的に確認し、それに応じて設定を調整することが重要です。
 
@@ -60,7 +60,7 @@
 - [NIST recommendations (2019)](https://www.keylength.com/en/4/ "NIST recommendations")
 - [BSI recommendations (2019)](https://www.keylength.com/en/8/ "BSI recommendations")
 
-## よくある設定の問題 (MSTG-CRYPTO-1, MSTG-CRYPTO-2, MSTG-CRYPTO-3)
+## よくある設定の問題
 
 ### 不十分な鍵長
 
@@ -197,23 +197,3 @@ App Store や Google Play にアプリをアップロードする場合、一般
 - MSTG-CRYPTO-2: "アプリは実績のある暗号化プリミティブの実装を使用している。"
 - MSTG-CRYPTO-3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
 - MSTG-CRYPTO-4: "アプリはセキュリティ上の目的で広く非推奨と考えられる暗号プロトコルやアルゴリズムを使用していない。"
-
-### 暗号化
-
-- [Argon2](https://github.com/p-h-c/phc-winner-argon2 "Argon2")
-- [AWS Well-Architected Framework guide](https://docs.aws.amazon.com/wellarchitected/latest/financial-services-industry-lens/use-envelope-encryption-with-customer-master-keys.html "AWS Well-Architected Framework")
-- [Breaking RSA with Mangers Attack]( https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Mangers attack")
-- [Google Cloud Key management guide](https://cloud.google.com/kms/docs/envelope-encryption?hl=en "Google Cloud Key management guide: Envelope encryption")
-- [Hybrid Public Key Encryption](https://tools.ietf.org/html/draft-irtf-cfrg-hpke-08 "Hybrid Public Key Encryption")
-- [NIST 800-38d](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf "NIST 800-38d")
-- [NIST 800-57Rev5](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final "NIST 800-57Rev5")
-- [NIST 800-63b](https://pages.nist.gov/800-63-3/sp800-63b.html "NIST 800-63b")
-- [NIST 800-132](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf "NIST 800-132")
-- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#encrypting-stored-keys "OWASP Cryptographic Storage Cheat Sheet: Encrypting Stored Keys")
-- [Password Hashing Competition(PHC)](https://password-hashing.net "PHC")
-- [PKCS #1: RSA Encryption Version 1.5](https://tools.ietf.org/html/rfc2313 "PKCS #1: RSA Encryption Version 1.5")
-- [PKCS #1: RSA Cryptography Specifications Version 2.0](https://tools.ietf.org/html/rfc2437 "PKCS #1: RSA Cryptography Specifications Version 2.0")
-- [PKCS #7: Cryptographic Message Syntax Version 1.5](https://tools.ietf.org/html/rfc2315 "PKCS #7")
-- [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack "The Padding Oracle Attack")
-- [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem")
-- [Cryptocoding Guidelines by veorq](https://github.com/veorq/cryptocoding "The Cryptocoding Guidelines by veorq")
