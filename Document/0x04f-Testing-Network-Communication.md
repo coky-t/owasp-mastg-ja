@@ -93,6 +93,113 @@ Apple は [長期的に考えること](https://developer.apple.com/news/?id=g9e
 - ["Android Security: SSL Pinning"](https://appmattus.medium.com/android-security-ssl-pinning-1db8acb6621e)
 - [OWASP Certificate Pinning Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html)
 
+## TLS 設定の検証
+
+コアとなるモバイルアプリの機能のひとつはインターネットなどの信頼できないネットワーク上でデータを送受信することです。データが転送中に正しく保護されない場合、ネットワークインフラストラクチャの任意の部分 (Wi-Fi アクセスポイントなど) にアクセスできる攻撃者は、傍受、読み取り、改変の可能性があります。これが平文のネットワークプロトコルがほとんど推奨されない理由です。
+
+大部分のアプリはバックエンドとの通信に HTTP に依存しています。HTTPS は暗号化された接続で HTTP をラップします (略語の HTTPS はもともと HTTP over Secure Socket Layer (SSL) と呼ばれていました。SSL は TLS の前身で非推奨です) 。TLS はバックエンドサービスの認証を可能にし、ネットワークデータの機密性と完全性を保証します。
+
+### 推奨される TLS 設定
+
+サーバー側で適切な TLS 設定を確保することも重要です。SSL プロトコルは非推奨であり、もはや使用すべきではありません。
+また TLS v1.0 および TLS v1.1 には [既知の脆弱性](https://portswigger.net/daily-swig/the-end-is-nigh-browser-makers-ditch-support-for-aging-tls-1-0-1-1-protocols "Browser-makers ditch support for aging TLS 1.0, 1.1 protocols") があり、2020年までにすべての主要なブラウザでその使用が非推奨になりました。
+TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベストプラクティスとみなされています。Android 10 (API level 29) 以降 TLS v1.3 はより高速でセキュアな通信のためにデフォルトで有効になります。[TLS v1.3 での主な変更点](https://developer.android.com/about/versions/10/behavior-changes-all#tls-1.3 "TLS 1.3 enabled by default") は暗号スイートのカスタマイズができなくなること、および TLS v1.3 が有効である場合にはそれらすべてが有効になることです。一方、ゼロラウンドトリップ (0-RTT) モードはサポートされません。
+
+クライアントとサーバーの両方が同じ組織により制御され、互いに通信するためだけに使用される場合、[設定を堅牢にすること](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") によりセキュリティを向上できます。
+
+モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
+
+### 暗号スイートの用語
+
+暗号スイートの構造は以下の通りです。
+
+```txt
+プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム
+```
+
+この構造は以下のとおりです。
+
+- **プロトコル** は暗号に使用されます
+- **鍵交換アルゴリズム** は TLS ハンドシェイク時の認証にサーバーおよびクライアントで使用されます
+- **ブロック暗号** はメッセージストリームを暗号化するために使用されます
+- **完全性チェックアルゴリズム** はメッセージを認証するために使用されます
+
+例: `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
+
+上記の例では暗号スイートは以下のものを使用します。
+
+- TLS をプロトコルとして
+- RSA を認証用の非対称暗号に
+- 3DES を EDE_CBC モードで対称暗号用に
+- SHA を完全性用のハッシュアルゴリズムに
+
+TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではなく、代わりに TLS ハンドシェイク時に決定されることに注意します。
+
+以下のリストでは、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
+
+**プロトコル:**
+
+- `SSLv1`
+- `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176 "RFC 6176")
+- `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101 "RFC 6101")
+- `TLSv1.0` - [RFC 2246](https://tools.ietf.org/rfc/rfc2246 "RFC 2246")
+- `TLSv1.1` - [RFC 4346](https://tools.ietf.org/html/rfc4346 "RFC 4346")
+- `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246 "RFC 5246")
+- `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446 "RFC 8446")
+
+**鍵交換アルゴリズム:**
+
+- `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
+- `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
+- `RSA` - [RFC 8017](https://tools.ietf.org/html/rfc8017 "RFC 8017")
+- `DHE` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `ECDHE` - [RFC 4492](https://tools.ietf.org/html/rfc4492 "RFC 4492")
+- `PSK` - [RFC 4279](https://tools.ietf.org/html/rfc4279 "RFC 4279")
+- `DSS` - [FIPS186-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf "FIPS186-4")
+- `DH_anon` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `DHE_RSA` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `DHE_DSS` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
+- `ECDHE_ECDSA` - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
+- `ECDHE_PSK`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")  - [RFC 5489](https://tools.ietf.org/html/rfc5489 "RFC 5489")
+- `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
+
+**ブロック暗号:**
+
+- `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772 "RFC 4772")
+- `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829 "RFC 1829")
+- `3DES`  - [RFC 2420](https://tools.ietf.org/html/rfc2420 "RFC 2420")
+- `3DES_EDE_CBC` - [RFC 2420](https://tools.ietf.org/html/rfc2420 "RFC 2420")
+- `AES_128_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268 "RFC 3268")
+- `AES_128_GCM`  - [RFC 5288](https://tools.ietf.org/html/rfc5288 "RFC 5288")
+- `AES_256_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268 "RFC 3268")
+- `AES_256_GCM` - [RFC 5288](https://tools.ietf.org/html/rfc5288 "RFC 5288")
+- `RC4_40`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
+- `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
+- `CHACHA20_POLY1305`  - [RFC 7905](https://tools.ietf.org/html/rfc7905 "RFC 7905")  - [RFC 7539](https://tools.ietf.org/html/rfc7539 "RFC 7539")
+
+**完全性チェックアルゴリズム:**
+
+- `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151 "RFC 6151")
+- `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
+- `SHA256`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
+- `SHA384`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
+
+暗号スイートの性能はそのアルゴリズムの性能に依存することに注意します。
+
+以下のリソースには TLS で使用する最新の推奨暗号スイートがあります。
+
+- IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4 "TLS Cipher Suites") にあります。
+- OWASP 推奨暗号スイートは [TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md "OWASP TLS Cipher String Cheat Sheet") にあります。
+
+一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#cipher-suites "Cipher suites") および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc "SSL Cipher Suite Values") バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
+
+サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
+
+- nscurl - 詳細については [iOS のネットワーク通信](0x06g-Testing-Network-Communication.md) を参照してください。
+- [testssl.sh](https://github.com/drwetter/testssl.sh "testssl.sh") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
+
+最後に、HTTPS 接続が終了するサーバーや終端プロキシがベストプラクティスにしたがって構成されていることを検証します。 [OWASP Transport Layer Protection cheat sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
+
 ## HTTP(S) トラフィックの傍受
 
 多くの場合、HTTP(S) トラフィックがホストコンピュータ上で実行されている _傍受プロキシ_ 経由でリダイレクトされるように、モバイルデバイス上にシステムプロキシを設定することが最も実用的です。モバイルアプリクライアントとバックエンドの間のリクエストを監視することにより、利用可能なサーバーサイド API を簡単にマップし、通信プロトコルの情報を得ることができます。さらに、サーバー側の脆弱性をテストするためにリクエストを再生および操作できます。
@@ -394,207 +501,9 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 
 > bettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
 
-## ネットワーク上のデータ暗号化の検証 (MSTG-NETWORK-1)
-
-詳細については対応する章を参照してください。
-
-- [Android ネットワーク通信](0x05g-Testing-Network-Communication.md#testing-data-encryption-on-the-network-mstg-network-1)
-- [iOS ネットワーク通信](0x06g-Testing-Network-Communication.md#testing-data-encryption-on-the-network-mstg-network-1)
-
-## TLS 設定の検証 (MSTG-NETWORK-2)
-
-コアとなるモバイルアプリの機能のひとつはインターネットなどの信頼できないネットワーク上でデータを送受信することです。データが転送中に正しく保護されない場合、ネットワークインフラストラクチャの任意の部分 (Wi-Fi アクセスポイントなど) にアクセスできる攻撃者は、傍受、読み取り、改変の可能性があります。これが平文のネットワークプロトコルがほとんど推奨されない理由です。
-
-大部分のアプリはバックエンドとの通信に HTTP に依存しています。HTTPS は暗号化された接続で HTTP をラップします (略語の HTTPS はもともと HTTP over Secure Socket Layer (SSL) と呼ばれていました。SSL は TLS の前身で非推奨です) 。TLS はバックエンドサービスの認証を可能にし、ネットワークデータの機密性と完全性を保証します。
-
-### 推奨される TLS 設定
-
-サーバー側で適切な TLS 設定を確保することも重要です。SSL プロトコルは非推奨であり、もはや使用すべきではありません。
-また TLS v1.0 および TLS v1.1 には [既知の脆弱性](https://portswigger.net/daily-swig/the-end-is-nigh-browser-makers-ditch-support-for-aging-tls-1-0-1-1-protocols "Browser-makers ditch support for aging TLS 1.0, 1.1 protocols") があり、2020年までにすべての主要なブラウザでその使用が非推奨になりました。
-TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベストプラクティスとみなされています。Android 10 (API level 29) 以降 TLS v1.3 はより高速でセキュアな通信のためにデフォルトで有効になります。[TLS v1.3 での主な変更点](https://developer.android.com/about/versions/10/behavior-changes-all#tls-1.3 "TLS 1.3 enabled by default") は暗号スイートのカスタマイズができなくなること、および TLS v1.3 が有効である場合にはそれらすべてが有効になることです。一方、ゼロラウンドトリップ (0-RTT) モードはサポートされません。
-
-クライアントとサーバーの両方が同じ組織により制御され、互いに通信するためだけに使用される場合、[設定を堅牢にすること](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") によりセキュリティを向上できます。
-
-モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
-
-### 暗号スイートの用語
-
-暗号スイートの構造は以下の通りです。
-
-```txt
-プロトコル_鍵交換アルゴリズム_WITH_ブロック暗号_完全性チェックアルゴリズム
-```
-
-この構造は以下のとおりです。
-
-- **プロトコル** は暗号に使用されます
-- **鍵交換アルゴリズム** は TLS ハンドシェイク時の認証にサーバーおよびクライアントで使用されます
-- **ブロック暗号** はメッセージストリームを暗号化するために使用されます
-- **完全性チェックアルゴリズム** はメッセージを認証するために使用されます
-
-例: `TLS_RSA_WITH_3DES_EDE_CBC_SHA`
-
-上記の例では暗号スイートは以下のものを使用します。
-
-- TLS をプロトコルとして
-- RSA を認証用の非対称暗号に
-- 3DES を EDE_CBC モードで対称暗号用に
-- SHA を完全性用のハッシュアルゴリズムに
-
-TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではなく、代わりに TLS ハンドシェイク時に決定されることに注意します。
-
-以下のリストでは、暗号スイートの各部分のさまざまなアルゴリズムについて説明します。
-
-**プロトコル:**
-
-- `SSLv1`
-- `SSLv2` - [RFC 6176](https://tools.ietf.org/html/rfc6176 "RFC 6176")
-- `SSLv3` - [RFC 6101](https://tools.ietf.org/html/rfc6101 "RFC 6101")
-- `TLSv1.0` - [RFC 2246](https://tools.ietf.org/rfc/rfc2246 "RFC 2246")
-- `TLSv1.1` - [RFC 4346](https://tools.ietf.org/html/rfc4346 "RFC 4346")
-- `TLSv1.2` - [RFC 5246](https://tools.ietf.org/html/rfc5246 "RFC 5246")
-- `TLSv1.3` - [RFC 8446](https://tools.ietf.org/html/rfc8446 "RFC 8446")
-
-**鍵交換アルゴリズム:**
-
-- `DSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
-- `ECDSA` - [RFC 6979](https://tools.ietf.org/html/rfc6979 "RFC 6979")
-- `RSA` - [RFC 8017](https://tools.ietf.org/html/rfc8017 "RFC 8017")
-- `DHE` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
-- `ECDHE` - [RFC 4492](https://tools.ietf.org/html/rfc4492 "RFC 4492")
-- `PSK` - [RFC 4279](https://tools.ietf.org/html/rfc4279 "RFC 4279")
-- `DSS` - [FIPS186-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf "FIPS186-4")
-- `DH_anon` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
-- `DHE_RSA` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
-- `DHE_DSS` - [RFC 2631](https://tools.ietf.org/html/rfc2631 "RFC 2631")  - [RFC 7919](https://tools.ietf.org/html/rfc7919 "RFC 7919")
-- `ECDHE_ECDSA` - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
-- `ECDHE_PSK`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")  - [RFC 5489](https://tools.ietf.org/html/rfc5489 "RFC 5489")
-- `ECDHE_RSA`  - [RFC 8422](https://tools.ietf.org/html/rfc8422 "RFC 8422")
-
-**ブロック暗号:**
-
-- `DES`  - [RFC 4772](https://tools.ietf.org/html/rfc4772 "RFC 4772")
-- `DES_CBC`  - [RFC 1829](https://tools.ietf.org/html/rfc1829 "RFC 1829")
-- `3DES`  - [RFC 2420](https://tools.ietf.org/html/rfc2420 "RFC 2420")
-- `3DES_EDE_CBC` - [RFC 2420](https://tools.ietf.org/html/rfc2420 "RFC 2420")
-- `AES_128_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268 "RFC 3268")
-- `AES_128_GCM`  - [RFC 5288](https://tools.ietf.org/html/rfc5288 "RFC 5288")
-- `AES_256_CBC` - [RFC 3268](https://tools.ietf.org/html/rfc3268 "RFC 3268")
-- `AES_256_GCM` - [RFC 5288](https://tools.ietf.org/html/rfc5288 "RFC 5288")
-- `RC4_40`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
-- `RC4_128`  - [RFC 7465](https://tools.ietf.org/html/rfc7465 "RFC 7465")
-- `CHACHA20_POLY1305`  - [RFC 7905](https://tools.ietf.org/html/rfc7905 "RFC 7905")  - [RFC 7539](https://tools.ietf.org/html/rfc7539 "RFC 7539")
-
-**完全性チェックアルゴリズム:**
-
-- `MD5`  - [RFC 6151](https://tools.ietf.org/html/rfc6151 "RFC 6151")
-- `SHA`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
-- `SHA256`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
-- `SHA384`  - [RFC 6234](https://tools.ietf.org/html/rfc6234 "RFC 6234")
-
-暗号スイートの性能はそのアルゴリズムの性能に依存することに注意します。
-
-以下のリソースには TLS で使用する最新の推奨暗号スイートがあります。
-
-- IANA 推奨暗号スイートは [TLS Cipher Suites](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4 "TLS Cipher Suites") にあります。
-- OWASP 推奨暗号スイートは [TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md "OWASP TLS Cipher String Cheat Sheet") にあります。
-
-一部の Android および iOS バージョンは推奨暗号スイートの一部をサポートしていないため、互換性を保つために [Android](https://developer.android.com/reference/javax/net/ssl/SSLSocket#cipher-suites "Cipher suites") および [iOS](https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc "SSL Cipher Suite Values") バージョンでサポートされている暗号スイートを確認し、サポートされている上位の暗号スイートを選択します。
-
-サーバーが正しい暗号スイートをサポートしているかどうかを検証したい場合、さまざまなツールを使用できます。
-
-- nscurl - 詳細については [iOS のネットワーク通信](0x06g-Testing-Network-Communication.md) を参照してください。
-- [testssl.sh](https://github.com/drwetter/testssl.sh "testssl.sh") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
-
-最後に、HTTPS 接続が終了するサーバーや終端プロキシがベストプラクティスにしたがって構成されていることを検証します。 [OWASP Transport Layer Protection cheat sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
-
-## クリティカルな操作がセキュアな通信チャネルを使用することの確認 (MSTG-NETWORK-5)
-
-### 概要
-
-銀行業務アプリなどの機密性の高いアプリケーションでは、[OWASP MASVS](https://github.com/OWASP/owasp-masvs/blob/master/Document/0x03-Using_the_MASVS.md "The Mobile Application Security Verification Standard") では「多層防御」検証レベルを導入しています。そのようなアプリケーションのクリティカルな操作 (ユーザー登録やアカウント回復など) は攻撃者にとって最も魅力的なターゲットです。 SMS や電子メールに頼ることなくユーザー操作を確認するための追加のチャネルなど、高度なセキュリティコントロールを実装する必要があります。
-
-クリティカルな操作への追加要素として SMS を使用することはお勧めできません。SIM スワップ詐欺のような攻撃は多くの場合 SMS の検証を回避するために [Instagram アカウント、暗号通貨為替](https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin "The SIM Hijackers") やもちろん [金融機関](https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/ "SIM swapping") を攻撃するために使用されてきました。SIM スワッピングは携帯電話番号を新しい SIM カードに切り替えるために多くの通信事業者により提供されている合法的なサービスです。攻撃者が通信事業者を説得するか、携帯ショップの小売店の従業員を雇って SIM スワップを行わせると、携帯電話番号は攻撃者が所有する SIM に転送されます。この結果、攻撃者は被害者に知られることなく SMS や音声通話をすべて受信できるようになります。
-
-[あなたの SIM カードを保護する](https://www.wired.com/story/sim-swap-attack-defend-phone/ "How to protect yourself against a SIM swap attack") にはさまざまな方法がありますが、このレベルのセキュリティ成熟度や意識の高さを通常のユーザーからは期待できず、通信事業者により強制されることもありません。
-
-また電子メールの使用をセキュアな通信チャネルとみなすべきではありません。電子メールの暗号化は通常ではサービスプロバイダにより提供されてはいませんし、利用可能な場合でも平均的なユーザーにより使用されてはいないため、電子メールを使用する際の機密性は保証できません。なりすまし、(スピア|ダイナマイト) フィッシング、スパムは電子メールを悪用してユーザーをだますためのさらなる方法です。したがって、SMS や電子メール以外に他のセキュアな通信チャネルを検討する必要があります。
-
-### 静的解析
-
-コードをレビューして、クリティカルな操作を参照する部分を特定します。そのような操作に追加のチャネルを使用していることを確認します。追加の検証チャネルの例には以下があります。
-
-- トークン (RSA トークン, YubiKey など)
-- プッシュ通知 (Google Prompt など)
-- 訪問またはスキャンした他のウェブサイトからのデータ (QR コードなど)
-- 物理的な文字や物理的なエントリポイントからのデータ (銀行で書類に署名した後にのみ受け取るデータなど)
-
-クリティカルな操作ではユーザーの操作を確認するために少なくとも一つの追加チャネルの使用を強制することを確認します。クリティカルな操作を実行する際にこれらのチャネルがバイパスされてはいけません。ユーザーの身元を検証するための追加要素を実装する場合には、[Google Authenticator](https://github.com/google/google-authenticator-android "Google Authenticator for Android") を介したワンタイムパスコード (OTP) も検討してください。
-
-### 動的解析
-
-テストされるアプリケーションのクリティカルな操作 (ユーザー登録、アカウント回復、金融取引など) をすべて特定します。それぞれのクリティカルな操作に少なくとも一つの追加チャネルが必要であることを確認します。関数を直接呼び出すことでこれらのチャネルの使用をバイパスしないことを確認します。
-
 ## 参考情報
 
 ### OWASP MASVS
 
 - MSTG-NETWORK-1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
 - MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
-- MSTG-NETWORK-5: "アプリは登録やアカウントリカバリーなどの重要な操作において（電子メールやSMSなどの）単方向のセキュアでない通信チャネルに依存していない。"
-
-### Android
-
-- Android supported Cipher suites - <https://developer.android.com/reference/javax/net/ssl/SSLSocket#Cipher%20suites>
-- Android documentation: Android 10 Changes - <https://developer.android.com/about/versions/10/behavior-changes-all>
-
-### iOS
-
-- iOS supported Cipher suites - <https://developer.apple.com/documentation/security/1550981-ssl_cipher_suite_values?language=objc>
-
-### IANA Transport Layer Security (TLS) Parameters
-
-- TLS Cipher Suites - <https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4>
-
-### OWASP TLS Cipher String Cheat Sheet
-
-- Recommendations for a cipher string - <https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md>
-
-### SIM Swap Fraud
-
-- The SIM Hijackers - <https://motherboard.vice.com/en_us/article/vbqax3/hackers-sim-swapping-steal-phone-numbers-instagram-bitcoin>
-- SIM swapping: how the mobile security feature can lead to a hacked bank account - <https://www.fintechnews.org/sim-swapping-how-the-mobile-security-feature-can-lead-to-a-hacked-bank-account/>
-- How to protect yourself against a SIM swap attack - <https://www.wired.com/story/sim-swap-attack-defend-phone/>
-
-### NIST
-
-- FIPS PUB 186 - Digital Signature Standard (DSS)
-
-### IETF
-
-- RFC 6176 - <https://tools.ietf.org/html/rfc6176>
-- RFC 6101 - <https://tools.ietf.org/html/rfc6101>
-- RFC 2246 - <https://tools.ietf.org/rfc/rfc2246>
-- RFC 4346 - <https://tools.ietf.org/html/rfc4346>
-- RFC 5246 - <https://tools.ietf.org/html/rfc5246>
-- RFC 8446 - <https://tools.ietf.org/html/rfc8446>
-- RFC 6979 - <https://tools.ietf.org/html/rfc6979>
-- RFC 8017 - <https://tools.ietf.org/html/rfc8017>
-- RFC 2631 - <https://tools.ietf.org/html/rfc2631>
-- RFC 7919 - <https://tools.ietf.org/html/rfc7919>
-- RFC 4492 - <https://tools.ietf.org/html/rfc4492>
-- RFC 4279 - <https://tools.ietf.org/html/rfc4279>
-- RFC 2631 - <https://tools.ietf.org/html/rfc2631>
-- RFC 8422 - <https://tools.ietf.org/html/rfc8422>
-- RFC 5489 - <https://tools.ietf.org/html/rfc5489>
-- RFC 4772 - <https://tools.ietf.org/html/rfc4772>
-- RFC 1829 - <https://tools.ietf.org/html/rfc1829>
-- RFC 2420 - <https://tools.ietf.org/html/rfc2420>
-- RFC 3268 - <https://tools.ietf.org/html/rfc3268>
-- RFC 5288 - <https://tools.ietf.org/html/rfc5288>
-- RFC 7465 - <https://tools.ietf.org/html/rfc7465>
-- RFC 7905 - <https://tools.ietf.org/html/rfc7905>
-- RFC 7539 - <https://tools.ietf.org/html/rfc7539>
-- RFC 6151 - <https://tools.ietf.org/html/rfc6151>
-- RFC 6234 - <https://tools.ietf.org/html/rfc6234>
-- RFC 8447 - <https://tools.ietf.org/html/rfc8447>
