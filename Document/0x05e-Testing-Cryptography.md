@@ -1,5 +1,7 @@
 # Android の暗号化 API
 
+## 概要
+
 ["モバイルアプリの暗号化"](0x04g-Testing-Cryptography.md) の章では、一般的な暗号のベストプラクティスを紹介し、暗号が間違って使用される場合に起こりうる典型的な問題について説明しました。この章では、Android の暗号化 API について詳しく説明します。ソースコード内でのこれらの API の使用を特定する方法とその暗号設定を判断する方法を示します。コードをレビューする際には、使用されている暗号パラメータをこのガイドからリンクされている現行のベストプラクティスと比較するようにしてください。
 
 Android 内の暗号化システムの主要コンポーネントを特定できます。
@@ -43,7 +45,7 @@ Apps that target modern API levels, went through the following changes:
   - `Crypto` プロバイダは現在削除されています。これをコールすると `NoSuchProviderException` が返されます。
 - Android 10 (API レベル 29) について [開発者ドキュメント](https://developer.android.com/about/versions/10/behavior-changes-all#security "Security Changes in Android 10") にすべてのネットワークセキュリティの変更がリストされています。
 
-## 改善方法
+### 一般的な改善方法
 
 アプリ審査の際には以下の推奨事項リストを考慮する必要があります。
 
@@ -252,14 +254,6 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 ## 対称暗号のテスト (MSTG-CRYPTO-1)
 
-### 概要
-
-このテストケースは唯一の暗号化手法としてハードコードされた対称暗号に焦点を当てています。以下のチェックを行う必要があります。
-
-- 対称暗号のすべてのインスタンスを特定します
-- 特定された各インスタンスについて、ハードコードされた対称鍵があるかどうかを検証します
-- ハードコードされた対称暗号が唯一の暗号化手法として使用されていないかどうかを検証します
-
 ### 静的解析
 
 対称鍵暗号のすべてのインスタンスを特定し、対称鍵をロードまたは提供するメカニズムを探します。以下を探します。
@@ -267,6 +261,8 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 - 対称アルゴリズム (`DES`, `AES`, など)
 - 鍵生成器の仕様 (`KeyGenParameterSpec`, `KeyPairGeneratorSpec`, `KeyPairGenerator`, `KeyGenerator`, `KeyProperties`, など)
 - `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` をインポートしているクラス
+
+[よくある暗号化設定の問題のリスト](0x04g-Testing-Cryptography.md#common-configuration-issues) も確認してください。
 
 特定された各インスタンスについて、対称鍵が使用されているかどうかを検証します。
 
@@ -294,14 +290,6 @@ grep -r "SecretKeySpec"
 
 ## 暗号標準アルゴリズムのテスト (MSTG-CRYPTO-2, MSTG-CRYPTO-3 および MSTG-CRYPTO-4)
 
-### 概要
-
-これらのテストケースでは暗号プリミティブの実装と使用に焦点を当てています。以下のチェックを実行する必要があります。
-
-- 暗号プリミティブのすべてのインスタンスとそれらの実装 (ライブラリまたはカスタム実装) を特定します
-- 暗号プリミティブがどのように使用されているかおよびどのように構成されているかを検証します
-- 使用されている暗号プロトコルおよびアルゴリズムがセキュリティ上の目的で非推奨ではないかを検証します
-
 ### 静的解析
 
 コード内の暗号プリミティブのすべてのインスタンスを特定します。すべてのカスタム暗号実装を特定します。以下を探します。
@@ -321,15 +309,6 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 暗号化メソッドで [メソッドトレース](0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08a-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
 
 ## 鍵の目的のテスト (MSTG-CRYPTO-5)
-
-### 概要
-
-このテストケースは目的の検証と同じ暗号鍵の再利用に焦点を当てています。以下のチェックを実行する必要があります。
-
-- 暗号化が使用されているすべてのインスタンスを特定します
-- 暗号化マテリアルの目的 (使用時、転送時、保存時のデータを保護するため) を特定します
-- 暗号化のタイプを特定します
-- 目的に応じて暗号化が使用されているかどうかを検証します
 
 ### 静的解析
 
@@ -361,15 +340,6 @@ getInstance へのすべてのコールで、指定しないことによりセ�
 暗号化メソッドで [メソッドトレース](0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている鍵などの入出力値を判別できます。暗号化操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り先を評価します。たとえば、[RMS - Runtime Mobile Security](0x08a-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
 
 ## 乱数生成のテスト (MSTG-CRYPTO-6)
-
-### 概要
-
-このテストケースはアプリケーションで使用される乱数値に焦点を当てています。以下のチェックを実行する必要があります。
-
-- 乱数値が使用されているすべてのインスタンスを特定する
-- 乱数生成器が暗号的にセキュアであるとみなされないかどうかを検証する
-- 乱数生成器がどのように使用されるかを検証する
-- 生成された乱数値のランダム性を検証する
 
 ### 静的解析
 
