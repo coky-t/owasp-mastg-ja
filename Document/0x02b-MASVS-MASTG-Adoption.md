@@ -87,3 +87,9 @@ BSI は "Federal Office for Information Security" の略で、ドイツにおけ
 ## 書籍
 
 - [Hands-On Security in DevOps](https://books.google.co.uk/books?id=bO1mDwAAQBAJ&pg=PA40&lpg=PA40&dq=owasp+mobile+security+testing+guide&source=bl&ots=pHhAasVgeC&sig=ACfU3U0yodcqH0O8Sjx3ADTN2m1tbHeCsg&hl=nl&sa=X&ved=2ahUKEwio2umM8tbiAhXgVBUIHehnAEU4UBDoATAIegQICRAB#v=onepage&q=owasp%20mobile%20security%20testing%20guide&f=false "Hands-On Security in DevOps in Google books")
+
+## 業界のケーススタディ
+
+- [Case Study: NowSecure Commits to Security Standards](https://drive.google.com/file/d/1cns3Ot6MGdHwMMSx88lDds3brktMhLOM/view?usp=share_link)
+
+> あなたのケーススタディを寄稿しませんか？ [私たちとコンタクトを取りましょう！](https://mas.owasp.org/contact/)
