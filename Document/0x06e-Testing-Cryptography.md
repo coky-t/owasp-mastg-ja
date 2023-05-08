@@ -1,3 +1,8 @@
+---
+masvs_category: MASVS-CRYPTO
+platform: ios
+---
+
 # iOS の暗号化 API
 
 ## 概要
@@ -24,16 +29,16 @@ Apple CryptoKit には以下のアルゴリズムが含まれています。
 
 - Message Authentication Codes (HMAC)
 - Authenticated Encryption
-  - AES-GCM
-  - ChaCha20-Poly1305
+    - AES-GCM
+    - ChaCha20-Poly1305
 
 **公開鍵:**
 
 - Key Agreement
-  - Curve25519
-  - NIST P-256
-  - NIST P-384
-  - NIST P-512
+    - Curve25519
+    - NIST P-256
+    - NIST P-384
+    - NIST P-512
 
 例:
 
@@ -167,150 +172,3 @@ Core Data や Realm からのシンクが `NSFileProtectionComplete` データ�
 Apple は [Randomization Services](https://developer.apple.com/reference/security/randomization_services "Randomization Services") API を提供しており、暗号論的にセキュアな乱数を生成します。
 
 Randomization Services API は `SecRandomCopyBytes` 関数を使用して数値を生成します。これは `/dev/random` デバイスファイルのラッパー関数であり、0 から 255 までの暗号論的にセキュアな擬似乱数値を提供します。すべての乱数がこの API で生成されることを確認します。開発者が別のものを使用する理由はありません。
-
-## 暗号化標準アルゴリズムの構成の検証 (MSTG-CRYPTO-2 および MSTG-CRYPTO-3)
-
-### 静的解析
-
-アプリケーションで使用される各ライブラリについて、使用されるアルゴリズムや暗号化構成を検証し、それらが非推奨ではなく、正しく使用されていることを確認する必要があります。
-
-鍵を保持するデータ構造の削除方法とプレーンテキストデータ構造が定義されていることに注意します。キーワード `let` が使用されている場合、メモリから消去するのが難しい不変 (immutable) 構造を作成します。メモリから簡単に削除できる  (たとえば、一時的に存在する `struct` などの) 親構造の一部であることを確認します。
-
-"[モバイルアプリの暗号化](0x04g-Testing-Cryptography.md)" の章で説明されているベストプラクティスに従っていることを確認します。[非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズム](0x04g-Testing-Cryptography.md#identifying-insecure-and/or-deprecated-cryptographic-algorithms) および [よくある設定の問題](0x04g-Testing-Cryptography.md#common-configuration-issues) を見直しましょう。
-
-#### CommonCryptor
-
-アプリが Apple により提供されている標準暗号化実装を使用する場合、関連するアルゴリズムのステータスを判断する最も簡単な方法は `CCCrypt` や `CCCryptorCreate` など、`CommonCryptor` からの関数呼び出しをチェックすることです。[ソースコードe](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h "CommonCryptor.h") には CommonCryptor.h のすべての関数のシグネチャが含まれています。例えば、`CCCryptorCreate` は以下のシグネチャを持ちます。
-
-```c
-CCCryptorStatus CCCryptorCreate(
-    CCOperation op,             /* kCCEncrypt, etc. */
-    CCAlgorithm alg,            /* kCCAlgorithmDES, etc. */
-    CCOptions options,          /* kCCOptionPKCS7Padding, etc. */
-    const void *key,            /* raw key material */
-    size_t keyLength,
-    const void *iv,             /* optional initialization vector */
-    CCCryptorRef *cryptorRef);  /* RETURNED */
-```
-
-それからすべての `enum` タイプを比較して、使用されているアルゴリズム、パディング、鍵マテリアルを確定します。鍵マテリアルに注意します。鍵は鍵導出関数または乱数生成関数を使用してセキュアに生成されるべきです。
-「モバイルアプリの暗号化」の章で非推奨として記載されている機能は、依然としてプログラムでサポートされていることに注意します。それらを使用すべきではありません。
-
-#### サードパーティーライブラリ
-
-すべてのサードパーティーライブラリの継続的な進化を考えると、これは静的解析の観点から各ライブラリを評価する適切な機会ではありません。まだ注意点がいくつかあります。
-
-- **利用されているライブラリを見つける**: これは以下の手法を使用して実行できます。
-  - [cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile "cartfile") をチェックします (Carthage が使用されている場合) 。
-  - [podfile](https://guides.cocoapods.org/syntax/podfile.html "podfile") をチェックします (Cocoapods が使用されている場合) 。
-  - リンクされたライブラリをチェックします。codeproj ファイルを開き、プロジェクトのプロパティをチェックします。**Build Phases** タブに移動し、いずれかのライブラリの **Link Binary With Libraries** のエントリをチェックします。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については以前のセクションを参照してください。
-  - ソースをコピー＆ペーストした場合、既知のライブラリの既知のメソッド名でヘッダファイル (Objective-C を使用している場合) およびその他の Swift ファイルを検索します。
-- **使用しているバージョンを確定する**: 使用しているライブラリのバージョンを常にチェックし、考えられる脆弱性または不具合が修正された新しいバージョンが利用可能かどうかをチェックします。ライブラリの新しいバージョンがない場合でも、暗号化機能はまだレビューされていない場合があります。そのため、妥当性確認されたライブラリを使用することを常にお勧めします。もしくはあなた自身に妥当性確認を行う能力、知識、経験があることを確認します。
-- **手製か？**: 独自の暗号を動かしたり、既存の暗号化機能を自分自身で実装したりしないことをお勧めします。
-
-## 鍵管理のテスト (MSTG-CRYPTO-1 および MSTG-CRYPTO-5)
-
-### 静的解析
-
-探すべきさまざまなキーワードがあります。鍵がどのように格納されているかを最もよく確認できるキーワードについては「暗号化標準アルゴリズムの構成の検証」セクションの概要と静的解析で言及されているライブラリをチェックします。
-
-常に以下のことを確認します。
-
-- 鍵がデバイス上で同期されていないこと (リスクの高いデータを保護するために使用される場合) 。
-- 鍵が追加の保護なしで保存されていないこと。
-- 鍵がハードコードされていないこと。
-- 鍵がデバイスの固定機能から導出されたものではないこと。
-- 鍵が低レベル言語 (C/C++ など) の使用により隠されていないこと。
-- 鍵が安全でない場所からインポートされていないこと。
-
-[よくある暗号化設定の問題のリスト](0x04g-Testing-Cryptography.md#common-configuration-issues) も確認してください。
-
-静的解析に関する推奨事項のほとんどは「iOS のデータストレージのテスト」の章にすでに記載されています。次に、以下のページで読むことができます。
-
-- [Apple 開発者ドキュメント: 証明書と鍵](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys "Certificates and keys")
-- [Apple 開発者ドキュメント: 新しい鍵の生成](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/generating_new_cryptographic_keys "Generating new keys")
-- [Apple 開発者ドキュメント: 鍵生成属性](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/key_generation_attributes "Key Generation attributes")
-
-### 動的解析
-
-暗号化メソッドをフックし、使用されている鍵を解析します。暗号化操作が実行される際にファイルシステムへのアクセスを監視し、鍵マテリアルが書き込みまたは読み取りされる場所を評価します。
-
-## 乱数生成のテスト (MSTG-CRYPTO-6)
-
-### 静的解析
-
-Swift では、 [`SecRandomCopyBytes` API](https://developer.apple.com/reference/security/1399291-secrandomcopybytes "SecRandomCopyBytes (Swift)") は以下のように定義されています。
-
-```default
-func SecRandomCopyBytes(_ rnd: SecRandomRef?,
-                      _ count: Int,
-                      _ bytes: UnsafeMutablePointer<UInt8>) -> Int32
-```
-
-[Objective-C バージョン](https://developer.apple.com/reference/security/1399291-secrandomcopybytes?language=objc "SecRandomCopyBytes (Objective-C)") は以下の通りです。
-
-```objectivec
-int SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
-```
-
-以下はこの API の使用例です。
-
-```objectivec
-int result = SecRandomCopyBytes(kSecRandomDefault, 16, randomBytes);
-```
-
-注意: コード内の乱数に他のメカニズムが使用されている場合には、これらが上述の API のラッパーであることを検証するか、セキュアランダム性をレビューします。多くの場合これは非常に困難であり、上記の実装を守ることが最適であることを意味します。
-
-### 動的解析
-
-ランダム性をテストしたい場合には、多数の数値セットをキャプチャし、[Burp の sequencer プラグイン](https://portswigger.net/burp/documentation/desktop/tools/sequencer "Sequencer") を使用してランダム性の品質をチェックします。
-
-## 参考情報
-
-### OWASP MASVS
-
-- MSTG-CRYPTO-1: "アプリは暗号化の唯一の方法としてハードコードされた鍵による対称暗号化に依存していない。"
-- MSTG-CRYPTO-2: "アプリは実績のある暗号化プリミティブの実装を使用している。"
-- MSTG-CRYPTO-3: "アプリは特定のユースケースに適した暗号化プリミティブを使用している。業界のベストプラクティスに基づくパラメータで構成されている。"
-- MSTG-CRYPTO-5: "アプリは複数の目的のために同じ暗号化鍵を再利用していない。"
-- MSTG-CRYPTO-6: "すべての乱数値は十分にセキュアな乱数生成器を用いて生成されている。"
-
-### 一般的なセキュリティドキュメント
-
-- Apple Developer Documentation on Security - <https://developer.apple.com/documentation/security>
-- Apple Security Guide - <https://www.apple.com/business/site/docs/iOS_Security_Guide.pdf>
-
-### 暗号化アルゴリズムの構成
-
-- Apple's Cryptographic Services Guide - <https://developer.apple.com/library/content/documentation/Security/Conceptual/cryptoservices/GeneralPurposeCrypto/GeneralPurposeCrypto.html>
-- Apple Developer Documentation on randomization SecKey - <https://opensource.apple.com/source/Security/Security-57740.51.3/keychain/SecKey.h.auto.html>
-- Apple Documentation on Secure Enclave - <https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/storing_keys_in_the_secure_enclave?language=objc>
-- Source code of the header file - <https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h.auto.html>
-- GCM in CommonCrypto - <https://opensource.apple.com/source/CommonCrypto/CommonCrypto-60074/include/CommonCryptorSPI.h>
-- Apple Developer Documentation on SecKey - <https://opensource.apple.com/source/Security/Security-57740.51.3/keychain/SecKey.h.auto.html>
-- IDZSwiftCommonCrypto - <https://github.com/iosdevzone/IDZSwiftCommonCrypto>
-- Heimdall - <https://github.com/henrinormak/Heimdall>
-- SwiftyRSA - <https://github.com/TakeScoop/SwiftyRSA>
-- RNCryptor - <https://github.com/RNCryptor/RNCryptor>
-- Arcane - <https://github.com/onmyway133/Arcane>
-- CJOSE - <https://github.com/cisco/cjose>
-- CryptoSwift - <https://github.com/krzyzanowskim/CryptoSwift>
-- OpenSSL - <https://www.openssl.org/>
-- LibSodiums documentation - <https://download.libsodium.org/doc/installation>
-- Google on Tink - <https://security.googleblog.com/2018/08/introducing-tink-cryptographic-software.html>
-- Themis - <https://github.com/cossacklabs/themis>
-- cartfile - <https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile>
-- Podfile - <https://guides.cocoapods.org/syntax/podfile.html>
-
-### 乱数ドキュメント
-
-- Apple Developer Documentation on randomization - <https://developer.apple.com/documentation/security/randomization_services>
-- Apple Developer Documentation on secrandomcopybytes - <https://developer.apple.com/reference/security/1399291-secrandomcopybytes>
-- Burp Suite Sequencer - <https://portswigger.net/burp/documentation/desktop/tools/sequencer>
-
-### 鍵管理
-
-- Apple Developer Documentation: Certificates and keys - <https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys>
-- Apple Developer Documentation: Generating new keys - <https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/generating_new_cryptographic_keys>
-- Apple Developer Documentation: Key generation attributes -
-<https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/key_generation_attributes>
