@@ -1,3 +1,8 @@
+---
+masvs_category: MASVS-AUTH
+platform: android
+---
+
 # Android のローカル認証
 
 ## 概要
@@ -289,38 +294,3 @@ if (!mKeyguardManager.isKeyguardSecure()) {
 ### サードパーティ SDK
 
 指紋認証やその種類の生体認証はもっぱら Android SDK とその API に基づいていることを確認します。そうでない場合、代替 SDK があらゆる脆弱性に対して適切に検証されていることを確認します。その SDK は TEE/SE がバックにあり、生体認証に基づいて (暗号) 機密をアンロックすることを確認します。この機密は他のものによりアンロックされるべきではなく、有効な生体エントリによってアンロックされるべきです。そのようにして、指紋ロジックがバイパスできることがあってはいけません。
-
-## 資格情報の確認のテスト (MSTG-AUTH-1 および MSTG-STORAGE-11)
-
-### 静的解析
-
-アンロックされた鍵がアプリケーションフローの中で使用されていることを確認します。例えば、鍵はローカルストレージやリモートエンドポイントから受信したメッセージを復号化するために使用される可能性があります。アプリケーションはユーザーが鍵をアンロックしたかどうかを単に確認しているだけであれば、そのアプリケーションはローカル認証のバイパスに対して脆弱となる可能性があります。
-
-### 動的解析
-
-ユーザーが正常に認証された後、鍵の使用が認可されている期間 (秒) を妥当性確認します。これは `setUserAuthenticationRequired` が使用されている場合にのみ必要です。
-
-## 生体認証のテスト (MSTG-AUTH-8)
-
-### 静的解析
-
-バイオメトリックサポートを提供するベンダーやサードパーティーの SDK はかなりありますが、個別の危険性があることに注意します。サードパーティー SDK を使用して機密認証ロジックを処理する場合は十分に気を付けてください。
-
-### 動的解析
-
-この詳細な [Android KeyStore と生体認証に関するブログ記事](https://labs.withsecure.com/blog/how-secure-is-your-android-keystore-authentication "How Secure is your Android Keystore Authentication ?") をご覧ください。この調査には生体認証のセキュアではない実装をテストし、バイパスできるかどうかを試みることができる二つの Frida スクリプトが含まれています。
-
-- [Fingerprint bypass](https://github.com/FSecureLABS/android-keystore-audit/blob/master/frida-scripts/fingerprint-bypass.js "Fingerprint Bypass"): この Frida スクリプトは `CryptoObject` が `BiometricPrompt` クラスの `authenticate` メソッドで使用されていない場合に認証をバイパスします。認証の実装はコールされる `onAuthenticationSucceded` コールバックに依存しています。
-- [Fingerprint bypass via exception handling](https://github.com/FSecureLABS/android-keystore-audit/blob/master/frida-scripts/fingerprint-bypass-via-exception-handling.js "Fingerprint bypass via exception handling"): この Frida スクリプトは `CryptoObject` が使用されているが正しくない方法で使用されている場合に認証のバイパスを試みます。詳細な説明はブログ記事の "Crypto Object Exception Handling" セクションにあります。
-
-## 参考情報
-
-### OWASP MASVS
-
-- MSTG-AUTH-1: "アプリがユーザーにリモートサービスへのアクセスを提供する場合、ユーザー名/パスワード認証など何らかの形態の認証がリモートエンドポイントで実行されている。"
-- MSTG-AUTH-8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
-- MSTG-STORAGE-11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
-
-### アプリパーミッションリクエスト
-
-- 実行時のパーミッション - <https://developer.android.com/training/permissions/requesting>
