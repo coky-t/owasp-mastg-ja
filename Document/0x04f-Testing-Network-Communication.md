@@ -1,3 +1,8 @@
+---
+masvs_category: MASVS-NETWORK
+platform: all
+---
+
 # モバイルアプリのネットワーク通信
 
 事実上、ネットワークに接続されたすべてのモバイルアプリは Hypertext Transfer Protocol (HTTP) または HTTP over Transport Layer Security (TLS), HTTPS を使用してリモートエンドポイントとの間でデータを送受信します。その結果、ネットワークベースの攻撃 (パケットスニッフィングや中間者攻撃など) が問題になります。この章ではモバイルアプリとエンドポイント間のネットワーク通信に関する潜在的な脆弱性、テスト技法、ベストプラクティスについて説明します。
@@ -500,10 +505,3 @@ Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy
 アプリの使用を開始し、その機能を動かします。傍受プロキシに HTTP メッセージが表示されるはずです。
 
 > bettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
-
-## 参考情報
-
-### OWASP MASVS
-
-- MSTG-NETWORK-1: "データはネットワーク上でTLSを使用して暗号化されている。セキュアチャネルがアプリ全体を通して一貫して使用されている。"
-- MSTG-NETWORK-2: "TLS 設定は現在のベストプラクティスと一致している。モバイルオペレーティングシステムが推奨される標準規格をサポートしていない場合には可能な限り近い状態である。"
