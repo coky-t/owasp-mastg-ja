@@ -28,9 +28,9 @@ Dalvik バイトコードは Java バイトコードの最適化バージョン�
 
 <img src="Images/Chapters/0x05a/java_vs_dalvik.png" width="400px" />
 
-Android 5.0 (API レベル 21) 以前は、Android は Dalvik Virtual Machine (DVM) 上でバイトコードを実行し、実行時にマシンコードに変換していました。 *ジャストインタイム* (JIT) コンパイルと呼ばれる処理です。これによりランタイムはコード解釈の柔軟性を維持しながら、コンパイルされたコードの速度の恩恵を受けられます。
+Android 5.0 (API レベル 21) 以前は、Android は Dalvik Virtual Machine (DVM) 上でバイトコードを実行し、実行時にマシンコードに変換していました。 ジャストインタイム (_just-in-time_, JIT) コンパイルと呼ばれる処理です。これによりランタイムはコード解釈の柔軟性を維持しながら、コンパイルされたコードの速度の恩恵を受けられます。
 
-Android 5.0 (API レベル 21) 以降、Android は DVM の後継である Android Runtime (ART) 上でバイトコードを実行するようになりました。ART は Java とネイティブスタック情報の両方を含めることで、パフォーマンスを向上させ、アプリのネイティブクラッシュレポートのコンテキスト情報を提供します。後方互換性を維持するために同じ Dalvik バイトコードを入力に使用します。しかし、ART は Dalvik バイトコードを異なる方法で実行します。 *事前* (ahead-of-time, AOT) コンパイル、 *ジャストインタイム* (just-in-time, JIT) コンパイル、プロファイルガイドに基づくコンパイルを組み合わせたハイブリッドコンパイルを使用します。
+Android 5.0 (API レベル 21) 以降、Android は DVM の後継である Android Runtime (ART) 上でバイトコードを実行するようになりました。ART は Java とネイティブスタック情報の両方を含めることで、パフォーマンスを向上させ、アプリのネイティブクラッシュレポートのコンテキスト情報を提供します。後方互換性を維持するために同じ Dalvik バイトコードを入力に使用します。しかし、ART は Dalvik バイトコードを異なる方法で実行します。 事前 (_ahead-of-time_, AOT) コンパイル、 ジャストインタイム (_just-in-time_, JIT) コンパイル、プロファイルガイドに基づくコンパイルを組み合わせたハイブリッドコンパイルを使用します。
 
 - **AOT** は Dalvik バイトコードをネイティブコードにプリコンパイルし、生成されたコードはディスク上に .oat 拡張子 (ELF バイナリ) で保存されます。 dex2oat ツールはコンパイルの実行に使用され、Android デバイスの /system/bin/dex2oat にあります。 AOT コンパイルはアプリのインストール時に実行されます。これによりコンパイルが不要になるため、アプリケーションの起動が速くなります。しかし、これは JIT コンパイルに比べてインストール時間が長くなることも意味します。さらに、アプリケーションは常に OS の現行バージョンに対して最適化されているため、ソフトウェアのアップデートによって以前にコンパイルされたアプリケーションはすべて再コンパイルすることになり、システムアップデート時間が大幅に増加することを意味します。最後に、AOT コンパイルはユーザーが使用しない部分があってもアプリケーション全体をコンパイルします。
 - **JIT** は実行時に発生します。
@@ -120,7 +120,7 @@ Android はアクセス制御メカニズムとして使用される広範なパ
 
 詳細については [Android ドキュメント](https://developer.android.com/guide/topics/permissions/overview) を参照してください。いくつかの [考慮事項](https://developer.android.com/training/permissions/evaluating) や [ベストプラクティス](https://developer.android.com/training/permissions/usage-notes) もあります。
 
-アプリパーミッションをテストする方法については "Android のプラットフォーム API" の章の [アプリパーミッションのテスト](0x05h-Testing-Platform-Interaction.md#testing-app-permissions-mstg-platform-1) セクションを参照してください。
+アプリパーミッションをテストする方法については "Android のプラットフォーム API" の章の [アプリパーミッションのテスト](0x05h-Testing-Platform-Interaction.md#app-permissions) セクションを参照してください。
 
 ### ネットワークセキュリティ
 
@@ -177,24 +177,24 @@ API 仕様は Android の新しいリリースごとに変更されます。重�
 - Android 8.0 (API レベル 26-27) 2017年8月 (多くのセキュリティ改善点)
 - Android 9 (API レベル 28) 2018年8月 (マイクやカメラのバックグラウンド使用の制限、ロックダウンモードの導入、すべてのアプリに対するデフォルト HTTPS)
 - **Android 10 (API レベル 29)** 2019年9月 (「アプリ使用時のみ」位置情報へのアクセス、デバイス追跡防止、セキュア外部ストレージの改善)
-  - プライバシー ([概要](https://developer.android.com/about/versions/10/highlights#privacy_for_users), [詳細 1](https://developer.android.com/about/versions/10/privacy), [詳細 2](https://developer.android.com/about/versions/10/privacy/changes))
-  - セキュリティ ([概要](https://developer.android.com/about/versions/10/highlights#security), [詳細](https://developer.android.com/about/versions/10/behavior-changes-all#security))
+    - プライバシー ([概要](https://developer.android.com/about/versions/10/highlights#privacy_for_users), [詳細 1](https://developer.android.com/about/versions/10/privacy), [詳細 2](https://developer.android.com/about/versions/10/privacy/changes))
+    - セキュリティ ([概要](https://developer.android.com/about/versions/10/highlights#security), [詳細](https://developer.android.com/about/versions/10/behavior-changes-all#security))
 - **Android 11 (API レベル 30)** 2020年9月 (スコープ付きストレージの適用、パーミッション自動リセット、 [パッケージ可視性の抑制](https://developer.android.com/training/package-visibility) 、 APK 署名スキーム v4)
-  - プライバシー ([概要](https://developer.android.com/about/versions/11/privacy))
-  - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all)
-  - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all#security)
-  - [プライバシー動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#privacy)
-  - [セキュリティ動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#security)
+    - プライバシー ([概要](https://developer.android.com/about/versions/11/privacy))
+    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all)
+    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all#security)
+    - [プライバシー動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#privacy)
+    - [セキュリティ動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#security)
 - **Android 12 (API レベル 31-32)** 2021年8月 (Material You、ウェブインテントの解決、プライバシーダッシュボード)
-  - [セキュリティとプライバシー](https://developer.android.com/about/versions/12/features#security-privacy)
-  - [動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/12/behavior-changes-all#security-privacy)
-  - [動作の変更 (バージョン 12 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/12/behavior-changes-12#security-privacy)
+    - [セキュリティとプライバシー](https://developer.android.com/about/versions/12/features#security-privacy)
+    - [動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/12/behavior-changes-all#security-privacy)
+    - [動作の変更 (バージョン 12 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/12/behavior-changes-12#security-privacy)
 - [BETA] **Android 13 (API レベル 33)** 2022年 (コンテキスト登録されたレシーバーの安全なエクスポート、新しい写真ピッカー)
-  - [セキュリティとプライバシー](https://developer.android.com/about/versions/13/features#privacy-security)
-  - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#privacy)
-  - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#security)
-  - [プライバシー動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#privacy)
-  - [セキュリティ動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#security)
+    - [セキュリティとプライバシー](https://developer.android.com/about/versions/13/features#privacy-security)
+    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#privacy)
+    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#security)
+    - [プライバシー動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#privacy)
+    - [セキュリティ動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#security)
 
 ### アプリサンドボックス
 
@@ -502,11 +502,11 @@ Found 99 services:
 _インテントメッセージング_ は Binder の上に構築された非同期通信フレームワークです。このフレームワークではポイントツーポイントとパブリッシュ・サブスクライブの両方のメッセージングが可能です。 _インテント_ は別のアプリコンポーネントからアクションをリクエストするために使用できるメッセージオブジェクトです。インテントはいくつかの方法でコンポーネント間通信を手助けしますが、三つの基本的なユースケースがあります。
 
 - アクティビティの開始
-  - アクティビティはアプリ内の単一の画面を表します。 `startActivity` にインテントを渡すことによりアクティビティの新しいインスタンスを開始できます。インテントはアクティビティを記述し、必要なデータを伝えます。
+    - アクティビティはアプリ内の単一の画面を表します。 `startActivity` にインテントを渡すことによりアクティビティの新しいインスタンスを開始できます。インテントはアクティビティを記述し、必要なデータを伝えます。
 - サービスの開始
-  - サービスはユーザーインタフェースなしでバックグラウンドd操作を実行するコンポーネントです。 Android 5.0 (API レベル 21) 以降では、 JobScheduler でサービスを開始できます。
+    - サービスはユーザーインタフェースなしでバックグラウンドd操作を実行するコンポーネントです。 Android 5.0 (API レベル 21) 以降では、 JobScheduler でサービスを開始できます。
 - ブロードキャストの配信
-  - ブロードキャストはどのアプリでも受信できるメッセージです。システムはシステムの起動や充電の初期化など、システムイベントについてのブロードキャストを配信します。 `sendBroadcast` または `sendOrderedBroadcast` にインテントを渡すことにより、他のアプリにブロードキャストを配信できます。
+    - ブロードキャストはどのアプリでも受信できるメッセージです。システムはシステムの起動や充電の初期化など、システムイベントについてのブロードキャストを配信します。 `sendBroadcast` または `sendOrderedBroadcast` にインテントを渡すことにより、他のアプリにブロードキャストを配信できます。
 
 インテントには二つのタイプがあります。明示的インテントは開始されるコンポーネントに名前を付けます (完全修飾クラス名) 。以下に例を示します。
 
@@ -707,23 +707,3 @@ Android エコシステムはオープンであるため、どこから (自身�
 他のベンダーでは実際に公開する前にアプリのレビューおよび承認をする可能性がありますが、 Google では既知のマルウェアシグネチャをスキャンするだけです。これにより、公開プロセスを開始してからアプリが公に利用できるまでの時間を最小限に抑えます。
 
 アプリの公開は非常に簡単であり、主な操作は署名付き APK ファイル自体をダウンロード可能にすることです。 Google Play では、公開はアカウントの作成から始まり、専用のインタフェースを通じてアプリを配信します。詳細は [Android 公式ドキュメント](https://play.google.com/console/about/guides/releasewithconfidence/ "Review the checklists to plan your launch") でご覧いただけます。
-
-## Android アプリケーションのアタックサーフェイス
-
-Android アプリケーションのアタックサーフェイスはアプリケーションのすべてのコンポーネントで構成されます。これにはアプリのリリースやその機能をサポートするために必要なサポートマテリアルが含まれます。以下を満たさない場合には Android アプリケーションは脆弱である可能性があります。
-
-- IPC 通信や URL スキームを使用したすべての入力を妥当性確認している。以下も参照。
-  - [IPC による機密性の高い機能の開示のテスト](0x05h-Testing-Platform-Interaction.md#testing-for-sensitive-functionality-exposure-through-ipc-mstg-platform-4)
-  - [ディープリンクのテスト](0x05h-Testing-Platform-Interaction.md#testing-deep-links-mstg-platform-3)
-- 入力フィールドでのユーザーによるすべての入力を妥当性確認している。
-- WebView 内でロードされたコンテンツを妥当性確認している。以下も参照。
-  - [WebView での JavaScript 実行のテスト](0x05h-Testing-Platform-Interaction.md#testing-javascript-execution-in-webviews-mstg-platform-5)
-  - [WebView プロトコルハンドラのテスト](0x05h-Testing-Platform-Interaction.md#testing-webview-protocol-handlers-mstg-platform-6)
-  - [Java オブジェクトが WebView を介して公開されているかのテスト](0x05h-Testing-Platform-Interaction.md#determining-whether-java-objects-are-exposed-through-webviews-mstg-platform-7)
-- バックエンドサーバーとセキュアに通信している、もしくはサーバーとモバイルアプリケーション間の中間者攻撃を受けやすい。以下も参照。
-  - [ネットワーク通信のテスト](0x04f-Testing-Network-Communication.md#testing-network-communication)
-  - [Android のネットワーク通信](0x05g-Testing-Network-Communication.md)
-- すべてのローカルデータをセキュアに保存している、もしくは信頼できないデータをストレージからロードしている。以下も参照。
-  - [Android のデータストレージ](0x05d-Testing-Data-Storage.md)
-- 危殆化された環境、再パッケージ化、またはその他のローカル攻撃から自身を保護している。以下も参照。
-  - [Android のアンチリバース防御](0x05j-Testing-Resiliency-Against-Reverse-Engineering.md)
