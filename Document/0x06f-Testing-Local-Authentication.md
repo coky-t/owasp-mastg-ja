@@ -1,3 +1,8 @@
+---
+masvs_category: MASVS-AUTH
+platform: ios
+---
+
 # iOS のローカル認証
 
 ## 概要
@@ -171,56 +176,3 @@ if (status == noErr){
 ## キーチェーン内の鍵の一過性に関する注釈
 
 macOS や Android とは異なり、iOS は現時点 (iOS 12) ではキーチェーンのアイテムのアクセシビリティの一過性をサポートしていません。キーチェーンに入るときに追加のセキュリティチェックがない場合 (例えば `kSecAccessControlUserPresence` などが設定されている) 、デバイスがアンロックされると、鍵はアクセス可能となります。
-
-## ローカル認証のテスト (MSTG-AUTH-8 および MSTG-STORAGE-11)
-
-アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによって検出できます。これは [otool](0x08a-Testing-Tools.md#otool) を使うことにより行えます。
-
-```bash
-otool -L <AppName>.app/<AppName>
-```
-
-`LocalAuthentication.framework` がアプリで使用されている場合、その出力には以下の行が両方含まれます (`LocalAuthentication.framework` は内部で `Security.framework` を使用します) 。
-
-```bash
-/System/Library/Frameworks/LocalAuthentication.framework/LocalAuthentication
-/System/Library/Frameworks/Security.framework/Security
-```
-
-`Security.framework` が使用されている場合、二番目のものだけが表示されます。
-
-### 静的解析
-
-ローカル認証フレームワークはイベントベースのプロシージャであり、唯一の認証方法ではないことに注意します。このタイプの認証はユーザーインタフェースレベルで有効ですが、パッチ適用や計装で容易にバイパスされます。したがって、キーチェーンサービスメソッドを使用することをお勧めします。つまり、以下を行う必要があります。
-
-- 支払いトランザクションを実行するユーザーの再認証などの機密プロセスが、キーチェーンサービスメソッドを使用して保護されていることを検証します。
-- キーチェーンアイテムのデータがユーザーの認証によってのみロック解除できるようにするために、アクセス制御フラグがキーチェーンアイテムに設定されていることを検証します。これには以下のフラグのいずれかを使用できます。
-  - `kSecAccessControlBiometryCurrentSet` (iOS 11.3 より前では `kSecAccessControlTouchIDCurrentSet`) 。これによりユーザーがキーチェーンアイテムのデータにアクセスする前に、ユーザーが生体情報 (Face ID や Touch ID など) で認証する必要があることを確実にします。ユーザーがデバイスに指紋や顔の表現を追加すると、キーチェーンのエントリが自動的に無効になります。これによりアイテムがキーチェーンに追加されたときに登録されていたユーザーのみがキーチェーンアイテムのロックを解除できるようになります。
-  - `kSecAccessControlBiometryAny` (iOS 11.3 より前では `kSecAccessControlTouchIDAny`) 。これによりユーザーがキーチェーンアイテムのデータにアクセスする前に、ユーザーが生体情報 (Face ID や Touch ID など) で認証する必要があることを確実にします。キーチェーンは新しい指紋や顔の表現を (再) 登録しても存続します。ユーザーの指紋が変化している場合、これは非常に便利です。但し、指紋や顔の表現を何らかの方法でデバイスに登録できる攻撃者は、これらのエントリにもアクセスできることも意味します。
-  - `kSecAccessControlUserPresence` を代替として使用できます。これにより生体認証が機能しない場合に、ユーザーはパスコードを介して認証できます。Touch ID や Face ID サービスをバイパスするよりも、ショルダーサーフィンによって誰かのパスコードエントリを盗むほうがはるかに簡単であるため、`kSecAccessControlBiometryAny` よりも脆弱であると考えられます。
-- 生体情報を使用できるようにするために、`SecAccessControlCreateWithFlags` メソッドがコールされたときに `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` または `kSecAttrAccessibleWhenPasscodeSet` 保護クラスが設定されていることを検証します。`...ThisDeviceOnly` バリアントはキーチェーンアイテムが他の iOS デバイスと同期されないようにすることに注意します。
-
-> 注意、データ保護クラスはデータをセキュアにするために使用されるアクセス方法を指定します。
-各クラスはいつデータがアクセス可能となるかを決定するために異なるポリシーを使用します。
-
-### 動的解析
-
-[Objection Biometrics Bypass](https://github.com/sensepost/objection/wiki/Understanding-the-iOS-Biometrics-Bypass "Understanding the iOS Biometrics Bypass") を使用して LocalAuthentication をバイパスできます。 Objection は Frida を使用して `evaluatePolicy` 関数を計装し、認証が成功しなかった場合でも `True` を返します。 `ios ui biometrics_bypass` コマンドを使用して、セキュアではない生体認証をバイパスします。Objection はジョブを登録して `evaluatePolicy` の結果を置き換えます。 Swift と Objective-C の両方の実装で機能します。
-
-```bash
-...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # ios ui biometrics_bypass
-(agent) Registering job 3mhtws9x47q. Type: ios-biometrics-disable
-...itudehacks.DVIAswiftv2.develop on (iPhone: 13.2.3) [usb] # (agent) [3mhtws9x47q] Localized Reason for auth requirement: Please authenticate yourself
-(agent) [3mhtws9x47q] OS authentication response: false
-(agent) [3mhtws9x47q] Marking OS response as True instead
-(agent) [3mhtws9x47q] Biometrics bypass hook complete
-```
-
-脆弱な場合、モジュールはログインフォームを自動的にバイパスします。
-
-## 参考情報
-
-### OWASP MASVS
-
-- MSTG-AUTH-8: "生体認証が使用される場合は（単に「true」や「false」を返すAPIを使うなどの）イベントバインディングは使用しない。代わりに、キーチェーンやキーストアのアンロックに基づくものとする。"
-- MSTG-STORAGE-11: "アプリは最低限のデバイスアクセスセキュリティポリシーを適用しており、ユーザーにデバイスパスコードを設定することなどを必要としている。"
