@@ -1,31 +1,52 @@
-## アンチリバース防御のテスト (Android)
+---
+masvs_category: MASVS-RESILIENCE
+platform: android
+---
 
-### ルート検出のテスト
+# Android のアンチリバース防御
 
-#### 概要
+## 概要
 
-アンチリバースの文脈では、ルート検出の目的はルート化されたデバイス上でアプリを実行することをもう少し難しくすることで、その後、リバースエンジニアが使用したいツールやテクニックを妨げます。他のほとんどの防御と同様に、ルート検出はそれ自体に高い効果はありませんが、いくつかのルートチェックをアプリにちりばめることで改竄対策スキーム全体の有効性が向上します。
+### 一般的な免責事項
 
-Android では、用語「ルート検出」をより広く定義し、カスタム ROM の検出などを含みます。例えば、デバイスが製品版の Android ビルドであるか、もしくはカスタムビルドであるかを確認します。
+**これらの対策のいずれが欠けても、脆弱性を生み出すことはありません** 。むしろ、リバースエンジニアリングや特定のクライアントサイド攻撃に対するアプリの耐性を高めることを目的としています。
 
-##### 共通ルート検出手法
+リバースエンジニアは常にデバイスにフルアクセスできるので (十分な時間とリソースがあれば) 必ず勝利できるため、これらの対策はいずれも 100% の効果を保証するものではありません。
 
-以下のセクションでは、よく見かけるいくつかのルート検出手法を記します。OWASP Mobile Testing Guide に添付されている crackme サンプル <sup>[1]</sup> で実装されているチェックがいくつかあります。
+たとえば、デバッグを防止することは事実上不可能です。アプリを公開している場合、攻撃者の完全な制御下にある信頼できないデバイス上で実行される可能性があります。非常に意志の固い攻撃者はアプリバイナリにパッチを当てるか Frida などのツールを使用して実行時にアプリの動作を動的に変更して、最終的にアプリのアンチデバッグ制御をすべてバイパスするでしょう。
 
-###### SafetyNet
+リバースエンジニアリングとコード変更の原則と技術的リスクについての詳細は以下の OWASP ドキュメントを参照してください。
 
-SafetyNet はソフトウェアとハードウェアの情報を使用してデバイスのプロファイルを作成する Android API です。このプロファイルは Android 互換性テストに合格したホワイトリスト化されたデバイスモデルのリストと比較されます。Google はこの機能を「不正使用防止システムの一環として付加的な多層防御シグナル」として使用することを推奨しています <sup>[2]</sup> 。
+- [OWASP Architectural Principles That Prevent Code Modification or Reverse Engineering](https://wiki.owasp.org/index.php/OWASP_Reverse_Engineering_and_Code_Modification_Prevention_Project "OWASP Architectural Principles That Prevent Code Modification or Reverse Engineering")
+- [OWASP Technical Risks of Reverse Engineering and Unauthorized Code Modification](https://wiki.owasp.org/index.php/Technical_Risks_of_Reverse_Engineering_and_Unauthorized_Code_Modification "OWASP Technical Risks of Reverse Engineering and Unauthorized Code Modification")
 
-SafetyNet が正確に中で何をしているかは十分に文書化されておらず、いつでも変更される可能性があります。この API を呼び出すと、サービスは Google はデバイス検証コードを含むバイナリパッケージをダウンロードし、リフレクションを使用して動的に実行されます。John Kozyrakis の分析によると、SafetyNet により実行された検査はデバイスがルート化されているかどうかを検出しようとしますが、これがどのくらい正しいかは不明確です <sup>[3]</sup> 。
+### ルート検出と一般的なルート検出手法
 
-この API を使用するには、アプリは the SafetyNetApi.attest() メソッドが *Attestation Result* の JWS メッセージを返し、それから以下のフィールドをチェックします。
+アンチリバースの文脈では、ルート検出の目的はルート化されたデバイス上でのアプリの実行を少し難しくすることです。これにより、リバースエンジニアが使用したいツールやテクニックの一部をブロックします。他のほとんどの防御と同様に、ルート検出はそれ自体に高い効果はありませんが、複数のルートチェックをアプリ全体にちりばめて実装することで改竄対策スキーム全体の有効性を向上できます。
 
-- ctsProfileMatch: "true" の場合、デバイスプロファイルは Android 互換性テストに合格した Google のリスト化されたデバイスのひとつと一致します。
-- basicIntegrity: アプリを実行しているデバイスはおそらく改竄されてはいません。
+Android では、 "ルート検出" を少し広く定義し、カスタム ROM の検出を含みます。例えば、デバイスが純正の Android ビルドであるか、もしくはカスタムビルドであるかを判断します
 
-attestation result は以下のようになります。
+以下のセクションでは、よく見かけるいくつかの一般的なルート検出手法を記します。 OWASP Mobile Testing Guide に付属する [OWASP UnCrackable Apps for Android](0x08b-Reference-Apps.md#android-crackmes) にこれらの手法がいくつかが実装されています。
 
-~~~
+ルート検出は [RootBeer](https://github.com/scottyab/rootbeer "RootBeer") などのライブラリを介して実装することもできます。
+
+#### SafetyNet
+
+SafetyNet は一連のサービスを提供する Android API であり、ソフトウェアとハードウェアの情報に従ってデバイスのプロファイルを作成します。このプロファイルは Android 互換性テストに合格した承認済みデバイスモデルのリストと比較されます。 Google はこの機能を "不正使用防止システムの一環としての付加的な多層防御シグナル" として使用することを [推奨](https://developers.google.com/android/reference/com/google/android/gms/safetynet/SafetyNet "SafetyNet Documentation") しています。
+
+SafetyNet が正確な動作は十分に文書化されておらず、いつでも変更される可能性があります。この API を呼び出すと、 SafetyNet は Google から提供されるデバイス検証コードを含むバイナリパッケージをダウンロードし、リフレクションを介してコードが動的に実行されます。 [John Kozyrakis の分析](https://koz.io/inside-safetynet/ "SafetyNet: Google's tamper detection for Android") によると、 SafetyNet はデバイスがルート化されているかどうかも検出しようとしますが、これがどのように判断されるかは明確ではありません。
+
+API を使用するには、アプリは `SafetyNetApi.attest` メソッド (_Attestation Result_ を含むメッセージを返します) を呼び出し、以下のフィールドをチェックします。
+
+- `ctsProfileMatch`: 'true' の場合、デバイスプロファイルは Google にリストされているデバイスのいずれかと一致します。
+- `basicIntegrity`: 'true' の場合、アプリを実行しているデバイスはおそらく改竄されてはいません。
+- `nonces`: そのリクエストに対するレスポンスを照合します。
+- `timestampMs`: リクエストしてからレスポンスが得られるまでの経過時間をチェックします。レスポンスが遅延している場合、不審な挙動を示唆している可能性があります。
+- `apkPackageName`, `apkCertificateDigestSha256`, `apkDigestSha256`: 呼び出し元アプリの素性を検証するために使用される、 APK に関する情報を提供します。 API が信頼性のある APK 情報を判断できない場合、これらのパラメータはありません。
+
+以下は attestation result の例です。
+
+```json
 {
   "nonce": "R2Rra24fVm5xa2Mg",
   "timestampMs": 9860437986543,
@@ -36,37 +57,64 @@ attestation result は以下のようになります。
   "ctsProfileMatch": true,
   "basicIntegrity": true,
 }
-~~~
+```
 
-###### プログラムによる検出
+##### ctsProfileMatch と basicIntegrity
 
-**ファイルの存在チェック**
+SafetyNet Attestation API は当初 `basicIntegrity` という単一の値を提供して、開発者がデバイスの完全性を判断できるようにしました。 API が進化するにつれ、 Google は新しく、より厳密なチェックを導入し、その結果は `ctsProfileMatch` という値で示されるようになりました。これにより開発者はアプリが実行されているデバイスをより詳細に評価できます。
 
-おそらく最も広く使用されている手法はルート化されたデバイスに通常見つかるファイルをチェックすることです。一般的なルート化アプリのパッケージファイルや関連するファイルおよびディレクトリなどがあります。
+大まかにいえば、 `basicIntegrity` はデバイスとその API の一般的な完全性に関するシグナルを提供します。多くのルート化デバイスは `basicIntegrity` に失敗します。エミュレータ、仮想デバイス、 API フックなどの改竄の兆候があるデバイスも同様です。
 
-~~~
+一方、 `ctsProfileMatch` はデバイスの互換性についてより厳密なシグナルを提供します。 Google により認定され、改変されていないデバイスのみが `ctsProfileMatch` をパスできます。 `ctsProfileMatch` に失敗するデバイスには以下のものがあります。
+
+- `basicIntegrity` に失敗したデバイス
+- アンロックされたブートローダを持つデバイス
+- カスタムシステムイメージ (カスタム ROM) を持つデバイス
+- 製造元が Google 認定を申請していない、または合格していないデバイス
+- Android Open Source Program のソースファイルから直接構築されたシステムイメージを持つデバイス
+- ベータ版または開発者プレビュープログラム (Android Beta Program を含む) の一部として配布されたシステムイメージを持つデバイス
+
+##### `SafetyNetApi.attest` 使用時の推奨事項
+
+- 暗号学的にセキュアなランダム関数を使用してサーバーに大きな (16 バイト以上) 乱数を作成して、悪意のあるユーザーが失敗した結果の代わりとして成功した認証結果を再利用できないようにします。
+- `ctsProfileMatch` の値が true の場合にのみ、 APK 情報 (`apkPackageName`, `apkCertificateDigestSha256`, `apkDigestSha256`) を信頼します。
+- 検証のために、セキュアな接続を使用して、 JWS レスポンス全体をサーバーに送信すべきです。アプリで直接検証を実行することはお勧めしません。その場合、検証ロジック自体が改変されていないという保証はありません。
+- `verify` メソッドは JWS メッセージが SafetyNet により署名されたことを妥当性確認するだけです。判定のペイロードが期待と一致するかどうか検証されません。このサービスは便利なように思われるかもしれませんが、これはテスト目的にのみ設計されており、プロジェクトごとに一日当たり 10,000 リクエストという非常に厳しい使用制限があり、リクエストに応じて増加することはありません。したがって、 [SafetyNet 検証サンプル](https://github.com/googlesamples/android-play-safetynet/tree/master/server/java/src/main/java "Google SafetyNet Sample") を参照して、 Google のサーバーに依存しない方法でサーバー上にデジタル署名検証ロジックを実装する必要があります。
+- SafetyNet Attestation API は構成証明リクエストが行われた時点でのデバイスの状態のスナップショットを提供します。構成証明が成功しても、デバイスが過去に構成証明に合格したことや、将来的に合格することを必ずしも意味しません。ユースケースを満たすために必要な最小限の構成証明を使用する戦略を計画することをお勧めします。
+- 誤って `SafetyNetApi.attest` 使用制限に達して構成証明エラーが発生することを防ぐには、 API の使用状況を監視し、使用制限に達する前に警告するシステムを構築することで、使用制限を増やせるようにしておきます。また使用制限を超過したことによる構成証明失敗に対応できるように準備し、このような状況ですべてのユーザーをブロックしないようにする必要があります。使用制限に近づいている場合や、短期的な急増で使用制限を超える可能性がある場合には、この [フォーム](https://support.google.com/googleplay/android-developer/contact/safetynetqr "quota request") を送信して、 API キーの使用制限の短期的または長期的な増加を要求することができます。このプロセスと追加の使用制限は無料です。
+
+この [チェックリスト](https://developer.android.com/training/safetynet/attestation-checklist "attestation checklist") に従い、アプリに `SafetyNetApi.attest` API を統合するために必要な各ステップを完了していることを確認します。
+
+#### プログラムによる検出
+
+##### ファイルの存在チェック
+
+おそらく最も広く使用されているプログラムによる検出の手法はルート化されたデバイスに通常見つかるファイルをチェックすることです。一般的なルート化アプリのパッケージファイルや関連するファイルおよびディレクトリなどがあります。以下のものを含みます。
+
+```default
 /system/app/Superuser.apk
 /system/etc/init.d/99SuperSUDaemon
 /dev/com.koushikdutta.superuser.daemon/
 /system/xbin/daemonsu
+```
 
-~~~
+検出コードは多くの場合デバイスがルート化されたときに一般的にインストールされるバイナリも検索します。これらの検索には busybox のチェックや _su_ バイナリを別の場所で開こうとするものなどがあります。
 
-検出コードはデバイスがルート化されたときに一般的にインストールされるバイナリも検索します。例として、busybox の存在チェックや、*su* バイナリを別の場所で開こうとしていることをチェックすることなどがあります。
-
-~~~
-/system/xbin/busybox
-
+```default
 /sbin/su
 /system/bin/su
+/system/bin/failsafe/su
 /system/xbin/su
+/system/xbin/busybox
+/system/sd/xbin/su
 /data/local/su
 /data/local/xbin/su
-~~~
+/data/local/bin/su
+```
 
-代わりに、*su* が PATH にあるかどうかを確認することもできます。
+*su* が PATH 上にあるかどうかを確認することもできます。
 
-~~~java
+```java
     public static boolean checkRoot(){
         for(String pathDir : System.getenv("PATH").split(":")){
             if(new File(pathDir, "su").exists()) {
@@ -75,9 +123,9 @@ attestation result は以下のようになります。
         }
         return false;
     }
-~~~
+```
 
-ファイルチェックは Java とネイティブコードの両方で簡単に実装できます。以下の JNI の例では、<code>stat</code> システムコールを使用してファイルに関する情報を取得します (rootinspector <sup>[9]</sup> から改変したコード例)。ファイルが存在する場合、<code>1</code> を返します。
+ファイルチェックは Java とネイティブコードの両方で簡単に実装できます。以下の JNI の例 ([rootinspector](https://github.com/devadvance/rootinspector/ "rootinspector") から改変) では `stat` システムコールを使用してファイルに関する情報を取得し、ファイルが存在する場合は "1" を返します。
 
 ```c
 jboolean Java_com_example_statfile(JNIEnv * env, jobject this, jstring filepath) {
@@ -97,13 +145,13 @@ jboolean Java_com_example_statfile(JNIEnv * env, jobject this, jstring filepath)
 }
 ```
 
-**su および他のコマンドの実行**
+##### `su` および他のコマンドの実行
 
-<code>su</code> が存在するかどうかを判断する別の方法は、<code>Runtime.getRuntime.exec()</code> で実行を試みることです。<code>su</code> が PATH にない場合、IOException がスローされます。同じ方法を使用して、ルート化されたデバイス上によく見つかる他のプログラムを確認することができます。busybox や一般的にそれを指すシンボリックリンクなどがあります。
+`su` が存在するかどうかを判断するもう一つの方法は `Runtime.getRuntime.exec` メソッドを使用して実行を試みることです。 `su` が PATH 上にない場合は IOException がスローされます。同じ方法を使用して、ルート化されたデバイス上によく見つかる他のプログラムを確認することができます。 busybox や一般的にそれを指すシンボリックリンクなどがあります。
 
-**実行中のプロセスの確認**
+##### 実行中のプロセスの確認
 
-Supersu は最も人気のあるルート化ツールであり、<code>daemonsu</code> という名前の認証デーモンを実行します。そのため、このプロセスが存在することはルート化されたデバイスのもうひとつの兆候です。実行中のプロセスは <code>ActivityManager.getRunningAppProcesses()</code> および <code>manager.getRunningServices()</code> API、<code>ps</code> コマンドで列挙でき、<code>/proc</code> ディレクトリで閲覧できます。例として、rootinspector <sup>[9]</sup> では以下のように実装されています。
+Supersu は最も人気のあるルート化ツールであり `daemonsu` という名前の認証デーモンを実行します。そのため、このプロセスが存在することはルート化されたデバイスのもうひとつの兆候です。実行中のプロセスは `ActivityManager.getRunningAppProcesses` および `manager.getRunningServices` API 、 `ps` コマンドで列挙でき、 `/proc` ディレクトリで閲覧できます。以下は [rootinspector](https://github.com/devadvance/rootinspector/ "rootinspector") で実装されている例です。
 
 ```java
     public boolean checkRunningProcesses() {
@@ -127,28 +175,29 @@ Supersu は最も人気のあるルート化ツールであり、<code>daemonsu<
     }
 ```
 
-**インストール済みのアプリパッケージの確認**
+##### インストール済みアプリパッケージの確認
 
-Android パッケージマネージャを使用するとインストールされているパッケージのリストを取得できます。以下のパッケージ名は一般的なルート化ツールに属します。
+Android パッケージマネージャを使用するとインストールされているパッケージのリストを取得できます。以下のパッケージ名は一般的なルート化ツールに属するものです。
 
-~~~
+```default
 com.thirdparty.superuser
 eu.chainfire.supersu
 com.noshufou.android.su
 com.koushikdutta.superuser
 com.zachspong.temprootremovejb
 com.ramdroid.appquarantine
-~~~
+com.topjohnwu.magisk
+```
 
-**書き込み可能なパーティションとシステムディレクトリの確認**
+##### 書き込み可能なパーティションとシステムディレクトリの確認
 
-sysytem ディレクトリに対する普通とは異なるアクセス許可は、カスタマイズまたはルート化されたデバイスを示します。通常の状況下では、system および data ディレクトリは常に読み取り専用でマウントされていますが、デバイスがルート化されていると読み書き可能でマウントされることがあります。これはこれらのファイルシステムが "rw" フラグでマウントされているかどうかをチェックすることでテストできます。もしくはこれらのディレクトリにファイルを作成してみます。
+sysytem ディレクトリに対する普通とは異なるアクセス許可は、カスタマイズまたはルート化されたデバイスを示している可能性があります。通常では system および data ディレクトリは読み取り専用でマウントされていますが、デバイスがルート化されていると読み書き可能でマウントされることがあります。 "rw" フラグでマウントされているこれらのファイルシステムを探すか、もしくはこれらのディレクトリにファイルを作成してみます。
 
-**カスタム Android ビルドの確認**
+##### カスタム Android ビルドの確認
 
-デバイスがルート化されているかどうかを確認するだけでなく、テストビルドやカスタム ROM の兆候を確認することも役に立ちます。これを行う方法のひとつは、BUILD タグに test-keys が含まれているかどうかを確認することです。これは一般的にカスタム Android イメージを示します <sup>[5]</sup> 。これは以下のように確認できます <sup>[6]</sup> 。
+テストビルドやカスタム ROM の兆候を確認することも役に立ちます。これを行う方法のひとつは BUILD タグに test-keys が含まれているかどうかを確認することです。これは一般的に [カスタム Android イメージを示します](https://resources.infosecinstitute.com/android-hacking-security-part-8-root-detection-evasion// "InfoSec Institute - Android Root Detection and Evasion") 。 [以下のように BUILD タグを確認します](https://github.com/scottyab/rootbeer/blob/master/rootbeerlib/src/main/java/com/scottyab/rootbeer/RootBeer.java#L76 "Rootbeer - detectTestKeys function") 。
 
-~~~
+```java
 private boolean isTestKeyBuild()
 {
 String str = Build.TAGS;
@@ -156,90 +205,25 @@ if ((str != null) && (str.contains("test-keys")));
 for (int i = 1; ; i = 0)
   return i;
 }
-~~~
+```
 
-Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。出荷版の Android ビルドでは、OTA アップデートに Google の公開証明書を使用します <sup>[4]</sup> 。
+Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。純正の Android ビルドでは [OTA アップデートに Google の公開証明書を使用します](https://blog.netspi.com/android-root-detection-techniques/ "Android Root Detection Techniques") 。
 
-##### ルート検出のバイパス
+### アンチデバッグ
 
-JDB, DDMS, strace やカーネルモジュールを使用して実行トレースを実行し、アプリが何をしているかを調べます。通常はオペレーティングシステムとのすべての種類の疑わしいやり取りを表示します。*su* の読み込みやプロセスリストの取得などがあります。これらのやり取りはルート検出の確実な兆候です。ルート検出メカニズムを一つ一つ特定し非アクティブにします。ブラックボックスの耐性評価を実行している場合は、ルート化検出メカニズムを無効にすることが最初のステップです。
+デバッグはアプリのランタイム動作を解析する非常に効果的な方法です。これによりリバースエンジニアがコードをステップ実行し、任意の箇所でアプリの実行を停止し、変数の状態を検査し、メモリを読み取りおよび変更し、さらに多くのことを可能にします。
 
-多くのテクニックを使用してこれらのチェックをバイパスできます。これらのほとんどは「リバースエンジニアリングと改竄」の章で紹介されています。
+アンチデバッグ機能には予防型と反応型があります。名前が示すように、予防型アンチデバッグはまず第一にデバッガがアタッチすることを防ぎます。反応型アンチデバッグはデバッガを検出し、何らかの方法でそれに反応します (アプリの終了や隠された動作のトリガなど) 。「多ければ多いほど良い」ルールが適用されます。効果を最大限にするため、防御側は、さまざまな API レイヤーで動作しアプリ全体に分散される、複数の予防と検出の手法を組み合わせます。
 
-1. バイナリの名前を変更する。例えば、場合によっては単に "su" バイナリの名前を変更するだけで、ルート検出を無効にできます (あなたの環境を壊さないようにします) 。
-2. /proc をアンマウントして、プロセスリストの詠み込みなどを防止する。往々にして、proc が利用できないだけでそのようなチェックを無効にできます。
-3. Frida や Xposed を使用して、Java やネイティブレイヤーに API をフックする。これを行うことにより、ファイルやプロセスを隠したり、ファイルの実際の内容を隠したり、アプリが要求するすべての種類の偽の値を返したりできます。
-4. カーネルモジュールを使用して、低レベル API をフックする。
-5. アプリにパッチを当て、チェックを削除する。
+"リバースエンジニアリングと改竄" の章で述べたように、 Android では二つの異なるデバッグプロトコルを扱う必要があります。 JDWP を使用した Java レベルと、 ptrace ベースのデバッガを使用したネイティブレイヤーでデバッグが可能です。優れたアンチデバッグスキームでは両方のデバッグタイプに対して防御する必要があります。
 
-#### 有効性評価
+#### JDWP アンチデバッグ
 
-ルート検出メカニズムが存在するかどうかを確認し、以下の基準を適用します。
+"リバースエンジニアリングと改竄" の章では、デバッガと Java 仮想マシンとの間の通信に使用されるプロトコルである JDWP について説明しました。マニフェストファイルにパッチを適用して任意のアプリを容易にデバッグ可能にできることや、 `ro.debuggable` システムプロパティを変更することであらゆるアプリをデバッグ可能にできることを示しました。開発者が JDWP デバッガを検出および無効にするために行ういくつかのことを見てみます。
 
-- 複数の検出手法がアプリ全体に分散されている (ひとつの手法にすべてを任せてはいない)
-- ルート検出メカニズムは複数の API レイヤ (Java API、ネイティブライブラリ関数、アセンブラ/システムコール) で動作する
-- そのメカニズムはある程度の独創性を示している (StackOverflow や他のソースからコピー＆ペーストしたものではない)
+##### ApplicationInfo のデバッグ可能フラグの確認
 
-ルート検出メカニズムのバイパス手法を開発し、以下の質問に答えます。
-
-- RootCloak などの標準ツールを使用してそのメカニズムを簡単にバイパスできますか？
-- ルート検出を処理するにはある程度の静的/動的解析が必要ですか？
-- カスタムコードを書く必要はありましたか？
-- それをうまくバイパスするにはどれくらいの時間がかかりましたか？
-- 難易度の主観的評価はいくつですか？
-
-より詳細な評価を行うには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
-
-#### 改善方法
-
-ルート検出が欠落しているか、または非常に簡単にバイパスされてしまう場合は、上記の有効性基準に沿って提案を作成します。これには、より多くの検出メカニズムを追加すること、または既存のメカニズムを他の防御とより良く統合することが含まれます。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
-##### OWASP MASVS
-
-- V8.3: "アプリは二つ以上の機能的に依存しないルート検出方式を実装しており、ユーザーに警告するかアプリを終了することでルート化デバイスの存在に応答している。"
-
-##### CWE
-
-N/A
-
-##### その他
-
-- [1] OWASP Mobile Crackmes - https://github.com/OWASP/owasp-mstg/blob/master/OMTG-Files/02_Crackmes/List_of_Crackmes.md
-- [2] SafetyNet Documentation - https://developers.google.com/android/reference/com/google/android/gms/safetynet/SafetyNet
-- [3] SafetyNet: Google's tamper detection for Android - https://koz.io/inside-safetynet/
-- [4] NetSPI Blog - Android Root Detection Techniques - https://blog.netspi.com/android-root-detection-techniques/
-- [5] InfoSec Institute - http://resources.infosecinstitute.com/android-hacking-security-part-8-root-detection-evasion/
-- [6] Android – Detect Root Access from inside an app - https://www.joeyconway.com/blog/2014/03/29/android-detect-root-access-from-inside-an-app/
-
-##### ツール
-
-- [7] rootbeer - https://github.com/scottyab/rootbeer
-- [8] RootCloak - http://repo.xposed.info/module/com.devadvance.rootcloak2
-- [9] rootinspector - https://github.com/devadvance/rootinspector/
-
-### アンチデバッグのテスト
-
-#### 概要
-
-デバッグはアプリのランタイム動作を解析する非常に効果的な方法です。これはリバースエンジニアがコードをステップ実行し、任意の箇所でアプリの実行を停止し、変数の状態を検査し、メモリを読み取りおよび変更し、さらに多くのことを可能にします。
-
-「リバースエンジニアリングと改竄」の章で述べたように、Android では二つの異なるデバッグプロトコルを扱う必要があります。JDWP を使用した Java レベルと、ptrace ベースのデバッガを使用したネイティブレイヤーのデバッグが可能です。したがって、優れたアンチデバッグスキームでは両方のデバッガタイプに対して防御を実装する必要があります。
-
-アンチデバッグ機能は予防型または反応型にできます。この名前が示すように、予防型アンチデバッグトリックはまず第一にデバッガがアタッチすることを防ぎます。反応型トリックはデバッガが存在するかどうかを検出し、何らかの方法でそれに反応させようと試みます (アプリの終了やなんらかの隠された動作のトリガなど) 。「多ければ多いほど良い」ルールが適用されます。効果を最大限にするため、防御側では、さまざまな API レイヤーで動作しアプリ全体に分散されている、複数の予防と検出の手法を組み合わせます。
-
-##### アンチ JDWP デバッグの例
-
-「リバースエンジニアリングと改竄」の章では、デバッガと Java 仮想マシンとの間の通信に使用されるプロトコルである JDWP について説明しました。また、Manifest ファイルにパッチを当てて任意のアプリを容易にデバッグ可能にできることや、ro.debuggable システムプロパティを変更することであらゆるアプリをデバッグ可能にできることがわかりました。開発者が JDWP デバッガを検出ないし無効にするために行ういくつかのことを見てみます。
-
-###### ApplicationInfo のデバッグ可能フラグの確認
-
-すでに何度か <code>android:debuggable</code> 属性が出てきました。アプリマニフェストのこのフラグは JDWP スレッドがアプリに対して起動されるかどうかを決定します。その値はアプリの ApplicationInfo オブジェクトを使用してプログラムで決定できます。このフラグが設定されている場合、これはマニフェストが改竄されてデバッグ可能になっていることを示します。
+すでに `android:debuggable` 属性は出てきています。 Android Manifest のこのフラグは JDWP スレッドがアプリに対して起動されるかどうかを決定します。その値はアプリの `ApplicationInfo` オブジェクトを使用してプログラムで決定できます。このフラグが設定されている場合、これはマニフェストが改竄されてデバッグ可能になっています。
 
 ```java
     public static boolean isDebuggable(Context context){
@@ -248,31 +232,32 @@ N/A
 
     }
 ```
-###### isDebuggerConnected
 
-Android Debug システムクラスはデバッガが現在接続されているかどうかをチェックする静的メソッドを提供します。このメソッドは単にブール値を返します。
+##### isDebuggerConnected
 
-```
+これはリバースエンジニアにとって当たり前かもしれませんが、 `android.os.Debug` クラスの `isDebuggerConnected` を使用してデバッガが接続されているかどうかを確認できます。
+
+```java
     public static boolean detectDebugger() {
         return Debug.isDebuggerConnected();
     }
 ```
 
-同じ API をネイティブコードから呼ぶことが可能です。DvmGlobals グローバル構造体にアクセスします。
+同じ API は DvmGlobals グローバル構造体にアクセスすることによりネイティブコードを介してコールすることができます。
 
-```
+```c
 JNIEXPORT jboolean JNICALL Java_com_test_debugging_DebuggerConnectedJNI(JNIenv * env, jobject obj) {
-    if (gDvm.debuggerConnect || gDvm.debuggerAlive)
+    if (gDvm.debuggerConnected || gDvm.debuggerActive)
         return JNI_TRUE;
     return JNI_FALSE;
 }
 ```
 
-###### タイマーチェック
+##### タイマーチェック
 
-<code>Debug.threadCpuTimeNanos</code> は現在のスレッドがコードの実行に費やした時間量を示します。デバッグはプロセスの実行を遅くするため、実行時間の違いを利用して、デバッガがアタッチされているかどうかを推測することができます [2] 。
+`Debug.threadCpuTimeNanos` は現在のスレッドがコードの実行に費やした時間量を示します。デバッグはプロセスの実行を遅くするため、 [実行時間の違いを使用して、デバッガがアタッチされているかどうかを推測することができます](https://www.yumpu.com/en/document/read/15228183/android-reverse-engineering-defenses-bluebox-labs "Bluebox Security - Android Reverse Engineering & Defenses") 。
 
-```
+```java
 static boolean detect_threadCpuTimeNanos(){
   long start = Debug.threadCpuTimeNanos();
 
@@ -287,11 +272,12 @@ static boolean detect_threadCpuTimeNanos(){
   else {
     return true;
   }
+}
 ```
 
-###### JDWP 関連のデータ構造への干渉
+##### JDWP 関連のデータ構造への干渉
 
-Dalvik では、グローバル仮想マシンの状態は DvmGlobals 構造体を介してアクセス可能です。グローバル変数 gDvm はこの構造体へのポイントを保持します。DvmGlobals には JDWP デバッグに重要なさまざまな変数やポインタが含まれており、改竄可能です。
+Dalvik では、グローバル仮想マシンの状態は `DvmGlobals` 構造体を介してアクセス可能です。グローバル変数 gDvm はこの構造体へのポイントを保持しています。 `DvmGlobals` には JDWP デバッグに重要なさまざまな変数やポインタが含まれており、改竄可能です。
 
 ```c
 struct DvmGlobals {
@@ -317,7 +303,7 @@ struct DvmGlobals {
 };
 ```
 
-例えば、gDvm.methDalvikDdmcServer_dispatch 関数ポインタに NULL を設定すると JDWP スレッドがクラッシュします <sup>[2]</sup> 。
+例えば、 [gDvm.methDalvikDdmcServer_dispatch 関数ポインタに NULL を設定すると JDWP スレッドがクラッシュします](https://github.com/crazykid95/Backup-Mobile-Security-Report/blob/master/AndroidREnDefenses201305.pdf "Bluebox Security - Android Reverse Engineering & Defenses") 。
 
 ```c
 JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
@@ -325,9 +311,9 @@ JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
 }
 ```
 
-gDvm 変数が利用できない場合でも、ART で同様の技法を使用してデバッグを無効にできます。ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、vtable はクラスメソッドのポインタを保持するテーブルです) 。これには JdwpSocketState と JdwpAdbState を含むクラスの vtable を含んでいます。これら二つはネットワークソケットと ADB を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作はこれらの vtable のメソッドポインタを上書きすることにより操作できます。
+gDvm 変数が利用できない場合でも、 ART で同様の技法を使用してデバッグを無効にできます。 ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、 vtable はクラスメソッドのポインタを保持するテーブルです) 。これには `JdwpSocketState` および `JdwpAdbState` クラスの vtable を含んでおり、これらはネットワークソケットと ADB を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作は [関連する vtable のメソッドポインタを上書きすることにより](https://web.archive.org/web/20200307152820/https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art "Anti-Debugging Fun with Android ART") (archived) 操作できます。
 
-これを行うための方法のひとつは "jdwpAdbState::ProcessIncoming()" のアドレスを "JdwpAdbState::Shutdown()" のアドレスで上書きすることです。これによりデバッガは直ちに切断されます [3] 。
+メソッドポインタを上書きするための方法のひとつは `jdwpAdbState::ProcessIncoming` のアドレスを `JdwpAdbState::Shutdown` のアドレスで上書きすることです。これによりデバッガは直ちに切断されます。
 
 ```c
 #include <jni.h>
@@ -391,50 +377,36 @@ JNIEXPORT void JNICALL Java_sg_vantagepoint_jdwptest_MainActivity_JDWPfun(
 }
 ```
 
-##### アンチネイティブデバッグの例
+#### 従来のアンチデバッグ
 
-ほとんどのアンチ JDWP トリックは (おそらくタイマーベースのチェックは安全だが) 旧来の ptrace ベースのデバッガをキャッチしないため、この種のデバッグを防ぐには別の防御が必要です。多くの「従来の」Linux アンチデバッグトリックがここでは採用されています。
+Linux では、 [`ptrace` システムコール](http://man7.org/linux/man-pages/man2/ptrace.2.html "Ptrace man page") を使用して、プロセス (_tracee_) の実行を監視および制御し、そのプロセスのメモリとレジスタを調べて変更します。 `ptrace` はネイティブコードでシステムコールトレースとブレークポイントデバッグを実装する主要な方法です。ほとんどの JDWP アンチデバッグトリック (タイマーベースのチェックには安全かもしれません) は `ptrace` をベースとする従来のデバッガをキャッチしないため、多くの Android アンチデバッグトリックには `ptrace` が含まれており、一つのプロセスにアタッチできるのは一度に一つのデバッガのみであるという事実を悪用することがよくあります。
 
-###### TracerPid のチェック
+##### TracerPid のチェック
 
-プロセスへのアタッチに <code>ptrace</code> システムコールを使用すると、デバッグされたプロセスのステータスファイルの "TracerPid" フィールドにアタッチプロセスの PID が表示されます。"TracerPid" のデフォルト値は "0" (他のプロセスはアタッチしていない) です。したがって、そのフィールドに "0" 以外のものを見つけることは、デバッガやその他の ptrace のいたずらの兆候です。
+アプリをデバッグしてネイティブコードにブレークポイントを設定する際、 Android Studio はターゲットデバイスに必要なファイルをコピーし、プロセスにアタッチするために `ptrace` を使用する lldb-server を起動します。この時点で、デバッグされるプロセスの [ステータスファイル](http://man7.org/linux/man-pages/man5/proc.5.html "/proc/[pid]/status") (`/proc/<pid>/status` または `/proc/self/status`) を検査すると、 "TracerPid" フィールドは 0 とは異なる値を持つことがわかります。これはデバッグの兆候です。
 
-以下の実装は Tim Strazzere's Anti-Emulator project <sup>[3]</sup> から得ました。
+> **これはネイティブコードにのみ適用される** ことに注意します。 Java/Kotlin のみのアプリをデバッグする場合には "TracerPid" フィールドの値は 0 になります。
 
-```
-    public static boolean hasTracerPid() throws IOException {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream("/proc/self/status")), 1000);
-            String line;
+この技法は通常 JNI ネイティブライブラリ内の C で適用されます。これは [Google の gperftools (Google Performance Tools)) Heap Checker](https://github.com/gperftools/gperftools/blob/master/src/heap-checker.cc#L112 "heap-checker.cc - IsDebuggerAttached") 実装の `IsDebuggerAttached` メソッドに示されています。ただし、このチェックを Java/Kotlin コードの一部として含める場合は、 [Tim Strazzere の Anti-Emulator プロジェクト](https://github.com/strazzere/anti-emulator/ "anti-emulator") から `hasTracerPid` メソッドの Java 実装を参照します。
 
-            while ((line = reader.readLine()) != null) {
-                if (line.length() > tracerpid.length()) {
-                    if (line.substring(0, tracerpid.length()).equalsIgnoreCase(tracerpid)) {
-                        if (Integer.decode(line.substring(tracerpid.length() + 1).trim()) > 0) {
-                            return true;
-                        }
-                        break;
-                    }
-                }
-            }
+このようなメソッドを自分で実装しようとする場合は、 ADB で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni "hello-jni sample") を使用して、 Android Studio のデバッガをアタッチした後にチェックを実行しています。
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            reader.close();
-        }
-        return false;
-    }
+```bash
+$ adb shell ps -A | grep com.example.hellojni
+u0_a271      11657   573 4302108  50600 ptrace_stop         0 t com.example.hellojni
+$ adb shell cat /proc/11657/status | grep -e "^TracerPid:" | sed "s/^TracerPid:\t//"
+TracerPid:      11839
+$ adb shell ps -A | grep 11839
+u0_a271      11839 11837   14024   4548 poll_schedule_timeout 0 S lldb-server
 ```
 
-**Ptraceのバリエーション***
+com.example.hellojni (PID=11657) のステータスファイルに 11839 の TracerPID がどのように含まれているかを確認できます。これは lldb-server プロセスとして識別できます。
 
-Linux では、<code>ptrace()</code> システムコールは別のプロセス ("tracee") の実行を監視および制御し、tracee のメモリとレジスタを調査および変更するために使用されます [5] 。それはブレークポイントデバッグとシステムコールトレースを実装する主な手段です。多くのアンチデバッグトリックは何かについえ <code>ptrace</code> を使用します。一度にプロセスにアタッチできるのはひとつのデバッガだけであるという事実をよく利用します。
+##### fork と ptrace の使用
 
-簡単な例として、以下のようなコードを使用して、子プロセスをフォークし、それをデバッガとして親プロセスにアタッチすることで、プロセスのデバッグを防ぐことができます。
+以下の簡単なコード例のようなコードを介して、子プロセスをフォークし、デバッガとして親プロセスにアタッチすることで、プロセスのデバッグを防止できます。
 
-```
+```c
 void fork_and_attach()
 {
   int pid = fork();
@@ -454,7 +426,7 @@ void fork_and_attach()
 }
 ```
 
-子がアタッチされると、何かしらがさらに親に接続しようとする試みは失敗します。これを確認するには、JNI 関数のコードをコンパイルし、デバイス上で実行するアプリにパックします。
+子プロセスがアタッチされていると、さらに親プロセスにアタッチしようとしても失敗します。これを検証するには、コードを JNI 関数にコンパイルし、デバイスで実行するアプリにパックします。
 
 ```bash
 root@android:/ # ps | grep -i anti
@@ -462,7 +434,7 @@ u0_a151   18190 201   1535844 54908 ffffffff b6e0f124 S sg.vantagepoint.antidebu
 u0_a151   18224 18190 1495180 35824 c019a3ac b6e0ee5c S sg.vantagepoint.antidebug
 ```
 
-親プロセスに gdbserver でアタッチしようとすると、エラーで失敗します。
+gdbserver で親プロセスにアタッチしようとすると以下のエラーで失敗します。
 
 ```bash
 root@android:/ # ./gdbserver --attach localhost:12345 18190
@@ -471,29 +443,29 @@ Cannot attach to lwp 18190: Operation not permitted (1)
 Exiting
 ```
 
-しかしこれは、子を終了し、追跡から親を「解放」することにより、容易に回避されます。実際には、通常、複数のプロセスやスレッド、さらには改ざんを防ぐための監視など、より緻密なスキームがあります。一般的な方法は以下のとおりです。
+ただし、子プロセスを強制終了し、親プロセスがトレースから "解放" することで、この失敗を簡単にバイパスできます。したがって、複数のプロセスとスレッド、および改竄を阻止するための何らかの形の監視を含む、より緻密なスキームが通常見つかります。一般的な手法は以下のとおりです。
 
-- 互いに追跡する複数のプロセスをフォークします。
-- 子が生存し続けていることを確認するために実行中のプロセスを追跡し続けます。
-- /proc/pid/status の TracerPID など /proc ファイルシステムの値を監視します。
+- 互いにトレースする複数のプロセスをフォークします。
+- 実行中のプロセスを追跡して子プロセスが生存していることを確認します。
+- `/proc/pid/status` の TracerPID など、 `/proc` ファイルシステムの値を監視します。
 
-上記の方法を簡単に改良してみます。初期の <code>fork()</code> の後、子のステータスを継続的に監視する親の追加スレッドを実行します。アプリがデバッグモードとリリースモードのいずれでビルドされたか (マニフェストの <code>android:debuggable</code> による) に従って、子プロセスは以下のいずれかの方法で動作することが期待されます。
+上記の手法について簡単に改良してみましょう。最初の `fork` の後で、子プロセスのステータスを継続的に監視する追加のスレッドを親プロセスで起動します。アプリがデバッグモードまたはリリースモードのいずれでビルドされたか (マニフェストの `android:debuggable` フラグで示されます) に応じて、子プロセスは以下のいずれかを実行する必要があります。
 
-1. リリースモードでは、ptrace への呼び出しは失敗し、子はセグメンテーションフォルト (exit code 11) で直ちにクラッシュします。
-2. デバッグモードでは、ptrace への呼び出しは機能し、子は無期限に実行されます。結果として、waitpid(child_pid) への呼び出しは決して戻らないでしょう。もし戻るのであれば、何かが怪しく、私たちはプロセスグループ全体を終了します。
+- リリースモードの場合: ptrace のコールが失敗し、子プロセスはセグメンテーションフォルト (終了コード 11) で直ちにクラッシュします。
+- デバッグモードの場合: ptrace のコールは機能し、子プロセスは無期限に実行されるはずです。したがって、 `waitpid(child_pid)` のコールは決して戻らないでしょう。もし戻るようであれば、何かが怪しいのでプロセスグループ全体を強制終了します。
 
-これを JNI 関数として実装する完全なコードは以下のとおりです。
+以下は JNI 関数でこの改善を実装するための完全なコードです。
 
 ```c
 #include <jni.h>
-#include <string>
 #include <unistd.h>
 #include <sys/ptrace.h>
 #include <sys/wait.h>
+#include <pthread.h>
 
 static int child_pid;
 
-void *monitor_pid(void *) {
+void *monitor_pid() {
 
     int status;
 
@@ -535,128 +507,54 @@ void anti_debug() {
         pthread_t t;
 
         /* Start the monitoring thread */
-
         pthread_create(&t, NULL, monitor_pid, (void *)NULL);
     }
 }
-extern "C"
 
 JNIEXPORT void JNICALL
-Java_sg_vantagepoint_antidebug_MainActivity_antidebug(
-        JNIEnv *env,
-        jobject /* this */) {
+Java_sg_vantagepoint_antidebug_MainActivity_antidebug(JNIEnv *env, jobject instance) {
 
-        anti_debug();
+    anti_debug();
 }
 ```
 
-再び、これを Android アプリにパックして、それが機能するかどうかを確認します。前と同様に、アプリのデバッグビルドを実行すると、二つのプロセスが表示されます。
+再び、これを Android アプリにパックして、機能するかどうかを確認します。以前と同様に、アプリのデバッグビルドを実行すると二つのプロセスが表示されます。
 
 ```bash
-root@android:/ # ps | grep -i anti-debug
+root@android:/ # ps | grep -I anti-debug
 u0_a152   20267 201   1552508 56796 ffffffff b6e0f124 S sg.vantagepoint.anti-debug
 u0_a152   20301 20267 1495192 33980 c019a3ac b6e0ee5c S sg.vantagepoint.anti-debug
 ```
 
-但し、子プロセスを終了すると、親プロセスも終了します。
+ただし、この時点で子プロセスを終了すると、親プロセスも終了します。
 
 ```bash
 root@android:/ # kill -9 20301
-130|root@hammerhead:/ # cd /data/local/tmp                                     
-root@android:/ # ./gdbserver --attach localhost:12345 20267   
+130|root@hammerhead:/ # cd /data/local/tmp
+root@android:/ # ./gdbserver --attach localhost:12345 20267
 gdbserver: unable to open /proc file '/proc/20267/status'
 Cannot attach to lwp 20267: No such file or directory (2)
 Exiting
 ```
 
-これを回避するには、アプリの動作を少し修正する必要があります (最も簡単なのは _exit への呼び出しを NOP でパッチするか、libc.so の関数 _exit をフックすることです) 。現時点では、よく知られた「軍拡競争」に入ります。この防御をより複雑な形で実現することは常に可能であり、それを回避する方法は常にあります。
+これをバイパスするには、アプリの動作を少し改変する必要があります (これを行う最も簡単な方法は `_exit` へのコールを NOP でパッチするか、 `libc.so` の `_exit` 関数をフックすることです) 。この時点で、おなじみの "軍備拡張競争" に突入します。この防御をより複雑な形で実装することもそれをバイパスすることも常に可能です。
 
-##### デバッガ検出のバイパス
+### ファイル完全性チェック
 
-例によって、アンチデバッグを回避する一般的な方法はありません。これはデバッグを防止または検出するために使用される特定のメカニズムや、全体的な保護スキームのその他の防御に依存します。例えば、整合性チェックがない場合、またはすでに無効化している場合には、アプリにパッチを当てるのが最も簡単な方法です。他の場合には、フックフレームワークやカーネルモジュールを使用するほうが望ましいかもしれません。
+ファイル完全性に関連するトピックは二つあります。
 
-1. アンチデバッグ機能をパッチアウトします。単純に NOP 命令で上書きすることで不要な動作を無効にします。アンチデバッグメカニズムが十分に検討されている場合には、より複雑なパッチが必要になることに注意します。
-2. Frida または Xposedを使用して、Java およびネイティブレイヤの API をフックします。isDebuggable や isDebuggerConnected などの関数の戻り値を操作し、デバッガを隠蔽します。
-3. 環境を変更します。Android はオープンな環境です。それ以外の何も機能しないのであれば、オペレーティングシステムを変更して、アンチデバッグトリックを設計する際に開発者が行った想定を覆すことができます。
+ 1. _コード完全性チェック:_ "[Android の改竄とリバースエンジニアリング](0x05c-Reverse-Engineering-and-Tampering.md)" の章では、Android の APK コード署名チェックについて説明しました。また、リバースエンジニアがアプリを再パッケージおよび再署名することで、このチェックを簡単に回避できることもわかりました。このバイパスプロセスをより複雑なものにするために、アプリのバイトコード、ネイティブライブラリ、重要なデータファイルに対する CRC チェックで保護スキームを強化できます。これらのチェックは Java とネイティブの両方のレイヤに実装できます。このアイデアは、コード署名が有効であっても、アプリが変更されていない状態でのみ正しく実行されるように、追加のコントロールを配置するというものです。
+ 2. _ファイルストレージ完全性チェック:_ アプリケーションが SD カードやパブリックストレージに保存するファイルの完全性、および `SharedPreferences` に保存されるキー・バリューペアの完全性を保護する必要があります。
 
-###### バイパスの例: UnCrackable App for Android Level 2
+#### サンプル実装 - アプリケーションソースコード
 
-難読化されたアプリを扱う場合、開発者はネイティブライブラリのデータや機能を意図的に「隠す」ことがよくあります。"UnCrackable App for Android" のレベル2にこの例があります。
-
-一見すると、コードは以前のチャレンジと似ています。
-"CodeCheck" と呼ばれるクラスはユーザーが入力したコードの検証を担当します。実際のチェックはメソッド "bar()" で行われているようです。これは *native* メソッドとして宣言されています。
-
--- TODO [Example for Bypassing Debugger Detection] --
-
-```java
-package sg.vantagepoint.uncrackable2;
-
-public class CodeCheck {
-    public CodeCheck() {
-        super();
-    }
-
-    public boolean a(String arg2) {
-        return this.bar(arg2.getBytes());
-    }
-
-    private native boolean bar(byte[] arg1) {
-    }
-}
-
-    static {
-        System.loadLibrary("foo");
-    }
-```
-
-#### 有効性評価
-
-アンチデバッグメカニズムの有無を確認し、以下の基準を適用します。
-
-- JDB および ptrace ベースのデバッガはアタッチに失敗するか、アプリを終了または機能を停止する
-- 複数の検出手法がアプリ全体に分散されている (すべてを単一のメソッドや関数につぎ込んではいない)
-- アンチデバッグ防御は複数の API レイヤ (Java、ネイティブライブラリ関数、アセンブラ/システムコール) で動作する
-- メカニズムはある程度の独創性を示す (StackOverflow や他のソースからのコピー/ペーストではない)
-
-アンチデバッグ防御のバイパスに取り組み、以下の問いに答えます。
-
-- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
-- 静的および動的解析を使用してアンチデバッグコードを特定することはどの程度困難か？
-- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
-- 難易度の主観的評価は何か？
-
-より詳細な評価を行うには「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
-
-#### 改善方法
-
-アンチデバッグが欠落しているか、非常に簡単にバイパスされる場合、上記の有効性基準に沿って提案します。これにはより多くの検出メカニズムの追加や、さらに既存のメカニズムと他の防御の統合を含みます。
-
-#### 参考情報
-
-- [1] Matenaar et al. - Patent Application - MOBILE DEVICES WITH INHIBITED APPLICATION DEBUGGING AND METHODS OF OPERATION - https://www.google.com/patents/US8925077
-- [2] Bluebox Security - Android Reverse Engineering & Defenses - https://slides.night-labs.de/AndroidREnDefenses201305.pdf
-- [3] Tim Strazzere - Android Anti-Emulator - https://github.com/strazzere/anti-emulator/
-- [4] Anti-Debugging Fun with Android ART - https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art
-- [5] ptrace man page - http://man7.org/linux/man-pages/man2/ptrace.2.html
-
-### ファイル整合性監視のテスト
-
-#### 概要
-ファイル整合性に関連するトピックは二つあります。
-
- 1. _アプリケーションソース関連の整合性チェック_ 「改竄とリバースエンジニアリング」の章では、Android の APK コード署名チェックについて説明しました。また、リバースエンジニアがアプリを再パッケージおよび再署名することで、このチェックを簡単に回避できることも説明しました。このプロセスをより複雑にするために、アプリのバイトコードやネイティブライブラリ、重要なデータファイルの CRC チェックを使用して、保護スキームを拡張できます。これらのチェックは Java とネイティブの両方のレイヤで実装できます。この考えは、コード署名が有効であっても、変更されていない状態でのみ正しく実行されるように、追加のコントロールを用意することです。
- 2. _ファイルストレージ関連の整合性チェック_ ファイルがアプリケーションにより SD カードまたはパブリックストレージに格納される場合、またはキー・バリューペアが `SharedPreferences` に格納される場合、それらの整合性は保護される必要があります。
-
-##### サンプル実装 - アプリケーションソース
-
-整合性チェックでは選択したファイルに対してチェックサムやハッシュを計算することがよくあります。一般的に保護されているファイルは以下のとおりです。
+完全性チェックではたいてい選択したファイルに対してチェックサムやハッシュを計算します。一般的に保護されるファイルは以下のとおりです。
 
 - AndroidManifest.xml
 - クラスファイル *.dex
 - ネイティブライブラリ (*.so)
 
-Android Cracking Blog <sup>[1]</sup> の以下のサンプル実装では classes.dex に対して CRC を計算し、期待値と比較します。
-
+以下の [Android Cracking ブログのサンプル実装](https://androidcracking.blogspot.com/2011/06/anti-tampering-with-crc-check.html "anti-tampering with crc check") では `classes.dex` の CRC を計算し、それを期待値と比較しています。
 
 ```java
 private void crcTest() throws IOException {
@@ -678,30 +576,32 @@ private void crcTest() throws IOException {
  }
 }
 ```
-##### サンプル実装 - ストレージ
 
-ストレージ自体に整合性を提供する場合。Android の `SharedPreferences` のようにキー・バリューペアを介して HMAC を作成することも、ファイルシステムが提供する完全なファイルに対して HMAC を作成することもできます。
-HMAC を使用する場合、bouncy castle 実装を使用して指定されたコンテンツまたは AndroidKeyStore を HMAC にして、後でその HMAC を検証します。処理をするにはいくつかのステップがあります。
-暗号化が必要な場合。[2] で説明されているように暗号化してから HMAC することを確認してください。
+#### サンプル実装 - ストレージ
 
-BouncyCastle で HMAC を生成する場合:
+ストレージ自体に完全性を提供する場合、特定のキー・バリューペア (Android の `SharedPreferences` など) に対して HMAC を作成するか、ファイルシステムが提供するファイル全体に対して HMAC を作成することができます。
+
+HMAC を使用する場合、[bouncy castle 実装または AndroidKeyStore を使用して、指定されたコンテンツを HMAC する](https://web.archive.org/web/20210804035343/https://cseweb.ucsd.edu/~mihir/papers/oem.html "Authenticated Encryption: Relations among notions and analysis of the generic composition paradigm") ことができます。
+
+BouncyCastle で HMAC を生成する場合は以下の手順を実行します。
 
 1. BounceyCastle または SpongeyCastle がセキュリティプロバイダとして登録されていることを確認します。
-2. HMAC をキーで初期化します。キーはキーストアに格納します。
+2. HMAC をキーで初期化します (キーはキーストアに格納します) 。
 3. HMAC を必要とするコンテンツのバイト配列を取得します。
 4. HMAC とバイトコードで `doFinal` を呼び出します。
-5. 手順3のバイト配列に HMAC を追加します。
-6. 手順5の結果を格納します。
+5. 手順 3 で取得したバイト配列に HMAC を追加します。
+6. 手順 5 の結果を保存します。
 
-BouncyCastle で HMAC を検証する場合:
+BouncyCastle で HMAC を検証する場合は以下の手順を実行します。
 
 1. BounceyCastle または SpongeyCastle がセキュリティプロバイダとして登録されていることを確認します。
-2. メッセージと hmacbytes を個別の配列として抽出します。
-3. データに対して hmac を生成する手順1-4を繰り返します。
-4. ここで抽出された hmacbytes を手順3の結果と比較します。
+2. メッセージと HMAC-bytes を個別の配列として抽出します。
+3. HMAC を生成する手順 1-4 を繰り返します。
+4. 抽出された HMAC-bytes を手順 3 の結果と比較します。
 
-Android キーストアに基づいて HMAC を生成する場合、Android 6 以降でのみこれを行うことが最適です。その場合、[3] で説明されているように hmac のためのキーを生成します。
-`AndroidKeyStore` なしでの便利な HMAC 実装を以下に示します。
+[Android Keystore](https://developer.android.com/training/articles/keystore.html "Android Keystore") に基づいて HMAC を生成する場合、Android 6.0 (API レベル 23) 以上でのみ行うことをお勧めします。
+
+以下は `AndroidKeyStore` を使用しない便利な HMAC 実装です。
 
 ```java
 public enum HMACWrapper {
@@ -774,318 +674,60 @@ public enum HMACWrapper {
     }
 }
 
-
 ```
 
-整合性を提供する他の方法には、取得されるバイト配列への署名があります。署名の生成方法については [3] を確認してください。署名を元のバイト配列に追加することを忘れないでください。
+完全性を持たせるもう一つの方法は取得したバイト配列に署名を行い、元のバイト配列に署名を加えることです。
 
-##### ファイル整合性監査のバイパス
+### リバースエンジニアリングツールの検出
 
-*アプリケーションソースの整合性チェックをバイパスしようとする場合*
+リバースエンジニアが一般的に使用するツール、フレームワーク、アプリが存在する場合、アプリをリバースエンジニアリングしようとしていることを示している可能性があります。これらのツールの中にはルート化されたデバイスでのみ実行できるものもあれば、アプリをデバッグモードで動作するものや、モバイルフォンでのバックグラウンドサービス開始に依存するものもあります。したがって、リバースエンジニアリング攻撃を検知してそれに対応するためにアプリが実装する方法はさまざまです。たとえば、アプリ自体を終了します。
 
-1. アンチデバッグ機能にパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
-2. Frida または Xposed を使用して Java およびネイティブレイヤ上のファイルシステム API をフックします。改変されたファイルの代わりに元のファイルへのハンドルを返します。
-3. カーネルモジュールを使用して、ファイル関連システムコールを傍受します。プロセスが改変されたファイルを開こうとすると、代わりに改変されていないバージョンのファイルのファイル記述子が返ります。
+関連するアプリケーションパッケージ、ファイル、プロセス、またはその他のツール固有の変更とアーティファクトを探すことで、変更のない状態でインストールされた一般的なリバースエンジニアリングツールを検出できます。以下の例では、このガイドで広く使用されている Frida インストルメンテーションフレームワークを検出するさまざまな方法について説明します。Substrate や Xposed などの他のツールも同様に検出できます。DBI/インジェクション/フックツールは後述するランタイム完全性チェックを通じて暗黙的に検出できることが多いことに注意してください。
 
-パッチ、コードインジェクション、カーネルモジュールの例については、「改竄とリバースエンジニアリング」のセクションを参照ください。
+たとえば、ルート化されたデバイスのデフォルト設定では Frida はデバイス上で frida-server として実行します。ターゲットアプリに (frida-trace や Frida REPL などを介して) 明示的にアタッチすると、Frida はアプリのメモリに frida-agent を注入します。したがって、アプリにアタッチした後 (前ではなく) そこにあることが期待できます。 `/proc/<pid>/maps` をチェックすると、frida-agent が frida-agent-64.so として見つかります。
 
-*ストレージの整合性チェックをバイパスしようとする場合*
-
-1. デバイスバインディングのセクションで記載されているように、デバイスからデータを取得します。
-2. 取得されたデータを変更し、ストレージに戻します。
-
-#### 有効性評価
-
-*アプリケーションソースの完全性チェックの場合*
-変更されていない状態でデバイス上でアプリを実行し、すべてが機能することを確認します。次に、アプリパッケージに含まれている classes.dex とすべての .so ライブラリに簡単なパッチを適用します。「セキュリティテスト入門」の章で説明されているようにアプリを再パッケージおよび再署名し、実行します。アプリは変更を検出して、何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したり、アプリを終了したりする必要があります。防御をバイパスするように作業し、以下の質問に答えます。
-
-- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
-- 静的および動的解析を使用してアンチデバッグコードを特定することはどの程度困難か？
-- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
-- 難易度の主観的評価は何か？
-
-より詳細な評価を行うには「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
-
-*ストレージの完全性チェックの場合*
-同様のアプローチをここで考え、以下の質問に答えます。
-- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、ファイルまたはキー・バリューの内容を変更するなど)
-- HMAC 鍵や非対称秘密鍵を取得することはどの程度困難か？
-- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
-- 難易度の主観的評価は何か？
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
-##### OWASP MASVS
-
--- V8.3: "アプリは実行ファイルや重要なデータの改竄を検出し応答している。"
-
-##### CWE
-
-- N/A
-
-##### その他
-
-- [1] Android Cracking Blog - http://androidcracking.blogspot.sg/2011/06/anti-tampering-with-crc-check.html
-- [2] Authenticated Encryption: Relations among notions and analysis of the generic composition paradigm - http://cseweb.ucsd.edu/~mihir/papers/oem.html
-- [3] Android Keystore System - https://developer.android.com/training/articles/keystore.html
-
-### リバースエンジニアリングツールの検出のテスト
-
-#### 概要
-
-リバースエンジニアは多くのツール、フレームワーク、アプリを使用し、このガイドで遭遇した多くのリバースプロセスを支援します。結果として、デバイス上にそのようなツールが存在することは、ユーザーがアプリをリバースエンジニアリング使用としているか、少なくともそのようなツールをインストールすることによるリスクが増大していることを示している可能性があります。
-
-##### 検出手法
-
-一般的なリバースエンジニアリングツールは、変更されていない形式でインストールされている場合、関連するアプリケーションパッケージ、ファイル、プロセス、またはその他のツール固有の修正やアーティファクトを探すことにより検出できます。以下の例では、このガイドで広く使用されている frida 計装フレームワークを検出するさまざまな方法を示します。Substrate や Xposed などの他のツールは同様の手段を使用して検出できます。DBI/インジェクション/フックツールはランタイムの完全性チェックによって暗黙的に検出されることもあります。以下で個別に説明します。
-
-###### 例: Frida を検出する方法
-
-frida や類似のフレームワークを検出する明白な方法は、パッケージファイル、バイナリ、ライブラリ、プロセス、一時ファイルなどの関連するアーティファクトの環境をチェックすることです。一例として、fridaserver について考えます。これは TCP を介して frida を公開するデーモンです。fridaserver が動作しているかどうかを確認するために実行中のプロセスリストをたどる Java メソッドを使用できます。
-
-```c
-public boolean checkRunningProcesses() {
-
-  boolean returnValue = false;
-
-  // Get currently running application processes
-  List<RunningServiceInfo> list = manager.getRunningServices(300);
-
-  if(list != null){
-    String tempName;
-    for(int i=0;i<list.size();++i){
-      tempName = list.get(i).process;
-
-      if(tempName.contains("fridaserver")) {
-        returnValue = true;
-      }
-    }
-  }
-  return returnValue;
-}
+```bash
+bullhead:/ # cat /proc/18370/maps | grep -i frida
+71b6bd6000-71b7d62000 r-xp  /data/local/tmp/re.frida.server/frida-agent-64.so
+71b7d7f000-71b7e06000 r--p  /data/local/tmp/re.frida.server/frida-agent-64.so
+71b7e06000-71b7e28000 rw-p  /data/local/tmp/re.frida.server/frida-agent-64.so
 ```
 
-これは frida がデフォルト設定で動作している場合に機能します。おそらくリバースエンジニアリングの最初のほんの小さな一歩を行う一部のスクリプトキディを困惑させるには十分です。しかし、fridaserver バイナリの名前を "lol" や別の名前に変更することで簡単にバイパスできるので、もっと良い方法を見つけるべきです。
+もう一つの方法 (非ルート化デバイスでも機能します) は APK に [frida-gadget](https://www.frida.re/docs/gadget/ "Frida Gadget") を埋め込み、アプリがそれをネイティブライブラリの一つとしてロードすることを強制するものです。アプリの起動後に (明示的にアタッチする必要はありません) アプリのメモリマップを調べると、埋め込まれた frida-gadget が libfrida-gadget.so として見つかります。
 
-デフォルトでは、fridaserver は TCP ポート 27047 にバインドするので、このポートが開いているかどうかを確認することもひとつの考えです。ネイティブコードでは、以下のようになります。
+```bash
+bullhead:/ # cat /proc/18370/maps | grep -i frida
 
-```c
-boolean is_frida_server_listening() {
-    struct sockaddr_in sa;
-
-    memset(&sa, 0, sizeof(sa));
-    sa.sin_family = AF_INET;
-    sa.sin_port = htons(27047);
-    inet_aton("127.0.0.1", &(sa.sin_addr));
-
-    int sock = socket(AF_INET , SOCK_STREAM , 0);
-
-    if (connect(sock , (struct sockaddr*)&sa , sizeof sa) != -1) {
-      /* Frida server detected. Do something… */
-    }
-
-}   
+71b865a000-71b97f1000 r-xp  /data/app/sg.vp.owasp_mobile.omtg_android-.../lib/arm64/libfrida-gadget.so
+71b9802000-71b988a000 r--p  /data/app/sg.vp.owasp_mobile.omtg_android-.../lib/arm64/libfrida-gadget.so
+71b988a000-71b98ac000 rw-p  /data/app/sg.vp.owasp_mobile.omtg_android-.../lib/arm64/libfrida-gadget.so
 ```
 
-この場合も、デフォルトモードの fridaserver を検出しますが、リスニングポートはコマンドライン引数で簡単に変更できるため、これをバイパスすることは非常に簡単です。この状況は nmap -sV をプルすることで改善できます。fridaserver は D-Bus プロトコルを使用して通信するため、開いているすべてのポートに D-Bus AUTH メッセージを送信し、答えをチェックします。fridaserver の期待は自身を公開することです。
+Frida が残したこれら二つの痕跡を見れば、それらを検出するのは簡単な作業であることがすぐに想像できるかもしれません。そして実際、その検出をバイパスすることは非常に簡単です。しかし物事はもっと複雑になる可能性があります。以下の表はいくつかの典型的な Frida 検出方法とその有効性についての簡単な説明を簡潔に示しています。
 
-```c
-/*
- * Mini-portscan to detect frida-server on any local port.
- */
+> 以下の検出方法の一部は [Berdhard Mueller の記事 "The Jiu-Jitsu of Detecting Frida"](https://web.archive.org/web/20181227120751/http://www.vantagepoint.sg/blog/90-the-jiu-jitsu-of-detecting-frida "The Jiu-Jitsu of Detecting Frida") (archived) で紹介されています。詳細とコードスニペット例についてはそちらを参照してください。
 
-for(i = 0 ; i <= 65535 ; i++) {
+| 手法 | 説明 | 考察 |
+| --- | --- | --- |
+| **アプリ署名をチェックする** | APK 内に frida-gadget を埋め込むには、再パッケージ化して再署名する必要があります。アプリの起動時に APK の署名をチェック (例: API レベル 28 以降では [GET_SIGNING_CERTIFICATES](https://developer.android.com/reference/android/content/pm/PackageManager#GET_SIGNING_CERTIFICATES "GET_SIGNING_CERTIFICATES")) し、API にピン留めしたものと比較します。 | これは残念ながら、APK にパッチを当てたり、システムコールフックを行うなどで、バイパスするのは非常に簡単です。 |
+| **環境に関連するアーティファクトをチェックする** | アーティファクトにはパッケージファイル、バイナリ、ライブラリ、プロセス、一時ファイルなどがあります。Frida の場合、これはターゲット (ルート化された) システムで実行されている frida-server (TCP 経由で Frida を公開する役割を担うデーモン) である可能性があります。実行中のサービス ([`getRunningServices`](https://developer.android.com/reference/android/app/ActivityManager.html#getRunningServices%28int%29 "getRunningServices")) とプロセス (`ps`) を調べて、名前が "frida-server" であるものを探します。また、ロードされたライブラリのリストを調べて、疑わしいもの (名前に "frida" が含まれているものなど) をチェックします。 | Android 7.0 (API レベル 24) 以降、実行中のサービスやプロセスを調べても、アプリ自体によって起動されていないため、frida-server のようなデーモンは表示されません。たとえ可能であったとしても、これをバイパスするには関連する Frida アーティファクト (frida-server/frida-gadget/frida-agent) の名前を変えるだけで簡単でしょう。 |
+| **オープン TCP ポートをチェックする** | frida-server プロセスはデフォルトで TCP ポート 27042 にバインドしています。このポートがオープンであるかどうかをチェックすることもデーモンを検出する方法の一つです。 | この方法はデフォルトモードの frida-server を検出しますが、リスニングポートはコマンドライン引数で変更できるため、これをバイパスすることは少し簡単すぎます。 |
+| **D-Bus 認証に応答するポートをチェックする** | `frida-server` は通信に D-Bus プロトコルを使用するため、D-Bus 認証に応答することが期待できます。すべてのオープンポートに D-Bus 認証メッセージを送信し、応答をチェックし、`frida-server` が現れることを期待します。 | これは `frida-server` を検出するかなり堅実な方法ですが、Frida は frida-server を必要としない別の動作モードを提供しています。 |
+| **既知のアーティファクトについてプロセスメモリをスキャンする** | メモリをスキャンして、Frida のライブラリで見つかるアーティファクト (すべてのバージョンの frida-gadget と frida-agent に現れる文字列 "LIBFRIDA" など) を探します。たとえば、 `Runtime.getRuntime().exec` を使用して、 `/proc/self/maps` や `/proc/<pid>/maps` (Android バージョンによる) にリストされているメモリマッピングを繰り返して文字列を探します。 | この方法はもう少し効果的で、特に難読化を加えている場合や複数のアーティファクトをスキャンしている場合には、Frida だけでバイパスするのは困難です。しかし、選択したアーティファクトは Frida バイナリにパッチが当てられている可能性があります。ソースコードは [Berdhard Mueller の GitHub](https://github.com/muellerberndt/frida-detection-demo/blob/master/AntiFrida/app/src/main/cpp/native-lib.cpp "frida-detection-demo") にあります。 |
 
-    sock = socket(AF_INET , SOCK_STREAM , 0);
-    sa.sin_port = htons(i);
+この表は網羅からは程遠いことを忘れないでください。 [名前付きパイプ](https://en.wikipedia.org/wiki/Named_pipe "Named Pipes") (frida-server が外部通信に使用) について話しましょう。 [トランポリン](https://en.wikipedia.org/wiki/Trampoline_%28computing%29 "Trampolines") (関数のプロローグに挿入された間接的なジャンプベクトル) の検出は Substrate や Frida の Interceptor の検出には役立ちますが、たとえば、Frida の Stalker に対しては有効ではありません。その他多くの、多かれ少なかれ、効果的な検出方法があります。これらはそれぞれ、ルート化されたデバイスを使用しているかどうか、ルート化手法の特定のバージョンやツール自体のバージョンによって異なります。さらに、アプリはさまざまな難読化技法を使用して実装された保護メカニズムの検出をより困難にすることができます。結局のところ、これは信頼できない環境 (ユーザーデバイスで実行されているアプリ) で処理されるデータを保護するいたちごっこの一環です。
 
-    if (connect(sock , (struct sockaddr*)&sa , sizeof sa) != -1) {
+> これらのコントロールはリバースエンジニアリングプロセスの複雑さを増すだけであることに注意することが重要です。使用する場合、最善のアプローチはコントロールを個別に使用するのではなく、巧みに組み合わせることです。ただし、リバースエンジニアリングは常にデバイスにフルアクセスできるので必ず勝利できるため、いずれも 100% の効果を保証することはできません。また、いくつかのコントロールをアプリに統合すると、アプリの複雑さが増し、パフォーマンスに影響を与える可能性があることも考慮する必要があります。
 
-        __android_log_print(ANDROID_LOG_VERBOSE, APPNAME,  "FRIDA DETECTION [1]: Open Port: %d", i);
+### エミュレータの検出
 
-        memset(res, 0 , 7);
+アンチリバースのコンテキストでは、エミュレータ検出の目的はエミュレートされたデバイス上でアプリを実行する難易度を上げて、リバースエンジニアが好んで使用するツールや技法を阻むことです。この難易度の上昇により、リバースエンジニアはエミュレータチェックを破るか物理デバイスを利用することを余儀なくされ、大規模なデバイス解析に必要なアクセスを妨げます。
 
-        // send a D-Bus AUTH message. Expected answer is “REJECT"
+問題のデバイスがエミュレートされていることを示すインジケータはいくつかあります。これらの API 呼び出しはすべてフックできますが、これらのインジケータはささやかな防御の第一線を提供します。
 
-        send(sock, "\x00", 1, NULL);
-        send(sock, "AUTH\r\n", 6, NULL);
+インジケータの最初のセットは `build.prop` ファイル内にあります。
 
-        usleep(100);
-
-        if (ret = recv(sock, res, 6, MSG_DONTWAIT) != -1) {
-
-            if (strcmp(res, "REJECT") == 0) {
-               /* Frida server detected. Do something… */
-            }
-        }
-    }
-    close(sock);
-}
-```
-
-私たちは fridaserver を検出する非常に安定した手法を持っていますが、目立った問題がいくつかあります。最も重要なこととして、frida は fridaserver を必要としない代替の操作モードを提供しています。それらをどのように検出しますか。
-
-frida のすべてのモードでの共通のテーマはコードインジェクションです。したがって、frida が使用されるときはいつでも、frida 関連のライブラリがメモリにマップされていることが期待できます。それらを検出する簡単な方法は、ロードされているライブラリのリストを調べて、疑わしいものをチェックすることです。
-
-```c
-char line[512];
-FILE* fp;
-
-fp = fopen("/proc/self/maps", "r");
-
-if (fp) {
-    while (fgets(line, 512, fp)) {
-        if (strstr(line, "frida")) {
-            /* Evil library is loaded. Do something… */
-        }
-    }
-
-    fclose(fp);
-
-    } else {
-       /* Error opening /proc/self/maps. If this happens, something is of. */
-    }
-}
-```
-
-これは名前に "frida" を含むライブラリを検出します。表面上ではこれは機能しますが、いくつかの大きな問題があります。
-
-- fridaserver と呼ばれる fridaserver に頼るのは良い考えではなかったことを覚えていますか。同じことがここに当てはまります。frida に小さな変更を加えることで、frida エージェントライブラリは簡単に名前を変更できます。- 検出は fopen() や strstr() などの標準ライブラリコールに依存します。本質的には、あなたが察するように frida で簡単にフックできる関数を使用して frida を検出しようとしています。明らかにこれはあまり強固な戦略ではありません。
-
-課題番号一は古典的なウイルススキャナ風の戦略を実装することで対応できます。frida のライブラリにある「ガジェット」が存在するかどうかメモリをスキャンします。私はすべてのバージョンの frida-gadget と frida-agent に存在すると思われる文字列 "LIBFRIDA" を選択しました。以下のコードを使用して、/proc/self/maps にリストされているメモリマッピングを繰り返し、各実行可能セクション内の文字列を検索します。簡潔にするために瑣末な機能は除外していることに注意します。それらは GitHub にあります。
-
-```c
-static char keyword[] = "LIBFRIDA";
-num_found = 0;
-
-int scan_executable_segments(char * map) {
-    char buf[512];
-    unsigned long start, end;
-
-    sscanf(map, "%lx-%lx %s", &start, &end, buf);
-
-    if (buf[2] == 'x') {
-        return (find_mem_string(start, end, (char*)keyword, 8) == 1);
-    } else {
-        return 0;
-    }
-}
-
-void scan() {
-
-    if ((fd = my_openat(AT_FDCWD, "/proc/self/maps", O_RDONLY, 0)) >= 0) {
-
-    while ((read_one_line(fd, map, MAX_LINE)) > 0) {
-        if (scan_executable_segments(map) == 1) {
-            num_found++;
-        }
-    }
-
-    if (num_found > 1) {
-
-        /* Frida Detected */
-    }
-
-}
-```
-
-通常の libc ライブラリ関数の代わりに my_openat() などを使用することに注意します。これらは Bionic libc と同様に機能するカスタム実装です。それぞれのシステムコールの引数を設定し、swi 命令を実行します (下記参照) 。これによりパブリック API の依存がなくなり、典型的な libc フックの影響を受けにくくなります。完全な実装は syscall.S にあります。以下は my_openat() のアセンブラ実装です。
-
-```
-#include "bionic_asm.h"
-
-.text
-    .globl my_openat
-    .type my_openat,function
-my_openat:
-    .cfi_startproc
-    mov ip, r7
-    .cfi_register r7, ip
-    ldr r7, =__NR_openat
-    swi #0
-    mov r7, ip
-    .cfi_restore r7
-    cmn r0, #(4095 + 1)
-    bxls lr
-    neg r0, r0
-    b __set_errno_internal
-    .cfi_endproc
-
-    .size my_openat, .-my_openat;
-```
-
-これは全体としては多少効果的ですが、frida でのみバイパスすることは困難です。特にいくつかの難読化が加えられた場合には。それでも、これをバイパスする方法は多くあります。パッチ適用とシステムコールのフックが思い浮かびます。覚えておいて。リバースエンジニアは常に勝利することを。
-
-上記の検出方法を試すには、Android Studio Project をダウンロードしてビルドします。frida が注入されると、アプリは以下のようなエントリを生成します。
-
-##### リバースエンジニアリングツールの検出のバイパス
-
-1. アンチデバッグ機能にパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
-2. Frida または Xposed を使用して Java およびネイティブレイヤ上のファイルシステム API をフックします。改変されたファイルの代わりに元のファイルへのハンドルを返します。
-3. カーネルモジュールを使用して、ファイル関連システムコールを傍受します。プロセスが改変されたファイルを開こうとすると、代わりに改変されていないバージョンのファイルのファイル記述子が返ります。
-
-パッチ、コードインジェクション、カーネルモジュールの例については、「改竄とリバースエンジニアリング」のセクションを参照ください。
-
-#### 有効性評価
-
-さまざまなアプリやフレームワークをインストールして、アプリを体系的に起動します。少なくとも以下のもので行います。
-
-- Substrate for Android
-- Xposed
-- Frida
-- Introspy-Android
-- Drozer
-- RootCloak
-- Android SSL Trust Killer
-
-アプリはこれらのツールの存在を検出して、何らかの方法で応答する必要があります。少なくとも、アプリはユーザーに警告したり、アプリを終了したりする必要があります。防御をバイパスするように作業し、以下の質問に答えます。
-
-- 単純な手法を使用してメカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
-- 静的および動的解析を使用してアンチデバッグコードを特定することはどの程度困難か？
-- 防御を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
-- 難易度の主観的評価は何か？
-
-より詳細な評価を行いには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
-##### OWASP MASVS
-
-- V8.4: "アプリはコードインジェクションツール、フッキングフレームワーク、デバッグサーバーなど広く使用されているリバースエンジニアリングツールの存在を検出している。"
-
-##### CWE
-
-N/A
-
-##### その他
-
-- [1] Netitude Blog - Who owns your runtime? - https://labs.nettitude.com/blog/ios-and-android-runtime-and-anti-debugging-protections/
-
-##### ツール
-
-* frida - https://www.frida.re/
-
-### エミュレータ検出のテスト
-
-#### 概要
-
-アンチリバースの文脈では、エミュレータ検出の目的はエミュレートされたデバイスでのアプリの実行をもう少し難しくすることです。これはリバースエンジニアが使用したいツールやテクニックを次々に妨げます。これによりリバースエンジニアはエミュレータチェックを無効にしたり物理デバイスを使用したりします。これは大規模なデバイス解析のためのエントリに障壁を提供します。
-
-#### エミュレータ検出の例
-
-問題のデバイスがエミュレートされていることを示すいくつかのインジケータがあります。これらの API コールのすべてがフックされている可能性がありますが、これは控えめな第一線の防御を提供します。
-
-最初のインジケータセットは build.prop ファイルからのものです。
-
-```
+```default
 API Method          Value           Meaning
 Build.ABI           armeabi         possibly emulator
 BUILD.ABI2          unknown         possibly emulator
@@ -1101,15 +743,14 @@ Build.MODEL         sdk             emulator
 Build.PRODUCT       sdk             emulator
 Build.RADIO         unknown         possibly emulator
 Build.SERIAL        null            emulator
-Build.TAGS          test-keys       emulator
 Build.USER          android-build   emulator
 ```
 
-build.prop ファイルはルート化された android デバイスで変更することや、ソースから AOSP をコンパイルする際に変更できることに注意する必要があります。これらの技法はいずれも上記の静的文字列チェックをバイパスします。
+ルート化された Android デバイスで `build.prop` ファイルを編集したり、ソースから AOSP をコンパイルするときにファイルを改変できます。いずれの技法でも上記の静的文字列チェックをバイパスできます。
 
-以下の静的インジケータセットは Telephony マネージャを使用します。すべての android エミュレータはこの API が照会できる固定値を持っています。
+次の静的インジケータのセットはテレフォニーマネージャを利用します。すべての Android エミュレータはこの API がクエリできる固定値があります。
 
-```
+```default
 API                                                     Value                   Meaning
 TelephonyManager.getDeviceId()                          0's                     emulator
 TelephonyManager.getLine1 Number()                      155552155               emulator
@@ -1124,66 +765,20 @@ TelephonyManager.getSubscriberId()                      310260000000000         
 TelephonyManager.getVoiceMailNumber()                   15552175049             emulator
 ```
 
-Xposed や Frida などのフッキングフレームワークはこの API をフックして誤ったデータを提供する可能性があることに注意します。
+Xposed や Frida などのフックフレームワークはこの API をフックして偽のデータを提供する可能性があることを心に留めてください。
 
-#### エミュレータ検出のバイパス
+### ランタイム完全性検証
 
-1. エミュレータ検出機能にパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
-2. Frida または Xposed を使用して Java およびネイティブレイヤ上のファイルシステム API をフックします。エミュレータを示す値の代わりに (できれば実デバイスから取得した) 無害に見える値を返します。例えば、<code>TelephonyManager.getDeviceID()</code> をオーバーライドして IMEI 値を返します。
+このカテゴリのコントロールはアプリのメモリ空間の完全性を検証して、実行時に適用されるメモリパッチからアプリを保護します。このようなパッチにはバイナリコード、バイトコード、関数ポインタテーブル、重要なデータ構造に対する望ましくない変更やプロセスメモリにロードされた不正コードが含まれます。完成性は以下のように検証します。
 
-パッチ、コードインジェクション、カーネルモジュールについては「改竄とリバースエンジニアリング」セクションを参照します。
+1. メモリの内容や内容のチェックサムを適切な値と比較して、
+2. 望ましくない改変のシグネチャがないかメモリを検索します。
 
-#### 有効性評価
+「リバースエンジニアリングツールとフレームワークの検出」カテゴリと重複する部分があり、実際、プロセスメモリで Frida 関連文字列を検索する方法を示した際に、その章でシグネチャベースのアプローチを説明しました。以下にさまざまな種類の完全性監視の例をいくつか挙げます。
 
-エミュレータにアプリをインストールして実行します。アプリはこれを検出して終了するか、保護されている機能を実行することを拒否する必要があります。
+#### Java ランタイムの改竄の検出
 
-防御をバイパスするように作業し、以下の質問に答えます。
-
-- 静的および動的解析を使用してエミュレータ検出コードを特定することはどの程度困難か？
-- 単純な手法を使用して検出メカニズムをバイパスすることは可能か？ (例えば、単一の API 関数をフックするなど)
-- アンチエミュレータ機能を無効にするカスタムコードを書く必要はあるか？どの程度の時間を費やす必要があったか？
-- 難易度の主観的評価は何か？
-
-より詳細な評価を行いには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を適用します。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
-##### OWASP MASVS
-
-- V8.5: "アプリは任意の方法を使用してエミュレータ内で動作しているかどうかを検出し応答している。"
-
-##### CWE
-
-N/A
-
-##### その他
-
-- [1] Timothy Vidas & Nicolas Christin - Evading Android Runtime Analysis via Sandbox Detection - https://users.ece.cmu.edu/~tvidas/papers/ASIACCS14.pdf
-
-##### ツール
-
-N/A
-
-### ランタイム整合性監視のテスト
-
-#### 概要
-
-このカテゴリのコントロールはアプリ自身のメモリ空間の整合性を検証することです。実行時に適用されるメモリパッチから保護することを目的とします。これにはバイナリコードやバイトコード、関数ポインタテーブル、重要なデータ構造、プロセスメモリにロードされる不正なコードなどの望まれない変更が含まれます。整合性は以下のいずれかにより検証できます。
-
-1. メモリの内容、または内容のチェックサムを既知の正しい値と比較する
-2. 望まれない改変のシグネチャがないかメモリを検索する
-
-カテゴリ「リバースエンジニアリングツールとフレームワークの検出」と一部重複があります。また、実際、その章でシグネチャベースのアプローチをすでに説明しました。プロセスメモリ内の frida 関連文字列を検索する方法を示しています。以下にさまざまな種類の整合性監視についていくつかの例を示します。
-
-##### 実行時整合性チェックの例
-
-**Java ランタイムによる改竄検出**
-
-dead && end blog <sup>[3]</sup> のコード検出。
+この検出コードは [dead && end blog](https://d3adend.org/blog/?p=589 "dead && end blog - Android Anti-Hooking Techniques in Java") から引用しました。
 
 ```java
 try {
@@ -1215,348 +810,149 @@ catch(Exception e) {
 }
 ```
 
-**ネイティブフックの検出**
+#### ネイティブフックの検出
 
-ELF バイナリでは、メモリ内の関数ポインタを上書きする (GOT や PLT フックなど) か、関数コード自体の一部にパッチを当てる (インラインフック) ことにより、ネイティブ関数フックをインストールできます。それぞれのメモリ領域の整合性をチェックすることが、この種のフックを検出する技法のひとつです。
+ELF バイナリを使用すると、メモリ内の関数ポインタを上書き (グローバスオフセットテーブルや PLT フックなど) したり、関数コード自体の一部にパッチを適用 (インラインフック) することでネイティブ関数フックをインストールできます。それぞれのメモリ領域の完全性をチェックすることがこの種のフックを検出する一つの方法です。
 
-グローバルオフセットテーブル (GOT) はライブラリ関数を解決するために使用されます。実行時に、動的リンカがこのテーブルにグローバルシンボルの絶対アドレスでパッチします。*GOT フック* は格納されている関数アドレスを上書きし、正当な関数呼び出しを攻撃者が制御するコードにリダイレクトします。このタイプのフックは、プロセスメモリマップを列挙し、各 GOT エントリポイントが正当にロードされたライブラリを指すことを確認することにより検出できます。
+グローバルオフセットテーブル (GOT) はライブラリ関数を解決するために使用されます。実行時に、ダイナミックリンカはこのテーブルをグローバルシンボルの絶対アドレスでパッチします。 _GOT フック_ は保存されている関数アドレスを上書きし、正当な関数呼び出しを攻撃者が制御するコードにリダイレクトします。プロセスメモリマップを列挙し、それぞれの GOT エントリが正当にロードされたライブラリを指していることを検証することで、この種のフックを検出できます。
 
-GNU <code>ld</code> はシンボルアドレスを初回に必要とされる一度だけ解決します (遅延バインディング)。対照的に、Android リンカはライブラリがロードされるとすべての外部関数を解決し、即座にそれぞれの GOT エントリを書き込みます (即時バインディング) 。したがって、すべての GOT エントリが実行時にそれぞれのライブラリのコードセクション内の有効なメモリ位置を指すことを期待できます。GOT フック検出手法は通常 GOT を見歩き、実際にそうであることを確認します。
+初めてシンボルアドレスが必要になったときにのみ解決を行う (遅延バインディング) GNU `ld` とは対照的に、 Android リンカーはライブラリがロードされた直後にすべての外部関数を解決してそれぞれの GOT エントリを書き込みます (即時バインディング)。したがって、すべての GOT エントリは実行時にそれぞれのライブラリのコードセクション内の有効なメモリ位置を指していることを期待できます。 GOT フック検出手法では一般的に GOT を歩いてこれを検証します。
 
-*インラインフック* は関数コードの最初または最後にいくつかの命令を上書きして動作します。実行時に、このいわゆるトランポリンが注入されたコードに実行をリダイレクトします。インラインフックは、ライブラリ関数のプロローグとエピローグを調べることで、ライブラリ外の場所への far jump などの疑わしい命令を検出できます。
+インラインフックは関数コードの先頭または末尾にいくつかの命令を上書きすることで機能します。実行時には、このいわゆるトランポリンは注入されたコードに実行をリダイレクトします。ライブラリ関数のプロローグとエピローグに対してライブラリ外部の位置へのファージャンプなどの疑わしい命令などを検査することで、インラインフックを検出できます。
 
-#### バイパスと有効性の評価
+### 難読化
 
-リバースエンジニアリングツールのすべてのファイルベースの検出が無効化されていることを確認します。次に、Xposed, Frida, Substrate を使用してコードを注入し、ネイティブフックと Java メソッドフックのインストールを試みます。アプリはメモリ内の「敵意のある」コードを検出し、それに応じて対応する必要があります。より詳細な評価を行うには、「ソフトウェア保護スキームの評価」の章の「プログラムによる防御の評価」に記載されている基準を使用して、使用されている検出メカニズムの特定および回避を行います。
+["モバイルアプリの改竄とリバースエンジニアリング"](0x04c-Tampering-and-Reverse-Engineering.md#obfuscation) の章ではモバイルアプリ全般に使用できるよく知られた難読化技法をいくつか紹介しています。
 
-以下の技法を使用してチェックのバイパスを手がけます。
+Android アプリはさまざまなツールを使用してこれらの難読化技法のいくつかを実装できます。たとえば、 [ProGuard](0x08a-Testing-Tools.md#proguard) はコードを縮小して難読化し、Android Java アプリのバイトコードから不要なデバッグ情報を削除する簡単な方法を提供します。それはクラス名、メソッド名、変数名などの識別子を意味のない文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響はありません。
 
-1. 整合性チェックにパッチを当てます。それぞれのバイトコードまたはネイティブコードを NOP 命令で上書きするだけで望まれない動作を無効にします。
-2. Frida または Xposed を使用して検出に使用される API をフックし、偽の値を返します。
+> Java クラスを逆コンパイルするのは簡単なので、製品バイトコードには常になんらかの基本的な難読化を適用することをお勧めします。
 
-パッチ、コードインジェクション、カーネルモジュールについては「改竄とリバースエンジニアリング」セクションを参照します。
+Android 難読化技法について詳しくは以下をご覧ください。
 
-#### 有効性評価
+- ["Security Hardening of Android Native Code"](https://darvincitech.wordpress.com/2020/01/07/security-hardening-of-android-native-code/) by Gautam Arvind
+- ["APKiD: Fast Identification of AppShielding Products"](https://github.com/enovella/cve-bio-enovella/blob/master/slides/APKiD-NowSecure-Connect19-enovella.pdf) by Eduardo Novella
+- ["Challenges of Native Android Applications: Obfuscation and Vulnerabilities"](https://www.theses.fr/2020REN1S047.pdf) by Pierre Graux
 
+#### ProGuard の使用
 
+開発者は build.gradle ファイルを使用して難読化を有効にします。以下の例では `minifyEnabled` と `proguardFiles` を設定していることがわかります。一部のクラスを難読化から保護するために例外を (`-keepclassmembers` と `-keep class` で) 作成することが一般的です。したがって、ProGuard 構成ファイルを監査して、どのクラスが除外されているかを確認することが重要です。 `getDefaultProguardFile('proguard-android.txt')` メソッドは `<Android SDK>/tools/proguard/` フォルダからデフォルトの ProGuard 設定を取得します。
 
-#### 参考情報
+アプリを縮小、難読化、最適化する方法の詳細については [Android 開発者ドキュメント](https://developer.android.com/studio/build/shrink-code "Shrink, obfuscate, and optimize your app") を参照してください。
 
-##### OWASP Mobile Top 10 2016
+> Android Studio 3.4 や Android Gradle プラグイン 3.4.0 以降を使用してプロジェクトをビルドすると、プラグインはコンパイル時のコード最適化を実行するために ProGuard を使用しなくなります。代わりに、プラグインは R8 コンパイラを使用します。R8 は既存のすべての ProGuard ルールファイルで動作するため、R8 を使用するように Android Gradle プラグインを更新しても既存のルールを変更する必要はありません。
 
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
+R8 は Google の新しいコードシュリンカーであり、Android Studio 3.3 beta で導入されました。デフォルトで R8 は行番号、ソースファイル名、変数名などのデバッグに役立つ属性を削除します。R8 はフリーの Java クラスファイルシュリンカー、オプティマイザー、オブファスケーター、プリベリファイアであり、ProGuard よりも高速です。 [Android 開発者ブログの詳細についての投稿](https://android-developers.googleblog.com/2018/11/r8-new-code-shrinker-from-google-is.html "R8") も参照してください。これは Android の SDK ツールに同梱されています。リリースビルドの縮小を有効にするには、以下を build.gradle に追加します。
 
-##### OWASP MASVS
+```default
+android {
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
 
--- TODO [Update reference "VX.Y" below and description] --
-- VX.Y: "Requirement text, e.g. 'the keyboard cache is disabled on text inputs that process sensitive data'."
-
-##### CWE
--- TODO [Add relevant CWE for "Testing Memory Integrity Checks"] --
-- CWE-312 - Cleartext Storage of Sensitive Information
-
-##### その他
-
-- [1] Michael Hale Ligh, Andrew Case, Jamie Levy, Aaron Walters (2014) *The Art of Memory Forensics.* Wiley. "Detecting GOT Overwrites", p. 743.
-- [2] Netitude Blog - "Who owns your runtime?" - https://labs.nettitude.com/blog/ios-and-android-runtime-and-anti-debugging-protections/
-- [3] dead && end blog - Android Anti-Hooking Techniques in Java - http://d3adend.org/blog/?p=589
-
-##### ツール
-
--- TODO [Add link to relevant tools for "Testing Memory Integrity Checks"] --
-* Enjarify - https://github.com/google/enjarify
-
-### デバイス結合のテスト
-
-#### 概要
-
-デバイス結合の目的は、アプリとその状態をデバイス A からデバイス B にコピーし、デバイス B でアプリの実行を継続しようとする、攻撃者を妨害することです。デバイス A が信頼できるとみなされた場合、デバイス B よりも多くの権限を持つ可能性があります。アプリがデバイス A からデバイス B にコピーされたときに変更してはいけません。
-
-#### 静的解析
-
-以前は、Android 開発者はセキュアな ANDROID_ID (SSAID) と MAC アドレスにしばしば依存していました。しかし、SSAID の動作は Android O で変更され、MAC アドレスの動作は Android N で変更されました <sup>[1]</sup> 。また、Google は識別子に関する SDK ドキュメントに新しい推奨事項を設定しました <sup>[2]</sup> 。
-ソースコードが利用可能である場合、以下のようないくつかのコードを見つけることができます。
-- 将来には機能しない固有の識別子の存在
-  - `Build.getSerial()` の存在なしでの `Build.SERIAL`
-  - HTC デバイス向けの `htc.camera.sensor.front_SN`
-  - `persist.service.bdroid.bdadd`
-  - `Settings.Secure.bluetooth_address`, マニフェストでシステムパーミッション LOCAL_MAC_ADDRESS が有効である場合を除く
-
-- 識別子として ANDROID_ID のみを使用すること。これは古いデバイスを使用する場合、バインディング品質に影響を与える可能性があります。
-- InstanceID, `Build.SERIAL`, IMEI はいずれも存在しないこと。
-
-```java
-  TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-  String IMEI = tm.getDeviceId();
-```
-
-
-さらに、識別子が使用できることを保証するために、IMEI および Build.Serial を使用する場合には AndroidManifest.xml をチェックする必要があります。次のパーミッションが含まれている必要があります: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`
-
-#### 動的解析
-
-アプリケーションバインディングをテストする方法はいくつかあります。
-
-##### エミュレータを使用した動的解析
-
-1. エミュレータ上でアプリケーションを実行します。
-2. アプリケーションのインスタンスの信頼を高めることができることを確認します (認証など) 。
-3. エミュレータからデータを取得します。これにはいくつかのステップがあります。
-- ADB shell を使用してシミュレータに ssh します
-- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
-- cache と shared-preferences のコンテンツを chmod 777 します
-- カレントユーザーを exit します
-- /dat/data/<your appid>/cache および shared-preferences のコンテンツを SD カードに copy します
-- ADB または DDMS を使用してコンテンツを pull します
-4. 別のエミュレータにそのアプリケーションをインストールします
-5. アプリケーションの data フォルダに step 3 のデータを上書きします
-- 二つ目のエミュレータの SD カードに step 3 のコンテンツをコピーします
-- ADB shell を使用してシミュレータに ssh します
-- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
-- フォルダ cache と shared-preferences を chmod 777 します
-- SD カードの古いコンテンツを /dat/data/<your appid>/cache および shared-preferences に copy します
-6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
-
-##### Google InstanceID
-
-Google InstanceID <sup>[5]</sup> はトークンを使用して、デバイスで実行中のアプリケーションインスタンスを認証します。アプリケーションがリセット、アンインストールなどが行われた瞬間、instanceID はリセットされます。つまり、アプリの新しい "instance" を持つことを意味します。
-instanceID のアカウントには以下のステップを行う必要があります。
-0. 指定のアプリケーション用に Google Developer Console で instanceID を構成します。これには PROJECT_ID の管理も含まれます。
-
-1. Google play サービスを設定します。build.gradle に以下を追加します。
-```groovy
-  apply plugin: 'com.android.application'
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+        }
+    }
     ...
-
-    dependencies {
-        compile 'com.google.android.gms:play-services-gcm:10.2.4'
-    }
-```
-2. instanceID を取得します。
-```java
-  String iid = InstanceID.getInstance(context).getId();
-  //now submit this iid to your server.
+}
 ```
 
-3. トークンを生成します。
-```java
-String authorizedEntity = PROJECT_ID; // Project id from Google Developer Console
-String scope = "GCM"; // e.g. communicating using GCM, but you can use any
-                      // URL-safe characters up to a maximum of 1000, or
-                      // you can also leave it blank.
-String token = InstanceID.getInstance(context).getToken(authorizedEntity,scope);
-//now submit this token to the server.
-```
-4. 無効なデバイス情報、セキュリティ問題などの場合に instanceID からのコールバックを処理できることを確認します。
-このためには `InstanceIDListenerService` を拡張し、そこでコールバックを処理する必要があります。
+`proguard-rules.pro` ファイルはカスタム ProGuard ルールを定義する場所です。 `-keep` フラグで R8 により削除されないように特定のコードを保持できます。フラグを使用しないとエラーが発生する可能性があります。たとえば、一般的な Android クラスを保持するには、サンプル構成 `proguard-rules.pro` ファイルのようにします。
 
-```java
-public class MyInstanceIDService extends InstanceIDListenerService {
-  public void onTokenRefresh() {
-    refreshAllTokens();
-  }
-
-  private void refreshAllTokens() {
-    // assuming you have defined TokenList as
-    // some generalized store for your tokens for the different scopes.
-    // Please note that for application validation having just one token with one scopes can be enough.
-    ArrayList<TokenList> tokenList = TokensList.get();
-    InstanceID iid = InstanceID.getInstance(this);
-    for(tokenItem : tokenList) {
-      tokenItem.token =
-        iid.getToken(tokenItem.authorizedEntity,tokenItem.scope,tokenItem.options);
-      // send this tokenItem.token to your server
-    }
-  }
-};
-
-```
-最後に AndroidManifest にサービスを登録します。
-```xml
-<service android:name=".MyInstanceIDService" android:exported="false">
-  <intent-filter>
-        <action android:name="com.google.android.gms.iid.InstanceID"/>
-  </intent-filter>
-</service>
+```default
+...
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+...
 ```
 
-iid とトークンをサーバーに送信する際、サーバーを Instance ID Cloud Service とともに使用して、トークンと iid を検証できます。iid もしくはトークンが無効であると思われる場合、セーフガードの手順 (例えば、コピーの可能性、セキュリティ問題の可能性などをサーバーに通知する、またはアプリからデータを削除して再登録を求めるなど) を実行できます。
+[以下の構文](https://developer.android.com/studio/build/shrink-code#configuration-files "Customize which code to keep") でプロジェクト内の特定のクラスやライブラリに対してこれをより詳細に定義できます。
 
-Firebase にも InstanceID のサポートがあります <sup>[4]</sup> 。
--- TODO [SHOULD WE ADD THE SERVER CODE HERE TOO TO EXPLAIN HOW TOKENS CAN BE USED TO EVALUATE?] --
-
-##### IMEI とシリアル
-
-一般的にアプリケーションに関わるリスクが高くはない場合に、Google はこれらの識別子の使用を推奨しています。
-
-Android O 以前のデバイスの場合、以下のようにシリアルを要求できます。
-
-```java
-   String serial = android.os.Build.SERIAL;
+```default
+-keep public class MyClass
 ```
 
-Android O 以降では、以下のようにデバイスのシリアルを要求できます。
+難読化は実行時のパフォーマンスにコストをもたらすことがよくあるため、通常はコードの特定の非常に特殊な部分、一般的にセキュリティと実行時保護を扱う部分、にのみ適用します。
 
-1. Android Manifest にパーミッションを設定します。
-```xml
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-```
-2. 実行時にユーザーへのパーミッションを要求します。詳細については https://developer.android.com/training/permissions/requesting.html を参照します。
-3. シリアルを取得します。
+### デバイスバインディング
 
-```java
-  String serial = android.os.Build.getSerial();
-```
+デバイスバインディングの目的はアプリとその状態をデバイス A からデバイス B にコピーし、デバイス B でアプリの実行を継続しようとする攻撃者を阻止することです。デバイス A が信頼できると判断された後、デバイス B よりも多くの権限を持つ可能性があります。このような差分の権限はアプリがデバイス A からデバイス B にコピーされても変更すべきではありません。
 
-Android での IMEI の取得は以下のように動作します。
+使用可能な識別子を説明する前に、それらをバインディングに使用できる方法について簡単に説明します。デバイスバインディングを可能にする三つの方法があります。
 
-1. Android Manifest に必要なパーミッションを設定します。
-```xml
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-```
+- 認証に使用されるクレデンシャルをデバイス識別子で補強します。これはアプリケーション自体やユーザーを頻繁に再認証する必要がある場合に意味があります。
 
-2. Android M 以上の場合、実行時にユーザーへのパーミッションを要求します。詳細については https://developer.android.com/training/permissions/requesting.html を参照します。
+- デバイスに強くバインドされている鍵マテリアルでデバイスに保存されるデータを暗号化することでデバイスバインディングを強化できます。Android Keystore はエクスポートできない鍵を提供しており、これに使用できます。悪意のある攻撃者がデバイスからそのようなデータを抽出した場合、鍵にアクセスできないため、データを復号できないでしょう。これを実装するには、以下の手順を行います。
 
-3. IMEI を取得します。
-```java
-  TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-  String IMEI = tm.getDeviceId();
-```
+    - `KeyGenParameterSpec` API を使用して Android Keystore の鍵ペアを生成します。
 
-##### SSAID
+      ```java
+      //Source: <https://developer.android.com/reference/android/security/keystore/KeyGenParameterSpec.html>
+      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
+              KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
+      keyPairGenerator.initialize(
+              new KeyGenParameterSpec.Builder(
+                      "key1",
+                      KeyProperties.PURPOSE_DECRYPT)
+                      .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
+                      .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
+                      .build());
+      KeyPair keyPair = keyPairGenerator.generateKeyPair();
+      Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+      cipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
+      ...
 
-一般にアプリケーションに関わるリスクが高くはない場合に、Google はこれらの識別子の使用を推奨しています。以下のようにして SSAID を取得できます。
+      // The key pair can also be obtained from the Android Keystore any time as follows:
+      KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+      keyStore.load(null);
+      PrivateKey privateKey = (PrivateKey) keyStore.getKey("key1", null);
+      PublicKey publicKey = keyStore.getCertificate("key1").getPublicKey();
+      ```
 
-```java
-  String SSAID = Settings.Secure.ANDROID_ID;
-```
-#### 有効性評価
+    - AES-GCM の暗号鍵 (secret key) を生成します。
 
-ソースコードが利用可能である場合、以下のようないくつかのコードを見つけることができます。
-- 将来には機能しない固有の識別子の存在
-  - `Build.getSerial()` の存在なしでの `Build.SERIAL`
-  - HTC デバイス向けの `htc.camera.sensor.front_SN`
-  - `persist.service.bdroid.bdadd`
-  - `Settings.Secure.bluetooth_address`, マニフェストでシステムパーミッション LOCAL_MAC_ADDRESS が有効である場合を除く
+      ```java
+      //Source: <https://developer.android.com/reference/android/security/keystore/KeyGenParameterSpec.html>
+      KeyGenerator keyGenerator = KeyGenerator.getInstance(
+              KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+      keyGenerator.init(
+              new KeyGenParameterSpec.Builder("key2",
+                      KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                      .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                      .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                      .build());
+      SecretKey key = keyGenerator.generateKey();
 
-- 識別子として ANDROID_ID のみを使用すること。これは古いデバイスを使用する場合、バインディング品質に影響を与える可能性があります。
-- InstanceID, `Build.SERIAL`, IMEI はいずれも存在しないこと。
+      // The key can also be obtained from the Android Keystore any time as follows:
+      KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+      keyStore.load(null);
+      key = (SecretKey) keyStore.getKey("key2", null);
+      ```
 
-```java
-  TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-  String IMEI = tm.getDeviceId();
-```
+    - AES-GCM 暗号の暗号鍵 (secret key) を使用して、アプリケーションによって保存されている認証データやその他の機密データを暗号化し、インスタンス ID などのデバイス固有のパラメータを関連データとして使用します。
 
-さらに、識別子が使用できることを保証するために、IMEI および Build.Serial を使用する場合には AndroidManifest.xml をチェックする必要があります。次のパーミッションが含まれている必要があります: `<uses-permission android:name="android.permission.READ_PHONE_STATE"/>`
+      ```java
+      Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+      final byte[] nonce = new byte[GCM_NONCE_LENGTH];
+      random.nextBytes(nonce);
+      GCMParameterSpec spec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, nonce);
+      cipher.init(Cipher.ENCRYPT_MODE, key, spec);
+      byte[] aad = "<deviceidentifierhere>".getBytes();;
+      cipher.updateAAD(aad);
+      cipher.init(Cipher.ENCRYPT_MODE, key);
 
-デバイスバインディングを動的にテストする方法はいくつかあります。
+      //use the cipher to encrypt the authentication data see 0x50e for more details.
+      ```
 
-##### エミュレータを使用する場合
+    - Android Keystore に保存されている公開鍵 (public key) を使用して暗号鍵 (secret key) を暗号化し、暗号化された暗号鍵 (secret key) をアプリケーションのプライベートストレージに保存します。
+    - アクセストークンやその他の機密データなどの認証データが必要な場合、Android Keystore に保存されている秘密鍵 (private key) を使用して暗号鍵 (secret key) を復号し、復号した暗号鍵 (secret key) を使用して暗号文を復号します。
 
-1. エミュレータ上でアプリケーションを実行します。
-2. アプリケーションのインスタンスの信頼を高めることができることを確認します (認証など) 。
-3. エミュレータからデータを取得します。これにはいくつかのステップがあります。
-- ADB shell を使用してシミュレータに ssh します
-- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
-- cache と shared-preferences のコンテンツを chmod 777 します
-- カレントユーザーを exit します
-- /dat/data/<your appid>/cache および shared-preferences のコンテンツを SD カードに copy します
-- ADB または DDMS を使用してコンテンツを pull します
-4. 別のエミュレータにそのアプリケーションをインストールします
-5. アプリケーションの data フォルダに step 3 のデータを上書きします
-- 二つ目のエミュレータの SD カードに step 3 のコンテンツをコピーします
-- ADB shell を使用してシミュレータに ssh します
-- <あなたの app-id (AndroidManifest.xml に記載されているパッケージ)> を run-as します
-- フォルダ cache と shared-preferences を chmod 777 します
-- SD カードの古いコンテンツを /dat/data/<your appid>/cache および shared-preferences に copy します
-6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
-
-##### 二つの個別のルート化デバイスを使用する場合
-
-1. ルート化デバイス上でアプリケーションを実行します。
-2. アプリケーションのインスタンスの信頼を高めることができることを確認します (認証など) 。
-3. 一つ目のルート化デバイスからデータを取得します。
-4. 二つ目のルート化デバイス上にアプリケーションをインストールします。
-5. アプリケーションの data フォルダに step 3 のデータを上書きします。
-6. 認証された状態で継続できるでしょうか。そうであれば、バインディングは正しく機能していない可能性があります。
-
-#### 改善方法
-
-SSAID の動作は Android O で変更され、MAC アドレスの動作は Android N で変更されました <sup>[1]</sup> 。また、Google は識別子に関する SDK ドキュメントに新しい推奨事項を設定しました <sup>[2]</sup> 。この新しい動作のため、開発者は SSAID だけに依存しないことをお勧めします。その識別子は安定ではありません。例えば、Android へのアップグレード後に、工場出荷のリセットやアプリの再インストールの際に、SSAID が変更される可能性があります。同じ ANDROID_ID やオーバーライドできる ANDROID_ID を持つデバイスが多くあることに注意します。
-また、Build.Serial がよく使われていました。ここで、Android O をターゲットとするアプリが Build.Serial をリクエストすると "UNKNOWN" を取得します。
-使用可能な識別子について述べる前に、バインディングを使用する方法について簡単に論じます。デバイスバインディングを可能にする3つの方法があります。
-
-- デバイス識別子での認証に使用される資格情報を増やします。これはアプリケーションが自分自身やユーザーを頻繁に再認証する必要がある場合にのみ意味を成します。
-- デバイス識別子を暗号化方式の鍵として使用して、デバイスに格納されているデータを暗号化します。これは、アプリにより多くのオフライン作業が行われるとき、または API へのアクセスがアプリケーションにより格納されたアクセストークンに依存するときに、デバイスへのバインディングに役立ちます。
-- トークンベースのデバイス認証 (InstanceID) を使用して、アプリの同じインスタンスが使用されていることを再確認します。
-
-以下の3つの識別子を使用できます。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
-##### OWASP MASVS
-
-- V8.10: "アプリはデバイスに固有の複数のプロパティから由来したデバイスフィンガープリントを使用して「デバイス結合」機能を実装している。"
-
-##### CWE
-
-N/A
-
-##### その他
-- [1] Changes in the Android device identifiers - https://android-developers.googleblog.com/2017/04/changes-to-device-identifiers-in.html
-- [2] Developer Android documentation - https://developer.android.com/training/articles/user-data-ids.html
-- [3] Documentation on requesting runtime permissions - https://developer.android.com/training/permissions/requesting.html
-- [4] Firebase InstanceID documentation - https://firebase.google.com/docs/reference/android/com/google/firebase/iid/FirebaseInstanceId
-- [5] Google InstanceID documentation - https://developers.google.com/instance-id/
-
-##### ツール
-
-* ADB および DDMS
-* Android エミュレータまたは2つのルート化デバイス
-
-### 難読化のテスト
-
-#### 概要
-
-難読化はコードとデータを変換して理解しにくくするためのプロセスです。これはすべてのソフトウェア保護スキームに不可欠なものです。重要なことは、難読化が単にオンまたはオフにできるものではないということを理解することです。むしろ、プログラムやその一部を理解できなくし、異なるグレードにできる方法はたくさんあります。
-
-このテストケースでは、Android で一般的に使用されるいくつかの基本的な難読化技法について説明します。難読化の詳細については、「ソフトウェア保護スキームの評価」の章を参照ください。
-
-#### 有効性評価
-
-バイトコードを逆コンパイルし、インクルードされたライブラリファイルを逆アセンブルし、静的解析を実行するために妥当な努力をします。少なくとも、アプリのコア機能を簡単に識別できてはいけません (つまり、その機能が難読化されていることを意味します) 。それを検証します。
-
-- クラス名、メソッド名、変数名などの意味のある識別子が破棄されている
-- 文字列リソースとバイナリ内の文字列が暗号化されている
-- 保護された機能に関連するコードとデータが暗号化、パック、または隠蔽されている
-
-より詳細な評価には、防御される脅威と使用される難読化手法の詳細な理解が必要です。詳細については「ソフトウェア保護スキームの評価」の章の「難読化の評価」のセクションを参照ください。
-
-#### 参考情報
-
-##### OWASP Mobile Top 10 2016
-
-* M9 - リバースエンジニアリング - https://www.owasp.org/index.php/Mobile_Top_10_2016-M9-Reverse_Engineering
-
-##### OWASP MASVS
-
-- V8.8: "アプリに属するすべての実行可能ファイルとライブラリはファイルレベルで暗号化されているか、実行形式内の重要なコードやデータセグメントが暗号化またはパック化されている。単純な静的解析では重要なコードやデータは明らかにならない。"
-- v8.9: "難読化変換および機能的防御が相互に依存し、アプリ全体で十分に統合されている。"
-- V8.12: "クライアント側で機密性の高い計算を実行するアーキテクチャが必要である場合、これらの計算はハードウェアベースのSEもしくはTEEを使用してオペレーティングシステムから分離している。あるいは、計算は難読化して保護されている。現在公表されている研究を考慮し、難読化タイプおよびパラメータはコードやデータの機密部分を理解しようとするリバースエンジニアに手作業で多くの努力を払う必要が十分にあること。"
-
-##### CWE
-
-- N/A
-
-##### その他
-
-- N/A
-
-##### ツール
-
-- N/A
+- トークンベースのデバイス認証 (インスタンス ID) を使用して、アプリの同じインスタンスが使用されることを確保します。
