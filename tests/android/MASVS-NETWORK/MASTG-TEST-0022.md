@@ -184,4 +184,4 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 - API は完全ではないかもしれません。
 - 何もフックされていないとしても、必ずしもアプリがピン留めを実装していないとは限りません。
 
-いずれの場合にも、アプリやそのコンポーネントの一部が [objection でサポートされている](https://github.com/sensepost/objection/blob/master/agent/src/android/pinning.ts) 方法でカスタムピンニングを実装している可能性があります。具体的なピン留めの指標やより詳細なテストについては静的解析のセクションをご確認ください。
+いずれの場合にも、アプリやそのコンポーネントの一部が [objection でサポートされている](https://github.com/sensepost/objection/blob/master/agent/src/android/pinning.ts) 方法でカスタムピン留めを実装している可能性があります。具体的なピン留めの指標やより詳細なテストについては静的解析のセクションをご確認ください。
