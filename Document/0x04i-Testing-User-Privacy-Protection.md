@@ -65,7 +65,7 @@
 
 <img src="Images/Chapters/0x04i/masa_framework.png" width="100%"/>
 
-> 開発者の方で参加を希望される場合は、こちらの [フォーム](https://docs.google.com/forms/d/e/1FAIpQLSdBl_eCNcUeUVDiB2duiJLZ5s4AV5AhDVuOz_1u8S9qhcXF5g/viewform) に記入する必要があります。
+> 開発者の方で参加を希望される場合は、こちらの [Independent Security Review フォーム](https://docs.google.com/forms/d/e/1FAIpQLSdBl_eCNcUeUVDiB2duiJLZ5s4AV5AhDVuOz_1u8S9qhcXF5g/viewform "Google Play - Independent Security Review form") に記入する必要があります。
 
 テストの性質が限定的であるため、アプリケーションの完全な安全性を保障するものではないことに注意してください。この自主的なレビューは開発者のデータセーフティ宣言の正確性と完全性を検証するために行われるものではありません。開発者はアプリの Play ストアリストで完全かつ正確な宣言を行う責任を単独で負います。
 
@@ -90,7 +90,7 @@
 - 例 3: ユーザーの電話や連絡帳のデータにアクセスするアプリがこのデータを個人データや機密データとして扱わず、さらに安全でないネットワーク接続を介して送信 (MSTG-NETWORK-1 に違反) する場合。
 - 例 4: アプリが (おそらく適切に機能するには必要ではない) デバイスの位置情報を収集し、どの機能がこのデータを使用するかを説明する明確な開示がない (MSTG-PLATFORM-1 に違反) 場合。
 
-> [Google Play Console Help (Policy Centre -> Privacy, deception and device abuse -> User data)](https://support.google.com/googleplay/android-developer/answer/10144311?hl=en-GB#1&2&3&4&5&6&7&87&9&zippy=%2Cexamples-of-common-violations) に、より一般的な違反があります。
+> **Policy Centre -> Privacy, deception and device abuse -> User data** で移動すると [Google Play Console Help の common violations](https://support.google.com/googleplay/android-developer/answer/10144311?hl=en-GB#1&2&3&4&5&6&7&87&9&zippy=%2Cexamples-of-common-violations) に詳細があります。
 
 このように他のテストカテゴリと深く関わっています。それらをテストする際に、間接的にユーザープライバシー保護のテストをしていることがよくあります。より良い、より包括的なレポートを提供するために、このことを心に留めておきます。多くの場合、ユーザープライバシー保護をテストするために、他のテストからの証跡を再利用することもできます。
 
@@ -146,5 +146,5 @@
 
 - Open-Source Licenses and Android - <https://www.bignerdranch.com/blog/open-source-licenses-and-android/>
 - Software Licenses in Plain English - <https://tldrlegal.com/>
-- Apple Accessing private data - <https://developer.apple.com/design/human-interface-guidelines/accessing-private-data>
+- Apple Accessing private data - <https://developer.apple.com/design/human-interface-guidelines/privacy>
 - Android App permissions best practices - <https://developer.android.com/training/permissions/requesting.html#explain>
