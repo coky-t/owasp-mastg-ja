@@ -12,13 +12,13 @@ Android プラットフォームの詳細については [Android 開発者ド�
 
 ## Android アーキテクチャ
 
-[Android](https://en.wikipedia.org/wiki/Android_(operating_system)) は [Open Handset Alliance](https://www.openhandsetalliance.com/) (Google を中心としたコンソーシアム) が開発した Linux ベースのオープンソースプラットフォームであり、モバイルオペレーティングシステム (OS) として機能します。現在、このプラットフォームはモバイルフォン、タブレット、ウェアラブル技術、テレビ、その他の「スマート」デバイスなど、さまざまな最新テクノロジの基盤となっています。典型的な Android ビルドにはさまざまなプリインストール (「ストック」) アプリが付属しており、 Google Play ストアや他のマーケットプレイスを通じてサードパーティアプリのインストールをサポートしています。
+[Android](https://en.wikipedia.org/wiki/Android_(operating_system) "Android (Operating System)") は [Open Handset Alliance](https://www.openhandsetalliance.com/) (Google を中心としたコンソーシアム) が開発した Linux ベースのオープンソースプラットフォームであり、モバイルオペレーティングシステム (OS) として機能します。現在、このプラットフォームはモバイルフォン、タブレット、ウェアラブル技術、テレビ、その他の「スマート」デバイスなど、さまざまな最新テクノロジの基盤となっています。典型的な Android ビルドにはさまざまなプリインストール (「ストック」) アプリが付属しており、 Google Play ストアや他のマーケットプレイスを通じてサードパーティアプリのインストールをサポートしています。
 
 Android のソフトウェアスタックはいくつかの異なるレイヤで構成されています。各レイヤはインタフェースを定義し、特定のサービスを提供します。
 
 <img src="Images/Chapters/0x05a/android_software_stack.png" width="400px" />
 
-**カーネル:** 最下層では、Android は [Low Memory Killer](https://source.android.com/devices/tech/perf/lmkd) 、ウェイクロック、 [Binder IPC](https://source.android.com/devices/architecture/hidl/binder-ipc) ドライバなどの重要な追加機能を含む [Linux カーネルのバリエーション](https://source.android.com/devices/architecture/kernel) をベースにしています。 MASTG では、Android が一般的な Linux ディストリビューションと大きく異なる、OS のユーザーモード部分に焦点を当てます。私たちにとって最も重要なコンポーネントはアプリケーションで使用されるマネージドランタイム (ART/Dalvik) と、glibc (GNU C ライブラリ) の Android 版である [Bionic](https://en.wikipedia.org/wiki/Bionic_(software)) の二つです。
+**カーネル:** 最下層では、Android は [Low Memory Killer](https://source.android.com/devices/tech/perf/lmkd) 、ウェイクロック、 [Binder IPC](https://source.android.com/devices/architecture/hidl/binder-ipc) ドライバなどの重要な追加機能を含む [Linux カーネルのバリエーション](https://source.android.com/devices/architecture/kernel) をベースにしています。 MASTG では、Android が一般的な Linux ディストリビューションと大きく異なる、OS のユーザーモード部分に焦点を当てます。私たちにとって最も重要なコンポーネントはアプリケーションで使用されるマネージドランタイム (ART/Dalvik) と、glibc (GNU C ライブラリ) の Android 版である [Bionic](https://en.wikipedia.org/wiki/Bionic_(software) "Android (Bionic)") の二つです。
 
 **HAL:** カーネルの上には、ハードウェア抽象化レイヤ (Hardware Abstraction Layer, HAL) がビルトインのハードウェアコンポーネントと対話するための標準インタフェースを定義します。いくつかの HAL 実装では Android システムが必要に応じて呼び出す共有ライブラリモジュールにパッケージ化されています。これはアプリケーションがデバイスのハードウェアと対話できるようにするための基礎となります。たとえば、純正の電話アプリケーションがデバイスのマイクとスピーカーを使用できるようにします。
 
@@ -42,7 +42,7 @@ Android 5.0 (API レベル 21) 以降、Android は DVM の後継である Andro
 
 **サンドボックス化:** Android アプリはハードウェアリソースに直接アクセスできず、各アプリはそれ自身の仮想マシンまたはサンドボックス内で動作します。これにより OS はデバイス上のリソースとメモリアクセスを正確に制御できます。例えば、アプリがクラッシュしてもその同じデバイス上で実行中の他のアプリには影響しません。 Android はアプリに割り当てられるシステムリソースの最大数を制御し、一つのアプリが多すぎるリソースを独占することを防ぎます。同時に、このサンドボックス設計は Android のグローバルな多層防御戦略における多くの原則の一つとみなすことができます。権限の低い悪意のあるサードパーティアプリケーションは自身のランタイムを抜け出して、同じデバイス上で狙ったアプリケーションのメモリを読み取ることはできないはずです。次のセクションでは Android オペレーティングシステムのさまざまな防御層について詳しく見ていきます。 ["ソフトウェアの分離"](#software-isolation) セクションで詳しく説明します。
 
-より詳しい情報については Google Source 記事 ["Android Runtime (ART)"](https://source.android.com/devices/tech/dalvik/configure#how_art_works) 、 [Jonathan Levin による "Android Internals"](http://newandroidbook.com/) 、 [@_qaz_qaz によるブログ投稿 "Android 101"](https://secrary.com/android-reversing/android101/) をご覧ください。
+より詳しい情報については Google Source 記事 ["Android Runtime (ART)"](https://source.android.com/devices/tech/dalvik/configure#how_art_works) 、 [Jonathan Levin による書籍 "Android Internals"](http://newandroidbook.com/) 、 [@_qaz_qaz によるブログ投稿 "Android 101"](https://secrary.com/android-reversing/android101/) をご覧ください。
 
 ## Android セキュリティ: 多層防御アプローチ
 
@@ -91,7 +91,7 @@ Android デバイスで実行されているコードが信頼できるソース
 
 Android オペレーティングシステムは Linux をベースにしていますが、他の Unix ライクなシステムと同じようにユーザーアカウントを実装してはいません。 Android では Linux カーネルのマルチユーザーサポートを使用してアプリをサンドボックス化しています。一部の例外を除いて、各アプリは別々の Linux ユーザーの下で実行しており、他のアプリやオペレーティングシステムの他の部分から実質的に分離されています。
 
-ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/9.0.0_r3/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。詳細については、 Bin Chen の Android サンドボックスに関する [ブログ記事](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html "Bin Chen - AProgrammer Blog - Android Security: An Overview Of Application Sandbox") をご覧ください。
+ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/9.0.0_r3/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。詳細については、 Android サンドボックスに関する [Bin Chen によるブログ記事 "An Overview Of Application Sandbox"](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html) をご覧ください。
 
 例えば、 Android 9.0 (API レベル 28) では以下のシステムユーザーが定義されています。
 
@@ -166,7 +166,7 @@ Android アプリは Android Framework を介してシステムサービスと�
 
 API 仕様は Android の新しいリリースごとに変更されます。重要なバグ修正とセキュリティパッチは通常、以前のバージョンにも適用されます。
 
-注目すべき API バージョン:
+注目すべき [API バージョン](https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels "What is API level?"):
 
 - Android 4.2 (API レベル 16) 2012年11月 (SELinux の導入)
 - Android 4.3 (API レベル 18) 2013年7月 (SELinux がデフォルトで有効になる)
@@ -177,24 +177,33 @@ API 仕様は Android の新しいリリースごとに変更されます。重�
 - Android 8.0 (API レベル 26-27) 2017年8月 (多くのセキュリティ改善点)
 - Android 9 (API レベル 28) 2018年8月 (マイクやカメラのバックグラウンド使用の制限、ロックダウンモードの導入、すべてのアプリに対するデフォルト HTTPS)
 - **Android 10 (API レベル 29)** 2019年9月 (「アプリ使用時のみ」位置情報へのアクセス、デバイス追跡防止、セキュア外部ストレージの改善)
-    - プライバシー ([概要](https://developer.android.com/about/versions/10/highlights#privacy_for_users), [詳細 1](https://developer.android.com/about/versions/10/privacy), [詳細 2](https://developer.android.com/about/versions/10/privacy/changes))
-    - セキュリティ ([概要](https://developer.android.com/about/versions/10/highlights#security), [詳細](https://developer.android.com/about/versions/10/behavior-changes-all#security))
+    - [プライバシー (概要)](https://developer.android.com/about/versions/10/highlights#privacy_for_users "Android 10 Privacy Overview")
+    - [プライバシー (詳細 1)](https://developer.android.com/about/versions/10/privacy "Android 10 Privacy Details 1")
+    - [プライバシー (詳細 2)](https://developer.android.com/about/versions/10/privacy/changes "Android 10 Privacy Details 2")
+    - [セキュリティ (概要)](https://developer.android.com/about/versions/10/highlights#security "Android 10 Security Overview")
+    - [セキュリティ (詳細)](https://developer.android.com/about/versions/10/behavior-changes-all#security "Android 10 Security Details")
 - **Android 11 (API レベル 30)** 2020年9月 (スコープ付きストレージの適用、パーミッション自動リセット、 [パッケージ可視性の抑制](https://developer.android.com/training/package-visibility) 、 APK 署名スキーム v4)
-    - プライバシー ([概要](https://developer.android.com/about/versions/11/privacy))
-    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all)
-    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all#security)
-    - [プライバシー動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#privacy)
-    - [セキュリティ動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#security)
+    - [プライバシー (概要)](https://developer.android.com/about/versions/11/privacy "Android 11 Privacy Overview")
+    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all "Android 11 Privacy Behavior changes (all apps)")
+    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all#security "Android 11 Security Behavior changes (all apps)")
+    - [プライバシー動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#privacy "Android 11 Privacy Behavior changes (apps targeting version)")
+    - [セキュリティ動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#security "Android 11 Security Behavior changes (apps targeting version)")
 - **Android 12 (API レベル 31-32)** 2021年8月 (Material You、ウェブインテントの解決、プライバシーダッシュボード)
     - [セキュリティとプライバシー](https://developer.android.com/about/versions/12/features#security-privacy)
     - [動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/12/behavior-changes-all#security-privacy)
     - [動作の変更 (バージョン 12 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/12/behavior-changes-12#security-privacy)
-- [BETA] **Android 13 (API レベル 33)** 2022年 (コンテキスト登録されたレシーバーの安全なエクスポート、新しい写真ピッカー)
-    - [セキュリティとプライバシー](https://developer.android.com/about/versions/13/features#privacy-security)
-    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#privacy)
-    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#security)
-    - [プライバシー動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#privacy)
-    - [セキュリティ動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#security)
+- **Android 13 (API レベル 33)** 2022年 (コンテキスト登録されたレシーバーの安全なエクスポート、新しい写真ピッカー)
+    - [セキュリティとプライバシー](https://developer.android.com/about/versions/13/features#privacy-security "Android 13 Security and privacy")
+    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#privacy "Android 13 Privacy Behavior changes (all apps)")
+    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#security "Android 13 Security Behavior changes (all apps)")
+    - [プライバシー動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#privacy "Android 13 Privacy Behavior changes (apps targeting version)")
+    - [セキュリティ動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#security "Android 13 Security Behavior changes (apps targeting version)")
+- **Android 14 (API レベル 34)** 2023年:
+    - [変更の概要](https://developer.android.com/about/versions/14/summary "Android 14 Summary of changes")
+    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/14/behavior-changes-all#security "Android 14 Security Behavior changes (all apps)")
+    - [セキュリティ動作の変更 (バージョン 14 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/14/behavior-changes-14#security "Android 14 Security Behavior changes (apps targeting version)")
+
+Android 開発リリースはユニークな構造になっています。それらはファミリーに編成され、おいしいお菓子にインスパイアされたアルファベット順のコードネームが付けられています。これらはすべて [こちら](https://source.android.com/docs/setup/about/build-numbers "Codenames, tags, and build numbers") で見ることができます。
 
 ### アプリサンドボックス
 
