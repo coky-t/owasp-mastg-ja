@@ -32,7 +32,7 @@ masvs_v1_levels:
 
 **ファイルストレージの完全性チェック:**
 
-["アプリデータディレクトリへのアクセス"](../../../Document/0x06b-Basic-Security-Testing.md#accessing-app-data-directories) のセクションに示されているようにアプリデータディレクトリに行き、いくつかのファイルを変更します。
+["アプリデータディレクトリへのアクセス"](../../../Document/0x06b-iOS-Security-Testing.md#accessing-app-data-directories) のセクションに示されているようにアプリデータディレクトリに行き、いくつかのファイルを変更します。
 
 次に、防御のバイパスに取り組み、以下の質問に回答します。
 
