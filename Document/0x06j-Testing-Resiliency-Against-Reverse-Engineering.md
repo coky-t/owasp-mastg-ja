@@ -7,7 +7,7 @@ platform: ios
 
 ## 概要
 
-この章では機密データや機能を処理したり、アクセスを許可するアプリに推奨される多層防御対策について説明します。調査によると [多くの App Store アプリにはこれらの対策が含まれていることがよくあります](https://seredynski.com/articles/a-security-review-of-1300-appstore-applications.html "A security review of 1,300 AppStore applications - 5 April 2020") 。
+この章では機密データや機能を処理したり、アクセスを許可するアプリに推奨される多層防御対策について説明します。調査によると [多くの App Store アプリにはこれらの対策が含まれていることがよくあります](https://seredynski.com/articles/a-security-review-of-1-300-appstore-applications "A security review of 1,300 AppStore applications - 5 April 2020") 。
 
 アプリの不正改竄やコードのリバースエンジニアリングによって引き起こされるリスクの評価に基づいて、必要に応じてこれらの対策を適用すべきです。
 
@@ -36,7 +36,7 @@ platform: ios
 
 #### 一般的な脱獄検出チェック
 
-ここでは三つの典型的な脱獄検出技法を紹介します (詳細については [このブログ記事](https://www.trustwave.com/Resources/SpiderLabs-Blog/Jailbreak-Detection-Methods/ "Jailbreak Detection Methods") をご覧ください) 。
+ここでは三つの典型的な脱獄検出技法を紹介します。
 
 **ファイルベースのチェック:**
 
@@ -98,7 +98,7 @@ do {
 
 **プロトコルハンドラのチェック:**
 
-アプリは `cydia://` ([Cydia](0x08a-Testing-Tools.md#cydia) をインストール後にデフォルトで利用可能) などのよく知られたプロトコルハンドラを呼び出してみる可能性があります。
+アプリは `cydia://` ([Cydia](0x08a-Testing-Tools.md#cydia "Cydia") をインストール後にデフォルトで利用可能) などのよく知られたプロトコルハンドラを呼び出してみる可能性があります。
 
 ```swift
 if let url = URL(string: "cydia://package/com.example.package"), UIApplication.shared.canOpenURL(url) {
@@ -118,7 +118,7 @@ if let url = URL(string: "cydia://package/com.example.package"), UIApplication.s
 
 バイナリをリバースエンジニアリングして脱獄検出を探す必要がある場合、最も明白な方法は "jail" や "jailbreak" といった既知の文字列を検索することです。耐性対策が施されている場合や開発者がそのような明白な用語を避けている場合には特に、これは常に有効であるとは限らないことに注意してください。
 
-例: [Damn Vulnerable iOS application](0x08b-Reference-Apps.md#dvia-v2) (DVIA-v2) をダウンロードして unzip し、メインバイナリを [radare2](0x08a-Testing-Tools.md#radare2) にロードして解析が完了するまで待ちます。
+例: [Damn Vulnerable iOS application (DVIA-v2)](0x08b-Reference-Apps.md#dvia-v2) をダウンロードして unzip し、メインバイナリを [radare2](0x08a-Testing-Tools.md#radare2) にロードして解析が完了するまで待ちます。
 
 ```sh
 r2 -A ./DVIA-v2-swift/Payload/DVIA-v2.app/DVIA-v2
@@ -181,7 +181,7 @@ iOS に適用可能なアンチデバッグテクニックがいくつかあり�
 
 #### ptrace の使用
 
-"[iOS の改竄とリバースエンジニアリング](0x06c-Reverse-Engineering-and-Tampering.md#debugging)" の章にあるように、iOS XNU カーネルは `ptrace` システムコールを実装していますが、プロセスを適切にデバッグするために必要となる機能のほとんどを欠如しています (例えば、アタッチやステップ実行は可能ですが、メモリやレジスタの読み取りや書き込みはできません) 。
+["iOS の改竄とリバースエンジニアリング"](0x06c-Reverse-Engineering-and-Tampering.md#debugging) の章にあるように、iOS XNU カーネルは `ptrace` システムコールを実装していますが、プロセスを適切にデバッグするために必要となる機能のほとんどを欠如しています (例えば、アタッチやステップ実行は可能ですが、メモリやレジスタの読み取りや書き込みはできません) 。
 
 ですが、 `ptrace` syscall の iOS 実装には非標準で非常に便利な機能が含まれています。プロセスのデバッグを防止するのです。この機能は `PT_DENY_ATTACH` として実装されており、 [公式の BSD システムコールマニュアル](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/ptrace.2.html "PTRACE(2)") で説明されています。簡単に言うと、他のデバッガが呼び出し側プロセスにアタッチできないことを保証します。デバッガがアタッチしようとすると、そのプロセスは終了します。 `PT_DENY_ATTACH` の使用はかなりよく知られているアンチデバッグテクニックであるため、 iOS ペンテスト時によく遭遇する可能性があります。
 
@@ -246,7 +246,7 @@ func AmIBeingDebugged() -> Bool {
 
 #### アプリケーションのソースコードの完全性チェック
 
-"[iOS の改竄とリバースエンジニアリング](0x06c-Reverse-Engineering-and-Tampering.md#debugging)" の章では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックをバイパスできることもわかりました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックするカスタムチェックを追加することです。
+["iOS の改竄とリバースエンジニアリング"](0x06c-Reverse-Engineering-and-Tampering.md#debugging) の章では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックをバイパスできることもわかりました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックするカスタムチェックを追加することです。
 
 Apple は DRM を使用して完全性チェックを行います。しかし、 (以下の例にあるように) 制御を追加できます。 `mach_header` を解析し、署名を生成するために使用される命令データの開始を計算します。次に、署名を与えられたものと比較します。生成された署名がどこに格納もしくはコード化されているか確認します。
 
@@ -354,7 +354,7 @@ int xyz(char *dst) {
 
 **バイパス:**
 
-1. "[デバイスバインディング](#device-binding)" セクションで説明されているように、デバイスからデータを取得します。
+1. ["デバイスバインディング"](#device-binding) セクションで説明されているように、デバイスからデータを取得します。
 2. 取得したデータを改変してストレージに戻します。
 
 ### リバースエンジニアリングツール検出
@@ -367,10 +367,10 @@ int xyz(char *dst) {
 
 リバースエンジニアリングツールの検出をバイパスする際には以下の手順を参照にしてください。
 
-1. アンチリバースエンジニアリング機能にパッチを当てます。radare2/Cutter や Ghidra を使用してバイナリにパッチを当て、望ましくない動作を無効にします。
+1. アンチリバースエンジニアリング機能にパッチを当てます。radare2/[iaito](https://github.com/radareorg/iaito "iaito") や Ghidra を使用してバイナリにパッチを当て、望ましくない動作を無効にします。
 2. Frida や Cydia Substrate を使用して、Objective-C/Swift やネイティブレイヤでファイルシステム API を フックします。改変されたファイルではなく、元のファイルのハンドルを返します。
 
-パッチ適用とコードインジェクションの例については "[iOS の改竄とリバースエンジニアリング](0x06c-Reverse-Engineering-and-Tampering.md)" の章を参照してください。
+パッチ適用とコードインジェクションの例については ["iOS の改竄とリバースエンジニアリング"](0x06c-Reverse-Engineering-and-Tampering.md) の章を参照してください。
 
 #### Frida の検出
 
@@ -412,7 +412,7 @@ Frida が _残した_ これらの _トレース_ を見ると、 Frida を検�
 この表は完全ではないことを忘れないでください。例えば、他に二つの検出メカニズムが考えられます。
 
 - [名前付きパイプ](https://en.wikipedia.org/wiki/Named_pipe "Named Pipes") の検出 (frida-server が外部通信に使用しています)
-- [トランポリン](https://en.wikipedia.org/wiki/Trampoline_%28computing%29 "Trampolines") の検出 (iOS アプリでのトランポリンを検出するための詳細な説明とサンプルコードについては "[iOS アプリケーションでの SSL 証明書ピンニングのバイパスを防止する](https://www.guardsquare.com/en/blog/iOS-SSL-certificate-pinning-bypassing "Prevent bypassing of SSL certificate pinning in iOS applications")" を参照してください)
+- [トランポリン](https://en.wikipedia.org/wiki/Trampoline_%28computing%29 "Trampolines") の検出 (iOS アプリでのトランポリンを検出するための詳細な説明とサンプルコードについては ["iOS アプリケーションでの SSL 証明書ピンニングのバイパスを防止する"](https://www.guardsquare.com/en/blog/iOS-SSL-certificate-pinning-bypassing "Prevent bypassing of SSL certificate pinning in iOS applications") を参照してください)
 
 いずれも Substrate や Frida's Interceptor を検出するのに _役立ち_ ますが、たとえば、 Frida's Stalker に対しては効果的ではありません。これらの各検出方法が成功するかどうかは、脱獄済みデバイスを使用しているかどうか、特定バージョンの脱獄および手法やツール自体のバージョンにより依存することを忘れないでください。最後に、これはコントロールされていない環境 (エンドユーザーのデバイス) で処理されているデータを保護するいたちごっこの一部です。
 
@@ -420,11 +420,11 @@ Frida が _残した_ これらの _トレース_ を見ると、 Frida を検�
 
 エミュレータ検出の目標はエミュレートされたデバイス上でアプリを実行する難易度を上げることです。これにより、リバースエンジニアはエミュレータチェックを無効にするか、物理デバイスを利用することを余儀なくされ、大規模なデバイス解析に必要なアクセスができなくなります。
 
-セキュリティテスト入門の章の [iOS シミュレータ上でのテスト](0x06b-Basic-Security-Testing.md#testing-on-the-ios-simulator "Testing on the iOS Simulator") セクションで説明したように、利用可能なシミュレータは Xcode に同梱されているものだけです。シミュレータバイナリは ARM コードではなく x86 コードにコンパイルされており、実デバイス (ARM アーキテクチャ) 用にコンパイルされたアプリはシミュレータでは動作しないため、幅広い _エミュレーション_ 選択肢が利用できる Android とは対照的に、 iOS アプリに関して _シミュレーション_ 保護はそれほど気にする必要はありませんでした。
+セキュリティテスト入門の章の [iOS シミュレータ上でのテスト](0x06b-iOS-Security-Testing.md#testing-on-the-ios-simulator "Testing on the iOS Simulator") セクションで説明したように、利用可能なシミュレータは Xcode に同梱されているものだけです。シミュレータバイナリは ARM コードではなく x86 コードにコンパイルされており、実デバイス (ARM アーキテクチャ) 用にコンパイルされたアプリはシミュレータでは動作しないため、幅広い _エミュレーション_ 選択肢が利用できる Android とは対照的に、 iOS アプリに関して _シミュレーション_ 保護はそれほど気にする必要はありませんでした。
 
-しかし、 [Corellium](https://www.corellium.com/) (商用ツール) はそのリリース以来、リアルエミュレーションを可能にし、 [iOS シミュレータとは一線を画しています](https://www.corellium.com/compare/ios-simulator) 。それに加えて、SaaS ソリューションであるため、Corellium は資金的な制約のみで大規模なデバイス解析が可能です。
+しかし、 [Corellium](https://www.corellium.com/) (商用ツール) はそのリリース以来、リアルエミュレーションを可能にし、 [iOS シミュレータとは一線を画しています](https://www.corellium.com/compare/ios-simulator "Corellium vs Apple\'s iOS Simulator") 。それに加えて、SaaS ソリューションであるため、Corellium は資金的な制約のみで大規模なデバイス解析が可能です。
 
-Apple Silicon (ARM) ハードウェアが広く普及しているため、x86 / x64 アーキテクチャの存在を確認する従来のチェックでは不十分なことがあります。潜在的な検出戦略の一つとして一般的に使用されるエミュレーションソリューションで利用可能な機能と制限を特定することがあります。たとえば、Corellium は iCloud、セルラーサービス、カメラ、NFC、Bluetooth、App Store アクセス、GPU ハードウェアエミュレーション ([Metal](https://developer.apple.com/documentation/metal/gpu_devices_and_work_submission/getting_the_default_gpu)) をサポートしていません。したがって、これらの機能のいずれかを含むチェックを賢く組み合わせることで、エミュレートされた環境の存在を示す指標となる可能性があります。
+Apple Silicon (ARM) ハードウェアが広く普及しているため、x86 / x64 アーキテクチャの存在を確認する従来のチェックでは不十分なことがあります。潜在的な検出戦略の一つとして一般的に使用されるエミュレーションソリューションで利用可能な機能と制限を特定することがあります。たとえば、Corellium は iCloud、セルラーサービス、カメラ、NFC、Bluetooth、App Store アクセス、GPU ハードウェアエミュレーション ([Metal](https://developer.apple.com/documentation/metal/gpu_devices_and_work_submission/getting_the_default_gpu "Apple Metal Framework")) をサポートしていません。したがって、これらの機能のいずれかを含むチェックを賢く組み合わせることで、エミュレートされた環境の存在を示す指標となる可能性があります。
 
 これらの結果と [iOS Security Suite](https://github.com/securing/IOSSecuritySuite#emulator-detector-module), [Trusteer](https://www.ibm.com/products/trusteer-mobile-sdk/details) などのサードパーティフレームワーク、あるいは [Appdome](https://www.appdome.com/) (商用ソリューション) のようなノーコードソリューションを組み合わせれば、エミュレータを利用した攻撃に対して優れた防御策を提供するでしょう。
 
@@ -434,7 +434,7 @@ Apple Silicon (ARM) ハードウェアが広く普及しているため、x86 / 
 
 #### 名前の難読化
 
-標準コンパイラはソースコードのクラス名と関数名に基づいてバイナリシンボルを生成します。したがって、難読化が適用されない場合には、シンボル名は意味を持ち、アプリバイナリから直接簡単に読み取ることができます。例えば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは Damn Vulnerable iOS App ([DVIA-v2](0x08b-Reference-Apps.md#dvia-v2)) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
+標準コンパイラはソースコードのクラス名と関数名に基づいてバイナリシンボルを生成します。したがって、難読化が適用されない場合には、シンボル名は意味を持ち、アプリバイナリから直接簡単に読み取ることができます。例えば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは [Damn Vulnerable iOS App (DVIA-v2)](0x08b-Reference-Apps.md#dvia-v2) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
 
 ```assembly
 __T07DVIA_v232JailbreakDetectionViewControllerC20jailbreakTest4TappedyypF:
@@ -462,7 +462,7 @@ mov        rbp, rsp
 
 <img src="Images/Chapters/0x06j/control-flow-flattening.png" width="600px">
 
-この画像は制御フローの平坦化がコードをどのように変更するかを示しています ("[制御フローの平坦化による C++ プログラムの難読化](http://ac.inf.elte.hu/Vol_030_2009/003.pdf)" を参照)
+この画像は制御フローの平坦化がコードをどのように変更するかを示しています。詳細については ["制御フローの平坦化による C++ プログラムの難読化"](http://ac.inf.elte.hu/Vol_030_2009/003.pdf) を参照してください。
 
 #### デッドコードインジェクション
 
@@ -477,7 +477,7 @@ mov        rbp, rsp
 - [SwiftShield](0x08a-Testing-Tools.md#swiftshield) を使用して名前の難読化を実行できます。 Xcode プロジェクトのソースコードを読み取り、コンパイラが使用される前にクラス、メソッド、フィールドのすべての名前をランダムな値に置き換えます。
 - [obfuscator-llvm](https://github.com/obfuscator-llvm) は中間表現 (Intermediate Representation, IR) で動作します。シンボルの難読化、文字列の暗号化、制御フローの平坦化に使用できます。 IR をベースとしているため、 SwiftShield と比較してアプリケーションの情報を大幅に隠すことができます。
 
-iOS の難読化技法については [こちら](https://faculty.ist.psu.edu/wu/papers/obf-ii.pdf) をご覧ください。
+iOS の難読化技法については記事 ["Protecting Million-User iOS Apps with Obfuscation: Motivations, Pitfalls, and Experience"](https://faculty.ist.psu.edu/wu/papers/obf-ii.pdf "Paper - Protecting Million-User iOS Apps with Obfuscation: Motivations, Pitfalls, and Experience") をご覧ください。
 
 ### デバイスバインディング
 
