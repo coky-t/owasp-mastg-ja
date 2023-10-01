@@ -155,7 +155,7 @@ func testKeyDerivation() {
 - _出典: [https://stackoverflow.com/questions/8569555/pbkdf2-using-commoncrypto-on-ios](https://stackoverflow.com/questions/8569555/pbkdf2-using-commoncrypto-on-ios "PBKDF2 using CommonCrypto on iOS"), `Arcane` ライブラリのテストスイートでテスト済み_
 
 鍵を保存する必要がある場合、選択した保護クラスが `kSecAttrAccessibleAlways` でない限り、キーチェーンを使用することをお勧めします。`NSUserDefaults`、プロパティリストファイル、または Core Data や Realm からの他のシンクなど、他の場所に鍵を保存することは一般的にキーチェーンを使用するよりセキュアではなくなります。
-Core Data や Realm からのシンクが `NSFileProtectionComplete` データ保護クラスを使用して保護されている場合でも、キーチェーンを使用することをお勧めします。詳細については "[iOS のデータストレージ](0x06d-Testing-Data-Storage.md)" の章を参照してください。
+Core Data や Realm からのシンクが `NSFileProtectionComplete` データ保護クラスを使用して保護されている場合でも、キーチェーンを使用することをお勧めします。詳細については ["iOS のデータストレージ"](0x06d-Testing-Data-Storage.md) の章を参照してください。
 
 キーチェーンは二種類のストレージメカニズムをサポートします。鍵がセキュアエンクレーブに格納されている暗号化鍵により保護されるか、鍵自体がセキュアエンクレーブ内にあります。後者は ECDH 署名鍵を使用する場合にのみ有効です。実装の詳細については [Apple ドキュメント](https://developer.apple.com/documentation/security/certificate_key_and_trust_services/keys/storing_keys_in_the_secure_enclave "Secure Enclave") を参照してください。
 
