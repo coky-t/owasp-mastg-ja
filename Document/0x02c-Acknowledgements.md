@@ -1,5 +1,11 @@
 # 謝辞
 
+## 寄稿者
+
+すべての寄稿者は OWASP MAS ウェブサイトの Contributing セクションに記載しています。
+
+<https://mas.owasp.org/contributing/>
+
 ## 🥇 MAS 支持者 (MAS Advocates)
 
 MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。
@@ -99,59 +105,6 @@ _注釈: MAS 支持者として認定されるには、三つのカテゴリす�
     - [Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Virtual AppSec 2021, Nov 11 2021)](https://www.youtube.com/watch?v=TcYtpUIIMYw)
     - [Insiders Guide to Mobile AppSec with OWASP MASVS (OWASP Northern Virginia Chapter, Oct 8 2021)](https://www.youtube.com/watch?v=fuLo64WH3SU)
     - その他いろいろ
-
-## 寄稿者
-
-**注意**: この寄稿者テーブルは [GitHub contribution statistics](https://github.com/OWASP/owasp-mastg/graphs/contributors "GitHub contribution statistics") に基づいて作成しています。これらの統計情報の詳細については、[GitHub Repository README](https://github.com/OWASP/owasp-mastg/blob/master/README.md "GitHub Repository README") を参照ください。手動でテーブルを更新しますので、あなたがすぐにリストに載らなくてもあわてないでください。
-
-### 主要寄稿者
-
-主要寄稿者は一貫して質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 500 件の追加が記録されています。
-
-- Pawel Rzepa
-- Francesco Stillavato
-- Henry Hoggard
-- Andreas Happe
-- Kyle Benac
-- Paulino Calderon
-- Alexander Anthuk
-- Caleb Kinney
-- Abderrahmane Aftahi
-- Koki Takeyama
-- Wen Bin Kong
-- Abdessamad Temmar
-- Cláudio André
-- Slawomir Kosowski
-- Bolot Kerimbaev
-- Lukasz Wierzbicki
-
-### 寄稿者
-
-寄稿者は質の高いコンテンツを寄稿しており、GitHub リポジトリに少なくとも 50 件の追加が記録されています。彼らの GitHub ハンドルは以下のとおりです。
-
-kryptoknight13, DarioI, luander, oguzhantopgul, Osipion, mpishu, pmilosev, isher-ux, thec00n, ssecteam, jay0301, magicansk, jinkunong, nick-epson, caitlinandrews, dharshin, raulsiles, righettod, karolpiateknet, mkaraoz, Sjord, bugwrangler, jasondoyle, joscandreu, yog3shsharma, ryantzj, rylyade1, shivsahni, diamonddocumentation, 51j0, AnnaSzk, hlhodges, legik, abjurato, serek8, mhelwig, locpv-ibl and ThunderSon.
-
-### 他の寄稿者
-
-他の多くの寄稿者が単一の単語や文章など (追加数が 50 件未満) の少量のコンテンツをコミットしています。彼らの GitHub ハンドルは以下のとおりです。
-
-jonasw234, zehuanli, jadeboer, Isopach, prabhant, jhscheer, meetinthemiddle-be, bet4it, aslamanver, juan-dambra, OWASP-Seoul, hduarte, TommyJ1994, forced-request, D00gs, vasconcedu, mehradn7, whoot, LucasParsy, DotDotSlashRepo, enovella, ionis111, vishalsodani, chame1eon, allRiceOnMe, crazykid95, Ralireza, Chan9390, tamariz-boop, abhaynayar, camgaertner, EhsanMashhadi, fujiokayu, decidedlygray, Ali-Yazdani, Fi5t, MatthiasGabriel, colman-mbuya and anyashka.
-
-### レビュー担当者
-
-レビュー担当者は GitHub issues および pull request コメントを通して有用なフィードバックを一貫して提供しています。
-
-- Jeroen Beckers
-- Sjoerd Langkemper
-- Anant Shrivastava
-
-### 編集者
-
-- Heaven Hodges
-- Caitlin Andrews
-- Nick Epson
-- Anita Diamond
-- Anna Szkudlarek
 
 ### 支援者
 
