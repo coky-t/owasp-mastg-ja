@@ -7,9 +7,9 @@ platform: android
 
 ## 概要
 
-["モバイルアプリの暗号化"](0x04g-Testing-Cryptography.md) の章では、一般的な暗号のベストプラクティスを紹介し、暗号が間違って使用される場合に起こりうる典型的な問題について説明しました。この章では、Android の暗号化 API について詳しく説明します。ソースコード内でのこれらの API の使用を特定する方法とその暗号設定を判断する方法を示します。コードをレビューする際には、使用されている暗号パラメータをこのガイドからリンクされている現行のベストプラクティスと比較するようにしてください。
+["モバイルアプリの暗号化"](0x04g-Testing-Cryptography.md) の章では、一般的な暗号のベストプラクティスを紹介し、暗号が間違って使用される場合に起こりうる典型的な問題について説明しました。この章では、Android の暗号化 API について詳しく説明します。ソースコード内でのこれらの API の使用を特定する方法とその暗号設定を判断する方法を示します。コードをレビューする際には、使用されている暗号パラメータをこのガイドにリンクされている現行のベストプラクティスと比較するようにしてください。
 
-Android 内の暗号化システムの主要コンポーネントを特定できます。
+Android 上の暗号化システムの主要コンポーネントを特定できます。
 
 - [セキュリティプロバイダ](0x05e-Testing-Cryptography.md#security-provider)
 - KeyStore - "データストレージのテスト" の章の [KeyStore](0x05d-Testing-Data-Storage.md#keystore) セクションを参照
@@ -64,7 +64,7 @@ Apps that target modern API levels, went through the following changes:
 
 ### セキュリティプロバイダ
 
-Android は Java Security サービスの実装を `provider` に依存しています。これはセキュアなネットワーク通信と、暗号に依存するその他のセキュアな機能を確保するために重要です。
+Android は Java Security サービスの実装を `java.security.Provider` クラスに依存しています。これらのプロバイダはセキュアなネットワーク通信と、暗号に依存するその他のセキュアな機能を確保するために重要です。
 
 Android に含まれるセキュリティプロバイダのリストは Android のバージョンや OEM 固有のビルドにより異なります。古いバージョンのセキュリティプロバイダの実装の中には安全性が低いものや脆弱性があるものが知られています。したがって、 Android アプリケーションは正しいアルゴリズムを選択して適切な構成を提供するだけでなく、場合によってはレガシーセキュリティプロバイダの実装の強度にも注意を払う必要があります。
 
@@ -85,19 +85,7 @@ String providers = builder.toString();
 //now display the string on the screen or in the logs for debugging.
 ```
 
-以下では、セキュリティプロバイダにパッチを適用した後の、 Google Play API を備えたエミュレータで実行中の Android 4.4 (API レベル 19) の出力を示しています。
-
-```default
-provider: GmsCore_OpenSSL1.0 (Android's OpenSSL-backed security provider)
-provider: AndroidOpenSSL1.0 (Android's OpenSSL-backed security provider)
-provider: DRLCertFactory1.0 (ASN.1, DER, PkiPath, PKCS7)
-provider: BC1.49 (BouncyCastle Security Provider v1.49)
-provider: Crypto1.0 (HARMONY (SHA1 digest; SecureRandom; SHA1withDSA signature))
-provider: HarmonyJSSE1.0 (Harmony JSSE Provider)
-provider: AndroidKeyStore1.0 (Android AndroidKeyStore security provider)
-```
-
-以下では Google Play API を備えたエミュレータで実行中の Android 9 (API レベル 28) の出力を示しています。
+これは Google Play API を備えたエミュレータで実行中の Android 9 (API レベル 28) の出力です。
 
 ```default
 provider: AndroidNSSP 1.0(Android Network Security Policy Provider)
@@ -133,9 +121,7 @@ Security.addProvider(Conscrypt.newProvider())
 
 ### 鍵生成
 
-Android SDK はセキュアな鍵生成および使用を指定するためのメカニズムを提供します。 Android 6.0 (API レベル 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。
-
-API 23 以降での AES/CBC/PKCS7Padding の使用例を以下に示します。
+Android SDK は鍵をどのように生成し、どのような状況で使用できるかを指定できます。Android 6.0 (API レベル 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。以下に例を示します。
 
 ```java
 String keyAlias = "MySecretKey";
@@ -154,7 +140,7 @@ keyGenerator.init(keyGenParameterSpec);
 SecretKey secretKey = keyGenerator.generateKey();
 ```
 
-`KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的には使用できません。さらに、ブロックモード (CBC) 、パディング (PKCS #7) を指定し、ランダム化された暗号化が必要である (これがデフォルトです) ことを明示的に指定します。 `"AndroidKeyStore"` はこの例で使用されているセキュリティプロバイダの名前です。これにより鍵の保護に役立つ `AndroidKeyStore` に鍵が自動的に保存されることが保証されます。
+`KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的には使用できません。さらに、ブロックモード (CBC) 、パディング (PKCS #7) を指定し、ランダム化された暗号化が必要である (これがデフォルトです) ことを明示的に指定します。次に、`KeyGenerator.getInstance` 呼び出しでプロバイダの名前として `AndroidKeyStore` を入力し、鍵が Android KeyStore に保存されることを確保します。
 
 GCM はもうひとつの AES ブロックモードであり、他の古いモードよりもセキュリティ上の利点があります。暗号的によりセキュアであることに加えて、認証も提供します。 CBC (および他のモード) を使用する場合は、認証は HMAC を使用して別に実行する必要があります ( "[Android の改竄とリバースエンジニアリング](0x05c-Reverse-Engineering-and-Tampering.md)" の章を参照してください) 。 GCM は [パディングをサポートしていない](https://developer.android.com/training/articles/keystore.html#SupportedCiphers "Supported Ciphers in AndroidKeyStore") AES の唯一のモードであることに注意します。
 
@@ -243,7 +229,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 }
 ```
 
-上記の手法ではパスワードと必要なビット長の鍵 (例えば 128 または 256 ビットの AES 鍵) を含む文字配列が必要です。 PBKDF2 アルゴリズムにより使用される 10,000 ラウンドの反復回数を定義します。反復回数を増やすことでパスワードに対するブルートフォース攻撃の作業負荷が大幅に増加しますが、鍵導出にはより多くの計算能力が必要になるためパフォーマンスに影響を与える可能性があります。鍵長に等しいソルトサイズを定義し、ビットからバイトへの変換を処理するために 8 で除算します。 `SecureRandom` クラスを使用してランダムにソルトを生成します。同じパスワードが与えられた際には何度でも同じ暗号鍵が生成されることを確実にするために、明らかに、このソルトは一定に保ちたいものです。ソルトを `SharedPreferences` に非公開で格納できることに注意します。リスクの高いデータの場合には同期を防ぐために Android のバックアップメカニズムからソルトを除外することを推奨します。
+上記の手法ではパスワードと必要なビット長の鍵 (例えば 128 または 256 ビットの AES 鍵) を含む文字配列が必要です。 PBKDF2 アルゴリズムにより使用される 10,000 ラウンドの反復回数を定義します。反復回数を増やすことでパスワードに対するブルートフォース攻撃の作業負荷が大幅に増加しますが、鍵導出にはより多くの計算能力が必要になるためパフォーマンスに影響を与える可能性があります。ビットからバイトに変換するために鍵長を 8 で除算した値に等しいソルトサイズを定義し、 `SecureRandom` クラスを使用してランダムにソルトを生成します。同じパスワードが与えられた際には何度でも同じ暗号鍵が生成されることを確実にするために、このソルトは一定に保つ必要があります。ソルトを `SharedPreferences` に非公開で格納できることに注意します。リスクの高いデータの場合には同期を防ぐために Android のバックアップメカニズムからソルトを除外することを推奨します。
 
 > ルート化デバイスやパッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、 `AndroidKeystore` に配置された鍵でソルトを暗号化するほうがよいかもしれないことに注意します。 Password-Based Encryption (PBE) 鍵は Android 8.0 (API レベル 26) まで、推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。より高い API レベルでは `PBKDF2withHmacSHA256` を使用することがベストです。これはハッシュ値が長くなります。
 
