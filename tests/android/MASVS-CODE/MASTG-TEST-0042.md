@@ -42,8 +42,6 @@ gradle dependencyCheckAnalyze --info
 
 プラグインは脆弱性フィードをダウンロードする必要があることに注意してください。プラグインで問題が発生した場合にはドキュメントを参照します。
 
-あるいは [Sonatype Nexus IQ](https://www.sonatype.com/nexus/iqserver "Nexus IQ"), [Sourceclear](https://www.sourceclear.com/ "Sourceclear"), [Snyk](https://snyk.io/ "Snyk") や [Blackduck](https://www.blackducksoftware.com/ "Blackduck") などの、使用されているライブラリに見られる依存関係をより適切にカバーできる商用ツールがあります。OWASP Dependency Checker や別のツールを使用した実際の結果は (NDK 関連または SDK 関連の) ライブラリの種類により異なります。
-
 最後に、ハイブリッドアプリケーションの場合には、RetireJS で JavaScript の依存関係を確認する必要があることに注意します。同様に Xamarin の場合には C# の依存関係を確認する必要があります。
 
 ライブラリに脆弱性が含まれていることが判明した場合、以下の理由が適用されます。
