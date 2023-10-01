@@ -45,7 +45,7 @@ masvs_v1_levels:
 アプリがクリアテキスト HTTP トラフィックを許可していないことを確認します。iOS 9.0 以降、クリアテキスト HTTP トラフィックはデフォルトで (App Transport Security (ATS) により) ブロックされますが、アプリケーションがそれを送信できる方法はいくつかあります。
 
 - アプリの `Info.plist` にある `NSAppTransportSecurity` で `NSAllowsArbitraryLoads` 属性を `true` (または `YES`) にセットしてクリアテキストトラフィックを有効にするよう ATS を設定する。
-- [`Info.plist` の取得](../../../Document/0x06b-Basic-Security-Testing.md#the-infoplist-file)
+- [`Info.plist` の取得](../../../Document/0x06b-iOS-Security-Testing.md#the-infoplist-file)
 - どのドメインでも `NSAllowsArbitraryLoads` がグローバルに `true` にセットされていないことをチェックする。
 
 - アプリケーションがサードパーティのウェブサイトを WebView で開く際、iOS 10 以降では `NSAllowsArbitraryLoadsInWebContent` を使用して WebView にロードされるコンテンツの ATS 制限を無効にできる。
@@ -78,4 +78,4 @@ ATS にはこれを [正当化する文字列](https://developer.apple.com/docum
 詳細については以下を参照してください。
 
 - ["ネットワーク通信のテスト"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-traffic-on-the-network-layer) の章の "ネットワーク層でのトラフィックの傍受"
-- [iOS のセキュリティテスト入門](../../../Document/0x06b-Basic-Security-Testing.md#setting-up-a-network-testing-environment)  の章の "ネットワークテスト環境のセットアップ"
+- [iOS のセキュリティテスト入門](../../../Document/0x06b-iOS-Security-Testing.md#setting-up-a-network-testing-environment)  の章の "ネットワークテスト環境のセットアップ"
