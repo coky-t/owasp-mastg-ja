@@ -145,7 +145,7 @@ Kotlin
     }
 ```
 
-Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793 "[Android] XSS via start ContentActivity") で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
+Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/reports/189793 "HackerOne report - [Android] XSS via start ContentActivity") で使用しました。HTML パラメータへの任意の入力が Quora の ActionBarContentActivity で信頼されます。ペイロードは adb の使用、ModalContentActivity を介したクリップボードデータ、サードパーティアプリケーションからのインテントに成功しました。
 
 - ADB
 
