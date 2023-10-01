@@ -55,9 +55,9 @@ Android アプリケーションはメモリ破損問題のほとんどが対処
 
 一般的にはすべてのバイナリをテストすべきです。これにはメインのアプリ実行可能ファイルだけでなくすべてのライブラリや依存関係が含まれます。しかし、Android では次に説明するようにメインの実行可能ファイルは安全であると考えられるため、ネイティブライブラリに焦点を当てます。
 
-Android は アプリの DEX ファイル (classes.dex など) から Dalvik バイトコードを最適化し、ネイティブコードを含む新しいファイルを生成します。通常、拡張子は .odex, .oat です。この [Android コンパイル済みバイナリ](0x05b-Basic-Security_Testing.md#compiled-app-binary) は Linux や Android がアセンブリコードをパッケージ化するために使用するフォーマットである [ELF フォーマット](https://refspecs.linuxfoundation.org/elf/gabi4+/contents.html) を使用してラップされています。
+Android は アプリの DEX ファイル (classes.dex など) から Dalvik バイトコードを最適化し、ネイティブコードを含む新しいファイルを生成します。通常、拡張子は .odex, .oat です。この [Android コンパイル済みバイナリ](0x05b-Android-Security-Testing.md#compiled-app-binary) は Linux や Android がアセンブリコードをパッケージ化するために使用するフォーマットである [ELF フォーマット](https://refspecs.linuxfoundation.org/elf/gabi4+/contents.html) を使用してラップされています。
 
-アプリの [NDK ネイティブライブラリ](0x05b-Basic-Security_Testing.md#native-libraries) も [ELF フォーマットを使用](https://developer.android.com/ndk/guides/abis) しています。
+アプリの [NDK ネイティブライブラリ](0x05b-Android-Security-Testing.md#native-libraries) も [ELF フォーマットを使用](https://developer.android.com/ndk/guides/abis) しています。
 
 - [**PIE (Position Independent Executable)**](0x04h-Testing-Code-Quality.md#position-independent-code):
     - Android 7.0 (API レベル 24) 以降、メインの実行可能ファイルに対して PIC コンパイルは [デフォルトで有効](https://source.android.com/devices/tech/dalvik/configure) になっています。
