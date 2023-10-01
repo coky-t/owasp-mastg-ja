@@ -239,7 +239,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 これは標準 API ライブラリ関数やクラスを使用するアプリではかなりうまく機能しますが、いくつかの欠点があります。
 
-- アプリがカスタムネットワークスタックを実装している可能性がある場合、使用できる API を見つけるためにアプリの解析に時間を費やさなければならないかもしれません ([このブログ投稿](https://hackmag.com/security/ssl-sniffing/) の "Searching for OpenSSL traces with signature analysis" セクションを参照してください ) 。
+- アプリがカスタムネットワークスタックを実装している可能性がある場合、使用できる API を見つけるためにアプリの解析に時間を費やさなければならないかもしれません。 [このブログ投稿](https://hackmag.com/security/ssl-sniffing/ "Searching for OpenSSL traces with signature analysis") の "Searching for OpenSSL traces with signature analysis" セクションを参照してください。
 - (多くのメソッドコールと実行スレッドにまたがる) HTTP レスポンスペアを再アセンブルするための適切なフックスクリプトを作成するのは非常に時間がかかることがあります。 [既製のスクリプト](https://github.com/fanxs-t/Android-SSL_read-write-Hook/blob/master/frida-hook.py) や [代替ネットワークスタック](https://codeshare.frida.re/@owen800q/okhttp3-interceptor/) もありますが、アプリやプラットフォームによってはこれらのスクリプトは多くのメンテナンスが必要かもしれず、 _常に機能する_ とは限りません。
 
 例をいくつかご覧ください。
