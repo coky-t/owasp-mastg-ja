@@ -95,7 +95,7 @@ Substrate, [Frida](0x08a-Testing-Tools.md#frida), [Xposed](0x08a-Testing-Tools.m
 
 #### 名前の難読化 (Name Obfuscation)
 
-標準のコンパイラはソースコードからクラスメイト関数名を基にバイナリシンボルを生成します。したがって、難読化を行わなければ、シンボル名は意味があるままと残り、アプリのバイナリから簡単に抽出できます。たとえば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは Damn Vulnerable iOS App ([DVIA-v2](0x08b-Reference-Apps.md#dvia-v2)) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
+標準のコンパイラはソースコードからクラスメイト関数名を基にバイナリシンボルを生成します。したがって、難読化を行わなければ、シンボル名は意味があるままと残り、アプリのバイナリから簡単に抽出できます。たとえば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは [Damn Vulnerable iOS App (DVIA-v2)](0x08b-Reference-Apps.md#dvia-v2) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
 
 ```assembly
 __T07DVIA_v232JailbreakDetectionViewControllerC20jailbreakTest4TappedyypF:
@@ -123,7 +123,7 @@ mov        rbp, rsp
 
 <img src="Images/Chapters/0x06j/control-flow-flattening.png" width="100%" />
 
-この画像は制御フローの平坦化がどのようにコードを変更するかを示しています ("[Obfuscating C++ programs via control flow flattening](http://ac.inf.elte.hu/Vol_030_2009/003.pdf)" を参照)
+この画像は制御フローの平坦化がどのようにコードを変更するかを示しています。詳細については ["Obfuscating C++ programs via control flow flattening"](http://ac.inf.elte.hu/Vol_030_2009/003.pdf) を参照してください。
 
 #### デッドコードインジェクション (Dead Code Injection)
 
