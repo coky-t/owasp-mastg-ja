@@ -29,7 +29,7 @@ masvs_v1_levels:
 
 Android 7.0 (API レベル 24) 以降をターゲットとするアプリケーションでは **ユーザーが提供する CA を一切信頼しないデフォルトの Network Security Configuration** を使用し、悪意のある CA をインストールするようにユーザーを誘導して行われる MITM 攻撃の可能性を減らします。
 
-[apktool を使用してアプリをデコード](../../../Document/0x05b-Basic-Security_Testing.md#exploring-the-app-package) して、apktool.yml の `targetSdkVersion` が `24` 以上であることを検証します。
+[apktool を使用してアプリをデコード](../../../Document/0x05b-Android-Security-Testing.md#exploring-the-app-package) して、apktool.yml の `targetSdkVersion` が `24` 以上であることを検証します。
 
 ```txt
 grep targetSdkVersion UnCrackable-Level3/apktool.yml
