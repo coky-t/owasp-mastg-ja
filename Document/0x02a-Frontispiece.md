@@ -46,22 +46,6 @@ Jeroen はモバイルセキュリティのリーダーであり、モバイル�
 
 Vikas はモバイルセキュリティの専門知識を持つ経験豊富なサイバーセキュリティ研究者です。これまでのキャリアではフィンテック、銀行、政府機関などさまざまな業界のアプリケーションをセキュアにすることに取り組んできました。リバースエンジニアリング、特に難読化されたネイティブコードと暗号化を得意としています。セキュリティとモバイルコンピューティングの修士号と OSCP 資格を保有しています。彼は自分の知識を共有し、アイデアを交換することに常にオープンです。
 
-## 旧版
-
-モバイルセキュリティテストガイドは2015年に Milan Singh Thakur によって開始されました。元のドキュメントは Google ドライブでホストされていました。ガイド開発は2016年10月に GitHub に移されました。
-
-### OWASP MSTG "Beta 2" (Google Doc)
-
-| 執筆者 | レビュー担当者 | 主寄稿者 |
-| --- | --- | --- |
-| Milan Singh Thakur, Abhinav Sejpal, Blessen Thomas, Dennis Titze, Davide Cioccia, Pragati Singh, Mohammad Hamed Dadpour, David Fern, Ali Yazdani, Mirza Ali, Rahil Parikh, Anant Shrivastava, Stephen Corbiaux, Ryan Dewhurst, Anto Joseph, Bao Lee, Shiv Patel, Nutan Kumar Panda, Julian Schütte, Stephanie Vanroelen, Bernard Wagner, Gerhard Wagner, Javier Dominguez | Andrew Muller, Jonathan Carter, Stephanie Vanroelen, Milan Singh Thakur  | Jim Manico, Paco Hope, Pragati Singh, Yair Amit, Amin Lalji, OWASP Mobile Team|
-
-### OWASP MSTG "Beta 1" (Google Doc)
-
-| 執筆者 | レビュー担当者 | 主寄稿者 |
-| --- | --- | --- |
-| Milan Singh Thakur, Abhinav Sejpal, Pragati Singh, Mohammad Hamed Dadpour, David Fern, Mirza Ali, Rahil Parikh | Andrew Muller, Jonathan Carter | Jim Manico, Paco Hope, Yair Amit, Amin Lalji, OWASP Mobile Team  |
-
 <!-- \pagebreak -->
 
 ## 更新履歴
