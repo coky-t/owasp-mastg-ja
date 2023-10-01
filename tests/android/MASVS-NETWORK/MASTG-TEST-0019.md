@@ -47,4 +47,4 @@ masvs_v1_levels:
 詳細については以下を参照してください。
 
 - "モバイルアプリのネットワーク通信" の章の ["ネットワーク層でのトラフィックの傍受"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-traffic-on-the-network-layer)
-- "Android セキュリティテスト入門" の章の ["ネットワークテスト環境のセットアップ"](../../../Document/0x05b-Basic-Security_Testing.md#setting-up-a-network-testing-environment)
+- "Android セキュリティテスト入門" の章の ["ネットワークテスト環境のセットアップ"](../../../Document/0x05b-Android-Security-Testing.md#setting-up-a-network-testing-environment)
