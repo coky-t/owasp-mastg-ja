@@ -66,6 +66,6 @@ Usage: /[!bf] [arg]  Search stuff (see 'e??search' for options)
 
 ### ランタイムメモリ解析
 
-[r2frida](../../../Document/0x08a-Testing-Tools.md#r2frida) を使用すると、実行時にアプリのメモリをダンプすることなく解析して調査できます。たとえば、r2frida から前述の検索コマンドを実行して、文字列や16進値などについてメモリを検索できます。その際、`r2 frida://usb//<name_of_your_app>` でセッションを開始した後、検索コマンド (および他の r2frida 固有のコマンド) の前にバックスラッシュ `\` を付けることを忘れないでください。
+[r2frida](../../../Document/0x08a-Testing-Tools.md#r2frida) を使用すると、実行時にアプリのメモリをダンプすることなく解析して調査できます。たとえば、r2frida から前述の検索コマンドを実行して、文字列や16進値などについてメモリを検索できます。その際、`r2 frida://usb//<name_of_your_app>` でセッションを開始した後、検索コマンド (および他の r2frida 固有のコマンド) の前にバックスラッシュ `:` を付けることを忘れないでください。
 
 詳細情報、オプション、アプローチについては、"iOS の改竄とリバースエンジニアリング" の章の "[メモリ内検索](../../../Document/0x06c-Reverse-Engineering-and-Tampering.md#in-memory-search "In-Memory Search")" セクションを参照してください。
