@@ -167,3 +167,19 @@ iOS 開発者はパーミッションを直接設定することはできませ�
 - Bluetooth sharing
 - Media Library
 - Social media accounts
+
+### DeviceCheck
+
+DeviceCheck フレームワークは DeviceCheck および App Attest のコンポーネントを含み、サービスの不正使用防止を支援します。DeviceCheck フレームワークはアプリから使用するフレームワークと、独自のサーバーにのみアクセスできる Apple サーバーで構成しています。DeviceCheck では情報をデバイスと Apple サーバーに永続的に保存できます。保存された情報は、アプリの再インストール、デバイス転送、リセット後もそのまま残りますが、このデータを定期的にリセットするオプションもあります。
+
+DeviceCheck は一般的に機密リソースへのアクセスを制限することで不正行為を制限するために使用されます。たとえば、プロモーションをデバイスごとに一回に制限する、不正なデバイスを特定してフラグを立てるなどです。ただし、すべての不正を防ぐことはできません。たとえば、これは [侵害されたオペレーティングシステムを検出するもの (別名、脱獄検出) ではありません](https://swiftrocks.com/app-attest-apple-protect-ios-jailbreak "App Attest: How to prevent an iOS app's APIs from being abused") 。
+
+詳細については [DeviceCheck ドキュメント](https://developer.apple.com/documentation/devicecheck "DeviceCheck documentation") を参照してください。
+
+#### App Attest
+
+DeviceCheck フレームワークで利用できる App Attest は、ハードウェア支援のアサーションをリクエストにアタッチできるようにして、デバイス上で実行しているアプリのインスタンスを検証し、リクエストが正規の Apple デバイス上の正規のアプリからのものであることを確保します。この機能は改変したアプリがサーバーと通信するのを防ぐのに役立ちます。
+
+このプロセスには、サーバーにより実行される一連の検証とともに、暗号鍵の生成と検証が含まれ、リクエストの真正性を確保します。App Attest はセキュリティを強化しますが、あらゆる形態の不正行為に対する完全な保護を保証するものではないことに注意することが重要です。
+
+詳細については [WWDC 2021](https://developer.apple.com/videos/play/wwdc2021/10244 "WWDC 2021") セッションと [App Attest ドキュメント](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity "App Attest documentation") および [App Attest 実装ガイド](https://developer.apple.com/documentation/devicecheck/validating_apps_that_connect_to_your_server "App Attest implementation guide") を参照してください。
