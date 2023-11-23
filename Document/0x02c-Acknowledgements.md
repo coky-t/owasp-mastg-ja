@@ -8,28 +8,27 @@
 
 ## 🥇 MAS 支持者 (MAS Advocates)
 
-MAS 支持者は OWASP MASVS および MASTG の業界採用者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。
+MAS 支持者は OWASP MASVS および MASTG の業界支援者であり、一貫した影響力のある貢献を行い、継続的に情報を広めることによって、プロジェクトを推進するためにかなりの一貫した量のリソースを投資しています。
 
 > 🥇 "MAS 支持者" であることは企業がプロジェクトを期待以上に支援していることに感謝し、プロジェクトでなせる最高のステータスです。
 
-このステータスは以下のカテゴリに従って検証します。
-
-1. **採用の表示**: 会社の公式ページを見るだけで OWASP MASVS や MASTG を採用していることが明らかであること。以下に例を示します。
-     - サービス / 製品
-     - リソース (ブログ投稿、プレスリリース、公開ペンテストレポートなど)
-     - トレーニング
-     - その他
-2. **一貫した影響力のある貢献の提供**: OWASP MAS プロジェクトに対して明確で高い影響力があり時間と専用のリソースで継続的に支援すること。
-     - コンテンツのプルリクエスト (例、既存テストの追加やアップグレード、ツール作成、コードサンプルのメンテナンスなど)
+**MAS 支持者は明確で高い影響力があり時間と専用のリソースでプロジェクトを継続的に支援します**。このステータスを達成するには、プロジェクトに対して **一貫した影響力のある貢献を行っている** ことを証明する必要があります。以下に例を示します。
+     - コンテンツのプルリクエスト (例、既存テストの追加や更新、ツール作成、コードサンプルのメンテナンスなど)
      - テクニカル PR レビュー
      - 自動化の改善 (GitHub Actions)
      - Crackmes のアップグレード、拡張、新規作成
      - GitHub ディスカッションのモデレート
-     - プロジェクトや MASVS/MASTG リファクタリングなどの特別なイベントに価値の高いフィードバックの提供
+     - プロジェクトや MASVS/MASTG リファクタリングなどの特別なイベントに高品質のフィードバックの提供
      - その他
-3. **情報を広めること** 毎年の多くのプレゼンテーション、公開トレーニング、ソーシャルメディアへの高い関与 (プロジェクトを宣伝するために、いいね、再共有、独自の投稿を行うなど) でプロジェクトを宣伝します。
 
-_注釈: MAS 支持者として認定されるには、三つのカテゴリすべてを満たす必要があります。ただし、すべての箇条書きを満たす必要はありません (あくまで例です) 。一般に、プロジェクトへの貢献の継続性と高い影響力を明確に示すことができなければなりません。たとえば、"2." を満たすには最初の 6 か月間に影響力の大きいプルリクエストを送信しており、今後も継続するつもりであることを示します。_
+以下は考慮されますが、必須ではありません。
+
+- **採用の表示**: 会社の公式ページを見るだけで OWASP MASVS や MASTG を採用していることが明らかであること。以下に例を示します。
+    - サービス/製品
+    - リソース (ブログ投稿、プレスリリース、公開ペンテストレポートなど)
+    - トレーニング
+    - その他
+- **情報を広めること** 毎年の多くのプレゼンテーション、公開トレーニング、ソーシャルメディアへの高い関与 (プロジェクトを宣伝するために、いいね、再共有、独自の投稿を行うなど) でプロジェクトを宣伝します。
 
 ### 🎁 メリット
 
@@ -41,7 +40,11 @@ _注釈: MAS 支持者として認定されるには、三つのカテゴリす�
 
 ### 📝 応募方法
 
-応募したい場合はプロジェクトリーダーにご連絡ください。 [Sven Schleier](mailto:sven.schleier@owasp.org) と [Carlos Holguera](mailto:carlos.holguera@owasp.org) に電子メールを送ると、あなたのアプリケーションを検証します。上記の三つのカテゴリに沿った 6 か月間の成果を示す十分な証跡 (通常、対応する要素にリンクする URL を含む _contribution report_ の形式で) を必ず含めてください。
+応募したい場合はプロジェクトリーダーにご連絡ください。 [Sven Schleier](mailto:sven.schleier@owasp.org) と [Carlos Holguera](mailto:carlos.holguera@owasp.org) に電子メールを送ると、あなたのアプリケーションを検証し、_contribution report_ を提供します。上記の三つのカテゴリに沿った 6 か月間の成果を示す十分な証跡 (PR へのリンクなど) を必ず含めてください。
+
+- **一貫した影響力のある貢献を行っている**
+- **採用の表示**
+- **情報を広めること**
 
 ### ❗ 重要な免責事項
 
@@ -63,18 +66,6 @@ _注釈: MAS 支持者として認定されるには、三つのカテゴリす�
 
 **プロジェクトを後押ししたい他の潜在的な貢献者に対する青写真を示す模範的な貢献に対して NowSecure に感謝します。**
 
-### MASVS/MASTG 採用者としての NowSecure
-
-- サービス / 製品:
-    - [NowSecure Debuts New OWASP MASVS Mobile Pen Tests](https://www.nowsecure.com/blog/2022/03/22/nowsecure-debuts-new-owasp-masvs-mobile-pen-tests/)
-    - [NowSecure Platform for Automated Mobile Security Testing](https://www.nowsecure.com/products/nowsecure-platform/)
-- リソース:
-    - [The Essential Guide to the OWASP Mobile Security Project](https://discover.nowsecure.com/c/manager-guide-owasp?x=LIaYZt&xs=90367)
-- トレーニング:
-    - [Standards and Risk Assessment](https://academy.nowsecure.com/standards-and-risk-assessment)
-    - [OWASP MASVS & MASTG Updates](https://academy.nowsecure.com/owasp-masvs-mstg-updates)
-    - [Intro to Mobile App Security](https://academy.nowsecure.com/intro-to-mobile-app-security)
-
 ### NowSecure の MAS プロジェクトへの貢献
 
 **影響力の大きな貢献 (時間と専用のリソース):**
@@ -92,6 +83,20 @@ _注釈: MAS 支持者として認定されるには、三つのカテゴリす�
 
 過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[UnCrackable App for Android Level 4: Radare2 Pay](0x08b-Reference-Apps.md#android-uncrackable-l4) を寄贈しています。
 
+追記:
+
+**採用の表示:**
+
+- サービス / 製品:
+    - [NowSecure Debuts New OWASP MASVS Mobile Pen Tests](https://www.nowsecure.com/blog/2022/03/22/nowsecure-debuts-new-owasp-masvs-mobile-pen-tests/)
+    - [NowSecure Platform for Automated Mobile Security Testing](https://www.nowsecure.com/products/nowsecure-platform/)
+- リソース:
+    - [The Essential Guide to the OWASP Mobile Security Project](https://discover.nowsecure.com/c/manager-guide-owasp?x=LIaYZt&xs=90367)
+- トレーニング:
+    - [Standards and Risk Assessment](https://academy.nowsecure.com/standards-and-risk-assessment)
+    - [OWASP MASVS & MASTG Updates](https://academy.nowsecure.com/owasp-masvs-mstg-updates)
+    - [Intro to Mobile App Security](https://academy.nowsecure.com/intro-to-mobile-app-security)
+
 **情報を広めること:**
 
 - **ソーシャルメディアへの関与**: 継続的な Twitter や LinkedIn の活動 ([例](https://twitter.com/search?q=(MASVS%20OR%20MSTG)%20(from%3ANowSecureMobile)&src=typed_query) を参照)
@@ -100,10 +105,13 @@ _注釈: MAS 支持者として認定されるには、三つのカテゴリす�
     - [Integrate security into the mobile app software development lifecycle](https://www.scmagazine.com/perspective/devops/integrate-security-into-the-mobile-app-software-development-lifecycle)
     - [OWASP Mobile Security Testing Checklist Aids Compliance](https://www.nowsecure.com/blog/2022/02/23/owasp-mobile-security-testing-checklist-aids-compliance/)
 - **プレゼンテーション**:
-    - "Mobile Wanderlust"! Our journey to Version 2.0! (OWASP AppSec EU, Jun 10 2022)
-    - Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Toronto Chapter, Feb 10 2022)
-    - [Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Virtual AppSec 2021, Nov 11 2021)](https://www.youtube.com/watch?v=TcYtpUIIMYw)
-    - [Insiders Guide to Mobile AppSec with OWASP MASVS (OWASP Northern Virginia Chapter, Oct 8 2021)](https://www.youtube.com/watch?v=fuLo64WH3SU)
+    - Refactoring Mobile App Security (OWASP AppSec US, Oct 2023)
+    - OWASP MAS Project Showcase (OWASP AppSec US, Oct 2023)
+    - OWASP MASVS v2 Updates (Tech Talks by NowSecure, Feb 2023)
+    - "Mobile Wanderlust"! Our journey to Version 2.0! (OWASP AppSec EU Jun 10 2022, OWASP Global AppSec APAC Sept 2022, OWASP AppSec US Nov 2022, OWASP AppSec EU Feb 2023)
+    - Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Toronto Chapter Feb 10 2022)
+    - [Insiders Guide to Mobile AppSec with Latest OWASP MASVS (OWASP Virtual AppSec 2021 Nov 11 2021)](https://www.youtube.com/watch?v=TcYtpUIIMYw)
+    - [Insiders Guide to Mobile AppSec with OWASP MASVS (OWASP Northern Virginia Chapter Oct 8 2021)](https://www.youtube.com/watch?v=fuLo64WH3SU)
     - その他いろいろ
 
 ### 支援者
