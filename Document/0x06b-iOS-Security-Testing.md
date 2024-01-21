@@ -1,546 +1,131 @@
-## セキュリティテスト入門 (iOS)
+# iOS セキュリティテスト
 
-### Swift および Objective-C の紹介
+この章では、セキュリティテスト環境のセットアップについて詳しく説明し、iOS アプリのセキュリティをテストするための実践的なプロセスとテクニックをいくつか紹介します。これらは MASTG テストケースの構成要素です。
 
-このチュートリアルのほとんどは主に Objective-C で書かれたアプリケーションやブリッジされた Swift タイプのアプリケーションに関連しています。これらの言語は基本的に異なることに注意してください。Cycript で頻繁に使用されるメソッドスウィズルなどの機能は Swift メソッドでは機能しません。このテストガイドの執筆時には、Frida は Swift メソッドの計装をサポートしていません。
+## iOS テストのセットアップ
 
-### テスト環境のセットアップ
+テストには Linux や Windows のホストコンピュータを使用できますが、これらのプラットフォームでは多くのタスクが困難か不可能であることが分かるでしょう。さらに、Xcode 開発環境と iOS SDK は macOS でのみ使用できます。つまり、ソースコード解析とデバッグには必ず macOS で作業する必要があることを意味します (ブラックボックステストも容易になります)。
 
-**iOS テストラボの要件**
+### ホストデバイス
 
-最小構成
+以下は最も基本的な iOS アプリのテストセットアップです。
 
-- 管理者権限を持つラップトップ、Kali Linux を搭載した VirtualBox
-- クライアントからクライアントへのトラフィックが許可された WiFi ネットワーク (USB を介した多重化も可能)
-- Hopper 逆アセンブラ
-- 少なくとも一つの脱獄済み iOS デバイス (必要な iOS バージョンのもの)
-- Burp Suite ツール
+- 理想的には管理権限を持つ macOS ホストコンピュータ。
+- [Xcode](0x08a-Testing-Tools.md#xcode) と [Xcode コマンドラインツール](0x08a-Testing-Tools.md#xcode-command-line-tools) がインストールされていること。
+- クライアント間のトラフィックを許可する Wi-Fi ネットワーク。
+- 少なくとも一台の脱獄済み iOS デバイス (目的の iOS バージョンのもの)。
+- [Burp Suite](0x08a-Testing-Tools.md#burp-suite) またはその他の傍受プロキシツール。
 
-推奨構成
-- Xcode と開発者プロファイルありの MacBook
-- 前述と同様の WiFi ネットワーク
-- Hopper 逆アセンブラもしくは Hex Rays の IDA Pro
-- 少なくとも二つの iOS デバイス、一つは脱獄済み、二つ目は脱獄なし
-- Burp Suite ツール
+### iOS デバイスの UDID を取得する
 
-### iOS の脱獄
+UDID は iOS デバイスを特定するための 40 桁の一意の文字と数字の列です。macOS Catalina 以降では Finder アプリで iOS デバイスの UDID がわかります。iTunes は Catalina で利用できなくなりました。Finder を開き、サイドバーで接続されている iOS デバイスを選択します。
 
-iOS の世界では、脱獄は Apple のコード署名メカニズムを無効にして、Apple が署名していないアプリを実行できるにすることを意味します。iOS デバイスで何かしらの動的セキュリティテストを行う予定がある場合、最も有用なテストツールはアプリストア以外でのみ利用可能であるため、脱獄済みデバイスで作業がはるかに楽になります。
+<img src="Images/Chapters/0x06b/finder_ipad_view.png" width="100%" />
 
-エクスプロイトチェーンと脱獄の間には重要な違いがあります。前者はコード署名や MAC などの iOS システム保護を無効にしますが、Cydia ストアはインストールしません。脱獄はエクスプロイトチェーンを活用し、システム保護を無効にして、Cydia をインストールする完全なツールです。
+モデル、ストレージ容量、バッテリー情報を含むテキストをクリックすると、代わりにシリアル番号、UDID、モデルを表示します。
 
-脱獄用語で、紐付きと紐なし脱獄手法についてお話しします。「紐付き」シナリオでは、脱獄は再起動前後で持続しないため、再起動するたびにデバイスをコンピュータに接続 (紐付き) して再適用する必要があります。「紐なし」脱獄は一度しか適用する必要がなく、エンドユーザーにとって最も人気のある選択となっています。
+<img src="Images/Chapters/0x06b/finder_unveil_udid.png" width="100%" />
 
-脱獄手法は iOS のバージョンによって異なります。最良の選択はあなたの iOS バージョンに対して一般的な脱獄が利用可能であるかどうかを確認することです <sup>[25]</sup> 。脱獄グループや著者に似たドメイン名で隠した、インターネットでしばしば配布されている偽ツールやスパイウェアに注意します。
+UDID を右コピーするとコピーできます。
 
-**重要** iOS の脱獄に関する注意：Android とは異なり、あなたは下記の例外を除いて iOS バージョンをダウングレード **できません** 。当然ながら、iOS バージョンに大きなバンプがあり (9 から 10 など)、新しい OS に公開された脱獄が存在しないとき、これは問題を引き起こします。一つの可能な解決策は少なくとも二つの iOS デバイスを持つことです。一つは脱獄済みでテストに必要なすべてのツールを持ち、二つ目はすべての主要な iOS リリースごとに更新され、公開された脱獄がリリースされるまで待ちます。一旦公開された脱獄がリリースされると、Apple はパッチをリリースするのがかなり速いので、数日中に最新の iOS バージョンにアップグレードして脱獄する必要があります (アップグレードが必要な場合) 。
-iOS のアップグレードプロセスはオンラインで実行され、チャレンジレスポンスプロセスに基づいています。チャレンジに対するレスポンスが Apple により署名されている場合にのみ、デバイスは OS インストールを実行します。これは研究者が「署名ウィンドウ」と呼ぶものです。iTunes 経由でダウンロードした OTA ファームウェアパッケージを保存していつでもデバイスにロードすることはできないという事実を説明しています。iOS のマイナーアップグレードでは、Apple により同時に二つのバージョンが署名されている可能性があります。これはiOS バージョンをダウングレードできる可能性のある唯一のケースです。このサイト <sup>[30]</sup> から現在の署名ウィンドウを確認し、OTA ファームウェアをダウンロードできます。脱獄の詳細については iPhone Wiki <sup>[26]</sup> を参照ください。
+また、デバイスが USB で接続されていると、macOS のさまざまなコマンドラインツールを介して UDID を取得することも可能です。
 
-### テスト環境の準備
+- [I/O Registry Explorer](https://developer.apple.com/library/archive/documentation/DeviceDrivers/Conceptual/IOKitFundamentals/TheRegistry/TheRegistry.html "I/O Registry Explorer") ツール `ioreg` を使用する:
 
-![Cydia Store](Images/Chapters/0x06b/cydia.png "Cydia Store")
+    ```sh
+    $ ioreg -p IOUSB -l | grep "USB Serial"
+    |         "USB Serial Number" = "9e8ada44246cee813e2f8c1407520bf2f84849ec"
+    ```
 
-iOS デバイスを脱獄させて Cydia が (スクリーンショットと同様に) インストールされたら、以下の手順に従います。
+- [ideviceinstaller](https://github.com/libimobiledevice/ideviceinstaller) を使用する (Linux でも利用できます):
 
-1. Cydia から aptitude と openssh をインストールする
-2. iDevice へ SSH する
-  * 二つのユーザー `root` と `mobile` がある
-  * デフォルトパスワードは `alpine` である
-3. Cydia に次のリポジトリを追加する `https://build.frida.re`
-4. Cydia から Frida をインストールする
-5. aptitude で以下のパッケージをインストールする
+    ```sh
+    $ brew install ideviceinstaller
+    $ idevice_id -l
+    316f01bd160932d2bf2f95f1f142bc29b1c62dbc
+    ```
 
-```
-inetutils 
-syslogd 
-less 
-com.autopear.installipa 
-class-dump 
-com.ericasadun.utilities 
-odcctools
-cycript 
-sqlite3 
-adv-cmds 
-bigbosshackertools
-```
+- system_profiler を使用する:
 
-あなたのワークステーションには SSH クライアント、Hopper 逆アセンブラ、Burp、Frida がインストールされている必要があります。pip で Frida をインストールできます。
+    ```sh
+    $ system_profiler SPUSBDataType | sed -n -e '/iPad/,/Serial/p;/iPhone/,/Serial/p;/iPod/,/Serial/p' | grep "Serial Number:"
+    2019-09-08 10:18:03.920 system_profiler[13251:1050356] SPUSBDevice: IOCreatePlugInInterfaceForService failed 0xe00002be
+                Serial Number: 64655621de6ef5e56a874d63f1e1bdd14f7103b1
+    ```
 
-```
-$ sudo pip install frida
-```
+- instruments を使用する:
 
-#### USB 経由の SSH 接続
+    ```sh
+    instruments -s devices
+    ```
 
-通常の動作と同様に、iTunes は <code>usbmux</code> を経由して iPhone と通信します。<code>usbmux</code> は一つの USB パイプで複数の「接続」を多重化するシステムです。このシステムは TCP のようなシステムを提供します。ホストマシン上の複数のプロセスがモバイルデバイス上の特定の番号付きポートへの接続を開きます。
+### 実デバイス (脱獄済み) でのテスト
 
-*usbmux* は */System/Library/PrivateFrameworks/MobileDevice.framework/Resources/usbmuxd* により処理されます。USB を経由して iPhone 接続を監視するソケットデーモンです <sup>[18]</sup> 。これを使用して、モバイルデバイスのローカルホストソケットをホストマシンの TCP ポートに接続することができます。これによりネットワーク設定とは関係なくデバイスに SSH を使用できます。標準モードで動作している iPhone を検出すると、iPhone に接続して、*/var/run/usbmuxd* <sup>[27]</sup> 経由で受信したリクエストの中継を開始します。
+テストを実行するには脱獄済み iPhone または iPad が必要です。これらのデバイスは root アクセスとツールのインストールが可能になり、セキュリティテストプロセスがより簡単になります。脱獄済みデバイスにアクセスできない場合、この章で後述する次善策を適用できますが、より困難な状況になることを覚悟してください。
 
-MacOS
+### iOS シミュレータでのテスト
 
-```
-$ brew install libimobiledevice
-$ iproxy 2222 22
-$ ssh -p 2222 root@localhost
-iPhone:~ root# 
-```
+実際の Android デバイスのハードウェアを完全にエミュレートする Android エミュレータとは異なり、iOS SDK シミュレータは iOS デバイスのより高いレベルの _シミュレーション_ を提供します。最も重要なのは、エミュレータバイナリが ARM コードではなく x86 コードにコンパイルされることです。実際のデバイス用にコンパイルされたアプリは実行しないため、シミュレータはブラックボックス解析やリバースエンジニアリングには役に立ちません。
 
-Python クライアント
+### エミュレータでのテスト
 
-```bash
-$ ./tcprelay.py -t 22:2222
-$ ssh -p 2222 root@localhost
-iPhone:~ root# 
-```
-iphonedevwiki <sup>[24]</sup> も参照ください。
+[Corellium](0x06c-Reverse-Engineering-and-Tampering.md#corellium) は一般に入手可能な唯一の iOS エミュレータです。これは企業向けの SaaS ソリューションで、ユーザーごとのライセンスモデルとなっており、コミュニティライセンスを提供していません。
 
-### 一般的な iOS アプリケーションテストのワークフロー
+### 特権アクセスの取得
 
-iOS アプリケーションテストの一般的なワークフローは以下のとおりです。
+iOS の脱獄は Android のルート化とよく比較されますが、そのプロセスは実際にはまったく異なります。その違いを説明するために、まず Android の「ルート化」と「フラッシュ」の概念をおさらいしましょう。
 
-1. IPA ファイルを入手する
-2. 脱獄検出をバイパスする (存在する場合)
-3. 証明書ピンニングをバイパスする (存在する場合)
-4. HTTP(S) トラフィックを検査する - 通常の Web アプリテスト
-5. ランタイム操作によりアプリケーションロジックを不正使用する
-6. ローカルデータストレージ (キャッシュ、バイナリクッキー、plist、データベース) を確認する
-7. クライアント固有のバグ SQLi や XSS などを確認する
-8. その他の確認：NSLog を使用した ASL へのログ出力、アプリケーションのコンパイルオプション、アプリケーションのスクリーンショット、アプリのバックグラウンド化有無
+- **ルート化**: これは一般的に `su` バイナリをシステムにインストールするか、システム全体をルート化済みのカスタム ROM に置き換えることを含みます。ブートローダーにアクセスできる限り、ルートアクセスを獲得するためにエクスプロイトは必要ありません。
+- **カスタム ROM のフラッシュ**: ブートローダーをアンロックした後、デバイス上で動作している OS を置き換えることができます。ブートローダーをアンロックするにはエクスプロイトを必要とすることがあります。
 
-### 静的解析
+iOS ブートローダーは Apple が署名したイメージの起動とフラッシュのみを許可しているため、iOS デバイスではカスタム ROM のフラッシュは不可能です。このため、公式の iOS イメージであっても Apple の署名がなければインストールできず、以前の iOS バージョンがまだ署名されていれば iOS をダウングレードできます。
 
-#### ソースコードあり
+脱獄の目的は iOS の保護 (特に Apple のコード署名メカニズム) を無効にして、任意の未署名コード (カスタムコードや、 [Cydia](0x08a-Testing-Tools.md#cydia "Cydia") や [Sileo](0x08a-Testing-Tools.md#sileo "Sileo") などの代替アプリストアからダウンロードしたものなど) をデバイス上で実行できるようにすることです。「脱獄」という言葉は無効化プロセスを自動化するオールインワンツールへの口語的な言及です。
 
--- TODO [Add content on security Static Analysis of an iOS app with source code] --
+特定の iOS バージョン向けに脱獄を開発することは容易ではありません。セキュリティテスト担当者としては一般に入手可能な脱獄ツールを使用したいと思うでしょう。やはり、さまざまなバージョンの iOS を脱獄するために使用されるテクニックを研究することをお勧めします。多くの興味深いエクスプロイトに遭遇し、OS の内部について多くのことを学ぶことでしょう。たとえば、iOS 9.x 向けの Pangu9 は [少なくとも五つの脆弱性を悪用しており](https://www.theiphonewiki.com/wiki/Jailbreak_Exploits "Jailbreak Exploits") 、use-after-free カーネルバグ (CVE-2015-6794) や写真アプリの任意のファイルシステムアクセスの脆弱性 (CVE-2015-7037) を含んでいます。
 
-#### ソースコードなし
+一部のアプリは実行している iOS デバイスが脱獄されているかどうかを検出することを試みます。これは脱獄が iOS のデフォルトのセキュリティメカニズムをいくつかを無効にするためです。しかし、これらの検出を回避する方法はいくつかあり、["iOS のアンチリバース防御"](0x06j-Testing-Resiliency-Against-Reverse-Engineering.md) の章で紹介しています。
 
-##### フォルダ構造
+#### 脱獄の利点
 
-システムアプリケーションは `/Applications` にあります。
-残りについてはすべて、`installipa` を使用して適切なフォルダにナビゲートできます [14]
+エンドユーザーは iOS システムの外観を調整したり、新しい機能を追加したり、非公式アプリストアからサードパーティアプリをインストールするために、デバイスを脱獄することがよくあります。しかし、セキュリティテスト担当者にとって、iOS デバイスを脱獄することにはさらに多くの利点があります。以下のものがありますが、それに限定されません。
 
-```
-iOS8-jailbreak:~ root# installipa -l
-me.scan.qrcodereader
-iOS8-jailbreak:~ root# installipa -i me.scan.qrcodereader
-Bundle: /private/var/mobile/Containers/Bundle/Application/09D08A0A-0BC5-423C-8CC3-FF9499E0B19C
-Application: /private/var/mobile/Containers/Bundle/Application/09D08A0A-0BC5-423C-8CC3-FF9499E0B19C/QR Reader.app
-Data: /private/var/mobile/Containers/Data/Application/297EEF1B-9CC5-463C-97F7-FB062C864E56
-```
+- ファイルシステムへのルートアクセス。
+- Apple によって署名されていないアプリケーション (多くのセキュリティツールを含む) を実行可能。
+- 制限なしでのデバッグと動的解析。
+- Objective-C や Swift ランタイムへのアクセス。
 
-ご覧のとおり、Bundle, Application, Data の三つの主要なディレクトリがあります。Application ディレクトリは Bundle ディレクトリのサブディレクトリです。
-静的インストーラファイルは Application にありますが、すべてのユーザーデータは Data ディレクトリにあります。
-URI のランダムな文字列はアプリケーションの GUID であり、インストールするごとに異なります。
+#### 脱獄の種類
 
-##### インストールされたアプリから IPA ファイルを取り戻す
+_紐付き (tethered)_, _半紐付き (semi-tethered)_, _半紐なし (semi-untethered)_, _紐なし (untethered)_ 脱獄があります。
 
-###### 脱獄デバイスから
+- 紐付き脱獄は再起動すると永続しないので、脱獄を再適用するには、再起動するごとにデバイスをコンピュータに接続 (tethered) する必要があります。コンピュータが接続されていないと、デバイスはまったく再起動しないかもしれません。
 
-Saurik の IPA インストーラを使用して、デバイスにインストールされたアプリから IPA を復元することができます。これを行うには、Cydia 経由で IPA installer console [1] をインストールします。次に、デバイスに ssh 接続して、ターゲットアプリのバンドル ID を調べます。
+- 半紐付き脱獄は再起動時にデバイスがコンピュータに接続されていないと再適用できません。デバイスは単独で非脱獄モードで起動することもできます。
 
-~~~
-iPhone:~ root# ipainstaller -l
-com.apple.Pages
-com.example.targetapp
-com.google.ios.youtube
-com.spotify.client
-~~~
+- 半紐なし脱獄はデバイス単独で起動できますが、コード署名を無効にするためのカーネルパッチ (またはユーザーランド改変) は自動的には適用されません。ユーザーはアプリを起動するかウェブサイトを訪問してデバイスを再脱獄しなければいけません (コンピュータへの接続を必要としないため、紐なし (untetherd) という用語が付けられています)。
 
-以下のコマンドを使用して、IPA ファイルを生成します。
+- 紐なし脱獄はエンドユーザーにとって最も人気のある選択肢です。一度適用するだけで済み、その後は永続的に脱獄されるためです。
 
-~~~
-iPhone:~ root# ipainstaller -b com.example.targetapp -o /tmp/example.ipa
-~~~
+#### 注意事項と考慮事項
 
-###### 非脱獄デバイスから
+Apple が OS を強化し続けるにつれて、iOS の脱獄を開発することはますます複雑になっています。Apple が脆弱性を認識するたびに、パッチが適用され、システムアップデートがすべてのユーザーにプッシュされます。iOS の特定のバージョンにダウングレードすることはできず、Apple は最新の iOS バージョンへのアップデートのみを許可しているため、脱獄が利用可能な iOS のバージョンを実行しているデバイスを所有することは困難です。A12 までのすべての CPU の BootROM に影響を与える [checkm8 exploit](https://www.theiphonewiki.com/wiki/Checkm8_Exploit "Checkm8 exploit") のように、一部の脆弱性はソフトウェアではパッチできません。
 
-アプリが iTunes で利用可能な場合は、以下の簡単な手順で MacOS の ipa を復元できます。
+セキュリティテストに使用する脱獄済みデバイスがある場合は、最新の iOS バージョンにアップグレードした後に再脱獄できることが 100% 確実でない限り、そのままにしておいてください。一台 (または複数台) の (iOS のメジャーリリースごとにアップデートされている) 予備デバイスを入手し、脱獄が公開されるまで待つことを検討してください。通常、Apple は脱獄が公開されるとすぐにパッチをリリースするため、影響を受ける iOS バージョンにダウングレードして脱獄を適用するには (Apple によってまだ署名されている場合) 数日しかありません。
 
-- iTunes でアプリをダウンロードする
-- iTunes の Apps Library にアクセスする
-- アプリを右クリックし、finder で表示を選択する
+iOS アップグレードはチャレンジレスポンスプロセス (結果としていわゆる SHSH blobs が生成されます) に基づいています。チャレンジに対するレスポンスが Apple によって署名されている場合のみ、デバイスは OS のインストールを許可します。これは研究者が「署名ウィンドウ」と呼ぶもので、ダウンロードした OTA ファームウェアパッケージを単純に保存して、いつでも好きなときにデバイスにロードすることができない理由です。iOS のマイナーアップグレード時に、二つのバージョン (最新バージョンと以前の iOS バージョン) が両方とも Apple によって署名されていることがあります。これは iOS デバイスをダウングレードできる唯一の状況です。現在の署名ウィンドウを確認して [IPSW Downloads ウェブサイト](https://ipsw.me "IPSW Downloads") から OTA ファームウェアをダウンロードできます。
 
--- TODO [Further develop section on Static Analysis of an iOS app from non-jailbroken devices without source code] --
+デバイスや iOS バージョンによっては、署名ウィンドウがアクティブだったときにそのデバイスの SHSH blobs を収集していた場合、古いバージョンにダウングレードできます。この詳細については [cfw iOS Guide - Saving Blobs](https://ios.cfw.guide/saving-blobs/) を参照してください。
 
-#### 復号された実行可能ファイルのダンプ
+#### どの脱獄ツールを使用するか
 
-コード署名の上に、App Store 経由で配布されるアプリも Apple の FairPlay DRM システムを使用して保護されています。このシステムでは非対称暗号を使用して App Store から取得した任意のアプリ (フリーのアプリを含みます) が、実行が承認された特定のデバイスでのみ実行されることを保証します。復号鍵はデバイス固有のもので、プロセッサに焼き付けられています。今のところ、FairPlayで復号化されたアプリから復号化されたコードを取得する唯一の方法は、アプリの実行中にメモリからダンプすることです。脱獄済みデバイスでは、これは標準の Cydia リポジトリに含まれている Clutch ツールで行うことができます [2] 。インタラクティブモードでクラッチを使用して、インストールされているアプリのリストを取得し、復号して IPA ファイルにパックします。
+iOS バージョンが異なれば、必要な脱獄テクニックも異なります。[お使いの iOS バージョンで利用可能な脱獄が公開されているかどうかを確認してください](https://appledb.dev/ "Apple DB") 。偽ツールやスパイウェアに注意してください。脱獄グループや製作者の名前に似たドメイン名の背後に隠れていることがよくあります。
 
-~~~
-# Clutch -i 
-~~~
+iOS の脱獄シーンは急速に進化しているため、最新のインストラクションを提供することは困難です。しかし、現在信頼できる情報源をいくつか紹介できます。
 
-**注意：** AppStore で配布されているアプリケーションのみが FairPlay DRM で保護されています。Xcode から直接コンパイルおよびエクスポートしたアプリケーションを取得した場合、復号化する必要はありません。もっとも簡単な方法は、アプリケーションを Hopper にロードして、それが正しく逆アセンブルされるか確認することです。otool で確認することもできます。
+- [AppleDB](https://appledb.dev/ "AppleDB")
+- [The iPhone Wiki](https://www.theiphonewiki.com/ "The iPhone Wiki")
+- [Redmond Pie](https://www.redmondpie.com/ "Redmone Pie")
+- [Reddit Jailbreak](https://www.reddit.com/r/jailbreak/ "Reddit Jailbreak")
 
-~~~
-# otool -l yourbinary | grep -A 4 LC_ENCRYPTION_INFO
-~~~
-
-出力に cryptoff, cryptsize, cryptid フィールドが含まれている場合、バイナリは暗号化されています。このコマンドの出力が空の場合、バイナリは暗号化されていないことを意味します。IPA ファイルではなく、バイナリに対して otool を使用することを **忘れないで** ください。
-
-#### class-dump と Hopper 逆アセンブラで基本情報の取得
-
-class-dump ツールはアプリケーション内のメソッドに関する情報を取得できます。以下の例では Damn Vulnerable iOS アプリケーション [12] を使用しています。私たちのバイナリはいわゆるファットバイナリであり、32ビットと64ビットのプラットフォームで実行できます。
-
-```
-$ unzip DamnVulnerableiOSApp.ipa
-
-$ cd Payload/DamnVulnerableIOSApp.app
-
-$ otool -hv DamnVulnerableIOSApp 
-
-DamnVulnerableIOSApp (architecture armv7):
-Mach header
-      magic cputype cpusubtype  caps    filetype ncmds sizeofcmds      flags
-   MH_MAGIC     ARM         V7  0x00     EXECUTE    38       4292   NOUNDEFS DYLDLINK TWOLEVEL WEAK_DEFINES BINDS_TO_WEAK PIE
-
-DamnVulnerableIOSApp (architecture arm64):
-Mach header
-      magic cputype cpusubtype  caps    filetype ncmds sizeofcmds      flags
-MH_MAGIC_64   ARM64        ALL  0x00     EXECUTE    38       4856   NOUNDEFS DYLDLINK TWOLEVEL WEAK_DEFINES BINDS_TO_WEAK PIE
-
-```
-
-32ビットである `armv7` と `arm64` のアーキテクチャに注意します。この設計によりすべてのデバイスに同じアプリケーションをデプロイできます。
-class-dump でアプリケーションを解析するには、ひとつのアーキテクチャのみを含む、いわゆるシンバイナリを作成する必要があります。
-
-```
-iOS8-jailbreak:~ root# lipo -thin armv7 DamnVulnerableIOSApp -output DVIA32
-```
-
-それから class-dump の実行に進みます。
-
-```
-iOS8-jailbreak:~ root# class-dump DVIA32 
-
-@interface FlurryUtil : ./DVIA/DVIA/DamnVulnerableIOSApp/DamnVulnerableIOSApp/YapDatabase/Extensions/Views/Internal/
-{
-}
-+ (BOOL)appIsCracked;
-+ (BOOL)deviceIsJailbroken;
-```
-
-プラス記号は BOOL 型を返すクラスメソッドを意味することに注意します。
-マイナス記号は、これがインスタンスメソッドであることを意味します。両者の実際的な違いを理解するには、以降のセクションを参照ください。
-
-あるいは、Hopper 逆アセンブラ [13] でアプリケーションを簡単に逆コンパイルすることもできます。これらのすべての手順は自動的に実行され、逆アセンブルされたバイナリやクラス情報が表示されます。
-
-静的解析を実行する際の主な焦点は以下のとおりです。
-* 脱獄検出と証明書ピンニングを担当する機能の特定と理解
-  * 脱獄検出には、`jailbreak`, `jailbroken`, `cracked` などの単語を含むメソッドやクラスを探します。脱獄検出を実行する関数の名前は解析を鈍化させるために「難読化」されることがあります。最善の策は以降のセクションで説明されている脱獄検出メカニズムを探すことです (動的解析 - 脱獄検出を参照ください) 。
-  * 証明書ピンニングには、`pinning`, `X509` などのキーワードや `NSURLSession`, `CFStream`, `AFNetworking` などのネイティブメソッドコールを探します。
-* アプリケーションロジックとそれを回避する可能性のある方法の理解
-* ハードコードされた資格情報、証明書
-* 難読化に使用され、結果として機密情報が明らかになる可能性がある任意のメソッド
-
-### 動的解析
-
--- TODO [Dynamic analysis - copying data files, logs, from device, etc.] --
-
-#### コンソールログの監視
-
-多くのアプリは有益な (そして潜在的に機密の) メッセージをコンソールログに記録します。それ以外にも、ログにはクラッシュレポートや潜在的に有益な情報が含まれています。コンソールログは Xcode の "Devices" ウィンドウで以下のように収集できます。
-
-1. Xcode を起動する
-2. デバイスをホストコンピュータに接続する
-3. デバイスを Window メニューから選択する
-4. Devices ウィンドウの左側のセクションで、接続している iOS デバイスをクリックする
-5. 問題を再現する
-6. Devices の右側のセクションの左下隅にあるボックストグルの三角形をクリックする
-コンソールログの内容を開示するウィンドウ
-
-コンソール出力をテキストファイルに保存するには、右下の下向き矢印がついた円をクリックします。
-
-![Console logs](Images/Chapters/0x06b/device_console.jpg "Monitoring console logs through XCode")
-
-#### 脱獄済みデバイスでの動的解析
-
-脱獄済みデバイスでのライフは簡単です。アプリのサンドボックスに簡単にアクセスできるだけでなく、コード署名の欠如のため、より強力な動的解析技法を使用することもできます。iOS では、ほとんどの動的解析ツールは Cydia Substrate 上に構築されています。このツールはランタイムパッチを開発するためのフレームワークです。これについては「改竄とリバースエンジニアリング」の章で詳しく説明します。しかし、基本的な API モニタリングの目的では、Substrate を詳しく知る必要はありません。この目的のために構築された既存のツールをそのまま使用できます。
-
-##### アプリデータファイルのコピー
-
-アプリに属するファイルはアプリのデータディレクトリに格納されます。正しいパスを特定するには、デバイスに ssh し、IPA インストーラコンソールを使用してパッケージ情報を取得します。
-
-```bash
-iPhone:~ root# ipainstaller -l 
-sg.vp.UnCrackable-2
-sg.vp.UnCrackable1
-
-iPhone:~ root# ipainstaller -i sg.vp.UnCrackable1
-Identifier: sg.vp.UnCrackable1
-Version: 1
-Short Version: 1.0
-Name: UnCrackable1
-Display Name: UnCrackable Level 1
-Bundle: /private/var/mobile/Containers/Bundle/Application/A8BD91A9-3C81-4674-A790-AF8CDCA8A2F1
-Application: /private/var/mobile/Containers/Bundle/Application/A8BD91A9-3C81-4674-A790-AF8CDCA8A2F1/UnCrackable Level 1.app
-Data: /private/var/mobile/Containers/Data/Application/A8AE15EE-DC8B-4F1C-91A5-1FED35258D87
-```
-
-これでデータディレクトリをアーカイブし、scp を使用してデバイスから取り出すことができます。
-
-```bash
-iPhone:~ root# tar czvf /tmp/data.tgz /private/var/mobile/Containers/Data/Application/A8AE15EE-DC8B-4F1C-91A5-1FED35258D87
-iPhone:~ root# exit
-$ scp -P 2222 root@localhost:/tmp/data.tgz .
-```
-
-##### キーチェーンデータのダンプ
-
-Keychain-Dumper [23] は脱獄済みデバイス上のキーチェーンの内容をダンプできます。ツールを実行する最も簡単な方法は GitHub リポジトリからバイナリをダウンロードすることです。
-
-``` bash
-$ git clone https://github.com/ptoomey3/Keychain-Dumper
-$ scp -P 2222 Keychain-Dumper/keychain_dumper root@localhost:/tmp/
-$ ssh -p 2222 root@localhost
-iPhone:~ root# chmod +x /tmp/keychain_dumper
-iPhone:~ root# /tmp/keychain_dumper 
-
-(...)
-
-Generic Password
-----------------
-Service: myApp
-Account: key3
-Entitlement Group: RUD9L355Y.sg.vantagepoint.example
-Label: (null)
-Generic Field: (null)
-Keychain Data: SmJSWxEs
-
-Generic Password
-----------------
-Service: myApp
-Account: key7
-Entitlement Group: RUD9L355Y.sg.vantagepoint.example
-Label: (null)
-Generic Field: (null)
-Keychain Data: WOg1DfuH
-```
-
-但し、このバイナリは「ワイルドカード」エンタイトルメントの自己署名証明書で署名されていることに注意します。キーチェーンの *すべて* のアイテムへのアクセスを許可します。あなたが疑い深い場合やテストデバイスに機密性の高いプライベートデータを入れている場合、ツールをソースからビルドしてビルドに適切な資格を手作業で署名したいかもしれません。これを行うための説明はその GitHub リポジトリで利用可能です。
-
-##### Introspy でのセキュリティプロファイリング
-
-Intospy <sup>[31]</sup> は iSecPartners によりリリースされた iOS 用のオープンソースのセキュリティプロファイラです。substrate の上に構築されていて、脱獄済みデバイス上のセキュリティの影響を受けやすい API 呼び出しを記録するために使用できます。記録された API 呼び出しはコンソールに送られ、データベースファイルに書き込まれます。Introspy-Analyzer <code>[32]</code> を使用して HTML レポートに変換できます。
-
--- TODO [Write an IntroSpy howto] --
-
-#### 非脱獄デバイス上での動的解析
-
-脱獄済みデバイスにアクセスできない場合は、起動時にダイナミックライブラリをロードするためにターゲットアプリをパッチおよび再パッケージします。この方法では、アプリを計装し動的解析に必要なほとんどすべてを行うことができます (もちろん、その方法でサンドボックスを脱出することはできませんが、通常は必要ありません) 。但し、この技法はアプリバイナリが FairPlay 暗号化 (すなわち、App Store から取得) されていない場合にのみ機能します。
-
-Apple のプロビジョニングとコード署名システムが混乱しているため、アプリの再署名は予想以上に困難です。プロビジョニングプロファイルとコード署名ヘッダが完全に正しい場合を除いて、iOS はアプリの実行を拒否します。これはあなたに多くの概念について学ぶことを要求します。さまざまなタイプの証明書、BundleID、アプリケーション ID、チーム識別子、Apple のビルドツールを使用してそれらを結びつける方法があります。言い換えれば、デフォルトの方法 (Xcode) を使用してビルドされていない特定のバイナリを OS に実行させることは厄介なプロセスになる可能性があります。
-
-使用するツールセットは optool、Apple のビルドツール、いくつかのシェルコマンドで構成されています。私たちの方法は Vincent Tan の Swizzler プロジェクト [4] の resign スクリプトに触発されています。さまざまなツールを使用して再パッケージする別の方法が NCC グループにより記述されています [5] 。
-
-下記の手順を再現するには、OWASP Mobile Testing Guide リポジトリ [6] から "UnCrackable iOS App Level 1" をダウンロードします。私たちの目標は、UnCrackable アプリが起動時に FridaGadget.dylib をロードして、Frida を使用してそれを計装できるようにすることです。
-
-##### 開発用プロビジョニングプロファイルと証明書の取得
-
-*プロビジョニングプロファイル* は Apple が署名した plist ファイルで、ひとつまたは複数のデバイスのコード署名証明書をホワイトリストに追加します。言い換えれば、これは Apple が選択したデバイス (開発プロファイル) でのデバッグなど、特定のコンテキストでアプリを明示的に実行できるように許可するものです。プロビジョニングプロファイルはアプリに付与された *エンタイトルメント* も含みます。*証明書* には実際の署名を行うために使用する秘密鍵を含みます。
-
-iOS 開発者として登録しているかどうかに応じて、以下の二つの方法のいずれかを使用して証明書とプロビジョニングプロファイルを取得できます。
-
-**iOS 開発者アカウントの場合：**
-
-以前に Xcode を使用して iOS アプリを開発およびデプロイした場合、既に独自のコード署名証明書がインストールされています。*security* ツールを使用して、既存の署名識別子を一覧表示します。
-
-~~~
-$ security find-identity -p codesigning -v
-  1) 61FA3547E0AF42A11E233F6A2B255E6B6AF262CE "iPhone Distribution: Vantage Point Security Pte. Ltd."
-  2) 8004380F331DCA22CC1B47FB1A805890AE41C938 "iPhone Developer: Bernhard Müller (RV852WND79)"
-~~~
-
-Apple Developer ポータルにログインして新しい App ID を発行し、プロファイルを発行およびダウンロードします [8] 。App ID は何でもかまいません。同じ App ID を使用して、複数のアプリに再署名できます。アプリをデバッグできるようにするには、*development* プロファイルを作成することを確認します。*distribution* プロファイルではありません。
-
-以下の例では、私の会社の開発チームに関連する独自の署名 ID を使用しています。この目的のために App ID "sg.vp.repackaged" と、"AwesomeRepackaging" という名前のプロビジョニングプロファイルを作成し、ファイル AwesomeRepackaging.mobileprovision にしました。これを以下のシェルコマンドで独自のファイル名と交換します。
-
-**通常の iTunes アカウントの場合：**
-
-幸いなことに、あなたが有料の開発者ではなくても、Apple はフリーの開発者プロビジョニングプロファイルを発行します。通常の Apple アカウントを使用して Xcode でプロファイルを取得することができます。空の iOS プロジェクトをビルドして、アプリコンテナから embedded.mobileprovision を抽出するだけです。NCC のブログでは、このプロセスを詳細に説明しています [5] 。
-
-プロビジョニングプロファイルを取得したら、*security* ツールでその内容を確認できます。許可された証明書とデバイスに加えて、プロファイルにはアプリに付与されているエンタイトルメントがあります。コード署名には後でそれらが必要になりますので、以下に示すように別の plist ファイルに抽出します。また、ファイルの内容を見て、すべてが期待通りであるかどうかを確認することも重要です。
-
-~~~
-$ security cms -D -i AwesomeRepackaging.mobileprovision > profile.plist
-$ /usr/libexec/PlistBuddy -x -c 'Print :Entitlements' profile.plist > entitlements.plist
-$ cat entitlements.plist
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>application-identifier</key>
-	<string>LRUD9L355Y.sg.vantagepoint.repackage</string>
-	<key>com.apple.developer.team-identifier</key>
-	<string>LRUD9L355Y</string>
-	<key>get-task-allow</key>
-	<true/>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>LRUD9L355Y.*</string>
-	</array>
-</dict>
-</plist>
-~~~
-
-application identitifier は Team ID (LRUD9L355Y) と Bundle ID (sg.vantagepoint.repackage) の組み合わせであることに注意します。このプロビジョニングプロファイルはこの特定の App ID を持つ一つのアプリに対してのみ有効です。"get-task-allow" key も重要です。"true" に設定する場合、デバッグサーバーなどの他のプロセスがアプリにアタッチすることが許可されます (結果的に、これはディストリビューションプロファイルでは "false" に設定されます) 。
-
-##### その他の準備
-
-起動時にアプリに追加のライブラリをロードさせるには、メインの実行可能ファイルの Mach-O ヘッダに追加の load コマンドをを挿入する方法が必要です。optool [3] を使用してこのプロセスを自動化できます。
-
-~~~
-$ git clone https://github.com/alexzielenski/optool.git
-$ cd optool/
-$ git submodule update --init --recursive
-~~~
-
-また、ios-deploy [10] も使用します。Xcode を使用せずに iOS アプリのデプロイとデバッグを可能にするツールです。
-
-~~~
-git clone https://github.com/alexzielenski/optool.git
-cd optool/
-git submodule update --init --recursive
-~~~
-
-以下の例に示すように、FridaGadget.dylib も必要です。
-
-~~~
-$ curl -O https://build.frida.re/frida/ios/lib/FridaGadget.dylib
-~~~
-
-上記のツールのほかに、OS X と Xcode に付属の標準ツールを使用します (Xcode コマンドライン開発者ツールがインストールされていることを確認します) 。
-
-##### パッチ適用、再パッケージ化、再署名
-
-本気になるときです。すでにご存知のとおり、IPA ファイルは実は ZIP アーカイブですので、任意の zip ツールを使用してアーカイブを展開します。その後、そのアプリディレクトリに FridaGadget.dylib をコピーし、optool を使用して "UnCrackable Level 1" バイナリに load コマンドを追加します。
-
-~~~
-$ unzip UnCrackable_Level1.ipa
-$ cp FridaGadget.dylib Payload/UnCrackable\ Level\ 1.app/
-$ optool install -c load -p "@executable_path/FridaGadget.dylib" -t Payload/UnCrackable\ Level\ 1.app/UnCrackable\ Level\ 1
-Found FAT Header
-Found thin header...
-Found thin header...
-Inserting a LC_LOAD_DYLIB command for architecture: arm
-Successfully inserted a LC_LOAD_DYLIB command for arm
-Inserting a LC_LOAD_DYLIB command for architecture: arm64
-Successfully inserted a LC_LOAD_DYLIB command for arm64
-Writing executable to Payload/UnCrackable Level 1.app/UnCrackable Level 1...
-~~~
-
-このような露骨な改竄はもちろんメインの実行可能ファイルのコード署名を無効にするため、これは非脱獄済みデバイスでは実行されません。プロビジョニングプロファイルを置き換え、メインの実行可能ファイルと FridaGadget.dylib の両方にそのプロファイルに記載されている証明書で署名する必要があります。
-
-まず、独自のプロビジョニングプロファイルをパッケージに追加します。
-
-~~~
-$ cp AwesomeRepackaging.mobileprovision Payload/UnCrackable\ Level\ 1.app/embedded.mobileprovision
-~~~
-
-次に、Info.plist の BundleID がプロファイルに指定されているものと一致することを確認する必要があります。この理由は "codesign" ツールが署名時に Info.plist から Bundle ID を読み取るためです。間違った値は無効な署名につながります。
-
-~~~
-$ /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier sg.vantagepoint.repackage" Payload/UnCrackable\ Level\ 1.app/Info.plist
-~~~
-
-最後に、codesign ツールを使用して、両方のバイナリを再署名します。
-
-~~~
-$ rm -rf Payload/F/_CodeSignature
-$ /usr/bin/codesign --force --sign 8004380F331DCA22CC1B47FB1A805890AE41C938  Payload/UnCrackable\ Level\ 1.app/FridaGadget.dylib
-Payload/UnCrackable Level 1.app/FridaGadget.dylib: replacing existing signature
-$ /usr/bin/codesign --force --sign 8004380F331DCA22CC1B47FB1A805890AE41C938 --entitlements entitlements.plist Payload/UnCrackable\ Level\ 1.app/UnCrackable\ Level\ 1
-Payload/UnCrackable Level 1.app/UnCrackable Level 1: replacing existing signature
-~~~
-
-##### アプリのインストールと実行
-
-ここで改変されたアプリを実行するために設定する必要があります。以下のようにデバイス上にアプリをデプロイおよび実行します。
-
-~~~
-$ ios-deploy --debug --bundle Payload/UnCrackable\ Level\ 1.app/
-~~~
-
-すべてうまくいけば、lldb をアタッチしてデバッグモードでデバイス上でアプリを実行します。ここで Frida はアプリにアタッチできるはずです。これを確認するには、frida-ps コマンドを使用します。
-
-~~~
-$ frida-ps -U
-PID  Name
----  ------
-499  Gadget
-~~~
-
-![Frida on non-JB device](Images/Chapters/0x06b/fridaStockiOS.png "Frida on non-JB device")
-
-##### トラブルシューティング
-
-何かが間違っている (通常はそうなります) 場合、プロビジョニングプロファイルとコード署名ヘッダの間の不一致がもっとも疑われます。この場合、公式のドキュメントを読んでシステム全体の仕組みを理解することが有用です [7][8] 。Apple の entitlement トラブルシューティングページ [9] に役に立つリソースがあります。
-
-### Burp のセットアップ
-
-トラフィックをプロキシするように Burp をセットアップすることはとても簡単です。iDevice とワークステーションの両方が同じ Wi-Fi ネットワークに接続され、クライアントからクライアントへのトラフィックが許可されていることが前提となります。クライアントからクライアントへのトラフィックが許可されていない場合、usbmuxd [18] を使用して USB 経由で Burp に接続することが可能である必要があります。
-
-最初のステップでは、すべてのインタフェース (または Wi-Fi インタフェースのみ) で listen するように Burp のプロキシを設定します。それから、高度な Wi-Fi 設定でプロキシを使用するように iDevice を設定します。Portswigger は iOS Device と Burp の設定に関するよいチュートリアルを提供しています [22] 。
-
-### 証明書ピンニングのバイパス
-
-証明書ピンニングは TLS 接続のセキュリティを強化するために使用される方法です。アプリケーションが TLS を使用してサーバーに接続する場合、サーバーの証明書が信頼できる CA の秘密鍵で署名されているかどうかがチェックされます。その検証はデバイスのキーストア内にある公開鍵で署名をチェックすることに基づいています。これにはすべての信頼できるルート CA の公開鍵が含まれています。
-
-証明書ピンニングはアプリケーションがサーバーの証明書や証明書のハッシュをソースコード内にハードコードされることを意味します。
-これは二つの主要な攻撃シナリオに対して保護します。
-
-* 私たちのドメインの証明書をサードパーティに発行する不正な CA
-* デバイスのトラストストアにサードパーティルート CA を追加するフィッシング攻撃
-
-最も簡単な方法は `SSL Kill Switch` (Cydia ストア経由でインストール可能) を使用して、すべての高レベル API 呼び出しをフックし、証明書ピンニングをバイパスすることです。但し、証明書ピンニングはバイパスが難しい場合もあります。証明書ピンニングをバイパスしようとする際に探すべき事項は以下のとおりです。
-
-- API 呼び出し： `NSURLSession`, `CFStream`, `AFNetworking`
-- 静的解析の中で、'pinning', 'X509', 'Certificate' などの単語を含むメソッドや文字列を探してみます。
-- 時には、openssl などを使用して、より低レベルの検証が行われます。これをバイパスする方法のチュートリアル [20] があります。
-- Apache Cordova や Adobe Phonegap を使用して書かれた一部のデュアルスタックアプリケーションはコールバックを頻繁に使用します。成功したときに呼び出されるコールバック関数を探し、Cycript を使用して手動で呼び出します。
-- 証明書がアプリケーションバンドル内にファイルとして存在することがあります。それを Burp の証明書で置き換えるだけで十分ですが、バイナリにハードコードされている可能性がある証明書の SHA サムに注意します。その場合はそれも置き換える必要があります。
-
-#### 推奨事項
-
-証明書ピンニングは適切なセキュリティプラクティスであり、機密情報を扱うすべてのアプリケーションで使用すべきです。
-EFF の Observatory <sup>[28]</sup> は主要なオペレーティングシステムでデフォルトで信頼されているルート CA および中間 CA の一覧を提供します。Mozilla や Microsoft により (直接もしくは間接的に) 信頼された認証機関として機能する 650 異常の組織のマップも参照します <sup>[29]</sup> 。これらの CA のうち少なくともひとつを信頼しない場合には、証明書ピンニングを使用します。
-
-ホワイトボックステストや一般的なコードパターンの詳細については David Thiel による iOS Application Security [21] を参照ください。証明書ピンニングを実行するために使用される最も一般的な技法の説明とコードスニペットが含まれています。
-
-トランスポートセキュリティのテストの詳細については、「ネットワーク通信のテスト」のセクションを参照ください。
-
-### 参考情報
-
-* [1] IPA Installer Console - http://cydia.saurik.com/package/com.autopear.installipa
-* [2] Clutch - https://github.com/KJCracks/Clutch
-* [3] Optool - https://github.com/alexzielenski/optool
-* [4] Swizzler 2 - https://github.com/vtky/Swizzler2/wiki
-* [5] iOS instrumentation without jailbreak - https://www.nccgroup.trust/au/about-us/newsroom-and-events/blogs/2016/october/ios-instrumentation-without-jailbreak/
-* [6] Uncrackable Level 1 - https://github.com/OWASP/owasp-mstg/tree/master/OMTG-Files/02_Crackmes/02_iOS/UnCrackable_Level1
-* [7] Maintaining Certificates - https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingCertificates/MaintainingCertificates.html
-* [8] Maintaining Provisioning Profiles - https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html
-* [9] Entitlements Troubleshooting - https://developer.apple.com/library/content/technotes/tn2415/_index.html
-* [10] iOS-deploy - https://github.com/phonegap/ios-deploy
-* [11] MacOS and iOS Internals, Volume III: Security & Insecurity - Johnathan Levin
-* [12] Damn Vulnerable iOS Application - http://damnvulnerableiosapp.com/
-* [13] Hopper Disassembler - https://www.hopperapp.com/
-* [14] Introduction to iOS Application Security Testing - Slawomir Kosowski
-* [15] The Mobile Application Hacker's Handbook -  Dominic Chell, Tyrone Erasmus, Shaun Colley
-* [16] Cydia Substrate  - http://www.cydiasubstrate.com
-* [17] Frida - http://frida.re
-* [18] usbmuxd - https://github.com/libimobiledevice/usbmuxd
-* [19] Jailbreak Detection Methods - https://www.trustwave.com/Resources/SpiderLabs-Blog/Jailbreak-Detection-Methods/
-* [20] Bypassing OpenSSL Certificate Pinning -https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2015/january/bypassing-openssl-certificate-pinning-in-ios-apps/ 
-* [21] iOS Application Security - David Thiel
-* [22] Configuring an iOS Device to Work With Burp - https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp
-* [23] KeyChain-Dumper - https://github.com/ptoomey3/Keychain-Dumper/
-* [24] iphonedevwiki - SSH over USB - http://iphonedevwiki.net/index.php/SSH_Over_USB
-* [25] Can I Jailbreak? by IPSW Downloads - https://canijailbreak.com/
-* [26] The iPhone Wiki - https://www.theiphonewiki.com/
-* [27] The iPhone Wiki - https://www.theiphonewiki.com/wiki/Usbmux 
-* [28] EFF's Observatory - https://www.eff.org/pl/observatory
-* [29] Map of the 650-odd organizations that function as Certificate Authorities trusted (directly or indirectly) by Mozilla or Microsoft - https://www.eff.org/files/colour_map_of_CAs.pdf
-* [30] IPSW Downloads - https://ipsw.me
-* [31] IntroSpy - http://isecpartners.github.io/Introspy-iOS/
-* [32] IntroSpy Analyzer - https://github.com/iSECPartners/Introspy-Analyzer
+> デバイスに行ういかなる改変も、ご自身の責任で行ってください。脱獄は一般的に安全ですが、物事はうまくいかないことがあり、デバイスが文鎮化してしまうかもしれません。いかなる損害に対しても、あなた自身以外の第三者が責任を負うことはありません。
