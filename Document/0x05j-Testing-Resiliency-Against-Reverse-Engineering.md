@@ -30,60 +30,72 @@ Android では、 "ルート検出" を少し広く定義し、カスタム ROM 
 
 ルート検出は [RootBeer](https://github.com/scottyab/rootbeer "RootBeer") などのライブラリを介して実装することもできます。
 
-#### SafetyNet
+#### Google Play Integrity
 
-SafetyNet は一連のサービスを提供する Android API であり、ソフトウェアとハードウェアの情報に従ってデバイスのプロファイルを作成します。このプロファイルは Android 互換性テストに合格した承認済みデバイスモデルのリストと比較されます。 Google はこの機能を "不正使用防止システムの一環としての付加的な多層防御シグナル" として使用することを [推奨](https://developers.google.com/android/reference/com/google/android/gms/safetynet/SafetyNet "SafetyNet Documentation") しています。
+Google は Android 4.4 (レベル 19) 以降の Android 上のアプリとゲームのセキュリティと完全性を向上させるために [Google Play Integrity API](https://developer.android.com/google/play/integrity/overview "Google Play Integrity API") を開始しました。以前の公式 API [SafetyNet](https://developer.android.com/training/safetynet) は Google がプラットフォームに求めるすべてのセキュリティニーズをカバーしてはいなかったため、Play Integrity は以前の公式 API の基本機能に追加機能を統合して開発されました。この変更は危険で人を欺くやりとりからユーザーを保護することを目的としています。
 
-SafetyNet が正確な動作は十分に文書化されておらず、いつでも変更される可能性があります。この API を呼び出すと、 SafetyNet は Google から提供されるデバイス検証コードを含むバイナリパッケージをダウンロードし、リフレクションを介してコードが動的に実行されます。 [John Kozyrakis の分析](https://koz.io/inside-safetynet/ "SafetyNet: Google's tamper detection for Android") によると、 SafetyNet はデバイスがルート化されているかどうかも検出しようとしますが、これがどのように判断されるかは明確ではありません。
+**Google Play Integrity はセーフガードを提供します:**
 
-API を使用するには、アプリは `SafetyNetApi.attest` メソッド (_Attestation Result_ を含むメッセージを返します) を呼び出し、以下のフィールドをチェックします。
+- 純正 Android デバイスの検証: アプリケーションが正規の Android デバイス上で動作していることを検証します。
+- ユーザーライセンスの検証: アプリケーションやゲームが Google Play ストアを通じてインストールまたは購入されたかどうかを示します。
+- 改変なしバイナリの検証: アプリケーションが Google Play によって認識されているオリジナルのバイナリと相関があるかどうかを判断します。
 
-- `ctsProfileMatch`: 'true' の場合、デバイスプロファイルは Google にリストされているデバイスのいずれかと一致します。
-- `basicIntegrity`: 'true' の場合、アプリを実行しているデバイスはおそらく改竄されてはいません。
-- `nonces`: そのリクエストに対するレスポンスを照合します。
-- `timestampMs`: リクエストしてからレスポンスが得られるまでの経過時間をチェックします。レスポンスが遅延している場合、不審な挙動を示唆している可能性があります。
-- `apkPackageName`, `apkCertificateDigestSha256`, `apkDigestSha256`: 呼び出し元アプリの素性を検証するために使用される、 APK に関する情報を提供します。 API が信頼性のある APK 情報を判断できない場合、これらのパラメータはありません。
+API はセキュリティチームが判断を下すのに役立つ四つのマクロカテゴリ情報を提供します。これらのカテゴリは以下のとおりです。
 
-以下は attestation result の例です。
+1. **リクエストの詳細 (Request Details)**: このセクションでは、完全性チェックをリクエストしたアプリパッケージに関する詳細が取得されます。これにはそのフォーマット (com.example.myapp など)、リクエストと完全性証明書をリンクするために開発者が提供した Base64 エンコードされた ID、リクエストの実行時間 (ミリ秒) を含みます。
+
+2. **アプリの完全性 (App Integrity)**: このセクションでは、アプリのインストール元が信頼できる (Play ストア経由) か不明/疑わしいかを示す検証結果 (命名された判定) など、アプリの完全性についての情報を提供します。インストール元が安全であると考えられる場合、アプリバージョンも表示されます。
+
+3. **アカウントの詳細 (Account Details)**: このカテゴリでは、アプリのライセンスステータスに関する情報を提供します。この結果は `LICENSED`、`UNLICENSED`、`UNEVALUATED` になります。`LICENSED` はユーザーが Google Play ストアでアプリを購入またはインストールされたことを示します。`UNLICENSED` はユーザーがアプリを所有していないか、Google Play ストアを通じてアプリを取得していないことを意味します。`UNEVALUATED` は必要な要件が欠落しているため、ライセンスの詳細を評価できないことを意味します。つまり、デバイスが十分に信頼できないか、インストールされているアプリのバージョンが Google Play ストアによって認識されていない可能性があります。
+
+4. **デバイスの完全性 (Device Integrity)**: このセクションでは、アプリが動作している Android 環境の真正性を検証する情報を示します。
+
+- `MEETS_DEVICE_INTEGRITY`: アプリは Google Play サービスを搭載した Android デバイス上にあり、システム完全性チェックと互換性要件に合格しています。
+- `MEETS_BASIC_INTEGRITY`: アプリは、Google Play サービスを実行することが承認されていない可能性があるものの基本的な完全性チェックに合格するデバイス上にあります。認識されていない Android バージョン、アンロックされたブートローダー、製造業者証明書の欠落が原因の可能性があります。
+- `MEETS_STRONG_INTEGRITY`: アプリは Google Play サービスを搭載したデバイス上にあり、ハードウェアで保護されたブートなどの機能により堅牢なシステム完全性を確保しています。
+- `MEETS_VIRTUAL_INTEGRITY`: アプリは Google Play サービスを搭載したエミュレータで動作しており、システム完全性チェックに合格し、Android 互換性要件を満たしています。
+
+**API エラー:**
+
+API は `APP_NOT_INSTALLED` や `APP_UID_MISMATCH` などのローカルエラーを返すことがあり、これは詐欺の試みや攻撃を示す可能性があります。さらに、Google Play サービスや Play Store が古い場合もエラーの原因となることがあるため、これらの状況をチェックして適切な完全性検証機能を確保し、環境が意図的に攻撃用に設定されていないことを確認することが重要です。詳細は [公式ページ](https://developer.android.com/google/play/integrity/error-codes) をご覧ください。
+
+**ベストプラクティス:**
+
+1. より広範なセキュリティ戦略の一環として Play Integrity を使用します。入力データバリデーション、ユーザー認証、不正防止などの追加のセキュリティ対策で補完します。
+2. Play Protect API へのクエリを最小限に抑え、デバイスリソースへの影響を軽減します。たとえば、デバイスの完全性検証が必要な場合にのみ API を使用します。
+
+3. 完全性検証リクエストに `NONCE` を含めます。アプリまたはサーバーが生成するこの乱数値は、サードパーティによる改竄がなく、レスポンスが元のリクエストと一致することを検証サーバーが確認するのに役立ちます。
+
+**制限事項:**  
+Google Play Services Integrity Verification API リクエストのデフォルトの日ごとの制限は 10,000 リクエスト/日 です。それ以上を必要とするアプリケーションは Google に連絡して上限を増やすようリクエストしなければなりません。
+
+**リクエスト例:**  
 
 ```json
-{
-  "nonce": "R2Rra24fVm5xa2Mg",
-  "timestampMs": 9860437986543,
-  "apkPackageName": "com.package.name.of.requesting.app",
-  "apkCertificateDigestSha256": ["base64 encoded, SHA-256 hash of the
-                                  certificate used to sign requesting app"],
-  "apkDigestSha256": "base64 encoded, SHA-256 hash of the app's APK",
-  "ctsProfileMatch": true,
-  "basicIntegrity": true,
-}
+{  
+   "requestDetails": {  
+     "requestPackageName": "com.example.your.package",  
+     "timestampMillis": "1666025823025",  
+     "nonce": "kx7QEkGebwQfBalJ4...Xwjhak7o3uHDDQTTqI"  
+   },  
+   "appIntegrity": {  
+     "appRecognitionVerdict": "UNRECOGNIZED_VERSION",  
+     "packageName": "com.example.your.package",  
+     "certificateSha256Digest": [  
+       "vNsB0...ww1U"  
+     ],  
+     "versionCode": "1"  
+   },  
+   "deviceIntegrity": {  
+     "deviceRecognitionVerdict": [  
+       "MEETS_DEVICE_INTEGRITY"  
+     ]  
+   },  
+   "accountDetails": {  
+     "appLicensingVerdict": "UNEVALUATED"  
+   }  
+ }  
 ```
-
-##### ctsProfileMatch と basicIntegrity
-
-SafetyNet Attestation API は当初 `basicIntegrity` という単一の値を提供して、開発者がデバイスの完全性を判断できるようにしました。 API が進化するにつれ、 Google は新しく、より厳密なチェックを導入し、その結果は `ctsProfileMatch` という値で示されるようになりました。これにより開発者はアプリが実行されているデバイスをより詳細に評価できます。
-
-大まかにいえば、 `basicIntegrity` はデバイスとその API の一般的な完全性に関するシグナルを提供します。多くのルート化デバイスは `basicIntegrity` に失敗します。エミュレータ、仮想デバイス、 API フックなどの改竄の兆候があるデバイスも同様です。
-
-一方、 `ctsProfileMatch` はデバイスの互換性についてより厳密なシグナルを提供します。 Google により認定され、改変されていないデバイスのみが `ctsProfileMatch` をパスできます。 `ctsProfileMatch` に失敗するデバイスには以下のものがあります。
-
-- `basicIntegrity` に失敗したデバイス
-- アンロックされたブートローダを持つデバイス
-- カスタムシステムイメージ (カスタム ROM) を持つデバイス
-- 製造元が Google 認定を申請していない、または合格していないデバイス
-- Android Open Source Program のソースファイルから直接構築されたシステムイメージを持つデバイス
-- ベータ版または開発者プレビュープログラム (Android Beta Program を含む) の一部として配布されたシステムイメージを持つデバイス
-
-##### `SafetyNetApi.attest` 使用時の推奨事項
-
-- 暗号学的にセキュアなランダム関数を使用してサーバーに大きな (16 バイト以上) 乱数を作成して、悪意のあるユーザーが失敗した結果の代わりとして成功した認証結果を再利用できないようにします。
-- `ctsProfileMatch` の値が true の場合にのみ、 APK 情報 (`apkPackageName`, `apkCertificateDigestSha256`, `apkDigestSha256`) を信頼します。
-- 検証のために、セキュアな接続を使用して、 JWS レスポンス全体をサーバーに送信すべきです。アプリで直接検証を実行することはお勧めしません。その場合、検証ロジック自体が改変されていないという保証はありません。
-- `verify` メソッドは JWS メッセージが SafetyNet により署名されたことを妥当性確認するだけです。判定のペイロードが期待と一致するかどうか検証されません。このサービスは便利なように思われるかもしれませんが、これはテスト目的にのみ設計されており、プロジェクトごとに一日当たり 10,000 リクエストという非常に厳しい使用制限があり、リクエストに応じて増加することはありません。したがって、 [SafetyNet 検証サンプル](https://github.com/googlesamples/android-play-safetynet/tree/master/server/java/src/main/java "Google SafetyNet Sample") を参照して、 Google のサーバーに依存しない方法でサーバー上にデジタル署名検証ロジックを実装する必要があります。
-- SafetyNet Attestation API は構成証明リクエストが行われた時点でのデバイスの状態のスナップショットを提供します。構成証明が成功しても、デバイスが過去に構成証明に合格したことや、将来的に合格することを必ずしも意味しません。ユースケースを満たすために必要な最小限の構成証明を使用する戦略を計画することをお勧めします。
-- 誤って `SafetyNetApi.attest` 使用制限に達して構成証明エラーが発生することを防ぐには、 API の使用状況を監視し、使用制限に達する前に警告するシステムを構築することで、使用制限を増やせるようにしておきます。また使用制限を超過したことによる構成証明失敗に対応できるように準備し、このような状況ですべてのユーザーをブロックしないようにする必要があります。使用制限に近づいている場合や、短期的な急増で使用制限を超える可能性がある場合には、この [フォーム](https://support.google.com/googleplay/android-developer/contact/safetynetqr "quota request") を送信して、 API キーの使用制限の短期的または長期的な増加を要求することができます。このプロセスと追加の使用制限は無料です。
-
-この [チェックリスト](https://developer.android.com/training/safetynet/attestation-checklist "attestation checklist") に従い、アプリに `SafetyNetApi.attest` API を統合するために必要な各ステップを完了していることを確認します。
 
 #### プログラムによる検出
 
@@ -207,7 +219,7 @@ for (int i = 1; ; i = 0)
 }
 ```
 
-Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。純正の Android ビルドでは [OTA アップデートに Google の公開証明書を使用します](https://blog.netspi.com/android-root-detection-techniques/ "Android Root Detection Techniques") 。
+Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。純正の Android ビルドでは [OTA アップデートに Google の公開証明書を使用します](https://www.netspi.com/blog/technical/mobile-application-penetration-testing/android-root-detection-techniques/ "Android Root Detection Techniques") 。
 
 ### アンチデバッグ
 
