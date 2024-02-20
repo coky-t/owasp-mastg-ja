@@ -14,9 +14,9 @@ masvs_v1_levels:
 
 ## 静的解析
 
-コード内の対象鍵暗号のすべてのインスタンスを特定し、対象鍵をロードまたは提供するメカニズムを探します。以下のものを探すことができます。
+コード内の対称鍵暗号のすべてのインスタンスを特定し、対称鍵をロードまたは提供するメカニズムを探します。以下のものを探すことができます。
 
-- 対象アルゴリズム (`DES`, `AES`, など)
+- 対称アルゴリズム (`DES`, `AES`, など)
 - 鍵生成器の仕様 (`KeyGenParameterSpec`, `KeyPairGeneratorSpec`, `KeyPairGenerator`, `KeyGenerator`, `KeyProperties`, など)
 - `java.security.*`, `javax.crypto.*`, `android.security.*`, `android.security.keystore.*` をインポートしているクラス
 
