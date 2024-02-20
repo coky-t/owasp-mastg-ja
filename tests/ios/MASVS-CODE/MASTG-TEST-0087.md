@@ -14,60 +14,50 @@ masvs_v1_levels:
 
 ## 静的解析
 
-[otool](../../../Document/0x08a-Testing-Tools.md#otool) を使用して上記のバイナリセキュリティ機能をチェックできます。これらの例ではすべての機能が有効になっています。
+radare2 を使用してバイナリセキュリティ機能をチェックできます。
 
-- PIE:
+例として [Damn Vulnerable iOS App DVIA v1](https://github.com/prateek147/DVIA/) を使用してみましょう。radare2 でそのメインバイナリを開きます。
 
-    ```bash
-    $ unzip DamnVulnerableiOSApp.ipa
-    $ cd Payload/DamnVulnerableIOSApp.app
-    $ otool -hv DamnVulnerableIOSApp
-    DamnVulnerableIOSApp (architecture armv7):
-    Mach header
-    magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
-    MH_MAGIC ARM V7 0x00 EXECUTE 38 4292 NOUNDEFS DYLDLINK TWOLEVEL
-    WEAK_DEFINES BINDS_TO_WEAK PIE
-    DamnVulnerableIOSApp (architecture arm64):
-    Mach header
-    magic cputype cpusubtype caps filetype ncmds sizeofcmds flags
-    MH_MAGIC_64 ARM64 ALL 0x00 EXECUTE 38 4856 NOUNDEFS DYLDLINK TWOLEVEL
-    WEAK_DEFINES BINDS_TO_WEAK PIE
-    ```
+```bash
+r2 DamnVulnerableIOSApp
+```
 
-    この出力結果は `PIE` の Mach-O フラグが設定されていることを示しています。このチェックは Objective-C, Swift, ハイブリッドアプリのすべてに適用されますが、メインの実行可能ファイルにのみ適用されます。
+そして以下のコマンドを実行します。
 
-- Stack canary:
+```bash
+[0x1000180c8]> i~pic,canary
+canary   true
+pic      true
+```
 
-    ```bash
-    $ otool -Iv DamnVulnerableIOSApp | grep stack
-    0x0046040c 83177 ___stack_chk_fail
-    0x0046100c 83521 _sigaltstack
-    0x004fc010 83178 ___stack_chk_guard
-    0x004fe5c8 83177 ___stack_chk_fail
-    0x004fe8c8 83521 _sigaltstack
-    0x00000001004b3fd8 83077 ___stack_chk_fail
-    0x00000001004b4890 83414 _sigaltstack
-    0x0000000100590cf0 83078 ___stack_chk_guard
-    0x00000001005937f8 83077 ___stack_chk_fail
-    0x0000000100593dc8 83414 _sigaltstack
-    ```
+```bash
+[0x1000180c8]> is~release,retain
+124  0x002951e0 0x1000891e0 LOCAL  FUNC 0        imp.dispatch_release
+149  0x00294e80 0x100088e80 LOCAL  FUNC 0        imp.objc_autorelease
+150  0x00294e8c 0x100088e8c LOCAL  FUNC 0        imp.objc_autoreleasePoolPop
+151  0x00294e98 0x100088e98 LOCAL  FUNC 0        imp.objc_autoreleasePoolPush
+152  0x00294ea4 0x100088ea4 LOCAL  FUNC 0        imp.objc_autoreleaseReturnValue
+165  0x00294f40 0x100088f40 LOCAL  FUNC 0        imp.objc_release
+167  0x00294f58 0x100088f58 LOCAL  FUNC 0        imp.objc_retainAutorelease
+168  0x00294f64 0x100088f64 LOCAL  FUNC 0        imp.objc_retainAutoreleaseReturnValue
+169  0x00294f70 0x100088f70 LOCAL  FUNC 0        imp.objc_retainAutoreleasedReturnValue
+```
 
-    上記の出力結果で `__stack_chk_fail` の存在はスタックカナリアが使用されていることを示しています。このチェックは純粋な Objective-C アプリとハイブリッドアプリに適用できますが、純粋な Swift アプリには適用できません (つまり Swift は設計上、メモリセーフであるため無効と表示されていても問題ありません) 。
+これらの例ではすべての機能が有効になっています。
 
-- ARC:
+- 位置独立コード (PIE, Position Independent Executable): `pic true` フラグによって示されます。
+    - 使用する言語に関係なく、すべてのアプリに適用されます。
+    - メインの実行可能ファイル (`MH_EXECUTE`) にのみ適用され、動的ライブラリ (`MH_DYLIB`) には適用されません。
 
-    ```bash
-    $ otool -Iv DamnVulnerableIOSApp | grep release
-    0x0045b7dc 83156 ___cxa_guard_release
-    0x0045fd5c 83414 _objc_autorelease
-    0x0045fd6c 83415 _objc_autoreleasePoolPop
-    0x0045fd7c 83416 _objc_autoreleasePoolPush
-    0x0045fd8c 83417 _objc_autoreleaseReturnValue
-    0x0045ff0c 83441 _objc_release
-    [SNIP]
-    ```
+- スタックカナリア (Stack Canary): `canary true` フラグによって示されます。
+    - Objective-C コードを含むアプリに適用されます。
+    - 純粋な Swift アプリには必要ありません (Swift は設計上メモリセーフです)。
+    - C/C++ コードを含むアプリでは特に重要です。アプリはメモリやポインタへの直接アクセスを提供して、バッファオーバーフローに対してより脆弱になるためです。
 
-    このチェックは自動的に有効になる純粋な Swift アプリを含むすべてのケースに適用できます。
+- 自動参照カウント (ARC, Automatic Reference Counting): `objc_autorelease` や `objc_retainAutorelease` などのシンボルによって示されます。
+    - Objective-C コードを含むバイナリにとって重要です。
+    - 純粋に Swift で書かれたバイナリでは、ARC はデフォルトで有効になります。
+    - ARC は Objective-C と Swift に固有のメモリ管理機能なので、純粋に C/C++ で記述されたバイナリには関係ありません。
 
 ## 動的解析
 
