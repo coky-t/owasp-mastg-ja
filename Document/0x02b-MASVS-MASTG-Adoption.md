@@ -38,8 +38,9 @@ CREST の OVS プログラムに関するコンサルテーションとグロー
 
 [米国国立標準技術研究所 (National Institute of Standards and Technology, NIST)](https://www.nist.gov/about-nist) は 1901 年に設立され、現在は米国商務省の一部となっています。NIST は米国で最も古い物理科学研究所の一つです。議会は当時の米国の産業競争力に対する大きな課題であった二流の測定インフラストラクチャを取り除くためにこの期間を設立しました。このインフラストラクチャは英国やドイツなどの経済的ライバルに後れを取っていました。
 
-- [NIST.SP.800-163 "Vetting the Security of Mobile Applications" Revision 1, 2019](https://csrc.nist.gov/news/2019/nist-publishes-sp-800-163-rev-1 "National Institute of Standards and Technology")
+- [NIST.SP.800-163 "Vetting the Security of Mobile Applications" Revision 1, 2019](https://csrc.nist.gov/news/2019/nist-publishes-sp-800-163-rev-1)
 - [NIST.SP.800-218 "Secure Software Development Framework (SSDF) v1.1: Recommendations for Mitigating the Risk of Software Vulnerabilities" v1.1, 2022](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf)
+- [NIST CSWP 33 "Product Development Cybersecurity Handbook: Concepts and Considerations for IoT Product Manufacturers" Initial Public Draft, 2024](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.33.ipd.pdf)
 
 ### BSI (ドイツ連邦情報セキュリティ局(Bundesamt für Sicherheit in der Informationstechnik, Germany))
 
