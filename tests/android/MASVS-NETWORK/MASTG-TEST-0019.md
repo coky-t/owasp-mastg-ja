@@ -42,7 +42,7 @@ masvs_v1_levels:
 - [OWASP ZAP](../../../Document/0x08a-Testing-Tools.md#owasp-zap) や [Burp Suite](../../../Document/0x08a-Testing-Tools.md#burp-suite) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャし、すべてのリクエストが HTTP ではなく HTTPS を介して行われていることを確認します。
 - Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して、XMPP やその他のプロトコルによる通信をデコードおよび可視化できます。
 
-> アプリケーションによっては証明書ピン留めのため Burp や OWASP ZAP などのプロキシで動作しないことがあります。このようなシナリオでは、 ["カスタム証明書ストアおよび証明書ピン留めのテスト"](../../../tests/android/MASVS-NETWORK/MASTG-TEST-0022.md) をチェックしてください。
+> アプリケーションによっては証明書ピン留めのため Burp や OWASP ZAP などのプロキシで動作しないことがあります。このようなシナリオでは、 ["カスタム証明書ストアおよび証明書ピン留めのテスト"](../MASVS-NETWORK/MASTG-TEST-0022.md) をチェックしてください。
 
 詳細については以下を参照してください。
 
