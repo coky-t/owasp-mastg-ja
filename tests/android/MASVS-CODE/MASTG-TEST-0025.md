@@ -14,9 +14,9 @@ masvs_v1_levels:
 
 [インジェクション欠陥](../../../Document/0x04h-Testing-Code-Quality.md#injection-flaws "Injection Flaws") をテストするには、まず、他のテストに依存し、露出している可能性のある機能をチェックする必要があります。
 
-- ["ディープリンクのテスト"](../../../tests/android/MASVS-PLATFORM/MASTG-TEST-0028.md)
-- ["IPC を介した機密機能露出のテスト"](../../../tests/android/MASVS-PLATFORM/MASTG-TEST-0029.md)
-- ["オーバーレイ攻撃のテスト"](../../../tests/android/MASVS-PLATFORM/MASTG-TEST-0035.md)
+- ["ディープリンクのテスト"](../MASVS-PLATFORM/MASTG-TEST-0028.md)
+- ["IPC を介した機密機能露出のテスト"](../MASVS-PLATFORM/MASTG-TEST-0029.md)
+- ["オーバーレイ攻撃のテスト"](../MASVS-PLATFORM/MASTG-TEST-0035.md)
 
 ## 静的解析
 
