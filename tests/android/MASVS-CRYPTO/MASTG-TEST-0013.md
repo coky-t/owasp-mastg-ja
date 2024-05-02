@@ -30,7 +30,7 @@ masvs_v1_levels:
 
 ハードコードされた各対称鍵について、セキュリティ上重要なコンテキストで唯一の暗号化方法として使用されていないことを検証します。
 
-例として、ハードコードされた暗号鍵の使用箇所を見つける方法を説明します。まず、アプリを [逆アセンブルおよび逆コンパイル](../../../Document/0x05c-Reverse-Engineering-and-Tampering.md#disassembling-and-decompiling) して Java コードを入手します。たとえば、 [jadx](../../../tools/android/MASTG-TOOL-0018.md#resources) を使用します。
+例として、ハードコードされた暗号鍵の使用箇所を見つける方法を説明します。まず、アプリを [逆アセンブルおよび逆コンパイル](../../../Document/0x05c-Reverse-Engineering-and-Tampering.md#disassembling-and-decompiling) して Java コードを入手します。たとえば、 [jadx](../../../tools/android/MASTG-TOOL-0018.md) を使用します。
 
 ここで `SecretKeySpec` クラスが使われているファイルを検索します。例えば、再帰的に grep するか、jadx 検索機能を使用するだけです。
 
