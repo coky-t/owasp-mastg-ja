@@ -13,7 +13,7 @@ masvs_v1_levels:
 
 ## 静的解析
 
-[APK を逆コンパイル](../../../Document/0x05c-Reverse-Engineering-and-Tampering.md#decompiling-java-code) し [レビュー](../../../Document/0x05c-Reverse-Engineering-and-Tampering.md#reviewing-decompiled-java-code) して、コードベースが難読化されているかどうかを判断します。
+[APK を逆コンパイル](../../../techniques/android/MASTG-TECH-0017.md "Decompiling Java Code") し [レビュー](../../../techniques/android/MASTG-TECH-0023.md "Reviewing Decompiled Java Code") して、コードベースが難読化されているかどうかを判断します。
 
 以下に難読化されたコードブロックの例を示します。
 
