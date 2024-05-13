@@ -219,7 +219,7 @@ for (int i = 1; ; i = 0)
 }
 ```
 
-Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。純正の Android ビルドでは [OTA アップデートに Google の公開証明書を使用します](https://www.netspi.com/blog/technical/mobile-application-penetration-testing/android-root-detection-techniques/ "Android Root Detection Techniques") 。
+Google Over-The-Air (OTA) 証明書の欠落はカスタム ROM のもうひとつの兆候です。純正の Android ビルドでは [OTA アップデートに Google の公開証明書を使用します](https://www.netspi.com/blog/technical-blog/mobile-application-penetration-testing/android-root-detection-techniques/ "Android Root Detection Techniques") 。
 
 ### アンチデバッグ
 
@@ -555,8 +555,8 @@ Exiting
 
 ファイル完全性に関連するトピックは二つあります。
 
- 1. _コード完全性チェック:_ ["Android の改竄とリバースエンジニアリング"](0x05c-Reverse-Engineering-and-Tampering.md) の章では、Android の APK コード署名チェックについて説明しました。また、リバースエンジニアがアプリを再パッケージおよび再署名することで、このチェックを簡単に回避できることもわかりました。このバイパスプロセスをより複雑なものにするために、アプリのバイトコード、ネイティブライブラリ、重要なデータファイルに対する CRC チェックで保護スキームを強化できます。これらのチェックは Java とネイティブの両方のレイヤに実装できます。このアイデアは、コード署名が有効であっても、アプリが変更されていない状態でのみ正しく実行されるように、追加のコントロールを配置するというものです。
- 2. _ファイルストレージ完全性チェック:_ アプリケーションが SD カードやパブリックストレージに保存するファイルの完全性、および `SharedPreferences` に保存されるキー・バリューペアの完全性を保護する必要があります。
+ 1. コード完全性チェック: アプリのバイトコード、ネイティブライブラリ、重要なデータファイルに対する追加の保護レイヤとして、CRC チェックを使用できます。この方法では、コード署名が有効であっても、アプリが変更されていない状態でのみ正しく動作します。
+ 2. ファイルストレージ完全性チェック: アプリケーションが SD カードやパブリックストレージに保存するファイルの完全性、および `SharedPreferences` に保存されるキー・バリューペアの完全性を保護する必要があります。
 
 #### サンプル実装 - アプリケーションソースコード
 
