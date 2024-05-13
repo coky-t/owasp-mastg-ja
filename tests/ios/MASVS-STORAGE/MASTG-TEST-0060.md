@@ -30,7 +30,7 @@ iOS アプリのメモリに機密データがないか動的にテストする�
 
 ### メモリダンプの取得と解析
 
-脱獄済みデバイスを使用しているか、脱獄していないデバイスを使用しているかに関係なく、[objection](https://github.com/sensepost/objection "Objection") や [Fridump](https://github.com/Nightbringer21/fridump "Fridump") でアプリのプロセスメモリをダンプできます。このプロセスの詳しい説明は "iOS の改竄とリバースエンジニアリング" の章の "[メモリダンプ](../../../Document/0x06c-Reverse-Engineering-and-Tampering.md#memory-dump "Memory Dump")" のセクションにあります。
+脱獄済みデバイスを使用しているか、脱獄していないデバイスを使用しているかに関係なく、[objection](https://github.com/sensepost/objection "Objection") や [Fridump](https://github.com/Nightbringer21/fridump "Fridump") でアプリのプロセスメモリをダンプできます。このプロセスの詳しい説明は ["メモリダンプ"](../../../techniques/android/MASTG-TECH-0044.md#memory-dump "Memory Dump") にあります。
 
 メモリを (たとえば "memory" というファイルに) ダンプした後、探しているデータの性質に応じて、そのメモリダンプを処理して解析するための一連のさまざまなツールが必要になります。たとえば、文字列に注目しているのであれば、`strings` や `rabin2 -zz` コマンドを実行して文字列を抽出するだけで十分かもしれません。
 
@@ -68,4 +68,4 @@ Usage: /[!bf] [arg]  Search stuff (see 'e??search' for options)
 
 [r2frida](../../../Document/0x08a-Testing-Tools.md#r2frida) を使用すると、実行時にアプリのメモリをダンプすることなく解析して調査できます。たとえば、r2frida から前述の検索コマンドを実行して、文字列や16進値などについてメモリを検索できます。その際、`r2 frida://usb//<name_of_your_app>` でセッションを開始した後、検索コマンド (および他の r2frida 固有のコマンド) の前にバックスラッシュ `:` を付けることを忘れないでください。
 
-詳細情報、オプション、アプローチについては、"iOS の改竄とリバースエンジニアリング" の章の "[メモリ内検索](../../../Document/0x06c-Reverse-Engineering-and-Tampering.md#in-memory-search "In-Memory Search")" セクションを参照してください。
+詳細情報、オプション、アプローチについては、["メモリ内検索"](../../../techniques/ios/MASTG-TECH-0096.md#in-memory-search "In-Memory Search")" を参照してください。
