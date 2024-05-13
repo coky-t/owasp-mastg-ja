@@ -42,7 +42,6 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 - [Android のネットワーク通信](Document/0x05g-Testing-Network-Communication.md)
 - [Android のプラットフォーム API](Document/0x05h-Testing-Platform-Interaction.md)
 - [Android アプリのコード品質とビルド設定](Document/0x05i-Testing-Code-Quality-and-Build-Settings.md)
-- [Android の改竄とリバースエンジニアリング](Document/0x05c-Reverse-Engineering-and-Tampering.md)
 - [Android のアンチリバース防御](Document/0x05j-Testing-Resiliency-Against-Reverse-Engineering.md)
 
 ### iOS テストガイド
@@ -55,7 +54,6 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 - [iOS のネットワーク通信](Document/0x06g-Testing-Network-Communication.md)
 - [iOS のプラットフォーム API](Document/0x06h-Testing-Platform-Interaction.md)
 - [iOS アプリのコード品質とビルド設定](Document/0x06i-Testing-Code-Quality-and-Build-Settings.md)
-- [iOS の改竄とリバースエンジニアリング](Document/0x06c-Reverse-Engineering-and-Tampering.md)
 - [iOS のアンチリバース防御](Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md)
 
 ### 付録
