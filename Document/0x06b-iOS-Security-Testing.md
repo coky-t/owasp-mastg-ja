@@ -69,7 +69,7 @@ UDID を右コピーするとコピーできます。
 
 ### エミュレータでのテスト
 
-[Corellium](0x06c-Reverse-Engineering-and-Tampering.md#corellium) は一般に入手可能な唯一の iOS エミュレータです。これは企業向けの SaaS ソリューションで、ユーザーごとのライセンスモデルとなっており、コミュニティライセンスを提供していません。
+[Corellium](../techniques/ios/MASTG-TECH-0088.md#corellium) は一般に入手可能な唯一の iOS エミュレータです。これは企業向けの SaaS ソリューションで、ユーザーごとのライセンスモデルとなっており、コミュニティライセンスを提供していません。
 
 ### 特権アクセスの取得
 
