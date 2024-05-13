@@ -27,4 +27,4 @@ masvs_v1_levels:
 
 ## 動的解析
 
-上記のクラスやメソッドに [メソッドトレース](../../../Document/0x05c-Reverse-Engineering-and-Tampering.md#method-tracing) を使用して、使用されている入出力値を判別できます。
+上記のクラスやメソッドに [メソッドトレース](../../../techniques/android/MASTG-TECH-0033.md "Method Tracing") を使用して、使用されている入出力値を判別できます。
