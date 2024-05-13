@@ -142,7 +142,7 @@ SecretKey secretKey = keyGenerator.generateKey();
 
 `KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的には使用できません。さらに、ブロックモード (CBC) 、パディング (PKCS #7) を指定し、ランダム化された暗号化が必要である (これがデフォルトです) ことを明示的に指定します。次に、`KeyGenerator.getInstance` 呼び出しでプロバイダの名前として `AndroidKeyStore` を入力し、鍵が Android KeyStore に保存されることを確保します。
 
-GCM はもうひとつの AES ブロックモードであり、他の古いモードよりもセキュリティ上の利点があります。暗号的によりセキュアであることに加えて、認証も提供します。 CBC (および他のモード) を使用する場合は、認証は HMAC を使用して別に実行する必要があります ( ["Android の改竄とリバースエンジニアリング"](0x05c-Reverse-Engineering-and-Tampering.md) の章を参照してください) 。 GCM は [パディングをサポートしていない](https://developer.android.com/training/articles/keystore.html#SupportedCiphers "Supported Ciphers in AndroidKeyStore") AES の唯一のモードであることに注意します。
+GCM は [認証付き暗号](https://en.wikipedia.org/wiki/Authenticated_encryption "Authenticated encryption") を提供する AES モードであり、HMAC などの別のメカニズムを必要とする CBC などの古いモードとは異なり、暗号化とデータ認証を単一プロセスに統合することでセキュリティを強化します。さらに、GCM はパディングを必要としないため、実装を簡易化し、脆弱性を最小限に抑えます。
 
 上記の仕様に違反して生成された鍵の使用を試みるとセキュリティ例外が発生します。
 
@@ -233,7 +233,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 > ルート化デバイスやパッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、 `AndroidKeystore` に配置された鍵でソルトを暗号化するほうがよいかもしれないことに注意します。 Password-Based Encryption (PBE) 鍵は Android 8.0 (API レベル 26) まで、推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。より高い API レベルでは `PBKDF2withHmacSHA256` を使用することがベストです。これはハッシュ値が長くなります。
 
-注: NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムを使用しても効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを見つけ、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Fridaの助けを借りて抽出された鍵、またはその両方を組み合わせた [r2frida](0x08a-Testing-Tools.md#r2frida) (詳細は "Android の改竄とリバースエンジニアリング" の章のセクション ["ネイティブコードの逆アセンブル"](0x05c-Reverse-Engineering-and-Tampering.md#disassembling-native-code "Disassembling Native Code"), ["メモリダンプ"](0x05c-Reverse-Engineering-and-Tampering.md#memory-dump "Memory Dump"), ["メモリ内検索"](0x05c-Reverse-Engineering-and-Tampering.md#in-memory-search "In-Memory Search") を参照) で解析することができます。 Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されておらず、代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") で説明されているように隠蔽の有効性にさらに影響を与えます。
+注: NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムを使用しても効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを見つけ、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Fridaの助けを借りて抽出された鍵、またはその両方を組み合わせた [r2frida](../tools/generic/MASTG-TOOL-0036.md "r2frida") (詳細は ["ネイティブコードの逆アセンブル"](../techniques/android/MASTG-TECH-0018.md "Disassembling Native Code"), ["メモリダンプ"](../techniques/android/MASTG-TECH-0044.md#memory-dump "Memory Dump"), ["メモリ内検索"](../techniques/android/MASTG-TECH-0044.md#in-memory-search "In-Memory Search") を参照) で解析することができます。 Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されておらず、代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") で説明されているように隠蔽の有効性にさらに影響を与えます。
 
 ### 乱数生成
 
