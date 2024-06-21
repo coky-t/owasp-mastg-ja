@@ -6,10 +6,10 @@
 
 モバイルアプリを四つのカテゴリに分水します。
 
-[ネイティブアプリ](#native-apps)
-[ウェブアプリ](#web-apps)
-[ハイブリッドアプリ](#hybrid-apps)
-[プログレッシブウェブアプリ](#progressive-web-apps)
+- [ネイティブアプリ](#native-apps)
+- [ウェブアプリ](#web-apps)
+- [ハイブリッドアプリ](#hybrid-apps)
+- [プログレッシブウェブアプリ](#progressive-web-apps)
 
 ## ネイティブアプリ <a name="native-apps"></a>
 
