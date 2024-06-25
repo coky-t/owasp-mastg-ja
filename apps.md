@@ -18,6 +18,7 @@
 - [InsecureShop](apps/android/MASTG-APP-0014.md)
 - [Android UnCrackable L4](apps/android/MASTG-APP-0015.md)
 - [Finstergram](apps/android/MASTG-APP-0016.md)
+- [Disable-flutter-tls-verification](apps/android/MASTG-APP-0017.md)
 
 ## iOS
 
@@ -25,3 +26,4 @@
 - [DVIA-v2](apps/ios/MASTG-APP-0024.md)
 - [iOS UnCrackable L1](apps/ios/MASTG-APP-0025.md)
 - [iOS UnCrackable L2](apps/ios/MASTG-APP-0026.md)
+- [Disable-flutter-tls-verification](apps/ios/MASTG-APP-0027.md)
