@@ -5,6 +5,7 @@ masvs_v2_id:
 - MASVS-STORAGE-2
 platform: android
 title: 機密データが組み込みサービスを介してサードパーティと共有されるかどうかの判定 (Determining Whether Sensitive Data Is Shared with Third Parties via Embedded Services)
+
 masvs_v1_levels:
 - L1
 - L2
@@ -21,4 +22,4 @@ masvs_v1_levels:
 ## 動的解析
 
 外部サービスへのすべてのリクエストに機密情報が埋め込まれていないかチェックします。
-クライアントとサーバー間のトラフィックを傍受するには、[Burp Suite](../../../Document/0x08a-Testing-Tools.md#burp-suite) Professional や [OWASP ZAP](../../../Document/0x08a-Testing-Tools.md#owasp-zap) を使用して中間者 (MITM) 攻撃を行うことで、動的解析を実施できます。トラフィックを傍受プロキシ経由とすることで、アプリとサーバー間を通過するトラフィックを盗聴してみることができます。メイン機能がホストされているサーバーに直接送信されないすべてのアプリリクエストは、トラッカーや広告サービスの PII などの機密情報がないかチェックする必要があります。
+クライアントとサーバー間のトラフィックを傍受するには、[Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) や [OWASP ZAP](../../../tools/network/MASTG-TOOL-0079.md) を使用して中間者 (MITM) 攻撃を行うことで、動的解析を実施できます。トラフィックを傍受プロキシ経由とすることで、アプリとサーバー間を通過するトラフィックを盗聴してみることができます。メイン機能がホストされているサーバーに直接送信されないすべてのアプリリクエストは、トラッカーや広告サービスの PII などの機密情報がないかチェックする必要があります。
