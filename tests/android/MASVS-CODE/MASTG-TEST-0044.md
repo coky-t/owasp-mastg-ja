@@ -16,7 +16,7 @@ masvs_v1_levels:
 
 アプリのネイティブライブラリをテストして、PIE とスタックスマッシュ保護が有効になっているかどうかを確認します。
 
-[radare2 の rabin2](../../../Document/0x08a-Testing-Tools.md#radare2) を使用してバイナリ情報を取得できます。例として [UnCrackable App for Android Level 4](../../../Document/0x08b-Reference-Apps.md#android-uncrackable-l4) v1.0 APK を使用します。
+[radare2 for Android](../../../tools/android/MASTG-TOOL-0028.md) を使用してバイナリ情報を取得できます。例として [Android UnCrackable L4](../../../apps/android/MASTG-APP-0015.md) v1.0 APK を使用します。
 
 すべてのネイティブライブラリは `canary` と `pic` が両方とも `true` に設定されていなければなりません。
 
