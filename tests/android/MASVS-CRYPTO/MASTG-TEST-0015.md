@@ -39,4 +39,4 @@ masvs_v1_levels:
 
 ## 動的解析
 
-暗号メソッドで [メソッドトレース](../../../techniques/android/MASTG-TECH-0033.md "Method Tracing") を使用して、使用されている鍵などの入出力値を判別できます。暗号操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り元を評価します。たとえば、[RMS - Runtime Mobile Security](../../../Document/0x08a-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
+暗号メソッドで [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用して、使用されている鍵などの入出力値を判別できます。暗号操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り元を評価します。たとえば、[RMS Runtime Mobile Security](../../../tools/generic/MASTG-TOOL-0037.md) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
