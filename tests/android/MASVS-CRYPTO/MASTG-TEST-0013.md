@@ -30,7 +30,7 @@ masvs_v1_levels:
 
 ハードコードされた各対称鍵について、セキュリティ上重要なコンテキストで唯一の暗号化方法として使用されていないことを検証します。
 
-例として、ハードコードされた暗号鍵の使用箇所を見つける方法を説明します。まず、アプリを [逆アセンブルおよび逆コンパイル](../../../techniques/android/MASTG-TECH-0017.md "Decompiling Java Code") して Java コードを入手します。たとえば、 [jadx](../../../tools/android/MASTG-TOOL-0018.md) を使用します。
+例として、ハードコードされた暗号鍵の使用箇所を見つける方法を説明します。まず、アプリを逆アセンブルおよび逆コンパイル ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md)) して Java コードを入手します。たとえば、 [jadx](../../../tools/android/MASTG-TOOL-0018.md) を使用します。
 
 ここで `SecretKeySpec` クラスが使われているファイルを検索します。例えば、再帰的に grep するか、jadx 検索機能を使用するだけです。
 
@@ -44,4 +44,4 @@ grep -r "SecretKeySpec"
 
 ## 動的解析
 
-暗号メソッドで [メソッドトレース](../../../techniques/android/MASTG-TECH-0033.md "Method Tracing") を使用して、使用されている鍵などの入出力値を判別できます。暗号操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り元を評価します。たとえば、[RMS - Runtime Mobile Security](../../../Document/0x08a-Testing-Tools.md#RMS-Runtime-Mobile-Security) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
+暗号メソッドで [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用して、使用されている鍵などの入出力値を判別できます。暗号操作の実行中にファイルシステムへのアクセスを監視し、鍵マテリアルの書き込み先または読み取り元を評価します。たとえば、[RMS Runtime Mobile Security](../../../tools/generic/MASTG-TOOL-0037.md) の [API monitor](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#8-api-monitor---android-only) を使用してファイルシステムを監視します。
