@@ -17,7 +17,7 @@ masvs_v1_levels:
 
 Network Security Configuration を調べて `<pin-set>` 要素を探します。 `expiration` の日付がないか調べます。有効期限が切れると、影響を受けるドメインでは証明書ピン留めが無効になります。
 
-> **テストのヒント**: 証明書ピン留めバリデーションチェックが失敗した場合、以下のイベントが [システムログ](../../../Document/0x05b-Android-Security-Testing.md#monitoring-system-logs) にログ記録されるはずです。
+> **テストのヒント**: 証明書ピン留めバリデーションチェックが失敗した場合、以下のイベントがシステムログ ([システムログの監視 (Monitoring System Logs)](../../../techniques/android/MASTG-TECH-0009.md) を参照) にログ記録されるはずです。
 
 ```bash
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
@@ -173,9 +173,9 @@ APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/ww
 
 ## 動的解析
 
-["エンドポイント同一性検証のテスト > 動的解析"](../MASVS-NETWORK/MASTG-TEST-0021.md) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピン留めが実際に実装され、すべてのセキュリティ対策が実施されていることを意味しているかもしれません。すべてのドメインで同じことが起こるでしょうか？
+[エンドポイント同一性検証のテスト (Testing Endpoint Identify Verification)](MASTG-TEST-0021.md) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピン留めが実際に実装され、すべてのセキュリティ対策が実施されていることを意味しているかもしれません。すべてのドメインで同じことが起こるでしょうか？
 
-簡単なスモークテストとしては、["証明書ピン留めのバイパス"](../../../Document/0x05b-Android-Security-Testing.md#bypassing-certificate-pinning) で説明しているように [objection](../../../Document/0x08a-Testing-Tools.md#objection) を使用して証明書ピン留めをバイパスしてみることができます。objection によってフックされているピン留め関連の API は objection の出力に表示されるはずです。
+簡単なスモークテストとしては、[証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/android/MASTG-TECH-0012.md) で説明しているように [objection](../../../tools/generic/MASTG-TOOL-0038.md) を使用して証明書ピン留めをバイパスしてみることができます。objection によってフックされているピン留め関連の API は objection の出力に表示されるはずです。
 
 <img src="../../../Document/Images/Chapters/0x05b/android_ssl_pinning_bypass.png" width="600px"/>
 
