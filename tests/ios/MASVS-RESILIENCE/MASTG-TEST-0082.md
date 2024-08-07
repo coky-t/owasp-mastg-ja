@@ -15,7 +15,7 @@ masvs_v1_levels:
 
 アプリのエンタイトルメントを調べて `get-task-allow` キーの値を確認します。 `true` に設定されていれば、そのアプリはデバッグ可能です。
 
-[codesign](../../../tools/ios/MASTG-TOOL-0101.md "codesign") を使用する場合:
+[codesign](../../../tools/ios/MASTG-TOOL-0101.md) と [iGoat-Swift](../../../apps/ios/MASTG-APP-0028.md) を使用する場合:
 
 ```bash
 $ codesign -d --entitlements - iGoat-Swift.app
