@@ -33,9 +33,9 @@ Apple が推奨する最新のアプローチは `Info.plist` ファイルの  A
 
 ### サーバー証明書ピン留め
 
-["エンドポイント同一性検証のテスト"](../MASVS-NETWORK/MASTG-TEST-0067.md) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピン留めが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。すべてのドメインで同じことが起こるでしょうか？
+[エンドポイント同一性検証のテスト (Testing Endpoint Identity Verification)](MASTG-TEST-0067.md) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピン留めが実際に実装され、すべてのセキュリティ対策が実施されていることを意味している可能性があります。すべてのドメインで同じことが起こるでしょうか？
 
-簡単なスモークテストとしては、["証明書ピン留めのバイパス"](../../../Document/0x06b-iOS-Security-Testing.md#bypassing-certificate-pinning) で説明しているように [objection](../../../Document/0x08a-Testing-Tools.md#objection) を使用して証明書ピン留めをバイパスしてみることができます。 objection によってフックされているピン留め関連の API が objection の出力に表示されるはずです。
+簡単なスモークテストとしては、[証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/ios/MASTG-TECH-0064.md) で説明しているように [objection](../../../tools/generic/MASTG-TOOL-0038.md) を使用して証明書ピン留めをバイパスしてみることができます。 objection によってフックされているピン留め関連の API が objection の出力に表示されるはずです。
 
 <img src="../../../Document/Images/Chapters/0x06b/ios_ssl_pinning_bypass.png" width="100%" />
 
