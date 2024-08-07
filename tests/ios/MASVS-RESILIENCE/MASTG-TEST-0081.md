@@ -13,7 +13,7 @@ masvs_v1_levels:
 
 ## 静的解析
 
-アプリが [最新のコード署名形式を使用している](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format) ことを確認する必要があります。[codesign](../../../tools/ios/MASTG-TOOL-0101.md "codesign") でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
+アプリが [最新のコード署名形式を使用している](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format) ことを確認する必要があります。[codesign](../../../tools/ios/MASTG-TOOL-0101.md) でアプリの .app ファイルから署名証明書情報を取得できます。codesign はコード署名の作成、確認、表示、およびシステム内の署名済みコードの動的ステータスの照会に使用されます。
 
 アプリケーションの IPA ファイルを取得した後、ZIP ファイルとして再度保存し、ZIP ファイルを展開します。アプリケーションの .app ファイルがある Payload ディレクトリに移動します。
 
