@@ -94,7 +94,7 @@ carthage update --platform iOS
 リンクされるライブラリとしてフレームワークを手動で追加する場合。
 
 1. xcodeproj ファイルを開き、プロジェクトのプロパティを確認します。
-2. **Build Phases** タブに移動して、いずれかのライブラリの **Link Binary With Libraries** のエントリを確認します。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
+2. **Build Phases** タブに移動して、いずれかのライブラリの **Link Binary With Libraries** のエントリを確認します。[MobSF](../../../tools/generic/MASTG-TOOL-0035.md) を使用して同様の情報を取得する方法については、これまでのセクションを参照してください。
 
 コピー＆ペーストされたソースの場合、(Objective-C を使用する場合) ヘッダファイルを検索し、あるいは既存のライブラリの既存のメソッド名の Swift ファイルを検索します。
 
@@ -110,7 +110,7 @@ carthage update --platform iOS
 
 ### アプリケーションライブラリの一覧表示
 
-アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](https://github.com/sensepost/objection), [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF) などのツールや `otool -L` コマンドを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
+アプリ解析を実行する際には、アプリの (通常はライブラリまたはいわゆる iOS フレームワークの形式での) 依存関係も解析し、脆弱性が含まれていないことを確認することが重要です。ソースコードがない場合でも、 [objection](../../../tools/generic/MASTG-TOOL-0038.md), [MobSF](../../../tools/generic/MASTG-TOOL-0035.md) などのツールや `otool -L` コマンドを使用して、アプリの依存関係の一部を特定できます。 objection は最も正確な結果が得られ、使いやすいため、推奨のツールです。これには iOS バンドルと連携するモジュールが含まれており、 `list_bundles` と `list_frameworks` という二つのコマンドを提供します。
 
 `list_bundles` コマンドはフレームワークに関係しないアプリケーションのすべてのバンドルを一覧表示します。出力には実行可能ファイル名、バンドル ID 、ライブラリのバージョン、ライブラリのパスが含まれます。
 
