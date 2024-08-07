@@ -13,7 +13,7 @@ masvs_v1_levels:
 
 ## 静的解析
 
-[APK を逆コンパイル](../../../techniques/android/MASTG-TECH-0017.md "Decompiling Java Code") し [レビュー](../../../techniques/android/MASTG-TECH-0023.md "Reviewing Decompiled Java Code") して、コードベースが難読化されているかどうかを判断します。
+APK を逆コンパイル ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md)) し、レビュー ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md)) して、コードベースが難読化されているかどうかを判断します。
 
 以下に難読化されたコードブロックの例を示します。
 
@@ -56,13 +56,13 @@ class a$b
 
 これらの技法のいくつかは Gautam Arvind によるブログ記事 ["Security hardening of Android native code"](https://darvincitech.wordpress.com/2020/01/07/security-hardening-of-android-native-code/) や Eduardo Novella によるプレゼンテーション ["APKiD: Fast Identification of AppShielding Products"](https://github.com/enovella/cve-bio-enovella/blob/master/slides/APKiD-NowSecure-Connect19-enovella.pdf) で説明および分析されています。
 
-より詳細な評価を行うには、関連する脅威と使用される難読化手法を詳細に理解する必要があります。 [APKiD](../../../Document/0x08a-Testing-Tools.md#apkid) などのツールでは、難読化ツール、パッカー、アンチデバッグ対策など、ターゲットアプリにどのような技法が使われたかについての追加情報を得られることがあります。
+より詳細な評価を行うには、関連する脅威と使用される難読化手法を詳細に理解する必要があります。 [APKiD](../../../tools/android/MASTG-TOOL-0009.md) などのツールでは、難読化ツール、パッカー、アンチデバッグ対策など、ターゲットアプリにどのような技法が使われたかについての追加情報を得られることがあります。
 
 ## 動的解析
 
-[APKiD](../../../Document/0x08a-Testing-Tools.md#apkid) を使用して、アプリが難読化されているかどうかを検出できます。
+[APKiD](../../../tools/android/MASTG-TOOL-0009.md) を使用して、アプリが難読化されているかどうかを検出できます。
 
-[UnCrackable App for Android Level 4](../../../Document/0x08b-Reference-Apps.md#android-uncrackable-l4) を使用した例:
+[Android UnCrackable L4](../../../apps/android/MASTG-APP-015.md) を使用した例:
 
 ```sh
 apkid owasp-mastg/Crackmes/Android/Level_04/r2pay-v1.0.apk
