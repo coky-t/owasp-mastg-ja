@@ -61,7 +61,7 @@ pic      true
 
 ## 動的解析
 
-これらのチェックは [objection](../../../Document/0x08a-Testing-Tools.md#objection) を使用して動的に実行できます。以下はその一例です。
+これらのチェックは [objection](../../../tools/generic/MASTG-TOOL-0038.md) を使用して動的に実行できます。以下はその一例です。
 
 ```bash
 com.yourcompany.PPClient on (iPhone: 13.2.3) [usb] # ios info binary
