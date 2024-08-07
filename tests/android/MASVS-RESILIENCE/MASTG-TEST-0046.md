@@ -20,7 +20,7 @@ masvs_v1_levels:
 
 ### バイパスの例: UnCrackable App for Android Level 2
 
-難読化されたアプリを扱う場合、開発者がデータや機能をネイティブライブラリに意図的に「隠している」ことがよくあります。この例は [UnCrackable App for Android Level 2](../../../apps/android/MASTG-APP-0004.md "UnCrackable App for Android Level 2") にあります。
+難読化されたアプリを扱う場合、開発者がデータや機能をネイティブライブラリに意図的に「隠している」ことがよくあります。この例は [Android UnCrackable L2](../../../apps/android/MASTG-APP-0004.md) にあります。
 
 一見すると、このコードは前の課題と同じように見えます。 `CodeCheck` というクラスはユーザーが入力したコードを検証する役割を果たします。実際のチェックは _native_ メソッドとして宣言された `bar` メソッドで行われるようです。
 
