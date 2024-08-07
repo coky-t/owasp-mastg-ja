@@ -36,7 +36,7 @@ textField.autocorrectionType = UITextAutocorrectionTypeNo;
 
 1. `Settings > General > Reset > Reset Keyboard Dictionary` に移動して、iOS デバイスのキーボードキャッシュをリセットします。
 2. アプリケーションを使用し、ユーザーが機密データを入力できる機能を特定します。
-3. 以下のディレクトリとそのサブディレクトリ (8.0 より前の iOS バージョンでは異なるかもしれません) の拡張子 `.dat` のキーボードキャッシュファイルをダンプします:
+3. [デバイスシェルのアクセス (Accessing the Device Shell)](../../../techniques/ios/MASTG-TECH-0052.md) によって以下のディレクトリとそのサブディレクトリ (8.0 より前の iOS バージョンでは異なるかもしれません) から拡張子 `.dat` のキーボードキャッシュファイルを取得します:
 `/private/var/mobile/Library/Keyboard/`
 4. ユーザー名、パスワード、電子メールアドレス、クレジットカード番号などの機密データを探します。キーボードキャッシュファイルから機密データを取得できた場合、アプリはこのテストに不合格となります。
 
