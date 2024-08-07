@@ -89,6 +89,6 @@ uid=10084(u0_a84) gid=10084(u0_a84) groups=10083(u0_a83),1004(input),1007(log),1
 
 デバッグに関するいくつかの注釈:
 
-- ツール [`JADX`](https://github.com/skylot/jadx "JADX") を使用してブレークポイント挿入のための重要な場所を特定できます。
+- [jadx](../../../tools/android/MASTG-TOOL-0018.md) を使用してブレークポイント挿入のための重要な場所を特定できます。
 - jdb についての基本的なコマンドの使用方法は [Tutorialspoint](https://www.tutorialspoint.com/jdb/jdb_basic_commands.htm "jdb basic commands") にあります。
 - `jdb` がローカル通信チャネルポートにバインドされている際に "the connection to the debugger has been closed" (デバッガへの接続が閉じられた) というエラーが表示された場合、すべての adb セッションを終了し、新しい一つのセッションを開始します。
