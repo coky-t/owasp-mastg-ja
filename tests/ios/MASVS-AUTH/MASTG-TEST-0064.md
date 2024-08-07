@@ -12,7 +12,7 @@ masvs_v1_levels:
 
 ## 概要
 
-アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによって検出できます。これは [otool](../../../Document/0x08a-Testing-Tools.md#otool) を使用して実行できます。
+アプリ内のフレームワークの使用はアプリバイナリの共有ダイナミックライブラリのリストを解析することによって検出できます。これは [otool](../../../tools/ios/MASTG-TOOL-0060.md) を使用して実行できます。
 
 ```bash
 otool -L <AppName>.app/<AppName>
