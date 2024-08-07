@@ -36,7 +36,7 @@ masvs_v1_levels:
 
 - サーバー信頼性評価の実行時にチャレンジタイプとホスト名と資格情報を検証している。
 - TLS エラーを無視していない。
-- セキュアでない TLS 設定を使用していない (["TLS 設定のテスト"](../MASVS-NETWORK/MASTG-TEST-0066.md) を参照)
+- セキュアでない TLS 設定を使用していない ([TLS 設定のテスト (Testing the TLS Settings)](MASTG-TEST-0066.md) を参照)
 
 これらのチェックは方向性を示すものであり、アプリごとに異なるフレームワークを使用している可能性があるため、特定の API を挙げることはできません。コードを調査する際の参考情報としてください。
 
@@ -45,7 +45,7 @@ masvs_v1_levels:
 アプリがクリアテキスト HTTP トラフィックを許可していないことを確認します。iOS 9.0 以降、クリアテキスト HTTP トラフィックはデフォルトで (App Transport Security (ATS) により) ブロックされますが、アプリケーションがそれを送信できる方法はいくつかあります。
 
 - アプリの `Info.plist` にある `NSAppTransportSecurity` で `NSAllowsArbitraryLoads` 属性を `true` (または `YES`) にセットしてクリアテキストトラフィックを有効にするよう ATS を設定する。
-- [`Info.plist` の取得](../../../Document/0x06b-iOS-Security-Testing.md#the-infoplist-file)
+- `Info.plist` を取得する ([アプリパッケージの調査 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を参照)
 - どのドメインでも `NSAllowsArbitraryLoads` がグローバルに `true` にセットされていないことをチェックする。
 
 - アプリケーションがサードパーティのウェブサイトを WebView で開く際、iOS 10 以降では `NSAllowsArbitraryLoadsInWebContent` を使用して WebView にロードされるコンテンツの ATS 制限を無効にできる。
@@ -70,12 +70,12 @@ ATS にはこれを [正当化する文字列](https://developer.apple.com/docum
 
 テスト対象のアプリの送受信ネットワークトラフィックを傍受して、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
-- [OWASP ZAP](../../../Document/0x08a-Testing-Tools.md#owasp-zap) や [Burp Suite](../../../Document/0x08a-Testing-Tools.md#burp-suite) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS 経由で行われることを確認します。
+- [OWASP ZAP](../../../tools/network/MASTG-TOOL-0079.md) や [Burp Suite](../../../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS 経由で行われることを確認します。
 - Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。ただし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して XMPP や他のプトロコルを介した通信をデコードして可視化できます。
 
-> 一部のアプリケーションでは証明書ピン留めが原因で Burp や OWASP ZAP などのプロキシで動作しないことがあります。そのようなシナリオでは ["カスタム証明書ストアおよび証明書ピン留めのテスト"](../MASVS-NETWORK/MASTG-TEST-0068.md) を確認してください。
+> 一部のアプリケーションでは証明書ピン留めが原因で Burp や OWASP ZAP などのプロキシで動作しないことがあります。そのようなシナリオでは [カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](MASTG-TEST-0068.md) を確認してください。
 
 詳細については以下を参照してください。
 
 - ["ネットワーク通信のテスト"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-traffic-on-the-network-layer) の章の "ネットワーク層でのトラフィックの傍受"
-- [iOS のセキュリティテスト入門](../../../Document/0x06b-iOS-Security-Testing.md#setting-up-a-network-testing-environment)  の章の "ネットワークテスト環境のセットアップ"
+- [基本的なネットワークモニタリングとスニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/ios/MASTG-TECH-0062.md)
