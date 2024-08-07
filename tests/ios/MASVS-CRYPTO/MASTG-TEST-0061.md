@@ -19,7 +19,7 @@ masvs_v1_levels:
 
 鍵を保持するデータ構造とプレーンテキストデータ構造の削除方法がどのように定義されているかに注意します。キーワード `let` が使用されている場合、メモリから消去するのが難しい不変 (immutable) 構造を作成します。メモリから簡単に削除できる  (たとえば、一時的に存在する `struct` などの) 親構造の一部であることを確認します。
 
-"[モバイルアプリの暗号化](../../../Document/0x04g-Testing-Cryptography.md)" の章で説明されているベストプラクティスに従っていることを確認します。[非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズム](../../../Document/0x04g-Testing-Cryptography.md#identifying-insecure-and/or-deprecated-cryptographic-algorithms) および [よくある設定の問題](../../../Document/0x04g-Testing-Cryptography.md#common-configuration-issues) を見直しましょう。
+"[モバイルアプリの暗号化](../../../Document/0x04g-Testing-Cryptography.md)" の章で説明されているベストプラクティスに従っていることを確認します。[非セキュアな暗号アルゴリズムや非推奨の暗号アルゴリズム](../../../Document/0x04g-Testing-Cryptography.md#identifying-insecure-andor-deprecated-cryptographic-algorithms) および [よくある設定の問題](../../../Document/0x04g-Testing-Cryptography.md#common-configuration-issues) を見直しましょう。
 
 ### CommonCryptor
 
@@ -46,7 +46,7 @@ CCCryptorStatus CCCryptorCreate(
 - **利用されているライブラリを見つけます**: これは以下の手法を使用して実行できます。
     - [cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile "cartfile") をチェックします (Carthage が使用されている場合) 。
     - [podfile](https://guides.cocoapods.org/syntax/podfile.html "podfile")  をチェックします (Cocoapods が使用されている場合) 。
-    - リンクされたライブラリをチェックします。xcodeproj ファイルを開き、プロジェクトのプロパティをチェックします。**Build Phases** タブに移動し、いずれかのライブラリの **Link Binary With Libraries** のエントリをチェックします。[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") を使用して同様の情報を取得する方法については以前のセクションを参照してください。
+    - リンクされたライブラリをチェックします。xcodeproj ファイルを開き、プロジェクトのプロパティをチェックします。**Build Phases** タブに移動し、いずれかのライブラリの **Link Binary With Libraries** のエントリをチェックします。[MobSF](../../../tools/generic/MASTG-TOOL-0035.md) を使用して同様の情報を取得する方法については以前のセクションを参照してください。
     - ソースをコピー＆ペーストした場合、既知のライブラリの既知のメソッド名でヘッダファイル (Objective-C を使用している場合) およびその他の Swift ファイルを検索します。
 - **使用しているバージョンを確定します**: 使用しているライブラリのバージョンを常にチェックし、潜在的な脆弱性や不具合にパッチ適用した新しいバージョンが利用可能かどうかをチェックします。ライブラリの新しいバージョンがない場合でも、暗号機能はまだレビューされていない場合があります。そのため確認済みライブラリを使用することを常に推奨します。もしくは、自分で確認できる能力、知識、経験があることを確認します。
 - **手製か？**: 独自の暗号を動かしたり、既存の暗号機能を自分自身で実装したりしないことをお勧めします。
