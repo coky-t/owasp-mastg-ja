@@ -91,7 +91,7 @@ Android デバイスで実行されているコードが信頼できるソース
 
 Android オペレーティングシステムは Linux をベースにしていますが、他の Unix ライクなシステムと同じようにユーザーアカウントを実装してはいません。 Android では Linux カーネルのマルチユーザーサポートを使用してアプリをサンドボックス化しています。一部の例外を除いて、各アプリは別々の Linux ユーザーの下で実行しており、他のアプリやオペレーティングシステムの他の部分から実質的に分離されています。
 
-ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/9.0.0_r3/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。詳細については、 Android サンドボックスに関する [Bin Chen によるブログ記事 "An Overview Of Application Sandbox"](https://pierrchen.blogspot.mk/2016/09/an-walk-through-of-android-uidgid-based.html) をご覧ください。
+ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/9.0.0_r3/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。
 
 例えば、 Android 9.0 (API レベル 28) では以下のシステムユーザーが定義されています。
 
