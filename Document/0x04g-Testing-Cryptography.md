@@ -158,7 +158,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 ### ストレージ内およびメモリ内の鍵を保護する
 
-メモリダンプが脅威モデルの一部であるとき、鍵はアクティブに使用される瞬間にアクセスできます。メモリダンプには root アクセス (ルート化デバイスや脱獄済みデバイスなど) または Frida によるパッチ適用済みのアプリケーション (Fridump などのツールを使用できます) のいずれかが必要です。
+メモリダンプが脅威モデルの一部であるとき、鍵はアクティブに使用される瞬間にアクセスできます。メモリダンプには root アクセス (ルート化デバイスや脱獄済みデバイスなど) または Frida によるパッチ適用済みのアプリケーション ([Fridump](../tools/generic/MASTG-TOOL-0106.md) などのツールを使用できます) のいずれかが必要です。
 そのため、デバイスに鍵がまだ必要とされる場合には、以下を考慮することがベストです。
 
 - **リモートサーバー内の鍵**: Amazon KMS や Azure Key Vault などのリモート Key Valut を使用できます。一部のユースケースでは、アプリとリモートリソースの間にオーケストレーションレイヤを開発することが適切な選択肢となることがあります。例えば、Function as a Service (FaaS) システム (AWS Lambda や Google Cloud Functions など) 上で動作するサーバーレス関数が API キーやシークレットを取得するためにリクエストを転送するような場合です。Amazon Cognito, Google Identity Platform, Azure Active Directory などの他の選択肢があります。
@@ -190,5 +190,4 @@ App Store や Google Play にアプリをアップロードする場合、一般
 - [Export compliance overview (Apple)](https://help.apple.com/app-store-connect/#/dev88f5c7bf9 "Export compliance overview")
 - [Export compliance (Google)](https://support.google.com/googleplay/android-developer/answer/113770?hl=en "Export compliance")
 - [Encryption and Export Administration Regulations (USA)](https://www.bis.doc.gov/index.php/policy-guidance/encryption "Encryption and Export Administration Regulations")
-- [Encryption Control (France)](https://www.ssi.gouv.fr/en/regulation/cryptology/ "Encryption Control")
 - [World map of encryption laws and policies](https://www.gp-digital.org/WORLD-MAP-OF-ENCRYPTION/)
