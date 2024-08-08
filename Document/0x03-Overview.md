@@ -6,7 +6,7 @@
 
 まず、このプロジェクトでは、モバイルアプリのセキュリティモデルを定義し、モバイルアプリの一般的なセキュリティ要件を列挙する [OWASP モバイルアプリケーションセキュリティ検証標準 (Mobile Application Security _Verification Standard_, MASVS)](https://mas.owasp.org/MASVS/) をモバイルアプリのセキュリティ戦略のベースとすることを推奨します。MASVS はアーキテクト、開発者、テスト担当者、セキュリティ専門家、一般消費者がセキュアなモバイルアプリの品質を定義し理解するために使用できるように設計されています。OWASP MASVS がモバイルアプリのセキュリティモデルにどのように適用されるかを決定した後、このプロジェクトでは [OWASP モバイルアプリケーションセキュリティテストガイド (Mobile Application Security _Testing Guide_, MASTG)](https://mas.owasp.org/MASTG/) を使用することを提案します。このテストガイドは MASVS が提供するセキュリティ要件と同じ基本セットに対応しており、コンテキストに応じてそれらを個別に使用したり組み合わせたりして、さまざまな目的を達成するために使用できます。
 
-<img src="Images/Chapters/0x03/owasp-mobile-overview.png" alt="image" width="50%" />
+<img src="Images/Chapters/0x03/owasp-mobile-overview.png" width="50%" />
 
 たとえば、MASVS 要件はアプリの計画およびアーキテクチャ設計段階で使用できますが、チェックリストとテストガイドは手動セキュリティテストでのベースラインとしたり、開発中や開発後の自動セキュリティテストのテンプレートとして利用できます。 ["モバイルアプリのセキュリティテスト"](0x04b-Mobile-App-Security-Testing.md) の章ではチェックリストと MASTG をモバイルアプリのペネトレーションテストに適用する方法について説明します。
 
@@ -31,16 +31,6 @@ MASTG は MASVS で規定されているすべての要件の説明を含みま�
 多くのモバイルアプリのペネトレーションテスト担当者はネットワークやウェブアプリのペネトレーションテストの経験を持っており、これはモバイルアプリテストにとって貴重な資質です。ほとんどすべてのモバイルアプリはバックエンドサービスと通信しており、それらのサービスはデスクトップマシン上のウェブアプリでよく知られているのと同じタイプの攻撃を受けやすくなります。モバイルアプリは攻撃対象領域が小さいため、インジェクションや類似の攻撃に対するセキュリティは高くなります。代わりに、MASTG はモバイルセキュリティを高めるために、デバイスとネットワークのデータ保護を優先しています。
 
 ## OWASP MASVS 概要: モバイルアプリケーションセキュリティの主要な領域
-
-この概要では MASVS がモバイルセキュリティの主要な領域をどのように定義し、記述するかについて説明します。
-
-- [データストレージとプライバシー (Data Storage and Privacy)](#masvs-storage-data-storage-and-privacy)
-- [暗号 (Cryptography)](#masvs-crypto-cryptography)
-- [認証と認可 (Authentication and Authorization)](#masvs-auth-authentication-and-authorization)
-- [ネットワーク通信 (Network Communication)](#masvs-network-network-communication)
-- [モバイルプラットフォームとの相互連携 (Interaction with the Mobile Platform)](#masvs-platform-interaction-with-the-mobile-platform)
-- [コード品質とエクスプロイトの軽減 (Code Quality and Exploit Mitigation)](#masvs-code-code-quality-and-exploit-mitigation)
-- [改竄防止とリバース防止 (Anti-Tampering and Anti-Reversing)](#masvs-resilience-anti-tampering-and-anti-reversing)
 
 ### MASVS-STORAGE: データストレージとプライバシー (Data Storage and Privacy) <a name="masvs-storage-data-storage-and-privacy"></a>
 
