@@ -110,7 +110,7 @@ Apple は [長期的に考えること](https://developer.apple.com/news/?id=g9e
 また TLS v1.0 および TLS v1.1 には [既知の脆弱性](https://portswigger.net/daily-swig/the-end-is-nigh-browser-makers-ditch-support-for-aging-tls-1-0-1-1-protocols "Browser-makers ditch support for aging TLS 1.0, 1.1 protocols") があり、2020年までにすべての主要なブラウザでその使用が非推奨になりました。
 TLS v1.2 および TLS v1.3 はデータのセキュアな送信のためのベストプラクティスとみなされています。Android 10 (API level 29) 以降 TLS v1.3 はより高速でセキュアな通信のためにデフォルトで有効になります。[TLS v1.3 での主な変更点](https://developer.android.com/about/versions/10/behavior-changes-all#tls-1.3 "TLS 1.3 enabled by default") は暗号スイートのカスタマイズができなくなること、および TLS v1.3 が有効である場合にはそれらすべてが有効になることです。一方、ゼロラウンドトリップ (0-RTT) モードはサポートされません。
 
-クライアントとサーバーの両方が同じ組織により制御され、互いに通信するためだけに使用される場合、[設定を堅牢にすること](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") によりセキュリティを向上できます。
+クライアントとサーバーの両方が同じ組織により制御され、互いに通信するためだけに使用される場合、[設定を堅牢にすること](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices "Qualys SSL/TLS Deployment Best Practices") によりセキュリティを向上できます。
 
 モバイルアプリケーションが特定のサーバーに接続している場合、そのネットワークスタックを調整して、サーバーの構成に対して可能な限り高いセキュリティレベルを確保できます。基盤となるオペレーティングシステムのサポートがない場合、モバイルアプリケーションがより脆弱な構成を使用するように強制する可能性があります。
 
@@ -203,7 +203,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 - nscurl - 詳細については [iOS のネットワーク通信](0x06g-Testing-Network-Communication.md) を参照してください。
 - [testssl.sh](https://github.com/drwetter/testssl.sh "testssl.sh") は「TLS/SSL 暗号、プロトコルのサポートおよび一部の暗号の欠陥について、任意のポート上のサーバーのサービスをチェックするフリーのコマンドラインツールです。」
 
-最後に、HTTPS 接続が終了するサーバーや終端プロキシがベストプラクティスにしたがって構成されていることを検証します。 [OWASP Transport Layer Protection cheat sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://dev.ssllabs.com/projects/best-practices/ "Qualys SSL/TLS Deployment Best Practices") も参照してください。
+最後に、HTTPS 接続が終了するサーバーや終端プロキシがベストプラクティスにしたがって構成されていることを検証します。 [OWASP Transport Layer Protection cheat sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
 ## HTTP(S) トラフィックの傍受
 
@@ -211,8 +211,8 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
 
-- [Burp Suite](0x08a-Testing-Tools.md#burp-suite)
-- [OWASP ZAP](0x08a-Testing-Tools.md#owasp-zap)
+- [Burp Suite](../tools/network/MASTG-TOOL-0077.md)
+- [OWASP ZAP](../tools/network/MASTG-TOOL-0079.md)
 
 傍受プロキシを使用するには、それをホストコンピュータ上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
@@ -222,7 +222,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 ## 非 HTTP トラフィックの傍受
 
-[Burp](0x08a-Testing-Tools.md#burp-suite) や [OWASP ZAP](0x08a-Testing-Tools.md#owasp-zap) などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
+[Burp Suite](../tools/network/MASTG-TOOL-0077.md) や [OWASP ZAP](../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
 
 - [Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension")
 - [Mitm-relay](https://github.com/jrmdev/mitm_relay "Mitm-relay")
@@ -260,8 +260,8 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 このような場合は、次に何をすべきかを決めるために、まずネットワークトラフィックを監視および解析する必要があります。幸いにも、ネットワーク通信をリダイレクトおよび傍受するための選択肢がいくつかあります。
 
-- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](0x08a-Testing-Tools.md#wireshark) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
-- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](0x08a-Testing-Tools.md#bettercap) または独自のアクセスポイントを検討する必要があります (下図参照) 。
+- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](../tools/network/MASTG-TOOL-0081.md) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
+- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](../tools/network/MASTG-TOOL-0076.md) または独自のアクセスポイントを検討する必要があります (下図参照) 。
 - ルート化デバイスでは、フックやコードインジェクションを使用して、ネットワーク関連の API コール (HTTP リクエストなど) を傍受したり、これらのコールの引数をダンプしたり操作することも可能です。これにより実際のネットワークデータを検査する必要がなくなります。これらの技法については「リバースエンジニアリングと改竄」の章で詳しく説明します。
 - macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
 
@@ -273,7 +273,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 ### MITM 攻撃
 
-まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて [bettercap](0x08a-Testing-Tools.md#bettercap) を実行します。
+まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて [bettercap](../tools/network/MASTG-TOOL-0076.md) を実行します。
 
 ```bash
 $ sudo bettercap -eval "set arp.spoof.targets X.X.X.X; arp.spoof on; set arp.spoof.internal true; set arp.spoof.fullduplex true;"
@@ -472,7 +472,7 @@ Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロ�
     sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080
     ```
 
-    最後のステップとして、 [Burp Suite](0x08a-Testing-Tools.md#burp-suite) の listener settings で 'Support invisible proxy' をセットする必要があります。
+    最後のステップとして、 [Burp Suite](../tools/network/MASTG-TOOL-0077.md) の listener settings で 'Support invisible proxy' をセットする必要があります。
 
 - 第三の方法: bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MITM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
 
@@ -480,7 +480,7 @@ Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロ�
 
 傍受プロキシは上記のポートフォワーディングルールで指定されたポート 8080 をリッスンする必要があります。
 
-Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy` を使用) するように設定されている場合、トラフィックを傍受プロキシにリダイレクトした後、次にトラフィックを送信すべき場所を指定する必要があります。そのトラフィックを元のロケーションにリダイレクトする必要があります。以下の手順は [Burp](0x08a-Testing-Tools.md#burp-suite) で元のロケーションへのリダイレクトを設定しています。
+Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy` を使用) するように設定されている場合、トラフィックを傍受プロキシにリダイレクトした後、次にトラフィックを送信すべき場所を指定する必要があります。そのトラフィックを元のロケーションにリダイレクトする必要があります。以下の手順は [Burp Suite](../tools/network/MASTG-TOOL-0077.md) で元のロケーションへのリダイレクトを設定しています。
 
 1. **Proxy** タブに移動し、**Options** をクリックします。
 2. proxy listeners のリストからリスナーを選択して編集します。
