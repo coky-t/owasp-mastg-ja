@@ -36,7 +36,7 @@ KeyStore および KeyChain は鍵を保存および使用するための API �
 Apps that target modern API levels, went through the following changes:
 
 - Android 7.0 (API level 24) 以上について [Android 開発者ブログでは以下のように記しています](https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html "Security provider Crypto deprecated in Android N") 。
-    - セキュリティプロバイダの指定を停止することを推奨します。代わりに、常に [パッチされたセキュリティプロバイダ](0x05e-Testing-Cryptography.md#updating-provider) を使用します。
+    - セキュリティプロバイダの指定を停止することを推奨します。代わりに、常にパッチされた [セキュリティプロバイダ](#security-provider) を使用します。
     - `Crypto` プロバイダのサポートは中止されており、このプロバイダは非推奨です。同じことがセキュアランダムのための `SHA1PRNG` にも当てはまります。
 - Android 8.1 (API レベル 27) 以上について [開発者ドキュメント](https://developer.android.com/about/versions/oreo/android-8.1 "Cryptography updates") は以下のように記しています。
     - `AndroidOpenSSL` として知られる Conscrypt は上述の Bouncy Castle を使用することをお勧めします。これは次の新しい実装を有します。 `AlgorithmParameters:GCM` , `KeyGenerator:AES`, `KeyGenerator:DESEDE`, `KeyGenerator:HMACMD5`, `KeyGenerator:HMACSHA1`, `KeyGenerator:HMACSHA224`, `KeyGenerator:HMACSHA256`, `KeyGenerator:HMACSHA384`, `KeyGenerator:HMACSHA512`, `SecretKeyFactory:DESEDE`, `Signature:NONEWITHECDSA`
@@ -233,7 +233,7 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 > ルート化デバイスやパッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、 `AndroidKeystore` に配置された鍵でソルトを暗号化するほうがよいかもしれないことに注意します。 Password-Based Encryption (PBE) 鍵は Android 8.0 (API レベル 26) まで、推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。より高い API レベルでは `PBKDF2withHmacSHA256` を使用することがベストです。これはハッシュ値が長くなります。
 
-注: NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムを使用しても効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを見つけ、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Fridaの助けを借りて抽出された鍵、またはその両方を組み合わせた [r2frida](../tools/generic/MASTG-TOOL-0036.md "r2frida") (詳細は ["ネイティブコードの逆アセンブル"](../techniques/android/MASTG-TECH-0018.md "Disassembling Native Code"), ["メモリダンプ"](../techniques/android/MASTG-TECH-0044.md#memory-dump "Memory Dump"), ["メモリ内検索"](../techniques/android/MASTG-TECH-0044.md#in-memory-search "In-Memory Search") を参照) で解析することができます。 Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されておらず、代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") で説明されているように隠蔽の有効性にさらに影響を与えます。
+注: NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムを使用しても効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを見つけ、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Fridaの助けを借りて抽出された鍵、またはその両方を組み合わせた [r2frida](../tools/generic/MASTG-TOOL-0036.md) (詳細は [ネイティブコードの逆アセンブル (Disassembling Native Code)](../techniques/android/MASTG-TECH-0018.md), [プロセス調査 (Process Exploration)](../techniques/android/MASTG-TECH-0044.md) を参照) で解析することができます。 Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されておらず、代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") で説明されているように隠蔽の有効性にさらに影響を与えます。
 
 ### 乱数生成
 
