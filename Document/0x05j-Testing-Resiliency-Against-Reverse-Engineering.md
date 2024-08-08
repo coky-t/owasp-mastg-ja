@@ -26,8 +26,6 @@ platform: android
 
 Android では、 "ルート検出" を少し広く定義し、カスタム ROM の検出を含みます。例えば、デバイスが純正の Android ビルドであるか、もしくはカスタムビルドであるかを判断します
 
-以下のセクションでは、よく見かけるいくつかの一般的なルート検出手法を記します。 OWASP Mobile Testing Guide に付属する [OWASP UnCrackable Apps for Android](0x08b-Reference-Apps.md#android-crackmes) にこれらの手法がいくつかが実装されています。
-
 ルート検出は [RootBeer](https://github.com/scottyab/rootbeer "RootBeer") などのライブラリを介して実装することもできます。
 
 #### Google Play Integrity
@@ -191,8 +189,7 @@ Supersu は最も人気のあるルート化ツールであり `daemonsu` とい
 
 Android パッケージマネージャを使用するとインストールされているパッケージのリストを取得できます。以下のパッケージ名は一般的なルート化ツールに属するものです。
 
-```default
-com.thirdparty.superuser
+```txt
 eu.chainfire.supersu
 com.noshufou.android.su
 com.koushikdutta.superuser
@@ -836,14 +833,14 @@ ELF バイナリを使用すると、メモリ内の関数ポインタを上書�
 
 ["モバイルアプリの改竄とリバースエンジニアリング"](0x04c-Tampering-and-Reverse-Engineering.md#obfuscation) の章ではモバイルアプリ全般に使用できるよく知られた難読化技法をいくつか紹介しています。
 
-Android アプリはさまざまなツールを使用してこれらの難読化技法のいくつかを実装できます。たとえば、 [ProGuard](0x08a-Testing-Tools.md#proguard) はコードを縮小して難読化し、Android Java アプリのバイトコードから不要なデバッグ情報を削除する簡単な方法を提供します。それはクラス名、メソッド名、変数名などの識別子を意味のない文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響はありません。
+Android アプリはさまざまなツールを使用してこれらの難読化技法のいくつかを実装できます。たとえば、 [ProGuard](../tools/android/MASTG-TOOL-0022.md) はコードを縮小して難読化し、Android Java アプリのバイトコードから不要なデバッグ情報を削除する簡単な方法を提供します。それはクラス名、メソッド名、変数名などの識別子を意味のない文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響はありません。
 
 > Java クラスを逆コンパイルするのは簡単なので、製品バイトコードには常になんらかの基本的な難読化を適用することをお勧めします。
 
 Android 難読化技法について詳しくは以下をご覧ください。
 
 - ["Security Hardening of Android Native Code"](https://darvincitech.wordpress.com/2020/01/07/security-hardening-of-android-native-code/) by Gautam Arvind
-- ["APKiD: Fast Identification of AppShielding Products"](https://github.com/enovella/cve-bio-enovella/blob/master/slides/APKiD-NowSecure-Connect19-enovella.pdf) by Eduardo Novella
+- ["APKiD: Fast Identification of AppShielding Products"](https://github.com/enovella/cve-bio-enovella/blob/master/slides/APKiD-NowSecure-Connect19-enovella.pdf) by Eduardo Novella ([APKiD](../tools/android/MASTG-TOOL-0009.md))
 - ["Challenges of Native Android Applications: Obfuscation and Vulnerabilities"](https://www.theses.fr/2020REN1S047.pdf) by Pierre Graux
 
 #### ProGuard の使用
