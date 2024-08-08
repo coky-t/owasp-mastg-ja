@@ -55,7 +55,7 @@ MAS 支持者は OWASP MASVS および MASTG の業界支援者であり、一�
 - 支持企業はコミュニケーションの一環としてロゴや MASVS/MASTG へのリンクを使用できますが、ソフトウェアやサービスの選定プロバイダとして OWASP が推奨しているものとして使用することはできません。
     - OK であるものの例: MAS 支持者ステータスをウェブサイトのホームページ、販売プレゼンテーションの「会社概要」スライド、販売資料に記載すること。
     - OK ではないものの例: MAS 支持者は OWASP の認定を受けていると主張することはできません。
-- これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://mas.owasp.org/MASVS/Intro/04-Assessment_and_Certification/) 。
+- これらの企業による MASVS/MASTG のアプリケーションの品質について [MAS チームによる検証は行われていません](https://mas.owasp.org/MASVS/04-Assessment_and_Certification/) 。
 
 > OWASP Foundation はリストに記載されている個人および組織によるサポートに非常に感謝しています。ただし、OWASP Foundation は厳格にベンダー中立であり、サポーターを推奨するものではないこと注意してください。MAS 支持者は MASVS や MASTG のコンテンツにいかなる方法であっても影響をあたえることはありません。
 
@@ -82,7 +82,7 @@ MAS 支持者は OWASP MASVS および MASTG の業界支援者であり、一�
 - 各カテゴリの提案に対するフィードバック
 - 内部分析による統計
 
-過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[UnCrackable App for Android Level 4: Radare2 Pay](0x08b-Reference-Apps.md#android-uncrackable-l4) を寄贈しています。
+過去には NowSecure もプロジェクトに貢献し、"God Mode Sponsor" となって後援し、[Android UnCrackable L4](../apps/android/MASTG-APP-0015.md) を寄贈しています。
 
 追記:
 
