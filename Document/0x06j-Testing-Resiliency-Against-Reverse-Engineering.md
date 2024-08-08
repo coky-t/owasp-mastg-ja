@@ -98,7 +98,7 @@ do {
 
 **プロトコルハンドラのチェック:**
 
-アプリは `cydia://` ([Cydia](0x08a-Testing-Tools.md#cydia "Cydia") をインストール後にデフォルトで利用可能) などのよく知られたプロトコルハンドラを呼び出してみる可能性があります。
+アプリは `cydia://` ([Cydia](../tools/ios/MASTG-TOOL-0047.md) をインストール後にデフォルトで利用可能) などのよく知られたプロトコルハンドラを呼び出してみる可能性があります。
 
 ```swift
 if let url = URL(string: "cydia://package/com.example.package"), UIApplication.shared.canOpenURL(url) {
@@ -108,7 +108,7 @@ if let url = URL(string: "cydia://package/com.example.package"), UIApplication.s
 
 #### 自動化された脱獄検出のバイパス
 
-一般的な脱獄検出メカニズムをバイパスする最も迅速な方法は [objection](0x08a-Testing-Tools.md#objection) です。脱獄バイパスの実装は [jailbreak.ts script](https://github.com/sensepost/objection/blob/master/agent/src/ios/jailbreak.ts "jailbreak.ts") にあります。
+一般的な脱獄検出メカニズムをバイパスする最も迅速な方法は [objection](../tools/generic/MASTG-TOOL-0038.md) です。脱獄バイパスの実装は [jailbreak.ts script](https://github.com/sensepost/objection/blob/master/agent/src/ios/jailbreak.ts "jailbreak.ts") にあります。
 
 #### 手動の脱獄検出のバイパス
 
@@ -118,7 +118,7 @@ if let url = URL(string: "cydia://package/com.example.package"), UIApplication.s
 
 バイナリをリバースエンジニアリングして脱獄検出を探す必要がある場合、最も明白な方法は "jail" や "jailbreak" といった既知の文字列を検索することです。耐性対策が施されている場合や開発者がそのような明白な用語を避けている場合には特に、これは常に有効であるとは限らないことに注意してください。
 
-例: [Damn Vulnerable iOS application (DVIA-v2)](0x08b-Reference-Apps.md#dvia-v2) をダウンロードして unzip し、メインバイナリを [radare2](0x08a-Testing-Tools.md#radare2) にロードして解析が完了するまで待ちます。
+例: [DVIA-v2](../apps/ios/MASTG-APP-0024.md) をダウンロードして unzip し、メインバイナリを [radare2 for iOS](../tools/ios/MASTG-TOOL-0073.md) にロードして解析が完了するまで待ちます。
 
 ```sh
 r2 -A ./DVIA-v2-swift/Payload/DVIA-v2.app/DVIA-v2
@@ -181,7 +181,7 @@ iOS に適用可能なアンチデバッグテクニックがいくつかあり�
 
 #### ptrace の使用
 
-["デバッグ"](../techniques/ios/MASTG-TECH-0084.md "Debugging") にあるように、iOS XNU カーネルは `ptrace` システムコールを実装していますが、プロセスを適切にデバッグするために必要となる機能のほとんどを欠如しています (例えば、アタッチやステップ実行は可能ですが、メモリやレジスタの読み取りや書き込みはできません) 。
+[デバッグ (Debugging)](../techniques/ios/MASTG-TECH-0084.md) にあるように、iOS XNU カーネルは `ptrace` システムコールを実装していますが、プロセスを適切にデバッグするために必要となる機能のほとんどを欠如しています (例えば、アタッチやステップ実行は可能ですが、メモリやレジスタの読み取りや書き込みはできません) 。
 
 ですが、 `ptrace` syscall の iOS 実装には非標準で非常に便利な機能が含まれています。プロセスのデバッグを防止するのです。この機能は `PT_DENY_ATTACH` として実装されており、 [公式の BSD システムコールマニュアル](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/ptrace.2.html "PTRACE(2)") で説明されています。簡単に言うと、他のデバッガが呼び出し側プロセスにアタッチできないことを保証します。デバッガがアタッチしようとすると、そのプロセスは終了します。 `PT_DENY_ATTACH` の使用はかなりよく知られているアンチデバッグテクニックであるため、 iOS ペンテスト時によく遭遇する可能性があります。
 
@@ -246,7 +246,7 @@ func AmIBeingDebugged() -> Bool {
 
 #### アプリケーションのソースコードの完全性チェック
 
-["デバッグ"](../techniques/ios/MASTG-TECH-0084.md) では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックをバイパスできることも学びました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックするカスタムチェックを追加することです。
+[デバッグ (Debugging)](../techniques/ios/MASTG-TECH-0084.md) では、iOS IPA アプリケーションの署名チェックについて説明しています。また、リバースエンジニアは開発者証明書やエンタープライズ証明書を使用してアプリを再パッケージおよび再署名することで、このチェックをバイパスできることも学びました。これをより困難にする方法のひとつは、署名が実行時に一致するかどうかをチェックするカスタムチェックを追加することです。
 
 Apple は DRM を使用して完全性チェックを行います。しかし、 (以下の例にあるように) 制御を追加できます。 `mach_header` を解析し、署名を生成するために使用される命令データの開始を計算します。次に、署名を与えられたものと比較します。生成された署名がどこに格納もしくはコード化されているか確認します。
 
@@ -432,7 +432,7 @@ Apple Silicon (ARM) ハードウェアが広く普及しているため、x86 / 
 
 #### 名前の難読化
 
-標準コンパイラはソースコードのクラス名と関数名に基づいてバイナリシンボルを生成します。したがって、難読化が適用されない場合には、シンボル名は意味を持ち、アプリバイナリから直接簡単に読み取ることができます。例えば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは [Damn Vulnerable iOS App (DVIA-v2)](0x08b-Reference-Apps.md#dvia-v2) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
+標準コンパイラはソースコードのクラス名と関数名に基づいてバイナリシンボルを生成します。したがって、難読化が適用されない場合には、シンボル名は意味を持ち、アプリバイナリから直接簡単に読み取ることができます。例えば、脱獄を検出する関数は関連するキーワード ("jailbreak" など) を検索することで見つけることができます。以下のリストは [DVIA-v2](../apps/ios/MASTG-APP-0024.md) から逆アセンブルされた関数 `JailbreakDetectionViewController.jailbreakTest4Tapped` を示しています。
 
 ```assembly
 __T07DVIA_v232JailbreakDetectionViewControllerC20jailbreakTest4TappedyypF:
@@ -472,7 +472,7 @@ mov        rbp, rsp
 
 #### 推奨ツール
 
-- [SwiftShield](0x08a-Testing-Tools.md#swiftshield) を使用して名前の難読化を実行できます。 Xcode プロジェクトのソースコードを読み取り、コンパイラが使用される前にクラス、メソッド、フィールドのすべての名前をランダムな値に置き換えます。
+- [SwiftShield](../tools/ios/MASTG-TOOL-0068.md) を使用して名前の難読化を実行できます。 Xcode プロジェクトのソースコードを読み取り、コンパイラが使用される前にクラス、メソッド、フィールドのすべての名前をランダムな値に置き換えます。
 - [obfuscator-llvm](https://github.com/obfuscator-llvm) は中間表現 (Intermediate Representation, IR) で動作します。シンボルの難読化、文字列の暗号化、制御フローの平坦化に使用できます。 IR をベースとしているため、 SwiftShield と比較してアプリケーションの情報を大幅に隠すことができます。
 
 iOS の難読化技法については記事 ["Protecting Million-User iOS Apps with Obfuscation: Motivations, Pitfalls, and Experience"](https://faculty.ist.psu.edu/wu/papers/obf-ii.pdf "Paper - Protecting Million-User iOS Apps with Obfuscation: Motivations, Pitfalls, and Experience") をご覧ください。
