@@ -26,7 +26,7 @@ Android 7.0 (API レベル 24) 以降、Android アプリはいわゆる [Networ
 <application android:networkSecurityConfig="@xml/network_security_config"
 ```
 
-この場合、ファイルは `@xml` (/res/xml と同じ) にあり、名前は "network_security_config" (異なることがあります) です。 "res/xml/network_security_config.xml" として見つけることができるはずです。コンフィグレーションが存在する場合、 [システムログ](0x05b-Android-Security-Testing.md#monitoring-system-logs) に以下のイベントが表示されるはずです。
+この場合、ファイルは `@xml` (/res/xml と同じ) にあり、名前は "network_security_config" (異なることがあります) です。 "res/xml/network_security_config.xml" として見つけることができるはずです。コンフィグレーションが存在する場合、システムログ ([システムログの監視 (Monitoring System Logs)](../techniques/android/MASTG-TECH-0009.md)) に以下のイベントが表示されるはずです。
 
 ```bash
 D/NetworkSecurityConfig: Using Network Security Config from resource network_security_config
