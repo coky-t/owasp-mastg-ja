@@ -8,11 +8,11 @@ Windows, Linux, macOS が動作するほぼすべてのマシン上で、完全�
 
 ### ホストデバイス
 
-少なくても、[Android Studio](0x08a-Testing-Tools.md#android-studio) (付属の [Android SDK](0x08a-Testing-Tools.md#android-sdk "Android SDK")) プラットフォームツール、エミュレータ、さまざまな SDK バージョンとフレームワークコンポーネントを管理するアプリが必要です。Android Studio にはエミュレータイメージを作成するための Android Virtual Device (AVD) Manager アプリケーションも付属しています。最新の [SDK ツール](https://developer.android.com/studio/releases/sdk-tools) と [プラットフォームツール](https://developer.android.com/studio/releases/platform-tools) がシステムにインストールされていることを確認します。
+少なくても、[Android Studio](../tools/android/MASTG-TOOL-0007.md) (付属の [Android SDK](../tools/android/MASTG-TOOL-0006.md)) プラットフォームツール、エミュレータ、さまざまな SDK バージョンとフレームワークコンポーネントを管理するアプリが必要です。Android Studio にはエミュレータイメージを作成するための Android Virtual Device (AVD) Manager アプリケーションも付属しています。最新の [SDK ツール](https://developer.android.com/studio/releases/sdk-tools) と [プラットフォームツール](https://developer.android.com/studio/releases/platform-tools) がシステムにインストールされていることを確認します。
 
-さらに、ネイティブライブラリを含むアプリを扱う予定がある場合は、[Android NDK](0x08a-Testing-Tools.md#android-ndk) をインストールしてホストのセットアップを完了するとよいでしょう。
+さらに、ネイティブライブラリを含むアプリを扱う予定がある場合は、[Android NDK](../tools/android/MASTG-TOOL-0005.md) をインストールしてホストのセットアップを完了するとよいでしょう。
 
-コンピュータからデバイスを表示や制御すると便利なことがあります。これを実現するには、[Scrcpy](0x08a-Testing-Tools.md#scrcpy) を使用できます。
+コンピュータからデバイスを表示や制御すると便利なことがあります。これを実現するには、[Scrcpy](../tools/android/MASTG-TOOL-0024.md) を使用できます。
 
 ### テストデバイス
 
@@ -43,7 +43,7 @@ Windows, Linux, macOS が動作するほぼすべてのマシン上で、完全�
 
 [LineageOS](https://lineageos.org/ "LineageOS") プロジェクトでサポートされているデバイスもテストデバイスとして非常に良い候補です。活発なコミュニティがあり、フラッシュとルート化の手順が簡単で、最新バージョンの Android が一般的に Lineage インストールとしてすぐに利用可能です。また、LineageOS は OEM がアップデートの配布を停止した後も、新しいバージョンの Android のサポートを継続しています。
 
-Android の物理デバイスで作業する場合、[ADB](0x08a-Testing-Tools.md#adb) デバッグインタフェースを使用するために、デバイスの開発者モードと USB デバッグを有効にしましょう。Android 4.2 (API レベル 16) 以降、設定アプリの **開発者オプション** サブメニューはデフォルトで非表示になっています。これをアクティブにするには **端末情報** ビューの **ビルド番号** セクションを七回タップします。ビルド番号フィールドの場所はデバイスによって若干異なることに注意してください。たとえば、LG Phone では、**端末情報** -> **ソフトウェア情報** にあります。これを行うと、設定メニューの一番下に **開発者オプション** が表示されます。開発者オプションをアクティブにすると、**USB デバッグ** スイッチでデバッグを有効にできます。
+Android の物理デバイスで作業する場合、[ADB](../tools/android/MASTG-TOOL-0004.md) デバッグインタフェースを使用するために、デバイスの開発者モードと USB デバッグを有効にしましょう。Android 4.2 (API レベル 16) 以降、設定アプリの **開発者オプション** サブメニューはデフォルトで非表示になっています。これをアクティブにするには **端末情報** ビューの **ビルド番号** セクションを七回タップします。ビルド番号フィールドの場所はデバイスによって若干異なることに注意してください。たとえば、LG Phone では、**端末情報** -> **ソフトウェア情報** にあります。これを行うと、設定メニューの一番下に **開発者オプション** が表示されます。開発者オプションをアクティブにすると、**USB デバッグ** スイッチでデバッグを有効にできます。
 
 #### エミュレータでのテスト
 
@@ -71,10 +71,8 @@ Android Studio の AVD Manager を使用して Android Virtual Device (AVD) を�
 
 エミュレータ環境内でアプリをテストするために使用できるツールや VM がいくつかあります。
 
-- [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF")
+- [MobSF](../tools/generic/MASTG-TOOL-0035.md)
 - [Nathan](https://github.com/mseclab/nathan "Nathan") (2016 年以降更新なし)
-
-本書巻末の ["テストツール"](0x08a-Testing-Tools.md) の章も確認してください。
 
 #### 特権アクセスの取得
 
@@ -102,7 +100,7 @@ Magisk ("Magic Mask") は Android デバイスをルート化する方法の一�
 
 公式の [GitHub 上のドキュメント](https://topjohnwu.github.io/Magisk/ "Magisk Documentation") を読むことで、Magisk について詳しく知ることができます。Magisk をインストールしていないのであれば、[そのドキュメント](https://topjohnwu.github.io/Magisk/ "Magisk Documentation") にインストール手順があります。公式 Android バージョンを使用していて、それをアップグレードする予定がある場合、Magisk は [GitHub 上のチュートリアル](https://topjohnwu.github.io/Magisk/ota.html "OTA Installation") を提供しています。
 
-さらに、開発者は Magisk の機能を利用してカスタムモジュールを作成し、それを公式の [Magisk Modules リポジトリ](https://github.com/Magisk-Modules-Repo "Magisk-Modules-Repo") に [投稿](https://github.com/Magisk-Modules-Repo/submission "Submission") できます。投稿されたモジュールは Magisk Manager アプリケーション内にインストールできます。これらのインストール可能なモジュールの一つが、有名な [Xposed Framework](0x08a-Testing-Tools.md#xposed) のシステムレスバージョンです (SDK バージョン 27 までで利用可能)。
+さらに、開発者は Magisk の機能を利用してカスタムモジュールを作成し、それを公式の [Magisk Modules リポジトリ](https://github.com/Magisk-Modules-Repo "Magisk-Modules-Repo") に [投稿](https://github.com/Magisk-Modules-Repo/submission "Submission") できます。投稿されたモジュールは Magisk Manager アプリケーション内にインストールできます。これらのインストール可能なモジュールの一つが、[Xposed](../tools/android/MASTG-TOOL-0027.md) のシステムレスバージョンです (SDK バージョン 27 までで利用可能)。
 
 ##### ルート検出
 
