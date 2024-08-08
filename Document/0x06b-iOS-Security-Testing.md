@@ -11,10 +11,10 @@
 以下は最も基本的な iOS アプリのテストセットアップです。
 
 - 理想的には管理権限を持つ macOS ホストコンピュータ。
-- [Xcode](0x08a-Testing-Tools.md#xcode) と [Xcode コマンドラインツール](0x08a-Testing-Tools.md#xcode-command-line-tools) がインストールされていること。
+- [Xcode](../tools/ios/MASTG-TOOL-0070.md) と [Xcode Command Line Tools](../tools/ios/MASTG-TOOL-0071.md) がインストールされていること。
 - クライアント間のトラフィックを許可する Wi-Fi ネットワーク。
 - 少なくとも一台の脱獄済み iOS デバイス (目的の iOS バージョンのもの)。
-- [Burp Suite](0x08a-Testing-Tools.md#burp-suite) またはその他の傍受プロキシツール。
+- [Burp Suite](../tools/network/MASTG-TOOL-0077.md) またはその他の傍受プロキシツール。
 
 ### iOS デバイスの UDID を取得する
 
@@ -69,7 +69,7 @@ UDID を右コピーするとコピーできます。
 
 ### エミュレータでのテスト
 
-[Corellium](../techniques/ios/MASTG-TECH-0088.md#corellium) は一般に入手可能な唯一の iOS エミュレータです。これは企業向けの SaaS ソリューションで、ユーザーごとのライセンスモデルとなっており、コミュニティライセンスを提供していません。
+[Corellium](../tools/generic/MASTG-TOOL-0108.md) は一般に入手可能な唯一の iOS エミュレータです。これは企業向けの SaaS ソリューションで、ユーザーごとのライセンスモデルとなっており、コミュニティライセンスを提供していません。
 
 ### 特権アクセスの取得
 
@@ -80,7 +80,7 @@ iOS の脱獄は Android のルート化とよく比較されますが、その�
 
 iOS ブートローダーは Apple が署名したイメージの起動とフラッシュのみを許可しているため、iOS デバイスではカスタム ROM のフラッシュは不可能です。このため、公式の iOS イメージであっても Apple の署名がなければインストールできず、以前の iOS バージョンがまだ署名されていれば iOS をダウングレードできます。
 
-脱獄の目的は iOS の保護 (特に Apple のコード署名メカニズム) を無効にして、任意の未署名コード (カスタムコードや、 [Cydia](0x08a-Testing-Tools.md#cydia "Cydia") や [Sileo](0x08a-Testing-Tools.md#sileo "Sileo") などの代替アプリストアからダウンロードしたものなど) をデバイス上で実行できるようにすることです。「脱獄」という言葉は無効化プロセスを自動化するオールインワンツールへの口語的な言及です。
+脱獄の目的は iOS の保護 (特に Apple のコード署名メカニズム) を無効にして、任意の未署名コード (カスタムコードや、 [Cydia](../tools/ios/MASTG-TOOL-0047.md) や [Sileo](../tools/ios/MASTG-TOOL-0064.md) などの代替アプリストアからダウンロードしたものなど) をデバイス上で実行できるようにすることです。「脱獄」という言葉は無効化プロセスを自動化するオールインワンツールへの口語的な言及です。
 
 特定の iOS バージョン向けに脱獄を開発することは容易ではありません。セキュリティテスト担当者としては一般に入手可能な脱獄ツールを使用したいと思うでしょう。やはり、さまざまなバージョンの iOS を脱獄するために使用されるテクニックを研究することをお勧めします。多くの興味深いエクスプロイトに遭遇し、OS の内部について多くのことを学ぶことでしょう。たとえば、iOS 9.x 向けの Pangu9 は [少なくとも五つの脆弱性を悪用しており](https://www.theiphonewiki.com/wiki/Jailbreak_Exploits "Jailbreak Exploits") 、use-after-free カーネルバグ (CVE-2015-6794) や写真アプリの任意のファイルシステムアクセスの脆弱性 (CVE-2015-7037) を含んでいます。
 
