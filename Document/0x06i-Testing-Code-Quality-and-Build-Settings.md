@@ -97,7 +97,7 @@ Swift アプリでは `swiftc` コンパイラによって ARC が自動的に�
 
 ### デバッグ可能アプリ
 
-アプリが [デバッグ可能](../techniques/android/MASTG-TECH-0031.md) であるかどうかをテストするには、アプリのエンタイトルメントを調べて [`get-task-allow`](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/resolving_common_notarization_issues "Resolving common notarization issues") キーの値が `true` に設定されているかを確認します。
+アプリがデバッグ可能 ([デバッグ (Debugging)](../techniques/ios/MASTG-TECH-0084.md)) であるかどうかをテストするには、アプリのエンタイトルメントを調べて [`get-task-allow`](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution/resolving_common_notarization_issues "Resolving common notarization issues") キーの値が `true` に設定されているかを確認します。
 
 デバッグはアプリを開発する際に便利な機能ですが、App Store やエンタープライズプログラム内にアプリをリリースする前にオフにしなければなりません。そのためにはアプリを生成するモードを決定して、環境内のフラグを確認する必要があります。
 
