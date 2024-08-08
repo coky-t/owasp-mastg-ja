@@ -14,7 +14,7 @@ Apple のデスクトップオペレーティングシステム macOS (以前の
 
 ユーザーを悪意のあるアプリケーションから保護するために、Apple は iOS デバイス上で実行できるアプリへのアクセスを制限および制御します。Apple の App Store は唯一の公式アプリケーション配信プラットフォームです。開発者はアプリを提供でき、消費者はアプリを購入、ダウンロード、インストールできます。この配信スタイルは Android とは異なり、いくつかのアプリストアおよびサイドローディング (公式の App Store を使用せずに iOS デバイスにアプリをインストールする) をサポートしています。iOS では、サイドローディングは一般的に USB 経由のアプリインストール方法を指しますが、 [Apple Developer Enterprise Program](https://developer.apple.com/programs/enterprise/ "Apple Developer Enterprise Program") の下で App Store を使用しない他の iOS アプリ配布方法があります。
 
-以前は、サイドローディングは脱獄または複雑なワークアラウンドでのみ可能でした。iOS 9 またはそれ以降では、[Xcode 経由でサイドロードする](https://www.igeeksblog.com/how-to-sideload-apps-on-iphone-ipad-in-ios-10/ "How to Sideload Apps on iPhone and iPad Running iOS 10 using Xcode 8") ことが可能です。
+以前は、サイドローディングは脱獄または複雑なワークアラウンドでのみ可能でした。iOS 9 またはそれ以降では、[Xcode 経由でサイドロードする](https://forums.developer.apple.com/forums/thread/91370) ことが可能です。
 
 iOS アプリは Apple の iOS Sandbox (歴史的に Seatbelt と呼ばれている) の、アプリがアクセス可能および不可となるリソースを記述する強制アクセスコントロール (MAC) メカニズムにより互いに分離されています。Android の広範囲の Binder IPC (プロセス間通信) 機能と比較して、iOS は IPC オプションをほとんど提供しないため、潜在的なアタックサーフェイスを最小限に抑えます。
 
@@ -182,4 +182,4 @@ DeviceCheck フレームワークで利用できる App Attest は、ハード�
 
 このプロセスには、サーバーにより実行される一連の検証とともに、暗号鍵の生成と検証が含まれ、リクエストの真正性を確保します。App Attest はセキュリティを強化しますが、あらゆる形態の不正行為に対する完全な保護を保証するものではないことに注意することが重要です。
 
-詳細については [WWDC 2021](https://developer.apple.com/videos/play/wwdc2021/10244 "WWDC 2021") セッションと [App Attest ドキュメント](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity "App Attest documentation") および [App Attest 実装ガイド](https://developer.apple.com/documentation/devicecheck/validating_apps_that_connect_to_your_server "App Attest implementation guide") を参照してください。
+詳細については [WWDC 2021](https://developer.apple.com/videos/play/wwdc2021/10244 "WWDC 2021") セッションと ["DeviceCheck ドキュメント"](https://developer.apple.com/documentation/devicecheck/) および ["Validating apps that connect to your server"](https://developer.apple.com/documentation/devicecheck/validating-apps-that-connect-to-your-server) を参照してください。
