@@ -20,7 +20,7 @@ Mach header
 MH_MAGIC_64   ARM64        ALL  0x00     EXECUTE    38       5728   NOUNDEFS DYLDLINK TWOLEVEL PIE
 ```
 
-含む場合、"--arch" パラメータに "arm64" を指定します。そうではなく、そのバイナリが ARM64 バイナリのみを含む場合は必要ありません。
+そうである場合、"--arch" パラメータに "arm64" を指定します。そうではなく、そのバイナリが ARM64 バイナリのみを含む場合は必要ありません。
 
 ```bash
 # Dump the Objective-C classes to a temporary file
