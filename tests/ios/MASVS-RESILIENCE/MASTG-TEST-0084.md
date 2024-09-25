@@ -48,15 +48,15 @@ Objective-C では、開発者はプリプロセッサマクロを使用して�
 
 Swift 2 では (Xcode 7 を使用して) 、すべてのターゲットにカスタムコンパイラフラグを設定する必要があります。コンパイラフラグは "-D" で始まる必要があります。したがって、デバッグフラグ `MSTG-DEBUG` を設定されている場合、以下のアノテーションが使用できます。
 
-```default
-#if MSTG-DEBUG
+```objectivec
+#if MSTG_DEBUG
     // Debug-only code
 #endif
 ```
 
 Swift 3 では (Xcode 8 を使用して) 、Build settings/Swift compiler - Custom flags の Active Compilation Conditions を設定できます。プリプロセッサを使用する代わりに、Swift3 は定義済みの条件に基づく [条件付きコンパイルブロック](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithCAPIs.html#//apple_ref/doc/uid/TP40014216-CH8-ID34 "Swift conditional compilation blocks") を使用します。
 
-```default
+```objectivec
 #if DEBUG_LOGGING
     // Debug-only code
 #endif
