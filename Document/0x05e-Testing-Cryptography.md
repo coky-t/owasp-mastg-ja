@@ -33,7 +33,7 @@ KeyStore および KeyChain は鍵を保存および使用するための API �
 - [乱数値生成](0x05e-Testing-Cryptography.md#random-number-generation)
 - 鍵ローテーション
 
-Apps that target modern API levels, went through the following changes:
+最新の API レベルをターゲットとするアプリでは、以下の変更が行われました。
 
 - Android 7.0 (API level 24) 以上について [Android 開発者ブログでは以下のように記しています](https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html "Security provider Crypto deprecated in Android N") 。
     - セキュリティプロバイダの指定を停止することを推奨します。代わりに、常にパッチされた [セキュリティプロバイダ](#security-provider) を使用します。
