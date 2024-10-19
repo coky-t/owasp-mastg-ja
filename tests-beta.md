@@ -9,6 +9,7 @@
 - [MASTG-TEST-0202 外部ストレージにアクセスするための API とパーミッションへの参照 (References to APIs and Permissions for Accessing External Storage)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0202.md)
 - [MASTG-TEST-0203 ログ記録 API を介した機密データの漏洩 (Leakage of Sensitive Data via Logging APIs)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0203.md)
 - [MASTG-TEST-0207 実行時にアプリのサンドボックスに保存されるデータ (Data Stored in the App Sandbox at Runtime)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0207.md)
+- [MASTG-TEST-0216 バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0216.md)
 
 ### MASVS-CRYPTO: 暗号
 
