@@ -24,6 +24,10 @@
 
 ## iOS
 
+### MASVS-STORAGE: ストレージ
+
+- [MASTG-TEST-0215 バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0215.md)
+
 ### MASVS-CRYPTO: 暗号
 
 - [MASTG-TEST-0209 不適切な鍵サイズ (Inappropriate Key Sizes)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0209.md)
