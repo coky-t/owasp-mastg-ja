@@ -23,7 +23,7 @@ masvs_v1_levels:
 
 ### CommonCryptor
 
-アプリが Apple により提供されている標準暗号実装を使用する場合、関連するアルゴリズムのステータスを判断する最も簡単な方法は `CCCrypt` や `CCCryptorCreate` など、`CommonCryptor` からの関数呼び出しをチェックすることです。[ソースコード](https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h "CommonCryptor.h") には CommonCryptor.h のすべての関数のシグネチャが含まれています。例えば、`CCCryptorCreate` は以下のシグネチャを持ちます。
+アプリが Apple により提供されている標準暗号実装を使用する場合、関連するアルゴリズムのステータスを判断する最も簡単な方法は `CCCrypt` や `CCCryptorCreate` など、`CommonCryptor` からの関数呼び出しをチェックすることです。[ソースコード](https://web.archive.org/web/20240606000307/https://opensource.apple.com/source/CommonCrypto/CommonCrypto-36064/CommonCrypto/CommonCryptor.h "CommonCryptor.h") には CommonCryptor.h のすべての関数のシグネチャが含まれています。例えば、`CCCryptorCreate` は以下のシグネチャを持ちます。
 
 ```c
 CCCryptorStatus CCCryptorCreate(
