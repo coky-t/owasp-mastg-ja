@@ -36,6 +36,7 @@
 - [MASTG-TOOL-0103 uber-apk-signer](tools/android/MASTG-TOOL-0103.md)
 - [MASTG-TOOL-0107 JNITrace](tools/android/MASTG-TOOL-0107.md)
 - [MASTG-TOOL-0112 pidcat](tools/android/MASTG-TOOL-0112.md)
+- [MASTG-TOOL-0120 proxyDroid](tools/android/MASTG-TOOL-0120.md)
 
 ## Generic
 
