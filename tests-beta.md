@@ -40,3 +40,7 @@
 - [MASTG-TEST-0211 脆弱なハッシュアルゴリズム (Weak Hashing Algorithms)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0211.md)
 - [MASTG-TEST-0213 コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md)
 - [MASTG-TEST-0214 ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md)
+
+### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+
+- [MASTG-TEST-0219 デバッグシンボルのテスト (Testing for Debugging Symbols)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0219.md)
