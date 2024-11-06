@@ -21,6 +21,7 @@
 ### MASVS-NETWORK: ネットワーク通信
 
 - [MASTG-TEST-0217 コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md)
+- [MASTG-TEST-0218 ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0218.md)
 
 ### MASVS-PRIVACY: プライバシー
 
