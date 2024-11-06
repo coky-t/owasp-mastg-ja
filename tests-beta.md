@@ -18,6 +18,10 @@
 - [MASTG-TEST-0208 不適切な鍵サイズ (Inappropriate Key Sizes)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0208.md)
 - [MASTG-TEST-0212 コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0212.md)
 
+### MASVS-NETWORK: ネットワーク通信
+
+- [MASTG-TEST-0217 コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md)
+
 ### MASVS-PRIVACY: プライバシー
 
 - [MASTG-TEST-0206 ネットワークトラフィックキャプチャにおける機密データ (Sensitive Data in Network Traffic Capture)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0206.md)
