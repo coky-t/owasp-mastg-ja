@@ -97,6 +97,7 @@
 - [MASTG-TOOL-0105 IPSW](tools/ios/MASTG-TOOL-0105.md)
 - [MASTG-TOOL-0111 ldid](tools/ios/MASTG-TOOL-0111.md)
 - [MASTG-TOOL-0114 codesign](tools/ios/MASTG-TOOL-0114.md)
+- [MASTG-TOOL-0121 objdump - iOS](tools/ios/MASTG-TOOL-0121.md)
 
 ## Network
 
