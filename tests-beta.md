@@ -17,6 +17,7 @@
 - [MASTG-TEST-0205 ランダムでないソースの使用 (Non-random Sources Usage)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0205.md)
 - [MASTG-TEST-0208 不適切な鍵サイズ (Inappropriate Key Sizes)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0208.md)
 - [MASTG-TEST-0212 コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0212.md)
+- [MASTG-TEST-0221 脆弱な暗号アルゴリズム (Weak Encryption Algorithms)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0221.md)
 
 ### MASVS-NETWORK: ネットワーク通信
 
