@@ -12,7 +12,7 @@ weakness: MASWE-0014
 
 ## 手順
 
-1. [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などの静的解析ツールをコードに対して実行し、ハードコードされた暗号鍵の使用を探します。
+1. [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などのツールで [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用するか、[Frida for Android](../../../tools/android/MASTG-TOOL-0001.md) などのツールで [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) (動的解析) を使用して、コード内の対称鍵暗号のインスタンスをすべて特定し、ハードコードされた暗号鍵の使用を探します。
 
 ## 結果
 
@@ -20,4 +20,4 @@ weakness: MASWE-0014
 
 ## 評価
 
-ハードコードされた鍵を見つけた場合、そのテストケースは不合格です。
+セキュリティ上重要なコンテキストで使用されるハードコードされた鍵を見つけた場合、そのテストケースは不合格です。
