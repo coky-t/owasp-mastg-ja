@@ -44,3 +44,4 @@
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
 - [MASTG-TEST-0219 デバッグシンボルのテスト (Testing for Debugging Symbols)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0219.md)
+- [MASTG-TEST-0220 古いコード署名フォーマットの使用 (Usage of Outdated Code Signature Format)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0220.md)
