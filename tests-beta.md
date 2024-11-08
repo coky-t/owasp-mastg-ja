@@ -27,6 +27,7 @@
 ### MASVS-CODE: コード品質
 
 - [MASTG-TEST-0222](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)
+- [MASTG-TEST-0223](tests-beta/android/MASVS-CODE/MASTG-TEST-0223.md) スタックカナリアが有効でない (Stack Canaries Not Enabled)
 
 ### MASVS-PRIVACY: プライバシー
 
