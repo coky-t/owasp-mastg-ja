@@ -9,7 +9,7 @@ weakness: MASWE-0116
 
 ## 概要
 
-このテストケースでは、アプリの [ネイティブライブラリ](../../../Document/0x05i-Testing-Code-Quality-and-Build-Settings/#binary-protection-mechanisms) が、メモリ破損攻撃に対する一般的な緩和技法である [位置独立コード (PIC)](../../../Document/0x04h-Testing-Code-Quality/#position-independent-code) を有効にせずにコンパイルされているかどうかをチェックします。
+このテストケースでは、アプリの [ネイティブライブラリ](../../../Document/0x05i-Testing-Code-Quality-and-Build-Settings.md#binary-protection-mechanisms) が、メモリ破損攻撃に対する一般的な緩和技法である [位置独立コード (PIC)](../../../Document/0x04h-Testing-Code-Quality.md#position-independent-code) を有効にせずにコンパイルされているかどうかをチェックします。
 
 Android 5.0 (API レベル 21) 以降、Android は [すべてのダイナミックリンクされた実行可能ファイルが PIE をサポートすること](https://source.android.com/docs/security/enhancements/#android-5) を必須としています。
 
