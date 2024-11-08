@@ -2,114 +2,115 @@
 
 ## Android
 
-- [MASTG-TOOL-0001 Frida for Android](tools/android/MASTG-TOOL-0001.md)
-- [MASTG-TOOL-0002 MobSF for Android](tools/android/MASTG-TOOL-0002.md)
-- [MASTG-TOOL-0003 nm - Android](tools/android/MASTG-TOOL-0003.md)
-- [MASTG-TOOL-0004 adb](tools/android/MASTG-TOOL-0004.md)
-- [MASTG-TOOL-0005 Android NDK](tools/android/MASTG-TOOL-0005.md)
-- [MASTG-TOOL-0006 Android SDK](tools/android/MASTG-TOOL-0006.md)
-- [MASTG-TOOL-0007 Android Studio](tools/android/MASTG-TOOL-0007.md)
-- [MASTG-TOOL-0008 Android-SSL-TrustKiller](tools/android/MASTG-TOOL-0008.md)
-- [MASTG-TOOL-0009 APKiD](tools/android/MASTG-TOOL-0009.md)
-- [MASTG-TOOL-0010 APKLab](tools/android/MASTG-TOOL-0010.md)
-- [MASTG-TOOL-0011 Apktool](tools/android/MASTG-TOOL-0011.md)
-- [MASTG-TOOL-0012 apkx](tools/android/MASTG-TOOL-0012.md)
-- [MASTG-TOOL-0013 Busybox](tools/android/MASTG-TOOL-0013.md)
-- [MASTG-TOOL-0014 Bytecode Viewer](tools/android/MASTG-TOOL-0014.md)
-- [MASTG-TOOL-0015 Drozer](tools/android/MASTG-TOOL-0015.md)
-- [MASTG-TOOL-0016 gplaycli](tools/android/MASTG-TOOL-0016.md)
-- [MASTG-TOOL-0017 House](tools/android/MASTG-TOOL-0017.md)
-- [MASTG-TOOL-0018 jadx](tools/android/MASTG-TOOL-0018.md)
-- [MASTG-TOOL-0019 jdb](tools/android/MASTG-TOOL-0019.md)
-- [MASTG-TOOL-0020 JustTrustMe](tools/android/MASTG-TOOL-0020.md)
-- [MASTG-TOOL-0021 Magisk](tools/android/MASTG-TOOL-0021.md)
-- [MASTG-TOOL-0022 Proguard](tools/android/MASTG-TOOL-0022.md)
-- [MASTG-TOOL-0023 RootCloak Plus](tools/android/MASTG-TOOL-0023.md)
-- [MASTG-TOOL-0024 Scrcpy](tools/android/MASTG-TOOL-0024.md)
-- [MASTG-TOOL-0025 SSLUnpinning](tools/android/MASTG-TOOL-0025.md)
-- [MASTG-TOOL-0026 Termux](tools/android/MASTG-TOOL-0026.md)
-- [MASTG-TOOL-0027 Xposed](tools/android/MASTG-TOOL-0027.md)
-- [MASTG-TOOL-0028 radare2 for Android](tools/android/MASTG-TOOL-0028.md)
-- [MASTG-TOOL-0029 objection for Android](tools/android/MASTG-TOOL-0029.md)
-- [MASTG-TOOL-0030 Angr](tools/android/MASTG-TOOL-0030.md)
-- [MASTG-TOOL-0099 FlowDroid](tools/android/MASTG-TOOL-0099.md)
-- [MASTG-TOOL-0103 uber-apk-signer](tools/android/MASTG-TOOL-0103.md)
-- [MASTG-TOOL-0107 JNITrace](tools/android/MASTG-TOOL-0107.md)
-- [MASTG-TOOL-0112 pidcat](tools/android/MASTG-TOOL-0112.md)
-- [MASTG-TOOL-0116 Blutter](tools/android/MASTG-TOOL-0116.md)
-- [MASTG-TOOL-0120 proxyDroid](tools/android/MASTG-TOOL-0120.md)
+- [MASTG-TOOL-0001](tools/android/MASTG-TOOL-0001.md) Frida for Android
+- [MASTG-TOOL-0002](tools/android/MASTG-TOOL-0002.md) MobSF for Android
+- [MASTG-TOOL-0003](tools/android/MASTG-TOOL-0003.md) nm - Android
+- [MASTG-TOOL-0004](tools/android/MASTG-TOOL-0004.md) adb
+- [MASTG-TOOL-0005](tools/android/MASTG-TOOL-0005.md) Android NDK
+- [MASTG-TOOL-0006](tools/android/MASTG-TOOL-0006.md) Android SDK
+- [MASTG-TOOL-0007](tools/android/MASTG-TOOL-0007.md) Android Studio
+- [MASTG-TOOL-0008](tools/android/MASTG-TOOL-0008.md) Android-SSL-TrustKiller
+- [MASTG-TOOL-0009](tools/android/MASTG-TOOL-0009.md) APKiD
+- [MASTG-TOOL-0010](tools/android/MASTG-TOOL-0010.md) APKLab
+- [MASTG-TOOL-0011](tools/android/MASTG-TOOL-0011.md) Apktool
+- [MASTG-TOOL-0012](tools/android/MASTG-TOOL-0012.md) apkx
+- [MASTG-TOOL-0013](tools/android/MASTG-TOOL-0013.md) Busybox
+- [MASTG-TOOL-0014](tools/android/MASTG-TOOL-0014.md) Bytecode Viewer
+- [MASTG-TOOL-0015](tools/android/MASTG-TOOL-0015.md) Drozer
+- [MASTG-TOOL-0016](tools/android/MASTG-TOOL-0016.md) gplaycli
+- [MASTG-TOOL-0017](tools/android/MASTG-TOOL-0017.md) House
+- [MASTG-TOOL-0018](tools/android/MASTG-TOOL-0018.md) jadx
+- [MASTG-TOOL-0019](tools/android/MASTG-TOOL-0019.md) jdb
+- [MASTG-TOOL-0020](tools/android/MASTG-TOOL-0020.md) JustTrustMe
+- [MASTG-TOOL-0021](tools/android/MASTG-TOOL-0021.md) Magisk
+- [MASTG-TOOL-0022](tools/android/MASTG-TOOL-0022.md) Proguard
+- [MASTG-TOOL-0023](tools/android/MASTG-TOOL-0023.md) RootCloak Plus
+- [MASTG-TOOL-0024](tools/android/MASTG-TOOL-0024.md) Scrcpy
+- [MASTG-TOOL-0025](tools/android/MASTG-TOOL-0025.md) SSLUnpinning
+- [MASTG-TOOL-0026](tools/android/MASTG-TOOL-0026.md) Termux
+- [MASTG-TOOL-0027](tools/android/MASTG-TOOL-0027.md) Xposed
+- [MASTG-TOOL-0028](tools/android/MASTG-TOOL-0028.md) radare2 for Android
+- [MASTG-TOOL-0029](tools/android/MASTG-TOOL-0029.md) objection for Android
+- [MASTG-TOOL-0030](tools/android/MASTG-TOOL-0030.md) Angr
+- [MASTG-TOOL-0099](tools/android/MASTG-TOOL-0099.md) FlowDroid
+- [MASTG-TOOL-0103](tools/android/MASTG-TOOL-0103.md) uber-apk-signer
+- [MASTG-TOOL-0107](tools/android/MASTG-TOOL-0107.md) JNITrace
+- [MASTG-TOOL-0112](tools/android/MASTG-TOOL-0112.md) pidcat
+- [MASTG-TOOL-0116](tools/android/MASTG-TOOL-0116.md) Blutter
+- [MASTG-TOOL-0120](tools/android/MASTG-TOOL-0120.md) proxyDroid
+- [MASTG-TOOL-0123](tools/android/MASTG-TOOL-0123.md) apksigner
 
 ## Generic
 
-- [MASTG-TOOL-0031 Frida](tools/generic/MASTG-TOOL-0031.md)
-- [MASTG-TOOL-0032 Frida CodeShare](tools/generic/MASTG-TOOL-0032.md)
-- [MASTG-TOOL-0033 Ghidra](tools/generic/MASTG-TOOL-0033.md)
-- [MASTG-TOOL-0034 LIEF](tools/generic/MASTG-TOOL-0034.md)
-- [MASTG-TOOL-0035 MobSF](tools/generic/MASTG-TOOL-0035.md)
-- [MASTG-TOOL-0036 r2frida](tools/generic/MASTG-TOOL-0036.md)
-- [MASTG-TOOL-0037 RMS Runtime Mobile Security](tools/generic/MASTG-TOOL-0037.md)
-- [MASTG-TOOL-0038 objection](tools/generic/MASTG-TOOL-0038.md)
-- [MASTG-TOOL-0098 iaito](tools/generic/MASTG-TOOL-0098.md)
-- [MASTG-TOOL-0100 re-flutter](tools/generic/MASTG-TOOL-0100.md)
-- [MASTG-TOOL-0101 disable-flutter-tls-verification](tools/generic/MASTG-TOOL-0101.md)
-- [MASTG-TOOL-0104 hermes-dec](tools/generic/MASTG-TOOL-0104.md)
-- [MASTG-TOOL-0106 Fridump](tools/generic/MASTG-TOOL-0106.md)
-- [MASTG-TOOL-0108 Corellium](tools/generic/MASTG-TOOL-0108.md)
-- [MASTG-TOOL-0110 semgrep](tools/generic/MASTG-TOOL-0110.md)
+- [MASTG-TOOL-0031](tools/generic/MASTG-TOOL-0031.md) Frida
+- [MASTG-TOOL-0032](tools/generic/MASTG-TOOL-0032.md) Frida CodeShare
+- [MASTG-TOOL-0033](tools/generic/MASTG-TOOL-0033.md) Ghidra
+- [MASTG-TOOL-0034](tools/generic/MASTG-TOOL-0034.md) LIEF
+- [MASTG-TOOL-0035](tools/generic/MASTG-TOOL-0035.md) MobSF
+- [MASTG-TOOL-0036](tools/generic/MASTG-TOOL-0036.md) r2frida
+- [MASTG-TOOL-0037](tools/generic/MASTG-TOOL-0037.md) RMS Runtime Mobile Security
+- [MASTG-TOOL-0038](tools/generic/MASTG-TOOL-0038.md) objection
+- [MASTG-TOOL-0098](tools/generic/MASTG-TOOL-0098.md) iaito
+- [MASTG-TOOL-0100](tools/generic/MASTG-TOOL-0100.md) re-flutter
+- [MASTG-TOOL-0101](tools/generic/MASTG-TOOL-0101.md) disable-flutter-tls-verification
+- [MASTG-TOOL-0104](tools/generic/MASTG-TOOL-0104.md) hermes-dec
+- [MASTG-TOOL-0106](tools/generic/MASTG-TOOL-0106.md) Fridump
+- [MASTG-TOOL-0108](tools/generic/MASTG-TOOL-0108.md) Corellium
+- [MASTG-TOOL-0110](tools/generic/MASTG-TOOL-0110.md) semgrep
 
 ## iOS
 
-- [MASTG-TOOL-0039 Frida for iOS](tools/ios/MASTG-TOOL-0039.md)
-- [MASTG-TOOL-0040 MobSF for iOS](tools/ios/MASTG-TOOL-0040.md)
-- [MASTG-TOOL-0041 nm - iOS](tools/ios/MASTG-TOOL-0041.md)
-- [MASTG-TOOL-0042 BinaryCookieReader](tools/ios/MASTG-TOOL-0042.md)
-- [MASTG-TOOL-0043 class-dump](tools/ios/MASTG-TOOL-0043.md)
-- [MASTG-TOOL-0044 class-dump-z](tools/ios/MASTG-TOOL-0044.md)
-- [MASTG-TOOL-0045 class-dump-dyld](tools/ios/MASTG-TOOL-0045.md)
-- [MASTG-TOOL-0046 Cycript](tools/ios/MASTG-TOOL-0046.md)
-- [MASTG-TOOL-0047 Cydia](tools/ios/MASTG-TOOL-0047.md)
-- [MASTG-TOOL-0048 dsdump](tools/ios/MASTG-TOOL-0048.md)
-- [MASTG-TOOL-0049 Frida-cycript](tools/ios/MASTG-TOOL-0049.md)
-- [MASTG-TOOL-0050 Frida-ios-dump](tools/ios/MASTG-TOOL-0050.md)
-- [MASTG-TOOL-0051 gdb](tools/ios/MASTG-TOOL-0051.md)
-- [MASTG-TOOL-0053 iOSbackup](tools/ios/MASTG-TOOL-0053.md)
-- [MASTG-TOOL-0054 ios-deploy](tools/ios/MASTG-TOOL-0054.md)
-- [MASTG-TOOL-0055 iProxy](tools/ios/MASTG-TOOL-0055.md)
-- [MASTG-TOOL-0056 Keychain-Dumper](tools/ios/MASTG-TOOL-0056.md)
-- [MASTG-TOOL-0057 lldb](tools/ios/MASTG-TOOL-0057.md)
-- [MASTG-TOOL-0058 MachOView](tools/ios/MASTG-TOOL-0058.md)
-- [MASTG-TOOL-0059 optool](tools/ios/MASTG-TOOL-0059.md)
-- [MASTG-TOOL-0060 otool](tools/ios/MASTG-TOOL-0060.md)
-- [MASTG-TOOL-0061 Grapefruit](tools/ios/MASTG-TOOL-0061.md)
-- [MASTG-TOOL-0062 Plutil](tools/ios/MASTG-TOOL-0062.md)
-- [MASTG-TOOL-0063 security](tools/ios/MASTG-TOOL-0063.md)
-- [MASTG-TOOL-0064 Sileo](tools/ios/MASTG-TOOL-0064.md)
-- [MASTG-TOOL-0065 simctl](tools/ios/MASTG-TOOL-0065.md)
-- [MASTG-TOOL-0066 SSL Kill Switch 2](tools/ios/MASTG-TOOL-0066.md)
-- [MASTG-TOOL-0067 swift-demangle](tools/ios/MASTG-TOOL-0067.md)
-- [MASTG-TOOL-0068 SwiftShield](tools/ios/MASTG-TOOL-0068.md)
-- [MASTG-TOOL-0069 Usbmuxd](tools/ios/MASTG-TOOL-0069.md)
-- [MASTG-TOOL-0070 Xcode](tools/ios/MASTG-TOOL-0070.md)
-- [MASTG-TOOL-0071 Xcode Command Line Tools](tools/ios/MASTG-TOOL-0071.md)
-- [MASTG-TOOL-0072 xcrun](tools/ios/MASTG-TOOL-0072.md)
-- [MASTG-TOOL-0073 radare2 for iOS](tools/ios/MASTG-TOOL-0073.md)
-- [MASTG-TOOL-0074 objection for iOS](tools/ios/MASTG-TOOL-0074.md)
-- [MASTG-TOOL-0102 ios-app-signer](tools/ios/MASTG-TOOL-0102.md)
-- [MASTG-TOOL-0105 IPSW](tools/ios/MASTG-TOOL-0105.md)
-- [MASTG-TOOL-0111 ldid](tools/ios/MASTG-TOOL-0111.md)
-- [MASTG-TOOL-0114 codesign](tools/ios/MASTG-TOOL-0114.md)
-- [MASTG-TOOL-0121 objdump - iOS](tools/ios/MASTG-TOOL-0121.md)
-- [MASTG-TOOL-0122 c++file](tools/ios/MASTG-TOOL-0122.md)
+- [MASTG-TOOL-0039](tools/ios/MASTG-TOOL-0039.md) Frida for iOS
+- [MASTG-TOOL-0040](tools/ios/MASTG-TOOL-0040.md) MobSF for iOS
+- [MASTG-TOOL-0041](tools/ios/MASTG-TOOL-0041.md) nm - iOS
+- [MASTG-TOOL-0042](tools/ios/MASTG-TOOL-0042.md) BinaryCookieReader
+- [MASTG-TOOL-0043](tools/ios/MASTG-TOOL-0043.md) class-dump
+- [MASTG-TOOL-0044](tools/ios/MASTG-TOOL-0044.md) class-dump-z
+- [MASTG-TOOL-0045](tools/ios/MASTG-TOOL-0045.md) class-dump-dyld
+- [MASTG-TOOL-0046](tools/ios/MASTG-TOOL-0046.md) Cycript
+- [MASTG-TOOL-0047](tools/ios/MASTG-TOOL-0047.md) Cydia
+- [MASTG-TOOL-0048](tools/ios/MASTG-TOOL-0048.md) dsdump
+- [MASTG-TOOL-0049](tools/ios/MASTG-TOOL-0049.md) Frida-cycript
+- [MASTG-TOOL-0050](tools/ios/MASTG-TOOL-0050.md) Frida-ios-dump
+- [MASTG-TOOL-0051](tools/ios/MASTG-TOOL-0051.md) gdb
+- [MASTG-TOOL-0053](tools/ios/MASTG-TOOL-0053.md) iOSbackup
+- [MASTG-TOOL-0054](tools/ios/MASTG-TOOL-0054.md) ios-deploy
+- [MASTG-TOOL-0055](tools/ios/MASTG-TOOL-0055.md) iProxy
+- [MASTG-TOOL-0056](tools/ios/MASTG-TOOL-0056.md) Keychain-Dumper
+- [MASTG-TOOL-0057](tools/ios/MASTG-TOOL-0057.md) lldb
+- [MASTG-TOOL-0058](tools/ios/MASTG-TOOL-0058.md) MachOView
+- [MASTG-TOOL-0059](tools/ios/MASTG-TOOL-0059.md) optool
+- [MASTG-TOOL-0060](tools/ios/MASTG-TOOL-0060.md) otool
+- [MASTG-TOOL-0061](tools/ios/MASTG-TOOL-0061.md) Grapefruit
+- [MASTG-TOOL-0062](tools/ios/MASTG-TOOL-0062.md) Plutil
+- [MASTG-TOOL-0063](tools/ios/MASTG-TOOL-0063.md) security
+- [MASTG-TOOL-0064](tools/ios/MASTG-TOOL-0064.md) Sileo
+- [MASTG-TOOL-0065](tools/ios/MASTG-TOOL-0065.md) simctl
+- [MASTG-TOOL-0066](tools/ios/MASTG-TOOL-0066.md) SSL Kill Switch 2
+- [MASTG-TOOL-0067](tools/ios/MASTG-TOOL-0067.md) swift-demangle
+- [MASTG-TOOL-0068](tools/ios/MASTG-TOOL-0068.md) SwiftShield
+- [MASTG-TOOL-0069](tools/ios/MASTG-TOOL-0069.md) Usbmuxd
+- [MASTG-TOOL-0070](tools/ios/MASTG-TOOL-0070.md) Xcode
+- [MASTG-TOOL-0071](tools/ios/MASTG-TOOL-0071.md) Xcode Command Line Tools
+- [MASTG-TOOL-0072](tools/ios/MASTG-TOOL-0072.md) xcrun
+- [MASTG-TOOL-0073](tools/ios/MASTG-TOOL-0073.md) radare2 for iOS
+- [MASTG-TOOL-0074](tools/ios/MASTG-TOOL-0074.md) objection for iOS
+- [MASTG-TOOL-0102](tools/ios/MASTG-TOOL-0102.md) ios-app-signer
+- [MASTG-TOOL-0105](tools/ios/MASTG-TOOL-0105.md) IPSW
+- [MASTG-TOOL-0111](tools/ios/MASTG-TOOL-0111.md) ldid
+- [MASTG-TOOL-0114](tools/ios/MASTG-TOOL-0114.md) codesign
+- [MASTG-TOOL-0121](tools/ios/MASTG-TOOL-0121.md) objdump - iOS
+- [MASTG-TOOL-0122](tools/ios/MASTG-TOOL-0122.md) c++filt
 
 ## Network
 
-- [MASTG-TOOL-0075 Android tcpdump](tools/network/MASTG-TOOL-0075.md)
-- [MASTG-TOOL-0076 bettercap](tools/network/MASTG-TOOL-0076.md)
-- [MASTG-TOOL-0077 Burp Suite](tools/network/MASTG-TOOL-0077.md)
-- [MASTG-TOOL-0078 MITM Relay](tools/network/MASTG-TOOL-0078.md)
-- [MASTG-TOOL-0079 OWASP ZAP](tools/network/MASTG-TOOL-0079.md)
-- [MASTG-TOOL-0080 tcpdump](tools/network/MASTG-TOOL-0080.md)
-- [MASTG-TOOL-0081 Wireshark](tools/network/MASTG-TOOL-0081.md)
-- [MASTG-TOOL-0097 mitmproxy](tools/network/MASTG-TOOL-0097.md)
-- [MASTG-TOOL-0109 Nope-Proxy](tools/network/MASTG-TOOL-0109.md)
-- [MASTG-TOOL-0115 HTTP Toolkit](tools/network/MASTG-TOOL-0115.md)
+- [MASTG-TOOL-0075](tools/network/MASTG-TOOL-0075.md) Android tcpdump
+- [MASTG-TOOL-0076](tools/network/MASTG-TOOL-0076.md) bettercap
+- [MASTG-TOOL-0077](tools/network/MASTG-TOOL-0077.md) Burp Suite
+- [MASTG-TOOL-0078](tools/network/MASTG-TOOL-0078.md) MITM Relay
+- [MASTG-TOOL-0079](tools/network/MASTG-TOOL-0079.md) OWASP ZAP
+- [MASTG-TOOL-0080](tools/network/MASTG-TOOL-0080.md) tcpdump
+- [MASTG-TOOL-0081](tools/network/MASTG-TOOL-0081.md) Wireshark
+- [MASTG-TOOL-0097](tools/network/MASTG-TOOL-0097.md) mitmproxy
+- [MASTG-TOOL-0109](tools/network/MASTG-TOOL-0109.md) Nope-Proxy
+- [MASTG-TOOL-0115](tools/network/MASTG-TOOL-0115.md) HTTP Toolkit
