@@ -29,6 +29,10 @@
 - [MASTG-TEST-0222](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)
 - [MASTG-TEST-0223](tests-beta/android/MASVS-CODE/MASTG-TEST-0223.md) スタックカナリアが有効でない (Stack Canaries Not Enabled)
 
+### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+
+- [MASTG-TEST-0x38](tests-beta/android/MASVS-CODE/MASTG-TEST-0x38.md) 安全でない署名バージョンの使用 (Usage of Insecure Signature Version)
+
 ### MASVS-PRIVACY: プライバシー
 
 - [MASTG-TEST-0206](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0206.md) ネットワークトラフィックキャプチャにおける機密データ (Sensitive Data in Network Traffic Capture)
