@@ -31,7 +31,7 @@
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
-- [MASTG-TEST-0x38](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0x38.md) 安全でない署名バージョンの使用 (Usage of Insecure Signature Version)
+- [MASTG-TEST-0224](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0224.md) 安全でない署名バージョンの使用 (Usage of Insecure Signature Version)
 - [MASTG-TEST-0x38-2](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0x38-2.md) 安全でない署名鍵サイズの使用 (Usage of Insecure Signature Key Size)
 
 ### MASVS-PRIVACY: プライバシー
