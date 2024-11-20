@@ -39,6 +39,7 @@
 - [MASTG-TOOL-0116](tools/android/MASTG-TOOL-0116.md) Blutter
 - [MASTG-TOOL-0120](tools/android/MASTG-TOOL-0120.md) proxyDroid
 - [MASTG-TOOL-0123](tools/android/MASTG-TOOL-0123.md) apksigner
+- [MASTG-TOOL-0124](tools/android/MASTG-TOOL-0124.md) aapt2
 
 ## Generic
 
