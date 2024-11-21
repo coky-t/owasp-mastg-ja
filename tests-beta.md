@@ -34,6 +34,7 @@
 - [MASTG-TEST-0224](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0224.md) 安全でない署名バージョンの使用 (Usage of Insecure Signature Version)
 - [MASTG-TEST-0225](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0225.md) 安全でない署名鍵サイズの使用 (Usage of Insecure Signature Key Size)
 - [MASTG-TEST-0226](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0226.md) AndroidManifest で有効になっているデバッグフラグ (Debuggable Flag Enabled in the AndroidManifest)
+- [MASTG-TEST-0227](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0227.md) WebView のデバッグが有効 (Debugging Enabled for WebViews)
 
 ### MASVS-PRIVACY: プライバシー
 
