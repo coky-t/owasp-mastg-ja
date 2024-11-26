@@ -58,6 +58,7 @@
 
 - [MASTG-TEST-0228](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
 - [MASTG-TEST-0229](tests-beta/ios/MASVS-CODE/MASTG-TEST-0229.md) スタックカナリアが有効でない (Stack Canaries not enabled)
+- [MASTG-TEST-0230](tests-beta/ios/MASVS-CODE/MASTG-TEST-0230.md) 自動参照カウント (ARC) が有効でない (Automatic Reference Counting (ARC) not enabled)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
