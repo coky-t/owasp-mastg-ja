@@ -54,6 +54,10 @@
 - [MASTG-TEST-0213](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md) コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 
+### MASVS-CODE: コード品質
+
+- [MASTG-TEST-0228](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
+
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
 - [MASTG-TEST-0219](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0219.md) デバッグシンボルのテスト (Testing for Debugging Symbols)
