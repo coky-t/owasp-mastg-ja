@@ -51,7 +51,7 @@ iOS アプリケーションはさまざまな状況で [メモリ破損バグ](
 Xcode はデフォルトですべてのバイナリセキュリティ機能を有効にしますが、古いアプリケーションに対してこれを検証したり、コンパイラフラグの設定ミスをチェックすることが適切な場合があります。以下の機能が適用可能です。
 
 - [**PIE (Position Independent Executable)**](0x04h-Testing-Code-Quality.md#position-independent-code):
-    - PIE は実行形式バイナリ (Mach-O タイプ `MH_EXECUTE`) に適用されます。
+    - PIE は実行形式バイナリ (Mach-O タイプ `MH_EXECUTE`) に適用されます。 [情報源](https://web.archive.org/web/20230328221404/https://opensource.apple.com/source/cctools/cctools-921/include/mach-o/loader.h.auto.html)
     - ただし、ライブラリ (Mach-O タイプ `MH_DYLIB`) には適用されません。
 - [**メモリ管理**](0x04h-Testing-Code-Quality.md#memory-management):
     - 純粋な Objective-C、Swift、ハイブリッドバイナリのいずれも ARC (Automatic Reference Counting) を有効にすべきです。
