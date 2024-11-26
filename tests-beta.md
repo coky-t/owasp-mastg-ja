@@ -57,6 +57,7 @@
 ### MASVS-CODE: コード品質
 
 - [MASTG-TEST-0228](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
+- [MASTG-TEST-0229](tests-beta/ios/MASVS-CODE/MASTG-TEST-0229.md) スタックカナリアが有効でない (Stack Canaries not enabled)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
