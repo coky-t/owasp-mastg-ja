@@ -7,6 +7,7 @@ weakness: MASWE-0116
 ---
 
 ## 概要
+
 [PIE (Position Independent Executables)](../../../Document/0x04h-Testing-Code-Quality.md/#position-independent-code) は、実行可能ファイルをランダムなメモリアドレスにロードできるようにすることでセキュリティを強化し、特定の種類の攻撃を緩和するように設計されています。
 
 iOS アプリケーションの Mach-O ファイルフォーマットの場合:
