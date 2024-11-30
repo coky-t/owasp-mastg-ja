@@ -17,7 +17,7 @@ Android アプリケーションはランダムでないソースを使用して
 
 ## 手順
 
-1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、ランダムでないソースの使用を探します。
+1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、ランダムでないソースの使用を探します。
 
 ## 結果
 
