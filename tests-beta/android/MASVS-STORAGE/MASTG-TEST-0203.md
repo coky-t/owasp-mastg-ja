@@ -1,6 +1,6 @@
 ---
 platform: android
-title: ログ記録 API を介した機密データの漏洩 (Leakage of Sensitive Data via Logging APIs)
+title: ログ記録 API の実行時使用 (Runtime Use of Logging APIs)
 id: MASTG-TEST-0203
 apis: [Log, Logger, System.out.print, System.err.print, java.lang.Throwable#printStackTrace]
 type: [dynamic]
