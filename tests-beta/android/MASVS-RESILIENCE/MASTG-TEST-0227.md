@@ -14,7 +14,7 @@ weakness: MASWE-0067
 
 ## 手順
 
-1. アプリバイナリに対して [re-flutter](../../../tools/generic/MASTG-TOOL-0100.md) などのツールで [Android での静的解析 (Static Analysis on Android)](techniques/android/MASTG-TECH-0014.md) を実行し、以下の使用箇所を探します。
+1. アプリバイナリに対して [re-flutter](../../../tools/generic/MASTG-TOOL-0100.md) などのツールで [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を実行し、以下の使用箇所を探します。
     - `WebView.setWebContentsDebuggingEnabled` に `true` を設定している。
     - `ApplicationInfo.FLAG_DEBUGGABLE`
 
@@ -47,7 +47,7 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
 ただし、WebView デバッグを無効にしても、すべての攻撃ベクトルが排除されるわけではありません。攻撃者は以下ができるかもしれません。
 
-1. アプリにパッチを適用してこれらの API への呼び出しを追加して ([パッチ適用 (Patching)](../../../techniques/android/MASTG-TECH-0038.md) を参照)、再パッケージして再署名します ([再パッケージと再署名 (Repackaging & Re-Signing)](techniques/android/MASTG-TECH-0039.md) を参照)。
-2. ランタイムメソッドフックを使用して ([メソッドフック (Method Hooking)](techniques/android/MASTG-TECH-0043.md) を参照)、実行時に動的に WebView デバッグを有効にします。
+1. アプリにパッチを適用してこれらの API への呼び出しを追加して ([パッチ適用 (Patching)](../../../techniques/android/MASTG-TECH-0038.md) を参照)、再パッケージして再署名します ([再パッケージと再署名 (Repackaging & Re-Signing)](../../../techniques/android/MASTG-TECH-0039.md) を参照)。
+2. ランタイムメソッドフックを使用して ([メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を参照)、実行時に動的に WebView デバッグを有効にします。
 
 WebView デバッグを無効にすることは、リスクを軽減するための防御層の一つとして機能しますが、他のセキュリティ対策と組み合わせる必要があります。
