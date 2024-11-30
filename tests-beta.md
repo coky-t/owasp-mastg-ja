@@ -10,6 +10,7 @@
 - [MASTG-TEST-0203](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0203.md) ログ記録 API の実行時使用 (Runtime Use of Logging APIs)
 - [MASTG-TEST-0207](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0207.md) 実行時にアプリのサンドボックスに保存されるデータ (Data Stored in the App Sandbox at Runtime)
 - [MASTG-TEST-0216](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0216.md) バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
+- [MASTG-TEST-0231](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0231.md) ログ記録 API への参照 (References to Logging APIs)
 
 ### MASVS-CRYPTO: 暗号
 
