@@ -25,3 +25,5 @@ Android アプリで [脆弱な暗号アルゴリズムの使用](../../../Docum
 ## 評価
 
 [安全でないか非推奨の](../../../Document/0x04g-Testing-Cryptography.md#Identifying-Insecure-and/or-Deprecated-Cryptographic-Algorithms) 暗号アルゴリズムが使用されていることを見つけた場合、そのテストケースは不合格です。
+
+たとえば、[DES (Data Encryption Standard) と 3DES (Triple DES)](https://developer.android.com/privacy-and-security/risks/broken-cryptographic-algorithm) は、ブルートフォース攻撃や中間一致攻撃などの脆弱性があるため、[NIST SP 800-131A Rev. 2](https://csrc.nist.gov/publications/detail/sp/800-131a/rev-2/final) では非推奨になっています。それらは、現代のアプリで安全であると広く認識されている [AES-256](https://developer.android.com/privacy-and-security/cryptography#choose-algorithm) などのより強力な代替手段に置き換えてください。
