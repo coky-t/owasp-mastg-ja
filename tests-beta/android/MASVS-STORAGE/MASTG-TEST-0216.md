@@ -4,6 +4,7 @@ title: バックアップから除外されない機密データ (Sensitive Data
 id: MASTG-TEST-0216
 type: [dynamic, filesystem]
 weakness: MASWE-0004
+mitigations: [MASTG-MITIG-0004]
 ---
 
 ## 概要
@@ -32,8 +33,3 @@ weakness: MASWE-0004
 ## 評価
 
 いずれかのファイルが機密であるとみなされる場合、そのテストケースは不合格です。
-
-見つかった機密ファイルについては、バックアップから除外するように指示します。
-
-- 自動バックアップを使用している場合、ターゲット API に応じて `backup_rules.xml` (Android 11 以前の場合は `android:fullBackupContent` を使用) または `data_extraction_rules.xml` (Android 12 以降の場合は `android:dataExtractionRules` を使用) の `exclude` タグでマークします。必ず `cloud-backup` と `device-transfer` の両方のパラメータを使用してください。
-- キーバリューアプローチを使用している場合、それに応じて [BackupAgent](https://developer.android.com/identity/data/keyvaluebackup#BackupAgent) をセットアップします。
