@@ -5,6 +5,7 @@ id: MASTG-TEST-0x39-1
 type: [static]
 available_since: 24
 weakness: MASWE-0104
+mitigations: [MASTG-MITIG-0006]
 ---
 
 ## 概要
@@ -27,23 +28,3 @@ APK 署名スキームの詳細については、["署名プロセス"](../../..
 ## 評価
 
 アプリの `minSdkVersion` 属性が 24 以上で、v1 署名スキームのみが有効になっている場合、そのテストケースは不合格です。
-
-この問題を緩和するには、少なくとも v2 または v3 の APK 署名スキームでアプリが署名されているようにします。これらは包括的な完全性チェックを提供し、APK 全体を改竄から保護します。最適なセキュリティと互換性のためには、鍵ローテーションもサポートする v3 の使用を検討してください。
-
-オプションとして、Android 11 および以降ではより高速な [増分アップデート](https://developer.android.com/about/versions/11/features#incremental) を可能にする v4 署名を追加できますが、v4 だけではセキュリティ保護を提供しないため、v2 または v3 と一緒に使用する必要があります。
-
-署名の設定は Android Studio や、`build.gradle` または `build.gradle.kts` の `signingConfigs` セクションで管理できます。v3 と v4 の両方のスキームを有効にするには、以下の値を設定しなければなりません。
-
-```default
-// build.gradle
-android {
-  ...
-  signingConfigs {
-    config {
-        ...
-        enableV3Signing true
-        enableV4Signing true
-    }
-  }
-}
-```
