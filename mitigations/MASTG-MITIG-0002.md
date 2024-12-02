@@ -1,7 +1,13 @@
 ---
-title: ProGuard を使用してログ記録コードを削除する (Use ProGuard to Remove Logging Code)
+title: ログ記録コードを削除する (Remove Logging Code)
+alias: remove-logging-code
+id: MASTG-MITIG-0002
 platform: android
 ---
+
+理想的には、リリースビルドではログ記録機能を使用せず、機密データの露出を評価しやすくすべきです。
+
+## ProGuard の使用
 
 製品リリースを準備する際に、[ProGuard](../tools/android/MASTG-TOOL-0022.md) (Android Studio に含まれています) などのツールを使用できます。`android.util.Log` クラスのすべてのログ記録機能が削除されているかどうかを確認するには、ProGuard 設定ファイル (proguard-rules.pro) で以下のオプションを確認します (この [ログ記録コードを削除する例](https://www.guardsquare.com/en/products/proguard/manual/examples#logging "ProGuard\'s example of removing logging code") と [Android Studio プロジェクトで ProGuard を有効にする](https://developer.android.com/studio/build/shrink-code#enable "Android Developer - Enable shrinking, obfuscation, and optimization") に関するこの記事に従います)。
 
@@ -57,3 +63,7 @@ SecureLog.v("Private key [byte format]: ", key);
 ```
 
 それから、その呼び出しを削除するように ProGuard を設定します。
+
+## カスタムログ記録
+
+カスタムログ記録機能を実装して、リリースビルドに対してのみ一度に無効にできます。
