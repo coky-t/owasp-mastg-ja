@@ -1,5 +1,7 @@
 ---
 title: プライバシー規制とベストプラクティスの遵守 (Comply with Privacy Regulations and Best Practices)
+alias: comply-with-privacy-regulations
+id: MASTG-MITIG-0003
 platform: android
 ---
 
