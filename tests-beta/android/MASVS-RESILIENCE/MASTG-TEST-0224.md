@@ -5,7 +5,7 @@ id: MASTG-TEST-0x39-1
 type: [static]
 available_since: 24
 weakness: MASWE-0104
-mitigations: [MASTG-MITIG-0006]
+best-practices: [MASTG-BEST-0006]
 ---
 
 ## 概要
