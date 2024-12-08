@@ -25,6 +25,7 @@
 
 - [MASTG-TEST-0217](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md) コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)
 - [MASTG-TEST-0218](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0218.md) ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
+- [MASTG-TEST-0233](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0233.md) ハードコードされた HTTP URL  (Hardcoded HTTP URLs)
 
 ### MASVS-CODE: コード品質
 
