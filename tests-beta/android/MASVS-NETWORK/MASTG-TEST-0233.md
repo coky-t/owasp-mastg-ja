@@ -36,4 +36,4 @@ HTTP URL が通信に使用されていることを確認された場合、そ�
 
 - **動的解析**: Frida などのツールを使用して、実行時にネットワーク API にフックします。これにより実行時に HTTP URL がいつどのように使用されるかを明らかにできます。詳細は [クリアテキストトラフィックを転送するネットワーク API の実行時使用 (Runtime Use of Network APIs Transmitting Cleartext Traffic)](MASTG-TEST-0238.md) を参照してください。
 
-- **ネットワークトラフィック傍受**: Burp Suite, mitmproxy, Wireshark などのツールを使用して、ネットワークトラフィックをキャプチャし、解析します。このアプローチは、実際の使用時に特定した HTTP URL にアプリが接続するかどうかを確認しますが、アプリの機能を包括的に実行するテスト担当者の能力に依存します。[ネットワーク上で取得されるクリアテキストトラフィック (Cleartext Traffic Observed on the Network)](MASTG-TEST-0236.md) を参照してください。
+- **ネットワークトラフィック傍受**: Burp Suite, mitmproxy, Wireshark などのツールを使用して、ネットワークトラフィックをキャプチャし、解析します。このアプローチは、実際の使用時に特定した HTTP URL にアプリが接続するかどうかを確認しますが、アプリの機能を包括的に実行するテスト担当者の能力に依存します。[ネットワーク上で観測されるクリアテキストトラフィック (Cleartext Traffic Observed on the Network)](MASTG-TEST-0236.md) を参照してください。
