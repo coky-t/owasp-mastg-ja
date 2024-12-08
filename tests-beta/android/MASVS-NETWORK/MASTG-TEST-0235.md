@@ -1,5 +1,5 @@
 ---
-title: クリアテキストトラフィックを許可している Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)
+title: クリアテキストトラフィックを許可する Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)
 platform: android
 id: MASTG-TEST-0235
 type: [static]

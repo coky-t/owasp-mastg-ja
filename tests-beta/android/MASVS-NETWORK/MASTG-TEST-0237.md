@@ -1,5 +1,5 @@
 ---
-title: クリアテキストトラフィックを許可しているクロスプラットフォーム構成 (Cross-Platform Framework Configurations Allowing Cleartext Traffic)
+title: クリアテキストトラフィックを許可するクロスプラットフォーム構成 (Cross-Platform Framework Configurations Allowing Cleartext Traffic)
 platform: android
 id: MASTG-TEST-0237
 type: [static]
