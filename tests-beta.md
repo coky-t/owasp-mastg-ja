@@ -30,6 +30,7 @@
 - [MASTG-TEST-0235](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0235.md) クリアテキストトラフィックを許可する Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)
 - [MASTG-TEST-0236](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0236.md) ネットワーク上で観測されるクリアテキストトラフィック (Cleartext Traffic Observed on the Network)
 - [MASTG-TEST-0237](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0237.md) クリアテキストトラフィックを許可するクロスプラットフォーム構成 (Cross-Platform Framework Configurations Allowing Cleartext Traffic)
+- [MASTG-TEST-0238](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0238.md) クリアテキストトラフィックを転送するネットワーク API の実行時使用 (Runtime Use of Network APIs Transmitting Cleartext Traffic)
 
 ### MASVS-CODE: コード品質
 
