@@ -16,7 +16,7 @@ Android アプリは、基本的に線形合同法生成器である `java.util.
 
 ## 手順
 
-1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、安全でないランダム API を探します。
+1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、安全でないランダム API を探します。
 
 ## 結果
 
