@@ -14,7 +14,7 @@ masvs_v1_levels:
 
 **アプリケーションのソースコードの完全性チェック:**
 
-変更されていない状態でデバイス上でアプリを実行し、すべてが動作することを確認します。次に optool を使用して実行可能ファイルにパッチを適用し、[パッチ適用 (Patching)](../../../techniques/ios/MASTG-TECH-0090.md) の説明に従ってアプリに再署名し、実行します。
+変更されていない状態でデバイス上でアプリを実行し、すべてが動作することを確認します。次に実行可能ファイルになんらかのパッチを適用 ([Frida Gadget を IPA 内に自動的に注入する (Injecting Frida Gadget into an IPA Automatically)](../../../techniques/ios/MASTG-TECH-0090.md) などを参照) し、アプリに再署名 ([再パッケージ化と再署名 (Repackaging and Re-Signing)](../../../techniques/ios/MASTG-TECH-0092.md)) し、実行します。
 
 アプリは何らかの反応を示すはずです。たとえば以下のようなものです。
 
