@@ -61,7 +61,7 @@ _視覚的なアプローチ_ を使用し、iOS デバイス (脱獄済みか�
 2. iOS デバイスで **ホーム** ボタンを押して、アプリケーションをバックグラウンドにします。
 3. 機密情報を含むビューではなく、デフォルト画像がトップビュー要素として表示されていることを検証します。
 
-必要に応じて、Frida Gadget ([非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)](../../../techniques/ios/MASTG-TECH-0079.md)) で再パッケージ化した後、脱獄済みデバイスまたは非脱獄デバイスで手順 1 から 3 を実行して証跡を収集することもできます。その後、SSH ([デバイスシェルへのアクセス (Accessing the Device Shell)](../../../techniques/ios/MASTG-TECH-0052.md)) またはその他の手段 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/ios/MASTG-TECH-0053.md)) を使用して iOS デバイスに接続し、Snapshots ディレクトリに移動します。場所は iOS のバージョンによって異なりますが、通常はアプリの Library ディレクトリにあります。たとえば、iOS 14.5 では Snapshots ディレクトリは以下の場所にあります。
+必要に応じて、Frida Gadget ([Frida Gadget を IPA 内に自動的に注入する (Injecting Frida Gadget into an IPA Automatically)](../../../techniques/ios/MASTG-TECH-0090.md)) で再パッケージ化した後、脱獄済みデバイスまたは非脱獄デバイスで手順 1 から 3 を実行して証跡を収集することもできます。その後、SSH ([デバイスシェルへのアクセス (Accessing the Device Shell)](../../../techniques/ios/MASTG-TECH-0052.md)) またはその他の手段 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/ios/MASTG-TECH-0053.md)) を使用して iOS デバイスに接続し、Snapshots ディレクトリに移動します。場所は iOS のバージョンによって異なりますが、通常はアプリの Library ディレクトリにあります。たとえば、iOS 14.5 では Snapshots ディレクトリは以下の場所にあります。
 
 ```txt
 /var/mobile/Containers/Data/Application/$APP_ID/Library/SplashBoard/Snapshots/sceneID:$APP_NAME-default/
