@@ -58,7 +58,7 @@ Vikas はモバイルセキュリティの専門知識を持つ経験豊富な�
 
 MASTG の資料を利用してモバイルアプリに対するテストを実行する場合はに、事前に各国の法律をご確認ください。MASTG に記載されている内容で法律に違反することはお控えください。
 
-[行動規範] に詳細があります: <https://github.com/OWASP/owasp-mastg/blob/master/.github/CODE_OF_CONDUCT.md>
+[行動規範](https://github.com/OWASP/owasp-mastg/blob/master/.github/CODE_OF_CONDUCT.md) に詳細があります。
 
 OWASP はこのガイドの作成に尽力された多くの著者、レビュー担当者、編集者に感謝します。ご意見やご提案がありましたら <https://mas.owasp.org/contact> までご連絡ください。
 
