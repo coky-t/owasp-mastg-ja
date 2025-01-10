@@ -20,8 +20,7 @@ iOS アプリケーションの Mach-O ファイルフォーマットの場合:
 ## 手順
 
 1. アプリケーションを抽出して、メインバイナリを特定します ([アプリの取得と抽出 (Obtaining and Extracting Apps)](../../../techniques/ios/MASTG-TECH-0054.md))。
-2. すべての共有ライブラリを特定します ([共有ライブラリの取得 (Get Shared Libraries)](../../../techniques/ios/MASTG-TECH-0082.md))。
-3. メインバイナリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) を実行して、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
+2. メインバイナリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) を実行して、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
 
 ## 結果
 
