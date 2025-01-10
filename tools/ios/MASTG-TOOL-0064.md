@@ -1,7 +1,11 @@
 ---
 title: Sileo
 platform: ios
-source: https://cydia-app.com/sileo/
+source: https://github.com/Sileo/Sileo
 ---
 
-iOS 11 以降の脱獄では、iOS デバイス用の新しい脱獄アプリストアである [Sileo](https://cydia-app.com/sileo/ "Sileo") を導入しています。iOS 12 の脱獄 [Chimera](https://chimera.sh/ "Chimera") もパッケージマネージャとして Sileo に依存しています。
+[Sileo](https://getsileo.app) は iOS 12 以降でルート済み脱獄とルートなし脱獄の両方で利用できるサードパーティアプリストアです。
+
+!!! 警告 「アプリのインストール」
+
+    Sileo またはその他のサードパーティアプリストア経由でアプリケーションをインストールすると、アプリケーションは Apple によって検証されていないため、リスクが伴います。不明なアプリケーションのインストールには注意してください。
