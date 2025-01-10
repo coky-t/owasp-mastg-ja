@@ -74,3 +74,4 @@
 - [MASTG-TEST-0219](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0219.md) デバッグシンボルのテスト (Testing for Debugging Symbols)
 - [MASTG-TEST-0220](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0220.md) 古いコード署名フォーマットの使用 (Usage of Outdated Code Signature Format)
 - [MASTG-TEST-0240](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0240.md) コード内の脱獄検出 (Jailbreak Detection in Code)
+- [MASTG-TEST-0241](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0241.md) 脱獄検出技法の実行時使用 (Runtime Use of Jailbreak Detection Techniques)
