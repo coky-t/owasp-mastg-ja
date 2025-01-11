@@ -37,7 +37,7 @@
 - [MASTG-TOOL-0107](tools/android/MASTG-TOOL-0107.md) JNITrace
 - [MASTG-TOOL-0112](tools/android/MASTG-TOOL-0112.md) pidcat
 - [MASTG-TOOL-0116](tools/android/MASTG-TOOL-0116.md) Blutter
-- [MASTG-TOOL-0120](tools/android/MASTG-TOOL-0120.md) proxyDroid
+- [MASTG-TOOL-0120](tools/android/MASTG-TOOL-0120.md) ProxyDroid
 - [MASTG-TOOL-0123](tools/android/MASTG-TOOL-0123.md) apksigner
 - [MASTG-TOOL-0124](tools/android/MASTG-TOOL-0124.md) aapt2
 - [MASTG-TOOL-0125](tools/android/MASTG-TOOL-0125.md) Apkleaks
