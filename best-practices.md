@@ -8,3 +8,4 @@
 - [MASTG-BEST-0006](best-practices/MASTG-BEST-0006.md) 最新の APK 署名スキームを使用する (Use Up-to-Date APK Signing Schemes)
 - [MASTG-BEST-0007](best-practices/MASTG-BEST-0007.md) AndroidManifest で無効になっているデバッグフラグ (Debuggable Flag Disabled in the AndroidManifest)
 - [MASTG-BEST-0008](best-practices/MASTG-BEST-0008.md) WebView のデバッグが無効 (Debugging Disabled for WebViews)
+- [MASTG-BEST-0009](best-practices/MASTG-BEST-0009.md) 安全な暗号アルゴリズムを使用する (Use Secure Encryption Algorithms)
