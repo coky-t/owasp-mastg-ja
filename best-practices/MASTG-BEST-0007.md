@@ -1,5 +1,5 @@
 ---
-title: AndroidManifest で無効になっているデバッグフラグ (Debuggable Flag Disabled in the AndroidManifest)
+title: AndroidManifest のデバッグフラグを無効にする (Debuggable Flag Disabled in the AndroidManifest)
 alias: debuggable-flag-disabled
 id: MASTG-BEST-0007
 platform: android

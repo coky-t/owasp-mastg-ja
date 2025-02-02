@@ -1,5 +1,5 @@
 ---
-title: プライバシー規制とベストプラクティスの遵守 (Comply with Privacy Regulations and Best Practices)
+title: プライバシー規制とベストプラクティスを遵守する (Comply with Privacy Regulations and Best Practices)
 alias: comply-with-privacy-regulations
 id: MASTG-BEST-0003
 platform: android

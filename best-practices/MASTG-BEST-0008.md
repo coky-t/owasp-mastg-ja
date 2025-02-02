@@ -1,5 +1,5 @@
 ---
-title: WebView のデバッグが無効 (Debugging Disabled for WebViews)
+title: WebView のデバッグを無効にする (Debugging Disabled for WebViews)
 alias: debugging-disabled-webviews
 id: MASTG-BEST-0008
 platform: android
