@@ -37,10 +37,9 @@ UDID を右コピーするとコピーできます。
     |         "USB Serial Number" = "9e8ada44246cee813e2f8c1407520bf2f84849ec"
     ```
 
-- [ideviceinstaller](https://github.com/libimobiledevice/ideviceinstaller) を使用する (Linux でも利用できます):
+- [libimobiledevice スイート](../tools/ios/TASTG-TOOL-0126.md) を使用する:
 
     ```sh
-    $ brew install ideviceinstaller
     $ idevice_id -l
     316f01bd160932d2bf2f95f1f142bc29b1c62dbc
     ```
