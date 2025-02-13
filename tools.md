@@ -77,7 +77,7 @@
 - [MASTG-TOOL-0051](tools/ios/MASTG-TOOL-0051.md) gdb
 - [MASTG-TOOL-0053](tools/ios/MASTG-TOOL-0053.md) iOSbackup
 - [MASTG-TOOL-0054](tools/ios/MASTG-TOOL-0054.md) ios-deploy
-- [MASTG-TOOL-0055](tools/ios/MASTG-TOOL-0055.md) iProxy
+- [MASTG-TOOL-0055](tools/ios/MASTG-TOOL-0055.md) iproxy
 - [MASTG-TOOL-0056](tools/ios/MASTG-TOOL-0056.md) Keychain-Dumper
 - [MASTG-TOOL-0057](tools/ios/MASTG-TOOL-0057.md) lldb
 - [MASTG-TOOL-0058](tools/ios/MASTG-TOOL-0058.md) MachOView
