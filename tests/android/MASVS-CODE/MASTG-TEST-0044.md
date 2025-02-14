@@ -19,7 +19,7 @@ deprecation_note: New version available in MASTG V2
 
 アプリのネイティブライブラリをテストして、PIE とスタックスマッシュ保護が有効になっているかどうかを確認します。
 
-[radare2 for Android](../../../tools/android/MASTG-TOOL-0028.md) を使用してバイナリ情報を取得できます。例として [Android UnCrackable L4](../../../apps/android/MASTG-APP-0015.md) v1.0 APK を使用します。
+[rabin2](../../../tools/generic/MASTG-TOOL-0129.md) を使用してバイナリ情報を取得できます。例として [Android UnCrackable L4](../../../apps/android/MASTG-APP-0015.md) v1.0 APK を使用します。
 
 すべてのネイティブライブラリは `canary` と `pic` が両方とも `true` に設定されていなければなりません。
 
