@@ -59,6 +59,7 @@
 - [MASTG-TOOL-0106](tools/generic/MASTG-TOOL-0106.md) Fridump
 - [MASTG-TOOL-0108](tools/generic/MASTG-TOOL-0108.md) Corellium
 - [MASTG-TOOL-0110](tools/generic/MASTG-TOOL-0110.md) semgrep
+- [MASTG-TOOL-0129](tools/generic/MASTG-TOOL-0129.md) rabin2
 
 ## iOS
 
