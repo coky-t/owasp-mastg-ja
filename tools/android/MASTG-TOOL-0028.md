@@ -31,62 +31,7 @@ $ rafind2 -ZS service AndroidManifest.xml
 $ rafind2 -ZS receiver AndroidManifest.xml
 ```
 
-また、`rabin2` を使用して、バイナリファイルに関する情報を取得します。
-
-```bash
-$ rabin2 -I UnCrackable-Level1/classes.dex
-arch     dalvik
-baddr    0x0
-binsz    5528
-bintype  class
-bits     32
-canary   false
-retguard false
-class    035
-crypto   false
-endian   little
-havecode true
-laddr    0x0
-lang     dalvik
-linenum  false
-lsyms    false
-machine  Dalvik VM
-maxopsz  16
-minopsz  1
-nx       false
-os       linux
-pcalign  0
-pic      false
-relocs   false
-sanitiz  false
-static   true
-stripped false
-subsys   java
-va       true
-sha1  12-5508c  b7fafe72cb521450c4470043caa332da61d1bec7
-adler32  12-5528c  00000000
-```
-
-すべてのオプションを表示するには `rabin2 -h` とタイプします。
-
-```bash
-$ rabin2 -h
-Usage: rabin2 [-AcdeEghHiIjlLMqrRsSUvVxzZ] [-@ at] [-a arch] [-b bits] [-B addr]
-              [-C F:C:D] [-f str] [-m addr] [-n str] [-N m:M] [-P[-P] pdb]
-              [-o str] [-O str] [-k query] [-D lang symname] file
- -@ [addr]       show section, symbol or import at addr
- -A              list sub-binaries and their arch-bits pairs
- -a [arch]       set arch (x86, arm, .. or <arch>_<bits>)
- -b [bits]       set bits (32, 64 ...)
- -B [addr]       override base address (pie bins)
- -c              list classes
- -cc             list classes in header format
- -H              header fields
- -i              imports (symbols imported from libraries)
- -I              binary info
- -j              output in json
- ...
-```
+また、[rabin2](../../tools/generic/MASTG-TOOL-0129.md) を使用して、バイナリファイルに関する情報を取得します。
 
 メインの `r2` ユーティリティを使用して **r2 シェル** にアクセスします。他のバイナリと同様に DEX バイナリをロードできます。
 
@@ -223,4 +168,4 @@ radare2 には **グラフモード** があり、コードのフローを追う
 
 これは Android バイナリから一部の基本的な情報を取得し始めるための radare2 コマンドの一部にすぎません。radare2 は非常に強力で、[radare2 コマンドドキュメント](https://book.rada.re/first_steps/commandline_flags.html) で見つかる多数のコマンドがあります。radare2 は、コードのリバース、デバッグ、バイナリ解析の実行など、さまざまな目的でガイド全体を通して使用されます。また、他のフレームワーク、特に Frida と組み合わせて使用することもあります (詳細については r2frida セクションを参照してください)。
 
-Android での radare2 の詳しい使い方、特にネイティブライブラリを解析する際には、[ネイティブコードの逆アセンブル (Disassembling Native Code)](../../techniques/android/MASTG-TECH-0018.md) を参照してください。また [公式の radare2 ブック](https://book.rada.re/ "Radare2 book") も読みたいと思うかもしれません
+Android での radare2 の詳しい使い方、特にネイティブライブラリを解析する際には、[ネイティブコードの逆アセンブル (Disassembling Native Code)](../../techniques/android/MASTG-TECH-0018.md) を参照してください。また [公式の radare2 ブック](https://book.rada.re/ "Radare2 book") も読みたいと思うかもしれません。
