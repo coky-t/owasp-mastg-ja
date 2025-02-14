@@ -3,7 +3,7 @@ title: コンパイラが提供するセキュリティ機能の取得 (Obtainin
 platform: android
 ---
 
-ターゲットバイナリ (共有ライブラリなど) に対して [radare2 for Android](../../tools/android/MASTG-TOOL-0028.md) を実行し、チェックしたいキーワードを grep します。
+ターゲットバイナリ (共有ライブラリなど) に対して [rabin2](../../tools/generic/MASTG-TOOL-0129.md) を実行し、チェックしたいキーワードを grep します。
 
 ```sh
 rabin2 -I lib/x86_64/libnative-lib.so | grep -E "canary|pic"
