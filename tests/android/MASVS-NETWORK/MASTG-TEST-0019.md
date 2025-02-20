@@ -42,10 +42,10 @@ deprecation_note: New version available in MASTG V2
 
 テスト対象アプリの送受信ネットワークトラフィックを傍受し、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
-- [OWASP ZAP](../../../tools/network/MASTG-TOOL-0079.md) や [Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャし、すべてのリクエストが HTTP ではなく HTTPS を介して行われていることを確認します。
-- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して、XMPP やその他のプロトコルによる通信をデコードおよび可視化できます。
+- [ZAP](../../../tools/network/MASTG-TOOL-0079.md) や [Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャし、すべてのリクエストが HTTP ではなく HTTPS を介して行われていることを確認します。
+- Burp や [ZAP](../../../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシは、主にウェブ関連のトラフィック (HTTP(S), Web Sockets, gRPC など) を表示します。しかし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して、XMPP やその他のプロトコルによる通信をデコードおよび可視化できます。
 
-> アプリケーションによっては証明書ピン留めのため Burp や OWASP ZAP などのプロキシで動作しないことがあります。このようなシナリオでは、 [カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](MASTG-TEST-0022.md) をチェックしてください。
+> アプリケーションによっては証明書ピン留めのため Burp や ZAP などのプロキシで動作しないことがあります。このようなシナリオでは、 [カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](MASTG-TEST-0022.md) をチェックしてください。
 
 詳細については以下を参照してください。
 
