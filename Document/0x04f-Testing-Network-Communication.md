@@ -212,7 +212,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
 
 - [Burp Suite](../tools/network/MASTG-TOOL-0077.md)
-- [OWASP ZAP](../tools/network/MASTG-TOOL-0079.md)
+- [ZAP](../tools/network/MASTG-TOOL-0079.md)
 
 傍受プロキシを使用するには、それをホストコンピュータ上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
 
@@ -222,7 +222,7 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 ## 非 HTTP トラフィックの傍受
 
-[Burp Suite](../tools/network/MASTG-TOOL-0077.md) や [OWASP ZAP](../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
+[Burp Suite](../tools/network/MASTG-TOOL-0077.md) や [ZAP](../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
 
 - [Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension")
 - [Mitm-relay](https://github.com/jrmdev/mitm_relay "Mitm-relay")

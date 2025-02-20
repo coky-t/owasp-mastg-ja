@@ -116,7 +116,7 @@
 - [MASTG-TOOL-0076](tools/network/MASTG-TOOL-0076.md) bettercap
 - [MASTG-TOOL-0077](tools/network/MASTG-TOOL-0077.md) Burp Suite
 - [MASTG-TOOL-0078](tools/network/MASTG-TOOL-0078.md) MITM Relay
-- [MASTG-TOOL-0079](tools/network/MASTG-TOOL-0079.md) OWASP ZAP
+- [MASTG-TOOL-0079](tools/network/MASTG-TOOL-0079.md) ZAP
 - [MASTG-TOOL-0080](tools/network/MASTG-TOOL-0080.md) tcpdump
 - [MASTG-TOOL-0081](tools/network/MASTG-TOOL-0081.md) Wireshark
 - [MASTG-TOOL-0097](tools/network/MASTG-TOOL-0097.md) mitmproxy
