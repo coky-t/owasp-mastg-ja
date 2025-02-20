@@ -70,10 +70,10 @@ ATS にはこれを [正当化する文字列](https://developer.apple.com/docum
 
 テスト対象のアプリの送受信ネットワークトラフィックを傍受して、このトラフィックが暗号化されていることを確認します。以下のいずれかの方法でネットワークトラフィックを傍受できます。
 
-- [OWASP ZAP](../../../tools/network/MASTG-TOOL-0079.md) や [Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS 経由で行われることを確認します。
-- Burp や OWASP ZAP などの傍受プロキシは HTTP(S) トラフィックのみを表示します。ただし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して XMPP や他のプトロコルを介した通信をデコードして可視化できます。
+- [ZAP](../../../tools/network/MASTG-TOOL-0079.md) や [Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) などの傍受プロキシですべての HTTP(S) と Websocket トラフィックをキャプチャして、すべてのリクエストが HTTP ではなく HTTPS 経由で行われることを確認します。
+- Burp や [ZAP](../../../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシは、主にウェブ関連のトラフィック (HTTP(S), Web Sockets, gRPC など) を表示します。ただし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension") などの Burp プラグインや [mitm-relay](https://github.com/jrmdev/mitm_relay "mitm-relay") というツールを使用して XMPP や他のプトロコルを介した通信をデコードして可視化できます。
 
-> 一部のアプリケーションでは証明書ピン留めが原因で Burp や OWASP ZAP などのプロキシで動作しないことがあります。そのようなシナリオでは [カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](MASTG-TEST-0068.md) を確認してください。
+> 一部のアプリケーションでは証明書ピン留めが原因で Burp や ZAP などのプロキシで動作しないことがあります。そのようなシナリオでは [カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](MASTG-TEST-0068.md) を確認してください。
 
 詳細については以下を参照してください。
 
