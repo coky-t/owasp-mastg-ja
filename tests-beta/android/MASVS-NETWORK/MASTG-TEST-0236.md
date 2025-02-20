@@ -26,7 +26,7 @@ weakness: MASWE-0050
 **注**:
 
 - 傍受プロキシは HTTP(S) トラフィックのみを示します。ただし、[Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension) などのツール固有のプラグインや [MITM Relay](../../../tools/network/MASTG-TOOL-0078.md) などの他のツールを使用して、XMPP やその他のプロトコルを介した通信をデコードして可視化できます。
-- 一部のアプリでは、証明書のピン留めのため、Burp や OWASP ZAP などのプロキシが正しく機能しないことがあります。そのようなシナリオでも、基本的なネットワークスニフィングを使用してクリアテキストトラフィックを検出できます。さもなければ、ピン留めを無効にしてみてください (Android の場合 [証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/android/MASTG-TECH-0012.md)、iOS の場合 [証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/ios/MASTG-TECH-0064.md) を参照してください)。
+- 一部のアプリでは、証明書のピン留めのため、Burp や [ZAP](../../../tools/network/MASTG-TOOL-0079.md) などのプロキシが正しく機能しないことがあります。そのようなシナリオでも、基本的なネットワークスニフィングを使用してクリアテキストトラフィックを検出できます。さもなければ、ピン留めを無効にしてみてください (Android の場合 [証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/android/MASTG-TECH-0012.md)、iOS の場合 [証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/ios/MASTG-TECH-0064.md) を参照してください)。
 
 ## 結果
 
