@@ -4,7 +4,7 @@ platform: network
 source: https://github.com/bettercap/bettercap
 ---
 
-セキュリティ研究者やリバースエンジニアに、Wi-Fi、Bluetooth Low Energy、ワイヤレス HID ハイジャッキング、Ethernet ネットワーク偵察用の使いやすいオールインワンソリューションを提供することを目的とした強力なフレームワークです。ネットワークペネトレーションテスト時に中間者 (MITM) 攻撃をシミュレートするために使用できます。これは [ARP ポイズニングまたはスプーフィング](https://en.wikipedia.org/wiki/ARP_spoofing "ARP poisoning/spoofing") をターゲットコンピュータに実行することで実現します。そのような攻撃が成功すると、二つのコンピュータ間のすべてのパケットが、中間者として機能して解析のためにトラフィックを傍受できる第三のコンピュータにリダイレクトされます。
+セキュリティ研究者やリバースエンジニアに、Wi-Fi、Bluetooth Low Energy、ワイヤレス HID ハイジャッキング、Ethernet ネットワーク偵察用の使いやすいオールインワンソリューションを提供することを目的とした強力なフレームワークです。ネットワークペネトレーションテスト時に中間マシン (Machine-in-the-Middle, MITM) 攻撃をシミュレートするために使用できます。これは [ARP ポイズニングまたはスプーフィング](https://en.wikipedia.org/wiki/ARP_spoofing "ARP poisoning/spoofing") をターゲットコンピュータに実行することで実現します。そのような攻撃が成功すると、二つのコンピュータ間のすべてのパケットが、MITM として機能して解析のためにトラフィックを傍受できる第三のコンピュータにリダイレクトされます。
 
 > bettercap は MITM 攻撃を実行するための強力なツールであり、現在では ettercap の代わりに推奨されています。bettercap のサイトの [Why another MITM tool?](https://www.bettercap.org/legacy/#why-another-mitm-tool "Why another MITM tool?") も参照してください。
 
