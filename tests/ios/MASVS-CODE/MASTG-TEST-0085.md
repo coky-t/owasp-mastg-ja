@@ -60,7 +60,7 @@ pod dependencies
 >
 > 1. 開発者が .podspec ファイルを使用して自身のサポートライブラリに関してすべての依存関係をパックする場合、この .podspec ファイルを実験的な CocoaPods podspec checker で確認できます。
 > 2. プロジェクトで CocoaPods を Objective-C と組み合わせて使用する場合、SourceClear を使用できます。
-> 3. HTTPS ではなく HTTP ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に中間者攻撃を許す可能性があり、攻撃者はライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に HTTPS を使用します。
+> 3. HTTPS ではなく HTTP ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に中間マシン (Machine-in-the-Middle, MITM) 攻撃を許す可能性があり、攻撃者はライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に HTTPS を使用します。
 
 [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [CocoaPods Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/cocoapods.html "dependency-check - CocoaPods Analyzer") を利用して、
 すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの \*.podspec や Podfile.lock ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
