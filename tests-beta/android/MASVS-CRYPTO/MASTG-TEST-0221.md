@@ -34,4 +34,4 @@ Android では [破られた暗号アルゴリズム](https://developer.android.
 
 ## 評価
 
-[安全でないか非推奨の](../../../Document/0x04g-Testing-Cryptography.md#Identifying-Insecure-and/or-Deprecated-Cryptographic-Algorithms) 暗号アルゴリズムが使用されていることを見つけた場合、そのテストケースは不合格です。
+[安全でないか非推奨の](../../../Document/0x04g-Testing-Cryptography.md#identifying-insecure-andor-deprecated-cryptographic-algorithms) 暗号アルゴリズムが使用されていることを見つけた場合、そのテストケースは不合格です。
