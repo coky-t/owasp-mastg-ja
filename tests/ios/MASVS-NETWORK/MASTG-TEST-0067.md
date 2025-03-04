@@ -14,7 +14,7 @@ masvs_v1_levels:
 
 ## 静的解析
 
-TLS を使用して機密情報をネットワーク上で転送することはセキュリティにとって不可欠です。しかし、モバイルアプリケーションとバックエンド API 間の通信を暗号化することは簡単ではありません。開発者は開発プロセスを容易にするためにより単純だがセキュアとはいい難いソリューション (例えば、任意の証明書を受け入れるもの) を決定することがよくあり、時にはこれらの弱いソリューションが製品版に組み込まれることがあり、ユーザーを中間マシン (Machine-in-the-Middle, MITM) 攻撃にさらす可能性があります。["CWE-295: Improper Certificate Validation"](https://cwe.mitre.org/data/definitions/295.html "CWE-295: Improper Certificate Validation") を参照してください。
+TLS を使用して機密情報をネットワーク上で転送することはセキュリティにとって不可欠です。しかし、モバイルアプリケーションとバックエンド API 間の通信を暗号化することは簡単ではありません。開発者は開発プロセスを容易にするためにより単純だがセキュアとはいい難いソリューション (例えば、任意の証明書を受け入れるもの) を決定することがよくあり、時にはこれらの弱いソリューションが製品版に組み込まれることがあり、ユーザーを [中間マシン (Machine-in-the-Middle, MITM)](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) 攻撃にさらす可能性があります。["CWE-295: Improper Certificate Validation"](https://cwe.mitre.org/data/definitions/295.html "CWE-295: Improper Certificate Validation") を参照してください。
 
 これらは対処すべき問題の一部です。
 
