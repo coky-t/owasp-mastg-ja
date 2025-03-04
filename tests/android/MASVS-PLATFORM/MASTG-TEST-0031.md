@@ -45,7 +45,7 @@ Android 4.4 (API レベル 19) より古いプラットフォームを実行し�
 動的解析は動作条件に依存します。アプリの WebView に JavaScript を注入する方法はいくつかあります。
 
 - エンドポイントにクロスサイトスクリプティングの脆弱性を保存します。ユーザーが脆弱な機能に移動すると、エクスプロイトがモバイルアプリの WebView に送信されます。
-- 攻撃者は中間マシン (Machine-in-the-Middle, MITM) に位置取りし、JavaScript を注入してレスポンスを改竄します。
+- 攻撃者は [中間マシン (Machine-in-the-Middle, MITM)](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) に位置取りし、JavaScript を注入してレスポンスを改竄します。
 - マルウェアは WebView によってロードされるローカルファイルを改竄します。
 
 これらの攻撃ベクトルに対処するには、以下をチェックします。
