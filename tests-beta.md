@@ -48,6 +48,7 @@
 - [MASTG-TEST-0225](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0225.md) 安全でない署名鍵サイズの使用 (Usage of Insecure Signature Key Size)
 - [MASTG-TEST-0226](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0226.md) AndroidManifest で有効になっているデバッグフラグ (Debuggable Flag Enabled in the AndroidManifest)
 - [MASTG-TEST-0227](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0227.md) WebView のデバッグが有効 (Debugging Enabled for WebViews)
+- [MASTG-TEST-0247](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0247.md) 安全な画面ロックを検出するための API への参照 ((References to APIs for Detecting Secure Screen Lock)
 
 ### MASVS-PRIVACY: プライバシー
 
