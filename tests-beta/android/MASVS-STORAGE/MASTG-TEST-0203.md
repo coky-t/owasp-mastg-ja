@@ -10,7 +10,7 @@ best-practices: [MASTG-BEST-0002]
 
 ## 概要
 
-Android プラットフォームでは、`Log`, `Logger`, `System.out.print`, `System.err.print`, `java.lang.Throwable#printStackTrace` などのログ記録 API によって意図せず機密情報の漏洩につながる可能性があります。ログメッセージは共有メモリバッファである logcat に記録され、Android 4.1 (API レベル 16) 以降では `READ_LOGS` パーミッションを宣言する特権システムアプリケーションのみがアクセスできます。とはいえ、Android システムの広大なエコシステムには `READ_LOGS` 権限を持つプリロードされたアプリが含まれており、機密データ開示のリスクが高まっています。したがって、logcat への直接的なログ記録はデータ漏洩の危険性があるため一般的に推奨されません。
+Android プラットフォームでは、`Log`, `Logger`, `System.out.print`, `System.err.print`, `java.lang.Throwable#printStackTrace` などの [ログ記録 API](../../../0x05d-Testing-Data-Storage.md/#logs) によって意図せず機密情報の漏洩につながる可能性があります。ログメッセージは共有メモリバッファである logcat に記録され、Android 4.1 (API レベル 16) 以降では `READ_LOGS` パーミッションを宣言する特権システムアプリケーションのみがアクセスできます。とはいえ、Android システムの広大なエコシステムには `READ_LOGS` 権限を持つプリロードされたアプリが含まれており、機密データ開示のリスクが高まっています。したがって、logcat への直接的なログ記録はデータ漏洩の危険性があるため一般的に推奨されません。
 
 ## 手順
 
