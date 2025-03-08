@@ -14,10 +14,7 @@ best-practices: []
 
 ## 手順
 
-1. 
-1. [Frida for iOS](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを実行して、
-
-Run a dynamic analysis tool like @MASTG-TOOL-0039 and look for uses of [LAContext.canEvaluatePolicy(.deviceOwnerAuthentication)](https://developer.apple.com/documentation/localauthentication/lacontext/canevaluatepolicy(_:error:)) API or data stored with [kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly](https://developer.apple.com/documentation/security/ksecattraccessiblewhenpasscodesetthisdeviceonly) attribute.
+1. [Frida for iOS](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを実行して、[LAContext.canEvaluatePolicy(.deviceOwnerAuthentication)](https://developer.apple.com/documentation/localauthentication/lacontext/canevaluatepolicy(_:error:)) API の使用または [kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly](https://developer.apple.com/documentation/security/ksecattraccessiblewhenpasscodesetthisdeviceonly) 属性で保存されたデータを探します。
 
 ## 結果
 
