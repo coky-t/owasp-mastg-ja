@@ -9,7 +9,7 @@ weakness: MASWE-0007
 
 ## 概要
 
-このテストでは静的解析を使用して、外部ストレージ API や `MediaStore` API など、他のアプリと共有される場所にアプリが書き込むことを許可する API の使用 ([機密データについてのローカルストレージのテスト (Testing Local Storage for Sensitive Data)](../../../tests/android/MASVS-STORAGE/MASTG-TEST-0001.md)) や、関連する Android マニフェストのストレージ関連パーミッションを探します。
+このテストでは静的解析を使用して、[外部ストレージ API](../../../0x05d-Testing-Data-Storage.md/#external-storage-apis) や [`MediaStore` API](../../../0x05d-Testing-Data-Storage.md/#mediastore-api) など、他のアプリと共有される場所にアプリが書き込むことを許可する API の使用 ([機密データについてのローカルストレージのテスト (Testing Local Storage for Sensitive Data)](../../../tests/android/MASVS-STORAGE/MASTG-TEST-0001.md)) や、[関連する Android マニフェストのストレージ関連パーミッション](../../../0x05d-Testing-Data-Storage.md/#manifest-permissions) を探します。
 
 この静的テストは、アプリが共有ストレージにデータを書き込むすべてのコードの場所を特定するのに最適です。しかし、実際に書き込まれるデータや、場合によっては、データが書き込まれるデバイスストレージ内の実際のパスも提供しません。そのため、このテストを動的なアプローチを採る他のテストと組み合わせることをお勧めします。これは共有ストレージに書き込まれるデータのより完全なビューを提供することでしょう。
 
