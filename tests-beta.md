@@ -82,3 +82,4 @@
 - [MASTG-TEST-0240](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0240.md) コード内の脱獄検出 (Jailbreak Detection in Code)
 - [MASTG-TEST-0241](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0241.md) 脱獄検出技法の実行時使用 (Runtime Use of Jailbreak Detection Techniques)
 - [MASTG-TEST-0246](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0246.md) 安全な画面ロック検出 API の実行時使用 (Runtime Use of Secure Screen Lock Detection APIs)
+- [MASTG-TEST-0248](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0248.md) 安全な画面ロックを検出するための API への参照 (References to APIs for Detecting Secure Screen Lock)
