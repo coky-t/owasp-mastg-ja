@@ -10,7 +10,7 @@ best-practices: [MASTG-BEST-0002]
 
 ## 概要
 
-このテストでは、アプリが `android.util.Log`, `Log`, `Logger`, `System.out.print`, `System.err.print`, `java.lang.Throwable#printStackTrace` などのログ記録 API を使用しているかどうかを検証します。
+このテストでは、アプリが `android.util.Log`, `Log`, `Logger`, `System.out.print`, `System.err.print`, `java.lang.Throwable#printStackTrace` などの [ログ記録 API](../../../0x05d-Testing-Data-Storage.md/#logs) を使用しているかどうかを検証します。
 
 ## 手順
 
