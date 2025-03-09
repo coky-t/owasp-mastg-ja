@@ -205,303 +205,38 @@ TLSv1.3 では鍵交換アルゴリズムは暗号スイートの一部ではな
 
 最後に、HTTPS 接続が終了するサーバーや終端プロキシがベストプラクティスにしたがって構成されていることを検証します。 [OWASP Transport Layer Protection cheat sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md "Transport Layer Protection Cheat Sheet") および [Qualys SSL/TLS Deployment Best Practices](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices "Qualys SSL/TLS Deployment Best Practices") も参照してください。
 
-## HTTP(S) トラフィックの傍受
+## MITM によるネットワークトラフィックの傍受
 
-多くの場合、HTTP(S) トラフィックがホストコンピュータ上で実行されている _傍受プロキシ_ 経由でリダイレクトされるように、モバイルデバイス上にシステムプロキシを設定することが最も実用的です。モバイルアプリクライアントとバックエンドの間のリクエストを監視することにより、利用可能なサーバーサイド API を簡単にマップし、通信プロトコルの情報を得ることができます。さらに、サーバー側の脆弱性をテストするためにリクエストを再生および操作できます。
+モバイルアプリのトラフィックを傍受することはセキュリティテストの側面であり、テスト担当者、アナリスト、ペネトレーションテスト担当者がネットワーク通信を解析および操作して脆弱性を特定できるようにします。このプロセスで重要な技法は **中間マシン (Machine-in-the-Middle, MITM)** 攻撃 (["中間者 (Man-in-the-Middle)"](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) (従来)、"中間敵対者 (Adversary-in-the-Middle)" ([MITRE](https://attack.mitre.org/techniques/T1638/) や [CAPEC](https://capec.mitre.org/data/definitions/94.html) などによる) とも呼ばれます) です。_攻撃者_ は自分のマシンを二つの通信エンティティ、通常はモバイルアプリ (クライアント) とそれが通信するサーバー、の間に配置します。そうすることで、攻撃者のマシンはさまざまな当事者間で送信されるデータを傍受して監視します。
 
-フリーおよび商用のプロキシツールがいくつかあります。最も人気のあるものは以下のとおりです。
+この技法には二つの側面があります。
 
-- [Burp Suite](../tools/network/MASTG-TOOL-0077.md)
-- [ZAP](../tools/network/MASTG-TOOL-0079.md)
+- 通常、どちらの当事者 (アプリまたはサーバー) に気付かれることなく通信を傍受、監視、潜在的に改変するために **悪意のある攻撃者によって使用されます**。これは、盗聴、悪意のあるコンテンツの注入、交換されるデータの操作などの悪意のあるアクティビティを可能にします。
+- しかし、**OWASP MASTG** とモバイルアプリセキュリティテスト **のコンテキストでは**、アプリテスト担当者がトラフィックをレビュー、解析、変更するための技法の一部として使用し、暗号化されていない通信や弱いセキュリティコントロールなどの脆弱性を特定できます。
 
-傍受プロキシを使用するには、それをホストコンピュータ上で実行し、HTTP(S) リクエストをプロキシにルーティングするようモバイルアプリを設定する必要があります。ほとんどの場合、モバイルデバイスのネットワーク設定でシステム全体のプロキシを設定するだけで十分です。アプリが標準の HTTP API や `okhttp` などの一般的なライブラリを使用する場合、自動的にシステム設定を使用します。
+使用される具体的な傍受方法はアプリのセキュリティメカニズムと送信されるデータの性質によって異なります。各アプローチは、暗号化や、妨害に対する耐性などの要素に応じて、複雑さや有効性が異なります。
 
-<img src="Images/Chapters/0x04f/BURP.png" width="100%" />
+さまざまなネットワーク層での傍受技法の概要は以下のとおりです。
 
-プロキシを使用すると SSL 証明書の検証が中断され、アプリは通常 TLS 接続を開始できません。この問題を回避するには、プロキシの CA 証明書をデバイスにインストールします。OS ごとの「テスト環境構築」の章でこれを行う方法について説明します。
+| **傍受技法** | **ツール例** | **備考** |
+|--------------|--------------|----------|
+| API フック (`HttpUrlConnection`, `NSURLSession`, `WebRequest`) | Frida | アプリがネットワークリクエストを処理する方法を変更します。 |
+| TLS 関数のフック (`SSL_read`, `SSL_write`) | Frida, SSL Kill Switch | 暗号化データがアプリに到達する前に傍受します。 |
+| プロキシ傍受 | Burp Suite, ZAP, mitmproxy | アプリがプロキシ設定を尊重する必要があります。 |
+| パケットスニッフィング | `tcpdump`, Wireshark | **すべての** TCP/UDP をキャプチャしますが HTTPS を復号 **しません**。 |
+| ARP スプーフィングによる MITM | bettercap | ネットワークが攻撃者によって制御されていない場合でも、デバイスを騙して攻撃者のマシン経由でトラフィックを送信します。 |
+| 不正な Wi-Fi AP | `hostapd`, `dnsmasq`, `iptables`, `wpa_supplicant`, `airmon-ng` | 攻撃者によって完全に制御されているアクセスポイントを使用します。 |
 
-## 非 HTTP トラフィックの傍受
+これらの技法の詳細については、それぞれの技法のページにあります。
 
-[Burp Suite](../tools/network/MASTG-TOOL-0077.md) や [ZAP](../tools/network/MASTG-TOOL-0079.md) などの傍受プロキシは非 HTTP トラフィックを表示しません。デフォルトでは正しくデコードできないためです。しかしながら、以下のような Burp プラグインを利用できます。
+- [アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)](../techniques/generic/MASTG-TECH-0119.md)
+- [傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)](../techniques/generic/MASTG-TECH-0120.md)
+- [傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)](../techniques/generic/MASTG-TECH-0121.md)
+- [受動的な盗聴 (Passive Eavesdropping)](../techniques/generic/MASTG-TECH-0122.md)
+- [ARP スプーフィングによる MITM ポジションを獲得する (Achieving a MITM Position via ARP Spoofing)](../techniques/generic/MASTG-TECH-0123.md)
+- [不正アクセスポイントを使用して MITM ポジションを獲得する (Achieving a MITM Position Using a Rogue Access Point)](../techniques/generic/MASTG-TECH-0124.md)
 
-- [Burp-non-HTTP-Extension](https://github.com/summitt/Burp-Non-HTTP-Extension "Burp-non-HTTP-Extension")
-- [Mitm-relay](https://github.com/jrmdev/mitm_relay "Mitm-relay")
+**証明書ピン留めに関する注意:** アプリが証明書ピン留めを使用している場合、トラフィックの傍受を開始すると上記の技法は失敗するように見えるかもしれませんが、別の手法を使用してバイパスできます。詳細については以下の技法を参照してください。
 
-これらのプラグインは非 HTTP プロトコルを視覚化することができ、トラフィックを傍受および操作することもできます。
-
-このセットアップは非常に面倒になることがあり、HTTP をテストするほど簡単ではないことに注意します。
-
-## アプリプロセスからのトラフィックの傍受
-
-アプリのテスト時の目的によりますが、ネットワーク層に届く前やアプリでレスポンスを受信する際のトラフィックを監視すれば十分なこともあります。
-
-特定の機密データがネットワークに転送されているかどうかを知りたいだけなら、本格的な MITM 攻撃を展開する必要はありません。この場合、もし実装されていても、ピンニングをバイパスする必要はありません。openssl の `SSL_write` and `SSL_read` などの適切な関数をフックしなければならないだけです。
-
-これは標準 API ライブラリ関数やクラスを使用するアプリではかなりうまく機能しますが、いくつかの欠点があります。
-
-- アプリがカスタムネットワークスタックを実装している可能性がある場合、使用できる API を見つけるためにアプリの解析に時間を費やさなければならないかもしれません。 [このブログ投稿](https://hackmag.com/security/ssl-sniffing/ "Searching for OpenSSL traces with signature analysis") の "Searching for OpenSSL traces with signature analysis" セクションを参照してください。
-- (多くのメソッドコールと実行スレッドにまたがる) HTTP レスポンスペアを再アセンブルするための適切なフックスクリプトを作成するのは非常に時間がかかることがあります。 [既製のスクリプト](https://github.com/fanxs-t/Android-SSL_read-write-Hook/blob/master/frida-hook.py) や [代替ネットワークスタック](https://codeshare.frida.re/@owen800q/okhttp3-interceptor/) もありますが、アプリやプラットフォームによってはこれらのスクリプトは多くのメンテナンスが必要かもしれず、 _常に機能する_ とは限りません。
-
-例をいくつかご覧ください。
-
-- ["Universal interception. How to bypass SSL Pinning and monitor traffic of any application"](https://hackmag.com/security/ssl-sniffing/), "Grabbing payload prior to transmission" および "Grabbing payload prior to encryption" のセクション
-- ["Frida as an Alternative to Network Tracing"](https://gaiaslastlaugh.medium.com/frida-as-an-alternative-to-network-tracing-5173cfbd7a0b)
-
-> この技法は BLE, NFC など MITM 攻撃の展開に非常にコストがかかったり複雑になる可能性がある他のタイプのトラフィックにも有効です。
-
-## ネットワーク層でのトラフィックの傍受
-
-傍受プロキシを使用することによる動的解析は、標準ライブラリがアプリで使用され、すべての通信が HTTP 経由で行われる場合には簡単です。しかしこれが動作しないいくつかのケースがあります。
-
-- システムプロキシ設定を無視する [Xamarin](https://www.xamarin.com/platform "Xamarin") などのモバイルアプリケーション開発プラットフォームが使用されている場合。
-- モバイルアプリケーションがシステムプロキシが使用されているかどうかを確認し、プロキシを介してリクエストを送信することを拒否する場合。
-- Android の GCM/FCM などのプッシュ通信を傍受したい場合。
-- XMPP や他の非 HTTP プロトコルが使用されている場合。
-
-このような場合は、次に何をすべきかを決めるために、まずネットワークトラフィックを監視および解析する必要があります。幸いにも、ネットワーク通信をリダイレクトおよび傍受するための選択肢がいくつかあります。
-
-- トラフィックをホストコンピュータにルーティングします。ホストコンピュータをネットワークゲートウェイとして設定します。例えば、オペレーティングシステムに内蔵のインターネット共有機能を使用します。それから、[Wireshark](../tools/network/MASTG-TOOL-0081.md) を使用して、モバイルデバイスからの任意のトラフィックを傍受できます。
-- 場合によっては MITM 攻撃を実行してモバイルデバイスに強制的に会話させる必要があります。このシナリオではモバイルデバイスからホストコンピュータにネットワークトラフィックをリダイレクトするために [bettercap](../tools/network/MASTG-TOOL-0076.md) または独自のアクセスポイントを検討する必要があります (下図参照) 。
-- ルート化デバイスでは、フックやコードインジェクションを使用して、ネットワーク関連の API コール (HTTP リクエストなど) を傍受したり、これらのコールの引数をダンプしたり操作することも可能です。これにより実際のネットワークデータを検査する必要がなくなります。これらの技法については「リバースエンジニアリングと改竄」の章で詳しく説明します。
-- macOS では、iOS デバイスのすべてのトラフィックを傍受するために "Remote Virtual Interface" を作成できます。「iOS アプリのテスト環境構築」の章でこの手法を説明します。
-
-### bettercap による中間マシン (Machine-in-the-Middle) 攻撃のシミュレーション
-
-#### ネットワークのセットアップ
-
-中間マシン (Machine-in-the-Middle, MITM) のポジションを実現するには、モバイルデバイスおよびそれと通信するゲートウェイと同じワイヤレスネットワークにホストコンピュータが存在しなければなりません。これをセットアップしたら、モバイルデバイスの IP アドレスを取得する必要があります。モバイルアプリの完全な動的解析には、すべてのネットワークトラフィックを傍受して解析する必要があります。
-
-### MITM 攻撃
-
-まずお好みのネットワーク解析ツールを起動し、次に以下のコマンドで IP アドレス (X.X.X.X) を MITM 攻撃を実行したいターゲットに置き換えて [bettercap](../tools/network/MASTG-TOOL-0076.md) を実行します。
-
-```bash
-$ sudo bettercap -eval "set arp.spoof.targets X.X.X.X; arp.spoof on; set arp.spoof.internal true; set arp.spoof.fullduplex true;"
-bettercap v2.22 (built for darwin amd64 with go1.12.1) [type 'help' for a list of commands]
-
-[19:21:39] [sys.log] [inf] arp.spoof enabling forwarding
-[19:21:39] [sys.log] [inf] arp.spoof arp spoofer started, probing 1 targets.
-```
-
-bettercap は自動的にパケットを (ワイヤレス) ネットワークのネットワークゲートウェイに送信します。あなたはそのトラフィックを盗聴できます。2019年の初めに [全二重 ARP スプーフィング](https://github.com/bettercap/bettercap/issues/426 "Full Duplex ARP Spoofing") サポートが bettercap に追加されました。
-
-モバイルフォンでブラウザを起動して `http://example.com` に移動すると、Wireshark を使用している場合には以下のような出力が表示されるはずです。
-
-<img src="Images/Chapters/0x04f/bettercap.png" width="100%" />
-
-それで、モバイルフォンで送受信される完全なネットワークトラフィックを確認できるようになります。これには DNS, DHCP およびその他の形式の通信も含まれるため、非常に「ノイズが多い」かもしれません。したがって、関連するトラフィックだけに集中するために、[Wireshark の DisplayFilter](https://wiki.wireshark.org/DisplayFilters "DisplayFilters") の使い方や [tcpdump でフィルタする方法](https://danielmiessler.com/study/tcpdump/#gs.OVQjKbk "A tcpdump Tutorial and Primer with Examples") を知る必要があります。
-
-> MITM 攻撃は ARP スプーフィングを通じて OSI レイヤ 2 上で攻撃が実行されるため、あらゆるデバイスやオペレーティングシステムに対して機能します。あなたが MITM である場合、通過するデータは TLS を使用して暗号化されている可能性があるため、平文データを見ることができないかもしれません。しかし、それは関与するホスト、使用されるプロトコルおよびアプリが通信しているポートに関する貴重な情報をあなたに提供します。
-
-### アクセスポイントを使用した中間マシン (Machine-in-the-Middle) 攻撃のシミュレーション
-
-#### ネットワークのセットアップ
-
-中間マシン (Machine-in-the-Middle, MITM) 攻撃をシミュレートする簡単な方法は、スコープ内のデバイスとターゲットネットワーク間のすべてのパケットがホストコンピュータを通過するネットワークを構成することです。モバイルペネトレーションテストでは、モバイルデバイスとホストコンピュータが接続されているアクセスポイントを使用して実現できます。そうしてホストコンピュータがルータおよびアクセスポイントになります。
-
-以下のシナリオが可能です。
-
-- ホストコンピュータの内蔵 WiFi カードをアクセスポイントとして使用し、有線接続を使用してターゲットネットワークに接続します。
-- 外部 USB WiFi カードをアクセスポイントとして使用し、ホストコンピュータの内蔵 WiFi を使用してターゲットネットワークに接続します (逆も可能です) 。
-- 別のアクセスポイントを使用し、トラフィックをホストコンピュータにリダイレクトします。
-
-外部 WiFi カードを使用するシナリオではカードがアクセスポイントを作成する機能が必要です。さらに、いくつかのツールをインストールするかネットワークを構成して MITM ポジションとなる必要があります (下記参照) 。Kali Linux で `iwconfig` コマンドを使用して、WiFi カードに AP 機能があるかどうかを確認できます。
-
-```bash
-iw list | grep AP
-```
-
-別のアクセスポイントを使用するシナリオでは AP の構成にアクセスする必要があります。AP が以下のいずれかをサポートしているかどうかを最初に確認する必要があります。
-
-- ポートフォワーディングまたは
-- スパンまたはミラーポートを持っている。
-
-どちらの場合もホストコンピュータの IP を指すように AP を構成する必要があります。ホストコンピュータは (有線接続または WiFi を介して) AP に接続する必要があり、ターゲットネットワークに接続する必要があります (AP と同じ接続でもかまいません) 。ターゲットネットワークにトラフィックをルーティングするにはホストコンピュータに追加の構成が必要になる場合があります。
-
-> 別のアクセスポイントがお客様のものである場合、変更を行う前に、すべての変更と構成をエンゲージメントの前に明確にし、バックアップを作成する必要があります。
-
-<img src="Images/Chapters/0x04f/architecture_MITM_AP.png" width="100%" />
-
-#### インストール
-
-以下の手順はアクセスポイントと追加のネットワークインタフェースを使用して MITM ポジションをセットアップしています。
-
-別のアクセスポイント、外部 USB WiFi カード、またはホストコンピュータの内蔵カードのいずれかを使用して WiFi ネットワークを作成します。
-
-これは macOS のビルトインユーティリティを使用して実行できます。[Mac のインターネット接続を他のネットワークユーザーと共有する](https://support.apple.com/en-ke/guide/mac-help/mchlp1540/mac "Share the internet connection on Mac with other network users") を使用できます。
-
-すべての主要な Linux および Unix オペレーティングシステムでは以下のようなツールが必要です。
-
-- hostapd
-- dnsmasq
-- iptables
-- wpa_supplicant
-- airmon-ng
-
-Kali Linux ではこれらのツールを `apt-get` でインストールできます。
-
-```bash
-apt-get update
-apt-get install hostapd dnsmasq aircrack-ng
-```
-
-> iptables と wpa_supplicant は Kali Linux にデフォルトでインストールされています。
-
-別のアクセスポイントの場合、トラフィックをホストコンピュータにルーティングします。外部 USB WiFi カードまたは内蔵 WiFi カードの場合、トラフィックはすでにホストコンピュータで利用可能です。
-
-WiFi からの着信トラフィックを、トラフィックがターゲットネットワークに到達できる追加のネットワークインタフェースにルーティングします。追加のネットワークインタフェースは、セットアップに応じて有線接続または他の WiFi カードにできます。
-
-#### 構成
-
-Kali Linux の構成ファイルにフォーカスします。以下の値を定義する必要があります。
-
-- wlan1 - AP ネットワークインタフェースの ID (AP 機能あり)
-- wlan0 - ターゲットネットワークインタフェースの ID (これは有線インタフェースまたは他の WiFi カードにできます)
-- 10.0.0.0/24 - AP ネットワークの IP アドレスとマスク
-
-以下の構成ファイルを変更し適宜に調整する必要があります。
-
-- hostapd.conf
-
-    ```bash
-    # Name of the WiFi interface we use
-    interface=wlan1
-    # Use the nl80211 driver
-    driver=nl80211
-    hw_mode=g
-    channel=6
-    wmm_enabled=1
-    macaddr_acl=0
-    auth_algs=1
-    ignore_broadcast_ssid=0
-    wpa=2
-    wpa_key_mgmt=WPA-PSK
-    rsn_pairwise=CCMP
-    # Name of the AP network
-    ssid=STM-AP
-    # Password of the AP network
-    wpa_passphrase=password
-    ```
-
-- wpa_supplicant.conf
-
-    ```bash
-    network={
-        ssid="NAME_OF_THE_TARGET_NETWORK"
-        psk="PASSWORD_OF_THE_TARGET_NETWORK"
-    }
-    ```
-
-- dnsmasq.conf
-
-    ```bash
-    interface=wlan1
-    dhcp-range=10.0.0.10,10.0.0.250,12h
-    dhcp-option=3,10.0.0.1
-    dhcp-option=6,10.0.0.1
-    server=8.8.8.8
-    log-queries
-    log-dhcp
-    listen-address=127.0.0.1
-    ```
-
-#### MITM 攻撃
-
-MITM ポジションを取得できるためには上記の構成を実行する必要があります。これは Kali Linux 上で以下のコマンドを使用して実行できます。
-
-```bash
-# check if other process is not using WiFi interfaces
-$ airmon-ng check kill
-# configure IP address of the AP network interface
-$ ifconfig wlan1 10.0.0.1 up
-# start access point
-$ hostapd hostapd.conf
-# connect the target network interface
-$ wpa_supplicant -B -i wlan0 -c wpa_supplicant.conf
-# run DNS server
-$ dnsmasq -C dnsmasq.conf -d
-# enable routing
-$ echo 1 > /proc/sys/net/ipv4/ip_forward
-# iptables will NAT connections from AP network interface to the target network interface
-$ iptables --flush
-$ iptables --table nat --append POSTROUTING --out-interface wlan0 -j MASQUERADE
-$ iptables --append FORWARD --in-interface wlan1 -j ACCEPT
-$ iptables -t nat -A POSTROUTING -j MASQUERADE
-```
-
-これでモバイルデバイスをアクセスポイントに接続できます。
-
-### ネットワーク解析ツール
-
-ホストコンピュータにリダイレクトされるネットワークトラフィックを監視および解析できるツールをインストールします。もっとも一般的な二つのネットワーク監視 (またはキャプチャ) ツールは以下の通りです。
-
-- [Wireshark](https://www.wireshark.org "Wireshark") (CLI pendant: [TShark](https://www.wireshark.org/docs/man-pages/tshark.html "TShark"))
-- [tcpdump](https://www.tcpdump.org/tcpdump_man.html "tcpdump")
-
-Wireshark には GUI があり、コマンドラインに慣れていないのであれば簡単です。コマンドラインツールを探しているのであれば TShark または tcpdump を使用する必要があります。これらのツールはいずれも、すべての主要な Linux および Unix オペレーティングシステムで利用可能であり、それぞれのパッケージインストールメカニズムの一部です。
-
-### 実行時計装によるプロキシの設定
-
-ルート化または脱獄済みデバイスでは、ランタイムフックを使用して、新しいプロキシを設定したりネットワークトラフィックをリダイレクトすることが可能です。これは [Inspeckage](https://github.com/ac-pm/Inspeckage "Inspeckage") などのフックツールや [Frida](https://www.frida.re "Frida") および [cycript](http://www.cycript.org "cycript") などのコードインジェクションフレームワークで実現できます。実行時計装についての詳細はこのガイドの「リバースエンジニアリングと改竄」の章で参照できます。
-
-### 例 - Xamarin の扱い
-
-例として、すべてのリクエストを Xamarin アプリから傍受プロキシにリダイレクトしてみます。
-
-Xamarin は Visual Studio と C# をプログラミング言語として使用して [ネイティブ Android](https://docs.microsoft.com/en-us/xamarin/android/get-started/ "Getting Started with Android") および [iOS アプリ](https://docs.microsoft.com/en-us/xamarin/ios/get-started/ "Getting Started with iOS") を作成できるモバイルアプリケーション開発プラットフォームです。
-
-Xamarin アプリをテストするときに Wi-Fi 設定でシステムプロキシを設定しようとすると、傍受プロキシで HTTP リクエストを見ることができなくなります。Xamarin により作成されたアプリはスマホのローカルプロキシ設定を使用しないためです。これを解決する方法は三つあります。
-
-- 第一の方法: [アプリにデフォルトプロキシ](https://developer.xamarin.com/api/type/System.Net.WebProxy/ "System.Net.WebProxy Class") を追加します。`OnCreate` または `Main` に以下のコードを追加してアプリを再作成します。
-
-    ```cs
-    WebRequest.DefaultWebProxy = new WebProxy("192.168.11.1", 8080);
-    ```
-
-- 第二の方法: bettercap を使用して MITM ポジションを取得します。MITM 攻撃のセットアップ方法については上記のセクションを参照してください。MITM であれば、ポート 443 を localhost 上で動作する傍受プロキシにリダイレクトするだけです。これは macOS で `rdr` コマンドを使うことにより行えます。
-
-    ```bash
-    $ echo "
-    rdr pass inet proto tcp from any to any port 443 -> 127.0.0.1 port 8080
-    " | sudo pfctl -ef -
-    ```
-
-    Linux システムでは `iptables` を使用できます。
-
-    ```bash
-    sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 127.0.0.1:8080
-    ```
-
-    最後のステップとして、 [Burp Suite](../tools/network/MASTG-TOOL-0077.md) の listener settings で 'Support invisible proxy' をセットする必要があります。
-
-- 第三の方法: bettercap の代わりのものでモバイルフォンの `/etc/hosts` を調整します。 `/etc/hosts` にターゲットドメインのエントリを追加し、傍受プロキシの IP アドレスをポイントします。これにより bettercap と同様に MITM となる状況を生成します。傍受プロキシで使用されるポートにポート 443 をリダイレクトする必要があります。リダイレクトは上述のように適用できます。さらに、トラフィックを傍受プロキシから元のロケーションとポートにリダイレクトする必要があります。
-
-> トラフィックをリダイレクトする際、ノイズとスコープ外のトラフィックを最小限に抑えるために、スコープ内のドメインと IP を狭めるルールを作成する必要があります。
-
-傍受プロキシは上記のポートフォワーディングルールで指定されたポート 8080 をリッスンする必要があります。
-
-Xamarin アプリがプロキシを使用 (例えば `WebRequest.DefaultWebProxy` を使用) するように設定されている場合、トラフィックを傍受プロキシにリダイレクトした後、次にトラフィックを送信すべき場所を指定する必要があります。そのトラフィックを元のロケーションにリダイレクトする必要があります。以下の手順は [Burp Suite](../tools/network/MASTG-TOOL-0077.md) で元のロケーションへのリダイレクトを設定しています。
-
-1. **Proxy** タブに移動し、**Options** をクリックします。
-2. proxy listeners のリストからリスナーを選択して編集します。
-3. **Request handling** タブに移動して以下をセットします。
-
-    - Redirect to host: 元のトラフィックロケーションを指定します。
-    - Redirect to port: 元のポートロケーションを指定します。
-    - 'Force use of SSL' をセット (HTTPS 使用時) および 'Support invisible proxy' をセットします。
-
-<img src="Images/Chapters/0x04f/burp_xamarin.png" width="100%" />
-
-#### CA 証明書
-
-まだ行われていなければ、HTTPS リクエストの傍受を許可するモバイルデバイスに CA 証明書をインストールします。
-
-- [Android フォンに傍受プロキシの CA 証明書をインストールする](https://support.portswigger.net/customer/portal/articles/1841102-installing-burp-s-ca-certificate-in-an-android-device "Installing Burp\'s CA Certificate in an Android Device")
-    > Android 7.0 (API level 24) 以降、アプリで指定されていない限り、OS はもはやユーザー指定の CA 証明書を信頼しないことに注意します。このセキュリティ対策の回避については、「セキュリティテスト入門」の章で説明します。
-- [iOS フォンに傍受プロキシの CA 証明書をインストールする](https://support.portswigger.net/customer/portal/articles/1841108-configuring-an-ios-device-to-work-with-burp "Configuring an iOS Device to Work With Burp")
-
-#### トラフィックの傍受
-
-アプリの使用を開始し、その機能を動かします。傍受プロキシに HTTP メッセージが表示されるはずです。
-
-> bettercap を使用する場合は、Proxy タブ / Options / Edit Interface で "Support invisible proxying" を有効にする必要があります
+- Android: [証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../techniques/android/MASTG-TECH-0012.md)
+- iOS: [証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../techniques/ios/MASTG-TECH-0064.md)
