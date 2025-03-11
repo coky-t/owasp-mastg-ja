@@ -36,6 +36,10 @@
 - [MASTG-TEST-0243](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0243.md) Network Security Configuration での証明書ピン留めの期限切れ (Expired Certificate Pins in the Network Security Configuration)
 - [MASTG-TEST-0244](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0244.md) ネットワークトラフィックでの証明書ピン留めの欠如 (Missing Certificate Pinning in Network Traffic)
 
+### MASVS-PLATFORM: プラットフォーム連携
+
+- [MASTG-TEST-0250](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0250.md) WebView におけるコンテンツプロバイダアクセスへの参照 (References to Content Provider Access in WebViews)
+
 ### MASVS-CODE: コード品質
 
 - [MASTG-TEST-0222](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)
