@@ -38,7 +38,9 @@
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
-- [MASTG-TEST-0250](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0250.md) WebView におけるコンテンツプロバイダアクセスへの参照 (References to Content Provider Access in WebViews)
+- [MASTG-TEST-0250](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0250.md) WebView におけるコンテンツプロバイダアクセスへの参照 (References to Content Provider Access in WebViews)
+- [MASTG-TEST-0251](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0251.md) WebView におけるコンテンツプロバイダアクセス API の実行時使用 (Runtime Use of Content Provider Access APIs in WebViews)
+s)
 
 ### MASVS-CODE: コード品質
 
