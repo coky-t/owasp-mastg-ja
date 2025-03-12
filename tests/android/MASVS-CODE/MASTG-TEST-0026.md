@@ -32,7 +32,7 @@ startActivityForResult(Intent.createChooser(intent, ""), REQUEST_IMAGE);
 
 この例では、インテントの返り値の不適切な検証によって、攻撃者がどのようにしてアプリの内部ストレージ `/data/data/<appname>` 内から任意のファイルを読み取ることができるかを見ていきます。
 
-以下の例の `performAction` メソッドは暗黙的インテントの戻り値を読み取ります。これは攻撃者が提供した URI である可能性があり、それを `getFileItemFromUri` に渡します。このメソッドはファイルを一時フォルダにコピーします。これはこのファイルが内部的に表示される場合に通常行われます。しかし、アプリが `getExternalCacheDir` や `getExternalFilesDir` を呼び出すなどして、URI で提供されたファイルを外部の一時ディレクトリに保存する場合、攻撃者は `android.permission.READ_EXTERNAL_STORAGE` パーミッションを設定することでこのファイルを読み取ることができます。
+以下の例の `performAction` メソッドは暗黙的インテントの戻り値を読み取ります。これは攻撃者が提供した URI である可能性があり、それを `getFileItemFromUri` に渡します。このメソッドはファイルを一時フォルダにコピーします。これはこのファイルが内部的に表示される場合に通常行われます。しかし、アプリが `getExternalCacheDir` や `getExternalFilesDir` を呼び出すなどして、URI で提供されたファイルを外部の一時ディレクトリに保存する場合、攻撃者は `android.permission.READ_EXTERNAL_STORAGE` パーミッションを設定した後でこのファイルを読み取ることができます。
 
 ```java
 private void performAction(Action action){
