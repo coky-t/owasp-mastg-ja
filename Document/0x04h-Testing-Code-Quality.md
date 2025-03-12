@@ -60,7 +60,7 @@ _XML インジェクション_ 攻撃では、攻撃者は XML メタキャラ�
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
- <!DOCTYPE foo [  
+ <!DOCTYPE foo [
   <!ELEMENT foo ANY >
   <!ENTITY xxe SYSTEM "file:///dev/random" >]><foo>&xxe;</foo>
 ```
@@ -236,10 +236,10 @@ Android アプリは大部分が Java で実装されています。これは設
 以下のコードスニペットはバッファオーバーフロー脆弱性をもたらす状態の簡単な例を示しています。
 
 ```c
- void copyData(char *userId) {  
-    char  smallBuffer[10]; // size of 10  
+ void copyData(char *userId) {
+    char  smallBuffer[10]; // size of 10
     strcpy(smallBuffer, userId);
- }  
+ }
 ```
 
 潜在的なバッファオーバーフローを特定するには、限られたサイズのバッファにユーザー入力をコピーするなど、安全ではない文字列関数 (`strcpy`, `strcat`, その他の "str" 接頭辞で始まる関数など) や潜在的に脆弱なプログラミング構造の使用を探します。以下は安全でない文字列関数のため危険とみなすべきです。
