@@ -49,7 +49,7 @@ CREST の OVS プログラムに関するコンサルテーションとグロー
 BSI は "Federal Office for Information Security" の略で、ドイツにおける IT セキュリティの推進を目的とし、連邦政府の IT セキュリティサービスプロバイダの中心的な役割を担っています。
 
 - [Technical Guideline BSI TR-03161 Security requirements for eHealth applications v1.0, 2020](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03161/TR-03161.pdf)
-- [Prüfvorschrift für den Produktgutachter des „ePA-Frontend des Versicherten“ und des „E-Rezept-Frontend des Versicherten v2.0, 2021](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/DigitaleGesellschaft/Pruefvorschrift_Produktgutachter_ePA-Frontend.pdf)
+- [Prüfvorschrift für den Produktgutachter des „ePA-Frontend des Versicherten" und des „E-Rezept-Frontend des Versicherten v2.0, 2021](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/DigitaleGesellschaft/Pruefvorschrift_Produktgutachter_ePA-Frontend.pdf)
 
 ### ioXt
 
