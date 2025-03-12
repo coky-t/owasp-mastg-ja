@@ -51,7 +51,7 @@ Network Security Configuration は [XML ベース](https://developer.android.com
 
 さらに学ぶために:
 
-- ["A Security Analyst’s Guide to Network Security Configuration in Android P"](https://www.nowsecure.com/blog/2018/08/15/a-security-analysts-guide-to-network-security-configuration-in-android-p/)
+- ["A Security Analyst's Guide to Network Security Configuration in Android P"](https://www.nowsecure.com/blog/2018/08/15/a-security-analysts-guide-to-network-security-configuration-in-android-p/)
 - [Android Developers - Network Security Configuration](https://developer.android.com/training/articles/security-config)
 - [Android Codelab - Network Security Configuration](https://developer.android.com/codelabs/android-network-security-config)
 
