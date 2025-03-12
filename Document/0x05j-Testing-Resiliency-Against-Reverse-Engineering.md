@@ -64,35 +64,35 @@ API は `APP_NOT_INSTALLED` や `APP_UID_MISMATCH` などのローカルエラ�
 
 3. 完全性検証リクエストに `NONCE` を含めます。アプリまたはサーバーが生成するこの乱数値は、サードパーティによる改竄がなく、レスポンスが元のリクエストと一致することを検証サーバーが確認するのに役立ちます。
 
-**制限事項:**  
+**制限事項:**
 Google Play Services Integrity Verification API リクエストのデフォルトの日ごとの制限は 10,000 リクエスト/日 です。それ以上を必要とするアプリケーションは Google に連絡して上限を増やすようリクエストしなければなりません。
 
-**リクエスト例:**  
+**リクエスト例:**
 
 ```json
-{  
-   "requestDetails": {  
-     "requestPackageName": "com.example.your.package",  
-     "timestampMillis": "1666025823025",  
-     "nonce": "kx7QEkGebwQfBalJ4...Xwjhak7o3uHDDQTTqI"  
-   },  
-   "appIntegrity": {  
-     "appRecognitionVerdict": "UNRECOGNIZED_VERSION",  
-     "packageName": "com.example.your.package",  
-     "certificateSha256Digest": [  
-       "vNsB0...ww1U"  
-     ],  
-     "versionCode": "1"  
-   },  
-   "deviceIntegrity": {  
-     "deviceRecognitionVerdict": [  
-       "MEETS_DEVICE_INTEGRITY"  
-     ]  
-   },  
-   "accountDetails": {  
-     "appLicensingVerdict": "UNEVALUATED"  
-   }  
- }  
+{
+   "requestDetails": {
+     "requestPackageName": "com.example.your.package",
+     "timestampMillis": "1666025823025",
+     "nonce": "kx7QEkGebwQfBalJ4...Xwjhak7o3uHDDQTTqI"
+   },
+   "appIntegrity": {
+     "appRecognitionVerdict": "UNRECOGNIZED_VERSION",
+     "packageName": "com.example.your.package",
+     "certificateSha256Digest": [
+       "vNsB0...ww1U"
+     ],
+     "versionCode": "1"
+   },
+   "deviceIntegrity": {
+     "deviceRecognitionVerdict": [
+       "MEETS_DEVICE_INTEGRITY"
+     ]
+   },
+   "accountDetails": {
+     "appLicensingVerdict": "UNEVALUATED"
+   }
+ }
 ```
 
 #### プログラムによる検出
