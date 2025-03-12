@@ -14,6 +14,8 @@ OWASP MASVS と MASTG は以下のプラットフォームプロバイダ、標�
 
 ## 執筆者
 
+<!-- markdownlint-disable search-replace -->
+
 ### Bernhard Mueller
 
 Bernhard はあらゆる種類のシステムをハックする才能を持つサイバーセキュリティの専門家です。業界で10年以上にわたり、MS SQL Server, Adobe Flash Player, IBM Director, Cisco VOIP, ModSecurity などのソフトウェアに対するゼロデイエクスプロイトを多数公表しています。それに名前をつけることができても、おそらく少なくとも一度はそれを破棄しているでしょう。BlackHat USA は Pwnie Award for Best Research でモバイルセキュリティの先駆的な取り組みを賞賛しました。
@@ -45,6 +47,8 @@ Jeroen はモバイルセキュリティのリーダーであり、モバイル�
 ### Vikas Gupta
 
 Vikas はモバイルセキュリティの専門知識を持つ経験豊富なサイバーセキュリティ研究者です。これまでのキャリアではフィンテック、銀行、政府機関などさまざまな業界のアプリケーションをセキュアにすることに取り組んできました。リバースエンジニアリング、特に難読化されたネイティブコードと暗号化を得意としています。セキュリティとモバイルコンピューティングの修士号と OSCP 資格を保有しています。彼は自分の知識を共有し、アイデアを交換することに常にオープンです。
+
+<!-- markdownlint-disable search-replace -->
 
 <!-- \pagebreak -->
 
