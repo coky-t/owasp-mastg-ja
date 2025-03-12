@@ -152,7 +152,7 @@ frida-trace -U -f /Applications/DamnVulnerableIOSApp.app/DamnVulnerableIOSApp  -
 ```javascript
 onLeave: function (log, retval, state) {
     console.log("Function [JailbreakDetectionVC isJailbroken] originally returned:"+ retval);
-    retval.replace(0);  
+    retval.replace(0);
     console.log("Changing the return value to:"+retval);
 }
 ```
@@ -483,7 +483,7 @@ iOS の難読化技法については記事 ["Protecting Million-User iOS Apps w
 
 [iOS 7.0 以降](https://developer.apple.com/library/content/releasenotes/General/RN-iOSSDK-7.0/index.html "iOS 7 release notes")、ハードウェア識別子 (MAC アドレスなど) は制限されていますが、iOS でデバイスバインディングを実装する他の方法があります。
 
-- **`identifierForVendor`**: `[[UIDevice currentDevice] identifierForVendor]` (Objective-C の場合),  `UIDevice.current.identifierForVendor?.uuidString` (Swift3 の場合), `UIDevice.currentDevice().identifierForVendor?.UUIDString` (Swift2 の場合) を使用できます。同じベンダーの他のアプリをインストールした後にアプリを再インストールすると `identifierForVendor` の値は同じにならないことがあり、アプリバンドル名を更新すると変わることがあります。したがって、キーチェーン内の何かと組み合わせるのが最良です。
+- **`identifierForVendor`**: `[[UIDevice currentDevice] identifierForVendor]` (Objective-C の場合), `UIDevice.current.identifierForVendor?.uuidString` (Swift3 の場合), `UIDevice.currentDevice().identifierForVendor?.UUIDString` (Swift2 の場合) を使用できます。同じベンダーの他のアプリをインストールした後にアプリを再インストールすると `identifierForVendor` の値は同じにならないことがあり、アプリバンドル名を更新すると変わることがあります。したがって、キーチェーン内の何かと組み合わせるのが最良です。
 - **キーチェーンの使用**: アプリケーションのインスタンスを識別するためにキーチェーンに何かを保存できます。このデータがバックアップされないようにするには `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` (データを保護し、パスコードや Touch ID の要件を適切に実施したい場合), `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`, `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` を使用します。
 - **Google Instance ID の使用**: [iOS の実装はこちら](https://developers.google.com/instance-id/guides/ios-implementation "iOS implementation Google Instance ID") を参照してください。
 
