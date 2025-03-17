@@ -77,5 +77,5 @@ ATS にはこれを [正当化する文字列](https://developer.apple.com/docum
 
 詳細については以下を参照してください。
 
-- ["ネットワーク通信のテスト"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-traffic-on-the-network-layer) の章の "ネットワーク層でのトラフィックの傍受"
+- ["MITM によるネットワークトラフィックの傍受"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm)
 - [基本的なネットワークモニタリングとスニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/ios/MASTG-TECH-0062.md)
