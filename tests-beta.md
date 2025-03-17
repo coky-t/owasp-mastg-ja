@@ -63,6 +63,7 @@
 - [MASTG-TEST-0206](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0206.md) ネットワークトラフィックキャプチャにおける機密データ (Sensitive Data in Network Traffic Capture)
 - [MASTG-TEST-0254](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0254.md) 危険なアプリパーミッション (Dangerous App Permissions)
 - [MASTG-TEST-0255](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0255.md) 最低限でないパーミッションリクエスト (Permission Requests Not Minimized)
+- [MASTG-TEST-0256](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0256.md) パーミッションの理由付けの欠如 (Missing Permission Rationale)
 
 ## iOS
 
