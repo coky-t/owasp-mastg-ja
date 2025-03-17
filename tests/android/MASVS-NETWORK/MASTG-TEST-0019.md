@@ -49,5 +49,5 @@ deprecation_note: New version available in MASTG V2
 
 詳細については以下を参照してください。
 
-- "モバイルアプリのネットワーク通信" の章の ["MITM によるネットワークトラフィックの傍受"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm)
+- ["MITM によるネットワークトラフィックの傍受"](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm)
 - [基本的なネットワークモニタリングとスニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/android/MASTG-TECH-0010.md)
