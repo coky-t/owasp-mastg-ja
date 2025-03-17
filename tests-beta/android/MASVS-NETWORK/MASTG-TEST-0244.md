@@ -10,7 +10,7 @@ weakness: MASWE-0047
 
 Android Network Security Config、カスタム TrustManager 実装、サードパーティライブラリ、ネイティブコードなど、アプリケーションが証明書のピン留めを実装する複数の方法があります。一部の実装には、特に難読化や動的コードローディングが関与する場合、静的解析では特定が困難なものがあるため、このテストではネットワーク傍受技法を使用して、実行時に証明書のピン留めが強制されているかどうかを判断します。
 
-このテストの目的は [MITM 攻撃]("../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) がアプリから HTTPS トラフィックを傍受できるかどうかを観察することです。MITM 傍受に成功した場合、アプリが証明書のピン留めを使用していないか、正しく実装していないことを示しています。
+このテストの目的は [MITM 攻撃](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) がアプリから HTTPS トラフィックを傍受できるかどうかを観察することです。MITM 傍受に成功した場合、アプリが証明書のピン留めを使用していないか、正しく実装していないことを示しています。
 
 アプリが証明書ピン留めを適切に実装している場合、CA がシステムによって信頼されている場合でも、アプリは認可されていない CA によって発行された証明書を拒否するため、MITM 攻撃は失敗するはずです。
 
