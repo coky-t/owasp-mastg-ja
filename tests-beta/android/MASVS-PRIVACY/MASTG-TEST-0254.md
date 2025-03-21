@@ -1,7 +1,8 @@
 ---
-platform: android
 title: 危険なアプリパーミッション (Dangerous App Permissions)
+platform: android
 id: MASTG-TEST-0254
+type: [static]
 weakness: MASWE-0117
 ---
 
