@@ -65,6 +65,7 @@
 - [MASTG-TEST-0255](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0255.md) 最低限でないパーミッションリクエスト (Permission Requests Not Minimized)
 - [MASTG-TEST-0256](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0256.md) パーミッションの理由付けの欠如 (Missing Permission Rationale)
 - [MASTG-TEST-0257](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0257.md) リセットしていない未使用のパーミッション (Not Resetting Unused Permissions)
+- [MASTG-TEST-0258](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0258.md) UI 要素のキーボードキャッシュ属性への参照 (References to Keyboard Caching Attributes in UI Elements)
 
 ## iOS
 
