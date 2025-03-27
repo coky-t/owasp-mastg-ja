@@ -94,13 +94,17 @@ Android は アプリの DEX ファイル (classes.dex など) から Dalvik バ
 
 #### StrictMode
 
-StrictMode はアプリケーションのメインスレッドでの偶発的なディスクやネットワークアクセスなどの違反を検出するための開発者ツールです。効率の良いコード実装など優れたコーディングプラクティスをチェックするためにも使用できます。
+StrictMode はアプリのメインスレッドへの偶発的なディスクやネットワークアクセスなどの違反を検出するための開発者ツールです。効率の良いコード実装など優れたコーディングプラクティスをチェックするためにも使用できます。
 
-メインスレッドへのディスクおよびネットワークアクセスに対してポリシーを有効にした [`StrictMode` の例](https://developer.android.com/reference/android/os/StrictMode.html "StrictMode Class") は以下のとおりです。
+[ThreadPolicy Builder](https://developer.android.com/reference/android/os/StrictMode.ThreadPolicy.Builder) と [VmPolicy Builder](https://developer.android.com/reference/android/os/StrictMode.VmPolicy.Builder) を使用して、さまざまなポリシーを設定できます。
+
+検出したポリシー違反に対する反応は、一つ以上の `penalty*` メソッドを使用して設定できます。たとえば、`penaltyLog()` を有効にすると、ポリシー違反をシステムログにログ記録できます。
+
+以下はメインスレッドへのディスクおよびネットワークアクセスに対してポリシーを有効にした [`StrictMode`](https://developer.android.com/reference/android/os/StrictMode.html "StrictMode Class") の例です。これが検出されると、ログメッセージがシステムログに書き込まれ、アプリは強制的にクラッシュします。
 
 ```java
 public void onCreate() {
-     if (DEVELOPER_MODE) {
+     if (BuildConfig.DEBUG) {
          StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                  .detectDiskReads()
                  .detectDiskWrites()
@@ -118,7 +122,7 @@ public void onCreate() {
  }
 ```
 
-`DEVELOPER_MODE` 条件で `if` ステートメントにポリシーを挿入することをお勧めします。`StrictMode` を無効にするには、リリースビルドに対して `DEVELOPER_MODE` を無効にする必要があります。
+アプリのデバッグビルドでのみ StrictMode ポリシーを自動的に有効にするには、`BuildConfig.DEBUG` 条件での `if` ステートメントにポリシーを含めることをお勧めします。
 
 ### 例外処理
 
