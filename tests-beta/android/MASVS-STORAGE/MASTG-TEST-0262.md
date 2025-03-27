@@ -26,7 +26,7 @@ best-practices: [MASTG-BEST-0004]
 
 ## 手順
 
-1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../techniques/android/MASTG-TECH-0117.md) を使用して `AndroidManifest.xml` ファイルを取得します。
+1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して `AndroidManifest.xml` ファイルを取得します。
 2. `AndroidManifest.xml` に対して `allowBackup` フラグを検索します。
 3. `AndroidManifest.xml` に対して `fullBackupContent` 属性 (Android 11 以前の場合) または `dataExtractionRules` 属性 (Android 12 以降の場合) を検索します。
 4. `backup_rules.xml` または `data_extraction_rules.xml` ファイルを取得します。
