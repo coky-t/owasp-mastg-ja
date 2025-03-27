@@ -16,7 +16,8 @@ Android アプリはレイアウトファイル内の XML 属性を使用する�
 
 1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
 2. `res/layout` ディレクトリ内のレイアウトファイルに対して上記の XML 属性を検索します。
-3. リバースしたコードに対して上記コード属性と `setInputType` API コールを検索します ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md))。
+3. `setInputType` メソッドコールとそれに渡される入力タイプ値を検索します ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md))。
+4. アプリが Jetpack Compose を使用している場合、リバースしたコードに対して [`KeyboardOptions` コンストラクタ](https://developer.android.com/reference/kotlin/androidx/compose/foundation/text/KeyboardOptions#public-constructors_1) へのコールとそのパラメータを検索します ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md))。特に `keyboardType` と `autoCorrect` です。
 
 ## 結果
 
