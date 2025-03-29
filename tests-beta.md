@@ -59,6 +59,7 @@
 - [MASTG-TEST-0247](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0247.md) 安全な画面ロックを検出するための API への参照 (References to APIs for Detecting Secure Screen Lock)
 - [MASTG-TEST-0249](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0249.md) 安全な画面ロック検出 API の実行時使用 (Runtime Use of Secure Screen Lock Detection APIs)
 - [MASTG-TEST-0263](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0263.md) StrictMode 違反のログ記録 (Logging of StrictMode Violations)
+- [MASTG-TEST-0264](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0264.md) StrictMode API の実行時使用 (Runtime Use of StrictMode APIs)
 
 ### MASVS-PRIVACY: プライバシー
 
