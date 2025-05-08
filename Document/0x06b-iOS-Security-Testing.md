@@ -14,7 +14,7 @@
 - [Xcode](../tools/ios/MASTG-TOOL-0070.md) と [Xcode Command Line Tools](../tools/ios/MASTG-TOOL-0071.md) がインストールされていること。
 - クライアント間のトラフィックを許可する Wi-Fi ネットワーク。
 - 少なくとも一台の脱獄済み iOS デバイス (目的の iOS バージョンのもの)。
-- [Burp Suite](../tools/network/MASTG-TOOL-0077.md) またはその他の傍受プロキシツール。
+- [mitmproxy](../tools/network/MASTG-TOOL-0097.md) またはその他の傍受プロキシツール。
 
 ### iOS デバイスの UDID を取得する
 
