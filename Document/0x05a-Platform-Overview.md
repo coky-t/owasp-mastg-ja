@@ -91,7 +91,7 @@ Android デバイスで実行されているコードが信頼できるソース
 
 Android オペレーティングシステムは Linux をベースにしていますが、他の Unix ライクなシステムと同じようにユーザーアカウントを実装してはいません。 Android では Linux カーネルのマルチユーザーサポートを使用してアプリをサンドボックス化しています。一部の例外を除いて、各アプリは別々の Linux ユーザーの下で実行しており、他のアプリやオペレーティングシステムの他の部分から実質的に分離されています。
 
-ファイル [system/core/include/private/android_filesystem_config.h](http://androidxref.com/9.0.0_r3/xref/system/core/include/private/android_filesystem_config.h "android_filesystem_config.h") には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。
+ファイル [android_filesystem_config.h](https://android.googlesource.com/platform/system/core/+/master/libcutils/include/private/android_filesystem_config.h) には、システムプロセスに割り当てられる定義済みユーザーおよびグループのリストがあります。他のアプリケーション用の UID (userID) は後者がインストールされたときに追加されます。
 
 例えば、 Android 9.0 (API レベル 28) では以下のシステムユーザーが定義されています。
 
@@ -166,42 +166,7 @@ Android アプリは Android Framework を介してシステムサービスと�
 
 API 仕様は Android の新しいリリースごとに変更されます。重要なバグ修正とセキュリティパッチは通常、以前のバージョンにも適用されます。
 
-注目すべき [API バージョン](https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels "What is API level?"):
-
-- Android 4.2 (API レベル 16) 2012年11月 (SELinux の導入)
-- Android 4.3 (API レベル 18) 2013年7月 (SELinux がデフォルトで有効になる)
-- Android 4.4 (API レベル 19) 2013年10月 (いくつかの新しい API と ART の導入された)
-- Android 5.0 (API レベル 21) 2014年11月 (ART がデフォルトで使用され、その他多くの機能が追加された)
-- Android 6.0 (API レベル 23) 2015年10月 (多くの新機能と改善点、インストール時の是非ではなく実行時のきめ細かい権限設定付与を含む)
-- Android 7.0 (API レベル 24-25) 2016年8月 (ART 上の新しい JIT コンパイラ)
-- Android 8.0 (API レベル 26-27) 2017年8月 (多くのセキュリティ改善点)
-- Android 9 (API レベル 28) 2018年8月 (マイクやカメラのバックグラウンド使用の制限、ロックダウンモードの導入、すべてのアプリに対するデフォルト HTTPS)
-- **Android 10 (API レベル 29)** 2019年9月 (「アプリ使用時のみ」位置情報へのアクセス、デバイス追跡防止、セキュア外部ストレージの改善)
-    - [プライバシー (概要)](https://developer.android.com/about/versions/10/highlights#privacy_for_users "Android 10 Privacy Overview")
-    - [プライバシー (詳細 1)](https://developer.android.com/about/versions/10/privacy "Android 10 Privacy Details 1")
-    - [プライバシー (詳細 2)](https://developer.android.com/about/versions/10/privacy/changes "Android 10 Privacy Details 2")
-    - [セキュリティ (概要)](https://developer.android.com/about/versions/10/highlights#security "Android 10 Security Overview")
-    - [セキュリティ (詳細)](https://developer.android.com/about/versions/10/behavior-changes-all#security "Android 10 Security Details")
-- **Android 11 (API レベル 30)** 2020年9月 (スコープ付きストレージの適用、パーミッション自動リセット、 [パッケージ可視性の抑制](https://developer.android.com/training/package-visibility) 、 APK 署名スキーム v4)
-    - [プライバシー (概要)](https://developer.android.com/about/versions/11/privacy "Android 11 Privacy Overview")
-    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all "Android 11 Privacy Behavior changes (all apps)")
-    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/11/behavior-changes-all#security "Android 11 Security Behavior changes (all apps)")
-    - [プライバシー動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#privacy "Android 11 Privacy Behavior changes (apps targeting version)")
-    - [セキュリティ動作の変更 (バージョン 11 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/11/behavior-changes-11#security "Android 11 Security Behavior changes (apps targeting version)")
-- **Android 12 (API レベル 31-32)** 2021年8月 (Material You、ウェブインテントの解決、プライバシーダッシュボード)
-    - [セキュリティとプライバシー](https://developer.android.com/about/versions/12/features#security-privacy)
-    - [動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/12/behavior-changes-all#security-privacy)
-    - [動作の変更 (バージョン 12 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/12/behavior-changes-12#security-privacy)
-- **Android 13 (API レベル 33)** 2022年 (コンテキスト登録されたレシーバーの安全なエクスポート、新しい写真ピッカー)
-    - [セキュリティとプライバシー](https://developer.android.com/about/versions/13/features#privacy-security "Android 13 Security and privacy")
-    - [プライバシー動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#privacy "Android 13 Privacy Behavior changes (all apps)")
-    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/13/behavior-changes-all#security "Android 13 Security Behavior changes (all apps)")
-    - [プライバシー動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#privacy "Android 13 Privacy Behavior changes (apps targeting version)")
-    - [セキュリティ動作の変更 (バージョン 13 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/13/behavior-changes-13#security "Android 13 Security Behavior changes (apps targeting version)")
-- **Android 14 (API レベル 34)** 2023年:
-    - [変更の概要](https://developer.android.com/about/versions/14/summary "Android 14 Summary of changes")
-    - [セキュリティ動作の変更 (すべてのアプリ)](https://developer.android.com/about/versions/14/behavior-changes-all#security "Android 14 Security Behavior changes (all apps)")
-    - [セキュリティ動作の変更 (バージョン 14 以上をターゲットとするアプリ)](https://developer.android.com/about/versions/14/behavior-changes-14#security "Android 14 Security Behavior changes (apps targeting version)")
+注目すべき [API バージョン](https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels "What is API level?")。Android バージョンごとに導入されたセキュリティとプライバシー機能の詳細については [最新の minSdkVersion を使用する (Use Up-to-Date minSdkVersion)](../best-practices/MASTG-BEST-0010.md) を参照してください。
 
 Android 開発リリースはユニークな構造になっています。それらはファミリーに編成され、おいしいお菓子にインスパイアされたアルファベット順のコードネームが付けられています。これらはすべて [こちら](https://source.android.com/docs/setup/about/build-numbers "Codenames, tags, and build numbers") で見ることができます。
 
@@ -242,7 +207,7 @@ uid=10188(u0_a188) gid=10188(u0_a188) groups=10188(u0_a188),3003(inet),
 
 グループ ID とパーミッションの関係は以下のファイルで定義されています。
 
-[frameworks/base/data/etc/platform.xml](http://androidxref.com/9.0.0_r3/xref/frameworks/base/data/etc/platform.xml "platform.xml")
+[platform.xml](https://android.googlesource.com/platform/frameworks/base/+/master/data/etc/platform.xml)
 
 ```xml
 <permission name="android.permission.INTERNET" >
