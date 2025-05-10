@@ -10,3 +10,4 @@
 - [MASTG-BEST-0008](best-practices/MASTG-BEST-0008.md) WebView のデバッグを無効にする (Debugging Disabled for WebViews)
 - [MASTG-BEST-0009](best-practices/MASTG-BEST-0009.md) 安全な暗号アルゴリズムを使用する (Use Secure Encryption Algorithms)
 - [MASTG-BEST-0010](best-practices/MASTG-BEST-0010.md) 最新の minSdkVersion を使用する (Use Up-to-Date minSdkVersion)
+- [MASTG-BEST-0011](best-practices/MASTG-BEST-0011.md) WebView でファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)
