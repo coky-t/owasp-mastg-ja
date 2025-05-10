@@ -12,3 +12,4 @@
 - [MASTG-BEST-0010](best-practices/MASTG-BEST-0010.md) 最新の minSdkVersion を使用する (Use Up-to-Date minSdkVersion)
 - [MASTG-BEST-0011](best-practices/MASTG-BEST-0011.md) WebView でファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)
 - [MASTG-BEST-0012](best-practices/MASTG-BEST-0012.md) WebView で JavaScript を無効にする (Disable JavaScript in WebViews)
+- [MASTG-BEST-0013](best-practices/MASTG-BEST-0013.md) WebView でコンテンツプロバイダアクセスを無効にする (Disable Content Provider Access in WebViews)
