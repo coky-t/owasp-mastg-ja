@@ -90,6 +90,7 @@
 - [MASTG-TEST-0266](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0266.md) イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
 - [MASTG-TEST-0267](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0267.md) イベントバウンド型生体認証の実行時使用 (Runtime Use Of Event-Bound Biometric Authentication)
 - [MASTG-TEST-0268](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0268.md) 非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)
+- [MASTG-TEST-0269](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0269.md) 非生体認証へのフォールバックを許可する API の実行時使用 (Runtime Use Of APIs Allowing Fallback to Non-Biometric Authentication)
 
 ### MASVS-CODE: コード品質
 
