@@ -92,6 +92,7 @@
 - [MASTG-TEST-0268](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0268.md) 非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)
 - [MASTG-TEST-0269](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0269.md) 非生体認証へのフォールバックを許可する API の実行時使用 (Runtime Use Of APIs Allowing Fallback to Non-Biometric Authentication)
 - [MASTG-TEST-0270](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0270.md) 生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)
+- [MASTG-TEST-0271](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0271.md) 生体認証登録の変更を検出する API の実行時使用 (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
 
 ### MASVS-CODE: コード品質
 
