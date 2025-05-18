@@ -85,6 +85,15 @@
 - [MASTG-TEST-0213](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md) コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 
+### MASVS-AUTH: 認証と認可
+
+- [MASTG-TEST-0266](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0266.md) イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
+- [MASTG-TEST-0267](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0267.md) (Runtime Use Of Event-Bound Biometric Authentication)
+- [MASTG-TEST-0268](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0268.md) (References to APIs Allowing Fallback to Non-Biometric Authentication)
+- [MASTG-TEST-0269](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0269.md) (Runtime Use Of APIs Allowing Fallback to Non-Biometric Authentication)
+- [MASTG-TEST-0270](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0270.md) (References to APIs Detecting Biometric Enrollment Changes)
+- [MASTG-TEST-0271](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0271.md) (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
+
 ### MASVS-CODE: コード品質
 
 - [MASTG-TEST-0228](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
