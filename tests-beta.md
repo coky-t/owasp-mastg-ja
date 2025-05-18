@@ -87,12 +87,12 @@
 
 ### MASVS-AUTH: 認証と認可
 
-- [MASTG-TEST-0266](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0266.md) イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
-- [MASTG-TEST-0267](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0267.md) (Runtime Use Of Event-Bound Biometric Authentication)
-- [MASTG-TEST-0268](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0268.md) (References to APIs Allowing Fallback to Non-Biometric Authentication)
-- [MASTG-TEST-0269](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0269.md) (Runtime Use Of APIs Allowing Fallback to Non-Biometric Authentication)
-- [MASTG-TEST-0270](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0270.md) (References to APIs Detecting Biometric Enrollment Changes)
-- [MASTG-TEST-0271](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0271.md) (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
+- [MASTG-TEST-0266](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0266.md) イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
+- [MASTG-TEST-0267](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0267.md) (Runtime Use Of Event-Bound Biometric Authentication)
+- [MASTG-TEST-0268](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0268.md) (References to APIs Allowing Fallback to Non-Biometric Authentication)
+- [MASTG-TEST-0269](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0269.md) (Runtime Use Of APIs Allowing Fallback to Non-Biometric Authentication)
+- [MASTG-TEST-0270](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0270.md) (References to APIs Detecting Biometric Enrollment Changes)
+- [MASTG-TEST-0271](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0271.md) (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
 
 ### MASVS-CODE: コード品質
 
