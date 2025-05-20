@@ -49,6 +49,7 @@
 - [MASTG-TEST-0222](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)
 - [MASTG-TEST-0223](tests-beta/android/MASVS-CODE/MASTG-TEST-0223.md) スタックカナリアが有効でない (Stack Canaries Not Enabled)
 - [MASTG-TEST-0245](tests-beta/android/MASVS-CODE/MASTG-TEST-0245.md) プラットフォームバージョン API への参照 (References to Platform Version APIs)
+- [MASTG-TEST-0272](tests-beta/android/MASVS-CODE/MASTG-TEST-0272.md) Android プロジェクトで既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
