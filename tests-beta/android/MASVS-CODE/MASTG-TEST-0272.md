@@ -1,6 +1,6 @@
 ---
 platform: android
-title: Android プロジェクトで既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
+title: Android プロジェクトでの既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
 id: MASTG-TEST-0272
 type: [static]
 weakness: MASWE-0076
