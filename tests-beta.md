@@ -50,6 +50,7 @@
 - [MASTG-TEST-0223](tests-beta/android/MASVS-CODE/MASTG-TEST-0223.md) スタックカナリアが有効でない (Stack Canaries Not Enabled)
 - [MASTG-TEST-0245](tests-beta/android/MASVS-CODE/MASTG-TEST-0245.md) プラットフォームバージョン API への参照 (References to Platform Version APIs)
 - [MASTG-TEST-0272](tests-beta/android/MASVS-CODE/MASTG-TEST-0272.md) Android プロジェクトでの既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
+- [MASTG-TEST-0274](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md) アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
