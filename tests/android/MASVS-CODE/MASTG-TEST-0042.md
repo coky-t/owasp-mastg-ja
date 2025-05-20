@@ -8,6 +8,9 @@ title: サードパーティーライブラリの脆弱性の確認 (Checking fo
 masvs_v1_levels:
 - L1
 - L2
+status: deprecated
+covered_by: [MASTG-TEST-0272, MASTG-TEST-0274]
+deprecation_note: New version available in MASTG V2
 ---
 
 ## 概要
