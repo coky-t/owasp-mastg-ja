@@ -101,6 +101,7 @@
 - [MASTG-TEST-0228](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
 - [MASTG-TEST-0229](tests-beta/ios/MASVS-CODE/MASTG-TEST-0229.md) スタックカナリアが有効でない (Stack Canaries Not enabled)
 - [MASTG-TEST-0230](tests-beta/ios/MASVS-CODE/MASTG-TEST-0230.md) 自動参照カウント (ARC) が有効でない (Automatic Reference Counting (ARC) not enabled)
+- [MASTG-TEST-0273](tests-beta/ios/MASVS-CODE/MASTG-TEST-0273.md) 依存関係マネージャのアーティファクトをスキャンして既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities by Scanning Dependency Managers Artifacts)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
