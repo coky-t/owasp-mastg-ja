@@ -63,6 +63,7 @@
 - [MASTG-TOOL-0129](tools/generic/MASTG-TOOL-0129.md) rabin2
 - [MASTG-TOOL-0131](tools/generic/MASTG-TOOL-0131.md) dependency-check
 - [MASTG-TOOL-0132](tools/generic/MASTG-TOOL-0132.md) dependency-track
+- [MASTG-TOOL-0133](tools/generic/MASTG-TOOL-0133.md) Visual Studio Code (vscode)
 
 ## iOS
 
