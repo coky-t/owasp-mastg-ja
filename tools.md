@@ -62,6 +62,7 @@
 - [MASTG-TOOL-0110](tools/generic/MASTG-TOOL-0110.md) semgrep
 - [MASTG-TOOL-0129](tools/generic/MASTG-TOOL-0129.md) rabin2
 - [MASTG-TOOL-0131](tools/generic/MASTG-TOOL-0131.md) dependency-check
+- [MASTG-TOOL-0132](tools/generic/MASTG-TOOL-0132.md) dependency-track
 
 ## iOS
 
