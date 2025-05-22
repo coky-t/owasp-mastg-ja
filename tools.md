@@ -41,6 +41,7 @@
 - [MASTG-TOOL-0123](tools/android/MASTG-TOOL-0123.md) apksigner
 - [MASTG-TOOL-0124](tools/android/MASTG-TOOL-0124.md) aapt2
 - [MASTG-TOOL-0125](tools/android/MASTG-TOOL-0125.md) Apkleaks
+- [MASTG-TOOL-0130](tools/android/MASTG-TOOL-0130.md) blint
 
 ## Generic
 
