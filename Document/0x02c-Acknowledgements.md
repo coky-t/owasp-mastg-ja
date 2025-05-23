@@ -71,18 +71,36 @@ MAS 支持者はディスカッションに参加したり、フィードバッ�
 
 ## 私たちの MAS 支持者
 
-<img src="Images/Other/nowsecure-logo.png" width="350px" />
+### NowSecure
 
-**2022 年以来、プロジェクトを前進させたいと考えている他の潜在的な貢献者にとっての青写真となる模範的な貢献をしてくれた [NowSecure](https://www.nowsecure.com) に感謝します。**
+<img src="Images/Other/nowsecure-logo.png" style="width: 50%; border-radius: 5px" />
 
-### NowSecure の MAS プロジェクトへの貢献
+**2022 年以来、プロジェクトを前進させたいと考えている他の潜在的な貢献者にとっての青写真となる模範的な貢献をしてくれた [NowSecure](https://www.nowsecure.com) に感謝します。** [彼らの道程の詳細についてはこちらをご覧ください。](https://github.com/OWASP/owasp-mastg/blob/master/docs/news/posts/2025-04-09-celebrating-3-years-advocate-nowsecure.md)
 
 **影響力の大きな貢献:**
 
-- コンテンツ PRs
-- PR に対するテクニカルレビュー
-- GitHub ディスカッションへの参加
+- 数百ものプルリクエストとレビューにより、MAS のリソースを大幅に強化しました。
+- プロジェクトを MSTG から OWASP MAS にリブランディングする上で重要な役割を果たしました。
+- 抽象化とテストプロファイルに関するフィードバックを含む、MASVS v2.0.0 への主要な貢献をしました。
+- フレームワークのモジュール化を含む、MASTG リファクタリングへの貢献をしました。
+- MASVS-PRIVACY と MASWE の導入に多大な貢献をしました。
+- MAS タスクフォースのリーダーシップにより、ロードマップの推進に貢献しました。
+- Android および iOS 向けの MAS テストアプリの開発をサポートしました。
 
-特筆すべきは **MASVS と MASTG のリファクタリングへの貢献と OWASP MASWE の作成** です。
+**OWASP Project Summit 2024** での NowSecure の貢献は特に注目に値します。同社はモバイルアプリのセキュリティトラックを主導し、多くの貢献をレビューし、コラボレーションとイノベーションを促進しました。
 
 過去には NowSecure もプロジェクトに貢献し、[Android UnCrackable L4](../apps/android/MASTG-APP-0015.md) を寄贈しています。
+
+### Guardsquare
+
+<img src="Images/Other/guardsquare-logo.png" style="width: 50%; border-radius: 5px" />
+
+**OWASP MAS プロジェクトへの卓越した貢献により、2025 年に MAS 支持者ステータスを獲得した [Guardsquare](https://www.guardsquare.com) に感謝します。** [彼らの業績の詳細についてはこちらをご覧ください。](https://github.com/OWASP/owasp-mastg/blob/master/docs/news/posts/2025-05-23-new-advocate-guardsquare.md)
+
+**影響力の大きな貢献:**
+
+- 月例会議や積極的なフォローアップを含む、MAS タスクフォースに積極的に参加しました。
+- v1 から v2 へのテストの移植に焦点を当てた多数のプルリクエストとデモに貢献しました。
+- MASTG の品質を維持するためのピアレビューと実用的なフィードバックに貢献しました。
+
+特に注目すべきは **OWASP Project Summit in November 2024** での Guardsquare の多大な貢献です。同社のチームはイベント時に作成された約 40 件のプルリクエストの大部分を提出しました。
