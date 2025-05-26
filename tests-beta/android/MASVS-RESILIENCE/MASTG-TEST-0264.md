@@ -16,7 +16,7 @@ status: new
 
 ## 手順
 
-1. 実行時メソッドフック ([メソッドフック (Method Hooking)](techniques/android/MASTG-TECH-0043.md) 参照) を使用し、`StrictMode` API の使用箇所を探します。
+1. 実行時メソッドフック ([メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) 参照) を使用し、`StrictMode` API の使用箇所を探します。
 
 ## 結果
 
