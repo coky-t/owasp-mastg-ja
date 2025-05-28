@@ -96,6 +96,10 @@
 - [MASTG-TEST-0270](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0270.md) 生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)
 - [MASTG-TEST-0271](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0271.md) 生体認証登録の変更を検出する API の実行時使用 (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
 
+### MASVS-PLATFORM: プラットフォーム連携
+
+- [MASTG-TEST-0276](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0276.md) iOS の一般的なペーストボードの使用 (Use of the iOS General Pasteboard)
+
 ### MASVS-CODE: コード品質
 
 - [MASTG-TEST-0228](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md) 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
