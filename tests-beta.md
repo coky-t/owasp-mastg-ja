@@ -101,6 +101,7 @@
 - [MASTG-TEST-0276](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0276.md) iOS の一般的なペーストボードの使用 (Use of the iOS General Pasteboard)
 - [MASTG-TEST-0277](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0277.md) 実行時の iOS の一般的なペーストボード内の機密データ (Sensitive Data in the iOS General Pasteboard at Runtime)
 - [MASTG-TEST-0278](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0278.md) 使用後にクリアされないペーストボードコンテンツ (Pasteboard Contents Not Cleared After Use)
+- [MASTG-TEST-0279](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0279.md) 期限切れにならないペーストボードコンテンツ (Pasteboard Contents Not Expiring)
 
 ### MASVS-CODE: コード品質
 
