@@ -8,7 +8,7 @@ weakness: MASWE-0076
 
 ## 概要
 
-This test case checks for dependencies with known vulnerabilities in iOS applications by using a Software Bill of Materials (SBOM). The SBOM should be in CycloneDX format, which is a standard for describing the components and dependencies of software.
+このテストケースでは、ソフトウェア部品表 (SBOM) を使用して、iOS アプリケーションにおける既知の脆弱性を持つ依存関係をチェックします。SBOM はソフトウェアのコンポーネントと依存関係を記述するための標準である CycloneDX 形式である必要があります。
 
 ## 手順
 
