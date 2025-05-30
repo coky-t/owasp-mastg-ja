@@ -18,7 +18,7 @@ best-practices: []
 
 ## 結果
 
-出力には`LAContext.evaluatePolicy` と `SecAccessControlCreateWithFlags` 関数が呼び出される場所 (使用されるすべてのフラグを含む) のリストを含む可能性があります。
+出力には `LAContext.evaluatePolicy` と `SecAccessControlCreateWithFlags` 関数が呼び出される場所 (使用されるすべてのフラグを含む) のリストを含む可能性があります。
 
 ## 評価
 
