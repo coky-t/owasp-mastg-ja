@@ -10,11 +10,11 @@ best-practices: []
 
 ## 概要
 
-このテストは [イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)](MASTG-TEST-0266) と対をなす動的テストです。
+このテストは [イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)](MASTG-TEST-0266.md) と対をなす動的テストです。
 
 ## 手順
 
-1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、 [LAContext.evaluatePolicy(...)](https://developer.apple.com/documentation/localauthentication/lacontext/evaluatepolicy(_:localizedreason:reply:)) と [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) の使用をすべてのフラグを含めて探します。
+1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、 [LAContext.evaluatePolicy(...)](https://developer.apple.com/documentation/localauthentication/lacontext/evaluatepolicy(_:localizedreason:reply:)) と [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) の使用をすべてのフラグを含めて探します。
 
 ## 結果
 
