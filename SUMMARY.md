@@ -50,6 +50,4 @@
 
 ### 付録
 
-- [テストツール](Document/0x08a-Testing-Tools.md)
-- [リファレンスアプリケーション](Document/0x08b-Reference-Apps.md)
 - [さらに学ぶための資料](Document/0x09-Suggested-Reading.md)
