@@ -5,6 +5,6 @@ id: MASTG-TEST-0280
 type: [dynamic]
 weakness: MASWE-0053
 threat: [app]
-status: draft
+status: placeholder
 note: このテストはアプリが `UIPasteboard.OptionsKey.localOnly` オプションを指定した `UIPasteboard.setItems(_:options:)` メソッドを使用して、一般的なペーストボードのコンテンツをローカルデバイスに制限するかどうかをチェックします。
 ---
