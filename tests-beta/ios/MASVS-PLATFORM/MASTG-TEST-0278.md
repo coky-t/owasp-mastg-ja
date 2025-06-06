@@ -5,6 +5,6 @@ id: MASTG-TEST-0278
 type: [dynamic]
 weakness: MASWE-0053
 threat: [app]
-status: draft
+status: placeholder
 note: このテストはアプリがバックグラウンドに移動したり終了する際に、一般的なペーストボードのコンテンツをクリアするかどうかをチェックします。
 ---
