@@ -6,4 +6,5 @@ type: [static]
 weakness: MASWE-0050
 status: placeholder
 note: このテストは MASWE-0049 用でもありますが、複数の脆弱性をサポートする必要があります。
+profiles: [L1, L2]
 ---
