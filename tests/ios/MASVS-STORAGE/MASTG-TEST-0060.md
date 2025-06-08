@@ -7,6 +7,7 @@ platform: ios
 title: 機密データに対してのメモリのテスト (Testing Memory for Sensitive Data)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要
