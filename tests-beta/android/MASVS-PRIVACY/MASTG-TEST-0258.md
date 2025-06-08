@@ -4,6 +4,7 @@ title: UI 要素のキーボードキャッシュ属性への参照 (References 
 id: MASTG-TEST-0258
 type: [static]
 weakness: MASWE-0053
+profiles: [L2]
 ---
 
 ## 概要
