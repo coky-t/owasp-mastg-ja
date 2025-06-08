@@ -7,6 +7,7 @@ platform: android
 title: 強制更新のテスト (Testing Enforced Updating)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要

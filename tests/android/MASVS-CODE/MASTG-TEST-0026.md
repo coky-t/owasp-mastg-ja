@@ -8,6 +8,7 @@ title: 暗黙的インテントのテスト (Testing Implicit Intents)
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要

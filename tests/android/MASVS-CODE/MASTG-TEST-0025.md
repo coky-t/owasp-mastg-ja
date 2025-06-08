@@ -8,6 +8,7 @@ title: インジェクション欠陥のテスト (Testing for Injection Flaws)
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要
