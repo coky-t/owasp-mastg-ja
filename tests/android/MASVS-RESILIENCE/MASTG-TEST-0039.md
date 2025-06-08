@@ -7,6 +7,7 @@ platform: android
 title: アプリがデバッグ可能であるかのテスト (Testing whether the App is Debuggable)
 masvs_v1_levels:
 - R
+profiles: [R]
 status: deprecated
 covered_by: [MASTG-TEST-0226,MASTG-TEST-0227]
 deprecation_note: New version available in MASTG V2

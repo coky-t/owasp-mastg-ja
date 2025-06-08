@@ -7,6 +7,7 @@ platform: android
 title: エミュレータ検出のテスト (Testing Emulator Detection)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## エミュレータ検出のバイパス

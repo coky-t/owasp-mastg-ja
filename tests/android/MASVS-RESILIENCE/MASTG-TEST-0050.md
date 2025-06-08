@@ -7,6 +7,7 @@ platform: android
 title: ランタイム完全性チェックのテスト (Testing Runtime Integrity Checks)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## 有効性評価

@@ -7,6 +7,7 @@ platform: android
 title: ファイル完全性チェックのテスト (Testing File Integrity Checks)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## ファイル完全性チェックのバイパス

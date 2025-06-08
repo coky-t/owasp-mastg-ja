@@ -7,6 +7,7 @@ platform: android
 title: ルート検出のテスト (Testing Root Detection)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## ルート検出のバイパス

@@ -7,6 +7,7 @@ platform: android
 title: アンチデバッグ検出のテスト (Testing Anti-Debugging Detection)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## デバッガ検出のバイパス
