@@ -7,6 +7,7 @@ platform: ios
 title: 難読化のテスト (Testing Obfuscation)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## 概要

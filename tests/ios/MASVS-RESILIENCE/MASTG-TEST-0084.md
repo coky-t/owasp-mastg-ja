@@ -7,6 +7,7 @@ platform: ios
 title: デバッグコードと詳細エラーログのテスト (Testing for Debugging Code and Verbose Error Logging)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## 概要

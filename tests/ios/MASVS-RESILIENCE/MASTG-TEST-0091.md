@@ -7,6 +7,7 @@ platform: ios
 title: リバースエンジニアリングツール検出のテスト (Testing Reverse Engineering Tools Detection)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## 概要

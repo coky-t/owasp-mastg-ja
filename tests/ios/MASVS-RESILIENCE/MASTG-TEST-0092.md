@@ -7,6 +7,7 @@ platform: ios
 title: エミュレータ検出のテスト (Testing Emulator Detection)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## 概要

@@ -7,6 +7,7 @@ platform: ios
 title: アンチデバッグ検出のテスト (Testing Anti-Debugging Detection)
 masvs_v1_levels:
 - R
+profiles: [R]
 ---
 
 ## 概要
