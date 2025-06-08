@@ -4,6 +4,7 @@ title: Android プロジェクトでの既知の脆弱性を持つ依存関係�
 id: MASTG-TEST-0272
 type: [static]
 weakness: MASWE-0076
+profiles: [L1, L2]
 ---
 
 ## 概要
