@@ -8,6 +8,7 @@ platform: android
 title: 認証情報確認のテスト (Testing Confirm Credentials)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要

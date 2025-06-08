@@ -7,6 +7,7 @@ platform: android
 title: 生体認証のテスト (Testing Biometric Authentication)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要
