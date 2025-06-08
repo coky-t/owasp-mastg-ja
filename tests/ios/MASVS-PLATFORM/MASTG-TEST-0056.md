@@ -4,28 +4,29 @@ masvs_v1_id:
 masvs_v2_id:
 - MASVS-PLATFORM-1
 platform: ios
-title: 機密データが IPC メカニズムを介して開示されているかどうかの判断 (Determining Whether Sensitive Data Is Exposed via IPC Mechanisms)
+title: Determining Whether Sensitive Data Is Exposed via IPC Mechanisms
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
-## 概要
+## Overview
 
-## 静的解析
+## Static Analysis
 
-以下のセクションでは iOS ソースコード内の IPC 実装を識別するために探すべきキーワードをまとめます。
+The following section summarizes keywords that you should look for to identify IPC implementations within iOS source code.
 
-### XPC サービス
+### XPC Services
 
-いくつかのクラスが NSXPCConnection API を実装するために使用されている可能性があります。
+Several classes may be used to implement the NSXPCConnection API:
 
 - NSXPCConnection
 - NSXPCInterface
 - NSXPCListener
 - NSXPCListenerEndpoint
 
-接続には [セキュリティ属性](https://www.objc.io/issues/14-mac/xpc/#security-attributes-of-the-connection "Security Attributes of NSXPCConnection") を設定できます。この属性を検証する必要があります。
+You can set [security attributes](https://www.objc.io/issues/14-mac/xpc/#security-attributes-of-the-connection "Security Attributes of NSXPCConnection") for the connection. The attributes should be verified.
 
 Check for the following two files in the Xcode project for the XPC Services API (which is C-based):
 
@@ -34,12 +35,12 @@ Check for the following two files in the Xcode project for the XPC Services API 
 
 ### Mach Ports
 
-低レベル実装で探すべきキーワードは以下の通りです。
+Keywords to look for in low-level implementations:
 
 - mach\_port\_t
 - mach\_msg\_*
 
-高レベル実装 (Core Foundation や Foundation ラッパー) で探すべきキーワードは以下の通りです。
+Keywords to look for in high-level implementations (Core Foundation and Foundation wrappers):
 
 - CFMachPort
 - CFMessagePort
@@ -48,10 +49,10 @@ Check for the following two files in the Xcode project for the XPC Services API 
 
 ### NSFileCoordinator
 
-探すべきキーワードは以下の通りです。
+Keywords to look for:
 
 - NSFileCoordinator
 
-## 動的解析
+## Dynamic Analysis
 
-iOS ソースコードの静的解析で IPC メカニズムを検証します。現在のところ IPC の使用状況を検証できる iOS ツールはありません。
+Verify IPC mechanisms with static analysis of the iOS source code. No iOS tool is currently available to verify IPC usage.
