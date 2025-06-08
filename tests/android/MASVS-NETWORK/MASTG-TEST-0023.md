@@ -7,6 +7,7 @@ platform: android
 title: セキュリティプロバイダのテスト (Testing the Security Provider)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要
