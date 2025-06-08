@@ -4,29 +4,29 @@ masvs_v1_id:
 masvs_v2_id:
 - MASVS-PLATFORM-1
 platform: ios
-title: Determining Whether Sensitive Data Is Exposed via IPC Mechanisms
+title: 機密データが IPC メカニズムを介して開示されているかどうかの判断 (Determining Whether Sensitive Data Is Exposed via IPC Mechanisms)
 masvs_v1_levels:
 - L1
 - L2
 profiles: [L1, L2]
 ---
 
-## Overview
+## 概要
 
-## Static Analysis
+## 静的解析
 
-The following section summarizes keywords that you should look for to identify IPC implementations within iOS source code.
+以下のセクションでは iOS ソースコード内の IPC 実装を識別するために探すべきキーワードをまとめます。
 
-### XPC Services
+### XPC サービス
 
-Several classes may be used to implement the NSXPCConnection API:
+いくつかのクラスが NSXPCConnection API を実装するために使用されている可能性があります。
 
 - NSXPCConnection
 - NSXPCInterface
 - NSXPCListener
 - NSXPCListenerEndpoint
 
-You can set [security attributes](https://www.objc.io/issues/14-mac/xpc/#security-attributes-of-the-connection "Security Attributes of NSXPCConnection") for the connection. The attributes should be verified.
+接続には [セキュリティ属性](https://www.objc.io/issues/14-mac/xpc/#security-attributes-of-the-connection "Security Attributes of NSXPCConnection") を設定できます。この属性を検証する必要があります。
 
 Check for the following two files in the Xcode project for the XPC Services API (which is C-based):
 
@@ -35,12 +35,12 @@ Check for the following two files in the Xcode project for the XPC Services API 
 
 ### Mach Ports
 
-Keywords to look for in low-level implementations:
+低レベル実装で探すべきキーワードは以下の通りです。
 
 - mach\_port\_t
 - mach\_msg\_*
 
-Keywords to look for in high-level implementations (Core Foundation and Foundation wrappers):
+高レベル実装 (Core Foundation や Foundation ラッパー) で探すべきキーワードは以下の通りです。
 
 - CFMachPort
 - CFMessagePort
@@ -49,10 +49,10 @@ Keywords to look for in high-level implementations (Core Foundation and Foundati
 
 ### NSFileCoordinator
 
-Keywords to look for:
+探すべきキーワードは以下の通りです。
 
 - NSFileCoordinator
 
-## Dynamic Analysis
+## 動的解析
 
-Verify IPC mechanisms with static analysis of the iOS source code. No iOS tool is currently available to verify IPC usage.
+iOS ソースコードの静的解析で IPC メカニズムを検証します。現在のところ IPC の使用状況を検証できる iOS ツールはありません。

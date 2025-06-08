@@ -4,19 +4,19 @@ masvs_v1_id:
 masvs_v2_id:
 - MASVS-PLATFORM-3
 platform: ios
-title: Testing Auto-Generated Screenshots for Sensitive Information
+title: 自動生成されたスクリーンショットの機密情報についてのテスト (Testing Auto-Generated Screenshots for Sensitive Information)
 masvs_v1_levels:
 - L2
 profiles: [L2]
 ---
 
-## Overview
+## 概要
 
-## Static Analysis
+## 静的解析
 
-If you have the source code, search for the [`applicationDidEnterBackground`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) method to determine whether the application sanitizes the screen before being backgrounded.
+ソースコードがある場合、[`applicationDidEnterBackground`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) メソッドを検索して、アプリケーションがバックグラウンドになる前に画面をサニタイズしているかどうかを調べます。
 
-The following is a sample implementation using a default background image (`overlayImage.png`) whenever the application is backgrounded, overriding the current view:
+以下は、アプリケーションがバックグラウンドになるたびに、デフォルトのバックグラウンド画像 (`overlayImage.png`) を使用して、現在のビューをオーバーライドするサンプル実装です。
 
 Swift:
 
@@ -52,20 +52,20 @@ Objective-C:
 }
 ```
 
-This sets the background image to `overlayImage.png` whenever the application is backgrounded. It prevents sensitive data leaks because `overlayImage.png` will always override the current view.
+これはアプリケーションがバックグラウンドになるたびにバックグラウンド画像を `overlayImage.png` に設定します。`overlayImage.png` が常に現在のビューを上書きするため、機密データ漏洩を防止できます。
 
-## Dynamic Analysis
+## 動的解析
 
-You can use a _visual approach_ to quickly validate this test case using any iOS device (jailbroken or not):
+_視覚的なアプローチ_ を使用し、iOS デバイス (脱獄済みかどうかに関わらず) を使用して、このテストケースをすばやく検証できます。
 
-1. Navigate to an application screen that displays sensitive information, such as a username, an email address, or account details.
-2. Background the application by hitting the **Home** button on your iOS device.
-3. Verify that a default image is shown as the top view element instead of the view containing the sensitive information.
+1. ユーザー名、電子メールアドレス、アカウントの詳細など、機密情報を表示するアプリケーション画面に移動します。
+2. iOS デバイスで **ホーム** ボタンを押して、アプリケーションをバックグラウンドにします。
+3. 機密情報を含むビューではなく、デフォルト画像がトップビュー要素として表示されていることを検証します。
 
-If required, you may also collect evidence by performing steps 1 to 3 on a jailbroken device or a non-jailbroken device after repackaging the app with the Frida Gadget (@MASTG-TECH-0090). After that, connect to the iOS device with SSH (@MASTG-TECH-0052) or by other means (@MASTG-TECH-0053) and navigate to the Snapshots directory. The location may differ on each iOS version but it's usually inside the app's Library directory. For instance, on iOS 14.5 the Snapshots directory is located at:
+必要に応じて、Frida Gadget ([Frida Gadget を IPA 内に自動的に注入する (Injecting Frida Gadget into an IPA Automatically)](../../../techniques/ios/MASTG-TECH-0090.md)) で再パッケージ化した後、脱獄済みデバイスまたは非脱獄デバイスで手順 1 から 3 を実行して証跡を収集することもできます。その後、SSH ([デバイスシェルへのアクセス (Accessing the Device Shell)](../../../techniques/ios/MASTG-TECH-0052.md)) またはその他の手段 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/ios/MASTG-TECH-0053.md)) を使用して iOS デバイスに接続し、Snapshots ディレクトリに移動します。場所は iOS のバージョンによって異なりますが、通常はアプリの Library ディレクトリにあります。たとえば、iOS 14.5 では Snapshots ディレクトリは以下の場所にあります。
 
 ```txt
 /var/mobile/Containers/Data/Application/$APP_ID/Library/SplashBoard/Snapshots/sceneID:$APP_NAME-default/
 ```
 
-The screenshots inside that folder should not contain any sensitive information.
+そのフォルダのスクリーンショットには機密情報が含まれていてはいけません。
