@@ -7,6 +7,7 @@ platform: android
 title: 自動生成されたスクリーンショット内の機密情報を見つける (Finding Sensitive Information in Auto-Generated Screenshots)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要

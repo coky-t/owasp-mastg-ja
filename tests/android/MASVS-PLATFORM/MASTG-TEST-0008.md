@@ -8,6 +8,7 @@ title: ユーザーインタフェースを介した機密データの漏洩の�
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L2]
 ---
 
 ## 概要

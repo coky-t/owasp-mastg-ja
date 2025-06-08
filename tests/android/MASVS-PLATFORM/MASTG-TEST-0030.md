@@ -8,6 +8,7 @@ title: PendingIntent の脆弱な実装のテスト (Testing for Vulnerable Impl
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要
