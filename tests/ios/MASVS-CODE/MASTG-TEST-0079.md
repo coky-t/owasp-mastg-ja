@@ -8,6 +8,7 @@ title: オブジェクト永続化のテスト (Testing Object Persistence)
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要

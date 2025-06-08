@@ -8,6 +8,7 @@ title: フリーなセキュリティ機能が有効であることの確認 (Ma
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 status: deprecated
 covered_by: [MASTG-TEST-0228, MASTG-TEST-0229, MASTG-TEST-0230]
 deprecation_note: New version available in MASTG V2
