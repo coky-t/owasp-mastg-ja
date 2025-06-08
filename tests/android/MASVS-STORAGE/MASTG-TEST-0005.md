@@ -8,6 +8,7 @@ title: 機密データが通知を介してサードパーティと共有され�
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要

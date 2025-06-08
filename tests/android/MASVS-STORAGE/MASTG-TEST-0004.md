@@ -9,6 +9,7 @@ title: 機密データが組み込みサービスを介してサードパーテ�
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要

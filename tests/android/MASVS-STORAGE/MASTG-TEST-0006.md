@@ -8,6 +8,7 @@ title: テキスト入力フィールドでキーボードキャッシュが無�
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 status: deprecated
 covered_by: [MASTG-TEST-0258]
 deprecation_note: New version available in MASTG V2
