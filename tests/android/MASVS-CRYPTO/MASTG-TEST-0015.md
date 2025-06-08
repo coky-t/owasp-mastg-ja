@@ -8,6 +8,7 @@ title: 鍵の目的のテスト (Testing the Purposes of Keys)
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L2]
 ---
 
 ## 概要
