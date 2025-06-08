@@ -7,4 +7,5 @@ weakness: MASWE-0053
 threat: [app]
 status: placeholder
 note: このテストはアプリがバックグラウンドに移動したり終了する際に、一般的なペーストボードのコンテンツをクリアするかどうかをチェックします。
+profiles: [L2]
 ---

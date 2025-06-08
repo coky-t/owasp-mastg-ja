@@ -7,4 +7,5 @@ weakness: MASWE-0053
 threat: [app]
 status: placeholder
 note: このテストはアプリが `UIPasteboard.Options.expirationDate` オプションを指定した `UIPasteboard.setItems(_:options:)` メソッドを使用して、一般的なペーストボードのコンテンツに有効期限を設定するかどうかをチェックします。
+profiles: [L2]
 ---
