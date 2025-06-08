@@ -4,6 +4,7 @@ title: バックアップから除外されない機密データ (Sensitive Data
 id: MASTG-TEST-0215
 type: [static, filesystem]
 weakness: MASWE-0004
+profiles: [L1, L2, P]
 ---
 
 ## 概要
