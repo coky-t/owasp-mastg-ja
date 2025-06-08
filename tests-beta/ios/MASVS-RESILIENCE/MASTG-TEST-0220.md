@@ -4,6 +4,7 @@ title: 古いコード署名フォーマットの使用 (Usage of Outdated Code 
 id: MASTG-TEST-0220
 type: [static]
 weakness: MASWE-0104
+profiles: [R]
 ---
 
 ## 概要

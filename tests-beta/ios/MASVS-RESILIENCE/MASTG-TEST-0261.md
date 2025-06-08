@@ -4,6 +4,7 @@ title: entitlements.plist で有効になっているデバッグ可能なエン
 id: MASTG-TEST-0261
 type: [static]
 weakness: MASWE-0067
+profiles: [R]
 ---
 
 ## 概要
