@@ -7,6 +7,7 @@ platform: ios
 title: カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)
 masvs_v1_levels:
 - L2
+profiles: [L2]
 ---
 
 ## 概要

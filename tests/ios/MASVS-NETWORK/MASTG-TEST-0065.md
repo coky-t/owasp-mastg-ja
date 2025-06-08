@@ -8,6 +8,7 @@ title: ネットワーク上のデータ暗号化のテスト (Testing Data Encr
 masvs_v1_levels:
 - L1
 - L2
+profiles: [L1, L2]
 ---
 
 ## 概要
