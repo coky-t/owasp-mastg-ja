@@ -10,7 +10,7 @@ profiles: [L2]
 
 ## 概要
 
-このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.OptionsKey.localOnly` オプションを使用して、一般的な [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md/#pasteboard) のコンテンツをローカルデバイスに制限しているかどうかをチェックします。この制限なしに機密データが一般的なペーストボードに配置されると、ユニバーサルクリップボードを介してデバイス間で同期され、データ漏洩につながる可能性があります。
+このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.OptionsKey.localOnly` オプションを使用して、汎用 [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md/#pasteboard) のコンテンツをローカルデバイスに制限しているかどうかをチェックします。この制限なしに機密データが汎用ペーストボードに配置されると、ユニバーサルクリップボードを介してデバイス間で同期され、データ漏洩につながる可能性があります。
 
 ## 手順
 
@@ -23,4 +23,4 @@ profiles: [L2]
 
 ## 評価
 
-アプリが一般的なペーストボードを使用し、そのコンテンツをローカルデバイスに制限しない場合、そのテストは不合格です。具体的には、`UIPasteboard.setItems(_:options:)` メソッドが `UIPasteboard.Options.localOnly` オプションを指定して呼び出されていることを確認します。
+アプリが汎用ペーストボードを使用し、そのコンテンツをローカルデバイスに制限しない場合、そのテストは不合格です。具体的には、`UIPasteboard.setItems(_:options:)` メソッドが `UIPasteboard.Options.localOnly` オプションを指定して呼び出されていることを確認します。

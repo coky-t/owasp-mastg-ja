@@ -10,7 +10,7 @@ profiles: [L2]
 
 ## 概要
 
-このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.Options.expirationDate` オプションを使用して、一般的な [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md#pasteboard) のコンテンツに有効期限を設定しているかどうかをチェックします。機密データが有効期限なしでペーストボードに残されると、他のアプリから無期限にアクセスされ、データ漏洩につながる可能性があります。
+このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.Options.expirationDate` オプションを使用して、汎用 [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md#pasteboard) のコンテンツに有効期限を設定しているかどうかをチェックします。機密データが有効期限なしでペーストボードに残されると、他のアプリから無期限にアクセスされ、データ漏洩につながる可能性があります。
 
 ## 手順
 
@@ -23,4 +23,4 @@ profiles: [L2]
 
 ## 評価
 
-アプリが一般的なペーストボードを使用し、そのコンテンツの有効期限を設定しない場合、そのテストは不合格です。具体的には、`UIPasteboard.setItems(_:options:)` メソッドが `UIPasteboard.Options.expirationDate` オプションを指定して呼び出されていることを確認します。
+アプリが汎用ペーストボードを使用し、そのコンテンツの有効期限を設定しない場合、そのテストは不合格です。具体的には、`UIPasteboard.setItems(_:options:)` メソッドが `UIPasteboard.Options.expirationDate` オプションを指定して呼び出されていることを確認します。
