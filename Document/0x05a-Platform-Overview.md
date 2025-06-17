@@ -262,48 +262,137 @@ $ bundletool build-apks --bundle=/MyApp/my_app.aab --output=/MyApp/my_app.apks
 
 ### Android Manifest
 
-すべてのアプリにはコンテンツをバイナリ XML 形式で埋め込む Android Manifest ファイルがあります。このファイルの標準名は AndroidManifest.xml です。アプリの Android Package Kit (APK) ファイルのルートディレクトリに配置されています。
+すべての Android アプリには APK のルートにバイナリ XML 形式で保存された `AndroidManifest.xml` ファイルを含みます。このファイルはインストール時および実行時に Android オペレーティングシステムによって使用されるアプリの構造と主要なプロパティを定義します。
 
-マニフェストファイルにはアプリ構造、そのコンポーネント (アクティビティ、サービス、コンテンツプロバイダ、インテントレシーバ) 、必要なパーミッションを記述します。また、アプリのアイコン、バージョン番号、テーマなど、アプリの一般的なメタデータも含んでいます。このファイルには互換性のある API (最小、ターゲット、最大 SDK バージョン) や [インストール可能なストレージの種類 (外部または内部)](https://developer.android.com/guide/topics/data/install-location.html "Define app install location") などの他の情報が含まれていることがあります。
+セキュリティ関連の要素には以下のものがあります。
 
-マニフェストファイルの例を示します。パッケージ名 (慣例では逆順の URL を使用しますが、任意の文字列を使用できます) を含んでいます。また、アプリのバージョン、関連する SDK 、必要なパーミッション、公開されているコンテンツプロバイダ、インテントフィルタで使用されるブロードキャストレシーバ、アプリの説明とそのアクティビティもあります。
+- **パーミッション:** インターネット、カメラ、ストレージ、位置情報、連絡先へのアクセスなど、必要なパーミッションを `<uses-permission>` を使用して宣言します。これらはアプリのアクセス境界を定義し、最小権限の原則に従う必要があります。カスタムパーミッションは `<permission>` を使用して定義でき、他のアプリによる悪用を防ぐために `signature` や `dangerous` などの適切な `protectionLevel` を含む必要があります。
+- **コンポーネント:** マニフェストには、アプリ内で宣言され、エントリポイントとして機能するすべての [アプリコンポーネント](#app-components) をリストします。これらは他のアプリに (インテントフィルタまたは `exported` 属性を介して) 公開される可能性があるため、攻撃者がアプリとどのようにやり取りするかを判断する上で非常に重要です。主なコンポーネントの種類は以下のとおりです。
+    - **アクティビティ:** ユーザーインタフェース画面を定義します。
+    - **サービス:** バックグラウンドタスクを実行します。
+    - **ブロードキャストレシーバ:** 外部メッセージを処理します。
+    - **コンテンツプロバイダ:** 構造化データを公開します。
+- **ディープリンク:** [ディープリンク](0x05h-Testing-Platform-Interaction.md#deep-links) は `VIEW` アクション、`BROWSABLE` カテゴリ、URI パターンを指定する `data` 要素でのインテントフィルタを介して設定されます。これらはウェブまたはアプリリンクにアクティビティを公開する可能性があり、インジェクションやスプーフィングのリスクを回避するために慎重に検証する必要があります。`android:autoVerify="true"` を追加すると、アプリリンクが有効になり、検証済みリンクの処理は宣言されたアプリに制限されるため、リンクハイジャックのリスクを軽減します。
+- **クリアテキストトラフィックの使用:** `android:usesCleartextTraffic` 属性はアプリが暗号化されていない HTTP トラフィックを許可するかどうかを制御します。Android 9 (API 28) 以降では、明示的に許可されない限り、クリアテキストトラフィックはデフォルトで無効になっています。この属性は `networkSecurityConfig` でオーバーライドすることもできます。
+- **ネットワークセキュリティ設定:** Android 7.0 (API レベル 24) 以降で利用可能な `android:networkSecurityConfig` で定義されるオプションの XML ファイルです。[ネットワークセキュリティの動作](0x05g-Testing-Network-Communication.md#android-network-security-configuration) をきめ細かく制御できます。信頼できる証明機関、ドメインごとの TLS 要件、クリアテキストトラフィックの例外を指定でき、`android:usesCleartextTraffic` で定義されたグローバル設定をオーバーライドできます。
+- **バックアップの動作:** `android:allowBackup` 属性はアプリデータの [バックアップ](0x05d-Testing-Data-Storage.md#backups) を許可または禁止します。
+- **タスクの親和性と起動モード:** これらの設定はアクティビティのグループ化と起動方法に影響します。不適切な設定により、攻撃者のアプリが正規のコンポーネントを模倣した場合、タスクのハイジャックやフィッシングのような攻撃が発生する可能性があります。
+
+利用可能なマニフェストオプションの完全なリストについては、公式の [Android Manifest ファイルのドキュメント](https://developer.android.com/guide/topics/manifest/manifest-intro.html "Android Developer Guide for Manifest") をご覧ください。
+
+ビルド時に、マニフェストは、含まれているライブラリと依存関係のマニフェストとマージされます。最終的にマージされたマニフェストには、開発者が明示的に宣言していない追加のパーミッション、コンポーネント、設定が含まれることがあります。セキュリティレビューでは、アプリの実際の露出を把握するために、マージされた出力を分析する必要があります。
+
+以下は開発者が定義したマニフェストファイルの例です。いくつかのパーミッションを宣言し、バックアップを許可し、アプリのメインアクティビティを定義しています。
 
 ```xml
-<manifest
-    package="com.owasp.myapplication"
-    android:versionCode="0.1" >
-
-    <uses-sdk android:minSdkVersion="12"
-        android:targetSdkVersion="22"
-        android:maxSdkVersion="25" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <provider
-        android:name="com.owasp.myapplication.MyProvider"
-        android:exported="false" />
-
-    <receiver android:name=".MyReceiver" >
-        <intent-filter>
-            <action android:name="com.owasp.myapplication.myaction" />
-        </intent-filter>
-    </receiver>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:icon="@drawable/ic_launcher"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Material.Light" >
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MASTestApp"
+        tools:targetApi="31">
         <activity
-            android:name="com.owasp.myapplication.MainActivity" >
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MASTestApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
 ```
 
-利用可能なマニフェストオプションの完全なリストは公式の [Android Manifest ファイルドキュメント](https://developer.android.com/guide/topics/manifest/manifest-intro.html "Android Developer Guide for Manifest") にあります。
+APK から AndroidManifest.xml ファイルを取得 ([AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../techniques/android/MASTG-TECH-0117.md)) すると、アプリの一意の識別子を定義する `package` 属性、`android:minSdkVersion` と `android:targetSdkVersion` を指定する `<uses-sdk>` 要素、新しいアクティビティ、プロバイダ、レシーバ、アプリがデバッグモードであることを示す `android:debuggable="true"` などのその他の属性などの追加要素を含むことがわかります。
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0"
+    android:compileSdkVersion="35"
+    android:compileSdkVersionCodename="15"
+    package="org.owasp.mastestapp"
+    platformBuildVersionCode="35"
+    platformBuildVersionName="15">
+    <uses-sdk
+        android:minSdkVersion="29"
+        android:targetSdkVersion="35"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <permission
+        android:name="org.owasp.mastestapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="org.owasp.mastestapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
+    <application
+        android:theme="@style/Theme.MASTestApp"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:debuggable="true"
+        android:testOnly="true"
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:extractNativeLibs="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:dataExtractionRules="@xml/data_extraction_rules">
+        <activity
+            android:theme="@style/Theme.MASTestApp"
+            android:name="org.owasp.mastestapp.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="androidx.compose.ui.tooling.PreviewActivity"
+            android:exported="true"/>
+        <activity
+            android:name="androidx.activity.ComponentActivity"
+            android:exported="true"/>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            android:authorities="org.owasp.mastestapp.androidx-startup">
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup"/>
+            ...
+        </provider>
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:permission="android.permission.DUMP"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="false">
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE"/>
+            </intent-filter>
+            ...
+        </receiver>
+    </application>
+</manifest>
+```
 
 ### アプリコンポーネント
 
