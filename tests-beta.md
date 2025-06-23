@@ -36,6 +36,7 @@
 - [MASTG-TEST-0242](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0242.md) Network Security Configuration での証明書ピン留めの欠如 (Missing Certificate Pinning in Network Security Configuration)
 - [MASTG-TEST-0243](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0243.md) Network Security Configuration での証明書ピン留めの期限切れ (Expired Certificate Pins in the Network Security Configuration)
 - [MASTG-TEST-0244](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0244.md) ネットワークトラフィックでの証明書ピン留めの欠如 (Missing Certificate Pinning in Network Traffic)
+- [MASTG-TEST-0282](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0282.md) 安全でないカスタムトラスト評価 (Unsafe Custom Trust Evaluation)
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
