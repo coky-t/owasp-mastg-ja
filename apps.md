@@ -19,6 +19,7 @@
 - [MASTG-APP-0015](apps/android/MASTG-APP-0015.md) Android UnCrackable L4
 - [MASTG-APP-0016](apps/android/MASTG-APP-0016.md) Finstergram
 - [MASTG-APP-0017](apps/android/MASTG-APP-0017.md) Disable-flutter-tls-verification
+- [MASTG-APP-0018](apps/android/MASTG-APP-0018.md) MASTestApp-Android-NETWORK
 
 ## iOS
 
