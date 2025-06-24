@@ -35,4 +35,4 @@ profiles: [L1, L2]
 - **明示的にトラストを緩めること:** 開発時やテスト時の利便性のために、トラストチェックを無効にして、自己署名証明書や信頼されていない証明書を受け入れます。
 - **[`getAcceptedIssuers()`](https://developer.android.com/reference/javax/net/ssl/X509TrustManager#getAcceptedIssuers()) の誤用**: 適切な処理を行わずに `null` または空の配列を返すと、発行者バリデーションを事実上無効になる可能性があります。
 
-自動化ツールを使用してテストする場合、リバースエンジニアされたコードで報告されたすべての場所を検査して、誤った実装を確認する必要があります ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md))。
+自動化ツールを使用してテストする場合、リバースエンジニアされたコードで報告されたすべての場所を検査して、正しくない実装を確認する必要があります ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md))。
