@@ -27,7 +27,7 @@
 - [MASTG-TEST-0217](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md) コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)
 - [MASTG-TEST-0218](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0218.md) ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
 - [MASTG-TEST-0233](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0233.md) ハードコードされた HTTP URL  (Hardcoded HTTP URLs)
-- [MASTG-TEST-0234](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0234.md) ホスト名を適切に検証しない SSLSocket (SSLSockets not Properly Verifying Hostnames)
+- [MASTG-TEST-0234](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0234.md) SSLSocket でのサーバーホスト名検証の実装の欠如 (Missing Implementation of Server Hostname Verification with SSLSockets)
 - [MASTG-TEST-0235](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0235.md) クリアテキストトラフィックを許可する Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)
 - [MASTG-TEST-0236](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0236.md) ネットワーク上で観測されるクリアテキストトラフィック (Cleartext Traffic Observed on the Network)
 - [MASTG-TEST-0237](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0237.md) クリアテキストトラフィックを許可するクロスプラットフォーム構成 (Cross-Platform Framework Configurations Allowing Cleartext Traffic)
