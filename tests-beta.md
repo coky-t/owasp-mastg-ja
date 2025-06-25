@@ -40,6 +40,7 @@
 - [MASTG-TEST-0283](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0283.md) サーバーホスト名検証の正しくない実装 (Incorrect Implementation of Server Hostname Verification)
 - [MASTG-TEST-0284](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0284.md) WebView での正しくない SSL エラー処理 (Incorrect SSL Error Handling in WebViews)
 - [MASTG-TEST-0285](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0285.md) ユーザー提供の CA を信頼する古い Android バージョン (Outdated Android Version Allowing Trust in User-Provided CAs)
+- [MASTG-TEST-0286](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0286.md) ユーザー提供の CA を信頼する Network Security Configuration (Network Security Configuration Allowing Trust in User-Provided CAs)
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
