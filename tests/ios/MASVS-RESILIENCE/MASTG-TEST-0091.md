@@ -12,7 +12,7 @@ profiles: [R]
 
 ## 概要
 
-Frida, Cydia Substrate, Cycript, SSL Kill Switch など、さまざまなリバースエンジニアリングツールやフレームワークをテストデバイスにインストールしてアプリを起動します。
+[Frida](../../../tools/generic/MASTG-TOOL-0031.md), [ElleKit](../../../tools/ios/MASTG-TOOL-0139.md), [SSL Kill Switch 2](../../../tools/ios/MASTG-TOOL-0066.md) など、さまざまなリバースエンジニアリングツールやフレームワークをテストデバイスにインストールしてアプリを起動します。
 
 アプリはこれらのツールの存在に何らかの反応を示すはずです。たとえば以下のようなものです。
 
