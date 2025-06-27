@@ -12,7 +12,7 @@ profiles: [R]
 
 ## 有効性評価
 
-さまざまなリバースエンジニアリングツールやフレームワークをテストデバイスにインストールしてアプリを起動します。少なくとも次のものを含めます: Frida, Xposed, Substrate for Android, RootCloak, Android SSL Trust Killer
+さまざまなリバースエンジニアリングツールやフレームワークをテストデバイスにインストールしてアプリを起動します。少なくとも次のものを含めます: [Frida](../../../tools/generic/MASTG-TOOL-0031.md), [Xposed](../../../tools/android/MASTG-TOOL-0027.md)
 
 アプリはこれらのツールの存在に何らかの反応を示すはずです。たとえば以下のようなものです。
 
