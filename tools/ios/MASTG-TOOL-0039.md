@@ -26,13 +26,47 @@ frida-trace -U YourApp -m "*[NSURL* *HTTP*]"
 
 ## iOS に Frida をインストールする
 
-Frida を iOS アプリに接続するには、そのアプリに Frida ランタイムを注入する方法が必要です。これは脱獄済みデバイスで実行するのは簡単です。Cydia から `frida-server` をインストールするだけです。インストールされると、Frida サーバーは自動的に root 権限で動作し、任意のプロセスにコードを簡単に注入できます。
+Frida を iOS アプリに接続するには、そのアプリに Frida ランタイムを注入する方法が必要です。脱獄済みデバイスでは [Sileo](MASTG-TOOL-0064.md) などのサードパーティアプリストアから `frida-server` をインストールできるため、これは簡単に実行できます。Sileo を開き、**Manage** -> **Sources** -> **Edit** -> **Add** に移動して <https://build.frida.re> と入力し、Frida のリポジトリを追加します。それ後 Frida パッケージを見つけてインストールできるようになります。
 
-Cydia を起動し、**Manage** -> **Sources** -> **Edit** -> **Add** に移動して <https://build.frida.re> と入力し、Frida のリポジトリを追加します。それ後 Frida パッケージを見つけてインストールできるようになります。
+デフォルトでは、`frida-server` はローカルインタフェースでのみ listen するため、デバイスを USB で接続する必要があります。`frida-server` をパブリックインタフェースで公開したい場合には、`/var/jb/Library/LaunchDaemons/re.frida.server.plist` を修正し、`ProgramArguments` の二つの項目を以下のようにします。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> <plist version="1.0"> <d>
+        <key>Label</key>
+        <string>re.frida.server</string>
+        <key>Program</key>
+        <string>/var/jb/usr/sbin/frida-server</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/var/jb/usr/sbin/frida-server</string>
+                <string>-l</string>
+                <string>0.0.0.0</string>
+        </array>
+        <key>UserName</key>
+        <string>root</string>
+        <key>POSIXSpawnType</key>
+        <string>Interactive</string>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>ThrottleInterval</key>
+        <integer>5</integer>
+        <key>ExecuteAllowed</key>
+        <true/>
+</dict>
+</plist>
+```
+
+一旦インストールされると、Frida サーバーが自動的にルート権限で実行し、任意のプロセスに簡単にコードを注入できるようになります。
+
+!!! 危険
+
+    frida-server をパブリックインタフェースで公開すると、同じネットワークに接続する誰もが、デバイス上で実行している任意のプロセスにコードを注入できるようになります。これは管理されたラボ環境でのみ実行すべきです。
 
 ## iOS で Frida を使用する
 
-デバイスを USB で接続し、`frida-ps` コマンドを '-U' フラグと実行して、Frida が動作することを確認します。これはデバイス上で動作しているプロセスのリストを返すはずです。
+デバイスを USB で接続し、`frida-ps` コマンドを `-U` フラグと実行して、Frida が動作することを確認します。これはデバイス上で動作しているプロセスのリストを返すはずです。
 
 ```bash
 $ frida-ps -U
