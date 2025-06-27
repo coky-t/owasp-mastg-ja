@@ -12,4 +12,4 @@ cd apkx
 sudo ./install.sh
 ```
 
-これは apkx を `/usr/local/bin` にコピーするはずです。使い方についての詳細については [Java コードの逆コンパイル](../../techniques/android/MASTG-TECH-0017.md) を参照してください。
+これは apkx を `/usr/local/bin` にコピーするはずです。
