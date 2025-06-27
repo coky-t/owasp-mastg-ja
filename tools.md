@@ -42,6 +42,7 @@
 - [MASTG-TOOL-0124](tools/android/MASTG-TOOL-0124.md) aapt2
 - [MASTG-TOOL-0125](tools/android/MASTG-TOOL-0125.md) Apkleaks
 - [MASTG-TOOL-0130](tools/android/MASTG-TOOL-0130.md) blint
+- [MASTG-TOOL-0140](tools/android/MASTG-TOOL-0140.md) frida-multiple-unpinning
 
 ## Generic
 
