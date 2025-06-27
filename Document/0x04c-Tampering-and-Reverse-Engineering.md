@@ -51,11 +51,9 @@ _パッチ適用_ とはコンパイルされたアプリを変更するプロ�
 
 コードインジェクションは非常に強力な技法であり、実行時にプロセスを探索および改変できます。インジェクションはさまざまな方法で実装されますが、自由に利用でき十分に文書化されたプロセスを自動化するツールのおかげで、すべての詳細を知らなくても使用できます。これらのツールは、アプリによりインスタンス化されたライブオブジェクトなどの、プロセスメモリや重要な構造体に直接アクセスできます。また、ロードされたライブラリの解決、メソッドやネイティブ関数のフックなどに役立つ多くのユーティリティ関数があります。プロセスメモリの改竄はファイルにパッチを適用するよりも検出が難しく、大半の場合に推奨される方法です。
 
-Substrate, [Frida](../tools/generic/MASTG-TOOL-0031.md), [Xposed](../tools/android/MASTG-TOOL-0027.md) はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。Substrate と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
+[ElleKit](../tools/ios/MASTG-TOOL-0139.md), [Frida](../tools/generic/MASTG-TOOL-0031.md), [Xposed](../tools/android/MASTG-TOOL-0027.md) はモバイル業界で最も広く使用されているフックとコードインジェクションのフレームワークです。三つのフレームワークは設計の哲学と実装の詳細が異なります。ElleKit と Xposed はコードインジェクションやフックに焦点を当てています。一方、Frida は本格的な「動的計装フレームワーク」とすることを目指しており、コードインジェクション、言語バインディング、インジェクト可能な JavaScript VM およびコンソールを組み込んでいます。
 
-それだけでなく、[Cycript](../tools/ios/MASTG-TOOL-0046.md) をインジェクトするために Substrate を使用してアプリを計装することもできます。Cycript は Cydia で有名な Saurik が作成したプログラミング環境 (通称 "Cycript-to-JavaScript" コンパイラ) です。さらに物事は複雑になりますが、Frida の作者も ["frida-cycript"](https://github.com/nowsecure/frida-cycript "Cycript fork powered by Frida") と呼ばれる Cycript のフォークを作成しました。これは Cycript のランタイムを Mjølner と呼ばれる Frida ベースのランタイムに置き換えます。これにより frida-core で保守されているすべてのプラットフォームとアーキテクチャで Cycript を実行できます (この時点で混乱しても、心配ありません) 。frida-cycript のリリースには Frida の開発者 Ole によるブログ記事 "Cycript on Steroids" が付いていました。このタイトルは [Saurik はあまり好きではありませんでした](https://www.reddit.com/r/ReverseEngineering/comments/50uweq/cycript_on_steroids_pumping_up_portability_and/ "Cycript on steroids: Pumping up portability and performance with Frida") 。
-
-三つすべてのフレームワークについて例を紹介します。私たちは Frida で始めることをお勧めします。これは三つの中で最も汎用性が高いからです (このため、Frida の詳細と事例が多く紹介されています) 。特に、Frida は Android と iOS の両方のプロセスに JavaScript VM をインジェクトできます。一方で Substrate での Cycript インジェクションは iOS でのみ動作します。しかし最終的には、いずれのフレームワークでも多くの同じ目標に到達できます。
+三つすべてのフレームワークについて例を紹介します。私たちは Frida で始めることをお勧めします。これは三つの中で最も汎用性が高いからです (このため、Frida の詳細と事例が多く紹介されています) 。特に、Frida は Android と iOS の両方のプロセスに JavaScript VM をインジェクトできます。一方で ElleKit でのインジェクションは iOS でのみ動作し、Xposed は Android でのみ動作します。しかし最終的には、いずれのフレームワークでも多くの同じ目標に到達できます。
 
 ## 静的および動的バイナリ解析
 
