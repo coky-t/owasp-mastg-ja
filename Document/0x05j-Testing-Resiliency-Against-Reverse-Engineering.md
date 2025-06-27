@@ -691,7 +691,7 @@ public enum HMACWrapper {
 
 リバースエンジニアが一般的に使用するツール、フレームワーク、アプリが存在する場合、アプリをリバースエンジニアリングしようとしていることを示している可能性があります。これらのツールの中にはルート化されたデバイスでのみ実行できるものもあれば、アプリをデバッグモードで動作するものや、モバイルフォンでのバックグラウンドサービス開始に依存するものもあります。したがって、リバースエンジニアリング攻撃を検知してそれに対応するためにアプリが実装する方法はさまざまです。たとえば、アプリ自体を終了します。
 
-関連するアプリケーションパッケージ、ファイル、プロセス、またはその他のツール固有の変更とアーティファクトを探すことで、変更のない状態でインストールされた一般的なリバースエンジニアリングツールを検出できます。以下の例では、このガイドで広く使用されている Frida インストルメンテーションフレームワークを検出するさまざまな方法について説明します。Substrate や Xposed などの他のツールも同様に検出できます。DBI/インジェクション/フックツールは後述するランタイム完全性チェックを通じて暗黙的に検出できることが多いことに注意してください。
+関連するアプリケーションパッケージ、ファイル、プロセス、またはその他のツール固有の変更とアーティファクトを探すことで、変更のない状態でインストールされた一般的なリバースエンジニアリングツールを検出できます。以下の例では、このガイドで広く使用されている Frida インストルメンテーションフレームワークを検出するさまざまな方法について説明します。ElleKit や Xposed などの他のツールも同様に検出できます。DBI/インジェクション/フックツールは後述するランタイム完全性チェックを通じて暗黙的に検出できることが多いことに注意してください。
 
 たとえば、ルート化されたデバイスのデフォルト設定では Frida はデバイス上で frida-server として実行します。ターゲットアプリに (frida-trace や Frida REPL などを介して) 明示的にアタッチすると、Frida はアプリのメモリに frida-agent を注入します。したがって、アプリにアタッチした後 (前ではなく) そこにあることが期待できます。 `/proc/<pid>/maps` をチェックすると、frida-agent が frida-agent-64.so として見つかります。
 
@@ -724,7 +724,7 @@ Frida が残したこれら二つの痕跡を見れば、それらを検出す�
 | **D-Bus 認証に応答するポートをチェックする** | `frida-server` は通信に D-Bus プロトコルを使用するため、D-Bus 認証に応答することが期待できます。すべてのオープンポートに D-Bus 認証メッセージを送信し、応答をチェックし、`frida-server` が現れることを期待します。 | これは `frida-server` を検出するかなり堅実な方法ですが、Frida は frida-server を必要としない別の動作モードを提供しています。 |
 | **既知のアーティファクトについてプロセスメモリをスキャンする** | メモリをスキャンして、Frida のライブラリで見つかるアーティファクト (すべてのバージョンの frida-gadget と frida-agent に現れる文字列 "LIBFRIDA" など) を探します。たとえば、 `Runtime.getRuntime().exec` を使用して、 `/proc/self/maps` や `/proc/<pid>/maps` (Android バージョンによる) にリストされているメモリマッピングを繰り返して文字列を探します。 | この方法はもう少し効果的で、特に難読化を加えている場合や複数のアーティファクトをスキャンしている場合には、Frida だけでバイパスするのは困難です。しかし、選択したアーティファクトは Frida バイナリにパッチが当てられている可能性があります。ソースコードは [Berdhard Mueller の GitHub](https://github.com/muellerberndt/frida-detection-demo/blob/master/AntiFrida/app/src/main/cpp/native-lib.cpp "frida-detection-demo") にあります。 |
 
-この表は網羅からは程遠いことを忘れないでください。 [名前付きパイプ](https://en.wikipedia.org/wiki/Named_pipe "Named Pipes") (frida-server が外部通信に使用) について話しましょう。 [トランポリン](https://en.wikipedia.org/wiki/Trampoline_%28computing%29 "Trampolines") (関数のプロローグに挿入された間接的なジャンプベクトル) の検出は Substrate や Frida の Interceptor の検出には役立ちますが、たとえば、Frida の Stalker に対しては有効ではありません。その他多くの、多かれ少なかれ、効果的な検出方法があります。これらはそれぞれ、ルート化されたデバイスを使用しているかどうか、ルート化手法の特定のバージョンやツール自体のバージョンによって異なります。さらに、アプリはさまざまな難読化技法を使用して実装された保護メカニズムの検出をより困難にすることができます。結局のところ、これは信頼できない環境 (ユーザーデバイスで実行されているアプリ) で処理されるデータを保護するいたちごっこの一環です。
+この表は網羅からは程遠いことを忘れないでください。[名前付きパイプ](https://en.wikipedia.org/wiki/Named_pipe "Named Pipes") (frida-server が外部通信に使用) と [トランポリン](https://en.wikipedia.org/wiki/Trampoline_%28computing%29 "Trampolines") (関数のプロローグに挿入された間接的なジャンプベクトル) の検出について話しましょう。 これは ElleKit や Frida の Interceptor の検出に役立ちます。その他多くの技法が存在し、これらはそれぞれ、ルート化されたデバイスを使用しているかどうか、ルート化手法の特定のバージョンやツール自体のバージョンによって異なります。さらに、アプリはさまざまな難読化技法を使用して実装された保護メカニズムの検出をより困難にすることができます。結局のところ、これは信頼できない環境 (ユーザーデバイスで実行されているアプリ) で処理されるデータを保護するいたちごっこの一環です。
 
 > これらのコントロールはリバースエンジニアリングプロセスの複雑さを増すだけであることに注意することが重要です。使用する場合、最善のアプローチはコントロールを個別に使用するのではなく、巧みに組み合わせることです。ただし、リバースエンジニアリングは常にデバイスにフルアクセスできるので必ず勝利できるため、いずれも 100% の効果を保証することはできません。また、いくつかのコントロールをアプリに統合すると、アプリの複雑さが増し、パフォーマンスに影響を与える可能性があることも考慮する必要があります。
 
@@ -787,35 +787,36 @@ Xposed や Frida などのフックフレームワークはこの API をフッ�
 
 #### Java ランタイムの改竄の検出
 
-この検出コードは [dead && end blog](https://d3adend.org/blog/?p=589 "dead && end blog - Android Anti-Hooking Techniques in Java") から引用しました。
+[Xposed](../tools/android/MASTG-TOOL-0027.md) などのフックフレームワークは Android ランタイムに自分自身を注入し、その際にさまざまなトレースを残します。これらのトレースは、[XPosedDetector](https://github.com/vvb2060/XposedDetector/) プロジェクトのこのコードスニペットで示されているように、検出可能です。
 
-```java
-try {
-  throw new Exception();
+```cpp
+static jclass findXposedBridge(C_JNIEnv *env, jobject classLoader) {
+    return findLoadedClass(env, classLoader, "de/robv/android/xposed/XposedBridge"_iobfs.c_str());
 }
-catch(Exception e) {
-  int zygoteInitCallCount = 0;
-  for(StackTraceElement stackTraceElement : e.getStackTrace()) {
-    if(stackTraceElement.getClassName().equals("com.android.internal.os.ZygoteInit")) {
-      zygoteInitCallCount++;
-      if(zygoteInitCallCount == 2) {
-        Log.wtf("HookDetection", "Substrate is active on the device.");
-      }
+void doAntiXposed(C_JNIEnv *env, jobject object, intptr_t hash) {
+    if (!add(hash)) {
+        debug(env, "checked classLoader %s", object);
+        return;
     }
-    if(stackTraceElement.getClassName().equals("com.saurik.substrate.MS$2") &&
-        stackTraceElement.getMethodName().equals("invoked")) {
-      Log.wtf("HookDetection", "A method on the stack trace has been hooked using Substrate.");
+#ifdef DEBUG
+    LOGI("doAntiXposed, classLoader: %p, hash: %zx", object, hash);
+#endif
+    jclass classXposedBridge = findXposedBridge(env, object);
+    if (classXposedBridge == nullptr) {
+        return;
     }
-    if(stackTraceElement.getClassName().equals("de.robv.android.xposed.XposedBridge") &&
-        stackTraceElement.getMethodName().equals("main")) {
-      Log.wtf("HookDetection", "Xposed is active on the device.");
+    if (xposed_status == NO_XPOSED) {
+        xposed_status = FOUND_XPOSED;
     }
-    if(stackTraceElement.getClassName().equals("de.robv.android.xposed.XposedBridge") &&
-        stackTraceElement.getMethodName().equals("handleHookedMethod")) {
-      Log.wtf("HookDetection", "A method on the stack trace has been hooked using Xposed.");
+    disableXposedBridge(env, classXposedBridge);
+    if (clearHooks(env, object)) {
+#ifdef DEBUG
+        LOGI("hooks cleared");
+#endif
+        if (xposed_status < ANTIED_XPOSED) {
+            xposed_status = ANTIED_XPOSED;
+        }
     }
-
-  }
 }
 ```
 
