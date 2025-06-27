@@ -14,4 +14,4 @@ jadx はオープンソースの Dex と Java のデコンパイラであり、C
 - アプリケーションのデバッグをサポート
 - [Frida](../generic/MASTG-TOOL-0031.md) および [Xposed](MASTG-TOOL-0027.md) スニペットの生成
 
-<img src=",,/../Document/Images/Tools/TOOL-0018-jadx-gui.png" width="800px" />
+<img src="../../Document/Images/Tools/TOOL-0018-jadx-gui.png" width="800px" />
