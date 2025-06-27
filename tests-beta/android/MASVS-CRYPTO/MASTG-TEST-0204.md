@@ -20,7 +20,7 @@ Android アプリは、安全でない [擬似乱数生成器 (PRNG)](../../../D
 ## 手順
 
 1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、安全でないランダム API を探すか、[メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用してそのような API の使用を検出します。
-2. 特定された API の使用ごとに、セキュリティ関連コンテキストで使用されているかどうかをチェックします。アプリをリバースエンジニア ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md)) し、コードを検査 ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md)) して確認できます。
+2. 特定された API の使用ごとに、セキュリティ関連コンテキストで使用されているかどうかをチェックします。アプリを逆コンパイル ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md)) し、コードを検査 ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md)) して確認できます。
 
 ## 結果
 
