@@ -2,6 +2,9 @@
 title: Cydia
 platform: ios
 source: https://cydia.saurik.com/
+status: deprecated
+deprecation_note: Dopamine や palera1n といった現代の脱獄では、Sileo や Zebra といった現代のパッケージマネージャを使用します。Cydia は iOS 14 以降、意味のあるアップデートを受けておらず、最新の脱獄にはもはや適していません。
+covered_by: [MASTG-TOOL-0064]
 ---
 
 Cydia は Jay Freeman (別名 "saurik") が開発した脱獄済みデバイス向けの代替アプリストアです。グラフィカルユーザーインタフェースと Advanced Packaging Tool (APT) のバージョンを提供します。Cydia を通じて多くの「非承認」アプリパッケージに簡単にアクセスできます。ほとんどの脱獄では Cydia を自動的にインストールします。
