@@ -121,6 +121,7 @@
 - [MASTG-TOOL-0138](tools/ios/MASTG-TOOL-0138.md) ipainstaller
 - [MASTG-TOOL-0139](tools/ios/MASTG-TOOL-0139.md) ElleKit
 - [MASTG-TOOL-0141](tools/ios/MASTG-TOOL-0141.md) IOSSecuritySuite
+- [MASTG-TOOL-0142](tools/ios/MASTG-TOOL-0142.md) Choicy
 
 ## Network
 
