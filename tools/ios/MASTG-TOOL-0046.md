@@ -2,11 +2,12 @@
 title: Cycript
 platform: ios
 source: https://www.cycript.org/
+status: deprecated
+deprecation_note: Cycript はもはや積極的にメンテナンスされておらず、最新の iOS バージョンでは動作しません。最後に意味のあるアップデートが行われたのは 2009 年から 2013 年の間です。cynject などの主要コンポーネントは Cydia Substrate の変更により 2019 年ごろの iOS 12 で動作しなくなり、修正されていません。Frida は、より広範な互換性、積極的なサポート、より強力な動的計装機能を提供します。
+covered_by: [MASTG-TOOL-0039]
 ---
 
-Cydia Substrate (旧称 MobileSubstrate) は iOS 上で Cydia ランタイムパッチ (いわゆる「Cydia Substrate Extensions」) を開発するための標準フレームワークです。C のコードインジェクションのサポートを提供するツールである Cynject が付属しています。
-
-Cycript は Jay Freeman (別名 Saurik) が開発したスクリプト言語です。これは実行中のプロセスに JavaScriptCore VM を注入します。Cycript の対話型コンソールを介して、ユーザーは Objective-C++ と JavaScript のハイブリッド構文でプロセスを操作できます。実行中のプロセス内の Objective-C クラスにアクセスしてインスタンス化することも可能です。
+Cycript は Jay Freeman (別名 Saurik) が開発したスクリプト言語です。これは実行中のプロセスに JavaScriptCore 仮想マシンを注入します。Cycript の対話型コンソールを使用して、ユーザーは Objective-C++ と JavaScript のハイブリッド構文でプロセスを操作できます。実行中のプロセス内の Objective-C クラスにアクセスすることやインスタンス化することがサポートされています。iOS 上で Cydia Substrate Extensions として知られる [Cydia](MASTG-TOOL-0047.md) ランタイムパッチを開発するための標準フレームワークである [Cydia Substrate](http://www.cydiasubstrate.com/) を使用して、デバッガと同様に Cycript を実行中のプロセスに注入できます。Cycript には、コード注入をサポートするツールである Cynject を含みます。
 
 Cycript をインストールするには、まず SDK をダウンロードし、展開して、インストールします。
 
