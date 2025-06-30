@@ -8,6 +8,8 @@ source: https://github.com/frida/frida
 
 <img src="../../Document/Images/Chapters/0x04/frida_logo.png" style="width: 80%; border-radius: 5px; margin: 2em" />
 
+## インストール
+
 Frida をローカルにインストールするには、以下を実行するだけです。
 
 ```bash
@@ -15,6 +17,8 @@ pip install frida-tools
 ```
 
 また詳細については [インストールページ](https://www.frida.re/docs/installation/ "Frida Installation") を参照してください。
+
+## 動作モード
 
 コードはいくつかの方法で注入できます。たとえば、Xposed は Android アプリローダーを永続的に変更し、新しいプロセスが開始されるたびに独自のコードを実行するためのフックを提供します。
 対照的に、Frida はプロセスメモリに直接コードを書き込むことでコードインジェクションを実装します。実行中のアプリにアタッチすると、以下のようになります。
@@ -34,12 +38,46 @@ Frida には三つの動作モードがあります。
 2. Embedded: これはデバイスがルート化や脱獄を行われていない (権限のないユーザーとして ptrace を使用できない) 場合です。あなたには手作業で、または [objection](MASTG-TOOL-0038.md) などのサードパーティツールを介して、アプリに [frida-gadget](https://www.frida.re/docs/gadget/ "Frida Gadget") ライブラリを埋め込むことにより、インジェクションを行う責任があります。
 3. Preloaded: `LD_PRELOAD` や `DYLD_INSERT_LIBRARIES` に似ています。frida-gadget を自律的に実行し、ファイルシステム (Gadget バイナリが存在する場所への相対パスなど) からスクリプトをロードするように設定できます。
 
+## API
+
 選択したモードに関係なく、[Frida JavaScript API](https://www.frida.re/docs/javascript-api/ "Frida JavaScript APIs") を使用して、実行中のプロセスおよびそのメモリとやり取りできます。基本的な API には以下のものがあります。
 
 - [Interceptor](https://www.frida.re/docs/javascript-api/#interceptor "Interceptor"): Interceptor API を使用する場合、Frida は関数のプロローグにトランポリン (別名インラインフック) を注入します。これはカスタムコードへのリダイレクトを引き起こし、コードを実行して、元の関数に戻ります。私たちの目的には非常に効果的ですが、これはかなりのオーバーヘッド (トランポリンに関連したジャンプとコンテキストスイッチによる) をもたらし、元のコードを上書きしてデバッガと同様に動作 (ブレークポイントの設定) を行うため、透過的であるとはみなすことはできず、たとえば定期的に独自のコードのチェックサムを行うアプリケーションによって、同様の方法で検出される可能性があることに注意してください。
 - [Stalker](https://www.frida.re/docs/javascript-api/#stalker "Stalker"): トレースの要件に透明性、パフォーマンス、高い粒度を含む場合には、Stalker が選択すべき API です。Stalker API でコードをトレースする場合、Frida はジャストインタイムの動的再コンパイルを ([Capstone](http://www.capstone-engine.org/ "Capstone") を使用して) 活用します。スレッドが次の命令を実行しようとすると、Stalker はメモリを割り当て、オリジナルのコードをコピーし、計装のためにそのコピーをカスタムコードとインタレースします。最後に、そのコピーを実行します (オリジナルのコードはそのままにしておくので、アンチデバッグチェックは回避します)。このアプローチは計装のパフォーマンスを大幅に向上し、トレース時に非常に高い粒度を可能にします (CALL または RET 命令のみをトレースするなど)。より詳細については [Frida の作者 Ole によるブログ投稿 "Anatomy of a code tracer"](https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8 "Anatomy of a code tracer") [#vadla] をご覧ください。Stalker の使用例としては [who-does-it-call](https://codeshare.frida.re/@oleavr/who-does-it-call/ "who-does-it-call") や [diff-calls](https://github.com/frida/frida-presentations/blob/master/R2Con2017/01-basics/02-diff-calls.js "diff-calls") などがあります。
 - [Java](https://www.frida.re/docs/javascript-api/#java "Java"): Android で作業する場合、この API を使用して、ロードされたクラスを列挙したり、クラスローダーを列挙したり、特定のクラスインスタンスを作成して使用したり、ヒープをスキャンしてクラスのライブインスタンスを列挙することなどができます。
 - [ObjC](https://www.frida.re/docs/javascript-api/#objc "ObjC"): iOS で作業する場合、この API を使用して、登録されているすべてのクラスのマッピングを取得したり、特定のクラスやプロトコルのインスタンスを登録または使用したり、ヒープをスキャンしてクラスのライブインスタンスを列挙することなどができます。
+
+### Frida 17
+
+Frida 17 では、Frida の GumJS ランタイム内にバンドルされていたランタイムブリッジ (`frida-{objc,swift,java}-bridge`) を削除するなど、[重大な変更](https://frida.re/news/2025/05/17/frida-17-0-0-released/) をもたらしています。つまり、必要なブリッジは `frida-pm install` を使用して明示的にインストールする必要があります。
+
+ ```bash
+ frida-pm install frida-java-bridge
+ ```
+
+ただし、コマンド `frida` と `frida-trace` には Java, Objective-C, Swift ブリッジがあらかじめバンドルされているので、これらのコンテキストでは手動でインストールしなくても使用できます。ブリッジの詳細については [Frida ドキュメント](https://frida.re/docs/bridges/) を参照してください。
+
+Frida はネイティブ API に変更を加えました。これらの変更により既存のスクリプトの一部が動作しなくなる可能性がありますが、より読みやすくパフォーマンスの高いコードを書くことができるようになります。たとえば、`Process.enumerateModules()` は `Module` オブジェクトの配列を返すようになり、それらを直接操作できるようになりました。
+
+```js
+for (const module of Process.enumerateModules()) {
+  console.log(module.name);
+}
+```
+
+削除されたもう一つの API は `Module.getSymbolByName` で、これは多くのスクリプトで使用されています。シンボルがどのモジュールにあるか分かっているかどうかに応じて、以下の二つの代替手段のいずれかを使用できます。
+
+```js
+// If you know the module
+Process.getModuleByName('libc.so').getExportByName('open')
+
+// If you don't (i.e., the old Module.getSymbolByName(null, 'open'); )
+Module.getGlobalExportByName('open');
+```
+
+詳細については [Frida 17.0.0 リリースノート](https://frida.re/news/2025/05/17/frida-17-0-0-released/) を参照してください。
+
+## ツール
 
 また Frida は Frida API 上に構築されたシンプルなツールもいくつか提供しており、pip 経由で frida-tools をインストールした後、ターミナルからすぐに利用できます。たとえば、以下があります。
 
