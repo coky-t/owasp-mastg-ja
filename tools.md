@@ -135,3 +135,4 @@
 - [MASTG-TOOL-0097](tools/network/MASTG-TOOL-0097.md) mitmproxy
 - [MASTG-TOOL-0109](tools/network/MASTG-TOOL-0109.md) Nope-Proxy
 - [MASTG-TOOL-0115](tools/network/MASTG-TOOL-0115.md) HTTP Toolkit
+- [MASTG-TOOL-0143](tools/network/MASTG-TOOL-0143.md) badssl
