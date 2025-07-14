@@ -88,7 +88,7 @@
 
 - [MASTG-TEST-0209](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0209.md) 不十分な鍵サイズ (Insufficient Key Sizes)
 - [MASTG-TEST-0210](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0210.md) 不備のある対称暗号アルゴリズム (Broken Symmetric Encryption Algorithms)
-- [MASTG-TEST-0211](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0211.md) 脆弱なハッシュアルゴリズム (Weak Hashing Algorithms)
+- [MASTG-TEST-0211](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0211.md) 不備のあるハッシュアルゴリズム (Broken Hashing Algorithms)
 - [MASTG-TEST-0213](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md) コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 
