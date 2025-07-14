@@ -66,9 +66,9 @@ class a$b
 [Android UnCrackable L4](../../../apps/android/MASTG-APP-015.md) を使用した例:
 
 ```sh
-apkid owasp-mastg/Crackmes/Android/Level_04/r2pay-v1.0.apk
+apkid mastg/Crackmes/Android/Level_04/r2pay-v1.0.apk
 [+] APKiD 2.1.2 :: from RedNaga :: rednaga.io
-[*] owasp-mastg/Crackmes/Android/Level_04/r2pay-v1.0.apk!classes.dex
+[*] mastg/Crackmes/Android/Level_04/r2pay-v1.0.apk!classes.dex
  |-> anti_vm : Build.TAGS check, possible ro.secure check
  |-> compiler : r8
  |-> obfuscator : unreadable field names, unreadable method names
