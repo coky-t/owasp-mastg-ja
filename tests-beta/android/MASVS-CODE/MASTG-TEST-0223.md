@@ -44,4 +44,4 @@ Flutter フレームワークは、[Dart がバッファオーバーフローを
 - **空の .so ファイル**: libruntimeexecutor.so` や `libreact_render_debug.so` などの一部の .so ファイルはリリースでは実質的に空であるため、シンボルを含みません。`-fstack-protector-all` でビルドしようとしても、そこにはメソッド呼び出しがないため、`stack_chk_fail` 文字列を見ることはできないでしょう。
 - **スタックバッファ呼び出しの欠如**: `libreact_utils.so`, `libreact_config.so`, `libreact_debug.so` などの他のファイルは空ではなく、メソッド呼び出しを含みますが、それらのメソッドはスタックバッファ呼び出しを含まないため、その中には `stack_chk_fail` 文字列はありません。
 
-このケースで React Native 開発者は `-fstack-protector-all` を追加しないと宣言しています。それは [そうすることでセキュリティ上の効果が得られず、パフォーマンスが低下すると考えている](https://github.com/OWASP/owasp-mastg/pull/3049#pullrequestreview-2420837259) ためです。
+このケースで React Native 開発者は `-fstack-protector-all` を追加しないと宣言しています。それは [そうすることでセキュリティ上の効果が得られず、パフォーマンスが低下すると考えている](https://github.com/OWASP/mastg/pull/3049#pullrequestreview-2420837259) ためです。
