@@ -20,7 +20,7 @@
 - [MASTG-TEST-0208](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0208.md) 不十分な鍵サイズ (Insufficient Key Sizes)
 - [MASTG-TEST-0212](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0212.md) コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 - [MASTG-TEST-0221](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0221.md) 不備のある対称暗号アルゴリズム (Broken Symmetric Encryption Algorithms)
-- [MASTG-TEST-0232](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0232.md) 脆弱な対称暗号モード (Weak Symmetric Encryption Modes)
+- [MASTG-TEST-0232](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0232.md) 不備のある対称暗号モード (Broken Symmetric Encryption Modes)
 
 ### MASVS-NETWORK: ネットワーク通信
 

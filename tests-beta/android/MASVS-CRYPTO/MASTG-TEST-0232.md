@@ -1,5 +1,5 @@
 ---
-title: 脆弱な対称暗号モード (Weak Symmetric Encryption Modes)
+title: 不備のある対称暗号モード (Broken Symmetric Encryption Modes)
 platform: android
 id: MASTG-TEST-0232
 type: [static, dynamic]
@@ -10,7 +10,7 @@ profiles: [L1, L2]
 
 ## 概要
 
-Android アプリで [脆弱な暗号モードの使用](../../../Document/0x04g-Testing-Cryptography.md#weak-block-cipher-mode) をテストするには、暗号モードを構成および適用するために使用される暗号フレームワークやライブラリのメソッドに注目する必要があります。
+Android アプリで [不備のある暗号モードの使用](../../../Document/0x04g-Testing-Cryptography.md#weak-block-cipher-mode) をテストするには、暗号モードを構成および適用するために使用される暗号フレームワークやライブラリのメソッドに注目する必要があります。
 
 Android 開発では、Java Cryptography Architecture (JCA) の `Cipher` クラスが暗号操作の暗号モードを指定できる主要な API です。[`Cipher.getInstance`](https://developer.android.com/reference/javax/crypto/Cipher#getInstance(java.lang.String)) は、暗号アルゴリズム、操作モード、パディングスキームを含む、変形文字列を定義します。一般的な書式は `"Algorithm/Mode/Padding"` です。たとえば、以下のとおりです。
 
@@ -41,8 +41,8 @@ ECB やその他のモードについては [NIST SP 800-38A - Recommendation fo
 
 ## 結果
 
-出力には暗号操作で安全でない暗号モードや非推奨の暗号モードが使用されている場所のリストを含む可能性があります。
+出力には暗号操作で不備のある暗号モードが使用されている場所のリストを含む可能性があります。
 
 ## 評価
 
-アプリ内で安全でない暗号モードが特定された場合、そのテストケースは不合格です。
+アプリ内で不備のあるモードが特定された場合、そのテストケースは不合格です。
