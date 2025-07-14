@@ -4,7 +4,7 @@ OWASP モバイルアプリケーションセキュリティテストガイド�
 
 ご意見やご提案がある場合、または寄稿したい場合、GitHub に issue を作成するか Slack で ping してください。手順については README を参照してください。
 
-<https://www.github.com/OWASP/owasp-mastg/>
+<https://www.github.com/OWASP/mastg/>
 
 **squirrel (名詞 複数形): 齧歯目リス科リス属。樹上性。キタリスやトウブハイイロリスなど。毛の豊かな尾を持ち、ナッツや種子などを食べる。**
 
