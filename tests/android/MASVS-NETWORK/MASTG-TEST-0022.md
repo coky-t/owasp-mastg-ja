@@ -132,7 +132,7 @@ Xamarin で開発されたアプリケーションは一般的に `ServicePointM
 
 この例では証明書チェーンの中間 CA をピン留めしています。HTTP レスポンスの出力はシステムログにあります。
 
-前述の例のサンプル Xamarin アプリは [MASTG リポジトリ](https://github.com/OWASP/owasp-mastg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk "Xamarin app with certificate pinning") から入手できます。
+前述の例のサンプル Xamarin アプリは [MASTG リポジトリ](https://github.com/OWASP/mastg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk "Xamarin app with certificate pinning") から入手できます。
 
 APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用箇所を確認します。
 
