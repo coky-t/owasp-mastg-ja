@@ -1,6 +1,6 @@
 # OWASP Mobile Application Security Testing Guide ja
 
-This is the unofficial Japanese translation of the [OWASP Mobile Application Security Testing Guide (MASTG)](https://github.com/OWASP/owasp-mastg).
+This is the unofficial Japanese translation of the [OWASP Mobile Application Security Testing Guide (MASTG)](https://github.com/OWASP/mastg).
 
 - Document Site - <https://coky-t.gitbook.io/owasp-mastg-ja/>
 - Document Repository - <https://github.com/coky-t/owasp-mastg-ja>
@@ -11,7 +11,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 - Project Site - <https://owasp.org/www-project-mobile-app-security/>
 - Project Repository - <https://github.com/OWASP/www-project-mobile-app-security>
 - Document Site - <https://mas.owasp.org/MASTG/>
-- Document Repository - <https://github.com/OWASP/owasp-mastg>
+- Document Repository - <https://github.com/OWASP/mastg>
 
 ## OWASP モバイルアプリケーションセキュリティテストガイド 日本語版
 
