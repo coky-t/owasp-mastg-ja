@@ -103,7 +103,7 @@ provider: AndroidKeyStore 1.0(Android KeyStore security provider)
 
 #### 旧バージョンの Android
 
-古いバージョンの Android (例: Android 7.0 (API レベル 24) より以前のバージョンのみ使用) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Conscrypt ライブラリはさまざまな API レベルで暗号化の一貫性を保ち、より重いライブラリである [Bouncy Castle](https://www.bouncycastle.org/java.html "Bouncy Castle in Java") をインポートする必要がないようにするため、この状況では適切な選択といえます。
+古いバージョンの Android (例: Android 7.0 (API レベル 24) より以前のバージョンでのみ使用される) をサポートする一部のアプリケーションでは、最新のライブラリをバンドルすることが唯一の選択肢かもしれません。Conscrypt ライブラリはさまざまな API レベルで暗号化の一貫性を保ち、より重いライブラリである [Bouncy Castle](https://www.bouncycastle.org/documentation/documentation-java/ "Bouncy Castle in Java") をインポートする必要がないようにするため、この状況では適切な選択といえます。
 
 [Conscrypt for Android](https://github.com/google/conscrypt#android "Conscrypt - A Java Security Provider") は以下の方法でインポートできます。
 
@@ -210,7 +210,7 @@ KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
 この例では 4096 ビットの鍵サイズ (すなわち、モジュラスサイズ) で RSA 鍵ペアを作成します。楕円曲線 (Elliptic Curve, EC) 鍵も同様の方法で生成できます。ただし、Android 11 (API レベル 30) 以降、[AndroidKeyStore は EC 鍵での暗号化や復号化をサポートしていません](https://developer.android.com/guide/topics/security/cryptography#SupportedCipher) 。これらは署名にのみ使用できます。
 
-対称暗号鍵は Password Based Key Derivation Function version 2 (PBKDF2) を使用してパスフレーズから生成できます。この暗号プロトコルは暗号鍵を生成するように設計されており、暗号化の目的で使用できます。アルゴリズムの入力パラメータは [脆弱な鍵生成関数](0x04g-Testing-Cryptography.md#weak-key-generation-functions) セクションに従って調整します。以下のコードはパスワードに基づいて強力な暗号鍵を生成する方法を示しています。
+対称暗号鍵は Password Based Key Derivation Function version 2 (PBKDF2) を使用してパスフレーズから生成できます。この暗号プロトコルは暗号鍵を生成するように設計されており、暗号化の目的で使用できます。アルゴリズムの入力パラメータは [脆弱な鍵生成関数](0x04g-Testing-Cryptography.md#improper-key-derivation-functions) セクションに従って調整します。以下のコードはパスワードに基づいて強力な暗号鍵を生成する方法を示しています。
 
 ```java
 public static SecretKey generateStrongAESKey(char[] password, int keyLength)
