@@ -10,7 +10,7 @@ profiles: [L1, L2]
 
 ## 概要
 
-Android アプリで [不備のある暗号モードの使用](../../../Document/0x04g-Testing-Cryptography.md#weak-block-cipher-mode) をテストするには、暗号モードを構成および適用するために使用される暗号フレームワークやライブラリのメソッドに注目する必要があります。
+Android アプリで [不備のある暗号モードの使用](../../../Document/0x04g-Testing-Cryptography.md#broken-block-cipher-modes) をテストするには、暗号モードを構成および適用するために使用される暗号フレームワークやライブラリのメソッドに注目する必要があります。
 
 Android 開発では、Java Cryptography Architecture (JCA) の `Cipher` クラスが暗号操作の暗号モードを指定できる主要な API です。[`Cipher.getInstance`](https://developer.android.com/reference/javax/crypto/Cipher#getInstance(java.lang.String)) は、暗号アルゴリズム、操作モード、パディングスキームを含む、変形文字列を定義します。一般的な書式は `"Algorithm/Mode/Padding"` です。たとえば、以下のとおりです。
 
