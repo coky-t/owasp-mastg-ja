@@ -9,6 +9,9 @@ masvs_v1_levels:
 - L1
 - L2
 profiles: [L1, L2]
+status: deprecated
+covered_by: []
+deprecation_note: JavaScript を有効にすること自体は脆弱性とはみなされませんが、WebView でのローカルファイルアクセスなど、MASTG v2 の他のテストでカバーされている他の脆弱性と組み合わせることで、セキュリティ上の問題につながる可能性があります。そのため、このテストはもはやスタンドアロンテストとはみなされません。
 ---
 
 ## 概要
