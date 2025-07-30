@@ -6,10 +6,10 @@ title: セキュリティプロバイダ (Security Provider)
 
 Android は `java.security.Provider` クラスを介した [セキュリティプロバイダ](https://developer.android.com/privacy-and-security/security-gms-provider "セキュリティプロバイダを更新して SSL エクスプロイトから保護する") に依存して、Java Security サービスを実装し、SSL/TLS ベースの接続を提供します。これらのプロバイダは安全なネットワーク通信と、暗号に依存するその他の安全な機能を確保するために重要です。Android に含まれるセキュリティプロバイダのリストは Android のバージョンや OEM 固有のビルドによって異なります。
 
-デバイスに付属するこの種のセキュリティプロバイダ ([OpenSSL](https://www.openssl.org/news/vulnerabilities.html "OpenSSL Vulnerabilities") など) の問題点はバグや脆弱性がしばしば存在することです。したがって、 Android アプリケーションは正しいアルゴリズムを選択して適切な構成を提供するだけでなく、場合によってはレガシーセキュリティプロバイダの実装の強度にも注意を払う必要があります。
+この種のセキュリティプロバイダの問題 (一例として [OpenSSL](https://www.openssl.org/news/vulnerabilities.html "OpenSSL Vulnerabilities")) はデバイスに付随するもので、多くの場合バグや脆弱性があります。したがって、 Android アプリケーションは正しいアルゴリズムを選択して適切な構成を提供するだけでなく、場合によってはレガシーセキュリティプロバイダの実装の強度にも注意を払う必要があります。
 
 既知の脆弱性を回避するために、開発者はアプリケーションが適切なセキュリティプロバイダをインストールすることを確認する必要があります。
-2016年7月11日以降、Google は脆弱なバージョンの OpenSSL を使用している [Play ストアアプリケーションの提出を拒否](https://support.google.com/faqs/answer/6376725?hl=en "How to address OpenSSL vulnerabilities in your apps") (新規アプリケーションとアップデートの両方) しています。
+2016年7月11日以降、Google は脆弱なバージョンの OpenSSL を使用している [Play ストアアプリケーションの提出を拒否しています](https://support.google.com/faqs/answer/6376725?hl=en "How to address OpenSSL vulnerabilities in your apps") (新規アプリケーションとアップデートの両方)。
 
 ## 利用可能なセキュリティプロバイダの一覧
 
