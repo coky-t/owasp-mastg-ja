@@ -63,6 +63,49 @@
   - [MASTG-BEST-0012 WebView で JavaScript を無効にする (Disable JavaScript in WebViews)](best-practices/MASTG-BEST-0012.md)
   - [MASTG-BEST-0013 WebView でコンテンツプロバイダアクセスを無効にする (Disable Content Provider Access in WebViews)](best-practices/MASTG-BEST-0013.md)
 
+### ナレッジ
+
+- [ナレッジ一覧](knowledge.md)
+  - Android
+    - MASVS-STORAGE: ストレージ
+
+    - MASVS-CRYPTO: 暗号
+      - [MASTG-KNOW-0011 セキュリティプロバイダ (Security Provider)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0011.md)
+      - [MASTG-KNOW-0012 鍵生成 (Key Generation)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0012.md)
+      - [MASTG-KNOW-0013 乱数生成 (Random number generation)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0013.md)
+
+    - MASVS-AUTH: 認証と認可
+      - [MASTG-KNOW-0001 生体認証 (Biometric Authentication)](knowledge/android/MASVS-AUTH/MASTG-KNOW-0001.md)
+      - [MASTG-KNOW-0002 FingerprintManager](knowledge/android/MASVS-AUTH/MASTG-KNOW-0002.md)
+
+    - MASVS-NETWORK: ネットワーク通信
+      - [MASTG-KNOW-0014 Android Network Security Configuration](knowledge/android/MASVS-NETWORK/MASTG-KNOW-0014.md)
+      - [MASTG-KNOW-0015 証明書ピン留め (Certificate Pinning)](knowledge/android/MASVS-NETWORK/MASTG-KNOW-0015.md)
+      - [MASTG-KNOW-0016 TBD](knowledge/android/MASVS-NETWORK/MASTG-KNOW-0016.md)
+
+    - MASVS-PLATFORM: プラットフォーム連携
+
+    - MASVS-CODE: コード品質
+
+    - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+
+    - MASVS-PRIVACY: プライバシー
+
+  - iOS
+    - MASVS-STORAGE: ストレージ
+
+    - MASVS-CRYPTO: 暗号
+
+    - MASVS-AUTH: 認証と認可
+
+    - MASVS-NETWORK: ネットワーク通信
+
+    - MASVS-PLATFORM: プラットフォーム連携
+
+    - MASVS-CODE: コード品質
+
+    - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+
 ### テスト
 
 <!-- - [テスト一覧](tests.md) -->
