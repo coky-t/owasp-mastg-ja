@@ -60,16 +60,14 @@
 
 ### MASVS-CODE: コード品質
 
-<!--
-- [MASTG-KNOW-0003](knowledge/android/MASVS-CODE/MASTG-KNOW-0003.md) App Signing
-- [MASTG-KNOW-0004](knowledge/android/MASVS-CODE/MASTG-KNOW-0004.md) Third-Party Libraries
-- [MASTG-KNOW-0005](knowledge/android/MASVS-CODE/MASTG-KNOW-0005.md) Memory Corruption Bugs
-- [MASTG-KNOW-0006](knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md) Binary Protection Mechanisms
-- [MASTG-KNOW-0007](knowledge/android/MASVS-CODE/MASTG-KNOW-0007.md) Debuggable Apps
-- [MASTG-KNOW-0008](knowledge/android/MASVS-CODE/MASTG-KNOW-0008.md) Debugging Symbols
+- [MASTG-KNOW-0003](knowledge/android/MASVS-CODE/MASTG-KNOW-0003.md) アプリ署名 (App Signing)
+- [MASTG-KNOW-0004](knowledge/android/MASVS-CODE/MASTG-KNOW-0004.md) サードパーティーライブラリ (Third-Party Libraries)
+- [MASTG-KNOW-0005](knowledge/android/MASVS-CODE/MASTG-KNOW-0005.md) メモリ破損バグ (Memory Corruption Bugs)
+- [MASTG-KNOW-0006](knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md) バイナリ保護メカニズム (Binary Protection Mechanisms)
+- [MASTG-KNOW-0007](knowledge/android/MASVS-CODE/MASTG-KNOW-0007.md) デバッグ可能アプリ (Debuggable Apps)
+- [MASTG-KNOW-0008](knowledge/android/MASVS-CODE/MASTG-KNOW-0008.md) デバッグシンボル (Debugging Symbols)
 - [MASTG-KNOW-0009](knowledge/android/MASVS-CODE/MASTG-KNOW-0009.md) StrictMode
-- [MASTG-KNOW-0010](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) Exception Handling
--->
+- [MASTG-KNOW-0010](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) 例外処理 (Exception Handling)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
@@ -84,6 +82,7 @@
 - [MASTG-KNOW-0034](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0034.md) Device Binding
 - [MASTG-KNOW-0035](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md) Google Play Integrity API
 -->
+
 ### MASVS-PRIVACY: プライバシー
 
 <!--
