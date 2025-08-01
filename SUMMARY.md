@@ -96,6 +96,15 @@
       - [MASTG-KNOW-0010 例外処理 (Exception Handling)](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md)
 
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+      - [MASTG-KNOW-0027 ルート検出 (Root Detection)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0027.md)
+      - [MASTG-KNOW-0028 アンチデバッグ (Anti-Debugging)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0028.md)
+      - [MASTG-KNOW-0029 ファイル完全性チェック (File Integrity Checks)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0029.md)
+      - [MASTG-KNOW-0030 リバースエンジニアリングツールの検出 (Detection of Reverse Engineering Tools)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0030.md)
+      - [MASTG-KNOW-0031 エミュレータの検出 (Emulator Detection)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0031.md)
+      - [MASTG-KNOW-0032 ランタイム完全性検証 (Runtime Integrity Verification)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0032.md)
+      - [MASTG-KNOW-0033 難読化 (Obfuscation)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0033.md)
+      - [MASTG-KNOW-0034 デバイスバインディング (Device Binding)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0034.md)
+      - [MASTG-KNOW-0035 Google Play Integrity API](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md)
 
     - MASVS-PRIVACY: プライバシー
 
