@@ -71,17 +71,15 @@
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
-<!--
-- [MASTG-KNOW-0027](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0027.md) Root Detection
-- [MASTG-KNOW-0028](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0028.md) Anti-Debugging
-- [MASTG-KNOW-0029](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0029.md) File Integrity Checks
-- [MASTG-KNOW-0030](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0030.md) Detection of Reverse Engineering Tools
-- [MASTG-KNOW-0031](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0031.md) Emulator Detection
-- [MASTG-KNOW-0032](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0032.md) Runtime Integrity Verification
-- [MASTG-KNOW-0033](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0033.md) Obfuscation
-- [MASTG-KNOW-0034](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0034.md) Device Binding
+- [MASTG-KNOW-0027](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0027.md) ルート検出 (Root Detection)
+- [MASTG-KNOW-0028](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0028.md) アンチデバッグ (Anti-Debugging)
+- [MASTG-KNOW-0029](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0029.md) ファイル完全性チェック (File Integrity Checks)
+- [MASTG-KNOW-0030](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0030.md) リバースエンジニアリングツールの検出 (Detection of Reverse Engineering Tools)
+- [MASTG-KNOW-0031](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0031.md) エミュレータの検出 (Emulator Detection)
+- [MASTG-KNOW-0032](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0032.md) ランタイム完全性検証 (Runtime Integrity Verification)
+- [MASTG-KNOW-0033](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0033.md) 難読化 (Obfuscation)
+- [MASTG-KNOW-0034](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0034.md) デバイスバインディング (Device Binding)
 - [MASTG-KNOW-0035](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md) Google Play Integrity API
--->
 
 ### MASVS-PRIVACY: プライバシー
 
