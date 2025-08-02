@@ -128,6 +128,8 @@
       - [MASTG-KNOW-0073 iOS ネットワーク API (iOS Network APIs)](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0073.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
+
+    - MASVS-CODE: コード品質
       - [MASTG-KNOW-0058 アプリ署名 (App Signing)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0058.md)
       - [MASTG-KNOW-0059 サードパーティライブラリ (Third-Party Libraries)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0059.md)
       - [MASTG-KNOW-0060 メモリ破損バグ (Memory Corruption Bugs)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md)
@@ -137,9 +139,14 @@
       - [MASTG-KNOW-0064 デバッグコードとエラーログ (Debugging Code and Error Logging)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md)
       - [MASTG-KNOW-0065 例外処理 (Exception Handling)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md)
 
-    - MASVS-CODE: コード品質
-
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+      - [MASTG-KNOW-0084](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0084.md) 脱獄検出 (Jailbreak Detection)
+      - [MASTG-KNOW-0085](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0085.md) アンチデバッグ検出 (Anti-Debugging Detection)
+      - [MASTG-KNOW-0086](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0086.md) ファイル完全性チェック (File Integrity Checks)
+      - [MASTG-KNOW-0087](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0087.md) リバースエンジニアリングツール検出 (Reverse Engineering Tools Detection)
+      - [MASTG-KNOW-0088](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) エミュレータ検出 (Emulator Detection)
+      - [MASTG-KNOW-0089](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0089.md) 難読化 (Obfuscation)
+      - [MASTG-KNOW-0090](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0090.md) デバイスバインディング (Device Binding)
 
 ### テスト
 
