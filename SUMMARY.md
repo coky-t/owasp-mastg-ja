@@ -112,6 +112,11 @@
     - MASVS-STORAGE: ストレージ
 
     - MASVS-CRYPTO: 暗号
+      - [MASTG-KNOW-0066 CryptoKit](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0066.md)
+      - [MASTG-KNOW-0067 CommonCrypto, SecKey および Wrapper ライブラリ (CommonCrypto, SecKey and Wrapper libraries)](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0067.md)
+      - [MASTG-KNOW-0068 暗号サードパーティーライブラリ (Cryptographic Third-Party libraries)](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0068.md)
+      - [MASTG-KNOW-0069 鍵管理 (Key Management)](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0069.md)
+      - [MASTG-KNOW-0070 乱数生成 (Random Number Generator)](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0070.md)
 
     - MASVS-AUTH: 認証と認可
 
