@@ -155,12 +155,10 @@
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
-<!--
-- [MASTG-KNOW-0084](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0084.md) Jailbreak Detection
-- [MASTG-KNOW-0085](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0085.md) Anti-Debugging Detection
-- [MASTG-KNOW-0086](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0086.md) File Integrity Checks
-- [MASTG-KNOW-0087](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0087.md) Reverse Engineering Tools Detection
-- [MASTG-KNOW-0088](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) Emulator Detection
-- [MASTG-KNOW-0089](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0089.md) Obfuscation
-- [MASTG-KNOW-0090](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0090.md) Device Binding
--->
+- [MASTG-KNOW-0084](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0084.md) 脱獄検出 (Jailbreak Detection)
+- [MASTG-KNOW-0085](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0085.md) アンチデバッグ検出 (Anti-Debugging Detection)
+- [MASTG-KNOW-0086](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0086.md) ファイル完全性チェック (File Integrity Checks)
+- [MASTG-KNOW-0087](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0087.md) リバースエンジニアリングツール検出 (Reverse Engineering Tools Detection)
+- [MASTG-KNOW-0088](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) エミュレータ検出 (Emulator Detection)
+- [MASTG-KNOW-0089](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0089.md) 難読化 (Obfuscation)
+- [MASTG-KNOW-0090](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0090.md) デバイスバインディング (Device Binding)
