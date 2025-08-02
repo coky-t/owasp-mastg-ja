@@ -128,6 +128,14 @@
       - [MASTG-KNOW-0073 iOS ネットワーク API (iOS Network APIs)](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0073.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
+      - [MASTG-KNOW-0058 アプリ署名 (App Signing)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0058.md)
+      - [MASTG-KNOW-0059 サードパーティライブラリ (Third-Party Libraries)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0059.md)
+      - [MASTG-KNOW-0060 メモリ破損バグ (Memory Corruption Bugs)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md)
+      - [MASTG-KNOW-0061 バイナリ保護メカニズム (Binary Protection Mechanisms)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md)
+      - [MASTG-KNOW-0062 デバッグ可能アプリ (Debuggable Apps)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md)
+      - [MASTG-KNOW-0063 デバッグシンボル (Debugging Symbols)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md)
+      - [MASTG-KNOW-0064 デバッグコードとエラーログ (Debugging Code and Error Logging)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md)
+      - [MASTG-KNOW-0065 例外処理 (Exception Handling)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md)
 
     - MASVS-CODE: コード品質
 
