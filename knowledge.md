@@ -123,11 +123,9 @@
 
 ### MASVS-NETWORK: ネットワーク通信
 
-<!--
 - [MASTG-KNOW-0071](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0071.md) iOS App Transport Security
-- [MASTG-KNOW-0072](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0072.md) Server Trust Evaluation
-- [MASTG-KNOW-0073](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0073.md) iOS Network APIs
--->
+- [MASTG-KNOW-0072](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0072.md) サーバー信頼性評価 (Server Trust Evaluation)
+- [MASTG-KNOW-0073](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0073.md) iOS ネットワーク API (iOS Network APIs)
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
