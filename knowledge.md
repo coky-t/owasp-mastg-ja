@@ -118,10 +118,8 @@
 
 ### MASVS-AUTH: 認証と認可
 
-<!--
-- [MASTG-KNOW-0056](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0056.md) Local Authentication Framework
-- [MASTG-KNOW-0057](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md) Keychain Services
--->
+- [MASTG-KNOW-0056](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0056.md) ローカル認証フレームワーク (Local Authentication Framework)
+- [MASTG-KNOW-0057](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md) キーチェーンサービス (Keychain Services)
 
 ### MASVS-NETWORK: ネットワーク通信
 
