@@ -110,13 +110,11 @@
 
 ### MASVS-CRYPTO: 暗号
 
-<!--
 - [MASTG-KNOW-0066](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0066.md) CryptoKit
-- [MASTG-KNOW-0067](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0067.md) CommonCrypto, SecKey and Wrapper libraries
-- [MASTG-KNOW-0068](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0068.md) Cryptographic Third-Party libraries
-- [MASTG-KNOW-0069](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0069.md) Key Management
-- [MASTG-KNOW-0070](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0070.md) Random Number Generator
--->
+- [MASTG-KNOW-0067](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0067.md) CommonCrypto, SecKey および Wrapper ライブラリ (CommonCrypto, SecKey and Wrapper libraries)
+- [MASTG-KNOW-0068](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0068.md) 暗号サードパーティーライブラリ (Cryptographic Third-Party libraries)
+- [MASTG-KNOW-0069](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0069.md) 鍵管理 (Key Management)
+- [MASTG-KNOW-0070](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0070.md) 乱数生成 (Random Number Generator)
 
 ### MASVS-AUTH: 認証と認可
 
