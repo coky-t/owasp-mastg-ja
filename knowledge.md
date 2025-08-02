@@ -144,16 +144,14 @@
 
 ### MASVS-CODE: コード品質
 
-<!--
-- [MASTG-KNOW-0058](knowledge/ios/MASVS-CODE/MASTG-KNOW-0058.md) App Signing
-- [MASTG-KNOW-0059](knowledge/ios/MASVS-CODE/MASTG-KNOW-0059.md) Third-Party Libraries
-- [MASTG-KNOW-0060](knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md) Memory Corruption Bugs
-- [MASTG-KNOW-0061](knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md) Binary Protection Mechanisms
-- [MASTG-KNOW-0062](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md) Debuggable Apps
-- [MASTG-KNOW-0063](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md) Debugging Symbols
-- [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) Debugging Code and Error Logging
-- [MASTG-KNOW-0065](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md) Exception Handling
--->
+- [MASTG-KNOW-0058](knowledge/ios/MASVS-CODE/MASTG-KNOW-0058.md) アプリ署名 (App Signing)
+- [MASTG-KNOW-0059](knowledge/ios/MASVS-CODE/MASTG-KNOW-0059.md) サードパーティライブラリ (Third-Party Libraries)
+- [MASTG-KNOW-0060](knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md) メモリ破損バグ (Memory Corruption Bugs)
+- [MASTG-KNOW-0061](knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md) バイナリ保護メカニズム (Binary Protection Mechanisms)
+- [MASTG-KNOW-0062](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md) デバッグ可能アプリ (Debuggable Apps)
+- [MASTG-KNOW-0063](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md) デバッグシンボル (Debugging Symbols)
+- [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) デバッグコードとエラーログ (Debugging Code and Error Logging)
+- [MASTG-KNOW-0065](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md) 例外処理 (Exception Handling)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
