@@ -123,6 +123,9 @@
       - [MASTG-KNOW-0057 キーチェーンサービス (Keychain Services)](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md)
 
     - MASVS-NETWORK: ネットワーク通信
+      - [MASTG-KNOW-0071 iOS App Transport Security](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0071.md)
+      - [MASTG-KNOW-0072 サーバー信頼性評価 (Server Trust Evaluation)](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0072.md)
+      - [MASTG-KNOW-0073 iOS ネットワーク API (iOS Network APIs)](knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0073.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
 
