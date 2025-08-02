@@ -119,6 +119,8 @@
       - [MASTG-KNOW-0070 乱数生成 (Random Number Generator)](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0070.md)
 
     - MASVS-AUTH: 認証と認可
+      - [MASTG-KNOW-0056 ローカル認証フレームワーク (Local Authentication Framework)](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0056.md)
+      - [MASTG-KNOW-0057 キーチェーンサービス (Keychain Services)](knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md)
 
     - MASVS-NETWORK: ネットワーク通信
 
