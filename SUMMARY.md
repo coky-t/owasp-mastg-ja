@@ -150,7 +150,90 @@
 
 ### テスト
 
-<!-- - [テスト一覧](tests.md) -->
+- [テスト一覧](tests.md)
+  - Android
+    - MASVS-STORAGE: ストレージ
+
+    - MASVS-CRYPTO: 暗号
+      - [MASTG-TEST-0013 対称暗号のテスト (Testing Symmetric Cryptography)](tests/android/MASVS-CRYPTO/MASTG-TEST-0013.md)
+      - [MASTG-TEST-0014 暗号標準アルゴリズムの設定のテスト (Testing the Configuration of Cryptographic Standard Algorithms)](tests/android/MASVS-CRYPTO/MASTG-TEST-0014.md)
+      - [MASTG-TEST-0015 鍵の目的のテスト (Testing the Purposes of Keys)](tests/android/MASVS-CRYPTO/MASTG-TEST-0015.md)
+      - [MASTG-TEST-0016 乱数生成のテスト (Testing Random Number Generation)](tests/android/MASVS-CRYPTO/MASTG-TEST-0016.md)
+
+    - MASVS-AUTH: 認証と認可
+      - [MASTG-TEST-0017 認証情報確認のテスト (Testing Confirm Credentials)](tests/android/MASVS-AUTH/MASTG-TEST-0017.md)
+      - [MASTG-TEST-0018 生体認証のテスト (Testing Biometric Authentication)](tests/android/MASVS-AUTH/MASTG-TEST-0018.md)
+
+    - MASVS-NETWORK: ネットワーク通信
+      - [MASTG-TEST-0019 ネットワーク上のデータ暗号化のテスト (Testing Data Encryption on the Network)](tests/android/MASVS-NETWORK/MASTG-TEST-0019.md)
+      - [MASTG-TEST-0020 TLS 設定のテスト (Testing the TLS Settings)](tests/android/MASVS-NETWORK/MASTG-TEST-0020.md)
+      - [MASTG-TEST-0021 エンドポイント同一性検証のテスト (Testing Endpoint Identify Verification)](tests/android/MASVS-NETWORK/MASTG-TEST-0021.md)
+      - [MASTG-TEST-0022 カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](tests/android/MASVS-NETWORK/MASTG-TEST-0022.md)
+      - [MASTG-TEST-0023 セキュリティプロバイダのテスト (Testing the Security Provider)](tests/android/MASVS-NETWORK/MASTG-TEST-0023.md)
+
+    - MASVS-PLATFORM: プラットフォーム連携
+
+    - MASVS-CODE: コード品質
+      - [MASTG-TEST-0002 ローカルストレージの入力バリデーションのテスト (Testing Local Storage for Input Validation)](tests/android/MASVS-CODE/MASTG-TEST-0002.md)
+      - [MASTG-TEST-0025 インジェクション欠陥のテスト (Testing for Injection Flaws)](tests/android/MASVS-CODE/MASTG-TEST-0025.md)
+      - [MASTG-TEST-0026 暗黙的インテントのテスト (Testing Implicit Intents)](tests/android/MASVS-CODE/MASTG-TEST-0026.md)
+      - [MASTG-TEST-0027 WebView での URL ローディングのテスト (Testing for URL Loading in WebViews)](tests/android/MASVS-CODE/MASTG-TEST-0027.md)
+      - [MASTG-TEST-0034 オブジェクト永続化のテスト (Testing Object Persistence)](tests/android/MASVS-CODE/MASTG-TEST-0034.md)
+      - [MASTG-TEST-0036 強制更新のテスト (Testing Enforced Updating)](tests/android/MASVS-CODE/MASTG-TEST-0036.md)
+      - [MASTG-TEST-0042 サードパーティーライブラリの脆弱性の確認 (Checking for Weaknesses in Third Party Libraries)](tests/android/MASVS-CODE/MASTG-TEST-0042.md)
+      - [MASTG-TEST-0043 メモリ破損バグ (Memory Corruption Bugs)](tests/android/MASVS-CODE/MASTG-TEST-0043.md)
+      - [MASTG-TEST-0044 フリーのセキュリティ機能が有効であることの確認 (Make Sure That Free Security Features Are Activated)](tests/android/MASVS-CODE/MASTG-TEST-0044.md)
+
+    - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+      - [MASTG-TEST-0038 アプリが正しく署名されていることの確認 (Making Sure that the App is Properly Signed)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0038.md)
+      - [MASTG-TEST-0039 アプリがデバッグ可能であるかのテスト (Testing whether the App is Debuggable)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0039.md)
+      - [MASTG-TEST-0040 デバッグシンボルに関するテスト (Testing for Debugging Symbols)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0040.md)
+      - [MASTG-TEST-0041 デバッグコードと詳細エラーログに関するテスト (Testing for Debugging Code and Verbose Error Logging)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0041.md)
+      - [MASTG-TEST-0045 ルート検出のテスト (Testing Root Detection)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0045.md)
+      - [MASTG-TEST-0046 アンチデバッグ検出のテスト (Testing Anti-Debugging Detection)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0046.md)
+      - [MASTG-TEST-0047 ファイル完全性チェックのテスト (Testing File Integrity Checks)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0047.md)
+      - [MASTG-TEST-0048 リバースエンジニアリングツール検出のテスト (Testing Reverse Engineering Tools Detection)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0048.md)
+      - [MASTG-TEST-0049 エミュレータ検出のテスト (Testing Emulator Detection)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0049.md)
+      - [MASTG-TEST-0050 ランタイム完全性チェックのテスト (Testing Runtime Integrity Checks)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0050.md)
+      - [MASTG-TEST-0051 難読化のテスト (Testing Obfuscation)](tests/android/MASVS-RESILIENCE/MASTG-TEST-0051.md)
+
+  - iOS
+    - MASVS-STORAGE: ストレージ
+
+    - MASVS-CRYPTO: 暗号
+      - [MASTG-TEST-0061 暗号標準アルゴリズムの構成の検証 (Verifying the Configuration of Cryptographic Standard Algorithms)](tests/ios/MASVS-CRYPTO/MASTG-TEST-0061.md)
+      - [MASTG-TEST-0062 鍵管理のテスト (Testing Key Management)](tests/ios/MASVS-CRYPTO/MASTG-TEST-0062.md)
+      - [MASTG-TEST-0063 乱数生成のテスト (Testing Random Number Generation)](tests/ios/MASVS-CRYPTO/MASTG-TEST-0063.md)
+
+    - MASVS-AUTH: 認証と認可
+      - [MASTG-TEST-0064 生体認証のテスト (Testing Biometric Authentication)](tests/ios/MASVS-AUTH/MASTG-TEST-0064.md)
+
+    - MASVS-NETWORK: ネットワーク通信
+      - [MASTG-TEST-0065 ネットワーク上のデータ暗号化のテスト (Testing Data Encryption on the Network)](tests/ios/MASVS-NETWORK/MASTG-TEST-0065.md)
+      - [MASTG-TEST-0066 TLS 設定のテスト (Testing the TLS Settings)](tests/ios/MASVS-NETWORK/MASTG-TEST-0066.md)
+      - [MASTG-TEST-0067 エンドポイント同一性検証のテスト (Testing Endpoint Identity Verification)](tests/ios/MASVS-NETWORK/MASTG-TEST-0067.md)
+      - [MASTG-TEST-0068 カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](tests/ios/MASVS-NETWORK/MASTG-TEST-0068.md)
+
+    - MASVS-PLATFORM: プラットフォーム連携
+
+    - MASVS-CODE: コード品質
+      - [MASTG-TEST-0079 オブジェクト永続化のテスト (Testing Object Persistence)](tests/ios/MASVS-CODE/MASTG-TEST-0079.md)
+      - [MASTG-TEST-0080 強制更新のテスト (Testing Enforced Updating)](tests/ios/MASVS-CODE/MASTG-TEST-0080.md)
+      - [MASTG-TEST-0085 サードパーティライブラリの脆弱性のチェック (Checking for Weaknesses in Third Party Libraries)](tests/ios/MASVS-CODE/MASTG-TEST-0085.md)
+      - [MASTG-TEST-0086 メモリ破損バグ (Memory Corruption Bugs)](tests/ios/MASVS-CODE/MASTG-TEST-0086.md)
+      - [MASTG-TEST-0087 フリーなセキュリティ機能が有効であることの確認 (Make Sure That Free Security Features Are Activated)](tests/ios/MASVS-CODE/MASTG-TEST-0087.md)
+
+    - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+      - [MASTG-TEST-0081 アプリが正しく署名されていることの確認 (Making Sure that the App Is Properly Signed)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0081.md)
+      - [MASTG-TEST-0082 アプリがデバッグ可能かどうかのテスト (Testing whether the App is Debuggable)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0082.md)
+      - [MASTG-TEST-0083 デバッグシンボルのテスト (Testing for Debugging Symbols)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0083.md)
+      - [MASTG-TEST-0084 デバッグコードと詳細エラーログのテスト (Testing for Debugging Code and Verbose Error Logging)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0084.md)
+      - [MASTG-TEST-0088 脱獄検出のテスト (Testing Jailbreak Detection)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0088.md)
+      - [MASTG-TEST-0089 アンチデバッグ検出のテスト (Testing Anti-Debugging Detection)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0089.md)
+      - [MASTG-TEST-0090 ファイル完全性チェックのテスト (Testing File Integrity Checks)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0090.md)
+      - [MASTG-TEST-0091 リバースエンジニアリングツール検出のテスト (Testing Reverse Engineering Tools Detection)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0091.md)
+      - [MASTG-TEST-0092 エミュレータ検出のテスト (Testing Emulator Detection)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0092.md)
+      - [MASTG-TEST-0093 難読化のテスト (Testing Obfuscation)](tests/ios/MASVS-RESILIENCE/MASTG-TEST-0093.md)
 
 - [テスト一覧 (beta)](tests-beta.md)
   - Android
