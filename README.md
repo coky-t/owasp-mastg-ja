@@ -71,7 +71,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 
 ### テスト
 
-<!-- - [テスト一覧](tests.md) -->
+- [テスト一覧](tests.md)
 - [テスト一覧 (beta)](tests-beta.md)
 
 ### デモ
