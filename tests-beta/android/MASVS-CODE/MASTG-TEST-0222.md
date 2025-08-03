@@ -18,7 +18,7 @@ Android 5.0 (API レベル 21) 以降、Android は [すべてのダイナミッ
 
 ## 手順
 
-1. アプリのコンテンツを抽出します ([アプリバイナリの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md))。
+1. アプリのコンテンツを抽出します ([アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md))。
 2. 各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler Provided Security Features)](MASTG-TECH-0115) を実行し、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
 
 ## 結果
