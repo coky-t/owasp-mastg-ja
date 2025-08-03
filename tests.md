@@ -4,14 +4,16 @@
 
 ### MASVS-STORAGE: ストレージ
 
-- [MASTG-TEST-0001](tests/android/MASVS-STORAGE/MASTG-TEST-0001.md) Testing Local Storage for Sensitive Data
-- [MASTG-TEST-0003](tests/android/MASVS-STORAGE/MASTG-TEST-0003.md) Testing Logs for Sensitive Data
+<!--
+- [MASTG-TEST-0001](tests/android/MASVS-STORAGE/MASTG-TEST-0001.md) 機密データに対してのローカルストレージのテスト (Testing Local Storage for Sensitive Data)
+- [MASTG-TEST-0003](tests/android/MASVS-STORAGE/MASTG-TEST-0003.md) 機密データに対してのログのテスト (Testing Logs for Sensitive Data)
 - [MASTG-TEST-0004](tests/android/MASVS-STORAGE/MASTG-TEST-0004.md) 機密データが組み込みサービスを介してサードパーティと共有されるかどうかの判定 (Determining Whether Sensitive Data Is Shared with Third Parties via Embedded Services)
 - [MASTG-TEST-0005](tests/android/MASVS-STORAGE/MASTG-TEST-0005.md) 機密データが通知を介してサードパーティと共有されるかどうかの判定 (Determining Whether Sensitive Data Is Shared with Third Parties via Notifications)
 - [MASTG-TEST-0006](tests/android/MASVS-STORAGE/MASTG-TEST-0006.md) テキスト入力フィールドでキーボードキャッシュが無効かどうかの判定 (Determining Whether the Keyboard Cache Is Disabled for Text Input Fields)
-- [MASTG-TEST-0009](tests/android/MASVS-STORAGE/MASTG-TEST-0009.md) Testing Backups for Sensitive Data
-- [MASTG-TEST-0011](tests/android/MASVS-STORAGE/MASTG-TEST-0011.md) Testing Memory for Sensitive Data
+- [MASTG-TEST-0009](tests/android/MASVS-STORAGE/MASTG-TEST-0009.md) 機密データに対してのバックアップのテスト (Testing Backups for Sensitive Data)
+- [MASTG-TEST-0011](tests/android/MASVS-STORAGE/MASTG-TEST-0011.md) 機密データに対してのメモリのテスト (Testing Memory for Sensitive Data)
 - [MASTG-TEST-0012](tests/android/MASVS-STORAGE/MASTG-TEST-0012.md) デバイスアクセスセキュリティポリシーのテスト (Testing the Device-Access-Security Policy)
+-->
 
 ### MASVS-CRYPTO: 暗号
 
@@ -35,18 +37,20 @@
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
-- [MASTG-TEST-0007](tests/android/MASVS-PLATFORM/MASTG-TEST-0007.md) Determining Whether Sensitive Stored Data Has Been Exposed via IPC Mechanisms
+<!--
+- [MASTG-TEST-0007](tests/android/MASVS-PLATFORM/MASTG-TEST-0007.md) IPC メカニズムを介して機密性の高いデータが漏洩したかどうかの判定 (Determining Whether Sensitive Stored Data Has Been Exposed via IPC Mechanisms)
 - [MASTG-TEST-0008](tests/android/MASVS-PLATFORM/MASTG-TEST-0008.md) ユーザーインタフェースを介した機密データの漏洩のチェック (Checking for Sensitive Data Disclosure Through the User Interface)
 - [MASTG-TEST-0010](tests/android/MASVS-PLATFORM/MASTG-TEST-0010.md) 自動生成されたスクリーンショット内の機密情報を見つける (Finding Sensitive Information in Auto-Generated Screenshots)
-- [MASTG-TEST-0024](tests/android/MASVS-PLATFORM/MASTG-TEST-0024.md) Testing for App Permissions
-- [MASTG-TEST-0028](tests/android/MASVS-PLATFORM/MASTG-TEST-0028.md) Testing Deep Links
-- [MASTG-TEST-0029](tests/android/MASVS-PLATFORM/MASTG-TEST-0029.md) Testing for Sensitive Functionality Exposure Through IPC
+- [MASTG-TEST-0024](tests/android/MASVS-PLATFORM/MASTG-TEST-0024.md) アプリパーミッションのテスト (Testing for App Permissions)
+- [MASTG-TEST-0028](tests/android/MASVS-PLATFORM/MASTG-TEST-0028.md) ディープリンクのテスト (Testing Deep Links)
+- [MASTG-TEST-0029](tests/android/MASVS-PLATFORM/MASTG-TEST-0029.md) IPC を介した機密機能露出のテスト (Testing for Sensitive Functionality Exposure Through IPC)
 - [MASTG-TEST-0030](tests/android/MASVS-PLATFORM/MASTG-TEST-0030.md) PendingIntent の脆弱な実装のテスト (Testing for Vulnerable Implementation of PendingIntent)
 - [MASTG-TEST-0031](tests/android/MASVS-PLATFORM/MASTG-TEST-0031.md) WebView での JavaScript 実行のテスト (Testing JavaScript Execution in WebViews)
-- [MASTG-TEST-0032](tests/android/MASVS-PLATFORM/MASTG-TEST-0032.md) Testing WebView Protocol Handlers
-- [MASTG-TEST-0033](tests/android/MASVS-PLATFORM/MASTG-TEST-0033.md) Testing for Java Objects Exposed Through WebViews
-- [MASTG-TEST-0035](tests/android/MASVS-PLATFORM/MASTG-TEST-0035.md) Testing for Overlay Attacks
-- [MASTG-TEST-0037](tests/android/MASVS-PLATFORM/MASTG-TEST-0037.md) Testing WebViews Cleanup
+- [MASTG-TEST-0032](tests/android/MASVS-PLATFORM/MASTG-TEST-0032.md) WebView プロトコルハンドラのテスト (Testing WebView Protocol Handlers)
+- [MASTG-TEST-0033](tests/android/MASVS-PLATFORM/MASTG-TEST-0033.md) WebView を介して公開される Java オブジェクトのテスト (Testing for Java Objects Exposed Through WebViews)
+- [MASTG-TEST-0035](tests/android/MASVS-PLATFORM/MASTG-TEST-0035.md) オーバーレイ攻撃のテスト (Testing for Overlay Attacks)
+- [MASTG-TEST-0037](tests/android/MASVS-PLATFORM/MASTG-TEST-0037.md) WebView クリーンアップのテスト (Testing WebViews Cleanup)
+-->
 
 ### MASVS-CODE: コード品質
 
@@ -78,12 +82,14 @@
 
 ### MASVS-STORAGE: ストレージ
 
+<!--
 - [MASTG-TEST-0052](tests/ios/MASVS-STORAGE/MASTG-TEST-0052.md) ローカルデータストレージのテスト (Testing Local Data Storage)
 - [MASTG-TEST-0053](tests/ios/MASVS-STORAGE/MASTG-TEST-0053.md) 機密データのログチェック (Checking Logs for Sensitive Data)
 - [MASTG-TEST-0054](tests/ios/MASVS-STORAGE/MASTG-TEST-0054.md) 機密データがサードパーティと共有されるかどうかの判定 (Determining Whether Sensitive Data Is Shared with Third Parties)
 - [MASTG-TEST-0055](tests/ios/MASVS-STORAGE/MASTG-TEST-0055.md) キーボードキャッシュ内の機密データの調査 (Finding Sensitive Data in the Keyboard Cache)
-- [MASTG-TEST-0058](tests/ios/MASVS-STORAGE/MASTG-TEST-0058.md) Testing Backups for Sensitive Data
+- [MASTG-TEST-0058](tests/ios/MASVS-STORAGE/MASTG-TEST-0058.md) 機密データに対してのバックアップのテスト (Testing Backups for Sensitive Data)
 - [MASTG-TEST-0060](tests/ios/MASVS-STORAGE/MASTG-TEST-0060.md) 機密データに対してのメモリのテスト (Testing Memory for Sensitive Data)
+-->
 
 ### MASVS-CRYPTO: 暗号
 
@@ -104,19 +110,21 @@
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
+<!--
 - [MASTG-TEST-0056](tests/ios/MASVS-PLATFORM/MASTG-TEST-0056.md) 機密データが IPC メカニズムを介して開示されているかどうかの判断 (Determining Whether Sensitive Data Is Exposed via IPC Mechanisms)
 - [MASTG-TEST-0057](tests/ios/MASVS-PLATFORM/MASTG-TEST-0057.md) 機密データがユーザーインタフェースを通じて開示されているかどうかのチェック (Checking for Sensitive Data Disclosed Through the User Interface)
 - [MASTG-TEST-0059](tests/ios/MASVS-PLATFORM/MASTG-TEST-0059.md) 自動生成されたスクリーンショットの機密情報についてのテスト (Testing Auto-Generated Screenshots for Sensitive Information)
-- [MASTG-TEST-0069](tests/ios/MASVS-PLATFORM/MASTG-TEST-0069.md) Testing App Permissions
-- [MASTG-TEST-0070](tests/ios/MASVS-PLATFORM/MASTG-TEST-0070.md) Testing Universal Links
-- [MASTG-TEST-0071](tests/ios/MASVS-PLATFORM/MASTG-TEST-0071.md) Testing UIActivity Sharing
-- [MASTG-TEST-0072](tests/ios/MASVS-PLATFORM/MASTG-TEST-0072.md) Testing App Extensions
-- [MASTG-TEST-0073](tests/ios/MASVS-PLATFORM/MASTG-TEST-0073.md) Testing UIPasteboard
-- [MASTG-TEST-0074](tests/ios/MASVS-PLATFORM/MASTG-TEST-0074.md) Testing for Sensitive Functionality Exposure Through IPC
-- [MASTG-TEST-0075](tests/ios/MASVS-PLATFORM/MASTG-TEST-0075.md) Testing Custom URL Schemes
+- [MASTG-TEST-0069](tests/ios/MASVS-PLATFORM/MASTG-TEST-0069.md) アプリパーミッションのテスト (Testing App Permissions)
+- [MASTG-TEST-0070](tests/ios/MASVS-PLATFORM/MASTG-TEST-0070.md) ユニバーサルリンクのテスト (Testing Universal Links)
+- [MASTG-TEST-0071](tests/ios/MASVS-PLATFORM/MASTG-TEST-0071.md) UIActivity 共有のテスト (Testing UIActivity Sharing)
+- [MASTG-TEST-0072](tests/ios/MASVS-PLATFORM/MASTG-TEST-0072.md) App Extension のテスト (Testing App Extensions)
+- [MASTG-TEST-0073](tests/ios/MASVS-PLATFORM/MASTG-TEST-0073.md) UIPasteboard のテスト (Testing UIPasteboard)
+- [MASTG-TEST-0074](tests/ios/MASVS-PLATFORM/MASTG-TEST-0074.md) IPC を介した機密機能露出のテスト (Testing for Sensitive Functionality Exposure Through IPC)
+- [MASTG-TEST-0075](tests/ios/MASVS-PLATFORM/MASTG-TEST-0075.md) カスタム URL スキームのテスト (Testing Custom URL Schemes)
 - [MASTG-TEST-0076](tests/ios/MASVS-PLATFORM/MASTG-TEST-0076.md) iOS WebView のテスト (Testing iOS WebViews)
-- [MASTG-TEST-0077](tests/ios/MASVS-PLATFORM/MASTG-TEST-0077.md) Testing WebView Protocol Handlers
-- [MASTG-TEST-0078](tests/ios/MASVS-PLATFORM/MASTG-TEST-0078.md) Determining Whether Native Methods Are Exposed Through WebViews
+- [MASTG-TEST-0077](tests/ios/MASVS-PLATFORM/MASTG-TEST-0077.md) WebView プロトコルハンドラのテスト (Testing WebView Protocol Handlers)
+- [MASTG-TEST-0078](tests/ios/MASVS-PLATFORM/MASTG-TEST-0078.md) WebView を介してネイティブメソッドが公開されているかどうかの判断 (Determining Whether Native Methods Are Exposed Through WebViews)
+-->
 
 ### MASVS-CODE: コード品質
 
