@@ -8,6 +8,9 @@ title: デバッグシンボルに関するテスト (Testing for Debugging Symb
 masvs_v1_levels:
 - R
 profiles: [R]
+status: deprecated
+covered_by: [MASTG-TEST-0288]
+deprecation_note: New version available in MASTG V2
 ---
 
 ## 概要
