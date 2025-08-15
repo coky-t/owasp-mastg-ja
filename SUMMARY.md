@@ -135,7 +135,7 @@
       - [MASTG-KNOW-0060 メモリ破損バグ (Memory Corruption Bugs)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md)
       - [MASTG-KNOW-0061 バイナリ保護メカニズム (Binary Protection Mechanisms)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md)
       - [MASTG-KNOW-0062 デバッグ可能アプリ (Debuggable Apps)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md)
-      - [MASTG-KNOW-0063 デバッグシンボル (Debugging Symbols)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md)
+      - [MASTG-KNOW-0063 デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md)
       - [MASTG-KNOW-0064 デバッグコードとエラーログ (Debugging Code and Error Logging)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md)
       - [MASTG-KNOW-0065 例外処理 (Exception Handling)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md)
 

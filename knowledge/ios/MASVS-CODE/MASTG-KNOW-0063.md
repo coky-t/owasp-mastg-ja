@@ -1,9 +1,13 @@
 ---
 masvs_category: MASVS-CODE
 platform: ios
-title: デバッグシンボル (Debugging Symbols)
+title: デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)
 ---
 
-良い習慣として、コンパイルされたバイナリで提供される説明情報はできる限り少なくするべきです。デバッグシンボルなどの付加的なメタデータの存在はコードに関する貴重な情報を提供する可能性があります。例えば、関数名は関数が何をするかについての情報を漏洩します。このメタデータはバイナリの実行には必要ありませんので、リリースビルド時に破棄しても問題ありません。これは適切なコンパイラ設定を使用して実行できます。テスト担当者としてはアプリで配布されるすべてのバイナリを検査し、デバッグシンボルが存在しないことを確認するべきです (少なくともデバッグシンボルはコードに関する貴重な情報を漏洩します) 。
+iOS アプリケーションがコンパイルされると、コンパイラはアプリ内に各バイナリ (メイン実行ファイル、フレームワーク、拡張機能など) に対するデバッグシンボルを生成します。これらのシンボルには、クラス名、グローバル変数、メソッド名、関数名を含み、特定のソースファイルと行番号にマップされています。テスト担当者として、アプリに含まれるすべてのバイナリを調査し、意味のあるデバッグシンボルが存在しないことを検証する必要があります。
 
-iOS アプリケーションがコンパイルされると、コンパイラはアプリ内の各バイナリファイル (メインアプリ実行可能ファイル、フレームワーク、アプリ拡張機能) のデバッグシンボルのリストを生成します。これらのシンボルにはクラス名、グローバル変数、メソッド名や関数名が含まれ、それらが定義されている特定のファイルと行番号にマップされます。アプリの [デバッグビルド](https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information "Building Your App to Include Debugging Information") はデフォルトでコンパイル済みバイナリにデバッグシンボルを配置しますが、アプリのリリースビルドは配布するアプリのサイズを縮小するためにコンパニオン _Debug Symbol ファイル_ (dSYM) に配置します。
+[デバッグビルド](https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information "Building Your App to Include Debugging Information") はこれらのシンボルをデフォルトでコンパイル済みバイナリに含めます。対照的に、[Debug Information Format](https://developer.apple.com/documentation/xcode/build-settings-reference#Debug-Information-Format) を `DWARF with dSYM File` に設定して構成されたリリースビルドは、個別の _Debug Symbol ファイル_ (dSYM) を生成し、配布されるアプリのサイズを削減します。
+
+このアプローチは Linux ツールチェーンで一般的な [split DWARF](https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-gsplit-dwarf) に似ています。dSYM ファイルは [クラッシュレポートのシンボル化](https://developer.apple.com/documentation/xcode/adding-identifiable-symbol-names-to-a-crash-report) のために Apple のシンボルサーバーにアップロードできます。
+
+ベストプラクティスとして、実行に必要なメタデータのみがコンパイル済みバイナリに含まれる必要があります。デバッグシンボルとその他の必須ではないメタデータは、関数名など、その目的を示す内部実装詳細を公開する可能性があります。この情報はアプリの実行には不要であり、適切なコンパイラ設定を使用してリリースビルドから削除する必要があります。

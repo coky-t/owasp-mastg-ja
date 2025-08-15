@@ -5,26 +5,26 @@
 ### MASVS-STORAGE: ストレージ
 
 <!--
-- [MASTG-KNOW-0036](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0036.md) Shared Preferences
-- [MASTG-KNOW-0037](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0037.md) SQLite Database
-- [MASTG-KNOW-0038](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0038.md) SQLCipher Database
-- [MASTG-KNOW-0039](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0039.md) Firebase Real-time Databases
-- [MASTG-KNOW-0040](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0040.md) Realm Databases
-- [MASTG-KNOW-0041](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0041.md) Internal Storage
-- [MASTG-KNOW-0042](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0042.md) External Storage
-- [MASTG-KNOW-0043](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0043.md) Android KeyStore
-- [MASTG-KNOW-0044](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0044.md) Key Attestation
-- [MASTG-KNOW-0045](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0045.md) Secure Key Import into Keystore
-- [MASTG-KNOW-0046](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0046.md) BouncyCastle KeyStore
-- [MASTG-KNOW-0047](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0047.md) Cryptographic Key Storage
-- [MASTG-KNOW-0048](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md) KeyChain
-- [MASTG-KNOW-0049](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md) Logs
-- [MASTG-KNOW-0050](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md) Backups
-- [MASTG-KNOW-0051](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0051.md) Process Memory
-- [MASTG-KNOW-0052](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md) User Interface Components
-- [MASTG-KNOW-0053](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0053.md) Screenshots
-- [MASTG-KNOW-0054](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0054.md) App Notifications
-- [MASTG-KNOW-0055](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0055.md) Keyboard Cache
+- [MASTG-KNOW-0036](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0036.md) 共有プリファレンス (Shared Preferences)
+- [MASTG-KNOW-0037](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0037.md) SQLite データベース (SQLite Database)
+- [MASTG-KNOW-0038](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0038.md) SQLCipher データベース (SQLCipher Database)
+- [MASTG-KNOW-0039](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0039.md) Firebase リアルタイムデータベース (Firebase Real-time Databases)
+- [MASTG-KNOW-0040](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0040.md) Realm データベース (Realm Databases)
+- [MASTG-KNOW-0041](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0041.md) 内部ストレージ (Internal Storage)
+- [MASTG-KNOW-0042](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0042.md) 外部ストレージ (External Storage)
+- [MASTG-KNOW-0043](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0043.md) Android キーストア (Android KeyStore)
+- [MASTG-KNOW-0044](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0044.md) 鍵構成証明 (Key Attestation)
+- [MASTG-KNOW-0045](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0045.md) キーストアへの安全な鍵のインポート (Secure Key Import into Keystore)
+- [MASTG-KNOW-0046](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0046.md) BouncyCastle キーストア (BouncyCastle KeyStore)
+- [MASTG-KNOW-0047](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0047.md) 暗号鍵の保管 (Cryptographic Key Storage)
+- [MASTG-KNOW-0048](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md) キーチェーン (KeyChain)
+- [MASTG-KNOW-0049](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md) ログ (Logs)
+- [MASTG-KNOW-0050](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md) バックアップ (Backups)
+- [MASTG-KNOW-0051](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0051.md) プロセスメモリ (Process Memory)
+- [MASTG-KNOW-0052](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md) ユーザーインタフェースコンポーネント (User Interface Components)
+- [MASTG-KNOW-0053](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0053.md) スクリーンショット (Screenshots)
+- [MASTG-KNOW-0054](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0054.md) アプリ通知 (App Notifications)
+- [MASTG-KNOW-0055](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0055.md) キーボードキャッシュ (Keyboard Cache)
 -->
 
 ### MASVS-CRYPTO: 暗号
@@ -47,15 +47,15 @@
 ### MASVS-PLATFORM: プラットフォーム連携
 
 <!--
-- [MASTG-KNOW-0017](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0017.md) App Permissions
-- [MASTG-KNOW-0018](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018.md) WebViews
-- [MASTG-KNOW-0019](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0019.md) Deep Links
-- [MASTG-KNOW-0020](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md) Inter-Process Communication (IPC) Mechanisms
-- [MASTG-KNOW-0021](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0021.md) Object Serialization
-- [MASTG-KNOW-0022](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0022.md) Overlay Attacks
-- [MASTG-KNOW-0023](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md) Enforced Updating
-- [MASTG-KNOW-0024](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) Pending Intents
-- [MASTG-KNOW-0025](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) Implicit Intents
+- [MASTG-KNOW-0017](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0017.md) アプリパーミッション (App Permissions)
+- [MASTG-KNOW-0018](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018.md) WebView (WebViews)
+- [MASTG-KNOW-0019](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0019.md) ディープリンク (Deep Links)
+- [MASTG-KNOW-0020](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
+- [MASTG-KNOW-0021](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0021.md) オブジェクトシリアライゼーション (Object Serialization)
+- [MASTG-KNOW-0022](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0022.md) オーバーレイ攻撃 (Overlay Attacks)
+- [MASTG-KNOW-0023](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md) 強制アップデート (Enforced Updating)
+- [MASTG-KNOW-0024](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) ペンディングインテント (Pending Intents)
+- [MASTG-KNOW-0025](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) 暗黙的インテント (Implicit Intents)
 -->
 
 ### MASVS-CODE: コード品質
@@ -84,7 +84,7 @@
 ### MASVS-PRIVACY: プライバシー
 
 <!--
-- [MASTG-KNOW-0026](knowledge/android/MASVS-PRIVACY/MASTG-KNOW-0026.md) Third-party Services Embedded in the App
+- [MASTG-KNOW-0026](knowledge/android/MASVS-PRIVACY/MASTG-KNOW-0026.md) アプリに組み込まれたサードパーティサービス (Third-party Services Embedded in the App)
 -->
 
 ## iOS
@@ -92,20 +92,20 @@
 ### MASVS-STORAGE: ストレージ
 
 <!--
-- [MASTG-KNOW-0091](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md) File System APIs
-- [MASTG-KNOW-0092](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0092.md) Binary Data Storage
+- [MASTG-KNOW-0091](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md) ファイルシステム API (File System APIs)
+- [MASTG-KNOW-0092](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0092.md) バイナリデータストレージ (Binary Data Storage)
 - [MASTG-KNOW-0093](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0093.md) UserDefaults
 - [MASTG-KNOW-0094](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0094.md) CoreData
-- [MASTG-KNOW-0095](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0095.md) Firebase Real-time Databases
-- [MASTG-KNOW-0096](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0096.md) Realm Databases
-- [MASTG-KNOW-0097](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md) Other Third-Party Databases
-- [MASTG-KNOW-0098](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md) User Interface Components
-- [MASTG-KNOW-0099](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md) Screenshots
-- [MASTG-KNOW-0100](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md) Keyboard Cache
-- [MASTG-KNOW-0101](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md) Logs
-- [MASTG-KNOW-0102](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0102.md) Backups
-- [MASTG-KNOW-0103](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) Process Memory
-- [MASTG-KNOW-0104](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md) Inter-Process Communication (IPC) Mechanisms
+- [MASTG-KNOW-0095](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0095.md) Firebase リアルタイムデータベース (Firebase Real-time Databases)
+- [MASTG-KNOW-0096](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0096.md) Realm データベース (Realm Databases)
+- [MASTG-KNOW-0097](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md) その他のサードパーティデータベース (Other Third-Party Databases)
+- [MASTG-KNOW-0098](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md) ユーザーインタフェースコンポーネント (User Interface Components)
+- [MASTG-KNOW-0099](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md) スクリーンショット (Screenshots)
+- [MASTG-KNOW-0100](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md) キーボードキャッシュ (Keyboard Cache)
+- [MASTG-KNOW-0101](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md) ログ (Logs)
+- [MASTG-KNOW-0102](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0102.md) バックアップ (Backups)
+- [MASTG-KNOW-0103](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) プロセスメモリ (Process Memory)
+- [MASTG-KNOW-0104](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
 -->
 
 ### MASVS-CRYPTO: 暗号
@@ -130,16 +130,16 @@
 ### MASVS-PLATFORM: プラットフォーム連携
 
 <!--
-- [MASTG-KNOW-0074](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0074.md) Enforced Updating
-- [MASTG-KNOW-0075](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0075.md) Object Serialization
-- [MASTG-KNOW-0076](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0076.md) WebViews
-- [MASTG-KNOW-0077](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0077.md) App Permissions
-- [MASTG-KNOW-0078](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0078.md) Inter-Process Communication (IPC)
-- [MASTG-KNOW-0079](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0079.md) Custom URL Schemes
-- [MASTG-KNOW-0080](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md) Universal Links
-- [MASTG-KNOW-0081](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md) UIActivity Sharing
-- [MASTG-KNOW-0082](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0082.md) App extensions
-- [MASTG-KNOW-0083](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) Pasteboard
+- [MASTG-KNOW-0074](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0074.md) 強制アップデート (Enforced Updating)
+- [MASTG-KNOW-0075](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0075.md) オブジェクトシリアライゼーション (Object Serialization)
+- [MASTG-KNOW-0076](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0076.md) WebView (WebViews)
+- [MASTG-KNOW-0077](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0077.md) アプリパーミッション (App Permissions)
+- [MASTG-KNOW-0078](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0078.md) プロセス間通信 (IPC) (Inter-Process Communication (IPC))
+- [MASTG-KNOW-0079](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0079.md) カスタム URL スキーム (Custom URL Schemes)
+- [MASTG-KNOW-0080](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md) ユニバーサルリンク (Universal Links)
+- [MASTG-KNOW-0081](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md) UIActivity 共有 (UIActivity Sharing)
+- [MASTG-KNOW-0082](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0082.md) App Extension (App extensions)
+- [MASTG-KNOW-0083](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) ペーストボード (Pasteboard)
 -->
 
 ### MASVS-CODE: コード品質
@@ -149,7 +149,7 @@
 - [MASTG-KNOW-0060](knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md) メモリ破損バグ (Memory Corruption Bugs)
 - [MASTG-KNOW-0061](knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md) バイナリ保護メカニズム (Binary Protection Mechanisms)
 - [MASTG-KNOW-0062](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md) デバッグ可能アプリ (Debuggable Apps)
-- [MASTG-KNOW-0063](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md) デバッグシンボル (Debugging Symbols)
+- [MASTG-KNOW-0063](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md) デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)
 - [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) デバッグコードとエラーログ (Debugging Code and Error Logging)
 - [MASTG-KNOW-0065](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md) 例外処理 (Exception Handling)
 
