@@ -299,6 +299,7 @@
       - [MASTG-TEST-0263 StrictMode 違反のログ記録 (Logging of StrictMode Violations)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0263.md)
       - [MASTG-TEST-0264 StrictMode API の実行時使用 (Runtime Use of StrictMode APIs)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0264.md)
       - [MASTG-TEST-0265 StrictMode API への参照 (References to StrictMode APIs)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0265.md)
+      - [MASTG-TEST-0288 ネイティブバイナリのデバッグシンボル (Debugging Symbols in Native Binaries)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0288.md)
 
     - MASVS-PRIVACY: プライバシー
       - [MASTG-TEST-0206 ネットワークトラフィックキャプチャにおける機密データ (Sensitive Data in Network Traffic Capture)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0206.md)
