@@ -1,6 +1,6 @@
 ---
 title: WKWebView にアタッチする (Attach to WKWebView)
-platform: macOS
+platform: ios
 ---
 
 脱獄済みデバイスに [GlobalWebInspect](../../tools/ios/MASTG-TOOL-0137.md) をインストールした後、App Store からインストールされたアプリ内の任意の `WKWebView` に Safari 開発者ツールをアタッチできます。
