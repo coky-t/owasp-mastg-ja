@@ -65,7 +65,7 @@
 - [MASTG-KNOW-0005](knowledge/android/MASVS-CODE/MASTG-KNOW-0005.md) メモリ破損バグ (Memory Corruption Bugs)
 - [MASTG-KNOW-0006](knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md) バイナリ保護メカニズム (Binary Protection Mechanisms)
 - [MASTG-KNOW-0007](knowledge/android/MASVS-CODE/MASTG-KNOW-0007.md) デバッグ可能アプリ (Debuggable Apps)
-- [MASTG-KNOW-0008](knowledge/android/MASVS-CODE/MASTG-KNOW-0008.md) デバッグシンボル (Debugging Symbols)
+- [MASTG-KNOW-0008](knowledge/android/MASVS-CODE/MASTG-KNOW-0008.md) デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)
 - [MASTG-KNOW-0009](knowledge/android/MASVS-CODE/MASTG-KNOW-0009.md) StrictMode
 - [MASTG-KNOW-0010](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) 例外処理 (Exception Handling)
 
