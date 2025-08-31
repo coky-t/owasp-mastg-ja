@@ -13,3 +13,4 @@
 - [MASTG-BEST-0011](best-practices/MASTG-BEST-0011.md) WebView でファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)
 - [MASTG-BEST-0012](best-practices/MASTG-BEST-0012.md) WebView で JavaScript を無効にする (Disable JavaScript in WebViews)
 - [MASTG-BEST-0013](best-practices/MASTG-BEST-0013.md) WebView でコンテンツプロバイダアクセスを無効にする (Disable Content Provider Access in WebViews)
+- [MASTG-BEST-0014](best-practices/MASTG-BEST-0014.md) スクリーンショットと画面録画を防止する (Preventing Screenshots and Screen Recording)
