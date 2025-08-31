@@ -8,6 +8,9 @@ title: 自動生成されたスクリーンショットの機密情報につい�
 masvs_v1_levels:
 - L2
 profiles: [L2]
+status: deprecated
+covered_by: [MASTG-TEST-0290]
+deprecation_note: New version available in MASTG V2
 ---
 
 ## 概要
