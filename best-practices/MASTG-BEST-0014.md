@@ -11,12 +11,12 @@ platform: android
 
 <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; margin:16px 0;">
   <figure style="flex:1 1 220px; margin:0; text-align:center;">
-    <img src="Images/Chapters/0x05d/task-switcher-without-flag-secure.png" width="200" alt="Task switcher without FLAG_SECURE">
-    <figcaption>Without <code>FLAG_SECURE</code></figcaption>
+    <img src="../Document/Images/Chapters/0x05d/task-switcher-without-flag-secure.png" width="200" alt="Task switcher without FLAG_SECURE">
+    <figcaption><code>FLAG_SECURE</code> なし</figcaption>
   </figure>
   <figure style="flex:1 1 220px; margin:0; text-align:center;">
-    <img src="Images/Chapters/0x05d/task-switcher-with-flag-secure.png" width="200" alt="Task switcher with FLAG_SECURE">
-    <figcaption>With <code>FLAG_SECURE</code></figcaption>
+    <img src="../Document/Images/Chapters/0x05d/task-switcher-with-flag-secure.png" width="200" alt="Task switcher with FLAG_SECURE">
+    <figcaption><code>FLAG_SECURE</code> あり</figcaption>
   </figure>
 </div>
 
