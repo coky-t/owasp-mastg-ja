@@ -282,6 +282,7 @@
       - [MASTG-TEST-0252 WebView におけるローカルファイルアクセスへの参照 (References to Local File Access in WebViews)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0252.md)
       - [MASTG-TEST-0253 WebView におけるローカルファイルアクセス API の実行時使用 (Runtime Use of Local File Access APIs in WebViews)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0253.md)
       - [MASTG-TEST-0258 UI 要素のキーボードキャッシュ属性への参照 (References to Keyboard Caching Attributes in UI Elements)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0258.md)
+      - [MASTG-TEST-0289 アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0289.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0222 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md)

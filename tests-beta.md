@@ -50,6 +50,7 @@
 - [MASTG-TEST-0252](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0252.md) WebView におけるローカルファイルアクセスへの参照 (References to Local File Access in WebViews)
 - [MASTG-TEST-0253](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0253.md) WebView におけるローカルファイルアクセス API の実行時使用 (Runtime Use of Local File Access APIs in WebViews)
 - [MASTG-TEST-0258](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0258.md) UI 要素のキーボードキャッシュ属性への参照 (References to Keyboard Caching Attributes in UI Elements)
+- [MASTG-TEST-0289](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0289.md) アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)
 
 ### MASVS-CODE: コード品質
 
