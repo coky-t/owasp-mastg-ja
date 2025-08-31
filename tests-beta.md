@@ -111,6 +111,7 @@
 - [MASTG-TEST-0278](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0278.md) 使用後にクリアされないペーストボードコンテンツ (Pasteboard Contents Not Cleared After Use)
 - [MASTG-TEST-0279](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0279.md) 期限切れにならないペーストボードコンテンツ (Pasteboard Contents Not Expiring)
 - [MASTG-TEST-0280](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0280.md) ローカルデバイスに制限されていないペーストボードコンテンツ (Pasteboard Contents Not Restricted to Local Device)
+- [MASTG-TEST-0290](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0290.md) アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)
 
 ### MASVS-CODE: コード品質
 
