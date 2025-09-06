@@ -1,6 +1,6 @@
---- 
+---
 title: アプリのバックアップデータの検査 (Inspecting an App's Backup Data)
-platform: android 
+platform: android
 ---
 
 Android アプリのバックアップデータを検査して、機密データがバックアップに含まれていないことを検証できます。このテクニックはアプリがバックアップから機密データを正しく除外していることを検証するのに役立ちます。
