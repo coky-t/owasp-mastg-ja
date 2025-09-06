@@ -1,6 +1,6 @@
---- 
+---
 title: アプリパーミッションの取得 (Obtaining App Permissions)
-platform: android 
+platform: android
 ---
 
 Android パーミッションは `AndroidManifest.xml` ファイル内の `<uses-permission>` タグを使用して宣言されます。それらを表示するには複数のツールを使用できます。
