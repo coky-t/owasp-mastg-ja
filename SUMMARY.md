@@ -523,6 +523,7 @@
     - [MASTG-APP-0016 Finstergram](apps/android/MASTG-APP-0016.md)
     - [MASTG-APP-0017 Disable-flutter-tls-verification](apps/android/MASTG-APP-0017.md)
     - [MASTG-APP-0018 MASTestApp-Android-NETWORK](apps/android/MASTG-APP-0018.md)
+    - [MASTG-APP-0029 BugBazaar](apps/android/MASTG-APP-0029.md)
 
   - iOS
     - [MASTG-APP-0023 DVIA](apps/ios/MASTG-APP-0023.md)
