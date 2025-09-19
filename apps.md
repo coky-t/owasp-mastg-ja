@@ -30,3 +30,4 @@
 - [MASTG-APP-0026](apps/ios/MASTG-APP-0026.md) iOS UnCrackable L2
 - [MASTG-APP-0027](apps/ios/MASTG-APP-0027.md) Disable-flutter-tls-verification
 - [MASTG-APP-0028](apps/ios/MASTG-APP-0028.md) iGoat-Swift
+- [MASTG-APP-0030](apps/ios/MASTG-APP-0030.md) iBugBazaar
