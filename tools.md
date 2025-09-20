@@ -66,7 +66,7 @@
 - [MASTG-TOOL-0132](tools/generic/MASTG-TOOL-0132.md) dependency-track
 - [MASTG-TOOL-0133](tools/generic/MASTG-TOOL-0133.md) Visual Studio Code (vscode)
 - [MASTG-TOOL-0134](tools/generic/MASTG-TOOL-0134.md) cdxgen
-- [MASTG-TOOL-0134](tools/generic/MASTG-TOOL-0144.md) gitleaks
+- [MASTG-TOOL-0144](tools/generic/MASTG-TOOL-0144.md) gitleaks
 
 ## iOS
 
