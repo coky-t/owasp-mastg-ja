@@ -275,6 +275,7 @@
       - [MASTG-TEST-0284 WebView での正しくない SSL エラー処理 (Incorrect SSL Error Handling in WebViews)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0284.md)
       - [MASTG-TEST-0285 ユーザー提供の CA を信頼する古い Android バージョン (Outdated Android Version Allowing Trust in User-Provided CAs)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0285.md)
       - [MASTG-TEST-0286 ユーザー提供の CA を信頼する Network Security Configuration (Network Security Configuration Allowing Trust in User-Provided CAs)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0286.md)
+      - [MASTG-TEST-0295 更新されていない GMS セキュリティプロバイダ (GMS Security Provider Not Updated)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0295.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
       - [MASTG-TEST-0250 WebView におけるコンテンツプロバイダアクセスへの参照 (References to Content Provider Access in WebViews)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0250.md)
