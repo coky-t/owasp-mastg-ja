@@ -63,6 +63,7 @@
   - [MASTG-BEST-0012 WebView で JavaScript を無効にする (Disable JavaScript in WebViews)](best-practices/MASTG-BEST-0012.md)
   - [MASTG-BEST-0013 WebView でコンテンツプロバイダアクセスを無効にする (Disable Content Provider Access in WebViews)](best-practices/MASTG-BEST-0013.md)
   - [MASTG-BEST-0014 スクリーンショットと画面録画を防止する (Preventing Screenshots and Screen Recording)](best-practices/MASTG-BEST-0014.md)
+  - [MASTG-BEST-0015 バックグラウンド時にスクリーンショットを防ぐために `setRecentsScreenshotEnabled` を使用する (Use `setRecentsScreenshotEnabled` to Prevent Screenshots When Backgrounded)](best-practices/MASTG-BEST-0015.md)
 
 ### ナレッジ
 
