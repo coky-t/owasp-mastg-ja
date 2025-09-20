@@ -17,3 +17,4 @@
 - [MASTG-BEST-0015](best-practices/MASTG-BEST-0015.md) バックグラウンド時にスクリーンショットを防ぐために `setRecentsScreenshotEnabled` を使用する (Use `setRecentsScreenshotEnabled` to Prevent Screenshots When Backgrounded)
 - [MASTG-BEST-0016](best-practices/MASTG-BEST-0016.md) スクリーンショットやスクリーン録画を防ぐために `SECURE_FLAG` を使用する (Use `SECURE_FLAG` to Prevent Screenshots and Screen Recording)
 - [MASTG-BEST-0017](best-practices/MASTG-BEST-0017.md) SurfaceView でのスクリーンショットを防ぐために `setSecure` を使用する (Use `setSecure` to Prevent Screenshots in SurfaceViews)
+- [MASTG-BEST-0018](best-practices/MASTG-BEST-0018.md) Compose コンポーネントでのスクリーンショットを防ぐために `SecureFlagPolicy.SecureOn` を使用する (Use `SecureFlagPolicy.SecureOn` to Prevent Screenshots in Compose Components)
