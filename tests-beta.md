@@ -54,6 +54,7 @@
 - [MASTG-TEST-0291](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0291.md) スクリーンキャプチャ防止 API への参照 (References to Screen Capturing Prevention APIs)
 - [MASTG-TEST-0292](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0292.md) バックグラウンド時にスクリーンショットを防止するために使用されていない `setRecentsScreenshotEnabled` (`setRecentsScreenshotEnabled` Not Used to Prevent Screenshots When Backgrounded)
 - [MASTG-TEST-0293](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0293.md) SurfaceView でのスクリーンショットを防止するために使用されていない `setSecure` (`setSecure` Not Used to Prevent Screenshots in SurfaceViews)
+- [MASTG-TEST-0294](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0294.md) Compose ダイアログのスクリーンショットを防止するために使用されていない `SecureOn` (`SecureOn` Not Used to Prevent Screenshots in Compose Dialogs)
 
 ### MASVS-CODE: コード品質
 
