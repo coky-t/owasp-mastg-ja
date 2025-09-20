@@ -8,6 +8,9 @@ title: セキュリティプロバイダのテスト (Testing the Security Provi
 masvs_v1_levels:
 - L2
 profiles: [L2]
+status: deprecated
+covered_by: [MASTG-TEST-0295]
+deprecation_note: New version available in MASTG V2
 ---
 
 ## 概要
