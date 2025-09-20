@@ -69,6 +69,7 @@
   - [MASTG-BEST-0018 Compose コンポーネントでのスクリーンショットを防ぐために `SecureFlagPolicy.SecureOn` を使用する (Use `SecureFlagPolicy.SecureOn` to Prevent Screenshots in Compose Components)](best-practices/MASTG-BEST-0018.md)
   - [MASTG-BEST-0019 機密性の高いフィールドに対して非キャッシュ入力タイプを使用する (Use Non-Caching Input Types for Sensitive Fields)](best-practices/MASTG-BEST-0019.md)
   - [MASTG-BEST-0020 GMS セキュリティプロバイダを更新する (Update the GMS Security Provider)](best-practices/MASTG-BEST-0020.md)
+  - [MASTG-BEST-0021 適切なエラーおよび例外処理を確保する (Ensure Proper Error and Exception Handling)](best-practices/MASTG-BEST-0021.md)
 
 ### ナレッジ
 
