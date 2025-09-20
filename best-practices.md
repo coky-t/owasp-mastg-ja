@@ -19,3 +19,4 @@
 - [MASTG-BEST-0017](best-practices/MASTG-BEST-0017.md) SurfaceView でのスクリーンショットを防ぐために `setSecure` を使用する (Use `setSecure` to Prevent Screenshots in SurfaceViews)
 - [MASTG-BEST-0018](best-practices/MASTG-BEST-0018.md) Compose コンポーネントでのスクリーンショットを防ぐために `SecureFlagPolicy.SecureOn` を使用する (Use `SecureFlagPolicy.SecureOn` to Prevent Screenshots in Compose Components)
 - [MASTG-BEST-0019](best-practices/MASTG-BEST-0019.md) 機密性の高いフィールドに対して非キャッシュ入力タイプを使用する (Use Non-Caching Input Types for Sensitive Fields)
+- [MASTG-BEST-0020](best-practices/MASTG-BEST-0020.md) GMS セキュリティプロバイダを更新する (Update the GMS Security Provider)
