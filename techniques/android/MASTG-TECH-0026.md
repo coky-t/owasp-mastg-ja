@@ -16,7 +16,7 @@ platform: android
 $ wget https://raw.githubusercontent.com/OWASP/mastg/master/Crackmes/Android/Level_01/UnCrackable-Level1.apk
 # Patch the APK with the Frida Gadget
 $ objection patchapk --source UnCrackable-Level1.apk
-# Install the patched APK on the android phone
+# Install the patched APK on the Android phone
 $ adb install UnCrackable-Level1.objection.apk
 # After running the mobile phone, objection will detect the running frida-server through the APK
 $ objection explore
