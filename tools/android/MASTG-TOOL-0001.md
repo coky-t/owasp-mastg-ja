@@ -15,12 +15,12 @@ Frida API が提供するタスクのうち、Android に関連するものや A
 
 Android では、Frida CLI (`frida`)、`frida-ps`、`frida-ls-devices`、`frida-trace` など、Frida のインストール時に提供されるビルトインツールも利用できることを心に留めてください。
 
-Frida は Xposed とよく比較されますが、両フレームワークは異なる目標を念頭に設計されているため、この比較は公平とは言えません。アプリのセキュリティテスト担当者として、どのような状況でどちらのフレームワークを使うべきかを知るために、これを理解しておくことは重要です。
+Frida は Xposed とよく比較されます。しかし、両フレームワークは異なる目標を念頭に設計されているため、この比較は公平とは言えません。アプリのセキュリティテスト担当者として、どのような状況でどちらのフレームワークを使うべきかを知るために、これを理解しておくことは重要です。
 
-- Frida はスタンドアロンであり、必要なのはターゲットの Android デバイスの既知の場所から frida-server バイナリを実行するだけです (下記の「Fridaのインストール」を参照)。つまり、Xposed とは対照的に、ターゲット OS に _深く_ インストールされるわけではありません。
+- Frida はスタンドアロンです。必要なのはターゲットの Android デバイスの既知の場所から frida-server バイナリを実行するだけです (下記の「Fridaのインストール」を参照)。つまり、Xposed とは対照的に、ターゲット OS に _深く_ インストールされるわけではありません。
 - アプリのリバースは反復的なプロセスです。前のポイントの結果として、フックを適用したり単純に更新するために (ソフト) リブートする必要がないため、テスト時のフィードバックループがより短くなります。そのため、より永続的なフックを実装する場合には Xposed を使用する方がいいかもしれません。
 - プロセスの実行中にいつでもオンザフライで Frida JavaScript コードを注入したり更新できます (iOS の Cycript と同様)。このようにして、Frida にアプリを生成させることで、いわゆる _早期計装_ を実行できます。また、特定の状態にした実行中のアプリにアタッチすることも可能です。
-- Frida は Java とネイティブコード (JNI) の両方を処理でき、その両方を変更できます。これは残念ながらネイティブコードのサポートがない Xposed の制限です。
+- Frida は Java とネイティブコード (JNI) の両方を処理でき、その両方を変更できます。これは、残念ながら、ネイティブコードのサポートがない Xposed の制限です。
 
 > Xposed は 2019 年初頭の時点ではまだ Android 9 (API レベル 28) では動作しないことに注意してください。
 
@@ -86,7 +86,7 @@ $ frida-ps -Uai
     -  drozer Agent                              com.mwr.dz
 ```
 
-これは、すべての名前と識別子を表示します。現在実行中の場合には、それらの PID も表示します。リストでアプリを検索し、PID またはその名前/識別子を書き留めます。今後はそれらのいずれかを使用してアプリを参照します。PID はアプリを実行するたびに変化するため、識別子を使用することをお勧めします。たとえば `com.android.chrome` を取得してみましょう。この文字列は Frida CLI、frida-trace、Python スクリプトなど、すべての Frida ツールで使用できるようになりました。
+これは、すべての名前と識別子を表示します。現在実行中の場合には、それらの PID も表示します。リストでアプリを検索し、PID またはその名前/識別子を書き留めます。今後はそれらのいずれかを使用してアプリを参照します。PID はアプリを実行するたびに変化するため、識別子を使用することをお勧めします。たとえば、`com.android.chrome` を取得してみましょう。この文字列は Frida CLI、frida-trace、Python スクリプトなど、すべての Frida ツールで使用できるようになりました。
 
 ## frida-trace でのネイティブライブラリのトレース
 
@@ -98,7 +98,7 @@ frida-trace -U com.android.chrome -i "open"
 
 これは `__handlers__/libc.so/open.js` に小さな JavaScript を生成し、Frida がプロセスに注入します。このスクリプトは `libc.so` の `open` 関数へのすべてのコールをトレースします。生成されたスクリプトは必要に応じて Frida [JavaScript API](https://www.frida.re/docs/javascript-api/) で変更できます。
 
-残念ながら Java クラスの高レベルメソッドのトレースはまだサポートしていません (しかし [将来的には](https://github.com/frida/frida-python/issues/70 "Support for tracing high-level methods of Java Classes via patterns") するかもしれません)。
+残念ながら、Java クラスの高レベルメソッドのトレースはまだサポートしていません (しかし [将来的には](https://github.com/frida/frida-python/issues/70 "Support for tracing high-level methods of Java Classes via patterns") するかもしれません)。
 
 ## Frida CLI と Java API
 
