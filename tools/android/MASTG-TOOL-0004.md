@@ -12,7 +12,7 @@ List of devices attached
 emulator-5554    device product:sdk_google_phone_x86 model:Android_SDK_built_for_x86 device:generic_x86 transport_id:1
 ```
 
-adb は他にも、ターゲット上で対話型シェルを起動する `adb shell` や、特定のホストポート上のトラフィックを、接続されたデバイス上の別のポートに転送する `adb forward` などの便利なコマンドを提供します。
+adb は他にも、ターゲット上で対話型シェルを起動する `adb shell` や、特定のホストポート上のトラフィックを、接続されたデバイス上の別のポートに転送する `adb forward` など、便利なコマンドを提供します。
 
 ```bash
 adb forward tcp:<host port> tcp:<device port>
