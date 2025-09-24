@@ -20,7 +20,7 @@ platform: android
 
 ## Frida の使用
 
-Frida CLI から `Process` コマンドを使用してプロセスに関連する情報を直接取得できます。`Process` コマンドの `enumerateModules` 関数はプロセスメモリにロードされたライブラリをリストします。
+Frida CLI から `Process` コマンドを使用してプロセスに関連する情報を直接取得できます。`Process` コマンド内では、`enumerateModules` 関数がプロセスメモリにロードされたライブラリをリストします。
 
 ```bash
 [Huawei Nexus 6P::sg.vantagepoint.helloworldjni]-> Process.enumerateModules()
