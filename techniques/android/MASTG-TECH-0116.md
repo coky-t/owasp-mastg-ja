@@ -21,7 +21,7 @@ Number of signers: 1
 
 ## 署名の追加情報
 
-署名証明書のフィールド、ダイジェスト、鍵情報など署名に関する追加情報も [apksigner](../../tools/android/MASTG-TOOL-0123.md) で確認できます。
+署名証明書のフィールド、ダイジェスト、鍵情報など、署名に関する追加情報も [apksigner](../../tools/android/MASTG-TOOL-0123.md) で確認できます。
 
 ```bash
 $ apksigner verify --print-certs --verbose example.apk
