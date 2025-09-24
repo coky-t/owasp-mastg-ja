@@ -104,7 +104,7 @@ JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
 }
 ```
 
-gDvm 変数が利用できない場合でも、 ART で同様の技法を使用してデバッグを無効にできます。 ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、 vtable はクラスメソッドのポインタを保持するテーブルです) 。これには `JdwpSocketState` および `JdwpAdbState` クラスの vtable を含んでおり、これらはネットワークソケットと ADB を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作は [関連する vtable のメソッドポインタを上書きすることにより](https://web.archive.org/web/20200307152820/https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art "Anti-Debugging Fun with Android ART") (archived) 操作できます。
+gDvm 変数が利用できない場合でも、 ART で同様の技法を使用してデバッグを無効にできます。 ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、 vtable はクラスメソッドのポインタを保持するテーブルです) 。これには `JdwpSocketState` および `JdwpAdbState` クラスの vtable を含んでおり、これらはネットワークソケットと [adb](../../../tools/android/MASTG-TOOL-0004.md) を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作は [関連する vtable のメソッドポインタを上書きすることにより](https://web.archive.org/web/20200307152820/https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art "Anti-Debugging Fun with Android ART") (archived) 操作できます。
 
 メソッドポインタを上書きするための方法のひとつは `jdwpAdbState::ProcessIncoming` のアドレスを `JdwpAdbState::Shutdown` のアドレスで上書きすることです。これによりデバッガは直ちに切断されます。
 
@@ -182,7 +182,7 @@ Linux では、 [`ptrace` システムコール](http://man7.org/linux/man-pages
 
 この技法は通常 JNI ネイティブライブラリ内の C で適用されます。これは [Google の gperftools (Google Performance Tools)) Heap Checker](https://github.com/gperftools/gperftools/blob/master/src/heap-checker.cc#L112 "heap-checker.cc - IsDebuggerAttached") 実装の `IsDebuggerAttached` メソッドに示されています。ただし、このチェックを Java/Kotlin コードの一部として含める場合は、 [Tim Strazzere の Anti-Emulator プロジェクト](https://github.com/strazzere/anti-emulator/ "anti-emulator") から `hasTracerPid` メソッドの Java 実装を参照します。
 
-このようなメソッドを自分で実装しようとする場合は、 ADB で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni "hello-jni sample") を使用して、 Android Studio のデバッガをアタッチした後にチェックを実行しています。
+このようなメソッドを自分で実装しようとする場合は、 [adb](../../../tools/android/MASTG-TOOL-0004.md) で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni "hello-jni sample") を使用して、 Android Studio のデバッガをアタッチした後にチェックを実行しています。
 
 ```bash
 $ adb shell ps -A | grep com.example.hellojni
