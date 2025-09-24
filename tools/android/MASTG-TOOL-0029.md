@@ -39,7 +39,7 @@ objection REPL に入ると、利用可能な任意のコマンドを実行で�
 # Show the different storage locations belonging to the app
 $ env
 
-# Disable popular ssl pinning methods
+# Disable popular SSL pinning methods
 $ android sslpinning disable
 
 # List items in the keystore
