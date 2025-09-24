@@ -12,7 +12,7 @@ Xposed を使用するには、[XDA-Developers Xposed フレームワークハ�
 
 注: Xposed フレームワークのプレーンインストールは SafetyNet で簡単に検出されるため、Magisk を使用して Xposed をインストールすることをお勧めします。そうすることで、SafetyNet 認証を持つアプリケーションは Xposed モジュールでテストできる可能性が高くなります。
 
-Xposed は Frida と比較されてきました。ルート化済みデバイスで Frida を実行すると、同様に効果的なセットアップになります。どちらのフレームワークも動的計装を行いたい場合に多くの価値を提供します。Frida がアプリをクラッシュする場合は、Xposed で同様のことを試すことができます。次に、Frida スクリプトの豊富さと同様に、Xposed に付属する多くのモジュールの一つを簡単に使用できます。たとえば、前に説明した SSL ピン留めをバイパスするモジュール ([JustTrustMe](https://github.com/Fuzion24/JustTrustMe "JustTrustMe") や [SSLUnpinning](https://github.com/ac-pm/SSLUnpinning_Xposed "SSL Unpinning")) などです。Xposed は [Inspeckage](https://github.com/ac-pm/Inspeckage "Inspeckage") などの他のモジュールも含み、より詳細なアプリケーションテストを行うこともできます。そのうえ、Android アプリケーションでよく使われるセキュリティメカニズムにパッチを適用するために、独自のモジュールを作成することもできます。
+Xposed は Frida と比較されてきました。ルート化済みデバイスで Frida を実行すると、同様に効果的なセットアップになります。どちらのフレームワークも動的計装を行いたい場合に多くの価値を提供します。Frida がアプリをクラッシュする場合は、Xposed で同様のことを試すことができます。次に、Frida スクリプトの豊富さと同様に、Xposed に付属する多くのモジュールの一つを簡単に使用できます。たとえば、前に説明した SSL ピン留めをバイパスするモジュール ([JustTrustMe](https://github.com/Fuzion24/JustTrustMe "JustTrustMe") や [SSLUnpinning](https://github.com/ac-pm/SSLUnpinning_Xposed "SSL Unpinning")) などです。Xposed は、[Inspeckage](https://github.com/ac-pm/Inspeckage "Inspeckage") など、他のモジュールも含み、より詳細なアプリケーションテストを行うこともできます。そのうえ、Android アプリケーションでよく使われるセキュリティメカニズムにパッチを適用するために、独自のモジュールを作成することもできます。
 
 Xposed は以下のスクリプトを使用してエミュレータにインストールすることもできます。
 
