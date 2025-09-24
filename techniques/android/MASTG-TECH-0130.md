@@ -1,15 +1,15 @@
 ---
-title: Software Composition Analysis (SCA) of Android Dependencies by Creating a SBOM
+title: SBOM を作成することによる Android の依存関係のソフトウェアコンポジション解析 (Software Composition Analysis (SCA) of Android Dependencies by Creating a SBOM)
 platform: android
 ---
 
-@MASTG-TOOL-0134 can be used to create a so called Software Bill of Material (SBOM) in the CycloneDX format. Navigate to the root directory of the Android Studio project you want to scan and execute the following command:
+[cdxgen](../../tools/generic/MASTG-TOOL-0134.md) を使用して、CycloneDX 形式のいわゆるソフトウェア部品表 (SBOM) を作成できます。スキャンしたい Android Studio プロジェクトのルートディレクトリに移動し、以下のコマンドを実行します。
 
 ```bash
 $ cdxgen -t java -o sbom.json
 ```
 
-The created SBOM file need to be Base64 encoded and can then be uploaded to @MASTG-TOOL-0132 for analysis:
+作成された SBOM ファイルは Base64 エンコードする必要があり、[dependency-track](../../tools/generic/MASTG-TOOL-0132.md) にアップロードして解析できます。
 
 ```bash
 $ cat sbom.json | base64
@@ -22,6 +22,6 @@ $ curl -X "PUT" "http://localhost:8081/api/v1/bom" \
   }'
 ```
 
-Go to the frontend of dependency-check, which is <http://localhost:8080>, if you are using the default settings of the dependency-track docker container. Open the project you uploaded the SBOM to and you can verify if there are any vulnerable dependencies.
+dependency-track Docker コンテナのデフォルト設定を使用している場合には、<http://localhost:8080> にある dependency-check のフロントエンドに行きます。SBOM をアップロードしたプロジェクトを開き、脆弱な依存関係があるかどうかを検証できます。
 
-> Note: Transitive dependencies are supported by @MASTG-TOOL-0132 for [Java and Kotlin](https://cyclonedx.github.io/cdxgen/#/PROJECT_TYPES).
+> 注: [dependency-track](../../tools/generic/MASTG-TOOL-0132.md) では [Java および Kotlin](https://cyclonedx.github.io/cdxgen/#/PROJECT_TYPES) に対して推移的依存関係がサポートされています。
