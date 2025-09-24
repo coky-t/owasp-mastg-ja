@@ -3,7 +3,7 @@ title: メソッドトレース (Method Tracing)
 platform: android
 ---
 
-メソッドが呼び出される頻度を示すメソッドプロファイリングとは対照的に、メソッドトレースはメソッドの入出力値を測定するのにも役立ちます。この技法は、大規模なコードベースであったり難読化されているアプリケーションを扱う際に非常に役立ちます。
+メソッドが呼び出される頻度を示すメソッドプロファイリングとは対照的に、メソッドトレースはメソッドの入出力値を測定するのに役立ちます。この技法は、大規模なコードベースであったり難読化されているアプリケーションを扱う際に非常に役立ちます。
 
 GUI ベースのアプローチを好む場合は、[RMS Runtime Mobile Security](../../tools/generic/MASTG-TOOL-0037.md) などのツールを使用できます。これはより視覚的な体験を可能にし、いくつかの便利な [トレースオプション](https://github.com/m0bilesecurity/RMS-Runtime-Mobile-Security#3-hook-on-the-fly-classesmethods-and-trace-their-args-and-return-values) も備えています。
 
