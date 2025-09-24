@@ -11,6 +11,6 @@ platform: android
 objection patchapk --source app-release.apk
 ```
 
-次に、パッチを適用したアプリケーションは adb を使用してインストールする必要があります。
+次に、パッチを適用したアプリケーションは [adb](../../tools/android/MASTG-TOOL-0004.md) を使用してインストールする必要があります。
 
 > この再パッケージ化手法はほとんどのユースケースで十分です。より高度な再パッケージ化については、[再パッケージ化と再署名 (Repackaging & Re-Signing)](MASTG-TECH-0039.md) を参照してください。
