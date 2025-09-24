@@ -1,4 +1,4 @@
-[---
+---
 title: ロードされたネイティブライブラリの取得 (Get Loaded Native Libraries)
 platform: android
 ---
@@ -40,4 +40,3 @@ Frida CLI から `Process` コマンドを使用してプロセスに関連す�
 ...
 
 ```
-](https://github.com/OWASP/mastg/commit/ef06c2c21cfdfe3010780c29781e3160f0305a07#diff-46f3588be4e3f66a6474b8ac24c78ce4b29f86c519216bee877644174cbc585c)
