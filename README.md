@@ -24,6 +24,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 - [OWASP MASVS と MASTG の採用](Document/0x02b-MASVS-MASTG-Adoption.md)
 - [謝辞](Document/0x02c-Acknowledgements.md)
 - [OWASP モバイルアプリケーションセキュリティプロジェクトの序文](Document/0x03-Overview.md)
+- [MAS テストプロファイル](Document/0x03b-Testing-Profiles.md)
 - [さらに学ぶための資料](Document/0x09-Suggested-Reading.md)
 
 ### 総合テストガイド
