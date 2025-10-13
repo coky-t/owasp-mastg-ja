@@ -116,6 +116,7 @@
       - [MASTG-KNOW-0035 Google Play Integrity API](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md)
 
     - MASVS-PRIVACY: プライバシー
+      - [MASTG-KNOW-0026 アプリに組み込まれたサードパーティサービス (Third-party Services Embedded in the App)](knowledge/android/MASVS-PRIVACY/MASTG-KNOW-0026.md)
 
   - iOS
     - MASVS-STORAGE: ストレージ

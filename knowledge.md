@@ -56,6 +56,9 @@
 - [MASTG-KNOW-0023](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md) 強制アップデート (Enforced Updating)
 - [MASTG-KNOW-0024](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) ペンディングインテント (Pending Intents)
 - [MASTG-KNOW-0025](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) 暗黙的インテント (Implicit Intents)
+- [MASTG-KNOW-0105](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md) ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)
+- [MASTG-KNOW-0106](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md) アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)
+- [MASTG-KNOW-0107](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md) スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)
 -->
 
 ### MASVS-CODE: コード品質
@@ -83,9 +86,7 @@
 
 ### MASVS-PRIVACY: プライバシー
 
-<!--
 - [MASTG-KNOW-0026](knowledge/android/MASVS-PRIVACY/MASTG-KNOW-0026.md) アプリに組み込まれたサードパーティサービス (Third-party Services Embedded in the App)
--->
 
 ## iOS
 
