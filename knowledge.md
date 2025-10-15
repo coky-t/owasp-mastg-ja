@@ -7,7 +7,9 @@
 <!--
 - [MASTG-KNOW-0036](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0036.md) 共有プリファレンス (Shared Preferences)
 - [MASTG-KNOW-0037](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0037.md) SQLite データベース (SQLite Database)
+-->
 - [MASTG-KNOW-0038](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0038.md) SQLCipher データベース (SQLCipher Database)
+<!--
 - [MASTG-KNOW-0039](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0039.md) Firebase リアルタイムデータベース (Firebase Real-time Databases)
 - [MASTG-KNOW-0040](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0040.md) Realm データベース (Realm Databases)
 - [MASTG-KNOW-0041](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0041.md) 内部ストレージ (Internal Storage)
