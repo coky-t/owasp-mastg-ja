@@ -25,7 +25,9 @@
 <!--
 - [MASTG-KNOW-0050](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md) バックアップ (Backups)
 - [MASTG-KNOW-0051](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0051.md) プロセスメモリ (Process Memory)
+-->
 - [MASTG-KNOW-0052](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md) ユーザーインタフェースコンポーネント (User Interface Components)
+<!--
 - [MASTG-KNOW-0053](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0053.md) スクリーンショット (Screenshots)
 - [MASTG-KNOW-0054](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0054.md) アプリ通知 (App Notifications)
 - [MASTG-KNOW-0055](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0055.md) キーボードキャッシュ (Keyboard Cache)

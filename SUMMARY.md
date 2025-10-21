@@ -79,6 +79,7 @@
     - MASVS-STORAGE: ストレージ
       - [MASTG-KNOW-0038 SQLCipher データベース (SQLCipher Database)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0038.md)
       - [MASTG-KNOW-0049 ログ (Logs)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md)
+      - [MASTG-KNOW-0052 ユーザーインタフェースコンポーネント (User Interface Components)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md)
 
     - MASVS-CRYPTO: 暗号
       - [MASTG-KNOW-0011 セキュリティプロバイダ (Security Provider)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0011.md)
