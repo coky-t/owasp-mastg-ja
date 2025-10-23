@@ -4,6 +4,10 @@ platform: ios
 source: https://github.com/sensepost/objection
 ---
 
+### ??? 情報 "objection についての情報"
+
+以下のコマンドは、Frida < 17 に依存する objection バージョン 1.11.0 のものです。objection を使用するには、`frida-tools==13.7.1` をインストールし、デバイスで 17 未満の `frida-server` を使用します。Frida 17 で objection を使用したい場合、objection リポジトリから最新バージョンを取得してローカルでビルドできます。いくつかのコマンドは以降のリリースで変更されているため、以下の手順を変更する必要があることに注意してください。たとえば、objection バージョン 2 では、API `explore` コマンドは `start` に置き換えられることが期待されています。更新バージョンが正式にリリースされた後、以下の手順は更新されるでしょう。
+
 objection は iOS に特化した機能をいくつか提供しています。[機能の全リスト](https://github.com/sensepost/objection/wiki/Features) はプロジェクトのページにありますが、ここでは興味深いものをいくつか紹介します。
 
 - アプリケーションを再パッケージして Frida ガジェットを含めます
