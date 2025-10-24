@@ -322,7 +322,7 @@
       - [MASTG-TEST-0288 ネイティブバイナリのデバッグシンボル (Debugging Symbols in Native Binaries)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0288.md)
 
     - MASVS-PRIVACY: プライバシー
-      - [MASTG-TEST-0206 ネットワークトラフィックキャプチャにおける機密データ (Sensitive Data in Network Traffic Capture)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0206.md)
+      - [MASTG-TEST-0206 ネットワークトラフィックキャプチャにおける宣言されていない PII (Undeclared PII in Network Traffic Capture)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0206.md)
       - [MASTG-TEST-0254 危険なアプリパーミッション (Dangerous App Permissions)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0254.md)
       - [MASTG-TEST-0255 最低限でないパーミッションリクエスト (Permission Requests Not Minimized)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0255.md)
       - [MASTG-TEST-0256 パーミッションの理由付けの欠如 (Missing Permission Rationale)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0256.md)
