@@ -97,6 +97,7 @@
       - [MASTG-KNOW-0016 TBD](knowledge/android/MASVS-NETWORK/MASTG-KNOW-0016.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
+      - [MASTG-KNOW-0105 ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-KNOW-0003 アプリ署名 (App Signing)](knowledge/android/MASVS-CODE/MASTG-KNOW-0003.md)
