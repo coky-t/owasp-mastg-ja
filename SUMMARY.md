@@ -99,6 +99,7 @@
     - MASVS-PLATFORM: プラットフォーム連携
       - [MASTG-KNOW-0105 ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md)
       - [MASTG-KNOW-0106 アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md)
+      - [MASTG-KNOW-0107 スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-KNOW-0003 アプリ署名 (App Signing)](knowledge/android/MASVS-CODE/MASTG-KNOW-0003.md)

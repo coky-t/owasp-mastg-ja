@@ -65,9 +65,7 @@
 -->
 - [MASTG-KNOW-0105](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md) ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)
 - [MASTG-KNOW-0106](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md) アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)
-<!--
 - [MASTG-KNOW-0107](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md) スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)
--->
 
 ### MASVS-CODE: コード品質
 
