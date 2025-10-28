@@ -91,6 +91,7 @@
 ### MASVS-STORAGE: ストレージ
 
 - [MASTG-TEST-0215](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0215.md) バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
+- [MASTG-TEST-0296](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0296.md) 安全でないログ記録による機密データ露出 (Sensitive Data Exposure Through Insecure Logging)
 
 ### MASVS-CRYPTO: 暗号
 
