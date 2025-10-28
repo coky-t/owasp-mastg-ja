@@ -21,3 +21,4 @@
 - [MASTG-BEST-0019](best-practices/MASTG-BEST-0019.md) 機密性の高いフィールドに対して非キャッシュ入力タイプを使用する (Use Non-Caching Input Types for Sensitive Fields)
 - [MASTG-BEST-0020](best-practices/MASTG-BEST-0020.md) GMS セキュリティプロバイダを更新する (Update the GMS Security Provider)
 - [MASTG-BEST-0021](best-practices/MASTG-BEST-0021.md) 適切なエラーおよび例外処理を確保する (Ensure Proper Error and Exception Handling)
+- [MASTG-BEST-0022](best-practices/MASTG-BEST-0022.md) プロダクションビルドで詳細ログ記録とデバッグログ記録を無効にする (Disable Verbose and Debug Logging in Production Builds)
