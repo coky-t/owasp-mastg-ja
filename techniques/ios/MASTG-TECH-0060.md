@@ -25,6 +25,6 @@ platform: ios
 1. デバイスをホストコンピュータに接続します。
 2. ターミナルで `idevicesyslog | grep YOUR_APP_NAME` を実行します。出力結果には特定のアプリに関連するデバイス固有のログを多数含みます。
 
-<img src="Images/Chapters/0x06b/idevicesyslog-screen.png" width="100%" />
+<img src="../../Document/Images/Chapters/0x06b/idevicesyslog-screen.png" width="100%" />
 
 > **注**: `idevicesyslog` はすべての種類のログをログ記録しない可能性があります。たとえば、[debug](https://developer.apple.com/documentation/os/oslogtype/debug) や [info](https://developer.apple.com/documentation/os/oslogtype/info) のログはログ記録されない可能性があります。
