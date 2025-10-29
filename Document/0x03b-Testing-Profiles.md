@@ -4,24 +4,29 @@
 
 **MAS テストプロファイル** は、基本的なセキュリティプラクティスから高度な保護対策まで、さまざまな保証レベルでモバイルアプリを評価するために適用できる一連のセキュリティコントロールとテストを概説します。これにより、MAS プロジェクトは、アプリ固有の要件、リスク状況、コンプライアンスニーズに基づいて適切なセキュリティ対策を検証できる柔軟なフレームワークを提供します。
 
-MAS テストプロファイルはさまざまな方法で利用できます。
+MAS テストプロファイルはさまざまな方法で使用できます。
 
 - **アプリのセキュリティ評価**: セキュリティ専門家は、アプリの特性に基づいて適切な MAS テストプロファイルを活用して包括的な評価を実施し、脆弱性、セキュリティコントロールのギャップ、改善のための領域 (暗号化や安全な通信のベストプラクティスなど) を特定できます。
-- **セキュア・バイ・デザイン アプローチ**: 開発者はアプリ開発ライフサイクルで MAS テストプロファイルをガイドラインとして活用できます。選択したプロファイルのセキュリティコントロールを設計および実装段階に組み込むことで、開発者はアプリ開発の初期段階からセキュリティ要件に積極的に対応し、潜在的なリスクを緩和できます。
+- **セキュア・バイ・デザイン アプローチ**: 開発者はアプリ開発ライフサイクルで MAS テストプロファイルをガイドラインとして使用できます。選択したプロファイルのセキュリティコントロールを設計および実装段階に組み込むことで、開発者はアプリ開発の初期段階からセキュリティ要件に積極的に対応し、潜在的なリスクを緩和できます。
 - **コンプライアンスとリスク管理**: 組織は MAS テストプロファイルを頼りにして、モバイルアプリドメインに特有の規制およびコンプライアンス標準に準拠できます。適用可能なセキュリティコントロールとテストを関連規制や業界のベストプラクティスとマップすることで、組織はセキュリティ要件への準拠を確保し、データ保護とプライバシーへのコミットメントを示すことができます。
 - **アプリ審査プロセス:** 組織は MAS テストプロファイルを、組織のデバイスのデプロイメント前のアプリ審査プロセスの基盤として使用できます。プロファイルは個々のセキュリティニーズとリスク許容度を満たすために、組織固有のセキュリティ要件に合わせて慎重に調整され、場合によっては拡張されます。詳細については ["NIST.SP.800-163r1 \- Vetting the Security of Mobile Applications"](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-163r1.pdf) をご覧ください。
 
 ## MAS テストプロファイル
 
-OWASP MASVS の有効性を最大限に高めるには、アプリケーションを脅威モデルに照らして、関連するすべての脅威を特定する必要があります。これらの脅威に基づいて、さまざまなセキュリティコントロールを選択し、アプリケーションに適用する必要があります。しかし、アプリケーション固有の脅威状況に合わせて調整されたカスタムプロファイルを作成できないこともあります。この課題を認識し、デフォルトの L1, L2, R プロファイルを作成しました。
+OWASP MASVS の有効性を最大限に高めるには、アプリケーションが脅威モデルを受けて、関連する脅威を特定し、適切なセキュリティコントロールを選択する必要があります。カスタムプロファイルを作成することが実現できない場合、デフォルトの **L1, L2, R, P プロファイル** を利用できます。
 
-これらのデフォルトプロファイルは幅広い潜在的な脅威を考慮して作成されており、ほとんどのアプリケーションに適したベースラインレベルのセキュリティコントロールを提供します。これらを使用することで、開発者は、包括的な脅威評価を実施していなくても、アプリケーションが一般的な脆弱性や攻撃ベクトルから保護されていることを確認できます。
+これらのプロファイルは、広範囲の一般的な脅威をカバーするベースラインのセキュリティとプライバシーのコントロールを提供し、包括的な脅威評価なしでも開発者がアプリケーションを保護するのに役立ちます。
 
-とはいえ、これらのデフォルトプロファイルが強固な基盤を提供する一方で、特定のアプリケーションが直面する特異な脅威や高度な脅威に対応していないかもしれないことに留意することが重要です。したがって、最高レベルのセキュリティを実現したいと考えている場合、詳細な脅威モデルに基づいて構築されたカスタムプロファイルが依然として最適な選択肢です。
+プロファイルは、**セキュリティ** と **プライバシー** という異なるが補完的な目標を反映して、**二つのグループ** に分かれています。
 
-それでも、開発を始めたばかりの開発者や時間に追われている開発者にとって、デフォルトプロファイルはスクラッチから始めることなくアプリケーションのセキュリティを強化するための効率的かつ効果的な手段を提供します。
+- **セキュリティプロファイル (L1, L2, R)**: 技術的な脅威と敵対的な行動に対処します。
+- **プライバシープロファイル (P)**: ユーザーの個人データを保護し、責任あるデータ処理を確保することに重点を置いています。
 
-### MAS-L1 - 必須のセキュリティ
+これらのデフォルトは強固な基盤を提供し、時間やリソースが限られるチームにとって効果的ですが、固有の脅威や高度な脅威をカバーできない可能性があります。最高レベルの保証には、詳細な脅威モデルに基づくカスタムプロファイルが依然として推奨されるアプローチです。
+
+### セキュリティ
+
+#### MAS-L1 - 必須のセキュリティ
 
 MAS-L1 は **一般的な脅威** から保護するためにすべてのモバイルアプリが満たすべき、最も基本的なセキュリティ要件とベストプラクティスのベースラインを提供します。
 
@@ -38,7 +43,7 @@ MAS-L1 は以下の場合に推奨されます。
 - すべてのモバイルアプリのベースラインとして。
 - (ユーザーの) **低リスクの機密データ** のみを取り扱い、**機密性の高い機能を含まない** アプリ。
 
-### MAS-L2 - 高度なセキュリティ
+#### MAS-L2 - 高度なセキュリティ
 
 MAS-L2 は MAS-L1 を拡張し、より厳格な脅威モデリングとテスト戦略を必要とする **高度な脅威** に対処するために、モバイルアプリに対する追加のセキュリティ対策とベストプラクティスを導入します。
 
@@ -53,7 +58,7 @@ MAS-L2 は以下の場合に推奨されます。
 
 - **高リスクの機密データ** を取り扱い、**機密性の高い機能を含む** アプリ。
 
-### MAS-R - 耐性のあるセキュリティ
+#### MAS-R - 耐性のあるセキュリティ
 
 MAS-R は、攻撃者による知的財産の抽出、セキュリティコントロール (ライセンスチェック、DRM、認証など) の回避、エコシステムへの悪影響 (ゲームでの不正行為、有料機能の無料でのロック解除など) を阻止することを試みます。機密データの再パッケージ化や抽出、IP 窃取 (プロプライエタリアルゴリズムなど)、著作権侵害など、**リバースエンジニアリングと改竄 (クライアントサイド) の脅威** に対する耐性を強化することを目的とした、さまざまなセキュリティ対策を組み込んでいます。
 
@@ -72,12 +77,26 @@ MAS-R 対策がまったく実施されていないからといって、必ず�
 
 リバースエンジニアは常にデバイスにフルアクセスでき、十分な時間とリソースがあれば最終的には成功してしまうため、これらの対策は 100% の有効性を保証するものではないことに注意してください。
 
+### プライバシー
+
+#### MAS-P - ベースラインプライバシープロファイル
+
+MAS-P は **ユーザープライバシー保護** のベースラインを提供します。
+
+このプロファイルは、ユーザーの個人を識別できる情報 (PII) や、健康、医療、金融データなどのその他の機密情報の開示を防ぎ、現行のデータ保護規制への準拠を確保するために、モバイルアプリが遵守すべき重要なプラクティスを概説しています。
+
+MAS-L1 や MAS-L2 などの他の OWASP MAS プロファイルと連携して機能し、プライバシーとセキュリティの両方に対する包括的なアプローチを確保することを目的としています。
+
+MAS-P は以下に推奨されます。
+
+- ユーザーの機密データを扱うすべてのモバイルアプリ
+
 ### 例
 
 <table>
   <tr>
-    <th>MAS L1</th>
-    <th>MAS L1+R</th>
+    <th>MAS L1+P</th>
+    <th>MAS L1+P+R</th>
   </tr>
   <tr>
     <td>
@@ -100,8 +119,8 @@ MAS-R 対策がまったく実施されていないからといって、必ず�
     </td>
   </tr>
   <tr>
-    <th>MAS L2</th>
-    <th>MAS L2+R</th>
+    <th>MAS L2+P</th>
+    <th>MAS L2+P+R</th>
   </tr>
   <tr>
     <td>
@@ -143,9 +162,9 @@ MAS テストプロファイルの選択と調整においては、**すべて�
 
 ## データ保護とプライバシーについて
 
-MASVS と MASTG を利用する場合、適切な MAS プロファイルを決定するために **アプリの徹底的な脅威モデルを実施** する必要があります。このプロセスでは、**組織及び国に適用されるプライバシー規制と法律を考慮する** ことが重要です。データ固有の性質と機密性が必要な保護レベルを左右することが多く、結果として、プロファイルごとに異なる MAS セキュリティコントロールとなります。たとえば、デバイスから外部に持ち出されない高リスクデータは、ストレージ関連のテストには MAS-L2 が必要になるかもしれませんが、ネットワーク関連のテストには MAS-L1 で十分なことがあります。
+MASVS と MASTG を使用する場合、適切な MAS プロファイルを決定するために **アプリの徹底的な脅威モデルを実施** する必要があります。このプロセスでは、**組織及び国に適用されるプライバシー規制と法律を考慮する** ことが重要です。データ固有の性質と機密性が必要な保護レベルを左右することが多く、結果としてプロファイルごとに異なる MAS セキュリティコントロールとなります。たとえば、デバイスから外部に持ち出されない高リスクデータは、ストレージ関連のテストには MAS-L2 が必要になるかもしれませんが、ネットワーク関連のテストには MAS-L1 で十分なことがあります。
 
-ガイダンスとして、[NIST SP 800-122](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-122.pdf) は個人を識別できる情報 (Personally Identifiable Information, PII) の例示的な影響レベルを示しています。たとえば、社会保障番号 (Social Security Numbers, SSN)、病歴、金融講座の詳細などの機密情報は、電話番号や郵便番号といった非機密データよりも一般的に機密性が高いとみなされます。しかしながら、組織はこれらの影響レベルを特定のデータに合わせて、欧州の [一般データ保護規則 (General Data Protection Regulation, GDPR)](https://gdpr-info.eu/) や米国の [医療保険の携行性と責任に関する法律 (Health Insurance Portability and Accountability Act of 1996, HIPAA)](https://www.cdc.gov/phlp/publications/topic/hipaa.html) などの関連法規を遵守する必要があります。
+ガイダンスとして、[NIST SP 800-122](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-122.pdf) は個人を識別できる情報 (Personally Identifiable Information, PII) の例示的な影響レベルを示しています。たとえば、社会保障番号 (Social Security Numbers, SSN)、病歴、金融講座の詳細などの機密情報は、電話番号や郵便番号といった非機密データよりも一般的に機密性が高いとみなされます。しかしながら、組織はこれらの影響レベルを特定のデータに合わせて、欧州の [一般データ保護規則 (General Data Protection Regulation, GDPR)](https://gdpr-info.eu/) や米国の [医療保険の携行性と責任に関する法律 (Health Insurance Portability and Accountability Act of 1996, HIPAA)](https://www.cdc.gov/phlp/php/resources/health-insurance-portability-and-accountability-act-of-1996-hipaa.html) などの関連法規を遵守する必要があります。
 
 PII の機密性を保護するための堅牢なポリシーと手順を策定することが不可欠です。MASVS に加えてガイドラインや規制を参照することで、包括的なデータ保護対策を確立し、プライバシー規制へのコンプライアンスを確保できます。
 
@@ -156,6 +175,9 @@ PII の機密性を保護するための堅牢なポリシーと手順を策定�
 - [NIST.SP.800-163r1 \- Vetting the Security of Mobile Applications](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-163r1.pdf)
 - [OWASP Secure Product Design Cheat Sheet \- The principle of Defense-in-Depth](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html#2-the-principle-of-defense-in-depth)
 - [NIST SP 800-122, Guide to Protecting the Confidentiality of Personally Identifiable Information (PII)](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-122.pdf)
-- [General Data Protection Regulation (EU GDPR)](https://gdpr-info.eu/)
-- [Health Insurance Portability and Accountability Act of 1996 (HIPAA) | CDC](https://www.cdc.gov/phlp/publications/topic/hipaa.html)
+- [General Data Protection Regulation (GDPR) - EU](https://gdpr-info.eu/)
+- [Health Insurance Portability and Accountability Act of 1996 (HIPAA) - USA | CDC](https://www.cdc.gov/phlp/php/resources/health-insurance-portability-and-accountability-act-of-1996-hipaa.html)
+- [Children's Online Privacy Protection Rule (COPPA) - USA](https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa)
+- [Personal Information Protection and Electronic Documents Act (PIPEDA) - Canada](https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/)
+- [Protection of Personal Information Act (POPIA) - South Africa](https://inforegulator.org.za/popia/)
 - [OWASP MASTG \- Mobile App User Privacy Protection](https://mas.owasp.org/MASTG/0x04i-Testing-User-Privacy-Protection/)
