@@ -15,7 +15,7 @@ profiles: [L2]
 
 ## 手順
 
-1. [Frida for iOS](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを実行して、`KeyguardManager.isDeviceSecure` と `BiometricManager.canAuthenticate` の API の使用を探します。
+1. [Frida for Android](../../../tools/android/MASTG-TOOL-0001.md) などの動的解析ツールを実行して、`KeyguardManager.isDeviceSecure` と `BiometricManager.canAuthenticate` の API の使用を探します。
 
 ## 結果
 
