@@ -16,7 +16,7 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [Frida for iOS](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを実行して、以下のいずれかを実行します。
+1. [Frida for Android](../../../tools/android/MASTG-TOOL-0001.md) などの動的解析ツールを実行して、以下のいずれかを実行します。
     - アプリ内の `WebView` インスタンスを列挙して、その設定値をリストする
     - または、`WebView` 設定のセッターを明示的にフックする
 
