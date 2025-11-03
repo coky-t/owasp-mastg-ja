@@ -48,7 +48,7 @@ frida-server をデバイスにコピーして実行します。
 ```bash
 adb push frida-server /data/local/tmp/
 adb shell "chmod 755 /data/local/tmp/frida-server"
-adb shell "su -c /data/local/tmp/frida-server &"
+adb shell "su -c /data/local/tmp/frida-server &" # or if su needs a uid: adb shell "su 0 /data/local/tmp/frida-server &"
 ```
 
 ## Android で Frida を使用する
