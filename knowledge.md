@@ -107,7 +107,9 @@
 - [MASTG-KNOW-0094](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0094.md) CoreData
 - [MASTG-KNOW-0095](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0095.md) Firebase リアルタイムデータベース (Firebase Real-time Databases)
 - [MASTG-KNOW-0096](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0096.md) Realm データベース (Realm Databases)
+-->
 - [MASTG-KNOW-0097](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md) その他のサードパーティデータベース (Other Third-Party Databases)
+<!--
 - [MASTG-KNOW-0098](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md) ユーザーインタフェースコンポーネント (User Interface Components)
 - [MASTG-KNOW-0099](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md) スクリーンショット (Screenshots)
 - [MASTG-KNOW-0100](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md) キーボードキャッシュ (Keyboard Cache)
