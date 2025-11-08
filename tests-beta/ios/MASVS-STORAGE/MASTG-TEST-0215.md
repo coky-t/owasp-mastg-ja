@@ -1,21 +1,22 @@
 ---
 platform: ios
-title: バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
+title: バックアップ除外としてマークされていない機密データ (Sensitive Data Not Marked For Backup Exclusion)
 id: MASTG-TEST-0215
-type: [static, filesystem]
+type: [static]
 weakness: MASWE-0004
+best-practices: [MASTG-BEST-0023]
 profiles: [L1, L2, P]
 ---
 
 ## 概要
 
-このテストでは、バックアップから機密ファイルを除外するように、アプリがシステムに正しく指示しているかどうかを検証します。
-
-アプリコンテナの `/tmp` および `/Library/Caches` サブディレクトリにあるファイルは iCloud バックアップから除外されます。アプリコンテナ内のその他の場所にあるファイルやディレクトリについては、iOS は [`isExcludedFromBackup`](https://developer.apple.com/documentation/foundation/urlresourcevalues/1780002-isexcludedfrombackup) API を提供し、特定のファイルやディレクトリをバックアップしないようにシステムをガイドします。ただし、この API は [実際の除外を保証するものではありません](https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/#3928527)。
+このてすとは、アプリが `isExcludedFromBackup` を使用して、機密ファイルをバックアップから除外するようにシステムに指示しているかどうかを検証します。この API は [実際の除外を保証するものではありません](https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/#3928527)。ドキュメントによると以下のようになります。
 
 > 「`isExcludedFromBackup` リソース値は、除外できるファイルやディレクトリについてのガイダンスをシステムに提供するためにのみ存在します。これらのアイテムがバックアップやリストアされたデバイスに決して現れないことを保証するメカニズムではありません。」
 
-したがって、バックアップからファイルを適切に保護する唯一の方法は、ファイルを暗号化することです。
+このテストでは、バックアップに依然として存在する可能性のあるファイルをマークするために `isExcludedFromBackup` API が使用されているすべての場所を特定します。
+
+**注**: アプリの `/tmp` および `/Library/Caches` ディレクトリに保存されているファイルは iCloud バックアップから **除外** されます。これらのディレクトリは一時データやキャッシュデータ用に意図されており、システムは空き容量を増やすためにいつでもその内容を自動的に削除する可能性があります。したがって、これらのファイルを `isExcludedFromBackup` でマークする必要はありません。詳細については、[Apple ドキュメント](https://developer.apple.com/documentation/foundation/optimizing-your-app-s-data-for-icloud-backup#Exclude-Purgeable-Data) を参照してください。
 
 ## 手順
 
@@ -23,10 +24,10 @@ profiles: [L1, L2, P]
 
 ## 結果
 
-出力には `isExcludedFromBackup` を使用する関数の逆アセンブルされたコードと、可能であれば影響を受けるファイルのリストを含む可能性があります。
+出力には `isExcludedFromBackup` を使用する関数の逆アセンブルされたコードと、可能であれば、影響を受けるファイルのリストを含む可能性があります。
 
 ## 評価
 
-ソースコード内に `isExcludedFromBackup` の使用が見つかり、影響を受けるいずれかのファイルが機密であるとみなされる場合、そのテストケースは不合格です。
+`isExcludedFromBackup` API が使用され、影響を受けるいずれかのファイルが機密であるとみなされる場合、そのテストは不合格です。
 
 見つかった機密ファイルについては、`isExcludedFromBackup` は除外を保証しないため、`isExcludedFromBackup` を使用することに加えて、必ず暗号化してください。
