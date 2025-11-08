@@ -22,3 +22,4 @@
 - [MASTG-BEST-0020](best-practices/MASTG-BEST-0020.md) GMS セキュリティプロバイダを更新する (Update the GMS Security Provider)
 - [MASTG-BEST-0021](best-practices/MASTG-BEST-0021.md) 適切なエラーおよび例外処理を確保する (Ensure Proper Error and Exception Handling)
 - [MASTG-BEST-0022](best-practices/MASTG-BEST-0022.md) プロダクションビルドで詳細ログ記録とデバッグログ記録を無効にする (Disable Verbose and Debug Logging in Production Builds)
+- [MASTG-BEST-0023](best-practices/MASTG-BEST-0023.md) バックアップから機密情報を除外する (Exclude Sensitive Information from Backups)
