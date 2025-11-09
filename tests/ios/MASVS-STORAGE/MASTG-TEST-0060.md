@@ -8,6 +8,9 @@ title: 機密データに対してのメモリのテスト (Testing Memory for S
 masvs_v1_levels:
 - L2
 profiles: [L2]
+status: deprecated
+covered_by: []
+deprecation_note: 関連する弱点は開発プロセスの中で対処するのが最善です。詳細については [プロセスメモリ (Process Memory)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) を参照してください。
 ---
 
 ## 概要
