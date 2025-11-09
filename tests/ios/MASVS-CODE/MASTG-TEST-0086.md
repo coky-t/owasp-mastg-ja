@@ -9,6 +9,9 @@ masvs_v1_levels:
 - L1
 - L2
 profiles: [L1, L2]
+status: deprecated
+covered_by: []
+deprecation_note: 関連する弱点は開発プロセスの中で対処するのが最善です。詳細については [MASTG-KNOW-0060 メモリ破損バグ (Memory Corruption Bugs)](../../../knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md) を参照してください。
 ---
 
 ## 概要
@@ -34,4 +37,4 @@ Xcode 8 で導入された Debug Memory Graph や Xcode の Allocations and Leak
 
 次に、アプリケーションのテスト時に Xcode で `NSAutoreleaseFreedObjectCheckEnabled`, `NSZombieEnabled`, `NSDebugEnabled` を有効にすることで、メモリの解放が早すぎるか遅すぎるかを確認できます。
 
-メモリ管理の面倒を見る手助けとなるさまざまなうまくまとめられた解説があります。これらは本章の参考情報リストにあります。
+iOS アプリケーションのメモリ破損バグの詳細については [MASTG-KNOW-0060 メモリ破損バグ (Memory Corruption Bugs)](../../../knowledge/ios/MASVS-CODE/MASTG-KNOW-0060.md) を参照してください。
