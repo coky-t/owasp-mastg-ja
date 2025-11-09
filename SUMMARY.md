@@ -133,6 +133,7 @@
       - [MASTG-KNOW-0093 UserDefaults](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0093.md)
       - [MASTG-KNOW-0097 その他のサードパーティデータベース (Other Third-Party Databases)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md)
       - [MASTG-KNOW-0098 ユーザーインタフェースコンポーネント (User Interface Components)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md)
+      - [MASTG-KNOW-0101 ログ (Logs)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md)
 
     - MASVS-CRYPTO: 暗号
       - [MASTG-KNOW-0066 CryptoKit](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0066.md)
