@@ -9,6 +9,9 @@ masvs_v1_levels:
 - L1
 - L2
 profiles: [L1, L2]
+status: deprecated
+covered_by: []
+deprecation_note: 関連する弱点は開発プロセスの中で対処するのが最善です。詳細については [メモリ破損バグ (Memory Corruption Bugs)](../../../knowledge/android/MASVS-CODE/MASTG-KNOW-0005.md) を参照してください。
 ---
 
 ## 概要
