@@ -10,7 +10,7 @@ platform: ios
 frida-server がインストールされた脱獄済みデバイスを持つ場合、[objection](../../tools/generic/MASTG-TOOL-0038.md) で `ios ui biometrics_bypass` コマンドを実行することで生体認証をバイパスできます。
 
 ```bash
-objection -g MASTestApp explore
+objection -n "MASTestApp" start
 ios ui biometrics_bypass
 ```
 
