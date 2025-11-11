@@ -4,9 +4,10 @@ platform: ios
 source: https://github.com/sensepost/objection
 ---
 
-### ??? 情報 "objection についての情報"
+### !!! 警告 "objection の pip/PyPI パッケージは古く、Frida 17+ に準拠していません"
+ソースリポジトリの `master` ブランチからインストールすることで、objection を Frida 17+ で引き続き使用できます。[Development Environment Installation](https://github.com/sensepost/objection/wiki/Development-Environment-Installation) を参照してください。
 
-以下のコマンドは、Frida < 17 に依存する objection バージョン 1.11.0 のものです。objection を使用するには、`frida-tools==13.7.1` をインストールし、デバイスで 17 未満の `frida-server` を使用します。Frida 17 で objection を使用したい場合、objection リポジトリから最新バージョンを取得してローカルでビルドできます。いくつかのコマンドは以降のリリースで変更されているため、以下の手順を変更する必要があることに注意してください。たとえば、objection バージョン 2 では、API `explore` コマンドは `start` に置き換えられることが期待されています。更新バージョンが正式にリリースされた後、以下の手順は更新されるでしょう。
+新しいリリースが存在し、Python Package Index (PyPI) で利用可能になれば、`pip` を使用してインストールできます。
 
 objection は iOS に特化した機能をいくつか提供しています。[機能の全リスト](https://github.com/sensepost/objection/wiki/Features) はプロジェクトのページにありますが、ここでは興味深いものをいくつか紹介します。
 
@@ -31,18 +32,29 @@ frida-server をインストールした脱獄済みデバイスがある場合�
 
 ## iOS で objection を使用する
 
-objection の起動は、IPA  にパッチを適用しているかどうか、frida-server が動作している脱獄済みデバイスを使用しているかどうかによって異なります。パッチを適用した IPA を実行する場合、objection は接続されているデバイスを自動的に検出し、リッスンしている Frida ガジェットを探します。しかし、frida-server を使用する場合、解析したいアプリケーションを frida-server に明示的に伝える必要があります。
+objection の起動は、IPA  にパッチを適用しているかどうか、frida-server が動作している脱獄済みデバイスを使用しているかどうかによって異なります。
+パッチを適用した IPA を実行する場合、`-n Gadget` を使用して Gadget という名前を指定する必要があります。一方、frida-server を使用する場合、アタッチまたはスポーンしたいアプリケーションを指定する必要があります。
 
 ```bash
 # Connecting to a patched IPA
-$ objection explore
+$ objection -n Gadget start
 
+# Using Frida-server
 # Using frida-ps to get the correct application name
 $ frida-ps -Ua | grep -i Telegram
 983  Telegram
 
 # Connecting to the Telegram app through Frida-server
-$ objection --gadget="Telegram" explore
+$ objection -n "Telegram" start
+# Alternatively use the process ID (PID)
+$ objection -n 983 start
+
+# Objection can also spawn the app through Frida-server using the application identifier / package name
+$ objection --spawn -n "org.telegram.messenger"
+... [usb] resume
+
+# Alternatively with "no pause"
+$ objection -s -p -n "org.telegram.messenger
 ```
 
 objection REPL に入ると、利用可能な任意のコマンドを実行できます。以下は最も便利ないくつかのコマンドの概要です。
