@@ -73,6 +73,7 @@
   - [MASTG-BEST-0021 適切なエラーおよび例外処理を確保する (Ensure Proper Error and Exception Handling)](best-practices/MASTG-BEST-0021.md)
   - [MASTG-BEST-0022 プロダクションビルドで詳細ログ記録とデバッグログ記録を無効にする (Disable Verbose and Debug Logging in Production Builds)](best-practices/MASTG-BEST-0022.md)
   - [MASTG-BEST-0023 バックアップから機密情報を除外する (Exclude Sensitive Information from Backups)](best-practices/MASTG-BEST-0023.md)
+  - [MASTG-BEST-0024 アプリサンドボックスディレクトリに暗号化したデータを保存する (Store Data Encrypted in App Sandbox Directory)](best-practices/MASTG-BEST-0024.md)
 
 ### ナレッジ
 
