@@ -94,11 +94,7 @@
 - [MASTG-TEST-0296](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0296.md) 安全でないログ記録による機密データ露出 (Sensitive Data Exposure Through Insecure Logging)
 - [MASTG-TEST-0297](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0297.md) ログへの機密データの挿入 (Insertion of Sensitive Data into Logs)
 - [MASTG-TEST-0298](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0298.md) バックアップ対象のファイルの実行時監視 (Runtime Monitoring of Files Eligible for Backup)
-- [MASTG-TEST-0299](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md) (Data Protection Classes for Files in Private Storage)
-- [MASTG-TEST-0300](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0300.md) (References to APIs for Storing Unencrypted Data in Private Storage)
-- [MASTG-TEST-0301](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0301.md) (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
-- [MASTG-TEST-0302](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0302.md) (Sensitive Data Unencrypted in Private Storage Files)
-- [MASTG-TEST-0303](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0303.md) (References to APIs for Storing Unencrypted Data in Shared Storage)
+- [MASTG-TEST-0299](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md) プライベートストレージでのファイルのデータ保護クラス (Data Protection Classes for Files in Private Storage)
 
 ### MASVS-CRYPTO: 暗号
 
