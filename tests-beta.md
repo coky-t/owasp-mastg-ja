@@ -97,6 +97,7 @@
 - [MASTG-TEST-0299](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md) プライベートストレージでのファイルのデータ保護クラス (Data Protection Classes for Files in Private Storage)
 - [MASTG-TEST-0300](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0300.md) プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)
 - [MASTG-TEST-0301](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0301.md) プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
+- [MASTG-TEST-0302](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0302.md) プライベートストレージファイル内の暗号化されていない機密データ (Sensitive Data Unencrypted in Private Storage Files)
 
 ### MASVS-CRYPTO: 暗号
 
