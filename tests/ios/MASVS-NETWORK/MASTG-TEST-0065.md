@@ -46,7 +46,7 @@ profiles: [L1, L2]
 アプリがクリアテキスト HTTP トラフィックを許可していないことを確認します。iOS 9.0 以降、クリアテキスト HTTP トラフィックはデフォルトで (App Transport Security (ATS) により) ブロックされますが、アプリケーションがそれを送信できる方法はいくつかあります。
 
 - アプリの `Info.plist` にある `NSAppTransportSecurity` で `NSAllowsArbitraryLoads` 属性を `true` (または `YES`) にセットしてクリアテキストトラフィックを有効にするよう ATS を設定する。
-- `Info.plist` を取得する ([アプリパッケージの調査 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を参照)
+- `Info.plist` を取得する ([アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を参照)
 - どのドメインでも `NSAllowsArbitraryLoads` がグローバルに `true` にセットされていないことをチェックする。
 
 - アプリケーションがサードパーティのウェブサイトを WebView で開く際、iOS 10 以降では `NSAllowsArbitraryLoadsInWebContent` を使用して WebView にロードされるコンテンツの ATS 制限を無効にできる。
