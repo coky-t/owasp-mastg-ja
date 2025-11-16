@@ -347,6 +347,7 @@
       - [MASTG-TEST-0298 バックアップ対象のファイルの実行時監視 (Runtime Monitoring of Files Eligible for Backup)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0298.md)
       - [MASTG-TEST-0299 プライベートストレージでのファイルのデータ保護クラス (Data Protection Classes for Files in Private Storage)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md)
       - [MASTG-TEST-0300 プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0300.md)
+      - [MASTG-TEST-0301 プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0301.md)
 
     - MASVS-CRYPTO: 暗号
       - [MASTG-TEST-0209 不十分な鍵サイズ (Insufficient Key Sizes)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0209.md)
