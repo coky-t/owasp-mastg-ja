@@ -8,7 +8,7 @@
 - [MASTG-TEST-0201](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0201.md) 外部ストレージにアクセスするための API の実行時使用 (Runtime Use of APIs to Access External Storage)
 - [MASTG-TEST-0202](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0202.md) 外部ストレージにアクセスするための API とパーミッションへの参照 (References to APIs and Permissions for Accessing External Storage)
 - [MASTG-TEST-0203](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0203.md) ログ記録 API の実行時使用 (Runtime Use of Logging APIs)
-- [MASTG-TEST-0207](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0207.md) 実行時にアプリのサンドボックスに保存されるデータ (Data Stored in the App Sandbox at Runtime)
+- [MASTG-TEST-0207](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0207.md) アプリのサンドボックスでの暗号化していないデータの実行時保存 (Runtime Storage of Unencrypted Data in the App Sandbox)
 - [MASTG-TEST-0216](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0216.md) バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
 - [MASTG-TEST-0231](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0231.md) ログ記録 API への参照 (References to Logging APIs)
 - [MASTG-TEST-0262](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0262.md) 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)
@@ -94,6 +94,11 @@
 - [MASTG-TEST-0296](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0296.md) 安全でないログ記録による機密データ露出 (Sensitive Data Exposure Through Insecure Logging)
 - [MASTG-TEST-0297](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0297.md) ログへの機密データの挿入 (Insertion of Sensitive Data into Logs)
 - [MASTG-TEST-0298](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0298.md) バックアップ対象のファイルの実行時監視 (Runtime Monitoring of Files Eligible for Backup)
+- [MASTG-TEST-0299](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md) (Data Protection Classes for Files in Private Storage)
+- [MASTG-TEST-0300](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0300.md) (References to APIs for Storing Unencrypted Data in Private Storage)
+- [MASTG-TEST-0301](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0301.md) (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
+- [MASTG-TEST-0302](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0302.md) (Sensitive Data Unencrypted in Private Storage Files)
+- [MASTG-TEST-0303](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0303.md) (References to APIs for Storing Unencrypted Data in Shared Storage)
 
 ### MASVS-CRYPTO: 暗号
 

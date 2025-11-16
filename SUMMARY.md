@@ -267,7 +267,7 @@
       - [MASTG-TEST-0201 外部ストレージにアクセスするための API の実行時使用 (Runtime Use of APIs to Access External Storage)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0201.md)
       - [MASTG-TEST-0202 外部ストレージにアクセスするための API とパーミッションへの参照 (References to APIs and Permissions for Accessing External Storage)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0202.md)
       - [MASTG-TEST-0203 ログ記録 API の実行時使用 (Runtime Use of Logging APIs)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0203.md)
-      - [MASTG-TEST-0207 実行時にアプリのサンドボックスに保存されるデータ (Data Stored in the App Sandbox at Runtime)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0207.md)
+      - [MASTG-TEST-0207 アプリのサンドボックスでの暗号化していないデータの実行時保存 (Runtime Storage of Unencrypted Data in the App Sandbox)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0207.md)
       - [MASTG-TEST-0216 バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0216.md)
       - [MASTG-TEST-0231 ログ記録 API への参照 (References to Logging APIs)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0231.md)
       - [MASTG-TEST-0262 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0262.md)

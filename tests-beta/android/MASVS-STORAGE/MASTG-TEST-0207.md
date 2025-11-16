@@ -1,6 +1,6 @@
 ---
 platform: android
-title: 実行時にアプリのサンドボックスに保存されるデータ (Data Stored in the App Sandbox at Runtime)
+title: アプリのサンドボックスでの暗号化していないデータの実行時保存 (Runtime Storage of Unencrypted Data in the App Sandbox)
 id: MASTG-TEST-0207
 type: [dynamic, filesystem]
 prerequisites:
@@ -11,7 +11,7 @@ profiles: [L2]
 
 ## 概要
 
-このテストの目的は、[内部ストレージ](../../../0x05d-Testing-Data-Storage.md/#internal-storage) に書き込まれたファイルを取得し、その書き込みに使用された API に関係なく、それらを検査することです。アプリの実行前と実行後にデバイスストレージからファイルを取得 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md)) するというシンプルなアプローチを使用して、アプリの実行時に作成されたファイルを特定し、それらに機密データが含まれているかどうかを確認します。
+このテストの目的は、[内部ストレージ](../../../Document/0x05d-Testing-Data-Storage.md/#internal-storage) に書き込まれたファイルを取得し、その書き込みに使用された API に関係なく、それらを検査することです。アプリの実行前と実行後にデバイスストレージからファイルを取得 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md)) するというシンプルなアプローチを使用して、アプリの実行時に作成されたファイルを特定し、それらに機密データが含まれているかどうかを確認します。
 
 ## 手順
 
