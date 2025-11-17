@@ -10,7 +10,7 @@ best-practices: [MASTG-BEST-0024]
 
 ## 概要
 
-このテストは @MASTG-TEST-0x52-1 と対をなす動的テストであり、@MASTG-TEST-0x52-3 と併用するように設計されています。
+このテストは [プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)](MASTG-TEST-0300.md) と対をなす動的テストであり、[プライベートストレージファイル内の暗号化されていない機密データ (Sensitive Data Unencrypted in Private Storage Files)](MASTG-TEST-0302.md) と併用するように設計されています。
 
 このテストはランタイムメソッドフックを使用して、ファイル API ([ファイルシステム API (File System APIs)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md)) とキーチェーン API ([キーチェーンサービス (Keychain Services)](../../../knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md)) を監視することで、機密データが暗号化されずにプライベートストレージ ([アプリサンドボックスディレクトリ (App Sandbox Directories)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md)) に書き込まれたか、またはキーチェーンに直接書き込まれたかを識別します。
 
