@@ -119,6 +119,7 @@
 - [MASTG-KNOW-0102](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0102.md) バックアップ (Backups)
 - [MASTG-KNOW-0103](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) プロセスメモリ (Process Memory)
 - [MASTG-KNOW-0104](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
+- [MASTG-KNOW-0108](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md) アプリサンドボックスディレクトリ (App Sandbox Directories)
 -->
 
 ### MASVS-CRYPTO: 暗号
@@ -147,7 +148,9 @@
 - [MASTG-KNOW-0075](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0075.md) オブジェクトシリアライゼーション (Object Serialization)
 - [MASTG-KNOW-0076](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0076.md) WebView (WebViews)
 - [MASTG-KNOW-0077](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0077.md) アプリパーミッション (App Permissions)
+-->
 - [MASTG-KNOW-0078](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0078.md) プロセス間通信 (IPC) (Inter-Process Communication (IPC))
+<!--
 - [MASTG-KNOW-0079](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0079.md) カスタム URL スキーム (Custom URL Schemes)
 - [MASTG-KNOW-0080](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md) ユニバーサルリンク (Universal Links)
 - [MASTG-KNOW-0081](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md) UIActivity 共有 (UIActivity Sharing)
