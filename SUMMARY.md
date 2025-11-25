@@ -276,6 +276,7 @@
       - [MASTG-TEST-0262 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0262.md)
       - [MASTG-TEST-0287 SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md)
       - [MASTG-TEST-0304 SQLite 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via SQLite)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0304.md)
+      - [MASTG-TEST-0305 DataStore 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via DataStore)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0305.md)
 
     - MASVS-CRYPTO: 暗号
       - [MASTG-TEST-0204 安全でないランダム API の使用 (Insecure Random API Usage)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0204.md)
