@@ -21,7 +21,4 @@ Objection は [Objection の Wiki](https://github.com/sensepost/objection/wiki/I
 pip3 install objection
 ```
 
-### !!! 警告 "objection の pip/PyPI パッケージは古く、Frida 17+ に準拠していません"
-ソースリポジトリの `master` ブランチからインストールすることで、objection を Frida 17+ で引き続き使用できます。[Development Environment Installation](https://github.com/sensepost/objection/wiki/Development-Environment-Installation) を参照してください。
-
-新しいリリースが存在し、Python Package Index (PyPI) で利用可能になれば、`pip` を使用してインストールできます。
+pip のバージョンが最新リリースと同期していない場合、または最新の開発バージョンを使用したい場合は、ソースリポジトリの main ブランチから直接 Objection をインストールできます。手順については [Development Environment Installation](https://github.com/sensepost/objection/wiki/Development-Environment-Installation) を参照してください。
