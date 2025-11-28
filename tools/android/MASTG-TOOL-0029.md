@@ -4,11 +4,6 @@ platform: android
 source: https://github.com/sensepost/objection
 ---
 
-### !!! 警告 "objection の pip/PyPI パッケージは古く、Frida 17+ に準拠していません"
-ソースリポジトリの `master` ブランチからインストールすることで、objection を Frida 17+ で引き続き使用できます。[Development Environment Installation](https://github.com/sensepost/objection/wiki/Development-Environment-Installation) を参照してください。
-
-新しいリリースが存在し、Python Package Index (PyPI) で利用可能になれば、`pip` を使用してインストールできます。
-
 objection は Android に特化した機能をいくつか提供しています。[機能の全リスト](https://github.com/sensepost/objection/wiki/Features) はプロジェクトのページにありますが、ここでは興味深いものをいくつか紹介します。
 
 - アプリケーションを再パッケージして Frida ガジェットを含めます
