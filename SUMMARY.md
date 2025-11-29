@@ -286,6 +286,12 @@
       - [MASTG-TEST-0212 コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0212.md)
       - [MASTG-TEST-0221 不備のある対称暗号アルゴリズム (Broken Symmetric Encryption Algorithms)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0221.md)
       - [MASTG-TEST-0232 不備のある対称暗号モード (Broken Symmetric Encryption Modes)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0232.md)
+<!--
+      - [MASTG-TEST-0307 複数の目的で使用される非対称鍵ペアへの参照 (References to Asymmetric Key Pairs Used For Multiple Purposes)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0307.md)
+      - [MASTG-TEST-0308 複数の目的で使用される非対称鍵ペアの実行時使用 (Runtime Use of Asymmetric Key Pairs Used For Multiple Purposes)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0308.md)
+      - [MASTG-TEST-0309 対称暗号化での再使用される初期化ベクトルへの参照 (References to Reused Initialization Vectors in Symmetric Encryption)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0309.md)
+-->
+      - [MASTG-TEST-0310 対称暗号化での再使用される初期化ベクトルの実行時使用 (Runtime Use of Reused Initialization Vectors in Symmetric Encryption)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0310.md)
 
     - MASVS-NETWORK: ネットワーク通信
       - [MASTG-TEST-0217 コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md)
