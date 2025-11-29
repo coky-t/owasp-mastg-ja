@@ -28,8 +28,8 @@
 <!--
 - [MASTG-TEST-0307](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0307.md) 複数の目的で使用される非対称鍵ペアへの参照 (References to Asymmetric Key Pairs Used For Multiple Purposes)
 - [MASTG-TEST-0308](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0308.md) 複数の目的で使用される非対称鍵ペアの実行時使用 (Runtime Use of Asymmetric Key Pairs Used For Multiple Purposes)
-- [MASTG-TEST-0309](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0309.md) 対称暗号化での再使用される初期化ベクトルへの参照 (References to Reused Initialization Vectors in Symmetric Encryption)
 -->
+- [MASTG-TEST-0309](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0309.md) 対称暗号化での再使用される初期化ベクトルへの参照 (References to Reused Initialization Vectors in Symmetric Encryption)
 - [MASTG-TEST-0310](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0310.md) 対称暗号化での再使用される初期化ベクトルの実行時使用 (Runtime Use of Reused Initialization Vectors in Symmetric Encryption)
 
 ### MASVS-NETWORK: ネットワーク通信
