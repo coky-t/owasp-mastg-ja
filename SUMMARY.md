@@ -74,6 +74,7 @@
   - [MASTG-BEST-0022 プロダクションビルドで詳細ログ記録とデバッグログ記録を無効にする (Disable Verbose and Debug Logging in Production Builds)](best-practices/MASTG-BEST-0022.md)
   - [MASTG-BEST-0023 バックアップから機密情報を除外する (Exclude Sensitive Information from Backups)](best-practices/MASTG-BEST-0023.md)
   - [MASTG-BEST-0024 アプリサンドボックスディレクトリに暗号化したデータを保存する (Store Data Encrypted in App Sandbox Directory)](best-practices/MASTG-BEST-0024.md)
+  - [MASTG-BEST-0025 安全な乱数生成器 API を使用する (Use Secure Random Number Generator APIs)](best-practices/MASTG-BEST-0025.md)
 
 ### ナレッジ
 
