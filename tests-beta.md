@@ -114,6 +114,7 @@
 - [MASTG-TEST-0211](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0211.md) 不備のあるハッシュアルゴリズム (Broken Hashing Algorithms)
 - [MASTG-TEST-0213](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md) コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
+- [MASTG-TEST-0311](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0311.md) 安全でないランダム API の使用 (Insecure Random API Usage)
 
 ### MASVS-AUTH: 認証と認可
 
