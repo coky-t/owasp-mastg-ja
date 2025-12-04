@@ -18,7 +18,9 @@
 - [MASTG-KNOW-0042](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0042.md) 外部ストレージ (External Storage)
 - [MASTG-KNOW-0043](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0043.md) Android キーストア (Android KeyStore)
 - [MASTG-KNOW-0044](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0044.md) 鍵構成証明 (Key Attestation)
+-->
 - [MASTG-KNOW-0045](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0045.md) キーストアへの安全な鍵のインポート (Secure Key Import into Keystore)
+<!--
 - [MASTG-KNOW-0046](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0046.md) BouncyCastle キーストア (BouncyCastle KeyStore)
 - [MASTG-KNOW-0047](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0047.md) 暗号鍵の保管 (Cryptographic Key Storage)
 - [MASTG-KNOW-0048](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md) キーチェーン (KeyChain)
