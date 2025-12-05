@@ -86,6 +86,7 @@
       - [MASTG-KNOW-0039 Firebase リアルタイムデータベース (Firebase Real-time Databases)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0039.md)
       - [MASTG-KNOW-0041 内部ストレージ (Internal Storage)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0041.md)
       - [MASTG-KNOW-0045 キーストアへの安全な鍵のインポート (Secure Key Import into Keystore)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0045.md)
+      - [MASTG-KNOW-0046 BouncyCastle キーストア (BouncyCastle KeyStore)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0046.md)
       - [MASTG-KNOW-0049 ログ (Logs)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md)
       - [MASTG-KNOW-0052 ユーザーインタフェースコンポーネント (User Interface Components)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md)
       - [MASTG-KNOW-0053 スクリーンショット (Screenshots)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0053.md)
