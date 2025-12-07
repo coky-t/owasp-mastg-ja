@@ -25,3 +25,4 @@
 - [MASTG-BEST-0023](best-practices/MASTG-BEST-0023.md) バックアップから機密情報を除外する (Exclude Sensitive Information from Backups)
 - [MASTG-BEST-0024](best-practices/MASTG-BEST-0024.md) アプリサンドボックスディレクトリに暗号化したデータを保存する (Store Data Encrypted in App Sandbox Directory)
 - [MASTG-BEST-0025](best-practices/MASTG-BEST-0025.md) 安全な乱数生成器 API を使用する (Use Secure Random Number Generator APIs)
+- [MASTG-BEST-0026](best-practices/MASTG-BEST-0026.md) 機密テキスト入力のキーボードキャッシュを防止する (Preventing Keyboard Caching for Sensitive Text Inputs)
