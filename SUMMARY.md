@@ -329,6 +329,7 @@
       - [MASTG-TEST-0292 バックグラウンド時にスクリーンショットを防止するために使用されていない `setRecentsScreenshotEnabled` (`setRecentsScreenshotEnabled` Not Used to Prevent Screenshots When Backgrounded)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0292.md)
       - [MASTG-TEST-0293 SurfaceView でのスクリーンショットを防止するために使用されていない `setSecure` (`setSecure` Not Used to Prevent Screenshots in SurfaceViews)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0293.md)
       - [MASTG-TEST-0294 Compose ダイアログのスクリーンショットを防止するために使用されていない `SecureOn` (`SecureOn` Not Used to Prevent Screenshots in Compose Dialogs)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0294.md)
+      - [MASTG-TEST-0315 通知を介して露出する機密データ (Sensitive Data Exposed via Notifications)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0315.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0222 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md)
