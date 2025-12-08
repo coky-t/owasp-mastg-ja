@@ -76,6 +76,7 @@
   - [MASTG-BEST-0024 アプリサンドボックスディレクトリに暗号化したデータを保存する (Store Data Encrypted in App Sandbox Directory)](best-practices/MASTG-BEST-0024.md)
   - [MASTG-BEST-0025 安全な乱数生成器 API を使用する (Use Secure Random Number Generator APIs)](best-practices/MASTG-BEST-0025.md)
   - [MASTG-BEST-0026 機密テキスト入力のキーボードキャッシュを防止する (Preventing Keyboard Caching for Sensitive Text Inputs)](best-practices/MASTG-BEST-0026.md)
+  - [MASTG-BEST-0027 通知での機密データの露出を防止する (Preventing Sensitive Data Exposure in Notifications)](best-practices/MASTG-BEST-0027.md)
 
 ### ナレッジ
 
