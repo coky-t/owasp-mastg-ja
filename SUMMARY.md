@@ -378,6 +378,7 @@
       - [MASTG-TEST-0213 コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md)
       - [MASTG-TEST-0214 ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md)
       - [MASTG-TEST-0311 安全でないランダム API の使用 (Insecure Random API Usage)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0311.md)
+      - [MASTG-TEST-0317 不備のある対称暗号モード (Broken Symmetric Encryption Modes)](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0317.md)
 
     - MASVS-AUTH: 認証と認可
       - [MASTG-TEST-0266 イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0266.md)

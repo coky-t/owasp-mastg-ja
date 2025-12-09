@@ -65,6 +65,7 @@
 - [MASTG-TEST-0293](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0293.md) SurfaceView でのスクリーンショットを防止するために使用されていない `setSecure` (`setSecure` Not Used to Prevent Screenshots in SurfaceViews)
 - [MASTG-TEST-0294](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0294.md) Compose ダイアログのスクリーンショットを防止するために使用されていない `SecureOn` (`SecureOn` Not Used to Prevent Screenshots in Compose Dialogs)
 - [MASTG-TEST-0315](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0315.md) 通知を介して露出する機密データ (Sensitive Data Exposed via Notifications)
+- [MASTG-TEST-0316](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0316.md) テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 
 ### MASVS-CODE: コード品質
 
@@ -119,6 +120,7 @@
 - [MASTG-TEST-0213](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0213.md) コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 - [MASTG-TEST-0311](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0311.md) 安全でないランダム API の使用 (Insecure Random API Usage)
+- [MASTG-TEST-0317](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0317.md) 不備のある対称暗号モード (Broken Symmetric Encryption Modes)
 
 ### MASVS-AUTH: 認証と認可
 
