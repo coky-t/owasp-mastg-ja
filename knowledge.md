@@ -23,8 +23,8 @@
 - [MASTG-KNOW-0046](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0046.md) BouncyCastle キーストア (BouncyCastle KeyStore)
 <!--
 - [MASTG-KNOW-0047](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0047.md) 暗号鍵の保管 (Cryptographic Key Storage)
-- [MASTG-KNOW-0048](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md) キーチェーン (KeyChain)
 -->
+- [MASTG-KNOW-0048](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md) キーチェーン (KeyChain)
 - [MASTG-KNOW-0049](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md) ログ (Logs)
 <!--
 - [MASTG-KNOW-0050](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md) バックアップ (Backups)
