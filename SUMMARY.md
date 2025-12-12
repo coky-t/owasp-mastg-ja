@@ -110,6 +110,7 @@
       - [MASTG-KNOW-0016 TBD](knowledge/android/MASVS-NETWORK/MASTG-KNOW-0016.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
+      - [MASTG-KNOW-0020 プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md)
       - [MASTG-KNOW-0105 ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md)
       - [MASTG-KNOW-0106 アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md)
       - [MASTG-KNOW-0107 スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md)
