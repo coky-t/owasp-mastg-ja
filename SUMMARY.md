@@ -111,6 +111,7 @@
 
     - MASVS-PLATFORM: プラットフォーム連携
       - [MASTG-KNOW-0020 プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md)
+      - [MASTG-KNOW-0023 強制アップデート (Enforced Updating)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md)
       - [MASTG-KNOW-0105 ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md)
       - [MASTG-KNOW-0106 アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md)
       - [MASTG-KNOW-0107 スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md)
@@ -454,7 +455,7 @@
     - [MASTG-TOOL-0021 Magisk](tools/android/MASTG-TOOL-0021.md)
     - [MASTG-TOOL-0022 Proguard](tools/android/MASTG-TOOL-0022.md)
     - [MASTG-TOOL-0023 RootCloak Plus](tools/android/MASTG-TOOL-0023.md)
-    - [MASTG-TOOL-0024 Scrcpy](tools/android/MASTG-TOOL-0024.md)
+    - [ Scrcpy](tools/android/.md)
     - [MASTG-TOOL-0025 SSLUnpinning](tools/android/MASTG-TOOL-0025.md)
     - [MASTG-TOOL-0026 Termux](tools/android/MASTG-TOOL-0026.md)
     - [MASTG-TOOL-0027 Xposed](tools/android/MASTG-TOOL-0027.md)

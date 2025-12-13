@@ -65,7 +65,9 @@
 <!--
 - [MASTG-KNOW-0021](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0021.md) オブジェクトシリアライゼーション (Object Serialization)
 - [MASTG-KNOW-0022](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0022.md) オーバーレイ攻撃 (Overlay Attacks)
+-->
 - [MASTG-KNOW-0023](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md) 強制アップデート (Enforced Updating)
+<!--
 - [MASTG-KNOW-0024](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) ペンディングインテント (Pending Intents)
 - [MASTG-KNOW-0025](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) 暗黙的インテント (Implicit Intents)
 -->
