@@ -143,6 +143,7 @@
   - iOS
     - MASVS-STORAGE: ストレージ
       - [MASTG-KNOW-0091 ファイルシステム API (File System APIs)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md)
+      - [MASTG-KNOW-0092 バイナリデータストレージ (Binary Data Storage)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0092.md)
       - [MASTG-KNOW-0093 UserDefaults](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0093.md)
       - [MASTG-KNOW-0097 その他のサードパーティデータベース (Other Third-Party Databases)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md)
       - [MASTG-KNOW-0098 ユーザーインタフェースコンポーネント (User Interface Components)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md)
