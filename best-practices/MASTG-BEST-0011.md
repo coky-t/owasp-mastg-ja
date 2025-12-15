@@ -3,6 +3,7 @@ title: WebView でファイルコンテンツを安全にロードする (Secure
 alias: securely-load-file-content-in-webview
 id: MASTG-BEST-0011
 platform: android
+knowledge: [MASTG-KNOW-0018]
 ---
 
 **WebView にファイルコンテンツを安全にロードする** ための推奨されるアプローチは、[`WebViewClient`](https://developer.android.com/reference/android/webkit/WebViewClient) と [`WebViewAssetLoader`](https://developer.android.com/reference/androidx/webkit/WebViewAssetLoader) を使用して、安全でない `file://` URL ではなく `https://` URL を使用してアプリのアセットディレクトリまたはリソースディレクトリからアセットをロードすることです。これにより、コンテンツが安全な同一オリジン環境でロードされることを確保し、ローカルファイルがクロスオリジン攻撃にさらされる可能性を回避します。
