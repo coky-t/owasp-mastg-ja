@@ -3,6 +3,7 @@ title: WebView でコンテンツプロバイダアクセスを無効にする (
 alias: disable-cont
 id: MASTG-BEST-0013
 platform: android
+knowledge: [MASTG-KNOW-0018]
 ---
 
 `WebSettings` の他のファイルコンテンツアクセスメソッドとは異なり、`setAllowContentAccess` メソッドのデフォルトは常に `true` です。したがって、**コンテンツプロバイダへのアクセスが明示的に必要でない場合は常に**、`setAllowContentAccess` メソッドが `false` に設定され、WebView がコンテンツプロバイダにアクセスできないようにしてください。
