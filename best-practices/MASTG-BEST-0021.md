@@ -3,6 +3,7 @@ title: 適切なエラーおよび例外処理を確保する (Ensure Proper Err
 alias: ensure-proper-error-and-exception-handling
 id: MASTG-BEST-0021
 platform: android
+knowledge: [MASTG-KNOW-0010]
 ---
 
 Android における安全な例外およびエラー処理とは、機密情報の漏洩を防ぎ、障害を適切に管理し、エラーがセキュリティを侵害しないことを確保することです。制御されたログ記録は開発者向けに確保しておきますが、ユーザーに表示するエラーメッセージは汎用的なものに留めるべきです。[OWASP DevGuide](https://devguide.owasp.org/en/12-appendices/01-implementation-dos-donts/06-exception-error-handling/) では、エンドユーザーにない情報を開示しないこと、開発者に機密性の高いユーザーデータを開示しないこと、認証や認可を脆弱にしない安全な障害モードを確保することに重点を置いて、これらの原則を強化しています。
