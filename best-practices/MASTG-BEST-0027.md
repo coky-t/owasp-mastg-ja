@@ -3,6 +3,7 @@ title: 通知での機密データの露出を防止する (Preventing Sensitive
 alias: preventing-sensitive-data-exposure-in-notifications
 id: MASTG-BEST-0027
 platform: android
+knowledge: [MASTG-KNOW-0054]
 status: placeholder
 note: このベストプラクティスは、露出を完全に回避したり、適切な可視化レベルを設定するなど、Android デバイスの通知における機密データの取り扱いに関するものです。
 ---
