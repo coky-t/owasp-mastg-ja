@@ -8,11 +8,12 @@ prerequisites:
 profiles: [L1]
 weakness: MASWE-0006
 best-practices: [MASTG-BEST-0024]
+knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0108]
 ---
 
 ## 概要
 
-このテストは、通常のアプリ使用時にアプリのプライベートストレージ ([アプリサンドボックスディレクトリ (App Sandbox Directories)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md)) で作成または変更されたファイル ([ファイルシステム API (File System APIs)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md)) のデータ保護クラスを取得します。目標はデバイスがロックされている際に機密データを含むファイルを保護するように適切なデータ保護クラスを割り当てられるようにすることです。
+このテストは、通常のアプリ使用時にアプリのプライベートストレージで作成または変更されたファイルのデータ保護クラスを取得します。目標はデバイスがロックされている際に機密データを含むファイルを保護するように適切なデータ保護クラスを割り当てられるようにすることです。
 
 ## 手順
 
