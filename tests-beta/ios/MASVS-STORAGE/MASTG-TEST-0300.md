@@ -6,14 +6,15 @@ type: [static]
 profiles: [L2]
 best-practices: [MASTG-BEST-0024]
 weakness: MASWE-0006
+knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 ---
 
 ## 概要
 
-このテストは、アプリが暗号化されていない機密データをプライベートストレージ ([アプリサンドボックスディレクトリ (App Sandbox Directories)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md)) に書き込むかどうかをチェックします。以下に焦点を当てています。
+このテストは、アプリが暗号化されていない機密データをプライベートストレージに書き込むかどうかをチェックします。以下に焦点を当てています。
 
-- アプリサンドボックスディレクトリにデータを保持する API ([ファイルシステム API (File System APIs)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md))。Foundation `FileManager` メソッド、低レベルの POSIX および BSD ファイル I/O 呼び出し、`UserDefaults`、Core Data、SQLite ラッパーなどの高レベル API を含みます。
-- 以下に使用されているキーチェーン API ([キーチェーンサービス (Keychain Services)](../../../knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md)):
+- アプリサンドボックスディレクトリにデータを保持する API。Foundation `FileManager` メソッド、低レベルの POSIX および BSD ファイル I/O 呼び出し、`UserDefaults`、Core Data、SQLite ラッパーなどの高レベル API を含みます。
+- 以下に使用されているキーチェーン API:
     - 機密データをキーチェーン内に直接保存している。
     - キーチェーンの鍵を管理している (プライベートストレージに書き込む前にデータを暗号化するために使用できます)。
 
