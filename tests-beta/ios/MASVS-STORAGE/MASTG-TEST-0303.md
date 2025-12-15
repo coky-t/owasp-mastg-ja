@@ -6,11 +6,12 @@ type: [static]
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0024]
 weakness: MASWE-0007
+knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 ---
 
 ## 概要
 
-このテストは、アプリの Info.plist で `UIFileSharingEnabled` ("Application supports iTunes file sharing") キーと `LSSupportsOpeningDocumentsInPlace` ("Supports opening documents in place") キーを `YES` に設定してファイル共有を有効にすることで、共有用に構成されたアプリサンドボックス ([アプリサンドボックスディレクトリ (App Sandbox Directories)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md)) 内のストレージロケーションに、アプリが暗号化されていない機密データを書き込むかどうかをチェックします ([ファイルシステム API (File System APIs)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0091.md) 参照)。
+このテストは、アプリの Info.plist で `UIFileSharingEnabled` ("Application supports iTunes file sharing") キーと `LSSupportsOpeningDocumentsInPlace` ("Supports opening documents in place") キーを `YES` に設定してファイル共有を有効にすることで、共有用に構成されたアプリサンドボックス内のストレージロケーションに、アプリが暗号化されていない機密データを書き込むかどうかをチェックします。
 
 ## 手順
 
