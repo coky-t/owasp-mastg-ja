@@ -77,7 +77,6 @@
 
 ### MASVS-CODE: コード品質
 
-- [MASTG-KNOW-0003](knowledge/android/MASVS-CODE/MASTG-KNOW-0003.md) アプリ署名 (App Signing)
 - [MASTG-KNOW-0004](knowledge/android/MASVS-CODE/MASTG-KNOW-0004.md) サードパーティーライブラリ (Third-Party Libraries)
 - [MASTG-KNOW-0005](knowledge/android/MASVS-CODE/MASTG-KNOW-0005.md) メモリ破損バグ (Memory Corruption Bugs)
 - [MASTG-KNOW-0006](knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md) バイナリ保護メカニズム (Binary Protection Mechanisms)
@@ -88,6 +87,7 @@
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
+- [MASTG-KNOW-0003](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0003.md) アプリ署名 (App Signing)
 - [MASTG-KNOW-0027](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0027.md) ルート検出 (Root Detection)
 - [MASTG-KNOW-0028](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0028.md) アンチデバッグ (Anti-Debugging)
 - [MASTG-KNOW-0029](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0029.md) ファイル完全性チェック (File Integrity Checks)

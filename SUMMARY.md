@@ -117,7 +117,6 @@
       - [MASTG-KNOW-0107 スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md)
 
     - MASVS-CODE: コード品質
-      - [MASTG-KNOW-0003 アプリ署名 (App Signing)](knowledge/android/MASVS-CODE/MASTG-KNOW-0003.md)
       - [MASTG-KNOW-0004 サードパーティーライブラリ (Third-Party Libraries)](knowledge/android/MASVS-CODE/MASTG-KNOW-0004.md)
       - [MASTG-KNOW-0005 メモリ破損バグ (Memory Corruption Bugs)](knowledge/android/MASVS-CODE/MASTG-KNOW-0005.md)
       - [MASTG-KNOW-0006 バイナリ保護メカニズム (Binary Protection Mechanisms)](knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md)
@@ -127,6 +126,7 @@
       - [MASTG-KNOW-0010 例外処理 (Exception Handling)](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md)
 
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+      - [MASTG-KNOW-0003 アプリ署名 (App Signing)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0003.md)
       - [MASTG-KNOW-0027 ルート検出 (Root Detection)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0027.md)
       - [MASTG-KNOW-0028 アンチデバッグ (Anti-Debugging)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0028.md)
       - [MASTG-KNOW-0029 ファイル完全性チェック (File Integrity Checks)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0029.md)
