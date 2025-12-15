@@ -3,6 +3,7 @@ title: GMS セキュリティプロバイダを更新する (Update the GMS Secu
 alias: update-gms-security-provider
 id: MASTG-BEST-0020
 platform: android
+knowledge: [MASTG-KNOW-0011]
 ---
 
 Android デバイスは OS バージョンとアップデート頻度が大きく異なります。プラットフォームレベルのセキュリティだけに依存すると、アプリが古い SSL/TLS 実装や既知の脆弱性にさらされる可能性があります。
