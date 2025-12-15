@@ -3,6 +3,7 @@ title: バックアップから機密データを除外する (Exclude Sensitive
 alias: exclude-sensitive-data-from-backups
 id: MASTG-BEST-0004
 platform: android
+knowledge: [MASTG-KNOW-0050]
 ---
 
 見つかった機密ファイルについては、バックアップから除外するように指示します。
