@@ -3,6 +3,7 @@ title: 最新の APK 署名スキームを使用する (Use Up-to-Date APK Signi
 alias: use-up-to-date-apk-signing-schemes
 id: MASTG-BEST-0006
 platform: android
+knowledge: [MASTG-KNOW-0003]
 ---
 
 少なくとも v2 または v3 の APK 署名スキームでアプリが署名されているようにします。これらは包括的な完全性チェックを提供し、APK 全体を改竄から保護します。最適なセキュリティと互換性のためには、鍵ローテーションもサポートする v3 の使用を検討してください。
