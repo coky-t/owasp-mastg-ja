@@ -5,12 +5,13 @@ id: MASTG-TEST-0295
 type: [static]
 weakness: MASWE-0052
 profiles: [L2]
-best-practices: [MASTG-BEST-0020, MASTG-KNOW-0021]
+best-practices: [MASTG-BEST-0020]
+knowledge: [MASTG-KNOW-0011, MASTG-KNOW-0010]
 ---
 
 ## 概要
 
-このテストでは、Android アプリがセキュリティプロバイダ ([セキュリティプロバイダ (Security Provider)](../../../knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0011.md)) が [SSL/TLS 脆弱性を緩和するために更新されている](https://developer.android.com/privacy-and-security/security-gms-provider) かどうかをチェックします。このプロバイダは Google Play Services API を使用して更新する必要があり、実装では例外を適切に処理する必要があります ([例外処理 (Exception Handling)](../../../knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) 参照)。
+このテストでは、Android アプリがセキュリティプロバイダ が [SSL/TLS 脆弱性を緩和するために更新されている](https://developer.android.com/privacy-and-security/security-gms-provider) かどうかをチェックします。このプロバイダは Google Play Services API を使用して更新する必要があり、実装では例外を適切に処理する必要があります。
 
 ## 手順
 
