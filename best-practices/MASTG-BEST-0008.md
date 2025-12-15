@@ -3,6 +3,7 @@ title: WebView のデバッグを無効にする (Debugging Disabled for WebView
 alias: debugging-disabled-webviews
 id: MASTG-BEST-0008
 platform: android
+knowledge: [MASTG-KNOW-0018]
 ---
 
 攻撃者がこの機能を悪用して WebView 内の通信を盗聴、変更、デバッグすることを防ぐために、WebView デバッグが本番ビルドで無効になっていることを確認します。
