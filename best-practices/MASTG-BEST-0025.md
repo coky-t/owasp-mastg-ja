@@ -3,6 +3,7 @@ title: 安全な乱数生成器 API を使用する (Use Secure Random Number Ge
 alias: ios-use-secure-random
 id: MASTG-BEST-0025
 platform: ios
+knowledge: [MASTG-KNOW-0070]
 ---
 
 オペレーティングシステムの _暗号論的に安全な擬似乱数生成器 (CSPRNG)_ を基盤とする安全な乱数生成器 API を使用します。独自の _擬似乱数生成器 (PRNG)_ を構築してはいけません。
