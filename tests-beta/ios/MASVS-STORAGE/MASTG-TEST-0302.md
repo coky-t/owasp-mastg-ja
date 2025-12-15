@@ -8,11 +8,12 @@ prerequisites:
 profiles: [L2]
 weakness: MASWE-0006
 best-practices: [MASTG-BEST-0024]
+knowledge: [MASTG-KNOW-0108]
 ---
 
 ## 概要
 
-このテストは [プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)](MASTG-TEST-0301.md) を補完するように設計されています。実行中の API を監視する代わりに、アプリを実行する前後に取得したスナップショットを比較することで、アプリのプライベートストレージ ([アプリサンドボックスディレクトリ (App Sandbox Directories)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md)) の差分解析を実行します。また、セッション中に作成または変更されたキーチェーンアイテムも列挙します。
+このテストは [プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)](MASTG-TEST-0301.md) を補完するように設計されています。実行中の API を監視する代わりに、アプリを実行する前後に取得したスナップショットを比較することで、アプリのプライベートストレージの差分解析を実行します。また、セッション中に作成または変更されたキーチェーンアイテムも列挙します。
 
 目標は、新規または変更されたファイルを識別し、それらがプレーンテキストまたは簡単にエンコードされた形式の機密データを含むかどうかを判断し、機密データまたはファイル暗号化に使用される鍵を含む可能性のある新しいキーチェーンエントリを識別することです。
 
