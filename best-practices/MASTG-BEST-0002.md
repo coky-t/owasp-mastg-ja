@@ -3,6 +3,7 @@ title: ログ記録コードを削除する (Remove Logging Code)
 alias: remove-logging-code
 id: MASTG-BEST-0002
 platform: android
+knowledge: [MASTG-KNOW-0049]
 ---
 
 理想的には、リリースビルドではログ記録機能を使用せず、機密データの露出を評価しやすくすべきです。
