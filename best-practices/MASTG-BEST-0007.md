@@ -3,6 +3,7 @@ title: AndroidManifest のデバッグフラグを無効にする (Debuggable Fl
 alias: debuggable-flag-disabled
 id: MASTG-BEST-0007
 platform: android
+knowledge: [MASTG-KNOW-0007]
 ---
 
 すべてのリリースビルドで AndroidManifest.xml の debuggable フラグが `false` に設定されていることを確認します。
