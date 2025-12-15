@@ -3,6 +3,7 @@ title: プロダクションビルドで詳細ログ記録とデバッグログ�
 alias: remove-logging-in-production
 id: MASTG-BEST-0022
 platform: ios
+knowledge: [MASTG-KNOW-0101]
 ---
 
 `print` や [`NSLog`](https://developer.apple.com/documentation/foundation/nslog) などの安全でないログ記録メカニズムを使用することは避ける必要があります。これらの API は機密性の高いランタイムデータをシステムログにさらす可能性があり、デバイスにアクセスできる攻撃者が取得する可能性があります。代わりに、iOS 10.0 以降で利用可能な [Apple の統合ログ記録システム](https://developer.apple.com/documentation/os/logging) (Swift では `Logger`、Objective-C では `os_log`) を採用する必要があります。
