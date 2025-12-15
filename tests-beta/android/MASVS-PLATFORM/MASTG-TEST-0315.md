@@ -9,11 +9,12 @@ prerequisites:
 - identify-sensitive-data
 profiles: [L2]
 best-practices: [MASTG-BEST-0027]
+knowledge: [MASTG-KNOW-0054]
 ---
 
 ## 概要
 
-このテストはアプリが通知 ([アプリ通知 (App Notifications)](../../../knowledge/android/MASVS-STORAGE/MASTG-KNOW-0054.md)) を正しく処理することを検証します。個人を識別できる情報 (PII)、ワンタイムパスワード (OTP)、健康や金融の詳細などのその他の機密データのような、機密情報がさらされていないことを確認します。
+このテストはアプリが通知を正しく処理することを検証します。個人を識別できる情報 (PII)、ワンタイムパスワード (OTP)、健康や金融の詳細などのその他の機密データのような、機密情報がさらされていないことを確認します。
 
 Android 13 以降では、API レベル 33 以上をターゲットとするアプリは通知を送信するためにランタイムパーミッション [`POST_NOTIFICATIONS`](https://developer.android.com/reference/android/Manifest.permission#POST_NOTIFICATIONS) をリクエストする必要があります。API レベル 33 未満では、このパーミッションは必要ありません。テスト目的では、アプリが実行可能な最低限の Android バージョンを示す、アプリの `minSdkVersion` の値を考慮します。
 
