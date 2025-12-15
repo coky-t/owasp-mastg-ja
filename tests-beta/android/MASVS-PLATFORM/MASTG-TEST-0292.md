@@ -6,6 +6,7 @@ type: [static]
 profiles: [L2]
 best-practices: [MASTG-BEST-0014, MASTG-BEST-0015]
 weakness: MASWE-0055
+knowledge: [MASTG-KNOW-0053]
 status: placeholder
 note: このテストでは、バックグラウンドされている際にアプリが最近使用した画面で機密データがキャプチャされることを防止するかどうかを検証します。
 ---
