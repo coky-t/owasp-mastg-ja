@@ -3,6 +3,7 @@ title: WebView で JavaScript を無効にする (Disable JavaScript in WebViews
 alias: disable-javascript-in-webviews
 id: MASTG-BEST-0012
 platform: android
+knowledge: [MASTG-KNOW-0018]
 ---
 
 JavaScript が **必要ではない** 場合は、[`setJavaScriptEnabled(false)`](https://developer.android.com/reference/android/webkit/WebSettings.html#setJavaScriptEnabled%28boolean%29) を設定して、WebView で明示的に無効にします。
