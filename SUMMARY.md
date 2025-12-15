@@ -98,7 +98,7 @@
     - MASVS-CRYPTO: 暗号
       - [MASTG-KNOW-0011 セキュリティプロバイダ (Security Provider)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0011.md)
       - [MASTG-KNOW-0012 鍵生成 (Key Generation)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0012.md)
-      - [MASTG-KNOW-0013 乱数生成 (Random number generation)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0013.md)
+      - [MASTG-KNOW-0013 乱数生成 (Random Number Generation)](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0013.md)
 
     - MASVS-AUTH: 認証と認可
       - [MASTG-KNOW-0001 生体認証 (Biometric Authentication)](knowledge/android/MASVS-AUTH/MASTG-KNOW-0001.md)

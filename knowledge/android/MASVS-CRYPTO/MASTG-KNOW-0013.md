@@ -1,7 +1,7 @@
 ---
 masvs_category: MASVS-CRYPTO
 platform: android
-title: 乱数生成 (Random number generation)
+title: 乱数生成 (Random Number Generation)
 ---
 
 暗号には安全な擬似乱数生成 (PRNG) が必要です。`java.util.Random` のような標準の Java クラスは十分なランダム性を提供しないため、実際に攻撃者が生成される次の値を推測し、この推測を使用して別のユーザーになりすましたり機密情報にアクセスしたりするおそれがあります。

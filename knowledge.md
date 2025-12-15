@@ -41,7 +41,7 @@
 
 - [MASTG-KNOW-0011](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0011.md) セキュリティプロバイダ (Security Provider)
 - [MASTG-KNOW-0012](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0012.md) 鍵生成 (Key Generation)
-- [MASTG-KNOW-0013](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0013.md) 乱数生成 (Random number generation)
+- [MASTG-KNOW-0013](knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0013.md) 乱数生成 (Random Number Generation)
 
 ### MASVS-AUTH: 認証と認可
 
