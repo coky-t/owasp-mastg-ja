@@ -6,6 +6,7 @@ type: [static]
 weakness: MASWE-0020
 best-practices: [MASTG-BEST-0020]
 profiles: [L1, L2]
+knowledge: [MASTG-KNOW-0011]
 ---
 
 ## 概要
@@ -16,7 +17,7 @@ Java Cryptography Architecture (JCA) に基づく Android 暗号 API では開�
 - _Crypto_ プロバイダは Android 7.0 (API レベル 24) で非推奨となり、[Android 9 (API レベル 28) で削除されました](https://developer.android.com/about/versions/pie/android-9.0-changes-all#conscrypt_implementations_of_parameters_and_algorithms)。
 - _BouncyCastle_ プロバイダは [Android 9 (API レベル 28) で非推奨となり、Android 12 (API level 31) で削除されました](https://developer.android.com/about/versions/12/behavior-changes-all#bouncy-castle)。
 
-このテストは、JCA API を使用する際に、アプリがデフォルトのプロバイダである `AndroidOpenSSL` ([Conscrypt](https://github.com/google/conscrypt)) 以外のセキュリティプロバイダを明示的に指定するケースを識別します。これは積極的に保守されており、通常は使用する必要があります ([セキュリティプロバイダ (Security Provider)](../../../knowledge/android/MASVS-CRYPTO/MASTG-KNOW-0011.md) 参照)。`getInstance` 呼び出しを検査し、`KeyStore.getInstance("AndroidKeyStore")` などの正当な例外を除き、名前付きプロバイダの使用をフラグ付けします。
+このテストは、JCA API を使用する際に、アプリがデフォルトのプロバイダである `AndroidOpenSSL` ([Conscrypt](https://github.com/google/conscrypt)) 以外のセキュリティプロバイダを明示的に指定するケースを識別します。これは積極的に保守されており、通常は使用する必要があります。`getInstance` 呼び出しを検査し、`KeyStore.getInstance("AndroidKeyStore")` などの正当な例外を除き、名前付きプロバイダの使用をフラグ付けします。
 
 ## 手順
 
