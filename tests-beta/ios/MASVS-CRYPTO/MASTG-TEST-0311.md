@@ -6,11 +6,12 @@ type: [static, dynamic]
 weakness: MASWE-0027
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0025]
+knowledge: [MASTG-KNOW-0070]
 ---
 
 ## 概要
 
-iOS アプリは、暗号論的に安全な擬似乱数生成器 (PRNG) ([乱数生成 (Random Number Generator)](../../../knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0070.md)) ではなく、安全でない擬似乱数生成器を使用することがあります。このテストケースは、標準 C ライブラリ関数 `rand`, `random`, `*rand48` ファミリなどの安全でない代替手段の使用を検出することに焦点を当てています。
+iOS アプリは、暗号論的に安全な擬似乱数生成器 (PRNG) ではなく、安全でない擬似乱数生成器を使用することがあります。このテストケースは、標準 C ライブラリ関数 `rand`, `random`, `*rand48` ファミリなどの安全でない代替手段の使用を検出することに焦点を当てています。
 
 ## 手順
 
