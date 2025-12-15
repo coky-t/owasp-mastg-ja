@@ -8,11 +8,12 @@ profiles: [L2]
 prerequisites:
 - identify-sensitive-data
 best-practices: [MASTG-BEST-0026]
+knowledge: [MASTG-KNOW-0100]
 ---
 
 ## 概要
 
-このテストは [テキストフィールドのキーボードキャッシュを防止するための API への参照 (References to APIs for Preventing Keyboard Caching of Text Fields)](MASTG-TEST-0313.md) を補完するものです。実行時に、[`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield), [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview), [`UISearchBar`](https://developer.apple.com/documentation/uikit/uisearchbar) など、アプリのテキスト入力を監視し、ユーザーが機密情報を入力した際にキーボードキャッシュの対象となるかどうかをチェックします ([キーボードキャッシュ (Keyboard Cache)](../../../knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md))。
+このテストは [テキストフィールドのキーボードキャッシュを防止するための API への参照 (References to APIs for Preventing Keyboard Caching of Text Fields)](MASTG-TEST-0313.md) を補完するものです。実行時に、[`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield), [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview), [`UISearchBar`](https://developer.apple.com/documentation/uikit/uisearchbar) など、アプリのテキスト入力を監視し、ユーザーが機密情報を入力した際にキーボードキャッシュの対象となるかどうかをチェックします。
 
 ## 手順
 
