@@ -3,6 +3,7 @@ title: 安全な乱数生成 API を使用する (Use Secure Random Number Gener
 alias: android-use-secure-random
 id: MASTG-BEST-0001
 platform: android
+knowledge: [MASTG-KNOW-0013]
 ---
 
 使用しているプラットフォームやプログラミング言語によって提供される、暗号論的に安全な擬似乱数生成器を使用します。
