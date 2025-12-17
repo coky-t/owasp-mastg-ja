@@ -110,8 +110,8 @@
 - [MASTG-KNOW-0092](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0092.md) バイナリデータストレージ (Binary Data Storage)
 - [MASTG-KNOW-0093](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0093.md) UserDefaults
 - [MASTG-KNOW-0094](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0094.md) CoreData
-<!--
 - [MASTG-KNOW-0095](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0095.md) Firebase リアルタイムデータベース (Firebase Real-time Databases)
+<!--
 - [MASTG-KNOW-0096](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0096.md) Realm データベース (Realm Databases)
 -->
 - [MASTG-KNOW-0097](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md) その他のサードパーティデータベース (Other Third-Party Databases)
