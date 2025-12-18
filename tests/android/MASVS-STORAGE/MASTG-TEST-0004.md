@@ -5,11 +5,13 @@ masvs_v2_id:
 - MASVS-STORAGE-2
 platform: android
 title: 機密データが組み込みサービスを介してサードパーティと共有されるかどうかの判定 (Determining Whether Sensitive Data Is Shared with Third Parties via Embedded Services)
-
 masvs_v1_levels:
 - L1
 - L2
 profiles: [L1, L2]
+status: deprecated
+covered_by: [MASTG-TEST-0318, MASTG-TEST-0319]
+deprecation_note: New version available in MASTG V2
 ---
 
 ## 概要
