@@ -364,6 +364,7 @@
       - [MASTG-TEST-0255 最低限でないパーミッションリクエスト (Permission Requests Not Minimized)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0255.md)
       - [MASTG-TEST-0256 パーミッションの理由付けの欠如 (Missing Permission Rationale)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0256.md)
       - [MASTG-TEST-0257 リセットしていない未使用のパーミッション (Not Resetting Unused Permissions)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0257.md)
+      - [MASTG-TEST-0318 機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0318.md)
       - [MASTG-TEST-0319 機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)](tests-beta/android/MASVS-PRIVACY/MASTG-TEST-0319.md)
 
   - iOS
