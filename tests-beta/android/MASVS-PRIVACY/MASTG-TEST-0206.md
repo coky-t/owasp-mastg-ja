@@ -31,4 +31,4 @@ profiles: [P]
 
 アプリのマーケットプレイスのプライバシー宣言 (Google Play の Data Safety セクションなど) やそのプライバシーポリシーに宣言されていない、アプリに入力した PII を見つけることができた場合、そのテストケースは不合格です。
 
-このテストは、機密データがネットワーク経由で送信されるコードの場所を提供しないことに注意してください。コードの場所を特定するには、[semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などの静的解析ツールや [Frida](../../../tools/generic/MASTG-TOOL-0031.md) などの動的解析ツールを使用できます。
+このテストは、機密データがネットワーク経由で送信されるコードの場所を提供しないことに注意してください。コードの場所を特定するには、[semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などの静的解析ツールや [Frida](../../../tools/generic/MASTG-TOOL-0031.md) などの動的解析ツールを使用できます。詳細については、それぞれ [機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0318.md) および [機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0319.md) を参照してください。
