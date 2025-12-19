@@ -116,8 +116,8 @@
 -->
 - [MASTG-KNOW-0097](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md) その他のサードパーティデータベース (Other Third-Party Databases)
 - [MASTG-KNOW-0098](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md) ユーザーインタフェースコンポーネント (User Interface Components)
-<!--
 - [MASTG-KNOW-0099](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md) スクリーンショット (Screenshots)
+<!--
 - [MASTG-KNOW-0100](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md) キーボードキャッシュ (Keyboard Cache)
 -->
 - [MASTG-KNOW-0101](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md) ログ (Logs)

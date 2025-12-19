@@ -149,6 +149,7 @@
       - [MASTG-KNOW-0095 Firebase リアルタイムデータベース (Firebase Real-time Databases)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0095.md)
       - [MASTG-KNOW-0097 その他のサードパーティデータベース (Other Third-Party Databases)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0097.md)
       - [MASTG-KNOW-0098 ユーザーインタフェースコンポーネント (User Interface Components)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0098.md)
+      - [MASTG-KNOW-0099 スクリーンショット (Screenshots)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md)
       - [MASTG-KNOW-0101 ログ (Logs)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md)
 
     - MASVS-CRYPTO: 暗号
