@@ -122,7 +122,9 @@
 <!--
 - [MASTG-KNOW-0102](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0102.md) バックアップ (Backups)
 - [MASTG-KNOW-0103](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) プロセスメモリ (Process Memory)
+-->
 - [MASTG-KNOW-0104](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
+<!--
 - [MASTG-KNOW-0108](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md) アプリサンドボックスディレクトリ (App Sandbox Directories)
 -->
 

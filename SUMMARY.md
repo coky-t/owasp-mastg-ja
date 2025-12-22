@@ -152,6 +152,7 @@
       - [MASTG-KNOW-0099 スクリーンショット (Screenshots)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md)
       - [MASTG-KNOW-0100 キーボードキャッシュ (Keyboard Cache)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md)
       - [MASTG-KNOW-0101 ログ (Logs)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md)
+      - [MASTG-KNOW-0104 プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md)
 
     - MASVS-CRYPTO: 暗号
       - [MASTG-KNOW-0066 CryptoKit](knowledge/ios/MASVS-CRYPTO/MASTG-KNOW-0066.md)
