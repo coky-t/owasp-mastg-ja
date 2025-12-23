@@ -149,8 +149,8 @@
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
-<!--
 - [MASTG-KNOW-0074](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0074.md) 強制アップデート (Enforced Updating)
+<!--
 - [MASTG-KNOW-0075](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0075.md) オブジェクトシリアライゼーション (Object Serialization)
 - [MASTG-KNOW-0076](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0076.md) WebView (WebViews)
 - [MASTG-KNOW-0077](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0077.md) アプリパーミッション (App Permissions)
