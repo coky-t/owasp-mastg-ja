@@ -26,8 +26,8 @@
 -->
 - [MASTG-KNOW-0048](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md) キーチェーン (KeyChain)
 - [MASTG-KNOW-0049](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md) ログ (Logs)
-<!--
 - [MASTG-KNOW-0050](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md) バックアップ (Backups)
+<!--
 - [MASTG-KNOW-0051](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0051.md) プロセスメモリ (Process Memory)
 -->
 - [MASTG-KNOW-0052](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md) ユーザーインタフェースコンポーネント (User Interface Components)

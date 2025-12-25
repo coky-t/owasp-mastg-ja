@@ -91,6 +91,7 @@
       - [MASTG-KNOW-0046 BouncyCastle キーストア (BouncyCastle KeyStore)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0046.md)
       - [MASTG-KNOW-0048 キーチェーン (KeyChain)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0048.md)
       - [MASTG-KNOW-0049 ログ (Logs)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0049.md)
+      - [MASTG-KNOW-0050 バックアップ (Backups)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md)
       - [MASTG-KNOW-0052 ユーザーインタフェースコンポーネント (User Interface Components)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0052.md)
       - [MASTG-KNOW-0053 スクリーンショット (Screenshots)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0053.md)
       - [MASTG-KNOW-0054 アプリ通知 (App Notifications)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0054.md)
