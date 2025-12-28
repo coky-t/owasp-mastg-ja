@@ -59,8 +59,8 @@
 <!--
 - [MASTG-KNOW-0017](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0017.md) アプリパーミッション (App Permissions)
 - [MASTG-KNOW-0018](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018.md) WebView (WebViews)
-- [MASTG-KNOW-0019](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0019.md) ディープリンク (Deep Links)
 -->
+- [MASTG-KNOW-0019](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0019.md) ディープリンク (Deep Links)
 - [MASTG-KNOW-0020](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
 <!--
 - [MASTG-KNOW-0021](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0021.md) オブジェクトシリアライゼーション (Object Serialization)

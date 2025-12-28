@@ -111,6 +111,7 @@
       - [MASTG-KNOW-0016 TBD](knowledge/android/MASVS-NETWORK/MASTG-KNOW-0016.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
+      - [MASTG-KNOW-0019 ディープリンク (Deep Links)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0019.md)
       - [MASTG-KNOW-0020 プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md)
       - [MASTG-KNOW-0023 強制アップデート (Enforced Updating)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md)
       - [MASTG-KNOW-0105 ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md)
