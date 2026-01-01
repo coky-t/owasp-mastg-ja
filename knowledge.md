@@ -64,8 +64,8 @@
 - [MASTG-KNOW-0020](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
 <!--
 - [MASTG-KNOW-0021](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0021.md) オブジェクトシリアライゼーション (Object Serialization)
-- [MASTG-KNOW-0022](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0022.md) オーバーレイ攻撃 (Overlay Attacks)
 -->
+- [MASTG-KNOW-0022](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0022.md) オーバーレイ攻撃 (Overlay Attacks)
 - [MASTG-KNOW-0023](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0023.md) 強制アップデート (Enforced Updating)
 <!--
 - [MASTG-KNOW-0024](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) ペンディングインテント (Pending Intents)
