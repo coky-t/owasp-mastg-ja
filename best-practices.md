@@ -27,3 +27,4 @@
 - [MASTG-BEST-0025](best-practices/MASTG-BEST-0025.md) 安全な乱数生成器 API を使用する (Use Secure Random Number Generator APIs)
 - [MASTG-BEST-0026](best-practices/MASTG-BEST-0026.md) 機密テキスト入力のキーボードキャッシュを防止する (Preventing Keyboard Caching for Sensitive Text Inputs)
 - [MASTG-BEST-0027](best-practices/MASTG-BEST-0027.md) 通知での機密データの露出を防止する (Preventing Sensitive Data Exposure in Notifications)
+- [MASTG-BEST-0028](best-practices/MASTG-BEST-0028.md) WebView キャッシュをクリーンアップする (WebViews Cache Cleanup)
