@@ -27,7 +27,8 @@ deprecation_note: New version available in MASTG V2
 
 ホスト名と証明書自体が正しく検証されていることを確認します。事例と一般的な落とし穴が [Android の公式ドキュメント](https://developer.android.com/training/articles/security-ssl.html "Android Documentation - SSL") にあります。`TrustManager` および `HostnameVerifier` の使用例のコードを探します。下記のセクションには、あなたが探しているようなセキュアではない事例があります。
 
-> Android 8.0 (API レベル 26) 以降、SSLv3 はサポートされなくなり、`HttpsURLConnection` はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しないことに注意します。
+### !!! 注記
+Android 8.0 (API レベル 26) 以降、SSLv3 はサポートされなくなり、`HttpsURLConnection` はセキュアではない TLS/SSL プロトコルへのフォールバックを実行しません。
 
 ### ターゲット SDK バージョンの検証
 
