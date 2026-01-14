@@ -63,9 +63,9 @@ Android は Android 2.3.4 (API レベル 10) からデバイス暗号化をサ�
 
 - [ファイルベース暗号化 (File-Based Encryption, FBE)](https://source.android.com/security/encryption/file-based "File-Based Encryption"): Android 7.0 (API レベル 24) ではファイルベースの暗号化をサポートしています。ファイルベース暗号化はさまざまなファイルを異なる鍵で暗号化できるため、ファイルを個別に解読できます。このタイプの暗号化をサポートするデバイスは Direct Boot もサポートします。 Direct Boot により、ユーザーがデバイスをロック解除していなくても、デバイスはアラームやアクセシビリティサービスなどの機能にアクセスできます。
 
-> 注意: [Adiantum](https://github.com/google/adiantum "Adiantum") について耳にしたことがあるかもしれません。これは Android 9 (API レベル 28) 以降を実行している  CPU に AES 命令がないデバイス用に設計された暗号化方式です。 **Adiantum は ROM 開発者やデバイスベンダーにのみ関係します**。 Android は開発者がアプリケーションから Adiantum を使用するための API を提供していません。 Google が推奨しているように、 ARMv8 Cryptography Extensions を搭載した ARM ベースのデバイスや、 AES-NI を搭載した x86 ベースのデバイスを出荷する際に Adiantum を使用すべきではありません。これらのプラットフォームでは AES の方が高速です。
->
-> 詳細については [Android ドキュメント](https://source.android.com/security/encryption/adiantum "Adiantum") を参照してください。
+##### !!! 注記
+[Adiantum](https://github.com/google/adiantum "Adiantum") について耳にしたことがあるかもしれません。Android 9 (API レベル 28) 以降を実行している  CPU に AES 命令がないデバイス用に設計された暗号化方式です。 **Adiantum は ROM 開発者やデバイスベンダーにのみ関係します**。 Android は開発者がアプリケーションから Adiantum を使用するための API を提供していません。 Google が推奨しているように、 ARMv8 Cryptography Extensions を搭載した ARM ベースのデバイスや、 AES-NI を搭載した x86 ベースのデバイスを出荷する際に Adiantum を使用すべきではありません。これらのプラットフォームでは AES の方が高速です。
+詳細については [Android ドキュメント](https://source.android.com/security/encryption/adiantum "Adiantum") を参照してください。
 
 #### Trusted Execution Environment (TEE)
 
