@@ -60,11 +60,10 @@ pod dependencies
 
 上記の手順の結果を、既知の脆弱性に対するさまざまな脆弱性フィードを検索するための入力として使用できます。
 
-> 注釈:
->
-> 1. 開発者が .podspec ファイルを使用して自身のサポートライブラリに関してすべての依存関係をパックする場合、この .podspec ファイルを実験的な CocoaPods podspec checker で確認できます。
-> 2. プロジェクトで CocoaPods を Objective-C と組み合わせて使用する場合、SourceClear を使用できます。
-> 3. HTTPS ではなく HTTP ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に [中間マシン (Machine-in-the-Middle, MITM)](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) 攻撃を許す可能性があり、攻撃者はライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に HTTPS を使用します。
+### !!! 注記
+1. 開発者が .podspec ファイルを使用して自身のサポートライブラリに関してすべての依存関係をパックする場合、この .podspec ファイルを実験的な CocoaPods podspec checker で確認できます。
+2. プロジェクトで CocoaPods を Objective-C と組み合わせて使用する場合、SourceClear を使用できます。
+3. HTTPS ではなく HTTP ベースのリンクを持つ CocoaPods を使用すると、依存関係のダウンロード時に [中間マシン (Machine-in-the-Middle, MITM)](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) 攻撃を許す可能性があり、攻撃者はライブラリ (の一部) を他のコンテンツと置き換える可能性があります。したがって、常に HTTPS を使用します。
 
 [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check") の実験的な [CocoaPods Analyzer](https://jeremylong.github.io/DependencyCheck/analyzers/cocoapods.html "dependency-check - CocoaPods Analyzer") を利用して、
 すべての依存関係の [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe "CPE") 命名スキームと対応する [Common Vulnerability and Exposure (CVE)](https://cve.mitre.org/ "CVE") エントリを識別することができます。以下のコマンドでアプリケーションの \*.podspec や Podfile.lock ファイルをスキャンし、既知の脆弱なライブラリのレポートを生成します。
@@ -86,7 +85,8 @@ carthage update --platform iOS
 
 次に、 Cartfile を確認します。使用されている実際のバージョンを解決し、既知の脆弱性についてライブラリを調査します。
 
-> 注釈、この章の執筆時点では、執筆者に知られている Carthage ベースの依存関係解析の自動サポートはありません。少なくとも、この機能は OWASP DependencyCheck ツールですでにリクエストされていますがまだ実装されていません ([GitHub issue](https://github.com/jeremylong/DependencyCheck/issues/962 "Add Carthage Analyze for Swift") を参照) 。
+### !!! 注記
+この章の執筆時点では、執筆者に知られている Carthage ベースの依存関係解析の自動サポートはありません。少なくとも、この機能は OWASP DependencyCheck ツールですでにリクエストされていますがまだ実装されていません ([GitHub issue](https://github.com/jeremylong/DependencyCheck/issues/962 "Add Carthage Analyze for Swift") を参照) 。
 
 ### 発見されたライブラリ脆弱性
 
