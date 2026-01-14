@@ -29,7 +29,8 @@ deprecation_note: 関連する弱点は開発プロセスの中で対処する�
 
 [Realm アカデミーでこの話題について素晴らしい講演が行われました](https://academy.realm.io/posts/russ-bishop-unsafe-swift/ "Russh Bishop on Unsafe Swift") 。また、この話題について Ray Wenderlich は [実際に何が起こっているかを見るための素敵なチュートリアル](https://www.raywenderlich.com/780-unsafe-swift-using-pointers-and-interacting-with-c "Unsafe Swift: Using Pointers And Interacting With C") を提供しています。
 
-> Swift 5 ではフルブロックの割り当て解除のみ可能であることに注意します。これはプレイグラウンドが少し変更されたことを意味しています。
+### !!! 注記
+Swift 5 ではフルブロックの割り当て解除のみ可能です。これはプレイグラウンドが少し変更されたことを意味しています。
 
 ## 動的解析
 
