@@ -27,4 +27,5 @@ platform: ios
 
 <img src="../../Document/Images/Chapters/0x06b/idevicesyslog-screen.png" width="100%" />
 
-> **注**: `idevicesyslog` はすべての種類のログをログ記録しない可能性があります。たとえば、[debug](https://developer.apple.com/documentation/os/oslogtype/debug) や [info](https://developer.apple.com/documentation/os/oslogtype/info) のログはログ記録されない可能性があります。
+### !!! 注記
+`idevicesyslog` はすべての種類のログをログ記録しない可能性があります。たとえば、[debug](https://developer.apple.com/documentation/os/oslogtype/debug) や [info](https://developer.apple.com/documentation/os/oslogtype/info) のログはログ記録されない可能性があります。
