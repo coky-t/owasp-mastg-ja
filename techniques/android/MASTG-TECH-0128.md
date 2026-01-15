@@ -21,8 +21,8 @@ tar xvf org.owasp.mastestapp.ab
 
 ## [adb](../../tools/android/MASTG-TOOL-0004.md) バックアップの使用
 
-!!! 警告
-    `adb backup` は [Android 12 以降で制限](https://developer.android.com/about/versions/12/behavior-changes-12#adb-backup-restrictions) されており、AndroidManifest.xml に `android:debuggable=true` が必要です。
+> [!WARNING]
+> `adb backup` は [Android 12 以降で制限](https://developer.android.com/about/versions/12/behavior-changes-12#adb-backup-restrictions) されており、AndroidManifest.xml に `android:debuggable=true` が必要です。
 
 `adb backup` を実行してアプリデータをバックアップできます。_データのバックアップ_ オプションを選択して、デバイスからバックアップを承認します。バックアッププロセスが終了すると、作業ディレクトリに _.ab_ ファイルがあります。
 
