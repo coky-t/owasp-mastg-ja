@@ -26,5 +26,5 @@ $ curl -X "PUT" "http://localhost:8081/api/v1/bom" \
 
 [Visual Studio Code (vscode)](../../tools/generic/MASTG-TOOL-0133.md) Docker コンテナのデフォルト設定を使用している場合、[dependency-track](../../tools/generic/MASTG-TOOL-0132.md) のフロントエンド <http://localhost:8080> に移動します。SBOM をアップロードしたプロジェクトを開き、脆弱な依存関係があるかどうかを検証します。
 
-### !!! 注記
-[cdxgen](../../tools/generic/MASTG-TOOL-0134.md) では [SwiftPM](https://cyclonedx.github.io/cdxgen/#/PROJECT_TYPES) に対して推移的依存関係をサポートしていません。
+> [!NOTE]
+> [cdxgen](../../tools/generic/MASTG-TOOL-0134.md) では [SwiftPM](https://cyclonedx.github.io/cdxgen/#/PROJECT_TYPES) に対して推移的依存関係をサポートしていません。
