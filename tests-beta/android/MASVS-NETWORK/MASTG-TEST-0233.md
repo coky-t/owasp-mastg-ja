@@ -12,8 +12,8 @@ profiles: [L1, L2]
 
 Android アプリは APK 内のアプリバイナリ、ライブラリバイナリ、その他のリソースにハードコードされた HTTP URL が埋め込まれていることがあります。これらの URL はアプリが暗号化されていない接続を介してサーバーと通信する潜在的な場所を示している可能性があります。
 
-!!! 警告 制限事項
-    HTTP URL の存在だけでは、必ずしも実際に通信に使用されていることを意味するわけではありません。URL の呼び出し方法や、アプリの構成でクリアテキストトラフィックが許可されているかどうかなど、それらの使用状況は実行時の状態によって異なることがあります。たとえば、AndroidManifest.xml でクリアテキストトラフィックが無効にされていたり、Network Security Configuration によって制限されていると、HTTP リクエストは失敗することがあります。[クリアテキストトラフィックを許可している Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)](MASTG-TEST-0235.md) を参照してください。
+> [!WARNING]
+> 制限事項 - HTTP URL の存在だけでは、必ずしも実際に通信に使用されていることを意味するわけではありません。URL の呼び出し方法や、アプリの構成でクリアテキストトラフィックが許可されているかどうかなど、それらの使用状況は実行時の状態によって異なることがあります。たとえば、AndroidManifest.xml でクリアテキストトラフィックが無効にされていたり、Network Security Configuration によって制限されていると、HTTP リクエストは失敗することがあります。[クリアテキストトラフィックを許可している Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)](MASTG-TEST-0235.md) を参照してください。
 
 ## 手順
 
