@@ -32,8 +32,8 @@ SecureTextField(
 )
 ```
 
-### !!! 注意
-`SecureTextField` がデフォルトの `TextObfuscationMode.RevealLastTyped` を使用している場合や、明示的に `RevealLastTyped` または `Hidden` を設定している場合でも、後でプログラムによって `Visible` に変更できます。
+> [!NOTE]
+> `SecureTextField` がデフォルトの `TextObfuscationMode.RevealLastTyped` を使用している場合や、明示的に `RevealLastTyped` または `Hidden` を設定している場合でも、後でプログラムによって `Visible` に変更できます。
 
 ## 手順
 
@@ -52,5 +52,5 @@ SecureTextField(
 - `TextField` が使用されている
 - `SecureTextField` が使用されているが、`TextObfuscationMode.Visible` が設定されている
 
-### !!! 注意
-アプリが `TextField` や `SecureTextField` のような標準クラスに依存しないカスタムテキスト入力コントロールを使用している場合 (カスタム UI フレームワークやゲームエンジンなど)、このテストは偽陰性を生み出す可能性があります。
+> [!NOTE]
+> アプリが `TextField` や `SecureTextField` のような標準クラスに依存しないカスタムテキスト入力コントロールを使用している場合 (カスタム UI フレームワークやゲームエンジンなど)、このテストは偽陰性を生み出す可能性があります。
