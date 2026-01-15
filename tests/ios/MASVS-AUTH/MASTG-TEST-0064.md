@@ -42,8 +42,8 @@ LocalAuthentication フレームワークはイベントベースのプロシー
     - `kSecAccessControlUserPresence` を代替として使用できます。これにより生体認証が機能しない場合に、ユーザーはパスコードを介して認証できます。Touch ID や Face ID サービスをバイパスするよりも、ショルダーサーフィンによって誰かのパスコードエントリを盗むほうがはるかに簡単であるため、`kSecAccessControlBiometryAny` よりも脆弱であると考えられます。
 - 生体情報を使用できるようにするために、`SecAccessControlCreateWithFlags` メソッドがコールされたときに `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly` または `kSecAttrAccessibleWhenPasscodeSet` 保護クラスが設定されていることを検証します。`...ThisDeviceOnly` バリアントはキーチェーンアイテムが他の iOS デバイスと同期されないようにすることに注意します。
 
-### !!! 注記
-データ保護クラスはデータをセキュアにするために使用されるアクセス方法を指定します。各クラスは異なるポリシーを使用して、いつデータにアクセス可能となるかを決定します。
+> [!NOTE]
+> データ保護クラスはデータをセキュアにするために使用されるアクセス方法を指定します。各クラスは異なるポリシーを使用して、いつデータにアクセス可能となるかを決定します。
 
 ## 動的解析
 
