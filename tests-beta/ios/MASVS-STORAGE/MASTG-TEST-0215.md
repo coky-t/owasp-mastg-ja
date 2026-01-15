@@ -11,14 +11,14 @@ knowledge: [MASTG-KNOW-0102]
 
 ## 概要
 
-このてすとは、アプリが `isExcludedFromBackup` を使用して、機密ファイルをバックアップから除外するようにシステムに指示しているかどうかを検証します。この API は [実際の除外を保証するものではありません](https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/#3928527)。ドキュメントによると以下のようになります。
+このテストは、アプリが `isExcludedFromBackup` を使用して、機密ファイルをバックアップから除外するようにシステムに指示しているかどうかを検証します。この API は [実際の除外を保証するものではありません](https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/#3928527)。ドキュメントによると以下のようになります。
 
 > 「`isExcludedFromBackup` リソース値は、除外できるファイルやディレクトリについてのガイダンスをシステムに提供するためにのみ存在します。これらのアイテムがバックアップやリストアされたデバイスに決して現れないことを保証するメカニズムではありません。」
 
 このテストでは、バックアップに依然として存在する可能性のあるファイルをマークするために `isExcludedFromBackup` API が使用されているすべての場所を特定します。
 
-### !!! 注記
-アプリの `/tmp` および `/Library/Caches` ディレクトリに保存されているファイルは iCloud バックアップから **除外** されます。これらのディレクトリは一時データやキャッシュデータ用に意図されており、システムは空き容量を増やすためにいつでもその内容を自動的に削除する可能性があります。したがって、これらのファイルを `isExcludedFromBackup` でマークする必要はありません。詳細については、[Apple ドキュメント](https://developer.apple.com/documentation/foundation/optimizing-your-app-s-data-for-icloud-backup#Exclude-Purgeable-Data) を参照してください。
+> [!NOTE]
+> アプリの `/tmp` および `/Library/Caches` ディレクトリに保存されているファイルは iCloud バックアップから **除外** されます。これらのディレクトリは一時データやキャッシュデータ用に意図されており、システムは空き容量を増やすためにいつでもその内容を自動的に削除する可能性があります。したがって、これらのファイルを `isExcludedFromBackup` でマークする必要はありません。詳細については、[Apple ドキュメント](https://developer.apple.com/documentation/foundation/optimizing-your-app-s-data-for-icloud-backup#Exclude-Purgeable-Data) を参照してください。
 
 ## 手順
 
