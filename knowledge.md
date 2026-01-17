@@ -117,8 +117,8 @@
 - [MASTG-KNOW-0099](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0099.md) スクリーンショット (Screenshots)
 - [MASTG-KNOW-0100](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0100.md) キーボードキャッシュ (Keyboard Cache)
 - [MASTG-KNOW-0101](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0101.md) ログ (Logs)
-<!--
 - [MASTG-KNOW-0102](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0102.md) バックアップ (Backups)
+<!--
 - [MASTG-KNOW-0103](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) プロセスメモリ (Process Memory)
 -->
 - [MASTG-KNOW-0104](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
