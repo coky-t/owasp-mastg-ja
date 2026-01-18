@@ -473,7 +473,7 @@
     - [MASTG-TOOL-0021 Magisk](tools/android/MASTG-TOOL-0021.md)
     - [MASTG-TOOL-0022 Proguard](tools/android/MASTG-TOOL-0022.md)
     - [MASTG-TOOL-0023 RootCloak Plus](tools/android/MASTG-TOOL-0023.md)
-    - [ Scrcpy](tools/android/.md)
+    - [MASTG-TOOL-0024 Scrcpy](tools/android/MASTG-TOOL-0024.md)
     - [MASTG-TOOL-0025 SSLUnpinning](tools/android/MASTG-TOOL-0025.md)
     - [MASTG-TOOL-0026 Termux](tools/android/MASTG-TOOL-0026.md)
     - [MASTG-TOOL-0027 Xposed](tools/android/MASTG-TOOL-0027.md)
