@@ -49,13 +49,32 @@ Frida には三つの動作モードがあります。
 
 ### Frida 17
 
-Frida 17 では、Frida の GumJS ランタイム内にバンドルされていたランタイムブリッジ (`frida-{objc,swift,java}-bridge`) を削除するなど、[重大な変更](https://frida.re/news/2025/05/17/frida-17-0-0-released/) をもたらしています。つまり、必要なブリッジは `frida-pm install` を使用して明示的にインストールする必要があります。
+Frida 17 では、バンドルされていたランタイムブリッジの削除やいくつかのネイティブ API の変更など、[重大な変更](https://frida.re/news/2025/05/17/frida-17-0-0-released/) をもたらしています。
 
- ```bash
- frida-pm install frida-java-bridge
- ```
+**ブリッジ:**
 
-ただし、コマンド `frida` と `frida-trace` には Java, Objective-C, Swift ブリッジがあらかじめバンドルされているので、これらのコンテキストでは手動でインストールしなくても使用できます。ブリッジの詳細については [Frida ドキュメント](https://frida.re/docs/bridges/) を参照してください。
+Frida 17 では Frida の GumJS ランタイム内にバンドルされていた [ランタイムブリッジ](https://frida.re/docs/bridges/) (`frida-{objc,swift,java}-bridge`) を削除しています。`frida` および `frida-trace` のコマンドを使用する場合、Java, Objective-C, Swift ブリッジが事前にバンドルされているため、これは目立った影響はなく、これまで通り使用できます。
+
+但し、これらのブリッジに依存する独自の Frida ベースのツールやスクリプトを作成している場合、Frida のパッケージマネージャである `frida-pm` を介して個別にインストールする必要があります。たとえば、Java ブリッジをインストールするには、以下を実行します。
+
+```bash
+frida-pm install frida-java-bridge
+```
+
+それから、スクリプト内で以下のようにブリッジをインポートして使用できます。
+
+```js
+import JavaBridge from 'frida-java-bridge';
+JavaBridge.load();
+```
+
+独自のツール (カスタム Python スクリプトなど) から Frida でスクリプトを実行する前に、`frida-compile` を使用してスクリプトを必要なブリッジにバンドルする必要があります。
+
+```bash
+npx frida-compile -o agent.js -o _agent.js
+```
+
+**API の変更:**
 
 Frida はネイティブ API に変更を加えました。これらの変更により既存のスクリプトの一部が動作しなくなる可能性がありますが、より読みやすくパフォーマンスの高いコードを書くことができるようになります。たとえば、`Process.enumerateModules()` は `Module` オブジェクトの配列を返すようになり、それらを直接操作できるようになりました。
 
@@ -81,10 +100,10 @@ Module.getGlobalExportByName('open');
 
 また Frida は Frida API 上に構築されたシンプルなツールもいくつか提供しており、pip 経由で frida-tools をインストールした後、ターミナルからすぐに利用できます。たとえば、以下があります。
 
-- [Frida CLI](https://www.frida.re/docs/frida-cli/ "Frida CLI") (`frida`) を使用して、スクリプトのプロトタイピングや試行錯誤のシナリオをすばやく実行できます。
-- [`frida-ps`](https://www.frida.re/docs/frida-ps/ "frida-ps") はデバイス上で動作しているすべてのアプリ (またはプロセス) の名前、識別子、PID を含むリストを取得します。
-- [`frida-ls-devices`](https://www.frida.re/docs/frida-ls-devices/ "frida-ls-devices") は Frida サーバーやエージェントを実行している接続されたデバイスをリストします。
-- [`frida-trace`](https://www.frida.re/docs/frida-trace/ "frida-trace") は iOS アプリの一部であるメソッド、または Android ネイティブライブラリ内に実装されているメソッドをすばやくトレースします。
+- [`frida`](https://www.frida.re/docs/frida-cli/ "Frida CLI"): スクリプトのプロトタイピングや試行錯誤のシナリオのための Frida CLI です。
+- [`frida-ps`](https://www.frida.re/docs/frida-ps/ "frida-ps"): デバイス上で動作しているすべてのプロセス (アプリ) の名前、識別子、PID などをリストします。
+- [`frida-ls-devices`](https://www.frida.re/docs/frida-ls-devices/ "frida-ls-devices"): Frida サーバーやエージェントを実行している接続されたデバイスをリストします。
+- [`frida-trace`](https://www.frida.re/docs/frida-trace/ "frida-trace"): Frida スクリプトを書くことなく関数呼び出しをトレースします。
 
 さらに、以下のようなオープンソースの Frida ベースのツールもいくつかあります。
 
