@@ -85,7 +85,7 @@ NSAppTransportSecurity : Dictionary {
 
 | キー | 説明 |
 | --------------| ------------|
-| `NSAllowsArbitraryLoads` | `NSExceptionDomains` の下に指定された個々のドメインを除いてグローバルに ATS 制限を無効化する |
+| `NSAllowsArbitraryLoads` | `NSExceptionDomains` の下に指定された個々のドメインを除いてグローバルに ATS 制限を無効化する (以下のいずれかが設定されている場合、その値に関係なく、このキーは無視されます) |
 | `NSAllowsArbitraryLoadsInWebContent` | WebView から作成されたすべての接続に対して ATS 制限を無効化する |
 | `NSAllowsLocalNetworking` | 非修飾ドメイン名と .local ドメインへの接続を許可する |
 | `NSAllowsArbitraryLoadsForMedia` | AV Foundation フレームワークからロードされたメディアのすべての ATS 制限を無効化する |
@@ -99,9 +99,11 @@ NSAppTransportSecurity : Dictionary {
 | `NSExceptionMinimumTLSVersion` | TLS バージョン 1.2 未満のサーバーへの接続を許可する |
 | `NSExceptionRequiresForwardSecrecy` | Perfect Forward Secrecy (PFS) を無効化する |
 
+古い例やドキュメントでは `NSTemporaryException...` で始まる例外キーに遭遇することがあります。これらのキーは元々 iOS 9 初期に一時的な ATS 例外ヘルパーとして導入されました。それらは依然として動作しますが、Apple により非推奨となりドキュメント化されていません。開発者は代わりに最新の非一時的な `NSException...` 同等品を使用する必要があります。
+
 **例外の正当性:**
 
-2017年1月1日から Apple App Store レビューでは以下の ATS 例外の一つが定義されている場合に [正当な理由を要求](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) します。
+2017年1月1日から Apple App Store レビューでは以下の ATS 例外の一つが定義されている場合に [正当な理由を要求](https://developer.apple.com/documentation/security/preventing-insecure-network-connections#Provide-Justification-for-Exceptions) します。
 
 - `NSAllowsArbitraryLoads`
 - `NSAllowsArbitraryLoadsForMedia`
