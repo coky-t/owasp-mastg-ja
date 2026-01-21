@@ -413,6 +413,7 @@
 
     - MASVS-NETWORK: ネットワーク通信
       - [MASTG-TEST-0321 ハードコードされた HTTP URL (Hardcoded HTTP URLs)](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0321.md)
+      - [MASTG-TEST-0322 クリアテキストトラフィックを許可する App Transport Security 構成 (App Transport Security Configurations Allowing Cleartext Traffic)](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0322.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
       - [MASTG-TEST-0276 iOS の汎用ペーストボードの使用 (Use of the iOS General Pasteboard)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0276.md)
