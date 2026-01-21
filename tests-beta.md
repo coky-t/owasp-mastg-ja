@@ -134,6 +134,10 @@
 - [MASTG-TEST-0270](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0270.md) 生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)
 - [MASTG-TEST-0271](tests-beta/ios/MASVS-AUTH/MASTG-TEST-0271.md) 生体認証登録の変更を検出する API の実行時使用 (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
 
+### MASVS-NETWORK: ネットワーク通信
+
+- [MASTG-TEST-0321](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0321.md) ハードコードされた HTTP URL (Hardcoded HTTP URLs)
+
 ### MASVS-PLATFORM: プラットフォーム連携
 
 - [MASTG-TEST-0276](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0276.md) iOS の汎用ペーストボードの使用 (Use of the iOS General Pasteboard)
