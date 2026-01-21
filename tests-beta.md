@@ -138,6 +138,7 @@
 
 - [MASTG-TEST-0321](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0321.md) ハードコードされた HTTP URL (Hardcoded HTTP URLs)
 - [MASTG-TEST-0322](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0322.md) クリアテキストトラフィックを許可する App Transport Security 構成 (App Transport Security Configurations Allowing Cleartext Traffic)
+- [MASTG-TEST-0323](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0323.md) クリアテキストトラフィックのための低レベルネットワーク API の使用 (Uses of Low-Level Networking APIs for Cleartext Traffic)
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
