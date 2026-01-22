@@ -5,7 +5,7 @@ platform: android
 
 Android では、[`Logcat`](https://developer.android.com/tools/debugging/debugging-log.html "Debugging with Logcat") を使用することで、システムメッセージのログを簡単に調査できます。Logcat を実行するには二つの方法があります。
 
-- Logcat は Android Studio の _Dalvik Debug Monitor Server_ (DDMS) の一部です。アプリがデバッグモードで実行されている場合、ログ出力は Android Monitor の Logcat タブに表示されます。Logcat でパターンを定義することで、アプリのログ出力をフィルタできます。
+- Android Studio では、アプリがデバッグモードで実行している場合、ログ出力は **Logcat** ウィンドウに表示されます (**View** -> **Tool Windows** -> **Logcat** でアクセスできます)。Logcat でパターンを定義することで、アプリのログ出力をフィルタできます。
 
 <img src="../../Document/Images/Chapters/0x05b/log_output_Android_Studio.png" width="100%" />
 
