@@ -85,6 +85,14 @@ Android デバイスで実行されているコードが信頼できるソース
 
 詳細については [Android ドキュメント](https://source.android.com/security/verifiedboot) を参照してください。
 
+#### Android Enterprise
+
+[Android Enterprise](https://developer.android.com/work) (旧称 Android for Work) は企業や組織での使用向けに設計された機能とサービスのセットであり、標準の Android を超える強化されたセキュリティ、プライバシー、管理機能を提供します。組織は、仕事用アプリとデータ用に、個人用アプリとは隔離された、個別の暗号化されたコンテナを作成する仕事用プロファイルなどの機能を通じて、Android デバイスとアプリを安全にデプロイおよび管理できます。
+
+主なセキュリティ機能には、強制暗号化、強化されたデバイス管理コントロール、常時接続 VPN、エンタープライズモビリティ管理 (EMM) ソリューションによって適用可能な厳格なセキュリティポリシーなどがあります。最近の Android バージョンに追加された新機能やアップデートについては [Android Enterprise ドキュメント](https://developer.android.com/work/versions) をご覧ください。
+
+エンタープライズ環境向けアプリを構築する開発者は [Android の仕事用プロファイル APIs](https://developer.android.com/work/versions) やデバイスポリシー制限を認識し、IT 管理者がリモートでアプリを構成できるように [管理対象構成](https://developer.android.com/work/managed-configurations) などの機能を実装して、組織のセキュリティ要件への準拠を確保する必要があります。
+
 ### ソフトウェアの分離
 
 #### Android ユーザーとグループ
