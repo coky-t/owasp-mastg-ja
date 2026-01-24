@@ -180,6 +180,7 @@
     - MASVS-PLATFORM: プラットフォーム連携
       - [MASTG-KNOW-0074 強制アップデート (Enforced Updating)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0074.md)
       - [MASTG-KNOW-0078 プロセス間通信 (IPC) (Inter-Process Communication (IPC))](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0078.md)
+      - [MASTG-KNOW-0080 ユニバーサルリンク (Universal Links)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md)
       - [MASTG-KNOW-0081 UIActivity 共有 (UIActivity Sharing)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md)
 
     - MASVS-CODE: コード品質

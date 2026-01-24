@@ -156,8 +156,8 @@
 - [MASTG-KNOW-0078](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0078.md) プロセス間通信 (IPC) (Inter-Process Communication (IPC))
 <!--
 - [MASTG-KNOW-0079](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0079.md) カスタム URL スキーム (Custom URL Schemes)
-- [MASTG-KNOW-0080](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md) ユニバーサルリンク (Universal Links)
 -->
+- [MASTG-KNOW-0080](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md) ユニバーサルリンク (Universal Links)
 - [MASTG-KNOW-0081](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md) UIActivity 共有 (UIActivity Sharing)
 <!--
 - [MASTG-KNOW-0082](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0082.md) App Extension (App extensions)
