@@ -118,7 +118,9 @@
 - [MASTG-TEST-0070](tests/ios/MASVS-PLATFORM/MASTG-TEST-0070.md) ユニバーサルリンクのテスト (Testing Universal Links)
 - [MASTG-TEST-0071](tests/ios/MASVS-PLATFORM/MASTG-TEST-0071.md) UIActivity 共有のテスト (Testing UIActivity Sharing)
 - [MASTG-TEST-0072](tests/ios/MASVS-PLATFORM/MASTG-TEST-0072.md) App Extension のテスト (Testing App Extensions)
+-->
 - [MASTG-TEST-0073](tests/ios/MASVS-PLATFORM/MASTG-TEST-0073.md) UIPasteboard のテスト (Testing UIPasteboard)
+<!--
 - [MASTG-TEST-0074](tests/ios/MASVS-PLATFORM/MASTG-TEST-0074.md) IPC を介した機密機能露出のテスト (Testing for Sensitive Functionality Exposure Through IPC)
 - [MASTG-TEST-0075](tests/ios/MASVS-PLATFORM/MASTG-TEST-0075.md) カスタム URL スキームのテスト (Testing Custom URL Schemes)
 - [MASTG-TEST-0076](tests/ios/MASVS-PLATFORM/MASTG-TEST-0076.md) iOS WebView のテスト (Testing iOS WebViews)

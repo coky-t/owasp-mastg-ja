@@ -269,6 +269,7 @@
       - [MASTG-TEST-0068 カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)](tests/ios/MASVS-NETWORK/MASTG-TEST-0068.md)
 
     - MASVS-PLATFORM: プラットフォーム連携
+      - [MASTG-TEST-0073 UIPasteboard のテスト (Testing UIPasteboard)](tests/ios/MASVS-PLATFORM/MASTG-TEST-0073.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0079 オブジェクト永続化のテスト (Testing Object Persistence)](tests/ios/MASVS-CODE/MASTG-TEST-0079.md)
