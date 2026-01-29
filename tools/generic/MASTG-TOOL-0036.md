@@ -11,7 +11,7 @@ source: https://github.com/nowsecure/r2frida
 - マップ、シンボル、インポート、クラス、メソッドなどの Frida 情報を radare2 にロードします。
 - Frida Javascript API に r2pipe インタフェースを公開して、Frida から r2 コマンドを呼び出します。
 
-[r2frida の公式インストール手順](https://github.com/nowsecure/r2frida/blob/master/README.md#installation "r2frida installation instructions") を参照してください。
+[r2frida の公式インストール手順](https://github.com/nowsecure/r2frida/blob/master/README.md#installation "r2frida installation instructions") を参照してください。r2frida を使用するための詳細なチュートリアルと実用的な例については、[Frida ハンドブックの r2frida セクション](https://learnfrida.info/r2frida/) を参照してください。
 
 frida-server が実行中であれば、pid、spawn パス、ホストとポート、デバイス ID を使用してアタッチできるはずです。たとえば PID 1234 にアタッチするには以下のようにします。
 
