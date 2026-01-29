@@ -164,3 +164,5 @@ public void android.view.View.setTooltipText(java.lang.CharSequence)
 ```
 
 最終的に、どこでデータを扱うかはあなた次第です。JavaScript から行う方が便利なこともあれば、Python が最適な選択肢となることもあるでしょう。もちろん `script.post` を使用して Python から JavaScript にメッセージを送信することもできます。[送信](https://www.frida.re/docs/messages/#sending-messages-from-a-target-process "Sending messages from a target process") および [受信](https://www.frida.re/docs/messages/#receiving-messages-in-a-target-process "Receiving messages in a target process") メッセージの詳細については Frida のドキュメントを参照してください。
+
+より実用的な例については、[Frida ハンドブックの MacOS セクション](https://learnfrida.info/macos/) をご覧ください。
