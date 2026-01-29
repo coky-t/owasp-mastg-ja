@@ -201,3 +201,5 @@ public void android.view.View.cancelLongPress()
 public final void android.view.View.cancelPendingInputEvents()
 ...
 ```
+
+より実用的な例については、[Frida ハンドブックの Android セクション](https://learnfrida.info/java/) をご覧ください。
