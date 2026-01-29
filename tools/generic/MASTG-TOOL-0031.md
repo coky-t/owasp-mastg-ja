@@ -43,7 +43,7 @@ Frida には三つの動作モードがあります。
 選択したモードに関係なく、[Frida JavaScript API](https://www.frida.re/docs/javascript-api/ "Frida JavaScript APIs") を使用して、実行中のプロセスおよびそのメモリとやり取りできます。基本的な API には以下のものがあります。
 
 - [Interceptor](https://www.frida.re/docs/javascript-api/#interceptor "Interceptor"): Interceptor API を使用する場合、Frida は関数のプロローグにトランポリン (別名インラインフック) を注入します。これはカスタムコードへのリダイレクトを引き起こし、コードを実行して、元の関数に戻ります。私たちの目的には非常に効果的ですが、これはかなりのオーバーヘッド (トランポリンに関連したジャンプとコンテキストスイッチによる) をもたらし、元のコードを上書きしてデバッガと同様に動作 (ブレークポイントの設定) を行うため、透過的であるとはみなすことはできず、たとえば定期的に独自のコードのチェックサムを行うアプリケーションによって、同様の方法で検出される可能性があることに注意してください。
-- [Stalker](https://www.frida.re/docs/javascript-api/#stalker "Stalker"): トレースの要件に透明性、パフォーマンス、高い粒度を含む場合には、Stalker が選択すべき API です。Stalker API でコードをトレースする場合、Frida はジャストインタイムの動的再コンパイルを ([Capstone](http://www.capstone-engine.org/ "Capstone") を使用して) 活用します。スレッドが次の命令を実行しようとすると、Stalker はメモリを割り当て、オリジナルのコードをコピーし、計装のためにそのコピーをカスタムコードとインタレースします。最後に、そのコピーを実行します (オリジナルのコードはそのままにしておくので、アンチデバッグチェックは回避します)。このアプローチは計装のパフォーマンスを大幅に向上し、トレース時に非常に高い粒度を可能にします (CALL または RET 命令のみをトレースするなど)。より詳細については [Frida の作者 Ole によるブログ投稿 "Anatomy of a code tracer"](https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8 "Anatomy of a code tracer") [#vadla] をご覧ください。Stalker の使用例としては [who-does-it-call](https://codeshare.frida.re/@oleavr/who-does-it-call/ "who-does-it-call") や [diff-calls](https://github.com/frida/frida-presentations/blob/master/R2Con2017/01-basics/02-diff-calls.js "diff-calls") などがあります。
+- [Stalker](https://www.frida.re/docs/javascript-api/#stalker "Stalker"): トレースの要件に透明性、パフォーマンス、高い粒度を含む場合には、Stalker が選択すべき API です。Stalker API でコードをトレースする場合、Frida はジャストインタイムの動的再コンパイルを ([Capstone](http://www.capstone-engine.org/ "Capstone") を使用して) 活用します。スレッドが次の命令を実行しようとすると、Stalker はメモリを割り当て、オリジナルのコードをコピーし、計装のためにそのコピーをカスタムコードとインタレースします。最後に、そのコピーを実行します (オリジナルのコードはそのままにしておくので、アンチデバッグチェックは回避します)。このアプローチは計装のパフォーマンスを大幅に向上し、トレース時に非常に高い粒度を可能にします (CALL または RET 命令のみをトレースするなど)。より詳細については [Frida の作者 Ole によるブログ投稿 "Anatomy of a code tracer"](https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8 "Anatomy of a code tracer") [#vadla] をご覧ください。Stalker の使用例としては [who-does-it-call](https://codeshare.frida.re/@oleavr/who-does-it-call/ "who-does-it-call") や [diff-calls](https://github.com/frida/frida-presentations/blob/master/R2Con2017/01-basics/02-diff-calls.js "diff-calls") などがあります。実用的なチュートリアルと高度な使用パターンについては、[Frida ハンドブックの Stalker セクション](https://learnfrida.info/advanced_usage/#stalker) を参照してください。
 - [Java](https://www.frida.re/docs/javascript-api/#java "Java"): Android で作業する場合、この API を使用して、ロードされたクラスを列挙したり、クラスローダーを列挙したり、特定のクラスインスタンスを作成して使用したり、ヒープをスキャンしてクラスのライブインスタンスを列挙することなどができます。
 - [ObjC](https://www.frida.re/docs/javascript-api/#objc "ObjC"): iOS で作業する場合、この API を使用して、登録されているすべてのクラスのマッピングを取得したり、特定のクラスやプロトコルのインスタンスを登録または使用したり、ヒープをスキャンしてクラスのライブインスタンスを列挙することなどができます。
 
@@ -116,3 +116,21 @@ Module.getGlobalExportByName('open');
 ガイド全体でこれらのツールをすべて使用します。
 
 これらのツールはそのまま使用することも、ニーズに合わせて調整することも、API の使用方法に関する優れた例とすることもできます。例としてこれらを使用すると、独自のフックスクリプトを作成するときや、リバースエンジニアリングワークフローをサポートするイントロスペクションツールを構築するときに非常に役立ちます。
+
+## Frida Handbook
+
+[Frida Handbook](https://learnfrida.info/) は MASTG の Dynamic Binary Instrumentation (DBI) テスト技法を拡張した包括的なリソースであり、モバイルセキュリティテストで Frida を使用するための詳細なチュートリアルと実用的な例があります。
+
+このハンドブックは以下を含む幅広いトピックをカバーしています。
+
+- **はじめに**: インストール、基本セットアップ、さまざまなプラットフォームでの最初の Frida スクリプトの実行。
+- **コアコンセプト**: Frida のアーキテクチャ、JavaScript API の基礎、ラピッドプロトタイピングに Frida REPL を効果的に使用する方法の理解。
+- **フックテクニック**: Android (Java/Kotlin および JNI) と iOS (Objective-C および Swift) にわたる関数、メソッド、ネイティブコードを傍受するための包括的なガイド。
+- **メモリ解析**: プロセスメモリの読み取り、書き込み、検索、およびポインタとデータ構造の操作のためのテクニック。
+- **高度な使用法**: [コードトレース用の Stalker](https://learnfrida.info/advanced_usage/#stalker)、カスタム計装パターン、パフォーマンス最適化などの高度な機能の詳細な説明。
+- **ツールの統合**: Frida を [r2frida](https://learnfrida.info/r2frida/) などの他のセキュリティツールを使用して、radare2 のリバースエンジニアリング機能と Frida の動的計装を組み合わせます。
+- **iOS 固有のトピック**: Objective-C ランタイム、Swift の内部、脱獄検出のバイパス、iOS システムフレームワークの計装との連携。
+- **Android 固有のトピック**: Java/Kotlin コードの計装、ネイティブライブラリとの連携、ルート検出のバイパス、Android フレームワークコンポーネントの解析。
+- **実用的な例**: よくあるモバイルセキュリティテストの課題を解決する方法を示す実際のシナリオとケーススタディ。
+
+Frida Handbook は MASTG の優れた手引きとして機能し、このガイドで説明されているテスト方法論を補完する詳細な説明とハンズオンの例を提供します。
