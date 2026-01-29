@@ -9,6 +9,8 @@ Objective-C メソッドの傍受は有用な iOS セキュリティテスト技
 
 Frida には関数トレースツールである `frida-trace` が付属しています。`frida-trace` は `-m` フラグで Objective-C メソッドを受け付けます。ワイルドカードを渡すこともできます。たとえば、`-[NSURL *]` では `frida-trace` がすべての `NSURL` クラスセレクタに自動的にフックをインストールします。これを使用して、ユーザーが URL を開いたときに Safari がどのライブラリ関数を呼び出すかを大まかに把握します。
 
+iOS で frida-trace を使用する詳細なチュートリアルについては、[Frida ハンドブックの frida-trace セクション](https://learnfrida.info/basic_usage/#frida-trace) を参照してください。
+
 デバイス上で Safari を実行し、デバイスが USB で接続されていることを確認します。それから以下のように `frida-trace` を起動します。
 
 ```bash
