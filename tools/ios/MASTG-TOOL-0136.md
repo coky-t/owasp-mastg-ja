@@ -1,10 +1,7 @@
 ---
 title: plistlib
 platform: ios
-host:
-- macOS
-- windows
-- linux
+hosts: [macOS, windows, linux]
 ---
 
 [plistlib モジュール](https://docs.python.org/3/library/plistlib.html) は Python 標準ライブラリの一部であり、`.plist` (プロパティリスト) ファイルをプログラムで読み取り、変更、書き込みを可能にします。XML とバイナリの両方の plist 形式をサポートし、ネイティブの辞書ベースの API を提供します。
