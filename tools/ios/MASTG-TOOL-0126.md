@@ -1,10 +1,7 @@
 ---
 title: libimobiledevice suite
 platform: ios
-host:
-- macOS
-- windows
-- linux
+hosts: [macOS, windows, linux]
 source: https://libimobiledevice.org/
 ---
 
@@ -17,7 +14,7 @@ libimobiledevice スイートは iOS デバイスとやり取りするための�
 以下のツールは libimobiledevice スイートの一部です。
 
 | ツール | 用途 |
-|------------------|---------------------|
+| --- | --- |
 | idevice_id | 接続されているデバイスを一覧表示するか、指定されたデバイスのデバイス名を表示します。 |
 | idevicebackup | カレントディレクトリまたは指定されたディレクトリからバックアップを作成または復元します (<iOS 4)。 |
 | idevicebackup2 | カレントディレクトリまたは指定されたディレクトリからバックアップを作成または復元します (>= iOS 4)。 |
