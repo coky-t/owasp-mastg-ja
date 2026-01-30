@@ -2,10 +2,7 @@
 title: ipsw
 platform: ios
 source: https://github.com/blacktop/ipsw
-host:
-- windows
-- linux
-- macOS
+hosts: [windows, linux, macOS]
 ---
 
 IPSW は自らを "iOS/macOS Research Swiss Army Knife" と呼んでいます。一般的に、IPSW は iOS 固有のファイル (IPSW, OTA, ...) を取得し、それらを静的に解析することもできます。アプリケーション解析にとって最も興味深い機能は Objective-C と Swift のクラスダンプです。その他の機能 (カーネルキャッシュパーサー、デバイスツリーパーサー、逆アセンブラなど) も利用できますが、OS 自体のセキュリティを解析する場合にのみ役立ちます。
