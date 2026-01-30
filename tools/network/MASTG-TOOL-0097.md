@@ -16,11 +16,11 @@ source: https://github.com/mitmproxy/mitmproxy/
 brew install mitmproxy
 ```
 
-インストール手順は [こちら](https://docs.mitmproxy.org/stable/overview-installation) です。
+インストール手順は [公式ドキュメント](https://docs.mitmproxy.org/stable/overview-installation) にあります。
 
 ## 使い方
 
-ドキュメントは [こちら](https://docs.mitmproxy.org/stable/) です。mitmproxy はデフォルトでは通常の HTTP プロキシとして起動し、`http://localhost:8080` でリッスンします。すべてのトラフィックを mitmproxy 経由でルーティングするように、ブラウザやデバイスを設定する必要があります。たとえば、Android エミュレータでは [こちら](https://docs.mitmproxy.org/stable/howto-install-system-trusted-ca-android/) に示されている手順に従う必要があります。
+ドキュメントは [mitmproxy ウェブサイトで利用可能](https://docs.mitmproxy.org/stable/) です。mitmproxy はデフォルトでは通常の HTTP プロキシとして起動し、`http://localhost:8080` でリッスンします。すべてのトラフィックを mitmproxy 経由でルーティングするように、ブラウザやデバイスを設定する必要があります。たとえば、Android エミュレータでは [mitmproxy Android ガイド](https://docs.mitmproxy.org/stable/howto-install-system-trusted-ca-android/) に示されている手順に従う必要があります。
 
 たとえば、すべてのトラフィックをファイルにキャプチャするには以下のようにします。
 
