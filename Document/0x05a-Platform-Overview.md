@@ -176,7 +176,7 @@ API 仕様は Android の新しいリリースごとに変更されます。重�
 
 注目すべき [API バージョン](https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels "What is API level?")。Android バージョンごとに導入されたセキュリティとプライバシー機能の詳細については [最新の minSdkVersion を使用する (Use Up-to-Date minSdkVersion)](../best-practices/MASTG-BEST-0010.md) を参照してください。
 
-Android 開発リリースはユニークな構造になっています。それらはファミリーに編成され、おいしいお菓子にインスパイアされたアルファベット順のコードネームが付けられています。これらはすべて [こちら](https://source.android.com/docs/setup/about/build-numbers "Codenames, tags, and build numbers") で見ることができます。
+Android 開発リリースはユニークな構造になっています。それらはファミリーに編成され、おいしいお菓子にインスパイアされたアルファベット順のコードネームが付けられています。これらはすべて [Android ソースウェブサイト](https://source.android.com/docs/setup/about/build-numbers "Codenames, tags, and build numbers") で見ることができます。
 
 ### アプリサンドボックス
 
