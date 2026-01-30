@@ -27,7 +27,7 @@ Corellium にはアプリケーションと iOS 自体の両方を解析する�
 - **Apple サービスなし**: Apple サービス (iMessage やプッシュ通知を含む) へのアクセスは利用できません。
 - **カメラ / 電話 / NFC / Bluetooth なし**: Corellium 上で動作するアプリはこれらの周辺機器にアクセスできません。ただし [SMS の擬似送信](https://support.corellium.com/features/messaging) はサポートしています。
 
-iOS テストの詳細については [こちら](https://support.corellium.com/features/apps/testing-ios-apps) をご覧ください。
+iOS テストの詳細については [Corellium の iOS テストドキュメント](https://support.corellium.com/features/apps/testing-ios-apps) をご覧ください。
 
 ## Android エミュレーション
 
@@ -38,4 +38,4 @@ iOS テストの詳細については [こちら](https://support.corellium.com/
 - **TrustZone**: Keymaster にアクセスしたり、PlayReady や Widevine を使用することはできません。
 - **Permissive モードの SELinux**: SELinux が Permissive モードに設定されていると、アプリケーションで検出されるかもしれません。これは一般的に Magisk や KernelSU でルート化された物理デバイスには当てはまりません。
 
-Android テストの詳細については [こちら](https://support.corellium.com/features/apps/debug-test-android-apps) をご覧ください。
+Android テストの詳細については [Corellium の Android テストドキュメント](https://support.corellium.com/features/apps/debug-test-android-apps) をご覧ください。
