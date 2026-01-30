@@ -6,13 +6,13 @@ platform: android
 Android NDK はネイティブコンパイラとツールチェーンのビルド済みバージョンを含みます。GCC と Clang のコンパイラはどちらも従来からサポートされてきましたが、GCC のアクティブサポートは NDK バージョン 14 で終了しました。デバイスアーキテクチャとホスト OS によって適切なバージョンが決まります。ビルド済みツールチェーンは NDK の `toolchains` ディレクトリにあり、アーキテクチャごとに一つのサブディレクトリがあります。
 
 | アーキテクチャ | ツールチェーン |
-| -------------- | -------------- |
-|ARM-based|arm-linux-androideabi-&lt;gcc-version&gt;|
-|x86-based|x86-&lt;gcc-version&gt;|
-|MIPS-based|mipsel-linux-android-&lt;gcc-version&gt;|
-|ARM64-based|aarch64-linux-android-&lt;gcc-version&gt;|
-|X86-64-based|x86_64-&lt;gcc-version&gt;|
-|MIPS64-based|mips64el-linux-android-&lt;gcc-version&gt;|
+| --- | --- |
+| ARM-based | arm-linux-androideabi-&lt;gcc-version&gt; |
+| x86-based | x86-&lt;gcc-version&gt; |
+| MIPS-based | mipsel-linux-android-&lt;gcc-version&gt; |
+| ARM64-based | aarch64-linux-android-&lt;gcc-version&gt; |
+| X86-64-based | x86_64-&lt;gcc-version&gt; |
+| MIPS64-based | mips64el-linux-android-&lt;gcc-version&gt; |
 
 適切なアーキテクチャを選択するだけでなく、ターゲットとするネイティブ API レベルに適した sysroot を指定する必要があります。sysroot はターゲットのシステムヘッダとライブラリを含むディレクトリです。ネイティブ API は Android API レベルによって異なります。Android API レベルごとに利用可能な sysroot ディレクトリは `$NDK/platforms/` にあります。各 API レベルディレクトリにはさまざまな CPU やアーキテクチャを含みます。
 
