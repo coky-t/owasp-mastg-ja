@@ -3,7 +3,7 @@ title: ロードされたクラスとメソッドを動的に取得 (Getting Loa
 platform: ios
 ---
 
-Frida REPL Objective-C ランタイム では `ObjC` コマンドを使用して実行中のアプリ内の情報にアクセスできます。`ObjC` コマンド内では `enumerateLoadedClasses` 関数が特定のアプリケーションにロードされたクラスをリストします。
+Frida REPL Objective-C ランタイム では、`ObjC` コマンドを使用して実行中のアプリ内の情報にアクセスできます。`ObjC` コマンド内では、`enumerateLoadedClasses` 関数が特定のアプリケーションにロードされたクラスをリストします。
 
 ```bash
 $ frida -U -f com.iOweApp
