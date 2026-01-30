@@ -193,13 +193,13 @@ WebView を使用してリモートウェブサイトを表示する場合、HTM
 レスポンスでのデータの処理方法を検討します。例えば、データが HTML コンテキストで処理される場合に、エスケープする必要がある六つの制御文字です。
 
 | 文字 | エスケープ後 |
-| :-------------: |:-------------:|
-| & | &amp;amp;|
+| --- | --- |
+| & | &amp;amp; |
 | < | &amp;lt; |
-| > | &amp;gt;|
-| " | &amp;quot;|
-| ' | &amp;#x27;|
-| / | &amp;#x2F;|
+| > | &amp;gt; |
+| " | &amp;quot; |
+| ' | &amp;#x27; |
+| / | &amp;#x2F; |
 
 エスケープのルールや他の予防措置の包括的なリストについては、[OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html "OWASP XSS Prevention Cheat Sheet") を参照してください。
 
@@ -291,11 +291,11 @@ PIE (Position Independent Executable) はすべて PIC から作られた実行�
 
 [ARC (Automatic Reference Counting)](https://en.wikipedia.org/wiki/Automatic_Reference_Counting) は [Objective-C](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html) および [Swift](https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html) 専用の Clang コンパイラのメモリ管理機能です。ARC はクラスインスタンスが不要になると、そのインスタンスが使用していたメモリを自動的に解放します。ARC はトレーシングガベージコレクションとは異なり、実行時に非同期にオブジェクトを解放するバックグラウンドプロセスが存在しません。
 
-トレーシングガベージコレクションとは異なり、ARC は参照サイクルを自動的には処理しません。つまり、あるオブジェクトへの「強い」参照がある限り、そのオブジェクトは解放されないということです。強い相互参照によりデッドロックやメモリリークが発生する可能性があります。弱い参照を使用してサイクルを断つかどうかは開発者次第です。ガベージコレクションとの違いについて詳しくは [こちら](https://fragmentedpodcast.com/episodes/064/) をご覧ください。
+トレーシングガベージコレクションとは異なり、ARC は参照サイクルを自動的には処理しません。つまり、あるオブジェクトへの「強い」参照がある限り、そのオブジェクトは解放されないということです。強い相互参照によりデッドロックやメモリリークが発生する可能性があります。弱い参照を使用してサイクルを断つかどうかは開発者次第です。ガベージコレクションとの違いについて詳しくは [この Fragmented Podcast のエピソード](https://fragmentedpodcast.com/episodes/064/) をご覧ください。
 
 #### ガベージコレクション (Garbage Collection)
 
-[Garbage Collection (GC)](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) は Java/Kotlin/Dart などの一部の言語の自動メモリ管理機能です。ガベージコレクタはプログラムによって割り当てられたがもはや参照されないメモリ (ガベージとも呼ばれます) を再利用しようとします。Android ランタイム (ART) は [改良版 GC](https://source.android.com/devices/tech/dalvik#Improved_GC) を使用しています。ARC との違いについて詳しくは [こちら](https://fragmentedpodcast.com/episodes/064/) をご覧ください。
+[Garbage Collection (GC)](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) は Java/Kotlin/Dart などの一部の言語の自動メモリ管理機能です。ガベージコレクタはプログラムによって割り当てられたがもはや参照されないメモリ (ガベージとも呼ばれます) を再利用しようとします。Android ランタイム (ART) は [改良版 GC](https://source.android.com/devices/tech/dalvik#Improved_GC) を使用しています。ARC との違いについて詳しくは [この Fragmented Podcast のエピソード](https://fragmentedpodcast.com/episodes/064/) をご覧ください。
 
 #### 手動メモリ管理 (Manual Memory Management)
 
