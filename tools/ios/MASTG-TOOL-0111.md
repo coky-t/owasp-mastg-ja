@@ -2,10 +2,7 @@
 title: ldid
 platform: ios
 source: https://github.com/ProcursusTeam/ldid
-host:
-- windows
-- linux
-- macOS
+hosts: [windows, linux, macOS]
 ---
 
 ldid は Saurik によって作成された Link Identity Editor です。MachO バイナリのエンタイトルメントを表示および更新できます。
