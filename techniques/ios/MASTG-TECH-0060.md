@@ -23,7 +23,7 @@ platform: ios
 ## [libimobiledevice suite](../../tools/ios/MASTG-TOOL-0126.md) を使用する
 
 1. デバイスをホストコンピュータに接続します。
-2. ターミナルで `idevicesyslog | grep YOUR_APP_NAME` を実行します。出力結果には特定のアプリに関連するデバイス固有のログを多数含みます。
+2. ターミナルで `idevicesyslog | grep YOUR_APP_NAME` を実行します。出力にはそのアプリのデバイス固有のログを多数含みます。
 
 <img src="../../Document/Images/Chapters/0x06b/idevicesyslog-screen.png" width="100%" />
 
