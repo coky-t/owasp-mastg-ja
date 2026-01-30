@@ -29,7 +29,7 @@ prerequisites:
 
 ## 手順
 
-1. デバイスにアプリをインストールします ([アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md))。
+1. デバイスにアプリをインストールします ([アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md))。
 2. [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用して、ストレージの有効化とクリーンアップについて WebView API をターゲットにします。
 3. アプリを開きます。
 4. アプリを広範に使用して、関連するすべての WebView がカバーされ、機密データがロードされることを確認します。クリーンアップする必要がある機密データのリストを保管しておきます。
