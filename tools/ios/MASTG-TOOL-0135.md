@@ -1,8 +1,7 @@
 ---
 title: PlistBuddy
 platform: ios
-host:
-- macOS
+hosts: [macOS]
 ---
 
 PlistBuddy は macOS で利用可能で、`.plist` ファイルの表示と修正が可能です。デフォルトパスにはありませんが、`/usr/libexec/PlistBuddy` で実行できます。PlistBuddy はカスタム構文を使用して、指定された plist ファイルに対してコマンドを実行します。
