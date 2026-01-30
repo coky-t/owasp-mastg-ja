@@ -521,6 +521,7 @@
     - [MASTG-TOOL-0133 Visual Studio Code (vscode)](tools/generic/MASTG-TOOL-0133.md)
     - [MASTG-TOOL-0134 cdxgen](tools/generic/MASTG-TOOL-0134.md)
     - [MASTG-TOOL-0144 gitleaks](tools/generic/MASTG-TOOL-0144.md)
+    - [MASTG-TOOL-0145 Frooky](tools/generic/MASTG-TOOL-0145.md)
 
   - iOS
     - [MASTG-TOOL-0039 Frida for iOS](tools/ios/MASTG-TOOL-0039.md)
