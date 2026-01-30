@@ -3,13 +3,13 @@ title: SBOM を作成することによる iOS 依存関係のソフトウェア
 platform: ios
 ---
 
-SwiftPM を使用している場合は、[cdxgen](../../tools/generic/MASTG-TOOL-0134.md) をして CycloneDX 形式のソフトウェア部品表 (SBOM) を作成できます。現在、Carthage と CocoaPods はサポートされていません。開発チームに SBOM ファイルの提供を依頼するか、自分で作成します。作成するには、スキャンしたい Xcode プロジェクトのルートディレクトリに移動し、以下のコマンドを実行します。
+SwiftPM を使用している場合は、[cdxgen](../../tools/generic/MASTG-TOOL-0134.md) を使用して CycloneDX 形式のソフトウェア部品表 (SBOM) を生成できます。現在、Carthage と CocoaPods はサポートされていません。開発チームに SBOM ファイルの提供を依頼するか、自分で作成します。作成するには、スキャンしたい Xcode プロジェクトのルートディレクトリに移動し、以下のコマンドを実行します。
 
 ```bash
 $ cdxgen -o sbom.json
 ```
 
-作成された SBOM ファイルは、分析のために Base64 エンコードして [dependency-track](../../tools/generic/MASTG-TOOL-0132.md) にアップロードする必要があります。
+SBOM ファイルは、分析のために Base64 エンコードして [dependency-track](../../tools/generic/MASTG-TOOL-0132.md) にアップロードする必要があります。
 
 ```bash
 $ cat sbom.json | base64
