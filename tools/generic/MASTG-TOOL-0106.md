@@ -2,10 +2,7 @@
 title: Fridump
 platform: generic
 source: https://github.com/Nightbringer21/fridump
-host:
-- windows
-- linux
-- macOS
+hosts: [windows, linux, macOS]
 ---
 
 Fridump はオープンソースのメモリダンプツールであり、主にペネトレーションテスト担当者や開発者を対象としています。Fridump は Frida フレームワークを使用しており、サポートしているすべてのプラットフォームからアクセス可能なメモリアドレスをダンプします。
