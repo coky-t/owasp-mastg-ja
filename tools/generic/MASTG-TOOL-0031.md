@@ -53,7 +53,7 @@ Frida 17 では、バンドルされていたランタイムブリッジの削�
 
 **ブリッジ:**
 
-Frida 17 では Frida の GumJS ランタイム内にバンドルされていた [ランタイムブリッジ](https://frida.re/docs/bridges/) (`frida-{objc,swift,java}-bridge`) を削除しています。`frida` および `frida-trace` のコマンドを使用する場合、Java, Objective-C, Swift ブリッジが事前にバンドルされているため、これは目立った影響はなく、これまで通り使用できます。
+Frida 17 では Frida の GumJS ランタイム内にバンドルされていた [ランタイムブリッジ](https://frida.re/docs/bridges/) (`frida-{objc,swift,java}-bridge`) を削除しています。`frida`, `frida-trace`, [Frooky](MASTG-TOOL-0145.md) などの CLI ツールを使用する場合、Java, Objective-C, Swift ブリッジが事前にバンドルされているため、これは目立った影響はなく、これまで通り使用できます。
 
 但し、これらのブリッジに依存する独自の Frida ベースのツールやスクリプトを作成している場合、Frida のパッケージマネージャである `frida-pm` を介して個別にインストールする必要があります。たとえば、Java ブリッジをインストールするには、以下を実行します。
 
@@ -76,7 +76,9 @@ npx frida-compile -o agent.js -o _agent.js
 
 **API の変更:**
 
-Frida はネイティブ API に変更を加えました。これらの変更により既存のスクリプトの一部が動作しなくなる可能性がありますが、より読みやすくパフォーマンスの高いコードを書くことができるようになります。たとえば、`Process.enumerateModules()` は `Module` オブジェクトの配列を返すようになり、それらを直接操作できるようになりました。
+Frida はネイティブ API に変更を加えました。これらの変更により既存のスクリプトの一部が動作しなくなる可能性がありますが、より読みやすくパフォーマンスの高いコードを書くことができるようになります。[MASTG Frida スクリプト作成ガイド](https://mas.owasp.org/contributing/writing-content/mastg-frida-scripts.instructions#use-and-validation-of-frida-apis) の完全な概要を参照してください。
+
+たとえば、`Process.enumerateModules()` は `Module` オブジェクトの配列を返すようになり、それらを直接操作できるようになりました。
 
 ```js
 for (const module of Process.enumerateModules()) {
@@ -94,7 +96,11 @@ Process.getModuleByName('libc.so').getExportByName('open')
 Module.getGlobalExportByName('open');
 ```
 
-詳細については [Frida 17.0.0 リリースノート](https://frida.re/news/2025/05/17/frida-17-0-0-released/) を参照してください。
+詳細については、以下を参照してください。
+
+- [Frida 17.0.0 リリースノート](https://frida.re/news/2025/05/17/frida-17-0-0-released/)
+- [更新された Frida JavaScript API ドキュメント](https://frida.re/docs/javascript-api/)
+- [frida-gum 型定義](https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/refs/heads/master/types/frida-gum/index.d.ts)
 
 ## ツール
 
