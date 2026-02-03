@@ -76,7 +76,7 @@ public Cursor query(Uri uri, String[] projection, String selection,String[] sele
 UI を介して入ってくるデータを処理するすべてのアプリの関数は入力バリデーションを実装すべきです。
 
 - ユーザーインタフェースの入力には、[Android Saripaar v2](https://github.com/ragunathjawahar/android-saripaar "Android Saripaar v2") を使用できます。
-- IPC または URL スキームからの入力には、バリデーション関数を作成すべきです。たとえば、 [文字列が英数字である](https://stackoverflow.com/questions/11241690/regex-for-checking-if-a-string-is-strictly-alphanumeric "Input Validation") かどうかを判定するのは以下のようになります。
+- IPC または URL スキームからの入力には、バリデーション関数を作成すべきです。たとえば、文字列が英数字であるかどうかを判定するのは以下のようになります。
 
 ```java
 public boolean isAlphaNumeric(String s){
