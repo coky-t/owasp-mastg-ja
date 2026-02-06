@@ -5,12 +5,12 @@ id: MASTG-TEST-0243
 type: [static]
 weakness: MASWE-0047
 profiles: [L2]
-knowledge: [MASTG-KNOW-0015]
+knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
 ---
 
 ## 概要
 
-アプリは [Network Security Configuration (NSC)]("../../../Document/0x05g-Testing-Network-Communication.md#certificate-pinning") で `expiration` 属性を使用して、ピン留めされた証明書の有効期限を設定できます。ピンが期限切れになると、アプリは証明書のピン留めを強制しなくなり、代わりに構成されたトラストアンカーに依存します。つまり、サーバーが信頼できる CA (システム CA やアプリの構成で定義されたカスタム CA など) からの有効な証明書を提示した場合、接続は成功します。しかし、信頼できる証明書が利用できない場合、接続は失敗します。
+アプリは Network Security Configuration (NSC) ([Android Network Security Configuration](../../../knowledge/android/MASVS-NETWORK/MASTG-KNOW-0014.md)) で `expiration` 属性を使用して、ピン留めされた証明書の有効期限を設定できます。ピンが期限切れになると、アプリは証明書のピン留めを強制しなくなり、代わりに構成されたトラストアンカーに依存します。つまり、サーバーが信頼できる CA (システム CA やアプリの構成で定義されたカスタム CA など) からの有効な証明書を提示した場合、接続は成功します。しかし、信頼できる証明書が利用できない場合、接続は失敗します。
 
 開発者はピン留めがまだ有効であると想定していて、期限切れであることに気が付かない場合、アプリは意図していなかった CA を信頼し始めるかもしれません。
 
