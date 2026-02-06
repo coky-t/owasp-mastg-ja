@@ -93,7 +93,7 @@ KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
 この例では 4096 ビットの鍵サイズ (すなわち、モジュラスサイズ) で RSA 鍵ペアを作成します。楕円曲線 (Elliptic Curve, EC) 鍵も同様の方法で生成できます。ただし、Android 11 (API レベル 30) 以降、[AndroidKeyStore は EC 鍵での暗号化や復号化をサポートしていません](https://developer.android.com/guide/topics/security/cryptography#SupportedCipher) 。これらは署名にのみ使用できます。
 
-対称暗号鍵は Password Based Key Derivation Function version 2 (PBKDF2) を使用してパスフレーズから生成できます。この暗号プロトコルは暗号鍵を生成するように設計されており、暗号化の目的で使用できます。アルゴリズムの入力パラメータは [脆弱な鍵生成関数](0x04g-Testing-Cryptography.md#improper-key-derivation-functions) セクションに従って調整します。以下のコードはパスワードに基づいて強力な暗号鍵を生成する方法を示しています。
+対称暗号鍵は Password Based Key Derivation Function version 2 (PBKDF2) を使用してパスフレーズから生成できます。この暗号プロトコルは暗号鍵を生成するように設計されており、暗号化の目的で使用できます。アルゴリズムの入力パラメータは [脆弱な鍵生成関数](../../../Document/0x04g-Testing-Cryptography.md#improper-key-derivation-functions) セクションに従って調整します。以下のコードはパスワードに基づいて強力な暗号鍵を生成する方法を示しています。
 
 ```java
 public static SecretKey generateStrongAESKey(char[] password, int keyLength)
