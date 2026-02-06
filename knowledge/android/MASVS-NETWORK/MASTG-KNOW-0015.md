@@ -4,7 +4,7 @@ platform: android
 title: 証明書ピン留め (Certificate Pinning)
 ---
 
-[証明書ピン留め](0x04f-Testing-Network-Communication.md/#restricting-trust-identity-pinning) を Android アプリで使用すると、アプリが特定のアイデンティティを持つリモートエンドポイントのみと通信するようにして、中間マシン (Machine-in-the-Middle, MITM) 攻撃から保護できます。
+[証明書ピン留め](../../../Document/0x04f-Testing-Network-Communication.md/#restricting-trust-identity-pinning) を Android アプリで使用すると、アプリが特定のアイデンティティを持つリモートエンドポイントのみと通信するようにして、中間マシン (Machine-in-the-Middle, MITM) 攻撃から保護できます。
 
 正しく実装されていれば効果的ですが、安全でない実装は攻撃者がすべての通信を読み取ったり変更できる可能性があります。ピン留めの一般的な詳細については、[安全でないアイデンティティのピン留め (Insecure Identity Pinning)](https://github.com/coky-t/owasp-maswe-ja/blob/main/Document/weaknesses/MASVS-NETWORK/MASWE-0047.md) を参照してください。
 
