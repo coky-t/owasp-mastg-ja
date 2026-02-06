@@ -10,7 +10,7 @@ knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
 
 ## 概要
 
-アプリは [Network Security Configuration を使用して証明書のピン留め]("../../../Document/0x05g-Testing-Network-Communication.md#pinning-via-network-security-configuration-api-24") を構成できます。ドメインごとに、一つまたは複数のダイジェストをピン留めできます。
+アプリは [Network Security Configuration を使用して証明書のピン留め](../../../knowledge/android/MASVS-NETWORK/MASTG-KNOW-0015.md#pinning-via-network-security-configuration-api-24) を構成できます。ドメインごとに、一つまたは複数のダイジェストをピン留めできます。
 
 このテストの目的は、アプリが NSC を使用して証明書のピン留めを実装していないかどうかをチェックすることです。ただし、アプリは他のテストでカバーされる他のピン留め手法を使用している可能性があることに注意してください。
 
