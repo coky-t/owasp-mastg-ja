@@ -10,7 +10,7 @@ knowledge: [MASTG-KNOW-0061]
 
 ## 概要
 
-このテストケースでは、iOS アプリで [ARC (Automatic Reference Counting)](../../../Document/0x04h-Testing-Code-Quality.md/#automatic-reference-counting) が有効になっているかどうかをチェックします。ARC は Objective-C と Swift のコンパイラ機能で、メモリ管理を自動化し、メモリリークやその他の関連問題の可能性を減らします。ARC を有効にすることは、iOS アプリケーションのセキュリティと安定性を維持するために不可欠です。
+このテストケースでは、iOS アプリで [ARC (Automatic Reference Counting)](../../../Document/0x04h-Testing-Code-Quality.md#automatic-reference-counting) が有効になっているかどうかをチェックします。ARC は Objective-C と Swift のコンパイラ機能で、メモリ管理を自動化し、メモリリークやその他の関連問題の可能性を減らします。ARC を有効にすることは、iOS アプリケーションのセキュリティと安定性を維持するために不可欠です。
 
 - **Objective-C コード:** ARC は Clang の `-fobjc-arc` フラグでコンパイルすることで有効にできます。
 - **Swift コード:** ARC はデフォルトで有効になります。
