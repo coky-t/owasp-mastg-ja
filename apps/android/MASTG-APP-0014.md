@@ -2,6 +2,7 @@
 title: InsecureShop
 platform: android
 source: https://github.com/hax0rgb/InsecureShop/
+status: deprecated
 ---
 
 InsecureShop は脆弱性を紹介する意図的に設計された Android アプリケーションであり、開発者やセキュリティ専門家に最近の Android アプリによくある落とし穴について教育することを目的としています。Android ペンテストスキルを磨くためのダイナミックなプラットフォームとして役立ちます。
@@ -15,4 +16,4 @@ InsecureShop は脆弱性を紹介する意図的に設計された Android ア�
 - **安全でないブロードキャストレシーバ**: URL インジェクションを可能にするブロードキャストを登録します。
 - **安全でないコンテンツプロバイダ**: アクセス可能なコンテンツプロバイダによりユーザーデータを危険にさらします。
 
-これらの学習体験を補完するために、InsecureShop は実装された脆弱性とそれに関連するコードに関する [ドキュメント](https://docs.insecureshopapp.com/ "InsecureShop Docs") を提供しています。しかし、このドキュメントでは InsecureShop アプリ内で示される各脆弱性に対する完全な解決策を提供することは控えています。
+これらの学習体験を補完するために、InsecureShop は実装された脆弱性とそれに関連するコードに関する [ドキュメント](https://docs.insecureshopapp.com/ "InsecureShop Docs") を提供していました。しかし、このドキュメントでは InsecureShop アプリ内で示される各脆弱性に対する完全な解決策を提供することは控えています。ドキュメントウェブサイトはアクセスできなくなりました。
