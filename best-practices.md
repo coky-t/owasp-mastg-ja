@@ -29,3 +29,4 @@
 - [MASTG-BEST-0027](best-practices/MASTG-BEST-0027.md) 通知での機密データの露出を防止する (Preventing Sensitive Data Exposure in Notifications)
 - [MASTG-BEST-0028](best-practices/MASTG-BEST-0028.md) WebView キャッシュをクリーンアップする (WebViews Cache Cleanup)
 - [MASTG-BEST-0029](best-practices/MASTG-BEST-0029.md) 耐性と RASP シグナルを実装する (Implementing Resilience and RASP Signals)
+- [MASTG-BEST-0030](best-practices/MASTG-BEST-0030.md) ルート検出を実装する (Implementing Root Detection)
