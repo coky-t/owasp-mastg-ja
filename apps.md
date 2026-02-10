@@ -22,6 +22,7 @@
 - [MASTG-APP-0018](apps/android/MASTG-APP-0018.md) MASTestApp-Android-NETWORK
 - [MASTG-APP-0029](apps/android/MASTG-APP-0029.md) BugBazaar
 - [MASTG-APP-0031](apps/android/MASTG-APP-0031.md) VulnForum
+- [MASTG-APP-0032](apps/android/MASTG-APP-0032.md) RootBeer Sample
 
 ## iOS
 
