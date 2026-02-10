@@ -616,6 +616,7 @@
     - [MASTG-APP-0029 BugBazaar](apps/android/MASTG-APP-0029.md)
     - [MASTG-APP-0031 VulnForum](apps/android/MASTG-APP-0031.md)
     - [MASTG-APP-0032 RootBeer Sample](apps/android/MASTG-APP-0032.md)
+    - [MASTG-APP-0033 Android RASP Sample](apps/android/MASTG-APP-0033.md)
 
   - iOS
     - [MASTG-APP-0023 DVIA](apps/ios/MASTG-APP-0023.md)
