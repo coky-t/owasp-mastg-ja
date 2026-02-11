@@ -8,6 +8,9 @@ title: ルート検出のテスト (Testing Root Detection)
 masvs_v1_levels:
 - R
 profiles: [R]
+status: deprecated
+covered_by: [MASTG-TEST-0324, MASTG-TEST-0325]
+deprecation_note: "New version available in MASTG V2"
 ---
 
 ## ルート検出のバイパス
@@ -32,7 +35,7 @@ jdb, Android Studio Profiler, `strace`, カーネルモジュールを使用し�
 
 ルート検出メカニズムのバイパス手法を開発し、以下の質問に回答します。
 
-- [Choicy](../../../tools/ios/MASTG-TOOL-0142.md) などの標準ツールを使用してそのメカニズムを簡単にバイパスできますか？
+- [objection for Android](../../../tools/android/MASTG-TOOL-0029.md) などの標準ツールを使用してそのメカニズムを簡単にバイパスできますか？
 - ルート検出を処理するために静的/動的解析が必要ですか？
 - カスタムコードを書く必要がありますか？
 - そのメカニズムのバイパスに成功するまでにどれくらいの時間がかかりましたか？
