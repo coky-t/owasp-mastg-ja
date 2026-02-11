@@ -81,7 +81,7 @@ This is the unofficial Japanese translation of the [OWASP Mobile Application Sec
 
 ### テクニック
 
-<!-- - [テクニック一覧](techniques.md) -->
+- [テクニック一覧](techniques.md)
 
 ### ツール
 
