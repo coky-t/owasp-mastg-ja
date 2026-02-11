@@ -500,6 +500,7 @@
     - [MASTG-TOOL-0125 Apkleaks](tools/android/MASTG-TOOL-0125.md)
     - [MASTG-TOOL-0130 blint](tools/android/MASTG-TOOL-0130.md)
     - [MASTG-TOOL-0140 frida-multiple-unpinning](tools/android/MASTG-TOOL-0140.md)
+    - [MASTG-TOOL-0146 RootBeer](tools/android/MASTG-TOOL-0146.md)
 
   - Generic
     - [MASTG-TOOL-0031 Frida](tools/generic/MASTG-TOOL-0031.md)
