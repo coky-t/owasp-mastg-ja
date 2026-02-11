@@ -88,6 +88,7 @@
 - [MASTG-TEST-0264](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0264.md) StrictMode API の実行時使用 (Runtime Use of StrictMode APIs)
 - [MASTG-TEST-0265](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0265.md) StrictMode API への参照 (References to StrictMode APIs)
 - [MASTG-TEST-0288](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0288.md) ネイティブバイナリのデバッグシンボル (Debugging Symbols in Native Binaries)
+- [MASTG-TEST-0324](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0324.md) ルート検出メカニズムへの参照 (References to Root Detection Mechanisms)
 
 ### MASVS-PRIVACY: プライバシー
 
