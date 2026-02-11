@@ -8,7 +8,7 @@ title: ルート検出 (Root Detection)
 
 Android では、 "ルート検出" を少し広く定義し、カスタム ROM の検出を含みます。例えば、デバイスが純正の Android ビルドであるか、もしくはカスタムビルドであるかを判断します
 
-ルート検出は [RootBeer](../../../tools/android/MASTG-TOOL-0146.md) や [Android RASP](../../../tools/android/MASTG-TOOL-0147.md) などのライブラリを介して実装することもできます (いずれも OWASP に承認されたものではありません。それぞれのセクションの免責事項をご覧ください)。これらのライブラリは、Java とネイティブコードの両方を使用して複数のルート検出技法を実装し、バイパスをより困難にしています。また、それらの機能を実演するためのサンプルアプリも提供しています。[RootBeer Sample](apps/android/MASTG-APP-0032.md) および [Android RASP Sample](apps/android/MASTG-APP-0033.md) をご覧ください。
+ルート検出は [RootBeer](../../../tools/android/MASTG-TOOL-0146.md) や [Android RASP](../../../tools/android/MASTG-TOOL-0147.md) などのライブラリを介して実装することもできます (いずれも OWASP に承認されたものではありません。それぞれのセクションの免責事項をご覧ください)。これらのライブラリは、Java とネイティブコードの両方を使用して複数のルート検出技法を実装し、バイパスをより困難にしています。また、それらの機能を実演するためのサンプルアプリも提供しています。[RootBeer Sample](../../../apps/android/MASTG-APP-0032.md) および [Android RASP Sample](../../../apps/android/MASTG-APP-0033.md) をご覧ください。
 
 ## ファイルの存在チェック
 
