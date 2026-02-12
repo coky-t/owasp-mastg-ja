@@ -487,6 +487,7 @@
     - [MASTG-TECH-0141 マージされた AndroidManifest の検査 (Inspecting the Merged AndroidManifest)](techniques/android/MASTG-TECH-0141.md)
     - [MASTG-TECH-0142 WebView ストレージの検査 (Inspecting WebView Storage)](techniques/android/MASTG-TECH-0142.md)
     - [MASTG-TECH-0143 WebView でのファイルシステム操作の監視 (Monitor File System Operations in WebViews)](techniques/android/MASTG-TECH-0143.md)
+    - [MASTG-TECH-0145 XAPK ファイルの扱い (Working with XAPK Files)](techniques/android/MASTG-TECH-0145.md)
 
   - Generic
     - [MASTG-TECH-0047 リバースエンジニアリング (Reverse Engineering)](techniques/generic/MASTG-TECH-0047.md)

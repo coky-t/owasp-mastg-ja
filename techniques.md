@@ -92,8 +92,8 @@
 - [MASTG-TECH-0143](techniques/android/MASTG-TECH-0143.md) WebView でのファイルシステム操作の監視 (Monitor File System Operations in WebViews)
 <!--
 - [MASTG-TECH-0144](techniques/android/MASTG-TECH-0144.md) ルート検出のバイパス (Bypassing Root Detection)
-- [MASTG-TECH-0145](techniques/android/MASTG-TECH-0145.md) XAPK ファイルの扱い (Working with XAPK Files)
 -->
+- [MASTG-TECH-0145](techniques/android/MASTG-TECH-0145.md) XAPK ファイルの扱い (Working with XAPK Files)
 
 ## Generic
 
