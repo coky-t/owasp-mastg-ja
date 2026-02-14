@@ -6,4 +6,4 @@ status: deprecated
 covered_by: [MASTG-TOOL-0142]
 ---
 
-Cydia Substrate Module は一般的に知られているルートの兆候をチェックするために使用されます。 <https://github.com/devadvance/rootcloakplus>
+RootCloak Plus は一般的に知られているルートの兆候をチェックするために使用される Cydia Substrate Module です。
