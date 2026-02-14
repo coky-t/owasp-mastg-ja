@@ -7,7 +7,7 @@ deprecation_note: Cycript はもはや積極的にメンテナンスされてお
 covered_by: [MASTG-TOOL-0039]
 ---
 
-Cycript は Jay Freeman (別名 Saurik) が開発したスクリプト言語です。これは実行中のプロセスに JavaScriptCore 仮想マシンを注入します。Cycript の対話型コンソールを使用して、ユーザーは Objective-C++ と JavaScript のハイブリッド構文でプロセスを操作できます。実行中のプロセス内の Objective-C クラスにアクセスすることやインスタンス化することがサポートされています。iOS 上で Cydia Substrate Extensions として知られる [Cydia](MASTG-TOOL-0047.md) ランタイムパッチを開発するための標準フレームワークである [Cydia Substrate](http://www.cydiasubstrate.com/) を使用して、デバッガと同様に Cycript を実行中のプロセスに注入できます。Cycript には、コード注入をサポートするツールである Cynject を含みます。
+Cycript は Jay Freeman (別名 Saurik) が開発したスクリプト言語です。これは実行中のプロセスに JavaScriptCore 仮想マシンを注入します。Cycript の対話型コンソールを使用して、ユーザーは Objective-C++ と JavaScript のハイブリッド構文でプロセスを操作できます。実行中のプロセス内の Objective-C クラスにアクセスすることやインスタンス化することがサポートされています。iOS 上で Cydia Substrate Extensions として知られる [Cydia](MASTG-TOOL-0047.md) ランタイムパッチを開発するための標準フレームワークである [Cydia Substrate](https://www.cydiasubstrate.com/) を使用して、デバッガと同様に Cycript を実行中のプロセスに注入できます。Cycript には、コード注入をサポートするツールである Cynject を含みます。
 
 Cycript をインストールするには、まず SDK をダウンロードし、展開して、インストールします。
 
