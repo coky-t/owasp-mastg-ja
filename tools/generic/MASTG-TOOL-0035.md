@@ -4,7 +4,7 @@ platform: generic
 source: https://github.com/MobSF/Mobile-Security-Framework-MobSF
 ---
 
-[MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF "MobSF") (Mobile Security Framework) は自動化されたオールインワンのモバイルアプリケーションのペンテストフレームワークであり、静的解析および動的解析を実行できます。MobSF を始める最も簡単な方法は Docker を介することです。
+MobSF (Mobile Security Framework) は自動化されたオールインワンのモバイルアプリケーションのペンテストフレームワークであり、静的解析および動的解析を実行できます。MobSF を始める最も簡単な方法は Docker を介することです。
 
 ```bash
 docker pull opensecurity/mobile-security-framework-mobsf
