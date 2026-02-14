@@ -1,10 +1,10 @@
 ---
 title: drozer
 platform: android
-source: https://github.com/WithSecureLabs/drozer
+source: https://github.com/ReversecLabs/drozer
 ---
 
-[drozer](https://github.com/WithSecureLabs/drozer "drozer on GitHub") は、Android 用のセキュリティテストフレームワークであり、Android ランタイム、他のアプリの IPC エンドポイント、基盤となる OS とやり取りするアプリの役割を仮定することによって、アプリやデバイスのセキュリティ脆弱性を検索できます。
+drozer は、Android 用のセキュリティテストフレームワークであり、Android ランタイム、他のアプリの IPC エンドポイント、基盤となる OS とやり取りするアプリの役割を仮定することによって、アプリやデバイスのセキュリティ脆弱性を検索できます。
 
 drozer は Android のセキュリティ評価時に使用して、タスクを自動化できます。これによりテスト担当者やリバースエンジニアは以下のことが可能になります。
 
@@ -17,11 +17,11 @@ drozer を追加モジュールで拡張して、他の弱点を発見、テス�
 
 ## drozer のインストールとセットアップ
 
-マシンに drozer コンソールをインストールおよびセットアップする方法と、Android フォンに drozer エージェントをインストールおよびセットアップする方法の詳細な手順は [drozer GitHub リポジトリ](https://github.com/WithSecureLabs/drozer "Installation instructions of drozer") にあります。
+マシンに drozer コンソールをインストールおよびセットアップする方法と、Android フォンに drozer エージェントをインストールおよびセットアップする方法の詳細な手順は [drozer GitHub リポジトリ](https://github.com/ReversecLabs/drozer "Installation instructions of drozer") にあります。
 
 ### 使用例
 
-drozer をセットアップしたら、drozer を使用して、デバイス上の悪意のあるアプリの視点から Android アプリケーションの偵察と悪用を実行できます。[drozer ユーザーマニュアル](https://labs.withsecure.com/tools/drozer#3 "drozer User Manual") では、意図的に脆弱なアプリケーションである [sieve](https://github.com/WithSecureLabs/sieve "GitHub repo - sieve") を、ステップバイステップの悪用手順とともに紹介しています。
+drozer をセットアップしたら、drozer を使用して、デバイス上の悪意のあるアプリの視点から Android アプリケーションの偵察と悪用を実行できます。[drozer ユーザーマニュアル](https://labs.reversec.com/tools/drozer "drozer User Manual") では、意図的に脆弱なアプリケーションである [sieve](https://github.com/ReversecLabs/sieve "GitHub repo - sieve") を、ステップバイステップの悪用手順とともに紹介しています。
 
 一般的な drozer コマンドには以下のようなものがあります。
 
@@ -71,6 +71,6 @@ usage: run app.activity.start [-h] [--action ACTION] [--category CATEGORY [CATEG
 
 役に立つ情報が見つかるかもしれないその他のリソースは以下のとおりです。
 
-- [公式 drozer ユーザーマニュアル](https://labs.withsecure.com/tools/drozer "drozer User Manual")
-- [drozer GitHub ページ](https://github.com/WithSecureLabs/drozer "GitHub repo - drozer")
-- [drozer エージェント GitHub ページ](https://github.com/WithSecureLabs/drozer-agent "GitHub repo - drozer-agent")
+- [公式 drozer ユーザーマニュアル](https://labs.reversec.com/tools/drozer "drozer User Manual")
+- [drozer GitHub ページ](https://github.com/ReversecLabs/drozer "GitHub repo - drozer")
+- [drozer エージェント GitHub ページ](https://github.com/ReversecLabs/drozer-agent "GitHub repo - drozer-agent")
