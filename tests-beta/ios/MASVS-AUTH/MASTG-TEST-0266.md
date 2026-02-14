@@ -19,8 +19,8 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 手順
 
-1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、`LAContext.evaluatePolicy` の使用を検出します。
-2. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、Keychain API、特に `SecAccessControlCreateWithFlags` (`SecItemAdd` や `SecItemCopyMatching` などの他の API と一緒に使用する必要がある) の使用を検出します。
+1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、`LAContext.evaluatePolicy` の使用を検出します。
+2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、Keychain API、特に `SecAccessControlCreateWithFlags` (`SecItemAdd` や `SecItemCopyMatching` などの他の API と一緒に使用する必要がある) の使用を検出します。
 
 ## 結果
 
