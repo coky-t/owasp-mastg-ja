@@ -1,10 +1,10 @@
 ---
-title: radare2 for iOS
+title: radare2 (iOS)
 platform: ios
 source: https://github.com/radare/radare2
 ---
 
-[Radare2](https://github.com/radare/radare2 "Radare2") はバイナリのリバースエンジニアリングと解析のための完全なフレームワークです。インストール手順は GitHub リポジトリにあります。radare2 について詳しくは [公式の radare2 ブック](https://book.rada.re/ "Radare2 book") を読むとよいでしょう。
+radare2 はバイナリのリバースエンジニアリングと解析のための完全なフレームワークです。インストール手順は GitHub リポジトリにあります。radare2 について詳しくは [公式の radare2 ブック](https://book.rada.re/ "Radare2 book") を読むとよいでしょう。
 
 詳細はこちら:
 

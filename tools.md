@@ -108,7 +108,7 @@
 - [MASTG-TOOL-0070](tools/ios/MASTG-TOOL-0070.md) Xcode
 - [MASTG-TOOL-0071](tools/ios/MASTG-TOOL-0071.md) Xcode Command Line Tools
 - [MASTG-TOOL-0072](tools/ios/MASTG-TOOL-0072.md) xcrun
-- [MASTG-TOOL-0073](tools/ios/MASTG-TOOL-0073.md) radare2 for iOS
+- [MASTG-TOOL-0073](tools/ios/MASTG-TOOL-0073.md) radare2 (iOS)
 - [MASTG-TOOL-0074](tools/ios/MASTG-TOOL-0074.md) objection for iOS
 - [MASTG-TOOL-0102](tools/ios/MASTG-TOOL-0102.md) ios-app-signer
 - [MASTG-TOOL-0105](tools/ios/MASTG-TOOL-0105.md) IPSW
