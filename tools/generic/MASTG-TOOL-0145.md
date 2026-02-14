@@ -5,7 +5,7 @@ source: https://github.com/cpholguera/frooky
 hosts: [ windows, linux, macOS ]
 ---
 
-[Frooky](https://github.com/cpholguera/frooky "Frooky on GitHub") は Android および iOS アプリケーション用の Frida ベースの動的解析ツールです。セキュリティ研究者は JSON ベースのフック設定を使用してモバイルアプリを計装でき、カスタム Frida スクリプトを記述することなく、メソッドインターセプションへの宣言的なアプローチを提供します。
+Frooky は Android および iOS アプリケーション用の Frida ベースの動的解析ツールです。セキュリティ研究者は JSON ベースのフック設定を使用してモバイルアプリを計装でき、カスタム Frida スクリプトを記述することなく、メソッドインターセプションへの宣言的なアプローチを提供します。
 
 ## 機能
 
