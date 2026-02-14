@@ -24,7 +24,7 @@ profiles: [P]
 
 1. [PrivacyInfo.xcprivacy ファイルの取得 (Retrieving PrivacyInfo.xcprivacy Files)](../../../techniques/ios/MASTG-TECH-0136.md) を使用して、サードパーティ SDK やフレームワークのものを含む、アプリのプライバシーマニフェストファイルを抽出します。
 2. [PrivacyInfo.xcprivacy ファイルの解析 (Analyzing PrivacyInfo.xcprivacy Files)](../../../techniques/ios/MASTG-TECH-0137.md) を使用して、プライバシーマニフェストファイルから宣言されたトラッキングドメインのリストを取得します。
-3. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) を使用して、静的解析スキャンを実行します。
+3. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して、静的解析スキャンを実行します。
     - 既知のトラッキングドメインへのハードコードされたリファレンスを検索します。
     - よく知られたトラッキングライブラリへのコードリファレンスを特定します。
 4. [mitmproxy](../../../tools/network/MASTG-TOOL-0097.md) でネットワーク解析を実行します。
