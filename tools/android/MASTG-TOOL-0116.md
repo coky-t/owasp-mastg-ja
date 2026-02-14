@@ -1,11 +1,11 @@
 ---
-title: Blutter
+title: blutter
 platform: android
 hosts: [linux, windows, macOS]
 source: https://github.com/worawit/blutter
 ---
 
-[Blutter](https://github.com/worawit/blutter) は Flutter アプリケーションのリバースエンジニアリングをサポートするために作成されたオープンソースツールです。他の Flutter ツールとは異なり、Blutter はデバイス上でアプリを実行する必要なく、libapp.so ファイルを静的に解析します。Blutter は以下のことが可能です。
+blutter は Flutter アプリケーションのリバースエンジニアリングをサポートするために作成されたオープンソースツールです。他の Flutter ツールとは異なり、blutter はデバイス上でアプリを実行する必要なく、libapp.so ファイルを静的に解析します。blutter は以下のことが可能です。
 
 - Dart オブジェクトの抽出と解析
 - 命令に対する注釈の提供 (適用可能な関数名やプールオブジェクトなど)

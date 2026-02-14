@@ -567,7 +567,7 @@
     - [MASTG-TOOL-0103 uber-apk-signer](tools/android/MASTG-TOOL-0103.md)
     - [MASTG-TOOL-0107 jnitrace](tools/android/MASTG-TOOL-0107.md)
     - [MASTG-TOOL-0112 pidcat](tools/android/MASTG-TOOL-0112.md)
-    - [MASTG-TOOL-0116 Blutter](tools/android/MASTG-TOOL-0116.md)
+    - [MASTG-TOOL-0116 blutter](tools/android/MASTG-TOOL-0116.md)
     - [MASTG-TOOL-0120 ProxyDroid](tools/android/MASTG-TOOL-0120.md)
     - [MASTG-TOOL-0123 apksigner](tools/android/MASTG-TOOL-0123.md)
     - [MASTG-TOOL-0124 aapt2](tools/android/MASTG-TOOL-0124.md)
