@@ -117,7 +117,7 @@ Module.getGlobalExportByName('open');
 - [Fridump](MASTG-TOOL-0106.md): Android と iOS の両方に対応したメモリダンプツール。
 - [objection](MASTG-TOOL-0038.md): ランタイムモバイルセキュリティ評価フレームワーク。
 - [r2frida](MASTG-TOOL-0036.md): 強力な radare2 のリバースエンジニアリング機能と Frida の動的計装ツールキットを統合したプロジェクト。
-- [JNITrace](MASTG-TOOL-0107.md): ネイティブライブラリによる Android JNI ランタイムメソッドの使用を追跡するツール。
+- [jnitrace](MASTG-TOOL-0107.md): ネイティブライブラリによる Android JNI ランタイムメソッドの使用を追跡するツール。
 
 ガイド全体でこれらのツールをすべて使用します。
 
