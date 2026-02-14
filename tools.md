@@ -34,7 +34,7 @@
 - [MASTG-TOOL-0030](tools/android/MASTG-TOOL-0030.md) Angr
 - [MASTG-TOOL-0099](tools/android/MASTG-TOOL-0099.md) FlowDroid
 - [MASTG-TOOL-0103](tools/android/MASTG-TOOL-0103.md) uber-apk-signer
-- [MASTG-TOOL-0107](tools/android/MASTG-TOOL-0107.md) JNITrace
+- [MASTG-TOOL-0107](tools/android/MASTG-TOOL-0107.md) jnitrace
 - [MASTG-TOOL-0112](tools/android/MASTG-TOOL-0112.md) pidcat
 - [MASTG-TOOL-0116](tools/android/MASTG-TOOL-0116.md) Blutter
 - [MASTG-TOOL-0120](tools/android/MASTG-TOOL-0120.md) ProxyDroid
