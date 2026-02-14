@@ -645,7 +645,7 @@
     - [MASTG-TOOL-0114 codesign](tools/ios/MASTG-TOOL-0114.md)
     - [MASTG-TOOL-0117 fastlane](tools/ios/MASTG-TOOL-0117.md)
     - [MASTG-TOOL-0118 Sideloadly](tools/ios/MASTG-TOOL-0118.md)
-    - [MASTG-TOOL-0121 objdump - iOS](tools/ios/MASTG-TOOL-0121.md)
+    - [MASTG-TOOL-0121 objdump (iOS)](tools/ios/MASTG-TOOL-0121.md)
     - [MASTG-TOOL-0122 c++filt](tools/ios/MASTG-TOOL-0122.md)
     - [MASTG-TOOL-0126 libimobiledevice suite](tools/ios/MASTG-TOOL-0126.md)
     - [MASTG-TOOL-0127 AppSync Unified](tools/ios/MASTG-TOOL-0127.md)
