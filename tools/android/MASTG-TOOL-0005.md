@@ -1,6 +1,7 @@
 ---
 title: Android NDK
 platform: android
+source: https://developer.android.com/ndk/guides/standalone_toolchain
 ---
 
 Android NDK はネイティブコンパイラとツールチェーンのビルド済みバージョンを含みます。GCC と Clang のコンパイラはどちらも従来からサポートされてきましたが、GCC のアクティブサポートは NDK バージョン 14 で終了しました。デバイスアーキテクチャとホスト OS によって適切なバージョンが決まります。ビルド済みツールチェーンは NDK の `toolchains` ディレクトリにあり、アーキテクチャごとに一つのサブディレクトリがあります。
