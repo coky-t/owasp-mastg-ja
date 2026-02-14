@@ -17,7 +17,7 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行して、上記の暗号 API を探します。
+1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行して、上記の暗号 API を探します。
 
 ## 結果
 
