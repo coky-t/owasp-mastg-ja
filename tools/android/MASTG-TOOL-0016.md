@@ -4,7 +4,7 @@ platform: android
 source: https://github.com/matlink/gplaycli
 ---
 
-[gplaycli](https://github.com/matlink/gplaycli "gplaycli") は Google Play Store から Android アプリケーションを検索、インストール、アップデートするための Python ベースの CLI ツールです。[インストール手順](https://github.com/matlink/gplaycli#installation "gplaycli Installation") に従えば、実行できるようになります。gplaycli にはいくつかのオプションがあります。詳細についてはヘルプ (`-h`) を参照してください。
+gplaycli は Google Play Store から Android アプリケーションを検索、インストール、アップデートするための Python ベースの CLI ツールです。[インストール手順](https://github.com/matlink/gplaycli#installation "gplaycli Installation") に従えば、実行できるようになります。gplaycli にはいくつかのオプションがあります。詳細についてはヘルプ (`-h`) を参照してください。
 
 アプリのパッケージ名 (または AppID) が不明な場合は、キーワードベースで APK の検索 (`-s`) を実行できます。
 
