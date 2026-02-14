@@ -4,8 +4,4 @@ platform: ios
 source: https://developer.apple.com/download/more/
 ---
 
-[Xcode](MASTG-TOOL-0070.md) をインストールした後、すべての開発ツールをシステム全体で利用可能にするために、Xcode Command Line Tools パッケージをインストールすることをお勧めします。これは、iOS アプリのテスト時に便利です。一部のツール (objection など) はこのパッケージの可用性にも依存しているためです。[Apple の公式ウェブサイトからダウンロードする](https://developer.apple.com/download/more/ "Apple iOS SDK") か、ターミナルから直接インストールできます。
-
-```bash
-xcode-select --install
-```
+Xcode Command Line Tools は [Xcode](MASTG-TOOL-0070.md) にバンドルされています。[Xcode](MASTG-TOOL-0070.md) をインストールした後、`xcode-select --install` を実行して Xcode Command Line Tools パッケージをインストールします。これは、一部のツール (objection など) もこのパッケージの可用性に依存しているため、iOS アプリのテスト時に便利です。あるいは、[Apple の公式ウェブサイトからツールをダウンロード](https://developer.apple.com/download/more/ "Apple iOS SDK") できます。
