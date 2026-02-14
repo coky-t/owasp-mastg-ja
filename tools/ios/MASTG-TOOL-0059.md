@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/alexzielenski/optool
 ---
 
-[optool](https://github.com/alexzielenski/optool) は、ロードコマンドの挿入/削除、コード署名の削除、再署名、aslr の削除を行うために、MachO バイナリとインタフェースするツールです。
+optool は、ロードコマンドの挿入/削除、コード署名の削除、再署名、aslr の削除を行うために、MachO バイナリとインタフェースするツールです。
 
 インストールするには:
 
