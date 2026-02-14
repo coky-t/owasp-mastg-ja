@@ -25,4 +25,4 @@ deprecation_note: New version available in MASTG V2
 ## 動的解析
 
 外部サービスへのすべてのリクエストに機密情報が埋め込まれていないかチェックします。
-クライアントとサーバー間のトラフィックを傍受するには、[Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) や [ZAP](../../../tools/network/MASTG-TOOL-0079.md) を使用して [中間マシン (Machine-in-the-Middle, MITM)](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) 攻撃を行うことで、動的解析を実施できます。トラフィックを傍受プロキシ経由とすることで、アプリとサーバー間を通過するトラフィックを盗聴してみることができます。メイン機能がホストされているサーバーに直接送信されないすべてのアプリリクエストは、トラッカーや広告サービスの PII などの機密情報がないかチェックする必要があります。
+クライアントとサーバー間のトラフィックを傍受するには、[Burp Suite](../../../tools/network/MASTG-TOOL-0077.md) や [ZAP (Zed Attack Proxy)](../../../tools/network/MASTG-TOOL-0079.md) を使用して [中間マシン (Machine-in-the-Middle, MITM)](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) 攻撃を行うことで、動的解析を実施できます。トラフィックを傍受プロキシ経由とすることで、アプリとサーバー間を通過するトラフィックを盗聴してみることができます。メイン機能がホストされているサーバーに直接送信されないすべてのアプリリクエストは、トラッカーや広告サービスの PII などの機密情報がないかチェックする必要があります。
