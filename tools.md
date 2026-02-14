@@ -46,9 +46,7 @@
 - [MASTG-TOOL-0146](tools/android/MASTG-TOOL-0146.md) RootBeer
 - [MASTG-TOOL-0147](tools/android/MASTG-TOOL-0147.md) Android RASP
 - [MASTG-TOOL-0148](tools/android/MASTG-TOOL-0148.md) apkeep
-<!--
 - [MASTG-TOOL-0149](tools/android/MASTG-TOOL-0149.md) LSPosed
--->
 
 ## Generic
 

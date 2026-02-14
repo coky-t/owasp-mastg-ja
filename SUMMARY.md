@@ -577,6 +577,7 @@
     - [MASTG-TOOL-0146 RootBeer](tools/android/MASTG-TOOL-0146.md)
     - [MASTG-TOOL-0147 Android RASP](tools/android/MASTG-TOOL-0147.md)
     - [MASTG-TOOL-0148 apkeep](tools/android/MASTG-TOOL-0148.md)
+    - [MASTG-TOOL-0149 LSPosed](tools/android/MASTG-TOOL-0149.md)
 
   - Generic
     - [MASTG-TOOL-0031 Frida](tools/generic/MASTG-TOOL-0031.md)
