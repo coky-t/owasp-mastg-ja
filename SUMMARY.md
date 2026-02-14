@@ -604,7 +604,7 @@
     - [MASTG-TOOL-0145 Frooky](tools/generic/MASTG-TOOL-0145.md)
 
   - iOS
-    - [MASTG-TOOL-0039 Frida for iOS](tools/ios/MASTG-TOOL-0039.md)
+    - [MASTG-TOOL-0039 Frida (iOS)](tools/ios/MASTG-TOOL-0039.md)
     - [MASTG-TOOL-0040 MobSF for iOS](tools/ios/MASTG-TOOL-0040.md)
     - [MASTG-TOOL-0041 nm - iOS](tools/ios/MASTG-TOOL-0041.md)
     - [MASTG-TOOL-0042 BinaryCookieReader](tools/ios/MASTG-TOOL-0042.md)
