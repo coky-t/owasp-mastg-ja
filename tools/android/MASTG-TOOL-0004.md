@@ -1,9 +1,10 @@
 ---
 title: adb
 platform: android
+source: https://developer.android.com/studio/command-line/adb
 ---
 
-[adb](https://developer.android.com/studio/command-line/adb "Android Debug Bridge") (Android Debug Bridge) は Android SDK に同梱されており、ローカル開発環境と、接続された Android デバイスとの間のギャップを埋めます。通常、エミュレータや、USB や Wi-Fi 経由で接続されたデバイスでアプリをテストするためにこれを活用します。`adb devices` コマンドを使用して、接続されたデバイスを一覧表示し、`-l` 引数を付けて実行することでそれらの詳細を取得できます。
+adb は Android SDK に同梱されており、ローカル開発環境と、接続された Android デバイスとの間のギャップを埋めます。通常、エミュレータや、USB や Wi-Fi 経由で接続されたデバイスでアプリをテストするためにこれを活用します。`adb devices` コマンドを使用して、接続されたデバイスを一覧表示し、`-l` 引数を付けて実行することでそれらの詳細を取得できます。
 
 ```bash
 $ adb devices -l
