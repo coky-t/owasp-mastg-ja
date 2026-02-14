@@ -4,7 +4,7 @@ platform: generic
 source: https://codeshare.frida.re/
 ---
 
-[Frida CodeShare](https://codeshare.frida.re/ "Frida CodeShare") は、Android と iOS の両方で具体的なタスクを実行する際に非常に役立つだけでなく、独自のスクリプトを作成するためのインスピレーションにもなる、すぐ実行できる Frida スクリプトのコレクションを含むリポジトリです。便利なスクリプトの例を以下に示します。
+Frida CodeShare は、Android と iOS の両方で具体的なタスクを実行する際に非常に役立つだけでなく、独自のスクリプトを作成するためのインスピレーションにもなる、すぐ実行できる Frida スクリプトのコレクションを含むリポジトリです。便利なスクリプトの例を以下に示します。
 
 - Frida Multiple Unpinning - <https://codeshare.frida.re/@akabe1/frida-multiple-unpinning/>
 - Disable Flutter TLS verification - <https://codeshare.frida.re/@TheDauntless/disable-flutter-tls-v1/>
