@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/ChiChou/grapefruit
 ---
 
-[Grapefruit](https://github.com/ChiChou/grapefruit "Grapefruit") は、iOS デバイス上の Firida サーバーを使用し、多くのペネトレーションテストタスクをウェブ UI に抽象化している iOS アプリ評価ツールです。`npm` 経由でインストールできます。
+Grapefruit は、iOS デバイス上の Firida サーバーを使用し、多くのペネトレーションテストタスクをウェブ UI に抽象化している iOS アプリ評価ツールです。`npm` 経由でインストールできます。
 
 ```bash
 $ npm install -g igf
