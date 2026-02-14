@@ -4,7 +4,7 @@ platform: android
 source: https://github.com/secure-software-engineering/FlowDroid
 ---
 
-[FlowDroid](https://github.com/secure-software-engineering/FlowDroid) は [soot](https://github.com/soot-oss/soot "soot") をベースとしたオープンソースツールであり、Java バイトコードをより簡単に解析および翻訳するためのフレームワークです。このツールは解析時に Android アプリのライフサイクル (`onCreate`、`onStart`、`onPause` など) とその UI コンポーネントのニュアンスを処理し、以下のような汚染解析を実行します。
+FlowDroid は [soot](https://github.com/soot-oss/soot "soot") をベースとしたオープンソースツールであり、Java バイトコードをより簡単に解析および翻訳するためのフレームワークです。このツールは解析時に Android アプリのライフサイクル (`onCreate`、`onStart`、`onPause` など) とその UI コンポーネントのニュアンスを処理し、以下のような汚染解析を実行します。
 
 - **コンテキスト依存 (Context-sensitive)**: 特定の実行コンテキストに基づいて、同じメソッドへの呼び出しを区別します。
 - **オブジェクト依存 (Object-sensitive)**: 同じクラスであっても、個々のオブジェクトを識別します。
