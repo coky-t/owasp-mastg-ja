@@ -4,7 +4,7 @@ platform: network
 source: https://github.com/mitmproxy/mitmproxy/
 ---
 
-[mitmproxy](https://mitmproxy.org/ "mitmproxy") はフリーでオープンソースの対話型 HTTPS 傍受プロキシです。
+mitmproxy はフリーでオープンソースの対話型 HTTPS 傍受プロキシです。
 
 - **コマンドライン**: `mitmdump` は mitmproxy のコマンドラインバージョンです。HTTP 用の tcpdump と考えてください。HTTP/1、HTTP/2、WebSocket、その他の SSL/TLS で保護されたプロトコルなどのウェブトラフィックを傍受、検査、変更、再生するために使用できます。HTML から Protobuf まで、さまざまなメッセージタイプを整形およびデコードし、特定のメッセージをオンザフライで傍受し、宛先に到達する前に変更し、後からクライアントやサーバーに再生できます。
 - **ウェブインタフェース**: `mitmweb` は mitmproxy のウェブベースのインタフェースです。Chrome の DevTools と同様のエクスペリエンスに加え、リクエストの傍受や再生などの追加機能もあります。
