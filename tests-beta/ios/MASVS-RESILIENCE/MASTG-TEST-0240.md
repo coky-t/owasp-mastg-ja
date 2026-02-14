@@ -17,7 +17,7 @@ knowledge: [MASTG-KNOW-0084]
 
 ## 手順
 
-1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行して、一般的な脱獄検出チェックを探します。
+1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行して、一般的な脱獄検出チェックを探します。
 
 ## 結果
 
