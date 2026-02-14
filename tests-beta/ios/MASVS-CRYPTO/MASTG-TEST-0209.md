@@ -19,7 +19,7 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行するか、[Frida for iOS](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを使用して、鍵を生成する暗号関数の使用を探します。
+1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行するか、[Frida (iOS)](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを使用して、鍵を生成する暗号関数の使用を探します。
 
 ## 結果
 
