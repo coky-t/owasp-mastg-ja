@@ -32,7 +32,7 @@ Android では、ネイティブライブラリは通常、NDK を使用して C
 
 さらに、一部のツールチェーンは DWARF データのバイナリサイズを縮小するために zlib [圧縮](https://www.linker-aliens.org/blogs/ali/entry/elf_section_compression/) を使用します (たとえば [clang](https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-gz) や [gcc](https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html#index-gz) は `-gz` オプションを使用してこれをサポートしています)。これらのセクションは一般的に `.z` プレフィックスを使用して名前付けされ (例: `.zdebug_info`, `.zdebug_line`, `.zdebug_str` など)、圧縮されていないセクションと同じ情報を含みます。これらをサポートしていない一部の解析ツールでは、削除されているものとしてバイナリを誤って報告されることがあります。
 
-バイナリ内にこれらのセクションが存在するかどうかをチェックするには、[objdump - iOS](../../../tools/ios/MASTG-TOOL-0121.md) (`-x` オプションを使用)、[radare2 for Android](../../../tools/android/MASTG-TOOL-0028.md) (`iS` コマンド)、`readelf` などのその他のツールを使用できます。
+バイナリ内にこれらのセクションが存在するかどうかをチェックするには、[objdump (iOS)](../../../tools/ios/MASTG-TOOL-0121.md) (`-x` オプションを使用)、[radare2 for Android](../../../tools/android/MASTG-TOOL-0028.md) (`iS` コマンド)、`readelf` などのその他のツールを使用できます。
 
 たとえば、radare2 を使用する場合:
 
