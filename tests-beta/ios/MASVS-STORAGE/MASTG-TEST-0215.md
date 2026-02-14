@@ -22,7 +22,7 @@ knowledge: [MASTG-KNOW-0102]
 
 ## 手順
 
-1. アプリバイナリに対して [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行するか、[Frida for iOS](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを使用して、`isExcludedFromBackup` API の使用を探します。
+1. アプリバイナリに対して [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行するか、[Frida (iOS)](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを使用して、`isExcludedFromBackup` API の使用を探します。
 
 ## 結果
 
