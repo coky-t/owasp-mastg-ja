@@ -1,6 +1,7 @@
 ---
 title: Android SDK
 platform: android
+source: https://developer.android.com/tools/releases/platform-tools
 ---
 
 ローカル Android SDK のインストールは Android Studio を介して管理されます。Android Studio で空のプロジェクトを作成し、**Tools** -> **SDK Manager** を選択して SDK Manager GUI を開きます。**SDK Platforms** タブで複数の API レベルの SDK をインストールします。最近の API レベルは以下のとおりです。
