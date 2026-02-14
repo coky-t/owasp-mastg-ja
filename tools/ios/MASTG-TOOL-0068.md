@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/rockbruno/swiftshield
 ---
 
-[SwiftShield](https://github.com/rockbruno/swiftshield "SwiftShield") は、iOS プロジェクトのオブジェクト (Pods や Storyboards など) に対して不可逆で暗号化された名前を生成するツールです。これはリバースエンジニアのハードルを上げ、class-dump や Frida などのリバースエンジニアリングツールを使用するときにあまり役に立たない出力を生成します。
+SwiftShield は、iOS プロジェクトのオブジェクト (Pods や Storyboards など) に対して不可逆で暗号化された名前を生成するツールです。これはリバースエンジニアのハードルを上げ、class-dump や Frida などのリバースエンジニアリングツールを使用するときにあまり役に立たない出力を生成します。
 
 > 警告: SwiftShield はすべてのソースファイルを不可逆的に上書きします。理想的には、CI サーバー上およびリリースビルドでのみ実行すべきです。
 
