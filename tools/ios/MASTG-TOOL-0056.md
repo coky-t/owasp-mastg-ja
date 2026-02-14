@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/ptoomey3/Keychain-Dumper
 ---
 
-[Keychain-dumper](https://github.com/ptoomey3/Keychain-Dumper/releases "keychain-dumper") は、iOS デバイスが脱獄された後に攻撃者が利用できるキーチェーンアイテムをチェックするための iOS ツールです。最新バージョンの iOS でこのツールを使用するには、いくつかの手順に従う必要があります。まず、[Keychain-Dumper リリースページ](https://github.com/ptoomey3/Keychain-Dumper/releases) から最新リリースをダウンロードして、パッケージを unzip します。次に、[updateEntitlements.sh](https://raw.githubusercontent.com/ptoomey3/Keychain-Dumper/refs/heads/master/updateEntitlements.sh) スクリプトを同じディレクトリにダウンロードします。最初の行 (`KEYCHAIN_DUMPER_FOLDER=/usr/bin`) を `KEYCHAIN_DUMPER_FOLDER=/var/jb/usr/bin` に変更して、ルートレス脱獄と互換性を持たせます。デバイスがルート化脱獄 (palera1n など) しているなら、この手順をスキップできます。
+Keychain-Dumper は、iOS デバイスが脱獄された後に攻撃者が利用できるキーチェーンアイテムをチェックするための iOS ツールです。最新バージョンの iOS でこのツールを使用するには、いくつかの手順に従う必要があります。まず、[Keychain-Dumper リリースページ](https://github.com/ptoomey3/Keychain-Dumper/releases) から最新リリースをダウンロードして、パッケージを unzip します。次に、[updateEntitlements.sh](https://raw.githubusercontent.com/ptoomey3/Keychain-Dumper/refs/heads/master/updateEntitlements.sh) スクリプトを同じディレクトリにダウンロードします。最初の行 (`KEYCHAIN_DUMPER_FOLDER=/usr/bin`) を `KEYCHAIN_DUMPER_FOLDER=/var/jb/usr/bin` に変更して、ルートレス脱獄と互換性を持たせます。デバイスがルート化脱獄 (palera1n など) しているなら、この手順をスキップできます。
 
 ```bash
 # Copy over the binary to /var/jb/usr/bin/
