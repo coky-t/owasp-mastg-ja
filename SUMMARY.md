@@ -663,7 +663,7 @@
     - [MASTG-TOOL-0076 bettercap](tools/network/MASTG-TOOL-0076.md)
     - [MASTG-TOOL-0077 Burp Suite](tools/network/MASTG-TOOL-0077.md)
     - [MASTG-TOOL-0078 MITM Relay](tools/network/MASTG-TOOL-0078.md)
-    - [MASTG-TOOL-0079 ZAP](tools/network/MASTG-TOOL-0079.md)
+    - [MASTG-TOOL-0079 ZAP (Zed Attack Proxy)](tools/network/MASTG-TOOL-0079.md)
     - [MASTG-TOOL-0080 tcpdump](tools/network/MASTG-TOOL-0080.md)
     - [MASTG-TOOL-0081 Wireshark](tools/network/MASTG-TOOL-0081.md)
     - [MASTG-TOOL-0097 mitmproxy](tools/network/MASTG-TOOL-0097.md)
