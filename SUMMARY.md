@@ -535,7 +535,7 @@
   - Android
     - [MASTG-TOOL-0001 Frida (Android)](tools/android/MASTG-TOOL-0001.md)
     - [MASTG-TOOL-0002 MobSF (Android)](tools/android/MASTG-TOOL-0002.md)
-    - [MASTG-TOOL-0003 nm - Android](tools/android/MASTG-TOOL-0003.md)
+    - [MASTG-TOOL-0003 nm (Android)](tools/android/MASTG-TOOL-0003.md)
     - [MASTG-TOOL-0004 adb](tools/android/MASTG-TOOL-0004.md)
     - [MASTG-TOOL-0005 Android NDK](tools/android/MASTG-TOOL-0005.md)
     - [MASTG-TOOL-0006 Android SDK](tools/android/MASTG-TOOL-0006.md)
