@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/DerekSelander/dsdump
 ---
 
-[dsdump](https://github.com/DerekSelander/dsdump "dsdump") は Objective-C クラスと Swift 型記述子 (クラス、構造体、列挙型) をダンプするツールです。Swift バージョン 5 以降のみをサポートしており、ARM 32 ビットバイナリはサポートしていません。
+dsdump は Objective-C クラスと Swift 型記述子 (クラス、構造体、列挙型) をダンプするツールです。Swift バージョン 5 以降のみをサポートしており、ARM 32 ビットバイナリはサポートしていません。
 
 以下の例は、iOS アプリケーションの Objective-C クラスと Swift 型記述子をダンプする方法を示しています。
 
