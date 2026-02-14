@@ -659,7 +659,7 @@
     - [MASTG-TOOL-0142 Choicy](tools/ios/MASTG-TOOL-0142.md)
 
   - Network
-    - [MASTG-TOOL-0075 Android tcpdump](tools/network/MASTG-TOOL-0075.md)
+    - [MASTG-TOOL-0075 tcpdump (Android)](tools/network/MASTG-TOOL-0075.md)
     - [MASTG-TOOL-0076 bettercap](tools/network/MASTG-TOOL-0076.md)
     - [MASTG-TOOL-0077 Burp Suite](tools/network/MASTG-TOOL-0077.md)
     - [MASTG-TOOL-0078 MITM Relay](tools/network/MASTG-TOOL-0078.md)

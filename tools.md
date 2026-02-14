@@ -131,7 +131,7 @@
 
 ## Network
 
-- [MASTG-TOOL-0075](tools/network/MASTG-TOOL-0075.md) Android tcpdump
+- [MASTG-TOOL-0075](tools/network/MASTG-TOOL-0075.md) tcpdump (Android)
 - [MASTG-TOOL-0076](tools/network/MASTG-TOOL-0076.md) bettercap
 - [MASTG-TOOL-0077](tools/network/MASTG-TOOL-0077.md) Burp Suite
 - [MASTG-TOOL-0078](tools/network/MASTG-TOOL-0078.md) MITM Relay
