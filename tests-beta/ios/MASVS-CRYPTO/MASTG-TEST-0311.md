@@ -15,7 +15,7 @@ iOS アプリは、暗号論的に安全な擬似乱数生成器 (PRNG) では�
 
 ## 手順
 
-1. アプリバイナリに対して [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析スキャンを実行するか、ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、安全でないランダム API を探します。
+1. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析スキャンを実行するか、ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、安全でないランダム API を探します。
 
 ## 結果
 
