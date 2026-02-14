@@ -3,7 +3,7 @@
 ## Android
 
 - [MASTG-TOOL-0001](tools/android/MASTG-TOOL-0001.md) Frida (Android)
-- [MASTG-TOOL-0002](tools/android/MASTG-TOOL-0002.md) MobSF for Android
+- [MASTG-TOOL-0002](tools/android/MASTG-TOOL-0002.md) MobSF (Android)
 - [MASTG-TOOL-0003](tools/android/MASTG-TOOL-0003.md) nm - Android
 - [MASTG-TOOL-0004](tools/android/MASTG-TOOL-0004.md) adb
 - [MASTG-TOOL-0005](tools/android/MASTG-TOOL-0005.md) Android NDK
