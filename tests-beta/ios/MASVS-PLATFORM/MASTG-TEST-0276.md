@@ -24,8 +24,8 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 手順
 
-1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析を実行し、汎用ペーストボードの使用を検出します。
-2. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析を実行し、機密データを取り扱う可能性のあるペーストボードメソッドの使用を検出します。
+1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析を実行し、汎用ペーストボードの使用を検出します。
+2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析を実行し、機密データを取り扱う可能性のあるペーストボードメソッドの使用を検出します。
 
 ## 結果
 
