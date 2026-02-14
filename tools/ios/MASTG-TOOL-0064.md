@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/Sileo/Sileo
 ---
 
-[Sileo](https://getsileo.app) は iOS 12 以降でルート済み脱獄とルートなし脱獄の両方で利用できるサードパーティアプリストアです。`apt/dpkg` 用のグラフィカルユーザーインタフェースを提供し、アプリ、バイナリ、Tweak をインストール可能にします。Sileo は Dopamine や palera1n などの人気の脱獄ツールにパッケージ化されています。
+Sileo は iOS 12 以降でルート済み脱獄とルートなし脱獄の両方で利用できるサードパーティアプリストアです。`apt/dpkg` 用のグラフィカルユーザーインタフェースを提供し、アプリ、バイナリ、Tweak をインストール可能にします。Sileo は Dopamine や palera1n などの人気の脱獄ツールにパッケージ化されています。
 
 > [!WARNING]
 > 「アプリのインストール」  
