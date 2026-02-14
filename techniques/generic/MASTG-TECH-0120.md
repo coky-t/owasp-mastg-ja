@@ -5,7 +5,7 @@ platform: generic
 
 傍受プロキシはモバイルアプリのトラフィックを傍受する最も一般的な方法です。傍受プロキシはモバイルアプリとサーバー間のすべての HTTP/HTTPS トラフィックを傍受してログ記録するプロキシサーバーを設定することで機能します。これによりリクエストとレスポンスをリアルタイムに閲覧および修正できます。
 
-フリーおよび商用のプロキシツールがいくつか利用可能です。例: [mitmproxy](../../tools/network/MASTG-TOOL-0097.md), [Burp Suite](../../tools/network/MASTG-TOOL-0077.md), [ZAP](../../tools/network/MASTG-TOOL-0079.md)
+フリーおよび商用のプロキシツールがいくつか利用可能です。例: [mitmproxy](../../tools/network/MASTG-TOOL-0097.md), [Burp Suite](../../tools/network/MASTG-TOOL-0077.md), [ZAP (Zed Attack Proxy)](../../tools/network/MASTG-TOOL-0079.md)
 
 ## プロキシへのトラフィックの再ルーティング
 
