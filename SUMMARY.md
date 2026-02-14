@@ -554,7 +554,7 @@
     - [MASTG-TOOL-0019 jdb](tools/android/MASTG-TOOL-0019.md)
     - [MASTG-TOOL-0020 JustTrustMe](tools/android/MASTG-TOOL-0020.md)
     - [MASTG-TOOL-0021 Magisk](tools/android/MASTG-TOOL-0021.md)
-    - [MASTG-TOOL-0022 Proguard](tools/android/MASTG-TOOL-0022.md)
+    - [MASTG-TOOL-0022 ProGuard](tools/android/MASTG-TOOL-0022.md)
     - [MASTG-TOOL-0023 RootCloak Plus](tools/android/MASTG-TOOL-0023.md)
     - [MASTG-TOOL-0024 Scrcpy](tools/android/MASTG-TOOL-0024.md)
     - [MASTG-TOOL-0025 SSLUnpinning](tools/android/MASTG-TOOL-0025.md)
