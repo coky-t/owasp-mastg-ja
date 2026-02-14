@@ -15,7 +15,7 @@ knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 
 ## 手順
 
-1. アプリバイナリに対して [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行します。
+1. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行します。
 
 2. 以下のような、共有ストレージの使用を示す API を探します。
 
