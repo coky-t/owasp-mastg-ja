@@ -34,5 +34,5 @@ Android SDK をベースとするアプリケーションは GooglePlayServices 
 
 ソースコードがない場合:
 
-1. [Frida for Android](../../../tools/android/MASTG-TOOL-0001.md) を使用して [`java.security.Security.getProviders()`](https://developer.android.com/reference/java/security/Security#getProviders()) をフックするか、[@platix/get-android-security-provider-mstg-network-6](https://codeshare.frida.re/@platix/get-android-security-provider-mstg-network-6/) などの [Frida CodeShare](../../../tools/generic/MASTG-TOOL-0032.md) スクリプトを使用します。
+1. [Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) を使用して [`java.security.Security.getProviders()`](https://developer.android.com/reference/java/security/Security#getProviders()) をフックするか、[@platix/get-android-security-provider-mstg-network-6](https://codeshare.frida.re/@platix/get-android-security-provider-mstg-network-6/) などの [Frida CodeShare](../../../tools/generic/MASTG-TOOL-0032.md) スクリプトを使用します。
 2. 最初のプロバイダが `GmsCore_OpenSSL` であるかどうかを判断します。
