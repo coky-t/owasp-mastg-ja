@@ -92,7 +92,7 @@ if let url = URL(string: "cydia://package/com.example.package"), UIApplication.s
 
 バイナリをリバースエンジニアリングして脱獄検出を探す必要がある場合、最も明白な方法は "jail" や "jailbreak" といった既知の文字列を検索することです。耐性対策が施されている場合や開発者がそのような明白な用語を避けている場合には特に、これは常に有効であるとは限らないことに注意してください。
 
-例: [DVIA-v2](../../../apps/ios/MASTG-APP-0024.md) をダウンロードして unzip し、メインバイナリを [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) にロードして解析が完了するまで待ちます。
+例: [DVIA-v2](../../../apps/ios/MASTG-APP-0024.md) をダウンロードして unzip し、メインバイナリを [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) にロードして解析が完了するまで待ちます。
 
 ```sh
 r2 -A ./DVIA-v2-swift/Payload/DVIA-v2.app/DVIA-v2
