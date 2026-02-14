@@ -4,7 +4,7 @@ platform: generic
 source: https://github.com/NationalSecurityAgency/ghidra
 ---
 
-[Ghidra](https://github.com/NationalSecurityAgency/ghidra) はアメリカ合衆国の国家安全保障局 (NSA) の研究局によって開発されたオープンソースのソフトウェアリバースエンジニアリング (SRE) ツールスイートです。Ghidra は逆アセンブラ、逆コンパイラ、高度な使用のためのビルトインスクリプトエンジンで構成される多目的ツールです。インストール方法については [インストールガイド](https://ghidra-sre.org/InstallationGuide.html "Ghidra Installation Guide") を参照してください。また、[チートシート](https://ghidra-sre.org/CheatSheet.html "Cheat Sheet") を参照して、利用可能なコマンドとショートカットの概要を確認してください。このセクションでは、プロジェクトの作成方法、バイナリの逆アセンブリおよび逆コンパイルされたコードの表示方法について説明します。
+Ghidra はアメリカ合衆国の国家安全保障局 (NSA) の研究局によって開発されたオープンソースのソフトウェアリバースエンジニアリング (SRE) ツールスイートです。Ghidra は逆アセンブラ、逆コンパイラ、高度な使用のためのビルトインスクリプトエンジンで構成される多目的ツールです。インストール方法については [インストールガイド](https://ghidra-sre.org/InstallationGuide.html "Ghidra Installation Guide") を参照してください。また、[チートシート](https://ghidra-sre.org/CheatSheet.html "Cheat Sheet") を参照して、利用可能なコマンドとショートカットの概要を確認してください。このセクションでは、プロジェクトの作成方法、バイナリの逆アセンブリおよび逆コンパイルされたコードの表示方法について説明します。
 
 Ghidra を起動するには、使用しているプラットフォームに応じて `ghidraRun` (\*nix) または `ghidraRun.bat` (Windows) を使用します。Ghidra を起動したら、プロジェクトディレクトリを指定して新しいプロジェクトを作成します。以下のようなウィンドウが表示されます。
 
