@@ -4,7 +4,7 @@ platform: generic
 source: https://github.com/P1sec/hermes-dec/
 ---
 
-[hermes-dec](https://github.com/P1sec/hermes-dec/) はコンパイルされた [hermes](https://reactnative.dev/docs/hermes) バイトコードをリバースエンジニアリングするためのツールであり、Android アプリと iOS アプリの両方に対応しています。[React Native](https://reactnative.dev/) で開発されたアプリでよく見られる [Hermes VM バイトコード (HBC)](https://lucasbaizer2.github.io/hasmer/hasm/instruction-docs/hbc86.html) 形式の逆コンパイルと逆アセンブルをサポートしています。
+hermes-dec はコンパイルされた [hermes](https://reactnative.dev/docs/hermes) バイトコードをリバースエンジニアリングするためのツールであり、Android アプリと iOS アプリの両方に対応しています。[React Native](https://reactnative.dev/) で開発されたアプリでよく見られる Hermes VM バイトコード (HBC) 形式の逆コンパイルと逆アセンブルをサポートしています。
 
 静的解析時に以下のファイルのいずれかに遭遇した場合、hermes-dec はファイルの内容の判別できるバージョンを復元する方法を提供します。
 
