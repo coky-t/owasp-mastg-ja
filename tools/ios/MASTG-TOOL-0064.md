@@ -14,7 +14,7 @@ Sileo を使用することで、多くの脱獄ツールをインストール�
 
 この方法でインストールできる便利なツールをいくつか紹介します。
 
-- [Frida for iOS](MASTG-TOOL-0039.md)
+- [Frida (iOS)](MASTG-TOOL-0039.md)
 - [SSL Kill Switch 2](MASTG-TOOL-0066.md)
 - [GlobalWebInspect](MASTG-TOOL-0137.md)
 - [AppSync Unified](MASTG-TOOL-0127.md)
