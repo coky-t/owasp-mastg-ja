@@ -18,7 +18,7 @@ Android プラットフォームでは、`Log`, `Logger`, `System.out.print`, `S
 
 1. アプリをインストールして実行します。
 2. ログ出力を解析したいモバイルアプリの画面に移動します。
-3. 実行中のアプリにアタッチし、ログ記録 API をターゲットにしてメソッドトレース ([メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md)) ([Frida for Android](../../../tools/android/MASTG-TOOL-0001.md) などを使用) を実行し、出力を保存します。
+3. 実行中のアプリにアタッチし、ログ記録 API をターゲットにしてメソッドトレース ([メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md)) ([Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) などを使用) を実行し、出力を保存します。
 
 ## 結果
 
