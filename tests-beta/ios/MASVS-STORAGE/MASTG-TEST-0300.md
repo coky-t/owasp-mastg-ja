@@ -20,8 +20,8 @@ knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 
 ## 手順
 
-1. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、ファイルを作成または書き込むファイルシステム API の使用を探します。
-2. [radare2 for iOS](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、キーチェーン API の使用を探します。
+1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、ファイルを作成または書き込むファイルシステム API の使用を探します。
+2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、キーチェーン API の使用を探します。
 
 ## 結果
 
