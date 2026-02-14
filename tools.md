@@ -76,7 +76,7 @@
 ## iOS
 
 - [MASTG-TOOL-0039](tools/ios/MASTG-TOOL-0039.md) Frida (iOS)
-- [MASTG-TOOL-0040](tools/ios/MASTG-TOOL-0040.md) MobSF for iOS
+- [MASTG-TOOL-0040](tools/ios/MASTG-TOOL-0040.md) MobSF (iOS)
 - [MASTG-TOOL-0041](tools/ios/MASTG-TOOL-0041.md) nm - iOS
 - [MASTG-TOOL-0042](tools/ios/MASTG-TOOL-0042.md) BinaryCookieReader
 - [MASTG-TOOL-0043](tools/ios/MASTG-TOOL-0043.md) class-dump
