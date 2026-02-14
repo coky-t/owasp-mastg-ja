@@ -5,7 +5,7 @@ source: https://github.com/EFForg/apkeep
 hosts: [windows, linux, macOS]
 ---
 
-[apkeep](https://github.com/EFForg/apkeep) は Google Play ストアを含むさまざまなソースから API ファイルをダウンロードするための Rust で記述されたコマンドラインツールです。Android APK のダウンロードとアーカイブをシンプルかつ確実に行うように設計されています。
+apkeep は Google Play ストアを含むさまざまなソースから API ファイルをダウンロードするための Rust で記述されたコマンドラインツールです。Android APK のダウンロードとアーカイブをシンプルかつ確実に行うように設計されています。
 
 - アプリの特定バージョンのダウンロードをサポートします
 - 分割 APK をダウンロードし、バンドルできます
