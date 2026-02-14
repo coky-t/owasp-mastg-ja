@@ -4,7 +4,7 @@ platform: ios
 source: https://github.com/ios-control/ios-deploy
 ---
 
-[ios-deploy](https://github.com/ios-control/ios-deploy "ios-deploy") では、Xcode を使用せずにコマンドラインから iOS アプリをインストールおよびデバッグできます。macOS では brew 経由でインストールできます。
+ios-deploy では、Xcode を使用せずにコマンドラインから iOS アプリをインストールおよびデバッグできます。macOS では brew 経由でインストールできます。
 
 ```bash
 brew install ios-deploy
