@@ -4,7 +4,7 @@ platform: android
 source: https://github.com/iBotPeaches/Apktool
 ---
 
-[Apktool](https://github.com/iBotPeaches/Apktool) は Android アプリパッケージ (APK) をアンパックするために使用します。標準の `unzip` ユーティリティで APK を展開するだけではいくつかのファイルが読み取れないままです。`AndroidManifest.xml` はバイナリ XML 形式にエンコードされており、テキストエディタで読み取れません。また、アプリのリソースは単一のアーカイブファイルにパッケージされたままです。
+Apktool は Android アプリパッケージ (APK) をアンパックするために使用します。標準の `unzip` ユーティリティで APK を展開するだけではいくつかのファイルが読み取れないままです。`AndroidManifest.xml` はバイナリ XML 形式にエンコードされており、テキストエディタで読み取れません。また、アプリのリソースは単一のアーカイブファイルにパッケージされたままです。
 
 デフォルトのコマンドラインフラグで実行すると、apktool は Android Manifest ファイルをテキストベースの XML 形式に自動的にデコードし、ファイルリソースを抽出します (また、.DEX ファイルを smali コードに逆アセンブルします。この機能については本書の後半で再度説明します)。
 
