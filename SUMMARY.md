@@ -561,7 +561,7 @@
     - [MASTG-TOOL-0026 Termux](tools/android/MASTG-TOOL-0026.md)
     - [MASTG-TOOL-0027 Xposed](tools/android/MASTG-TOOL-0027.md)
     - [MASTG-TOOL-0028 radare2 for Android](tools/android/MASTG-TOOL-0028.md)
-    - [MASTG-TOOL-0029 objection for Android](tools/android/MASTG-TOOL-0029.md)
+    - [MASTG-TOOL-0029 objection (Android)](tools/android/MASTG-TOOL-0029.md)
     - [MASTG-TOOL-0030 Angr](tools/android/MASTG-TOOL-0030.md)
     - [MASTG-TOOL-0099 FlowDroid](tools/android/MASTG-TOOL-0099.md)
     - [MASTG-TOOL-0103 uber-apk-signer](tools/android/MASTG-TOOL-0103.md)
