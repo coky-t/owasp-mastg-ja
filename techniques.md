@@ -41,9 +41,7 @@
 - [MASTG-TECH-0025](techniques/android/MASTG-TECH-0025.md) 自動静的解析 (Automated Static Analysis)
 - [MASTG-TECH-0026](techniques/android/MASTG-TECH-0026.md) 非ルート化デバイスでの動的解析 (Dynamic Analysis on Non-Rooted Devices)
 - [MASTG-TECH-0027](techniques/android/MASTG-TECH-0027.md) オープンファイルの取得 (Get Open Files)
-<!--
 - [MASTG-TECH-0028](techniques/android/MASTG-TECH-0028.md) オープンコネクションの取得 (Get Open Connections)
--->
 - [MASTG-TECH-0029](techniques/android/MASTG-TECH-0029.md) ロードされたネイティブライブラリの取得 (Get Loaded Native Libraries)
 - [MASTG-TECH-0030](techniques/android/MASTG-TECH-0030.md) サンドボックス検査 (Sandbox Inspection)
 <!--
