@@ -322,7 +322,7 @@ Infrastructure as Code プラクティスは開発チームと運用チーム間
 
 Infrastructure as Code は一般的にクラウドベースのリソースを持つプロジェクトに使用されます。多くのベンダーがプロビジョニングアイテム (仮想マシン、ストレージスペースなど) および構成作業 (例、仮想マシンが使用するメモリサイズや CPU 数を変更すること) に使用できる API を提供しているためです。これらの API は管理者が監視コンソールからこれらのアクティビティを実行する代わりのものを提供します。
 
-このドメインの主なツールには [Puppet](https://puppet.com/ "Puppet"), [Terraform](https://www.terraform.io/ "Terraform"), [Packer](https://www.packer.io/ "Packer"), [Chef](https://www.chef.io/chef/ "Chef") および [Ansible](https://www.ansible.com/ "Ansible") があります。
+このドメインの主なツールには [Puppet](https://puppet.com/ "Puppet"), [Terraform](https://developer.hashicorp.com/terraform "Terraform"), [Packer](https://developer.hashicorp.com/packer "Packer"), [Chef](https://www.chef.io/chef/ "Chef") および [Ansible](https://www.ansible.com/ "Ansible") があります。
 
 ##### デプロイメント
 
