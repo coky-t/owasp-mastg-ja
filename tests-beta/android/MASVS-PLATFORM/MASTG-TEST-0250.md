@@ -20,7 +20,7 @@ JavaScript コードは以下のようにデバイス上のあらゆるコンテ
 - そのアプリで宣言されたもの、**エクスポートされていない場合でも**。
 - 他のアプリで宣言されたもの、**エクスポートされている場合のみ**、およびアクセス制限に関して推奨される [ベストプラクティス](https://developer.android.com/privacy-and-security/security-tips#content-providers) に従っていない場合。
 
-`setAllowContentAccess` メソッド、アクセスできる特定のファイル、アクセスできる条件の詳細については、[WebView コンテンツプロバイダアクセス](../../../Document/0x05h-Testing-Platform-Interaction.md#webview-content-provider-access) を参照してください。
+`setAllowContentAccess` メソッド、アクセスできる特定のファイル、アクセスできる条件の詳細については、[WebView (WebViews)](../../../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018.md) を参照してください。
 
 **攻撃シナリオの例:**
 
