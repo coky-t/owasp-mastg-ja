@@ -14,7 +14,7 @@ Android 難読化技法について詳しくは以下をご覧ください。
 
 - ["Security Hardening of Android Native Code"](https://darvincitech.wordpress.com/2020/01/07/security-hardening-of-android-native-code/) by Gautam Arvind
 - ["APKiD: Fast Identification of AppShielding Products"](https://github.com/enovella/cve-bio-enovella/blob/master/slides/APKiD-NowSecure-Connect19-enovella.pdf) by Eduardo Novella ([APKiD](../../../tools/android/MASTG-TOOL-0009.md))
-- ["Challenges of Native Android Applications: Obfuscation and Vulnerabilities"](https://www.theses.fr/2020REN1S047.pdf) by Pierre Graux
+- ["Challenges of Native Android Applications: Obfuscation and Vulnerabilities"](https://theses.hal.science/tel-03164744/document) by Pierre Graux
 
 ## ProGuard の使用
 
