@@ -26,7 +26,7 @@ _ネイティブアプリ_ の最も明白な欠点はひとつの特定のプ�
 
 以下に開発者が Android と iOS の両方を含むさまざまなターゲット向けに単一のコードベースをコンパイルできるクロスプラットフォームフレームワークをいくつか示します。
 
-- [Xamarin](https://dotnet.microsoft.com/apps/xamarin "Xamarin")
+- [Xamarin](https://dotnet.microsoft.com/en-us/apps/xamarin "Xamarin (end of support)")
 - [MAUI](https://dotnet.microsoft.com/en-us/apps/maui ".NET MAUI")
 - [Flutter](https://flutter.dev/ "Google Flutter")
 - [React Native](https://reactnative.dev/ "React Native")
