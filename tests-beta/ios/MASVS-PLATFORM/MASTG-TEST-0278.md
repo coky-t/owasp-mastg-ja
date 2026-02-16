@@ -11,7 +11,7 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 概要
 
-このテストは、アプリがバックグラウンドに移動したり終了する際に、汎用 [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md#pasteboard) のコンテンツをクリアするかどうかをチェックします。ペーストボードに機密データが残っていると、他のアプリからアクセスされ、データ漏洩につながる可能性があります。
+このテストは、アプリがバックグラウンドに移動したり終了する際に、汎用 [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) のコンテンツをクリアするかどうかをチェックします。ペーストボードに機密データが残っていると、他のアプリからアクセスされ、データ漏洩につながる可能性があります。
 
 アプリは `applicationDidEnterBackground:` や `applicationWillTerminate:` などの適切なライフサイクルメソッドで `UIPasteboard.general.items = []` を設定することで、汎用ペーストボードのコンテンツをクリアできます。
 
