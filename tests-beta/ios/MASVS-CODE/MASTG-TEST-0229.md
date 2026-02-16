@@ -10,7 +10,7 @@ knowledge: [MASTG-KNOW-0061]
 
 ## 概要
 
-このテストケースでは、アプリのメインバイナリやライブラリがスタックカナリアなしでコンパイルされ、バッファオーバーフロー攻撃に対する一般的な緩和技法である [スタックスマッシュ保護](../../../Document/0x06i-Testing-Code-Quality-and-Build-Settings.md/#binary-protection-mechanisms) を欠いているかどうかをチェックします。
+このテストケースでは、アプリのネイティブライブラリがバッファオーバーフロー攻撃に対する緩和技法であるスタックスマッシュ保護などの一般的なバイナリ保護メカニズム ([バイナリ保護メカニズム (Binary Protection Mechanisms)](../../../knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md)) なしでコンパイルされているかどうかをチェックします。
 
 このテストはすべてのバイナリとライブラリに適用します。
 
