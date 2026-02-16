@@ -12,7 +12,7 @@ knowledge: [MASTG-KNOW-0041]
 
 ## 概要
 
-このテストの目的は、[内部ストレージ](../../../Document/0x05d-Testing-Data-Storage.md/#internal-storage) に書き込まれたファイルを取得し、その書き込みに使用された API に関係なく、それらを検査することです。アプリの実行前と実行後にデバイスストレージからファイルを取得 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md)) するというシンプルなアプローチを使用して、アプリの実行時に作成されたファイルを特定し、それらに機密データが含まれているかどうかを確認します。
+このテストの目的は、内部ストレージ ([内部ストレージ (Internal Storage)](../../../knowledge/android/MASVS-STORAGE/MASTG-KNOW-0041.md)) に書き込まれたファイルを取得し、その書き込みに使用された API に関係なく、それらを検査することです。アプリの実行前と実行後にデバイスストレージからファイルを取得 ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md)) するというシンプルなアプローチを使用して、アプリの実行時に作成されたファイルを特定し、それらに機密データが含まれているかどうかを確認します。
 
 ## 手順
 
