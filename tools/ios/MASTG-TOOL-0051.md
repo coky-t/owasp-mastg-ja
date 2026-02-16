@@ -2,8 +2,8 @@
 title: gdb
 platform: ios
 status: deprecated
-deprecation_note: このツールは最近の iOS バージョンや脱獄とは互換性がありません。
-source: https://cydia.radare.org/pool/main/g/gdb/
+deprecation_note: GDB は積極的に開発されています (https://www.sourceware.org/gdb/ 参照) が、最近の iOS バージョンや脱獄とは互換性がありません。Apple も GDB のサポートを中止し LLDB を支持しています。
+source: https://github.com/swigger/gdb-ios
 covered_by: [MASTG-TOOL-0057]
 
 ---
