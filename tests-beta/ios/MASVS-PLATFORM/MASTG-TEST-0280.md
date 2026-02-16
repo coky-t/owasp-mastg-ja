@@ -11,7 +11,7 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 概要
 
-このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.OptionsKey.localOnly` オプションを使用して、汎用 [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md/#pasteboard) のコンテンツをローカルデバイスに制限しているかどうかをチェックします。この制限なしに機密データが汎用ペーストボードに配置されると、ユニバーサルクリップボードを介してデバイス間で同期され、データ漏洩につながる可能性があります。
+このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.OptionsKey.localOnly` オプションを使用して、汎用 [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) のコンテンツをローカルデバイスに制限しているかどうかをチェックします。この制限なしに機密データが汎用ペーストボードに配置されると、ユニバーサルクリップボードを介してデバイス間で同期され、データ漏洩につながる可能性があります。
 
 ## 手順
 
