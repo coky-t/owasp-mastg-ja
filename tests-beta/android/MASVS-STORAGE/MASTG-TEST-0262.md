@@ -13,7 +13,7 @@ knowledge: [MASTG-KNOW-0050]
 
 このテストでは、アプリの AndroidManifest.xml とバックアップ構成ファイルを解析して、アプリが機密ファイルをバックアップから除外するように、システムに正しく指示しているかどうかを検証します。
 
-["Android バックアップ"](../../../Document/0x05d-Testing-Data-Storage.md#backups) は [自動バックアップ](https://developer.android.com/identity/data/autobackup) (Android 6.0 (API レベル 23) 以降) および [キーバリューバックアップ](https://developer.android.com/identity/data/keyvaluebackup) (Android 2.2 (API レベル 8) 以降) によって実装できます。自動バックアップはデフォルトで有効になっており、実装に手間がかからないため、Android で推奨されているアプローチです。
+"Android バックアップ" ([バックアップ (Backups)](../../../knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md)) は [自動バックアップ](https://developer.android.com/identity/data/autobackup) (Android 6.0 (API レベル 23) 以降) および [キーバリューバックアップ](https://developer.android.com/identity/data/keyvaluebackup) (Android 2.2 (API レベル 8) 以降) によって実装できます。自動バックアップはデフォルトで有効になっており、実装に手間がかからないため、Android で推奨されているアプローチです。
 
 自動バックアップを使用する際に特定のファイルを除外するには、開発者は `exclude` タグで除外ルールを明示的に定義しなければなりません。
 
