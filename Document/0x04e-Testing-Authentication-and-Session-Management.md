@@ -258,7 +258,7 @@ OWASP Web Testing Guide ([WSTG-SESS-06](https://owasp.org/www-project-web-securi
 
 ## 補助認証
 
-認証スキームは [パッシブコンテキスト認証](https://pdfs.semanticscholar.org/13aa/7bf53070ac8e209a84f6389bab58a1e2c888.pdf "Best Practices for Multi-factor Authentication") により補完されることがよくあります。
+認証スキームは [パッシブコンテキスト認証](https://web.archive.org/web/20190219011248/https://pdfs.semanticscholar.org/13aa/7bf53070ac8e209a84f6389bab58a1e2c888.pdf "Best Practices for Multi-factor Authentication") により補完されることがよくあります。
 これは以下を取り込むことができます。
 
 - 位置情報
