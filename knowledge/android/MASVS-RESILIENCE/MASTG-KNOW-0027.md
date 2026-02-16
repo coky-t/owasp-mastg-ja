@@ -127,7 +127,7 @@ sysytem ディレクトリに対する普通とは異なるアクセス許可は
 
 ## カスタム Android ビルドの確認
 
-テストビルドやカスタム ROM の兆候を確認することも役に立ちます。これを行う方法のひとつは `BUILD.TAGS` に [`test-keys`](https://source.android.com/docs/core/ota/sign_builds#release-keys) が含まれているかどうかを確認することです。これは一般的に [カスタム Android イメージを示します](https://www.infosecinstitute.com/resources/application-security/android-hacking-security-part-8-root-detection-evasion/)。たとえば、[RootBeer](../../../tools/android/MASTG-TOOL-0146.md) は [以下のように BUILD.TAGS を確認します](https://github.com/scottyab/rootbeer/blob/0.1.1/rootbeerlib/src/main/java/com/scottyab/rootbeer/RootBeer.java#L71-L80)。
+テストビルドやカスタム ROM の兆候を確認することも役に立ちます。これを行う方法のひとつは `BUILD.TAGS` に [`test-keys`](https://source.android.com/docs/core/ota/sign_builds#release-keys) が含まれているかどうかを確認することです。これは一般的に [カスタム Android イメージを示します](https://web.archive.org/web/20160404172508/https://resources.infosecinstitute.com/android-hacking-security-part-8-root-detection-evasion/)。たとえば、[RootBeer](../../../tools/android/MASTG-TOOL-0146.md) は [以下のように BUILD.TAGS を確認します](https://github.com/scottyab/rootbeer/blob/0.1.1/rootbeerlib/src/main/java/com/scottyab/rootbeer/RootBeer.java#L71-L80)。
 
 ```java
 public boolean detectTestKeys() {
