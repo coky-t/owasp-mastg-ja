@@ -11,7 +11,7 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 概要
 
-このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.Options.expirationDate` オプションを使用して、汎用 [ペーストボード](../../../Document/0x06h-Testing-Platform-Interaction.md#pasteboard) のコンテンツに有効期限を設定しているかどうかをチェックします。機密データが有効期限なしでペーストボードに残されると、他のアプリから無期限にアクセスされ、データ漏洩につながる可能性があります。
+このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.Options.expirationDate` オプションを使用して、汎用 [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) のコンテンツに有効期限を設定しているかどうかをチェックします。機密データが有効期限なしでペーストボードに残されると、他のアプリから無期限にアクセスされ、データ漏洩につながる可能性があります。
 
 ## 手順
 
