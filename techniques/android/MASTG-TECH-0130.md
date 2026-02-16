@@ -25,4 +25,4 @@ $ curl -X "PUT" "http://localhost:8081/api/v1/bom" \
 dependency-track Docker コンテナのデフォルト設定を使用している場合には、<http://localhost:8080> にある dependency-check のフロントエンドに行きます。SBOM をアップロードしたプロジェクトを開き、脆弱な依存関係があるかどうかを検証できます。
 
 > [!NOTE]
-> [dependency-track](../../tools/generic/MASTG-TOOL-0132.md) では [Java および Kotlin](https://cyclonedx.github.io/cdxgen/#/PROJECT_TYPES) に対して推移的依存関係がサポートされています。
+> [dependency-track](../../tools/generic/MASTG-TOOL-0132.md) では [Java および Kotlin](https://cdxgen.github.io/cdxgen/#/PROJECT_TYPES) に対して推移的依存関係がサポートされています。
