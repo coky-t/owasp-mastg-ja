@@ -75,7 +75,7 @@ MAS 支持者はディスカッションに参加したり、フィードバッ�
 
 <img src="Images/Other/nowsecure-logo.png" style="width: 50%; border-radius: 5px" />
 
-**2022 年以来、プロジェクトを前進させたいと考えている他の潜在的な貢献者にとっての青写真となる模範的な貢献をしてくれた [NowSecure](https://www.nowsecure.com) に感謝します。** [彼らの道程の詳細についてはこちらをご覧ください。](https://github.com/OWASP/owasp-mastg/blob/master/docs/news/posts/2025-04-09-celebrating-3-years-advocate-nowsecure.md)
+**2022 年以来、プロジェクトを前進させたいと考えている他の潜在的な貢献者にとっての青写真となる模範的な貢献をしてくれた [NowSecure](https://www.nowsecure.com) に感謝します。** [彼らの道程の詳細についてはこちらをご覧ください。](https://mas.owasp.org/news/2025/04/09/3-years-advocate-nowsecure/)
 
 **影響力の大きな貢献:**
 
@@ -95,7 +95,7 @@ MAS 支持者はディスカッションに参加したり、フィードバッ�
 
 <img src="Images/Other/guardsquare-logo.png" style="width: 50%; border-radius: 5px" />
 
-**OWASP MAS プロジェクトへの卓越した貢献により、2025 年に MAS 支持者ステータスを獲得した [Guardsquare](https://www.guardsquare.com) に感謝します。** [彼らの業績の詳細についてはこちらをご覧ください。](https://github.com/OWASP/owasp-mastg/blob/master/docs/news/posts/2025-05-23-new-advocate-guardsquare.md)
+**OWASP MAS プロジェクトへの卓越した貢献により、2025 年に MAS 支持者ステータスを獲得した [Guardsquare](https://www.guardsquare.com) に感謝します。** [彼らの業績の詳細についてはこちらをご覧ください。](https://mas.owasp.org/news/2025/05/23/new-advocate-guardsquare/)
 
 **影響力の大きな貢献:**
 
