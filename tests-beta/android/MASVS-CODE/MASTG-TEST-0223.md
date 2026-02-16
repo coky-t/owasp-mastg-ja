@@ -10,7 +10,7 @@ knowledge: [MASTG-KNOW-0006]
 
 ## 概要
 
-このテストケースでは、アプリの [ネイティブライブラリ](../../../Document/0x05i-Testing-Code-Quality-and-Build-Settings.md#binary-protection-mechanisms) がスタックカナリアなしでコンパイルされ、バッファオーバーフロー攻撃に対する一般的な緩和技法である [スタックスマッシュ保護](../../../Document/0x04h-Testing-Code-Quality.md#stack-smashing-protection) が欠けているかどうかをチェックします。
+このテストケースでは、アプリのネイティブライブラリがバッファオーバーフロー攻撃に対する緩和技法であるスタックスマッシュ保護などの一般的なバイナリ保護メカニズム ([バイナリ保護メカニズム (Binary Protection Mechanisms)](../../../knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md)) なしでコンパイルされているかどうかをチェックします。
 
 - NDK ライブラリでは、スタックカナリアが有効になっているはずです。[コンパイラがデフォルトでそれを行っている](https://android.googlesource.com/platform/ndk/%2B/master/docs/BuildSystemMaintainers.md#additional-required-arguments) ためです。
 - 他のカスタム C/C++ ライブラリでは、スタックカナリアが有効になっていないかもしれません。必要なコンパイラフラグ (`-fstack-protector-strong` または `-fstack-protector-all`) が欠如していたり、カナリアがコンパイラによって最適化により削除されてしまうためです。詳細については [評価](#evaluation) セクションを参照してください。
