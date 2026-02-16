@@ -13,7 +13,7 @@ knowledge: [MASTG-KNOW-0018]
 
 ## 概要
 
-このテストでは [ローカルファイルを含むさまざまなソースからコンテンツをロードすることを可能にする](../../../Document/0x05h-Testing-Platform-Interaction.md#webview-local-file-access-settings) Android WebView で使用される [`WebSettings`](https://developer.android.com/reference/android/webkit/WebSettings.html) クラスのメソッドへの参照をチェックします。不適切に設定されている場合、これらのメソッドは不正ファイルアクセスやデータ流出などのセキュリティリスクを引き起こす可能性があります。これらのメソッドは以下のとおりです。
+このテストではローカルファイルを含むさまざまなソースからコンテンツをロードすることを可能にする Android WebView で使用される [`WebSettings`](https://developer.android.com/reference/android/webkit/WebSettings.html) クラスのメソッドへの参照をチェックします。不適切に設定されている場合、これらのメソッドは不正ファイルアクセスやデータ流出などのセキュリティリスクを引き起こす可能性があります。これらのメソッドは以下のとおりです。
 
 - `setAllowFileAccess`: WebView がアプリの内部ストレージまたは外部ストレージからローカルファイルをロードすることを許可します。
 - `setAllowFileAccessFromFileURLs`: ローカルファイル内の JavaScript が他のローカルファイルにアクセスできるようにします。
