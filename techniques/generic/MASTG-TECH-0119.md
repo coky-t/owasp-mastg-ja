@@ -23,10 +23,10 @@ platform: generic
 
 これは標準 API ライブラリ関数とクラスを使用するアプリでは非常にうまく機能しますが、以下のようないくつかの欠点があるかもしれません。
 
-- アプリはカスタムネットワークスタックを実装しているかもしれず、使用できる API を見つけるにはアプリの解析に時間をかける必要があるでしょう。[このブログ記事](https://hackmag.com/security/ssl-sniffing/ "Searching for OpenSSL traces with signature analysis") の "Searching for OpenSSL traces with signature analysis" セクションを参照してください。
+- アプリはカスタムネットワークスタックを実装しているかもしれず、使用できる API を見つけるにはアプリの解析に時間をかける必要があるでしょう。[このブログ記事](https://web.archive.org/web/20251007161718/https://hackmag.com/security/ssl-sniffing/ "Searching for OpenSSL traces with signature analysis") の "Searching for OpenSSL traces with signature analysis" セクションを参照してください。
 - (多数のメソッドコールと実行スレッドにまたがる) HTTP レスポンスペアを再構成するための適切なフックスクリプトを作成するのは非常に時間がかかるかもしれません。[規制のスクリプト](https://github.com/fanxs-t/Android-SSL_read-write-Hook/blob/master/frida-hook.py) や [代替ネットワークスタック](https://codeshare.frida.re/@owen800q/okhttp3-interceptor/) 用のスクリプトが見つかるかもしれませんが、アプリやプラットフォームによっては、これらのスクリプトには多くのメンテナンスが必要になるかもしれませんし、_必ず動作する_ とは限りません。
 
 いくつかの例をご覧ください。
 
-- ["Universal interception. How to bypass SSL Pinning and monitor traffic of any application"](https://hackmag.com/security/ssl-sniffing/), sections "Grabbing payload prior to transmission" and "Grabbing payload prior to encryption"
+- ["Universal interception. How to bypass SSL Pinning and monitor traffic of any application"](https://web.archive.org/web/20251007161718/https://hackmag.com/security/ssl-sniffing/), sections "Grabbing payload prior to transmission" and "Grabbing payload prior to encryption"
 - ["Frida as an Alternative to Network Tracing"](https://gaiaslastlaugh.medium.com/frida-as-an-alternative-to-network-tracing-5173cfbd7a0b)
