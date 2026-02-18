@@ -53,8 +53,8 @@
 - [MASTG-TECH-0034](techniques/android/MASTG-TECH-0034.md) ネイティブコードトレース (Native Code Tracing)
 -->
 - [MASTG-TECH-0035](techniques/android/MASTG-TECH-0035.md) JNI トレース (JNI Tracing)
-<!--
 - [MASTG-TECH-0036](techniques/android/MASTG-TECH-0036.md) エミュレーションベースの解析 (Emulation-based Analysis)
+<!--
 - [MASTG-TECH-0037](techniques/android/MASTG-TECH-0037.md) シンボリック実行 (Symbolic Execution)
 - [MASTG-TECH-0038](techniques/android/MASTG-TECH-0038.md) パッチ適用 (Patching)
 -->

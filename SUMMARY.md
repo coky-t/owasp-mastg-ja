@@ -476,6 +476,7 @@
     - [MASTG-TECH-0030 サンドボックス検査 (Sandbox Inspection)](techniques/android/MASTG-TECH-0030.md)
     - [MASTG-TECH-0033 メソッドトレース (Method Tracing)](techniques/android/MASTG-TECH-0033.md)
     - [MASTG-TECH-0035 JNI トレース (JNI Tracing)](techniques/android/MASTG-TECH-0035.md)
+    - [MASTG-TECH-0036 エミュレーションベースの解析 (Emulation-based Analysis)](techniques/android/MASTG-TECH-0036.md)
     - [MASTG-TECH-0039 再パッケージ化と再署名 (Repackaging & Re-Signing)](techniques/android/MASTG-TECH-0039.md)
     - [MASTG-TECH-0040 デバッガを待機 (Waiting for the Debugger)](techniques/android/MASTG-TECH-0040.md)
     - [MASTG-TECH-0115 コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](techniques/android/MASTG-TECH-0115.md)
