@@ -31,6 +31,16 @@
 - [MASTG-TEST-0310](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0310.md) 対称暗号化での再使用される初期化ベクトルの実行時使用 (Runtime Use of Reused Initialization Vectors in Symmetric Encryption)
 - [MASTG-TEST-0312](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0312.md) 暗号 API での明示的なセキュリティプロバイダへの参照 (References to Explicit Security Provider in Cryptographic APIs)
 
+### MASVS-AUTH: 認証と認可
+
+- [MASTG-TEST-0326](tests-beta/android/MASVS-AUTH/MASTG-TEST-0326.md) 非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)
+<!--
+- [MASTG-TEST-0327](tests-beta/android/MASVS-AUTH/MASTG-TEST-0327.md) イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
+- [MASTG-TEST-0328](tests-beta/android/MASVS-AUTH/MASTG-TEST-0328.md) 生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)
+- [MASTG-TEST-0329](tests-beta/android/MASVS-AUTH/MASTG-TEST-0329.md) 明示的なユーザーアクションなしでの認証を強制する API への参照 (References to APIs Enforcing Authentication without Explicit User Action)
+- [MASTG-TEST-0330](tests-beta/android/MASVS-AUTH/MASTG-TEST-0330.md) 有効期間が延長された生体認証で使用される鍵のための API への参照 (References to APIs for Keys used in Biometric Authentication with Extended Validity Duration)
+-->
+
 ### MASVS-NETWORK: ネットワーク通信
 
 - [MASTG-TEST-0217](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md) コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)

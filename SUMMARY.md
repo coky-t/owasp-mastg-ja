@@ -322,6 +322,9 @@
       - [MASTG-TEST-0310 対称暗号化での再使用される初期化ベクトルの実行時使用 (Runtime Use of Reused Initialization Vectors in Symmetric Encryption)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0310.md)
       - [MASTG-TEST-0312 暗号 API での明示的なセキュリティプロバイダへの参照 (References to Explicit Security Provider in Cryptographic APIs)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0312.md)
 
+    - MASVS-AUTH: 認証と認可
+      - [MASTG-TEST-0326 非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)](tests-beta/android/MASVS-AUTH/MASTG-TEST-0326.md)
+
     - MASVS-NETWORK: ネットワーク通信
       - [MASTG-TEST-0217 コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md)
       - [MASTG-TEST-0218 ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0218.md)
