@@ -30,3 +30,4 @@
 - [MASTG-BEST-0028](best-practices/MASTG-BEST-0028.md) WebView キャッシュをクリーンアップする (WebViews Cache Cleanup)
 - [MASTG-BEST-0029](best-practices/MASTG-BEST-0029.md) 耐性と RASP シグナルを実装する (Implementing Resilience and RASP Signals)
 - [MASTG-BEST-0030](best-practices/MASTG-BEST-0030.md) ルート検出を実装する (Implementing Root Detection)
+- [MASTG-BEST-0031](best-practices/MASTG-BEST-0031.md) 機密性の高い操作に強力な生体認証を導入する (Enforce Strong Biometrics for Sensitive Operations)
