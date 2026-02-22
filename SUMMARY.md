@@ -326,6 +326,7 @@
       - [MASTG-TEST-0326 非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)](tests-beta/android/MASVS-AUTH/MASTG-TEST-0326.md)
       - [MASTG-TEST-0327 イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)](tests-beta/android/MASVS-AUTH/MASTG-TEST-0327.md)
       - [MASTG-TEST-0328 生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)](tests-beta/android/MASVS-AUTH/MASTG-TEST-0328.md)
+      - [MASTG-TEST-0329 明示的なユーザーアクションなしでの認証を強制する API への参照 (References to APIs Enforcing Authentication without Explicit User Action)](tests-beta/android/MASVS-AUTH/MASTG-TEST-0329.md)
 
     - MASVS-NETWORK: ネットワーク通信
       - [MASTG-TEST-0217 コード内で明示的に許可された安全でない TLS プロトコル (Insecure TLS Protocols Explicitly Allowed in Code)](tests-beta/android/MASVS-NETWORK/MASTG-TEST-0217.md)
