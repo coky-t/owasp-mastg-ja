@@ -4,7 +4,7 @@ platform: android
 title: 難読化 (Obfuscation)
 ---
 
-["モバイルアプリの改竄とリバースエンジニアリング"](../../../Document/0x04c-Tampering-and-Reverse-Engineering.md#obfuscation) の章ではモバイルアプリ全般に使用できるよく知られた難読化技法をいくつか紹介しています。
+[難読化 (Obfuscation)](../../generic/MASVS-RESILIENCE/MASTG-KNOW-0111.md) ではモバイルアプリ全般に使用できるよく知られた難読化技法をいくつか紹介しています。
 
 Android アプリはさまざまなツールを使用してこれらの難読化技法のいくつかを実装できます。たとえば、 [ProGuard](../../../tools/android/MASTG-TOOL-0022.md) はコードを縮小して難読化し、Android Java アプリのバイトコードから不要なデバッグ情報を削除する簡単な方法を提供します。それはクラス名、メソッド名、変数名などの識別子を意味のない文字列に置き換えます。これはレイアウト難読化の一種であり、プログラムのパフォーマンスに影響はありません。
 
