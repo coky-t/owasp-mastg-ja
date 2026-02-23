@@ -85,6 +85,10 @@
 ### ナレッジ
 
 - [ナレッジ一覧](knowledge.md)
+  - Generic
+    - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+      - [MASTG-KNOW-0109 バイナリパッチ適用 (Binary Patching)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0109.md)
+
   - Android
     - MASVS-STORAGE: ストレージ
       - [MASTG-KNOW-0037 SQLite データベース (SQLite Database)](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0037.md)

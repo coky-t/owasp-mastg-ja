@@ -1,5 +1,20 @@
 # OWASP Mobile Application Security Testing Guide ja - knowledge
 
+## Generic
+
+### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
+
+- [MASTG-KNOW-0109](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0109.md) バイナリパッチ適用 (Binary Patching)
+<!--
+- [MASTG-KNOW-0110](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0110.md) コードインジェクション (Code Injection)
+- [MASTG-KNOW-0111](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0111.md) 難読化 (Obfuscation)
+- [MASTG-KNOW-0112](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0112.md) エミュレーションベースの動的解析 (Emulation-based Dynamic Analysis)
+- [MASTG-KNOW-0113](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0113.md) 逆アセンブラと逆コンパイラの使用 (Using Disassemblers and Decompilers)
+- [MASTG-KNOW-0114](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0114.md) デバッグとトレース (Debugging and Tracing)
+- [MASTG-KNOW-0115](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0115.md) 動的バイナリ計装 (Dynamic Binary Instrumentation)
+- [MASTG-KNOW-0116](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0116.md) シンボリック実行 (Symbolic Execution)
+-->
+
 ## Android
 
 ### MASVS-STORAGE: ストレージ
