@@ -3,25 +3,26 @@ title: 非ルート化デバイスでの動的解析 (Dynamic Analysis on Non-Ro
 platform: android
 ---
 
-### ??? 情報 "objection についての情報"
+ルート化されたデバイスにアクセスできない場合、対象アプリにパッチ適用して再パッケージ化し、起動時に動的ライブラリ (Frida ガジェットなど) をロードして、Frida や objection などの関連ツールを用いた動的テストを可能にします。iOS とは異なり、Android アプリは FairPlay で暗号化されていないため、デバイスから直接 APK を抽出したり、ルートアクセスなしで代替ストアからダウンロードできます。
 
-以下のコマンドは、Frida < 17 に依存する objection バージョン 1.11.0 のものです。objection を使用するには、`frida-tools==13.7.1` をインストールし、デバイスで 17 未満の `frida-server` を使用します。Frida 17 で objection を使用したい場合、objection リポジトリから最新バージョンを取得してローカルでビルドできます。いくつかのコマンドは以降のリリースで変更されているため、以下の手順を変更する必要があることに注意してください。たとえば、objection バージョン 2 では、API `explore` コマンドは `start` に置き換えられることが期待されています。更新バージョンが正式にリリースされた後、以下の手順は更新されるでしょう。
+> [!NOTE]
+> "Android エミュレータの使用"  
+> 研究者や楽手者にとって、多くの場合、Android エミュレータは最もシンプルな出発点となります。エミュレータで実行しているアプリは物理デバイスと同じハードウェア基盤の制限の影響をうけません。Frida ガジェットを使用せず (単に `frida -U` を使用するだけ)、バイナリにパッチ適用せず、アプリを再署名することなく、Frida をプロセスに直接アタッチできます。これにより、エミュレータは、実機テストに移行する前の、実験、スクリプト作成、動的解析技法の学習に最適になります。
 
-非ルート化デバイスにはアプリケーションの実行対象となる環境を複製できるという利点があります。
+以下のセクションでは、ルート化されていない実機でのプロセスの各ステップを順を追って説明します。
 
-[objection](../../tools/generic/MASTG-TOOL-0038.md) などのツールのおかげで、ルート化されたデバイスにいるかのようにアプリをテストするためにアプリにパッチを適用できます (もちろんそのアプリ一つに投獄されていますが)。そのためにはもう一つの手順を実行する必要があります。[APK にパッチを適用](https://github.com/sensepost/objection/wiki/Patching-Android-Applications#patching---patching-an-apk "patching - patching an APK") して、[Frida ガジェット](https://www.frida.re/docs/gadget/ "Frida Gadget") ライブラリをインクルードします。
+## 手順 1: APK を取得する
 
-これで objection を使用して、非ルート化デバイスでアプリケーションを動的に解析できます。
+[アプリの取得と抽出 (Obtaining and Extracting Apps)](MASTG-TECH-0003.md) に従い、テストしたいアプリの APK を取得します。
 
-以下のコマンドは、[Android UnCrackable L1](../../apps/android/MASTG-APP-0003.md) を例として、objection を使用してパッチを適用して動的解析を開始する方法をまとめたものです。
+## 手順 2: Frida ガジェットを注入する
 
-```bash
-# Download the Uncrackable APK
-$ wget https://raw.githubusercontent.com/OWASP/mastg/master/Crackmes/Android/Level_01/UnCrackable-Level1.apk
-# Patch the APK with the Frida Gadget
-$ objection patchapk --source UnCrackable-Level1.apk
-# Install the patched APK on the Android phone
-$ adb install UnCrackable-Level1.objection.apk
-# After running the mobile phone, objection can attach to the frida-server running through the APK by specifying the foreground process (-f).
-$ objection -f start
-```
+[ライブラリインジェクション (Library Injection)](MASTG-TECH-0041.md) に従い、APK にパッチ適用し、Frida ガジェットライブラリを注入します。[objection](../../tools/generic/MASTG-TOOL-0038.md) などのツールは [アプリの再パッケージ化 (Repackaging Apps)](MASTG-TECH-0004.md) で記述されているようにこのプロセスの大部分を自動化できます。
+
+## 手順 3: APK に署名する
+
+[再パッケージ化と再署名 (Repackaging & Re-Signing)](MASTG-TECH-0039.md) に従い、パッチ適用済み APK に再署名します。標準の Android デバッグキーストアで十分です。開発者アカウントや特別な証明書は必要ありません。
+
+## 手順 4: アプリをインストールする
+
+[アプリのインストール (Installing Apps)](MASTG-TECH-0005.md) に従い、再署名した APK をデバイスにインストールします。元のアプリが既にインストールされている場合は、Android は署名証明書が変更されたインストールを拒否するため、まずアンインストールする必要があります。
