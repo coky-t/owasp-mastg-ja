@@ -4,7 +4,7 @@ platform: ios
 title: 難読化 (Obfuscation)
 ---
 
-["モバイルアプリの改竄とリバースエンジニアリング"](../../../Document/0x04c-Tampering-and-Reverse-Engineering.md#obfuscation) の章では一般的にモバイルアプリで使用できるよく知られた難読化技法をいくつか紹介しています。
+[難読化 (Obfuscation)](../../generic/MASVS-RESILIENCE/MASTG-KNOW-0111.md) では一般的にモバイルアプリで使用できるよく知られた難読化技法をいくつか紹介しています。
 
 ## 名前の難読化
 
