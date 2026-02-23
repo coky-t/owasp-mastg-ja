@@ -1,6 +1,6 @@
 ---
 masvs_category: MASVS-CRYPTO
-platform: all
+platform: generic
 ---
 
 # モバイルアプリの暗号化
