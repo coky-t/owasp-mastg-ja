@@ -1,6 +1,6 @@
 ---
 masvs_category: MASVS-CODE
-platform: all
+platform: generic
 ---
 
 # モバイルアプリのコード品質
