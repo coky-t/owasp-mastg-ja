@@ -464,6 +464,16 @@
 ### テクニック
 
 - [テクニック一覧](techniques.md)
+  - Generic
+    - [MASTG-TECH-0047 リバースエンジニアリング (Reverse Engineering)](techniques/generic/MASTG-TECH-0047.md)
+    - [MASTG-TECH-0048 静的解析 (Static Analysis)](techniques/generic/MASTG-TECH-0048.md)
+    - [MASTG-TECH-0049 動的解析 (Dynamic Analysis)](techniques/generic/MASTG-TECH-0049.md)
+    - [MASTG-TECH-0050 バイナリ解析 (Binary Analysis)](techniques/generic/MASTG-TECH-0050.md)
+    - [MASTG-TECH-0051 改竄と実行時計装 (Tampering and Runtime Instrumentation)](techniques/generic/MASTG-TECH-0051.md)
+    - [MASTG-TECH-0119 アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)](techniques/generic/MASTG-TECH-0119.md)
+    - [MASTG-TECH-0120 傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)](techniques/generic/MASTG-TECH-0120.md)
+    - [MASTG-TECH-0121 傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)](techniques/generic/MASTG-TECH-0121.md)
+
   - Android
     - [MASTG-TECH-0004 アプリの再パッケージ化 (Repackaging Apps)](techniques/android/MASTG-TECH-0004.md)
     - [MASTG-TECH-0006 インストール済みアプリの一覧 (Listing Installed Apps)](techniques/android/MASTG-TECH-0006.md)
@@ -498,16 +508,6 @@
     - [MASTG-TECH-0142 WebView ストレージの検査 (Inspecting WebView Storage)](techniques/android/MASTG-TECH-0142.md)
     - [MASTG-TECH-0143 WebView でのファイルシステム操作の監視 (Monitor File System Operations in WebViews)](techniques/android/MASTG-TECH-0143.md)
     - [MASTG-TECH-0145 XAPK ファイルの扱い (Working with XAPK Files)](techniques/android/MASTG-TECH-0145.md)
-
-  - Generic
-    - [MASTG-TECH-0047 リバースエンジニアリング (Reverse Engineering)](techniques/generic/MASTG-TECH-0047.md)
-    - [MASTG-TECH-0048 静的解析 (Static Analysis)](techniques/generic/MASTG-TECH-0048.md)
-    - [MASTG-TECH-0049 動的解析 (Dynamic Analysis)](techniques/generic/MASTG-TECH-0049.md)
-    - [MASTG-TECH-0050 バイナリ解析 (Binary Analysis)](techniques/generic/MASTG-TECH-0050.md)
-    - [MASTG-TECH-0051 改竄と実行時計装 (Tampering and Runtime Instrumentation)](techniques/generic/MASTG-TECH-0051.md)
-    - [MASTG-TECH-0119 アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)](techniques/generic/MASTG-TECH-0119.md)
-    - [MASTG-TECH-0120 傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)](techniques/generic/MASTG-TECH-0120.md)
-    - [MASTG-TECH-0121 傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)](techniques/generic/MASTG-TECH-0121.md)
 
   - iOS
     - [MASTG-TECH-0055 再パッケージ化したアプリをデバッグモードで起動する (Launching a Repackaged App in Debug Mode)](techniques/ios/MASTG-TECH-0055.md)

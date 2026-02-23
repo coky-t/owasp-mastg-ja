@@ -1,5 +1,22 @@
 # OWASP Mobile Application Security Testing Guide ja - techniques
 
+## Generic
+
+- [MASTG-TECH-0047](techniques/generic/MASTG-TECH-0047.md) リバースエンジニアリング (Reverse Engineering)
+- [MASTG-TECH-0048](techniques/generic/MASTG-TECH-0048.md) 静的解析 (Static Analysis)
+- [MASTG-TECH-0049](techniques/generic/MASTG-TECH-0049.md) 動的解析 (Dynamic Analysis)
+- [MASTG-TECH-0050](techniques/generic/MASTG-TECH-0050.md) バイナリ解析 (Binary Analysis)
+- [MASTG-TECH-0051](techniques/generic/MASTG-TECH-0051.md) 改竄と実行時計装 (Tampering and Runtime Instrumentation)
+- [MASTG-TECH-0119](techniques/generic/MASTG-TECH-0119.md) アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)
+- [MASTG-TECH-0120](techniques/generic/MASTG-TECH-0120.md) 傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)
+- [MASTG-TECH-0121](techniques/generic/MASTG-TECH-0121.md) 傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)
+<!--
+- [MASTG-TECH-0122](techniques/generic/MASTG-TECH-0122.md) 受動的な盗聴 (Passive Eavesdropping)
+- [MASTG-TECH-0123](techniques/generic/MASTG-TECH-0123.md) ARP スプーフィングによる MITM ポジションを獲得する (Achieving a MITM Position via ARP Spoofing)
+- [MASTG-TECH-0124](techniques/generic/MASTG-TECH-0124.md) 不正アクセスポイントを使用して MITM ポジションを獲得する (Achieving a MITM Position Using a Rogue Access Point)
+- [MASTG-TECH-0125](techniques/generic/MASTG-TECH-0125.md) Xamarin トラフィックの傍受 (Intercepting Xamarin Traffic)
+-->
+
 ## Android
 
 <!--
@@ -92,23 +109,6 @@
 - [MASTG-TECH-0144](techniques/android/MASTG-TECH-0144.md) ルート検出のバイパス (Bypassing Root Detection)
 -->
 - [MASTG-TECH-0145](techniques/android/MASTG-TECH-0145.md) XAPK ファイルの扱い (Working with XAPK Files)
-
-## Generic
-
-- [MASTG-TECH-0047](techniques/generic/MASTG-TECH-0047.md) リバースエンジニアリング (Reverse Engineering)
-- [MASTG-TECH-0048](techniques/generic/MASTG-TECH-0048.md) 静的解析 (Static Analysis)
-- [MASTG-TECH-0049](techniques/generic/MASTG-TECH-0049.md) 動的解析 (Dynamic Analysis)
-- [MASTG-TECH-0050](techniques/generic/MASTG-TECH-0050.md) バイナリ解析 (Binary Analysis)
-- [MASTG-TECH-0051](techniques/generic/MASTG-TECH-0051.md) 改竄と実行時計装 (Tampering and Runtime Instrumentation)
-- [MASTG-TECH-0119](techniques/generic/MASTG-TECH-0119.md) アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)
-- [MASTG-TECH-0120](techniques/generic/MASTG-TECH-0120.md) 傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)
-- [MASTG-TECH-0121](techniques/generic/MASTG-TECH-0121.md) 傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)
-<!--
-- [MASTG-TECH-0122](techniques/generic/MASTG-TECH-0122.md) 受動的な盗聴 (Passive Eavesdropping)
-- [MASTG-TECH-0123](techniques/generic/MASTG-TECH-0123.md) ARP スプーフィングによる MITM ポジションを獲得する (Achieving a MITM Position via ARP Spoofing)
-- [MASTG-TECH-0124](techniques/generic/MASTG-TECH-0124.md) 不正アクセスポイントを使用して MITM ポジションを獲得する (Achieving a MITM Position Using a Rogue Access Point)
-- [MASTG-TECH-0125](techniques/generic/MASTG-TECH-0125.md) Xamarin トラフィックの傍受 (Intercepting Xamarin Traffic)
--->
 
 ## iOS
 
@@ -209,3 +209,6 @@
 - [MASTG-TECH-0138](techniques/ios/MASTG-TECH-0138.md) Plist ファイルを JSON に変換する (Convert Plist Files to JSON)
 -->
 - [MASTG-TECH-0139](techniques/ios/MASTG-TECH-0139.md) WKWebView にアタッチする (Attach to WKWebView)
+<!--
+- [MASTG-TECH-0146](techniques/ios/MASTG-TECH-0146.md) 脱獄していないデバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)
+-->
