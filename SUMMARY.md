@@ -89,6 +89,7 @@
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
       - [MASTG-KNOW-0109 バイナリパッチ適用 (Binary Patching)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0109.md)
       - [MASTG-KNOW-0110 コードインジェクション (Code Injection)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0110.md)
+      - [MASTG-KNOW-0111 難読化 (Obfuscation)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0111.md)
 
   - Android
     - MASVS-STORAGE: ストレージ
