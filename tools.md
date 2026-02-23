@@ -1,5 +1,30 @@
 # OWASP Mobile Application Security Testing Guide ja - tools
 
+## Generic
+
+- [MASTG-TOOL-0031](tools/generic/MASTG-TOOL-0031.md) Frida
+- [MASTG-TOOL-0032](tools/generic/MASTG-TOOL-0032.md) Frida CodeShare
+- [MASTG-TOOL-0033](tools/generic/MASTG-TOOL-0033.md) Ghidra
+- [MASTG-TOOL-0034](tools/generic/MASTG-TOOL-0034.md) LIEF
+- [MASTG-TOOL-0035](tools/generic/MASTG-TOOL-0035.md) MobSF
+- [MASTG-TOOL-0036](tools/generic/MASTG-TOOL-0036.md) r2frida
+- [MASTG-TOOL-0037](tools/generic/MASTG-TOOL-0037.md) RMS Runtime Mobile Security
+- [MASTG-TOOL-0038](tools/generic/MASTG-TOOL-0038.md) objection
+- [MASTG-TOOL-0098](tools/generic/MASTG-TOOL-0098.md) iaito
+- [MASTG-TOOL-0100](tools/generic/MASTG-TOOL-0100.md) re-flutter
+- [MASTG-TOOL-0101](tools/generic/MASTG-TOOL-0101.md) disable-flutter-tls-verification
+- [MASTG-TOOL-0104](tools/generic/MASTG-TOOL-0104.md) hermes-dec
+- [MASTG-TOOL-0106](tools/generic/MASTG-TOOL-0106.md) Fridump
+- [MASTG-TOOL-0108](tools/generic/MASTG-TOOL-0108.md) Corellium
+- [MASTG-TOOL-0110](tools/generic/MASTG-TOOL-0110.md) semgrep
+- [MASTG-TOOL-0129](tools/generic/MASTG-TOOL-0129.md) rabin2
+- [MASTG-TOOL-0131](tools/generic/MASTG-TOOL-0131.md) dependency-check
+- [MASTG-TOOL-0132](tools/generic/MASTG-TOOL-0132.md) dependency-track
+- [MASTG-TOOL-0133](tools/generic/MASTG-TOOL-0133.md) Visual Studio Code (vscode)
+- [MASTG-TOOL-0134](tools/generic/MASTG-TOOL-0134.md) cdxgen
+- [MASTG-TOOL-0144](tools/generic/MASTG-TOOL-0144.md) gitleaks
+- [MASTG-TOOL-0145](tools/generic/MASTG-TOOL-0145.md) Frooky
+
 ## Android
 
 - [MASTG-TOOL-0001](tools/android/MASTG-TOOL-0001.md) Frida (Android)
@@ -47,31 +72,6 @@
 - [MASTG-TOOL-0147](tools/android/MASTG-TOOL-0147.md) Android RASP
 - [MASTG-TOOL-0148](tools/android/MASTG-TOOL-0148.md) apkeep
 - [MASTG-TOOL-0149](tools/android/MASTG-TOOL-0149.md) LSPosed
-
-## Generic
-
-- [MASTG-TOOL-0031](tools/generic/MASTG-TOOL-0031.md) Frida
-- [MASTG-TOOL-0032](tools/generic/MASTG-TOOL-0032.md) Frida CodeShare
-- [MASTG-TOOL-0033](tools/generic/MASTG-TOOL-0033.md) Ghidra
-- [MASTG-TOOL-0034](tools/generic/MASTG-TOOL-0034.md) LIEF
-- [MASTG-TOOL-0035](tools/generic/MASTG-TOOL-0035.md) MobSF
-- [MASTG-TOOL-0036](tools/generic/MASTG-TOOL-0036.md) r2frida
-- [MASTG-TOOL-0037](tools/generic/MASTG-TOOL-0037.md) RMS Runtime Mobile Security
-- [MASTG-TOOL-0038](tools/generic/MASTG-TOOL-0038.md) objection
-- [MASTG-TOOL-0098](tools/generic/MASTG-TOOL-0098.md) iaito
-- [MASTG-TOOL-0100](tools/generic/MASTG-TOOL-0100.md) re-flutter
-- [MASTG-TOOL-0101](tools/generic/MASTG-TOOL-0101.md) disable-flutter-tls-verification
-- [MASTG-TOOL-0104](tools/generic/MASTG-TOOL-0104.md) hermes-dec
-- [MASTG-TOOL-0106](tools/generic/MASTG-TOOL-0106.md) Fridump
-- [MASTG-TOOL-0108](tools/generic/MASTG-TOOL-0108.md) Corellium
-- [MASTG-TOOL-0110](tools/generic/MASTG-TOOL-0110.md) semgrep
-- [MASTG-TOOL-0129](tools/generic/MASTG-TOOL-0129.md) rabin2
-- [MASTG-TOOL-0131](tools/generic/MASTG-TOOL-0131.md) dependency-check
-- [MASTG-TOOL-0132](tools/generic/MASTG-TOOL-0132.md) dependency-track
-- [MASTG-TOOL-0133](tools/generic/MASTG-TOOL-0133.md) Visual Studio Code (vscode)
-- [MASTG-TOOL-0134](tools/generic/MASTG-TOOL-0134.md) cdxgen
-- [MASTG-TOOL-0144](tools/generic/MASTG-TOOL-0144.md) gitleaks
-- [MASTG-TOOL-0145](tools/generic/MASTG-TOOL-0145.md) Frooky
 
 ## iOS
 
