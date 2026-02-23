@@ -93,6 +93,7 @@
       - [MASTG-KNOW-0112 エミュレーションベースの動的解析 (Emulation-based Dynamic Analysis)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0112.md)
       - [MASTG-KNOW-0113 逆アセンブラと逆コンパイラの使用 (Using Disassemblers and Decompilers)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0113.md)
       - [MASTG-KNOW-0114 デバッグとトレース (Debugging and Tracing)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0114.md)
+      - [MASTG-KNOW-0115 動的バイナリ計装 (Dynamic Binary Instrumentation)](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0115.md)
 
   - Android
     - MASVS-STORAGE: ストレージ

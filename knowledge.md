@@ -10,8 +10,8 @@
 - [MASTG-KNOW-0112](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0112.md) エミュレーションベースの動的解析 (Emulation-based Dynamic Analysis)
 - [MASTG-KNOW-0113](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0113.md) 逆アセンブラと逆コンパイラの使用 (Using Disassemblers and Decompilers)
 - [MASTG-KNOW-0114](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0114.md) デバッグとトレース (Debugging and Tracing)
-<!--
 - [MASTG-KNOW-0115](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0115.md) 動的バイナリ計装 (Dynamic Binary Instrumentation)
+<!--
 - [MASTG-KNOW-0116](knowledge/generic/MASVS-RESILIENCE/MASTG-KNOW-0116.md) シンボリック実行 (Symbolic Execution)
 -->
 
