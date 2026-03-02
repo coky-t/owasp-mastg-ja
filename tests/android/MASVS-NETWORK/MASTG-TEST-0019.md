@@ -33,7 +33,7 @@ deprecation_note: New version available in MASTG V2
 - AndroidManifest.xml ファイルの `<application>` タグの [`android:usesCleartextTraffic`](https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic "Android documentation - usesCleartextTraffic flag") 属性を設定します。なお Network Security Configuration を設定している場合、このフラグは無視されることに注意してください。
 - Network Security Configuration を設定して、 `<domain-config>` 要素の `cleartextTrafficPermitted` 属性を true に設定することでクリアテキストトラフィックを有効にします。
 - 低レベル API ([`Socket`](https://developer.android.com/reference/java/net/Socket "Socket class") など) を使用して、カスタム HTTP 接続をセットアップします。
-- クロスプラットフォームフレームワーク (Flutter, Xamarin など) を使用します。これらは一般的に HTTP ライブラリ用の独自の実装を持っているためです。
+- クロスプラットフォームフレームワーク (Flutter など) を使用します。これらは一般的に HTTP ライブラリ用の独自の実装を持っているためです。
 
 上記のすべてのケースは全体として慎重に分析しなければなりません。たとえば、アプリが Android Manifest や Network Security Configuration でクリアテキストトラフィックを許可していなくても、実際にはまだ HTTP トラフィックを送信している可能性があります。低レベル API (Network Security Configuration が無視される) を使用している場合やクロスプラットフォームフレームワークが適切に設定されていない場合がそれにあたります。
 
