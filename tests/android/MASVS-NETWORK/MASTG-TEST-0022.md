@@ -94,7 +94,9 @@ myWebView.setWebViewClient(new WebViewClient(){
 
 あるいは、ピンが設定された OkHttpClient を使用し、それを `WebViewClient` の `shouldInterceptRequest` をオーバーライドするプロキシとして機能させるのがよいでしょう。
 
-### Xamarin アプリケーション
+### Xamarin アプリケーション (レガシー – サポート終了)
+
+Xamarin は 2024 年 5 月 1 日をもって [サポート終了 (End of Support, EoS)](https://dotnet.microsoft.com/en-us/apps/xamarin) となり、今後セキュリティパッチやアップデートの提供はありません。新しいプロジェクトでは Microsoft がサポートするクロスプラットフォームの後継である [.NET MAUI](https://dotnet.microsoft.com/en-us/apps/maui) をターゲットにする必要があります。
 
 Xamarin で開発されたアプリケーションは一般的に `ServicePointManager` を使用してピン留めを実装します。
 
