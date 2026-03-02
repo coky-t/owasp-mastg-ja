@@ -34,7 +34,7 @@ deprecation_note: New version available in MASTG V2
 
 > **Apple の推奨事項: アプリでは高レベルフレームワークを優先すること**: 「ATS はアプリが Network フレームワークや CFNetwork などの低レベルネットワークインタフェースに対して行う呼び出しには適用されません。これらの場合、接続のセキュリティを確保するのはあなたの責任です。この方法でセキュア接続を構築できますが、ミスを犯しやすく、コストもかかります。代わりに Loading System を使用するのが通常はもっとも安全です ([出典](https://developer.apple.com/documentation/security/preventing_insecure_network_connections) を参照) 。」
 
-アプリが [`Network`](https://developer.apple.com/documentation/network) や [`CFNetwork`](https://developer.apple.com/documentation/cfnetwork) などの低レベル API を使用している場合、それらがセキュアに使用されているかどうかを注意深く調査すべきです。クロスプラットフォームフレームワーク (Flutter, Xamarin など) やサードパーティフレームワーク (Alamofire など) を使用するアプリでは、それらがベストプラクティスに沿ってセキュアに設定され使用されているかどうかを解析すべきです。
+アプリが [`Network`](https://developer.apple.com/documentation/network) や [`CFNetwork`](https://developer.apple.com/documentation/cfnetwork) などの低レベル API を使用している場合、それらがセキュアに使用されているかどうかを注意深く調査すべきです。クロスプラットフォームフレームワーク (Flutter, React Native, Cordova など) やサードパーティフレームワーク (Alamofire など) を使用するアプリでは、それらがベストプラクティスに沿ってセキュアに設定され使用されているかどうかを解析すべきです。
 
 アプリについて以下を確認します。
 
