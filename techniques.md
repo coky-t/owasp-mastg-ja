@@ -79,7 +79,9 @@
 - [MASTG-TECH-0040](techniques/android/MASTG-TECH-0040.md) デバッガを待機 (Waiting for the Debugger)
 <!--
 - [MASTG-TECH-0041](techniques/android/MASTG-TECH-0041.md) ライブラリインジェクション (Library Injection)
+-->
 - [MASTG-TECH-0042](techniques/android/MASTG-TECH-0042.md) ロードされたクラスとメソッドを動的に取得 (Getting Loaded Classes and Methods Dynamically)
+<!--
 - [MASTG-TECH-0043](techniques/android/MASTG-TECH-0043.md) メソッドフック (Method Hooking)
 - [MASTG-TECH-0044](techniques/android/MASTG-TECH-0044.md) プロセス探索 (Process Exploration)
 - [MASTG-TECH-0045](techniques/android/MASTG-TECH-0045.md) ランタイムリバースエンジニアリング (Runtime Reverse Engineering)
