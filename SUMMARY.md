@@ -511,6 +511,7 @@
     - [MASTG-TECH-0042 ロードされたクラスとメソッドを動的に取得 (Getting Loaded Classes and Methods Dynamically)](techniques/android/MASTG-TECH-0042.md)
     - [MASTG-TECH-0115 コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](techniques/android/MASTG-TECH-0115.md)
     - [MASTG-TECH-0116 APK 署名に関する情報の取得 (Obtaining Information about the APK Signature)](techniques/android/MASTG-TECH-0116.md)
+    - [MASTG-TECH-0117 AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](techniques/android/MASTG-TECH-0117.md)
     - [MASTG-TECH-0126 アプリパーミッションの取得 (Obtaining App Permissions)](techniques/android/MASTG-TECH-0126.md)
     - [MASTG-TECH-0127 アプリのバックアップデータの検査 (Inspecting an App's Backup Data)](techniques/android/MASTG-TECH-0127.md)
     - [MASTG-TECH-0128 アプリデータのバックアップと復元の実行 (Performing a Backup and Restore of App Data)](techniques/android/MASTG-TECH-0128.md)
