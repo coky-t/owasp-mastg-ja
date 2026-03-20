@@ -530,6 +530,7 @@
     - [MASTG-TECH-0065 iOS アプリのリバースエンジニアリング (Reverse Engineering iOS Apps)](techniques/ios/MASTG-TECH-0065.md)
     - [MASTG-TECH-0066 iOS での静的解析 (Static Analysis on iOS)](techniques/ios/MASTG-TECH-0066.md)
     - [MASTG-TECH-0067 iOS での動的解析 (Dynamic Analysis on iOS)](techniques/ios/MASTG-TECH-0067.md)
+    - [MASTG-TECH-0068 ネイティブコードの逆アセンブル (Disassembling Native Code)](techniques/ios/MASTG-TECH-0068.md)
     - [MASTG-TECH-0069 ネイティブコードの逆コンパイル (Decompiling Native Code)](techniques/ios/MASTG-TECH-0069.md)
     - [MASTG-TECH-0071 文字列の取得 (Retrieving Strings)](techniques/ios/MASTG-TECH-0071.md)
     - [MASTG-TECH-0072 相互参照の取得 (Retrieving Cross References)](techniques/ios/MASTG-TECH-0072.md)
