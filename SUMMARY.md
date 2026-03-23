@@ -374,6 +374,7 @@
       - [MASTG-TEST-0315 通知を介して露出する機密データ (Sensitive Data Exposed via Notifications)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0315.md)
       - [MASTG-TEST-0316 テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0316.md)
       - [MASTG-TEST-0320 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0320.md)
+      - [MASTG-TEST-0334 WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0334.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0222 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md)

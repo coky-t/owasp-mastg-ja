@@ -75,6 +75,7 @@
 - [MASTG-TEST-0315](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0315.md) 通知を介して露出する機密データ (Sensitive Data Exposed via Notifications)
 - [MASTG-TEST-0316](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0316.md) テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 - [MASTG-TEST-0320](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0320.md) 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)
+- [MASTG-TEST-0334](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0334.md) WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)
 
 ### MASVS-CODE: コード品質
 
