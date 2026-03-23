@@ -172,7 +172,9 @@
 - [MASTG-TECH-0088](techniques/ios/MASTG-TECH-0088.md) エミュレーションベースの解析 (Emulation-based Analysis)
 - [MASTG-TECH-0089](techniques/ios/MASTG-TECH-0089.md) シンボリック実行 (Symbolic Execution)
 - [MASTG-TECH-0090](techniques/ios/MASTG-TECH-0090.md) Frida Gadget を IPA 内に自動的に注入する (Injecting Frida Gadget into an IPA Automatically)
+-->
 - [MASTG-TECH-0091](techniques/ios/MASTG-TECH-0091.md) ライブラリを IPA 内に手作業で注入する (Injecting Libraries into an IPA Manually)
+<!--
 - [MASTG-TECH-0092](techniques/ios/MASTG-TECH-0092.md) 再パッケージ化と再署名 (Repackaging and Re-Signing)
 -->
 - [MASTG-TECH-0093](techniques/ios/MASTG-TECH-0093.md) デバッガを待機 (Waiting for the debugger)

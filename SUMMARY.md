@@ -544,6 +544,7 @@
     - [MASTG-TECH-0085 実行トレース (Execution Tracing)](techniques/ios/MASTG-TECH-0085.md)
     - [MASTG-TECH-0086 メソッドトレース (Method Tracing)](techniques/ios/MASTG-TECH-0086.md)
     - [MASTG-TECH-0087 ネイティブコードトレース (Native Code Tracing)](techniques/ios/MASTG-TECH-0087.md)
+    - [MASTG-TECH-0091 ライブラリを IPA 内に手作業で注入する (Injecting Libraries into an IPA Manually)](techniques/ios/MASTG-TECH-0091.md)
     - [MASTG-TECH-0093 デバッガを待機 (Waiting for the debugger)](techniques/ios/MASTG-TECH-0093.md)
     - [MASTG-TECH-0094 ロードされたクラスとメソッドを動的に取得 (Getting Loaded Classes and Methods dynamically)](techniques/ios/MASTG-TECH-0094.md)
     - [MASTG-TECH-0098 React Native アプリのパッチ適用 (Patching React Native Apps)](techniques/ios/MASTG-TECH-0098.md)
