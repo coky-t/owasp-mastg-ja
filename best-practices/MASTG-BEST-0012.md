@@ -6,14 +6,29 @@ platform: android
 knowledge: [MASTG-KNOW-0018]
 ---
 
-JavaScript が **必要ではない** 場合は、[`setJavaScriptEnabled(false)`](https://developer.android.com/reference/android/webkit/WebSettings.html#setJavaScriptEnabled%28boolean%29) を設定して、WebView で明示的に無効にします。
+JavaScript を有効にすることは **それ自体としては脆弱性ではありません**。実際のアプリでは、現代のウェブアプリケーション、インタラクティブなアカウントポータル、サポートセンター、決済、ログインフロー、ウェブテクノロジで構築されたハイブリッドアプリコンテンツを描画するなど、正当な機能に必要とされることがよくあります。Ionic や Capacitor といったフレームワークは JavaScript アプリケーションコードを実行する WebView を中心に構築されており、`react-native-webview` はウェブコンテンツをネイティブビューに描画するために特化して存在します。
 
-WebView で JavaScript を有効にすると、**攻撃対象領域が拡大** し、アプリが以下のような重大なセキュリティリスクにさらされる可能性があります。
+Android のガイダンスは JavaScript を有効にした WebView の安全でない使用を [クロスアプリスクリプティング](https://developer.android.com/privacy-and-security/risks/cross-app-scripting) と関連付けています。JavaScript は WebView の攻撃対象領域を増やしますが、深刻なケースは一般的に次の条件のいずれかまたは複数と組み合わされた時に発生します: 信頼できないコンテンツや十分に検証されていないコンテンツのロード、JavaScript ブリッジの露出、ファイルやコンテンツへの自由なアクセスの許可、安全でない URL ローディングの使用。
 
-- **[Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/):** 悪意のある JavaScript が WebView 内で実行され、セッションハイジャック、クレデンシャル窃取、改竄につながる可能性があります。
-- **データ流出:** WebView は Cookie、トークン、ローカルファイルなどの機密データに (`setAllowFileAccess(true)`, `setAllowFileAccessFromFileURLs(true)`, または `setAllowContentAccess(true)` が有効になっている場合は `file://` または `content://` URI で経由して) アクセスできます。`setAllowUniversalAccessFromFileURLs(true)` が設定されている場合は、悪意のあるスクリプトによってこれらのデータが流出する可能性があります。
-- **不正なデバイスアクセス:** JavaScript を `addJavascriptInterface` と組み合わせて使用すると、公開されているネイティブ Android インタフェースを悪用して、リモートコード実行 (RCE) を引き起こす可能性があります。
+## 必要でない場合には WebView で JavaScript を無効のままとする
 
-アプリの要件により、これが可能ではないこともあります。そのような場合には、適切な入力バリデーション、出力エンコーディング、その他のセキュリティ対策を実装していることを確認してください。
+JavaScript は [WebViews ではデフォルトで無効にされています](https://developer.android.com/develop/ui/views/layout/webapps/webview#EnablingJavaScript)。JavaScript が必要でない場合は、最初から有効にしないか、WebView で [`setJavaScriptEnabled(false)`](https://developer.android.com/reference/android/webkit/WebSettings.html#setJavaScriptEnabled%28boolean%29) を用いて [明示的に無効にします](https://developer.android.com/privacy-and-security/risks/cross-app-scripting#cross-app-scripting-disable-javascript)。
 
-注: アプリでより安全にウェブコンテンツを表示する方法を提供する、[Trusted Web Activities](https://developer.android.com/guide/topics/app-bundle/trusted-web-activities) や [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/overview/) など、通常の WebView に代わるものを使用したいことがあります。このような場合、JavaScript はブラウザ環境内で処理され、最新のセキュリティアップデート、サンドボックス化、およびクロスサイトスクリプティング (XSS) や中間マシン (MITM) 攻撃などの一般的なウェブ脆弱性に対する緩和策の恩恵を受けることができます。
+- 静的コンテンツまたは最小限のインタラクティブコンテンツのみを表示する WebView では JavaScript を無効のままにします。該当するものには、静的ヘルプページ、法的文書、リリースノート、その他クライアントサイドスクリプティングを必要としない制御されたコンテンツなどがあります。
+- WebView が信頼できるウェブアプリケーションロジックを実行するために意図的に使用される場合にのみ、JavaScript を有効にします。該当するものには、ハイブリッドアプリ画面、複雑な内部ウェブアプリ、シングルページアプリケーション、描画や機能に JavaScript を必要とするウェブベースのユーザーエクスペリエンスなどがあります。
+
+## 実現可能である場合には外部コンテンツに WebView 以外の代替手段を使用する
+
+外部ウェブコンテンツを開くためだけに必要であれば、WebView を埋め込む代わりに [カスタムタブ](https://developer.chrome.com/docs/android/custom-tabs/overview/) の使用を検討します。自身で管理するウェブアプリを配布する場合には、[Trusted Web Activities](https://developer.android.com/develop/ui/views/layout/webapps/trusted-web-activities) も適切なものとなるかもしれません。これらのオプションは描画をアプリの WebView ではなくブラウザのコンテキストに移し、アプリ固有の WebView リスクを軽減できます。ウェブコンテンツ自体を保護する必要性は除かれてはいません。
+
+カスタムタブは認証やその他のブラウザベースのフローに特に適しています。Android はサインインにそれらを推奨しており、ホストアプリがコンテンツを検査できないことを注記しています。また Trusted Web Activities は、ホストアプリがウェブコンテンツや、クッキーや `localStorage` などのウェブ状態に直接アクセスすることも防止します。
+
+## JavaScript が必要とされる場合には WebView を堅牢化する
+
+JavaScript が必要とされる場合には、関連する MASTG ベストプラクティスで説明されている、WebView 固有の堅牢化策を適用して、増加した攻撃対象領域を緩和します。これには以下を含みますが、それに限定されません。
+
+- 想定され、許可リストにあるオリジンのみをロードします。
+- `loadUrl`, `shouldOverrideUrlLoading`, または同様の API を呼び出す前に、スキームとホストを検証します。
+- 厳密に必要とされる場合を除き、ファイルとコンテンツへのアクセスを無効にします ([WebView でファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)](MASTG-BEST-0011.md) および [WebView でコンテンツプロバイダアクセスを無効にする (Disable Content Provider Access in WebViews)](MASTG-BEST-0013.md))。
+- 信頼できないコンテンツへの JavaScript ブリッジの露出を避けます ([従来の JavaScript ブリッジよりもオリジンスコープメッセージングを優先する (Prefer Origin Scoped Messaging Over Legacy JavaScript Bridges)](MASTG-BEST-0035.md))。
+- WebView 実装でサポートされている場合にはセーフブラウジングを有効にします。たとえば [`WebSettings.setSafeBrowsingEnabled(true)`](https://developer.android.com/reference/android/webkit/WebSettings#setSafeBrowsingEnabled(boolean)) を呼び出します (Android 8.0, API レベル 26 以降で利用可能)。
