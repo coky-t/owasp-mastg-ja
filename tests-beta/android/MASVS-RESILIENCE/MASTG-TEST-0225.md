@@ -1,5 +1,5 @@
 ---
-title: 安全でない署名鍵サイズの使用 (Usage of Insecure Signature Key Size)
+title: 安全でない APK 署名鍵サイズの使用 (Usage of Insecure APK Signature Key Size)
 platform: android
 id: MASTG-TEST-0225
 type: [static]

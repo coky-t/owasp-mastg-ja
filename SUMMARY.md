@@ -383,8 +383,8 @@
       - [MASTG-TEST-0274 アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md)
 
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
-      - [MASTG-TEST-0224 安全でない署名バージョンの使用 (Usage of Insecure Signature Version)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0224.md)
-      - [MASTG-TEST-0225 安全でない署名鍵サイズの使用 (Usage of Insecure Signature Key Size)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0225.md)
+      - [MASTG-TEST-0224 安全でない APK 署名バージョンの使用 (Usage of Insecure APK Signature Version)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0224.md)
+      - [MASTG-TEST-0225 安全でない APK 署名鍵サイズの使用 (Usage of Insecure APK Signature Key Size)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0225.md)
       - [MASTG-TEST-0226 AndroidManifest で有効になっているデバッグフラグ (Debuggable Flag Enabled in the AndroidManifest)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0226.md)
       - [MASTG-TEST-0227 WebView のデバッグが有効 (Debugging Enabled for WebViews)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0227.md)
       - [MASTG-TEST-0247 安全な画面ロックを検出するための API への参照 (References to APIs for Detecting Secure Screen Lock)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0247.md)

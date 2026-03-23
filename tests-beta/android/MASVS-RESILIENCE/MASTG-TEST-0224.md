@@ -1,5 +1,5 @@
 ---
-title: 安全でない署名バージョンの使用 (Usage of Insecure Signature Version)
+title: 安全でない APK 署名バージョンの使用 (Usage of Insecure APK Signature Version)
 platform: android
 id: MASTG-TEST-0x39-1
 type: [static]
