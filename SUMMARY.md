@@ -450,6 +450,7 @@
       - [MASTG-TEST-0280 ローカルデバイスに制限されていないペーストボードコンテンツ (Pasteboard Contents Not Restricted to Local Device)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0280.md)
       - [MASTG-TEST-0290 アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0290.md)
       - [MASTG-TEST-0331 非推奨の WebView API の使用 (Use of Deprecated WebView APIs)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0331.md)
+      - [MASTG-TEST-0332 WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0332.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0228 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md)

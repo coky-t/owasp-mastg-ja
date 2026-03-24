@@ -160,8 +160,8 @@
 - [MASTG-TEST-0280](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0280.md) ローカルデバイスに制限されていないペーストボードコンテンツ (Pasteboard Contents Not Restricted to Local Device)
 - [MASTG-TEST-0290](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0290.md) アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)
 - [MASTG-TEST-0331](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0331.md) 非推奨の WebView API の使用 (Use of Deprecated WebView APIs)
-<!--
 - [MASTG-TEST-0332](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0332.md) WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)
+<!--
 - [MASTG-TEST-0333](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0333.md) WebView での過度に広範なファイル読み取りアクセス (Overly Broad File Read Access in WebViews)
 -->
 
