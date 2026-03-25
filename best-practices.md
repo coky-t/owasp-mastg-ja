@@ -31,3 +31,9 @@
 - [MASTG-BEST-0029](best-practices/MASTG-BEST-0029.md) 耐性と RASP シグナルを実装する (Implementing Resilience and RASP Signals)
 - [MASTG-BEST-0030](best-practices/MASTG-BEST-0030.md) ルート検出を実装する (Implementing Root Detection)
 - [MASTG-BEST-0031](best-practices/MASTG-BEST-0031.md) 機密性の高い操作に強力な生体認証を導入する (Enforce Strong Biometrics for Sensitive Operations)
+- [MASTG-BEST-0032](best-practices/MASTG-BEST-0032.md) UIWebView から WKWebView に移行する (Migrate from UIWebView to WKWebView)
+<!--
+- [MASTG-BEST-0033](best-practices/MASTG-BEST-0033.md) WebView にファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)
+- [MASTG-BEST-0034](best-practices/MASTG-BEST-0034.md) WebView の入力を検証する (Validate WebView Input)
+- [MASTG-BEST-0035](best-practices/MASTG-BEST-0035.md) 従来の JavaScript ブリッジよりもオリジンスコープメッセージングを優先する (Prefer Origin Scoped Messaging Over Legacy JavaScript Bridges)
+-->
