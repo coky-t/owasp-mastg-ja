@@ -82,6 +82,7 @@
   - [MASTG-BEST-0030 ルート検出を実装する (Implementing Root Detection)](best-practices/MASTG-BEST-0030.md)
   - [MASTG-BEST-0031 機密性の高い操作に強力な生体認証を導入する (Enforce Strong Biometrics for Sensitive Operations)](best-practices/MASTG-BEST-0031.md)
   - [MASTG-BEST-0032 UIWebView から WKWebView に移行する (Migrate from UIWebView to WKWebView)](best-practices/MASTG-BEST-0032.md)
+  - [MASTG-BEST-0033 WebView にファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)](best-practices/MASTG-BEST-0033.md)
 
 ### ナレッジ
 
