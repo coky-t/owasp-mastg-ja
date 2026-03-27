@@ -55,4 +55,4 @@ Writing executable to Payload/UnCrackable Level 1.app/UnCrackable Level 1...
 zip -r patched.ipa Payload
 ```
 
-App Store から入手した iOS アプリケーションをデバッグするには、`get-task-allow` エンタイトルメントを含む開発プロビジョニングプロファイルで再署名する必要があります。アプリケーションの再署名方法については [非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)](MASTG-TECH-0079.md) で説明されています。
+App Store から入手した iOS アプリケーションをデバッグするには、`get-task-allow` エンタイトルメントを含む開発プロビジョニングプロファイルで再署名する必要があります。アプリをデバッグ可能にするパッチ適用の完全なワークフローは [パッチ適用 (Patching)](MASTG-TECH-0147.md) を参照してください。
