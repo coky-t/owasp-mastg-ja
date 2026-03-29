@@ -37,6 +37,4 @@
 - [MASTG-BEST-0035](best-practices/MASTG-BEST-0035.md) 従来の JavaScript ブリッジよりもオリジンスコープメッセージングを優先する (Prefer Origin Scoped Messaging Over Legacy JavaScript Bridges)
 - [MASTG-BEST-0036](best-practices/MASTG-BEST-0036.md) 生体認証には暗号バインディングを使用する (Use Cryptographic Binding for Biometric Authentication)
 - [MASTG-BEST-0037](best-practices/MASTG-BEST-0037.md) 登録変更時に生体鍵を無効にする (Invalidate Biometric Keys on Enrollment Changes)
-<!--
 - [MASTG-BEST-0038](best-practices/MASTG-BEST-0038.md) 生体認証には明示的なユーザー確認を要求する (Require Explicit User Confirmation for Biometric Authentication)
--->
