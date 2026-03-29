@@ -85,6 +85,7 @@
   - [MASTG-BEST-0033 WebView にファイルコンテンツを安全にロードする (Securely Load File Content in a WebView)](best-practices/MASTG-BEST-0033.md)
   - [MASTG-BEST-0034 WebView の入力を検証する (Validate WebView Input)](best-practices/MASTG-BEST-0034.md)
   - [MASTG-BEST-0035 従来の JavaScript ブリッジよりもオリジンスコープメッセージングを優先する (Prefer Origin Scoped Messaging Over Legacy JavaScript Bridges)](best-practices/MASTG-BEST-0035.md)
+  - [MASTG-BEST-0036 生体認証には暗号バインディングを使用する (Use Cryptographic Binding for Biometric Authentication)](best-practices/MASTG-BEST-0036.md)
 
 ### ナレッジ
 
