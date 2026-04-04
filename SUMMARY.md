@@ -560,6 +560,7 @@
     - [MASTG-TECH-0094 ロードされたクラスとメソッドを動的に取得 (Getting Loaded Classes and Methods dynamically)](techniques/ios/MASTG-TECH-0094.md)
     - [MASTG-TECH-0098 React Native アプリのパッチ適用 (Patching React Native Apps)](techniques/ios/MASTG-TECH-0098.md)
     - [MASTG-TECH-0112 コード署名フォーマットバージョンの取得 (Obtaining the Code Signature Format Version)](techniques/ios/MASTG-TECH-0112.md)
+    - [MASTG-TECH-0113 デバッグシンボルの取得 (Obtaining Debugging Symbols)](techniques/ios/MASTG-TECH-0113.md)
     - [MASTG-TECH-0114 シンボルのデマングリング (Demangling Symbols)](techniques/ios/MASTG-TECH-0114.md)
     - [MASTG-TECH-0132 SBOM を作成することによる iOS 依存関係のソフトウェアコンポジション分析 (SCA) (Software Composition Analysis (SCA) of iOS Dependencies by Creating a SBOM)](techniques/ios/MASTG-TECH-0132.md)
     - [MASTG-TECH-0135 生体認証のバイパス (Bypassing Biometric Authentication)](techniques/ios/MASTG-TECH-0135.md)

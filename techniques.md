@@ -190,9 +190,7 @@
 - [MASTG-TECH-0111](techniques/ios/MASTG-TECH-0111.md) MachO バイナリからエンタイトルメントの抽出 (Extracting Entitlements from MachO Binaries)
 -->
 - [MASTG-TECH-0112](techniques/ios/MASTG-TECH-0112.md) コード署名フォーマットバージョンの取得 (Obtaining the Code Signature Format Version)
-<!--
 - [MASTG-TECH-0113](techniques/ios/MASTG-TECH-0113.md) デバッグシンボルの取得 (Obtaining Debugging Symbols)
--->
 - [MASTG-TECH-0114](techniques/ios/MASTG-TECH-0114.md) シンボルのデマングリング (Demangling Symbols)
 <!--
 - [MASTG-TECH-0118](techniques/ios/MASTG-TECH-0118.md) コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)
@@ -211,4 +209,5 @@
 - [MASTG-TECH-0139](techniques/ios/MASTG-TECH-0139.md) WKWebView にアタッチする (Attach to WKWebView)
 <!--
 - [MASTG-TECH-0146](techniques/ios/MASTG-TECH-0146.md) 脱獄していないデバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)
+- [MASTG-TECH-0147](techniques/ios/MASTG-TECH-0147.md) パッチ適用 (Patching)
 -->
