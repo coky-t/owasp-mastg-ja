@@ -20,7 +20,7 @@ profiles: [L1, L2]
 
 ## 結果
 
-出力には `HostnameVerifier` が使用されている場所のリストを含みます。
+出力には `HostnameVerifier` が使用されている場所のリストを含む可能性があります。
 
 ## 評価
 
