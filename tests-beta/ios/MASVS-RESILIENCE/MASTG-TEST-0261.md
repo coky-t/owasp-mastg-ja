@@ -19,7 +19,7 @@ knowledge: [MASTG-KNOW-0062]
 
 ## 結果
 
-出力には `get-task-allow` エンタイトルメントの値を含みます。
+出力には `get-task-allow` エンタイトルメントの値を含む可能性があります。
 
 ## 評価
 
