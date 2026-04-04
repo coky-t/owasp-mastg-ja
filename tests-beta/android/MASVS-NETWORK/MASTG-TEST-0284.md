@@ -24,7 +24,7 @@ knowledge: [MASTG-KNOW-0010]
 
 ## 結果
 
-出力には SSL エラーを適切に処理する例外処理なしで `proceed()` を含む `onReceivedSslError(...)` が使用されている場所のリストを含みます。
+出力には SSL エラーを適切に処理する例外処理なしで `proceed()` を含む `onReceivedSslError(...)` が使用されている場所のリストを含む可能性があります。
 
 ## 評価
 
