@@ -22,7 +22,7 @@ knowledge: [MASTG-KNOW-0014]
 
 ## 結果
 
-出力には `minSdkVersion` の値を含みます。
+出力には `minSdkVersion` の値を含む可能性があります。
 
 ## 評価
 
