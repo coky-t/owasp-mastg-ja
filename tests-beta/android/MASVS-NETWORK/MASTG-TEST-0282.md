@@ -22,7 +22,7 @@ knowledge: [MASTG-KNOW-0010]
 
 ## 結果
 
-出力には `checkServerTrusted(...)` が使用されている場所のリストを含みます。
+出力には `checkServerTrusted(...)` が使用されている場所のリストを含む可能性があります。
 
 ## 評価
 
