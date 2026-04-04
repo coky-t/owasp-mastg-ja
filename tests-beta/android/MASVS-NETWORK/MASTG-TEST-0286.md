@@ -22,7 +22,7 @@ knowledge: [MASTG-KNOW-0014]
 
 ## 結果
 
-出力には Network Security Configuration ファイルのすべての `<trust-anchors>` と、定義されている `<certificates>` エントリを、存在する場合、含みます。
+出力には Network Security Configuration ファイルのすべての `<trust-anchors>` と、定義されている `<certificates>` エントリ (存在する場合) を含む可能性があります。
 
 ## 評価
 
