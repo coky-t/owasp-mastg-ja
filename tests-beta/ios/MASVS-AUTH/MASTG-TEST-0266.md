@@ -24,7 +24,7 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 結果
 
-解析ではコードベースで `LAContext.evaluatePolicy` および Keychain API が使用されている (または使用されていない) 場所を出力する可能性があります。
+出力にはコードベースで `LAContext.evaluatePolicy` および Keychain API が使用されている (または使用されていない) 場所を含む可能性があります。
 
 ## 評価
 
