@@ -389,6 +389,7 @@
       - [MASTG-TEST-0245 プラットフォームバージョン API への参照 (References to Platform Version APIs)](tests-beta/android/MASVS-CODE/MASTG-TEST-0245.md)
       - [MASTG-TEST-0272 Android プロジェクトでの既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)](tests-beta/android/MASVS-CODE/MASTG-TEST-0272.md)
       - [MASTG-TEST-0274 アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md)
+      - [MASTG-TEST-0337 信頼できないデータのオブジェクトデシリアライゼーションへの参照 (References to Object Deserialization of Untrusted Data)](tests-beta/android/MASVS-CODE/MASTG-TEST-0337.md)
 
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
       - [MASTG-TEST-0224 安全でない APK 署名バージョンの使用 (Usage of Insecure APK Signature Version)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0224.md)
