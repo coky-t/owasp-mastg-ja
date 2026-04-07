@@ -563,6 +563,7 @@
     - [MASTG-TECH-0112 コード署名フォーマットバージョンの取得 (Obtaining the Code Signature Format Version)](techniques/ios/MASTG-TECH-0112.md)
     - [MASTG-TECH-0113 デバッグシンボルの取得 (Obtaining Debugging Symbols)](techniques/ios/MASTG-TECH-0113.md)
     - [MASTG-TECH-0114 シンボルのデマングリング (Demangling Symbols)](techniques/ios/MASTG-TECH-0114.md)
+    - [MASTG-TECH-0118 コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](techniques/ios/MASTG-TECH-0118.md)
     - [MASTG-TECH-0132 SBOM を作成することによる iOS 依存関係のソフトウェアコンポジション分析 (SCA) (Software Composition Analysis (SCA) of iOS Dependencies by Creating a SBOM)](techniques/ios/MASTG-TECH-0132.md)
     - [MASTG-TECH-0135 生体認証のバイパス (Bypassing Biometric Authentication)](techniques/ios/MASTG-TECH-0135.md)
     - [MASTG-TECH-0139 WKWebView にアタッチする (Attach to WKWebView)](techniques/ios/MASTG-TECH-0139.md)

@@ -192,9 +192,7 @@
 - [MASTG-TECH-0112](techniques/ios/MASTG-TECH-0112.md) コード署名フォーマットバージョンの取得 (Obtaining the Code Signature Format Version)
 - [MASTG-TECH-0113](techniques/ios/MASTG-TECH-0113.md) デバッグシンボルの取得 (Obtaining Debugging Symbols)
 - [MASTG-TECH-0114](techniques/ios/MASTG-TECH-0114.md) シンボルのデマングリング (Demangling Symbols)
-<!--
 - [MASTG-TECH-0118](techniques/ios/MASTG-TECH-0118.md) コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)
--->
 - [MASTG-TECH-0132](techniques/ios/MASTG-TECH-0132.md) SBOM を作成することによる iOS 依存関係のソフトウェアコンポジション分析 (SCA) (Software Composition Analysis (SCA) of iOS Dependencies by Creating a SBOM)
 <!--
 - [MASTG-TECH-0133](techniques/ios/MASTG-TECH-0133.md) パッケージマネージャのアーティファクトをスキャンしての iOS 依存関係のソフトウェアコンポジション解析 (SCA) (Software Composition Analysis (SCA) of iOS Dependencies by Scanning Package Manager Artifacts)
