@@ -202,8 +202,8 @@
 <!--
 - [MASTG-TECH-0136](techniques/ios/MASTG-TECH-0136.md) PrivacyInfo.xcprivacy ファイルの取得 (Retrieving PrivacyInfo.xcprivacy Files)
 - [MASTG-TECH-0137](techniques/ios/MASTG-TECH-0137.md) PrivacyInfo.xcprivacy ファイルの解析 (Analyzing PrivacyInfo.xcprivacy Files)
-- [MASTG-TECH-0138](techniques/ios/MASTG-TECH-0138.md) Plist ファイルを JSON に変換する (Convert Plist Files to JSON)
 -->
+- [MASTG-TECH-0138](techniques/ios/MASTG-TECH-0138.md) Plist ファイルを JSON に変換する (Convert Plist Files to JSON)
 - [MASTG-TECH-0139](techniques/ios/MASTG-TECH-0139.md) WKWebView にアタッチする (Attach to WKWebView)
 <!--
 - [MASTG-TECH-0146](techniques/ios/MASTG-TECH-0146.md) 脱獄していないデバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)

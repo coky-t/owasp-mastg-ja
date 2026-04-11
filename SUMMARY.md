@@ -566,6 +566,7 @@
     - [MASTG-TECH-0118 コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](techniques/ios/MASTG-TECH-0118.md)
     - [MASTG-TECH-0132 SBOM を作成することによる iOS 依存関係のソフトウェアコンポジション分析 (SCA) (Software Composition Analysis (SCA) of iOS Dependencies by Creating a SBOM)](techniques/ios/MASTG-TECH-0132.md)
     - [MASTG-TECH-0135 生体認証のバイパス (Bypassing Biometric Authentication)](techniques/ios/MASTG-TECH-0135.md)
+    - [MASTG-TECH-0138 Plist ファイルを JSON に変換する (Convert Plist Files to JSON)](techniques/ios/MASTG-TECH-0138.md)
     - [MASTG-TECH-0139 WKWebView にアタッチする (Attach to WKWebView)](techniques/ios/MASTG-TECH-0139.md)
 
 ### ツール
