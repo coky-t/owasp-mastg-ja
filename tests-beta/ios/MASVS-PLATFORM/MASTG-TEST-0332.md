@@ -18,13 +18,13 @@ iOS アプリはさまざまな URL ロードメソッドを使用して [`WKWeb
 **リモート URL ローディング:**
 
 - [`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:))
-- [`load(_:mimeType:characterEncodingName:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:mimetype:characterencodingname:baseurl:))
 
 **ローカル URL およびコンテンツのローディング:**
 
 - [`loadFileRequest(_:allowingReadAccessTo:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadfilerequest(_:allowingreadaccessto:))
 - [`loadFileURL(_:allowingReadAccessTo:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadfileurl(_:allowingreadaccessto:))
 - [`loadHTMLString(_:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadhtmlstring(_:baseurl:))
+- [`load(_:mimeType:characterEncodingName:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:mimetype:characterencodingname:baseurl:))
 
 そのソースに関わらず、攻撃者が制御する入力 (たとえば、ディープリンク、カスタム URL スキーム、UI からのユーザー提供データを通じて) に由来する URL を `WKWebView` URL ロードメソッドに直接渡すと、不正なリダイレクト、クロスサイトスクリプティング (XSS)、ローカルファイルの露出といった脆弱性につながる可能性があります。
 
