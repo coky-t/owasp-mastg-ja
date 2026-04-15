@@ -85,6 +85,7 @@
 - [MASTG-TEST-0272](tests-beta/android/MASVS-CODE/MASTG-TEST-0272.md) Android プロジェクトでの既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
 - [MASTG-TEST-0274](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md) アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)
 - [MASTG-TEST-0337](tests-beta/android/MASVS-CODE/MASTG-TEST-0337.md) 信頼できないデータのオブジェクトデシリアライゼーションへの参照 (References to Object Deserialization of Untrusted Data)
+- [MASTG-TEST-0338](tests-beta/android/MASVS-CODE/MASTG-TEST-0338.md) ローカルストレージデータの完全性と真正性のバリデーション (Integrity and Authenticity Validation of Local Storage Data)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
@@ -163,6 +164,10 @@
 - [MASTG-TEST-0331](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0331.md) 非推奨の WebView API の使用 (Use of Deprecated WebView APIs)
 - [MASTG-TEST-0332](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0332.md) WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)
 - [MASTG-TEST-0333](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0333.md) WebView での過度に広範なファイル読み取りアクセス (Overly Broad File Read Access in WebViews)
+<!--
+- [MASTG-TEST-0335](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0335.md) 設定により緩和される WebView のファイルオリジンアクセス (WebView File Origin Access Relaxed by Configuration)
+- [MASTG-TEST-0336](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0336.md) WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)
+-->
 
 ### MASVS-CODE: コード品質
 
