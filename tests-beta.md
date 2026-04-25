@@ -76,6 +76,9 @@
 - [MASTG-TEST-0316](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0316.md) テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 - [MASTG-TEST-0320](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0320.md) 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)
 - [MASTG-TEST-0334](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0334.md) WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)
+<!--
+- [MASTG-TEST-0340](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0340.md) オーバーレイ攻撃保護への参照 (References to Overlay Attack Protections)
+-->
 
 ### MASVS-CODE: コード品質
 
@@ -86,6 +89,7 @@
 - [MASTG-TEST-0274](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md) アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)
 - [MASTG-TEST-0337](tests-beta/android/MASVS-CODE/MASTG-TEST-0337.md) 信頼できないデータのオブジェクトデシリアライゼーションへの参照 (References to Object Deserialization of Untrusted Data)
 - [MASTG-TEST-0338](tests-beta/android/MASVS-CODE/MASTG-TEST-0338.md) ローカルストレージデータの完全性と真正性のバリデーション (Integrity and Authenticity Validation of Local Storage Data)
+- [MASTG-TEST-0339](tests-beta/android/MASVS-CODE/MASTG-TEST-0339.md) コンテンツプロバイダでの SQL インジェクション (SQL Injection in Content Providers)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 

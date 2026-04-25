@@ -391,6 +391,7 @@
       - [MASTG-TEST-0274 アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md)
       - [MASTG-TEST-0337 信頼できないデータのオブジェクトデシリアライゼーションへの参照 (References to Object Deserialization of Untrusted Data)](tests-beta/android/MASVS-CODE/MASTG-TEST-0337.md)
       - [MASTG-TEST-0338 ローカルストレージデータの完全性と真正性のバリデーション (Integrity and Authenticity Validation of Local Storage Data)](tests-beta/android/MASVS-CODE/MASTG-TEST-0338.md)
+      - [MASTG-TEST-0339 コンテンツプロバイダでの SQL インジェクション (SQL Injection in Content Providers)](tests-beta/android/MASVS-CODE/MASTG-TEST-0339.md)
 
     - MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
       - [MASTG-TEST-0224 安全でない APK 署名バージョンの使用 (Usage of Insecure APK Signature Version)](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0224.md)
