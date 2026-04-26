@@ -24,7 +24,7 @@ uses-permission: name='android.permission.READ_EXTERNAL_STORAGE'
 uses-permission: name='org.owasp.mastestapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
 ```
 
-## [ADB](../../tools/android/MASTG-TOOL-0004.md) の使用
+## [adb](../../tools/android/MASTG-TOOL-0004.md) の使用
 
 `adb` を使用して、アプリケーションが要求するパーミッションを表示できます。また、実行時のパーミッションの状態 (許可または拒否) も表示します。
 
