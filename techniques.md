@@ -109,6 +109,7 @@
 - [MASTG-TECH-0144](techniques/android/MASTG-TECH-0144.md) ルート検出のバイパス (Bypassing Root Detection)
 -->
 - [MASTG-TECH-0145](techniques/android/MASTG-TECH-0145.md) XAPK ファイルの扱い (Working with XAPK Files)
+- [MASTG-TECH-0148](techniques/android/MASTG-TECH-0148.md) Android コンテンツプロバイダとのやり取り (Interacting with Android ContentProviders)
 
 ## iOS
 

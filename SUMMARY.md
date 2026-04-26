@@ -537,6 +537,7 @@
     - [MASTG-TECH-0142 WebView ストレージの検査 (Inspecting WebView Storage)](techniques/android/MASTG-TECH-0142.md)
     - [MASTG-TECH-0143 WebView でのファイルシステム操作の監視 (Monitor File System Operations in WebViews)](techniques/android/MASTG-TECH-0143.md)
     - [MASTG-TECH-0145 XAPK ファイルの扱い (Working with XAPK Files)](techniques/android/MASTG-TECH-0145.md)
+    - [MASTG-TECH-0148 Android コンテンツプロバイダとのやり取り (Interacting with Android ContentProviders)](techniques/android/MASTG-TECH-0148.md)
 
   - iOS
     - [MASTG-TECH-0055 再パッケージ化したアプリをデバッグモードで起動する (Launching a Repackaged App in Debug Mode)](techniques/ios/MASTG-TECH-0055.md)
