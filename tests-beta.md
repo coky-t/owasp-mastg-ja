@@ -169,9 +169,7 @@
 - [MASTG-TEST-0332](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0332.md) WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)
 - [MASTG-TEST-0333](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0333.md) WebView での過度に広範なファイル読み取りアクセス (Overly Broad File Read Access in WebViews)
 - [MASTG-TEST-0335](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0335.md) 設定により緩和される WebView のファイルオリジンアクセス (WebView File Origin Access Relaxed by Configuration)
-<!--
 - [MASTG-TEST-0336](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0336.md) WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)
--->
 
 ### MASVS-CODE: コード品質
 

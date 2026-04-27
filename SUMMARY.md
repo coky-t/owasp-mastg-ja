@@ -464,6 +464,7 @@
       - [MASTG-TEST-0332 WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0332.md)
       - [MASTG-TEST-0333 WebView での過度に広範なファイル読み取りアクセス (Overly Broad File Read Access in WebViews)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0333.md)
       - [MASTG-TEST-0335 設定により緩和される WebView のファイルオリジンアクセス (WebView File Origin Access Relaxed by Configuration)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0335.md)
+      - [MASTG-TEST-0336 WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0336.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0228 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)](tests-beta/ios/MASVS-CODE/MASTG-TEST-0228.md)
