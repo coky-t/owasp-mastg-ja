@@ -76,9 +76,7 @@
 - [MASTG-TEST-0316](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0316.md) テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 - [MASTG-TEST-0320](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0320.md) 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)
 - [MASTG-TEST-0334](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0334.md) WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)
-<!--
 - [MASTG-TEST-0340](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0340.md) オーバーレイ攻撃保護への参照 (References to Overlay Attack Protections)
--->
 
 ### MASVS-CODE: コード品質
 
