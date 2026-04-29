@@ -155,7 +155,7 @@
 -->
 - [MASTG-TECH-0078](techniques/ios/MASTG-TECH-0078.md) 自動静的解析 (Automated Static Analysis)
 <!--
-- [MASTG-TECH-0079](techniques/ios/MASTG-TECH-0079.md) 非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)
+- [MASTG-TECH-0079](techniques/ios/MASTG-TECH-0079.md) 開発者プロビジョニングプロファイルの取得 (Obtaining a Developer Provisioning Profile)
 -->
 - [MASTG-TECH-0080](techniques/ios/MASTG-TECH-0080.md) オープンファイルの取得 (Get Open Files)
 - [MASTG-TECH-0081](techniques/ios/MASTG-TECH-0081.md) オープンコネクションの取得 (Get Open Connections)
@@ -206,7 +206,7 @@
 -->
 - [MASTG-TECH-0138](techniques/ios/MASTG-TECH-0138.md) Plist ファイルを JSON に変換する (Convert Plist Files to JSON)
 - [MASTG-TECH-0139](techniques/ios/MASTG-TECH-0139.md) WKWebView にアタッチする (Attach to WKWebView)
+- [MASTG-TECH-0146](techniques/ios/MASTG-TECH-0146.md) 非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)
 <!--
-- [MASTG-TECH-0146](techniques/ios/MASTG-TECH-0146.md) 脱獄していないデバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)
 - [MASTG-TECH-0147](techniques/ios/MASTG-TECH-0147.md) パッチ適用 (Patching)
 -->

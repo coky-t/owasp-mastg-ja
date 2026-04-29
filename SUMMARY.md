@@ -576,6 +576,7 @@
     - [MASTG-TECH-0135 生体認証のバイパス (Bypassing Biometric Authentication)](techniques/ios/MASTG-TECH-0135.md)
     - [MASTG-TECH-0138 Plist ファイルを JSON に変換する (Convert Plist Files to JSON)](techniques/ios/MASTG-TECH-0138.md)
     - [MASTG-TECH-0139 WKWebView にアタッチする (Attach to WKWebView)](techniques/ios/MASTG-TECH-0139.md)
+    - [MASTG-TECH-0146 非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)](techniques/ios/MASTG-TECH-0146.md)
 
 ### ツール
 
