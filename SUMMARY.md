@@ -89,6 +89,7 @@
   - [MASTG-BEST-0037 登録変更時に生体鍵を無効にする (Invalidate Biometric Keys on Enrollment Changes)](best-practices/MASTG-BEST-0037.md)
   - [MASTG-BEST-0038 生体認証には明示的なユーザー確認を要求する (Require Explicit User Confirmation for Biometric Authentication)](best-practices/MASTG-BEST-0038.md)
   - [MASTG-BEST-0039 コンテンツプロバイダでの SQL インジェクションを防止する (Prevent SQL Injection in ContentProviders)](best-practices/MASTG-BEST-0039.md)
+  - [MASTG-BEST-0040 オーバーレイ攻撃を防止する (Preventing Overlay Attacks)](best-practices/MASTG-BEST-0040.md)
 
 ### ナレッジ
 
