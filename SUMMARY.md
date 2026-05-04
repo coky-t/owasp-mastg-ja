@@ -503,6 +503,7 @@
     - [MASTG-TECH-0119 アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)](techniques/generic/MASTG-TECH-0119.md)
     - [MASTG-TECH-0120 傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)](techniques/generic/MASTG-TECH-0120.md)
     - [MASTG-TECH-0121 傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)](techniques/generic/MASTG-TECH-0121.md)
+    - [MASTG-TECH-0122 受動的な盗聴 (Passive Eavesdropping)](techniques/generic/MASTG-TECH-0122.md)
 
   - Android
     - [MASTG-TECH-0004 アプリの再パッケージ化 (Repackaging Apps)](techniques/android/MASTG-TECH-0004.md)
