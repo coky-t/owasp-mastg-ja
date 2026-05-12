@@ -26,7 +26,7 @@ knowledge: [MASTG-KNOW-0010]
 
 ## 評価
 
-`checkServerTrusted(...)` がカスタム `X509TrustManager` に実装されており、サーバー証明書を正しく検証 **しない** 場合、そのテストは不合格です。
+`checkServerTrusted(...)` がカスタム `X509TrustManager` に実装されており、サーバー証明書を正しく検証 **しない** 場合、そのテストケースは不合格です。
 
 これには以下のようなケースを含みます。
 
