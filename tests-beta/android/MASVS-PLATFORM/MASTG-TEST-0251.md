@@ -27,9 +27,7 @@ knowledge: [MASTG-KNOW-0018]
 
 ## 評価
 
-**不合格:**
-
-以下のすべてが当てはまる場合、そのテストは不合格です。
+以下のすべてが当てはまる場合、そのテストケースは不合格です。
 
 - `JavaScriptEnabled` が `true` である。
 - `AllowContentAccess` が `true` である。
@@ -37,12 +35,5 @@ knowledge: [MASTG-KNOW-0018]
 
 [WebView におけるコンテンツプロバイダアクセスへの参照 (References to Content Provider Access in WebViews)](MASTG-TEST-0250.md) で取得したコンテンツプロバイダのリストを使用して、それが機密データを取り扱っているかどうかを検証する必要があります。
 
-**注:** `AllowContentAccess` が `true` であること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。したがって、アプリがコンテンツプロバイダにアクセスする必要がない場合は、明示的に `false` を設定することをお勧めします。
-
-**合格:**
-
-以下のいずれかが当てはまる場合、そのテストは合格です。
-
-- `JavaScriptEnabled` が `false` である。
-- `AllowContentAccess` が `false` である。
-- `AllowUniversalAccessFromFileURLs` が `false` である。
+> [!NOTE]
+> `AllowContentAccess` が `true` であること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。
