@@ -43,7 +43,7 @@ knowledge: [MASTG-KNOW-0050]
 
 ## 評価
 
-アプリが機密データのバックアップを許可している場合、そのテストは不合格です。具体的には、以下の条件を満たす場合です。
+アプリが機密データのバックアップを許可している場合、そのテストケースは不合格です。具体的には、以下の条件を満たす場合です。
 
 - `AndroidManifest.xml` に `android:allowBackup="true"` がある場合
 - `AndroidManifest.xml` に `android:fullBackupContent="@xml/backup_rules"` が宣言されていない場合 (Android 11 以前)
