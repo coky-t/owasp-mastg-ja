@@ -25,7 +25,7 @@ Android アプリでは、カメラ、位置情報、ストレージなどの情
 
 ## 評価
 
-アプリに危険なパーミッションがある場合、そのテストは不合格です。
+アプリに危険なパーミッションがある場合、そのテストケースは不合格です。
 
 宣言されているパーミッションのリストを Android で定義されている [dangerous permissions](https://android.googlesource.com/platform/frameworks/base/%2B/master/core/res/AndroidManifest.xml) のリストと比較します。詳細については [Android ドキュメント](https://developer.android.com/reference/android/Manifest.permission) を参照してください。
 
