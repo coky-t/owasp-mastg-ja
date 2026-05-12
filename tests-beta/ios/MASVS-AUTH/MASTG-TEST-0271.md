@@ -23,4 +23,4 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 評価
 
-保護が必要な機密データリソースに対して、アプリが `kSecAccessControlBiometryCurrentSet` フラグ以外のフラグを指定した `SecAccessControlCreateWithFlags` を使用している場合、そのテストは不合格です。
+保護が必要な機密データリソースに対して、アプリが `kSecAccessControlBiometryCurrentSet` フラグ以外のフラグを指定した `SecAccessControlCreateWithFlags` を使用している場合、そのテストケースは不合格です。
