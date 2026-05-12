@@ -24,4 +24,4 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 評価
 
-アプリが汎用ペーストボードを使用し、そのコンテンツの有効期限を設定しない場合、そのテストは不合格です。具体的には、`UIPasteboard.setItems(_:options:)` メソッドが `UIPasteboard.Options.expirationDate` オプションを指定して呼び出されていることを確認します。
+アプリが汎用ペーストボードを使用し、そのコンテンツの有効期限を設定しない場合、そのテストケースは不合格です。具体的には、`UIPasteboard.setItems(_:options:)` メソッドが `UIPasteboard.Options.expirationDate` オプションを指定して呼び出されていることを確認します。
