@@ -24,12 +24,7 @@ best-practices: [MASTG-BEST-0038]
 
 ## 評価
 
-明示的なユーザー認証を必要とする機密操作に対してアプリが `setConfirmationRequired()` に `false` を設定している場合、このテストは不合格です。
-
-アプリが以下のいずれかである場合、このテストは合格です。
-
-- 機密操作に対して明示的に `setConfirmationRequired()` に `true` を設定している、または
-- デフォルト動作に依存し、確認を必要としている。
+明示的なユーザー認証を必要とする機密操作に対してアプリが `setConfirmationRequired()` に `false` を設定している場合、このテストケースは不合格です。
 
 > [!NOTE]
 > [`setConfirmationRequired(false)`](https://developer.android.com/identity/sign-in/biometric-auth#no-explicit-user-action) の使用は本質的に脆弱性ではありません。低リスク操作には適しているかもしれませんが、支払いやデータアクセスなどの機密操作では、アプリは `setConfirmationRequired(true)` を使用するか、デフォルト動作に依存して [ユーザーが認証を明示的に確認することを確保する](https://developer.android.com/identity/sign-in/biometric-auth#no-explicit-user-action) 必要があります。
