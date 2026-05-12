@@ -68,9 +68,7 @@ for protocol schemes: http, data, chrome, https, chrome-untrusted.", source: fil
 
 ## 評価
 
-**不合格:**
-
-以下のすべてが当てはまる場合、そのテストは不合格です。
+以下のすべてが当てはまる場合、そのテストケースは不合格です。
 
 - `setJavaScriptEnabled` が明示的に `true` に設定されている。
 - `setAllowContentAccess` が明示的に `true` に設定されているか、_まったく使用されていない_ (デフォルト値 `true` を継承している)。
@@ -78,12 +76,5 @@ for protocol schemes: http, data, chrome, https, chrome-untrusted.", source: fil
 
 結果ステップで取得したコンテンツプロバイダのリストを使用して、コンテンツプロバイダが機密データを処理しているかどうかを検証する必要があります。
 
-**注:** `setAllowContentAccess` メソッドを `true` に設定されていること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。したがって、アプリがコンテンツプロバイダにアクセスする必要がない場合は、明示的に `false` を設定することをお勧めします。
-
-**合格:**
-
-以下のいずれかが当てはまる場合、そのテストは合格です。
-
-- `setJavaScriptEnabled` が明示的に false` に設定されているか、_まったく使用されていない_ (デフォルト値 `false` を継承している)。
-- `setAllowContentAccess` メソッドが明示的に `false` に設定されている。
-- `setAllowUniversalAccessFromFileURLs` メソッドが明示的に `false` に設定されている。
+> [!NOTE]
+> `setAllowContentAccess` メソッドを `true` に設定されていること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。
