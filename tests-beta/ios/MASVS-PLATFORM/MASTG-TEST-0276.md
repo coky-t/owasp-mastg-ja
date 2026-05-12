@@ -33,6 +33,6 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 評価
 
-`UIPasteboard.generalPasteboard` への呼び出しが行われ、機密データがそこに書き込まれる場合、そのテストは不合格です。
+`UIPasteboard.generalPasteboard` への呼び出しが行われ、機密データがそこに書き込まれる場合、そのテストケースは不合格です。
 
 機密データを構成するものの判断はコンテキストに依存するため、静的に検出することは困難なことがあります。前述の方法を使用して機密データがペーストボードに書き込まれているかどうかをチェックするには、リバースエンジニアされたコードで報告されたコード位置を検査します ([逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を参照)。
