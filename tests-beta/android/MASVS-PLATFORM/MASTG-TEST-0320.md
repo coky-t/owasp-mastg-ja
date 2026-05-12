@@ -49,8 +49,6 @@ prerequisites:
 
 アプリが閉じられた後にも依然として `/data/data/<app_package>/app_webview/` ディレクトリに機密データがある場合、そのテストケースは不合格です。これはアプリが WebView の使用後に関連するクリーンアップ API を呼び出していないことに起因する可能性があります。
 
-WebView で使用されるすべての機密データが関連する API を使用して適切にクリーンアップされ、アプリを閉じた後に `/data/data/<app_package>/app_webview/` ディレクトリに機密データが残っていない場合、そのテストは合格です。
-
 > [!NOTE]
 > 有効になっているストレージ領域に対して適切なクリーンアップ API が呼び出されたかどうかを判断することが困難なことがあります。[WebView (WebViews)](../../../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018.md) では、WebView により使用されるストレージ領域と、それらのクリーンアップを評価する際の課題について説明しています。
 
