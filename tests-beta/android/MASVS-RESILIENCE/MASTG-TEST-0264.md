@@ -24,4 +24,4 @@ profiles: [R]
 
 ## 評価
 
-Frida スクリプトの出力が `StrictMode` API の実行時使用を示す場合、そのテストは不合格です。
+Frida スクリプトの出力が `StrictMode` API の実行時使用を示す場合、そのテストケースは不合格です。
