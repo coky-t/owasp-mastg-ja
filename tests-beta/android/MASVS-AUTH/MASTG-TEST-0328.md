@@ -28,9 +28,4 @@ best-practices: [MASTG-BEST-0037]
 
 ## 評価
 
-アプリが機密データリソースの保護に使用される鍵に `setInvalidatedByBiometricEnrollment(false)` を使用している場合、このテストは不合格です。
-
-アプリが以下のいずれかである場合、このテストは合格です。
-
-- `setInvalidatedByBiometricEnrollment(true)` を明示的に使用している、または
-- デフォルト動作に依存しており、`setUserAuthenticationRequired(true)` が設定されると新しい生体認証登録で鍵を無効化している。
+アプリが機密データリソースの保護に使用される鍵に `setInvalidatedByBiometricEnrollment(false)` を使用している場合、このテストケースは不合格です。
