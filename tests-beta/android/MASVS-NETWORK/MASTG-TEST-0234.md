@@ -30,4 +30,5 @@ profiles: [L1, L2]
 
 アプリが `HostnameVerifier` なしで `SSLSocket` を使用している場合、そのテストケースは不合格です。
 
-**注:** `HostnameVerifier` が存在する場合、それが安全でない方法で実装されていないことを確認してください。ガイダンスについては [サーバーホスト名検証の正しくない実装 (Incorrect Implementation of Server Hostname Verification)](MASTG-TEST-0283.md) を参照してください。
+> [!NOTE]
+> `HostnameVerifier` が存在する場合、それが安全でない方法で実装されていないことを確認してください。ガイダンスについては [サーバーホスト名検証の正しくない実装 (Incorrect Implementation of Server Hostname Verification)](MASTG-TEST-0283.md) を参照してください。
