@@ -34,7 +34,7 @@ knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 
 ## 評価
 
-以下の場合、そのテストは不合格です。
+以下の場合、そのテストケースは不合格です。
 
 - アプリが暗号化されていない機密データを `documentDirectory` (または同等の共有ストレージパス) に書き込み、かつ
 - `Info.plist` がユーザーに Documents ディレクトリへのアクセスを許可している (`UIFileSharingEnabled` および/または `LSSupportsOpeningDocumentsInPlace`)。
