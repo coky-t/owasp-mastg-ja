@@ -23,4 +23,4 @@ knowledge: [MASTG-KNOW-0062]
 
 ## 評価
 
-`get-task-allow` エンタイトルメントが `true` の場合、そのテストは不合格です。
+`get-task-allow` エンタイトルメントが `true` の場合、そのテストケースは不合格です。
