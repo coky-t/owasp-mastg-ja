@@ -29,12 +29,10 @@ Android では、開発者は [`setUserAuthenticationParameters(int timeout, int
 
 ## 評価
 
-アプリが機密操作に使用される鍵を以下で設定した場合、このテストは不合格です。
+アプリが機密操作に使用される鍵を以下で設定した場合、このテストケースは不合格です。
 
 - `setUserAuthenticationParameters(duration, type)` (duration > 0 の場合)
 - `setUserAuthenticationValidityDurationSeconds(duration)` (duration > 0 の場合)
-
-アプリが `setUserAuthenticationParameters(0, type)` を使用して、機密データリソースや機密機能を保護する際にすべての暗号操作に対して認証を要求する場合、このテストは合格です。
 
 > [!NOTE]
 > 認証の有効期間が非ゼロであることは本質的に脆弱性ではありません。複数の関連する操作を迅速に連続して実行する必要がある特定のユースケースでは、数秒程度の短い期間が許容されることがあります。但し、高セキュリティアプリケーションや機密操作では、使用ごとに認証を要求 (duration = 0) することで、不正な鍵の使用やランタイム攻撃に対する最も強力な保護を提供します。
