@@ -68,20 +68,11 @@ Error reading file: 0
 
 ## 評価
 
-このテストの評価は [異なる Android バージョン間での API の動作](../../../Document/0x05h-Testing-Platform-Interaction.md#webview-local-file-access-settings) に基づいています。
-
-**不合格:**
-
-以下の場合、そのテストは不合格です。
+以下のすべてが当てはまる場合、そのテストケースは不合格です ([異なる Android バージョン間での API の動作](../../../Document/0x05h-Testing-Platform-Interaction.md#webview-local-file-access-settings) に基づいています)。
 
 - `setJavaScriptEnabled` が明示的に `true` に設定されている。
 - `setAllowFileAccess` が明示的に `true` に設定されている (または、`minSdkVersion` < 30 の場合は、デフォルト値 `true` を継承して、一切使用されていない)。
 - `setAllowFileAccessFromFileURLs` または `setAllowUniversalAccessFromFileURLs` のいずれかが明示的に `true` に設定されている (または、`minSdkVersion` < 16 の場合は、デフォルト値 `true` を継承して、一切使用されていない)。
 
-**合格:**
-
-以下の場合、そのテストは合格です。
-
-- `setJavaScriptEnabled` が明示的に `false` に設定されている。
-- `setAllowFileAccess` が明示的に `false` に設定されている (または、`minSdkVersion` >= 30 の場合は、デフォルト値 `false` を継承して、一切使用されていない)。
-- `setAllowFileAccessFromFileURLs` および `setAllowUniversalAccessFromFileURLs` の両方が明示的に `false` に設定されている (または、`minSdkVersion` >= 16 の場合は、デフォルト値 `false` を継承して、一切使用されていない)。
+> [!NOTE]
+> `AllowFileAccess` が `true` であること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。
