@@ -33,5 +33,3 @@ iOS アプリは [`loadFileURL(_:allowingReadAccessTo:)`](https://developer.appl
 - `fileURL` 引数を検査し、攻撃者が制御する入力によって影響される可能性があるかどうかを判断します。
 - `readAccessURL` 引数を検査し、必要以上に広範なアクセスを付与しているかどうかを判断します。
 - 許可される読み取り範囲が、意図したコンテンツに必要な最小限のディレクトリに制限されていることを検証します。
-
-`loadFileURL(_:allowingReadAccessTo:)` のすべての使用が `readAccessURL` を最小限の範囲に制限し、攻撃者が影響したファイルローディングが、意図しないファイルに到達できない場合、そのテストは合格です。
