@@ -30,6 +30,6 @@ knowledge: [MASTG-KNOW-0102]
 
 ## 評価
 
-`isExcludedFromBackup` API が使用され、影響を受けるいずれかのファイルが機密であるとみなされる場合、そのテストは不合格です。
+`isExcludedFromBackup` API が使用され、影響を受けるいずれかのファイルが機密であるとみなされる場合、そのテストケースは不合格です。
 
 見つかった機密ファイルについては、`isExcludedFromBackup` は除外を保証しないため、`isExcludedFromBackup` を使用することに加えて、必ず暗号化してください。
