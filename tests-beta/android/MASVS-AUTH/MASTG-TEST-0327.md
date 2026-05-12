@@ -28,12 +28,7 @@ Android では、`BiometricPrompt.authenticate()` は [`CryptoObject` あり](ht
 
 ## 評価
 
-以下の場合、保護する価値のある機密操作ごとに、このテストは不合格です。
+以下のすべてが当てはまる場合、保護する価値のある機密操作ごとに、このテストケースは不合格です。
 
 - `BiometricPrompt.authenticate` が [`CryptoObject` なし](https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt#authenticate(android.os.CancellationSignal,%20java.util.concurrent.Executor,%20android.hardware.biometrics.BiometricPrompt.AuthenticationCallback)) で使用されている。
 - 生体認証と組み合わせて `setUserAuthenticationRequired(true)` での鍵生成の呼び出しがない。デフォルトでは、ユーザーが認証されているかどうかに関係なく、鍵の使用が認可されるため。
-
-以下の場合、保護する価値のある機密操作ごとに、このテストは合格です。
-
-- `BiometricPrompt.authenticate` が [`CryptoObject` あり](https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt#authenticate(android.hardware.biometrics.BiometricPrompt.CryptoObject,%20android.os.CancellationSignal,%20java.util.concurrent.Executor,%20android.hardware.biometrics.BiometricPrompt.AuthenticationCallback)) で、つまり機密操作に Android KeyStore から適切に構成された暗号鍵を用いて、使用されている。
-- `setUserAuthenticationRequired(true)` での鍵生成の呼び出しがあり、鍵は生体認証が成功した後にのみ使用できるようにし、認証を暗号操作にバインドしている。
