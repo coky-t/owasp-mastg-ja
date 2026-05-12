@@ -23,6 +23,4 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 評価
 
-保護が必要な機密データリソースに対して、アプリが `kSecAccessControlUserPresence` または `kSecAccessControlDevicePasscode` フラグを指定した `SecAccessControlCreateWithFlags` を使用している場合、そのテストは不合格です。
-
-アプリが [`kSecAccessControlBiometryAny`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/biometryany), [`kSecAccessControlBiometryCurrentSet`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/biometrycurrentset) などのより厳しいフラグを指定した `SecAccessControlCreateWithFlags` を使用して、保護が必要な機密データリソースに対するアクセスを生体認証のみに強制する場合にのみ、そのテストは合格です (`kSecAccessControlBiometryCurrentSet` が最も安全であると考えられています)。
+保護が必要な機密データリソースに対して、アプリが `kSecAccessControlUserPresence` または `kSecAccessControlDevicePasscode` フラグを指定した `SecAccessControlCreateWithFlags` を使用している場合、そのテストケースは不合格です。
