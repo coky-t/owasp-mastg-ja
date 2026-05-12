@@ -24,7 +24,7 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 評価
 
-保護する価値のある機密データリソースごとに、以下が該当する場合、そのテストは不合格です。
+保護する価値のある機密データリソースごとに、以下が該当する場合、そのテストケースは不合格です。
 
 - `LAContext.evaluatePolicy` が明示的に使用されている。
 - [可能なフラグのいずれか](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags) でユーザーの存在を要求する `SecAccessControlCreateWithFlags` の呼び出しがない。
