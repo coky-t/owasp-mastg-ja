@@ -19,7 +19,11 @@ knowledge: [MASTG-KNOW-0018]
 
 1. [Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) などの動的解析ツールを実行して、以下のいずれかを実行します。
     - アプリ内の `WebView` インスタンスを列挙して、その設定値をリストする
-    - または、`WebView` 設定のセッターを明示的にフックする
+    - または、`WebView` 設定の以下のようなセッターを明示的にフックする
+        - `setJavaScriptEnabled`
+        - `setAllowFileAccess`
+        - `setAllowFileAccessFromFileURLs`
+        - `setAllowUniversalAccessFromFileURLs`
 
 ## 結果
 
@@ -27,20 +31,11 @@ knowledge: [MASTG-KNOW-0018]
 
 ## 評価
 
-**不合格:**
+以下のすべてが当てはまる場合、そのテストケースは不合格です ([異なる Android バージョン間での API の動作](../../../Document/0x05h-Testing-Platform-Interaction.md#webview-local-file-access-settings) に基づいています)。
 
-以下のすべてが当てはまる場合、そのテストは不合格です。
+- `setJavaScriptEnabled` が明示的に `true` に設定されている。
+- `setAllowFileAccess` が明示的に `true` に設定されている (または、`minSdkVersion` < 30 の場合は、デフォルト値 `true` を継承して、一切使用されていない)。
+- `setAllowFileAccessFromFileURLs` または `setAllowUniversalAccessFromFileURLs` のいずれかが明示的に `true` に設定されている (または、`minSdkVersion` < 16 の場合は、デフォルト値 `true` を継承して、一切使用されていない)。
 
-- `AllowFileAccess` が `true` である。
-- `AllowFileAccessFromFileURLs` が `true` である。
-- `AllowUniversalAccessFromFileURLs` が `true` である。
-
-**注:** `AllowFileAccess` が `true` であること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。したがって、アプリがローカルファイルにアクセスする必要がない場合は、明示的に `false` を設定することをお勧めします。
-
-**合格:**
-
-以下のいずれかが当てはまる場合、そのテストは合格です。
-
-- `AllowFileAccess` が `false` である。
-- `AllowFileAccessFromFileURLs` が `false` である。
-- `AllowUniversalAccessFromFileURLs` が `false` である。
+> [!NOTE]
+> `AllowFileAccess` が `true` であること自体はセキュリティ脆弱性を表すものではありませんが、他の脆弱性と組み合わせて使用することで攻撃の影響を拡大する可能性があります。
