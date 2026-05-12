@@ -36,10 +36,11 @@ Android 9 (API レベル 28) 以降、クリアテキストの HTTP トラフィ
 2. NSC は `<base-config>` の `cleartextTrafficPermitted` を `true` に設定します。
 3. NSC は `<domain-config>` の `cleartextTrafficPermitted` を `true` に設定します。
 
-**注:** AndroidManifest が `usesCleartextTraffic` を `true` に設定し、NSC がある場合、空の `<network-security-config>` 要素しかないとしても、テストは不合格ではありません。たとえば、以下のような場合です。
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-</network-security-config>
-```
+> [!NOTE]
+> AndroidManifest が `usesCleartextTraffic` を `true` に設定し、NSC がある場合、空の `<network-security-config>` 要素しかないとしても、テストは不合格ではありません。たとえば、以下のような場合です。
+> 
+> ```xml
+> <?xml version="1.0" encoding="utf-8"?>
+> <network-security-config>
+> </network-security-config>
+> ```
