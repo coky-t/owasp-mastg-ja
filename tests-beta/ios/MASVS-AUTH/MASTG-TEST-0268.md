@@ -27,8 +27,7 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 評価
 
-保護が必要な機密データリソースに対して、アプリが `kSecAccessControlUserPresence` または `kSecAccessControlDevicePasscode` フラグを指定した `SecAccessControlCreateWithFlags` を使用している場合、そのテストは不合格です。
+保護が必要な機密データリソースに対して、アプリが `kSecAccessControlUserPresence` または `kSecAccessControlDevicePasscode` フラグを指定した `SecAccessControlCreateWithFlags` を使用している場合、そのテストケースは不合格です。
 
-アプリが [`kSecAccessControlBiometryAny`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/biometryany), [`kSecAccessControlBiometryCurrentSet`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/biometrycurrentset) などのより厳しいフラグを指定した `SecAccessControlCreateWithFlags` を使用して、保護が必要な機密データリソースに対するアクセスを生体認証のみに強制する場合にのみ、そのテストは合格です (`kSecAccessControlBiometryCurrentSet` が最も安全であると考えられています)。
-
-**注:** `kSecAccessControlUserPresence` や `kSecAccessControlDevicePasscode` の使用は本質的に脆弱性ではありませんが、高セキュリティアプリケーション (金融、行政、医療など) では、これらの使用は弱点や設定ミスとなり、意図したセキュリティ態勢を減らす可能性があります。したがって、この問題は重大な脆弱性ではなく、セキュリティの弱点または堅牢化の問題として分類する方が適切です。
+> [!NOTE]
+> `kSecAccessControlUserPresence` や `kSecAccessControlDevicePasscode` の使用は本質的に脆弱性ではありませんが、高セキュリティアプリケーション (金融、行政、医療など) では、これらの使用は弱点や設定ミスとなり、意図したセキュリティ態勢を減らす可能性があります。したがって、この問題は重大な脆弱性ではなく、セキュリティの弱点または堅牢化の問題として分類する方が適切です。
