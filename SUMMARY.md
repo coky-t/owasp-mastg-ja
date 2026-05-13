@@ -710,6 +710,7 @@
     - [MASTG-TOOL-0139 ElleKit](tools/ios/MASTG-TOOL-0139.md)
     - [MASTG-TOOL-0141 IOSSecuritySuite](tools/ios/MASTG-TOOL-0141.md)
     - [MASTG-TOOL-0142 Choicy](tools/ios/MASTG-TOOL-0142.md)
+    - [MASTG-TOOL-0150 xpcspy](tools/ios/MASTG-TOOL-0150.md)
 
   - Network
     - [MASTG-TOOL-0075 tcpdump (Android)](tools/network/MASTG-TOOL-0075.md)
