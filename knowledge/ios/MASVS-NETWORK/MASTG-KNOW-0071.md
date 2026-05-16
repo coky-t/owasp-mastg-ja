@@ -101,6 +101,10 @@ NSAppTransportSecurity : Dictionary {
 
 古い例やドキュメントでは `NSTemporaryException...` で始まる例外キーに遭遇することがあります。これらのキーは元々 iOS 9 初期に一時的な ATS 例外ヘルパーとして導入されました。それらは依然として動作しますが、Apple により非推奨となりドキュメント化されていません。開発者は代わりに最新の非一時的な `NSException...` 同等品を使用する必要があります。
 
+**コード内での TLS 構成:**
+
+`Info.plist` の例外以外にも、アプリは [`tlsMinimumSupportedProtocolVersion`](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/tlsminimumsupportedprotocolversion) などの `URLSessionConfiguration` プロパティを介してコード内で TLS の動作を構成することもできます。これらのプロパティは ATS とは別に評価されます。ATS はコードで設定された値に加えて独自の最小 TLS 要件を適用するため、コードで低い値を設定しただけでは ATS の動作を上書きしません。一致する `Info.plist` 例外が存在しない場合でも、ATS は接続をブロックする可能性があります。API レイヤーごとの TLS 構成の詳細については [iOS ネットワーク API (iOS Network APIs)](MASTG-KNOW-0073.md) を参照してください。
+
 **例外の正当性:**
 
 2017年1月1日から Apple App Store レビューでは以下の ATS 例外の一つが定義されている場合に [正当な理由を要求](https://developer.apple.com/documentation/security/preventing-insecure-network-connections#Provide-Justification-for-Exceptions) します。
@@ -138,3 +142,11 @@ NSAppTransportSecurity : Dictionary {
 ```
 
 ATS 例外の詳細については [Apple Developer ドキュメント](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138482) の記事 "Preventing Insecure Network Connections" のセクション "Configure Exceptions Only When Needed; Prefer Server Fixes" および [ATS に関するブログ投稿](https://www.nowsecure.com/blog/2017/08/31/security-analysts-guide-nsapptransportsecurity-nsallowsarbitraryloads-app-transport-security-ats-exceptions/ "A guide to ATS") を参照してください。
+
+## ATS TLS 設定の実行時バリデーション
+
+> [!NOTE]
+> 
+> macOS Tahoe 26 以降では、TLS 1.0/1.1 接続は常に失敗します。[macOS Tahoe 26](https://support.apple.com/en-us/126655) 以降、`URLSession` と `Network.framework` によって適用されるデフォルト ATS ポリシーでは ATS 準拠の暗号スイートと証明書を用いた TLS 1.2 以上を必須としています。結果として、たとえ `NSExceptionMinimumTLSVersion` 例外が通常は接続を許可する場合でも、ATS 例外が評価される前にホスト macOS スタックがハンドシェイクを拒否するため、`nscurl` は TLS バージョン 1.2 未満を使用するすべてのテストに対して `FAIL` を報告します。これらの例外が依然として適用される古い TLS バージョンを対象するアプリを検証するには、iOS シミュレータではなく、実際の iOS デバイスでテストします。
+
+静的解析は `Info.plist` に構成されている例外を特定できますが、実サーバーに対してどの TLS バージョンが実際にネゴシエートされているかを確認することはできません。macOS では、`nscurl` ツールは、ATS ポリシー評価をシミュレートすることで、実際のエンドポイントに対する ATS の動作をテストできます。このツールは ATS 設定のさまざまな組み合わせを実行し、どの構成が成功または失敗したかを報告して、特定のサーバーが必要とする例外を特定するのに役立ちます。Apple は ATS 例外を追加するより、サーバーサイドの TLS 問題を修正することを推奨しています。手順のガイダンスについては [nscurl を使用して実行時に ATS TLS 設定を検証する (Validating ATS TLS Settings at Runtime Using nscurl)](../../../techniques/ios/MASTG-TECH-0149.md) を参照してください。
