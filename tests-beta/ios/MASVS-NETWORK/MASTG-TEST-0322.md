@@ -29,7 +29,7 @@ ATS 構成の詳細については、[iOS App Transport Security](../../../knowl
 
 1. アプリを抽出します ([アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md))。
 2. アプリバンドルから `Info.plist` ファイルを取得します。
-3. [ Plist ファイルを JSON に変換する (Convert Plist Files to JSON)](../../../techniques/ios/MASTG-TECH-0138.md) を使用して `Info.plist` を読み取り可能な形式に変換します (必要に応じて)。
+3. [Plist ファイルを JSON に変換する (Convert Plist Files to JSON)](../../../techniques/ios/MASTG-TECH-0138.md) を使用して `Info.plist` を読み取り可能な形式に変換します (必要に応じて)。
 4. `NSAppTransportSecurity` ディクショナリでクリアテキストトラフィック例外を調べます。
 
 ## 結果
