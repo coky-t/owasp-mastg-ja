@@ -155,6 +155,12 @@
 - [MASTG-TEST-0321](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0321.md) ハードコードされた HTTP URL (Hardcoded HTTP URLs)
 - [MASTG-TEST-0322](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0322.md) クリアテキストトラフィックを許可する App Transport Security 構成 (App Transport Security Configurations Allowing Cleartext Traffic)
 - [MASTG-TEST-0323](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0323.md) クリアテキストトラフィックのための低レベルネットワーク API の使用 (Uses of Low-Level Networking APIs for Cleartext Traffic)
+- [MASTG-TEST-0342](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0342.md) Info.plist 内の脆弱な ATS TLS ポリシー例外への参照 (References to Weak ATS TLS Policy Exceptions in Info.plist)
+<!--
+- [MASTG-TEST-0343](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0343.md) URLSession TLS プロトコル構成 (URLSession TLS Protocol Configuration)
+- [MASTG-TEST-0344](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0344.md) Network.framework TLS プロトコル構成 (Network.framework TLS Protocol Configuration)
+- [MASTG-TEST-0345](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0345.md) 組み込みまたはサードパーティ TLS スタック構成 (Embedded or Third-party TLS Stack Configuration)
+-->
 
 ### MASVS-PLATFORM: プラットフォーム連携
 
