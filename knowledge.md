@@ -96,6 +96,9 @@
 - [MASTG-KNOW-0008](knowledge/android/MASVS-CODE/MASTG-KNOW-0008.md) デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)
 - [MASTG-KNOW-0009](knowledge/android/MASVS-CODE/MASTG-KNOW-0009.md) StrictMode
 - [MASTG-KNOW-0010](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) 例外処理 (Exception Handling)
+<!--
+- [MASTG-KNOW-0117](knowledge/android/MASVS-CODE/MASTG-KNOW-0117.md) Android コンテンツプロバイダ (Android ContentProvider)
+-->
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
@@ -110,6 +113,11 @@
 - [MASTG-KNOW-0033](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0033.md) 難読化 (Obfuscation)
 - [MASTG-KNOW-0034](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0034.md) デバイスバインディング (Device Binding)
 - [MASTG-KNOW-0035](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md) Google Play Integrity API
+<!--
+- [MASTG-KNOW-0118](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0118.md) Runtime Application Self-Protection (RASP)
+- [MASTG-KNOW-0119](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0119.md) キーアテステーション (Key Attestation)
+- [MASTG-KNOW-0120](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0120.md) デバイスアテステーション (Device Attestation)
+-->
 
 ### MASVS-PRIVACY: プライバシー
 
@@ -176,6 +184,7 @@
 - [MASTG-KNOW-0082](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0082.md) App Extension (App extensions)
 - [MASTG-KNOW-0083](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) ペーストボード (Pasteboard)
 -->
+- [MASTG-KNOW-0121](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0121.md) iOS のテキスト入力フィールドのマスク (Text Input Field Masking in iOS)
 
 ### MASVS-CODE: コード品質
 

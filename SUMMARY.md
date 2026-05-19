@@ -205,6 +205,7 @@
       - [MASTG-KNOW-0078 プロセス間通信 (IPC) (Inter-Process Communication (IPC))](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0078.md)
       - [MASTG-KNOW-0080 ユニバーサルリンク (Universal Links)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0080.md)
       - [MASTG-KNOW-0081 UIActivity 共有 (UIActivity Sharing)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md)
+      - [MASTG-KNOW-0121 iOS のテキスト入力フィールドのマスク (Text Input Field Masking in iOS)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0121.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-KNOW-0058 アプリ署名 (App Signing)](knowledge/ios/MASVS-CODE/MASTG-KNOW-0058.md)
