@@ -40,3 +40,9 @@
 - [MASTG-BEST-0038](best-practices/MASTG-BEST-0038.md) 生体認証には明示的なユーザー確認を要求する (Require Explicit User Confirmation for Biometric Authentication)
 - [MASTG-BEST-0039](best-practices/MASTG-BEST-0039.md) コンテンツプロバイダでの SQL インジェクションを防止する (Prevent SQL Injection in ContentProviders)
 - [MASTG-BEST-0040](best-practices/MASTG-BEST-0040.md) オーバーレイ攻撃を防止する (Preventing Overlay Attacks)
+<!--
+- [MASTG-BEST-0041](best-practices/MASTG-BEST-0041.md) ランタイムフックに対して堅牢にする (Hardening Against Runtime Hooking)
+- [MASTG-BEST-0042](best-practices/MASTG-BEST-0042.md) ATS 構成で強力な TLS 設定を使用する (Use Strong TLS Settings in ATS Configuration)
+- [MASTG-BEST-0043](best-practices/MASTG-BEST-0043.md) ATS が適用されない場合に強力な TLS を強制する (Enforce Strong TLS Settings When ATS Doesn't Apply)
+-->
+- [MASTG-BEST-0044](best-practices/MASTG-BEST-0044.md) テキスト入力フィールド内の機密データをマスクする (Mask Sensitive Data in Text Input Fields)
