@@ -3,7 +3,7 @@ title: 位置独立コード (PIC) が有効でない (Position Independent Code
 platform: android
 id: MASTG-TEST-0222
 deprecated_since: 21
-type: [static]
+type: [static, code]
 weakness: MASWE-0116
 profiles: [L2]
 knowledge: [MASTG-KNOW-0006]
@@ -19,8 +19,8 @@ Android 5.0 (API レベル 21) 以降、Android は [すべてのダイナミッ
 
 ## 手順
 
-1. アプリのコンテンツを抽出します ([アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md))。
-2. 各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler Provided Security Features)](MASTG-TECH-0115) を実行し、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md) を使用して、アプリパッケージからネイティブライブラリを抽出します。
+2. 各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler Provided Security Features)](MASTG-TECH-0115) を使用して、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
 
 ## 結果
 
