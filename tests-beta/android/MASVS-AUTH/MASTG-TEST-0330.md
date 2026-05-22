@@ -3,7 +3,7 @@ platform: android
 title: 有効期間が延長された生体認証で使用される鍵のための API への参照 (References to APIs for Keys used in Biometric Authentication with Extended Validity Duration)
 id: MASTG-TEST-0330
 apis: [KeyGenParameterSpec.Builder, setUserAuthenticationParameters, setUserAuthenticationValidityDurationSeconds]
-type: [static]
+type: [static, code]
 weakness: MASWE-0044
 profiles: [L2]
 knowledge: [MASTG-KNOW-0001, MASTG-KNOW-0043, MASTG-KNOW-0047, MASTG-KNOW-0012]
@@ -21,7 +21,8 @@ Android では、開発者は [`setUserAuthenticationParameters(int timeout, int
 
 ## 手順
 
-1. 静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、関連する API のインスタンスを識別します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
