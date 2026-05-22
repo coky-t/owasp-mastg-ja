@@ -2,18 +2,18 @@
 platform: android
 title: Android プロジェクトでの既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
 id: MASTG-TEST-0272
-type: [static]
+type: [static, code]
 weakness: MASWE-0076
 profiles: [L1, L2]
 ---
 
 ## 概要
 
-このテストケースでは、Android Studio で依存関係を識別し、[dependency-check](../../../tools/generic/MASTG-TOOL-0131.md) でスキャンします。
+このテストケースでは、Android Studio で依存関係を識別します。
 
 ## 手順
 
-1. [dependency-check](../../../tools/generic/MASTG-TOOL-0131.md) に従って、Android Studio のビルド環境を通じて Gradle を使用してスキャンを実行します。
+1. [ビルド時の Android の依存関係のソフトウェアコンポジション解析 (SCA) (Software Composition Analysis (SCA) of Android Dependencies at Build Time)](../../../techniques/android/MASTG-TECH-0131.md) を使用して、Android Studio のビルド環境を通じて Gradle を使用してスキャンします。
 
 ## 結果
 
