@@ -3,7 +3,7 @@ platform: android
 title: イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
 id: MASTG-TEST-0327
 apis: [BiometricPrompt, BiometricPrompt.CryptoObject, authenticate]
-type: [static]
+type: [static, code]
 weakness: MASWE-0044
 profiles: [L2]
 knowledge: [MASTG-KNOW-0001, MASTG-KNOW-0043, MASTG-KNOW-0047, MASTG-KNOW-0012]
@@ -20,7 +20,8 @@ Android では、`BiometricPrompt.authenticate()` は [`CryptoObject` あり](ht
 
 ## 手順
 
-1. 静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、関連する API のインスタンスを識別します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
