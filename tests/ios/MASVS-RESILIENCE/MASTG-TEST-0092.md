@@ -12,7 +12,7 @@ profiles: [R]
 
 ## 概要
 
-エミュレータ検出をテストするには、["エミュレータ検出"](../../../Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#emulator-detection) のセクションで示されているように、さまざまなエミュレータ上でアプリを実行してみて、何が起こるかを確認します。
+エミュレータ検出をテストするには、[エミュレータ検出 (Emulator Detection)](../../../knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) で示されているように、さまざまなエミュレータ上でアプリを実行してみて、何が起こるかを確認します。
 
 アプリは何らかの反応を示すはずです。たとえば以下のようなものです。
 
@@ -20,7 +20,7 @@ profiles: [R]
 - 穏やかに終了して、実行を防止します。
 - 不正検出など、バックエンドサーバーに報告します。
 
-また、["エミュレータ検出"](../../../Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#emulator-detection) のセクションの文字列やメソッドのアイデアを使用して、アプリをリバースエンジニアできます。
+また、[エミュレータ検出 (Emulator Detection)](../../../knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) の文字列やメソッドのアイデアを使用して、アプリをリバースエンジニアできます。
 
 次に、この検出のバイパスに取り組み、以下の質問に回答します。
 
