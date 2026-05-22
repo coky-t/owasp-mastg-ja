@@ -13,7 +13,7 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. 開発チームに CycloneDX 形式の SBOM を共有するように依頼するか、元のソースコードにアクセスできる場合は、[dependency-track](../../../tools/generic/MASTG-TOOL-0132.md) に従って SBOM を作成します。
+1. [SBOM を作成することによる Android の依存関係のソフトウェアコンポジション解析 (Software Composition Analysis (SCA) of Android Dependencies by Creating a SBOM)](../../../techniques/android/MASTG-TECH-0130.md) を使用して SBOM を生成するか、開発チームに CycloneDX 形式のものを依頼します。
 2. SBOM を [dependency-track](../../../tools/generic/MASTG-TOOL-0132.md) にアップロードします。
 3. [dependency-track](../../../tools/generic/MASTG-TOOL-0132.md) プロジェクトに脆弱な依存関係の使用がないか検査します。
 
