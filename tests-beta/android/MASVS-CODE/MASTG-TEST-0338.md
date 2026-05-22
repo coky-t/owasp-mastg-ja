@@ -2,7 +2,7 @@
 title: ローカルストレージデータの完全性と真正性のバリデーション (Integrity and Authenticity Validation of Local Storage Data)
 platform: android
 id: MASTG-TEST-0338
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0082
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0036]
@@ -20,8 +20,8 @@ knowledge: [MASTG-KNOW-0036]
 
 ## 手順
 
-1. [Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md) でアプリをリバースエンジニアします。
-2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) でリバースエンジニアしたアプリに対して静的解析ツールを実行し、ローカルストレージからデータを読み取る API、および可能であれば関連する完全性と真正性のバリデーション API を特定します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -31,11 +31,10 @@ knowledge: [MASTG-KNOW-0036]
 
 アプリが、セキュリティ関連の判断に使用する前に、ローカルストレージからロードしたデータの完全性と真正性を検証しない場合、そのテストケースは不合格です。
 
-これは、たとえば `SharedPreferences.getString` のようなターゲット API の存在が本質的にテストを不合格にするわけではないことを意味します。報告された各コード箇所はリバースエンジニアリングによって慎重に解析し、アプリが適切なバリデーションを実行しているかどうかをチェックする必要があります。
+**さらなるバリデーションが必要となります:**
 
-報告されたコード箇所を評価する際には、以下を確認します。
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、データが適切な完全性および真正性バリデーションなしでセキュリティ関連の決定に使用されているかどうかを判断します。
 
-1. ローカルストレージからロードされている値は何か。
-2. その値が、認証状態、認可、機能アクセス、設定、信頼性判断など、セキュリティ関連の判断に影響を与える可能性があるかどうか。
-3. アプリが、たとえば HMAC、MAC、署名、または同様の検証メカニズムで、使用前に、ロードされた値の完全性と真正性を検証しているかどうか。
-4. そのバリデーションは対象とする攻撃モデルに対して有効であるかどうか。
+- その値が、認証状態、認可、機能アクセス、設定、信頼性判断など、セキュリティ関連の判断に影響を与える可能性があるかどうかを判断します。
+- アプリが、たとえば HMAC、MAC、署名、または同様の検証メカニズムで、使用前に、ロードされた値の完全性と真正性を検証しているかどうかを判断します。
+- そのバリデーションは対象とする攻撃モデルに対して有効であるかどうかを判断します。
