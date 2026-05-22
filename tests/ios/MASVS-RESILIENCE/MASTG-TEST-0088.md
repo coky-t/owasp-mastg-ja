@@ -28,8 +28,8 @@ deprecation_note: New version available in MASTG V2
 
 **アプリを起動して、自動ツールを使用して脱獄検出をバイパスしてみる:**
 
-脱獄検出を実装している場合、ツールの出力でその指標をみることができるかもしれません。["自動化された脱獄検出のバイパス"](../../../Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#automated-jailbreak-detection-bypass) のセクションを参照してください。
+脱獄検出を実装している場合、ツールの出力でその指標をみることができるかもしれません。[脱獄検出のバイパス (Bypassing Jailbreak Detection)](../../../techniques/ios/MASTG-TECH-0152.md) を参照してください。
 
 **アプリをリバースエンジニアする:**
 
-アプリはあなたがこれまでに使用した自動ツールで実装されていない技法を使用しているかもしれません。その場合、アプリをリバースエンジニアして証拠を見つけなければなりません。["手動の脱獄検出のバイパス"](../../../Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#manual-jailbreak-detection-bypass) のセクションを参照してください。
+アプリはあなたがこれまでに使用した自動ツールで実装されていない技法を使用しているかもしれません。その場合、アプリをリバースエンジニアして証拠を見つけなければなりません。[脱獄検出 (Jailbreak Detection)](../../../knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0084.md) を参照してください。
