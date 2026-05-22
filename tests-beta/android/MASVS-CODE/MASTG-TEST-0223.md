@@ -2,7 +2,7 @@
 title: スタックカナリアが有効でない (Stack Canaries Not Enabled)
 platform: android
 id: MASTG-TEST-0223
-type: [static]
+type: [static, code]
 weakness: MASWE-0116
 profiles: [L2]
 knowledge: [MASTG-KNOW-0006]
@@ -13,12 +13,12 @@ knowledge: [MASTG-KNOW-0006]
 このテストケースでは、アプリのネイティブライブラリがバッファオーバーフロー攻撃に対する緩和技法であるスタックスマッシュ保護などの一般的なバイナリ保護メカニズム ([バイナリ保護メカニズム (Binary Protection Mechanisms)](../../../knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md)) なしでコンパイルされているかどうかをチェックします。
 
 - NDK ライブラリでは、スタックカナリアが有効になっているはずです。[コンパイラがデフォルトでそれを行っている](https://android.googlesource.com/platform/ndk/%2B/master/docs/BuildSystemMaintainers.md#additional-required-arguments) ためです。
-- 他のカスタム C/C++ ライブラリでは、スタックカナリアが有効になっていないかもしれません。必要なコンパイラフラグ (`-fstack-protector-strong` または `-fstack-protector-all`) が欠如していたり、カナリアがコンパイラによって最適化により削除されてしまうためです。詳細については [評価](#evaluation) セクションを参照してください。
+- 他のカスタム C/C++ ライブラリでは、スタックカナリアが有効になっていないかもしれません。必要なコンパイラフラグ (`-fstack-protector-strong` または `-fstack-protector-all`) が欠如していたり、カナリアがコンパイラによって最適化により削除されてしまうためです。
 
 ## 手順
 
-1. アプリのコンテンツを抽出します ([アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md))。
-2. 各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler Provided Security Features)](MASTG-TECH-0115) を実行し、"canary" または選択したツールで使用される対応するキーワードを grep で検索します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md) を使用して、アプリパッケージからネイティブライブラリを抽出します。
+2. 各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler Provided Security Features)](MASTG-TECH-0115) を使用して、"canary" または選択したツールで使用される対応するキーワードを grep で検索します。
 
 ## 結果
 
