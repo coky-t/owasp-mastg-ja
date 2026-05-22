@@ -110,6 +110,10 @@
 -->
 - [MASTG-TECH-0145](techniques/android/MASTG-TECH-0145.md) XAPK ファイルの扱い (Working with XAPK Files)
 - [MASTG-TECH-0148](techniques/android/MASTG-TECH-0148.md) Android コンテンツプロバイダとのやり取り (Interacting with Android ContentProviders)
+<!--
+- [MASTG-TECH-0150](techniques/android/MASTG-TECH-0150.md) AndroidManifest の解析 (Analyzing the AndroidManifest)
+- [MASTG-TECH-0151](techniques/android/MASTG-TECH-0151.md) Network Security Configuration の解析 (Analyzing the Network Security Configuration)
+-->
 
 ## iOS
 
@@ -209,4 +213,11 @@
 - [MASTG-TECH-0146](techniques/ios/MASTG-TECH-0146.md) 非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)
 <!--
 - [MASTG-TECH-0147](techniques/ios/MASTG-TECH-0147.md) パッチ適用 (Patching)
+- [MASTG-TECH-0149](techniques/ios/MASTG-TECH-0149.md) nscurl を使用して実行時に ATS TLS 設定を検証する (Validating ATS TLS Settings at Runtime Using nscurl)
+-->
+- [MASTG-TECH-0152](techniques/ios/MASTG-TECH-0152.md) 脱獄検出のバイパス (Bypassing Jailbreak Detection)
+<!--
+- [MASTG-TECH-0153](techniques/ios/MASTG-TECH-0153.md) Info.plist ファイルの取得 (Retrieving Info.plist Files)
+- [MASTG-TECH-0154](techniques/ios/MASTG-TECH-0154.md) Info.plist ファイルの解析 (Analyzing Info.plist Files)
+- [MASTG-TECH-0155](techniques/ios/MASTG-TECH-0155.md) ATS 構成の解析 (Analyzing the ATS Configuration)
 -->
