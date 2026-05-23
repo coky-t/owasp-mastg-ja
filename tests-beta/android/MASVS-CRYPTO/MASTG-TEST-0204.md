@@ -2,7 +2,7 @@
 platform: android
 title: 安全でないランダム API の使用 (Insecure Random API Usage)
 id: MASTG-TEST-0204
-type: [static]
+type: [static, code, manual]
 best-practices: [MASTG-BEST-0001]
 prerequisites:
 - identify-sensitive-data
@@ -20,8 +20,8 @@ Android アプリは、安全でない [擬似乱数生成器 (PRNG)](../../../D
 
 ## 手順
 
-1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、安全でないランダム API を探すか、[メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用してそのような API の使用を検出します。
-2. 特定された API の使用ごとに、セキュリティ関連コンテキストで使用されているかどうかをチェックします。アプリを逆コンパイル ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md)) し、コードを検査 ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md)) して確認できます。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -30,3 +30,9 @@ Android アプリは、安全でない [擬似乱数生成器 (PRNG)](../../../D
 ## 評価
 
 パスワードや認証トークンの生成など、セキュリティ関連コンテキストにそのような API を使用して生成された乱数を見つけることができた場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
+
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、その使用がセキュリティ関連であるかどうかを判断します。
+
+- 生成された乱数値が、暗号鍵、初期化ベクトル (IV)、nonce、認証トークン、セッション識別子、パスワード、PIN などのセキュリティ関連目的で使用されているかどうかを判断します。
