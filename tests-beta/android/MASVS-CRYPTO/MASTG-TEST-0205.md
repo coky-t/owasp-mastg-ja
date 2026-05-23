@@ -2,7 +2,7 @@
 platform: android
 title: ランダムでないソースの使用 (Non-random Sources Usage)
 id: MASTG-TEST-0205
-type: [static]
+type: [static, code, manual]
 best-practices: [MASTG-BEST-0001]
 prerequisites:
 - identify-sensitive-data
@@ -18,7 +18,8 @@ Android アプリケーションはランダムでないソースを使用して
 
 ## 手順
 
-1. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、ランダムでないソースの使用を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -27,3 +28,9 @@ Android アプリケーションはランダムでないソースを使用して
 ## 評価
 
 ランダムでないソースを使用して生成されたパスワードやトークンなどのセキュリティ関連の値を見つけることができた場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
+
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、その使用がセキュリティ関連であるかどうかを判断します。
+
+- 生成された値が、暗号鍵、初期化ベクトル (IV)、nonce、認証トークン、セッション識別子、パスワード、PIN などのセキュリティ関連目的で使用されているかどうかを判断します。
