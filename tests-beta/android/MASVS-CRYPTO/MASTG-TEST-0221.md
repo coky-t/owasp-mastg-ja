@@ -2,7 +2,7 @@
 title: 不備のある対称暗号アルゴリズム (Broken Symmetric Encryption Algorithms)
 platform: android
 id: MASTG-TEST-0221
-type: [static, dynamic]
+type: [static, code, manual]
 weakness: MASWE-0020
 best-practices: [MASTG-BEST-0009]
 profiles: [L1, L2]
@@ -27,7 +27,8 @@ Android では [破られた暗号アルゴリズム](https://developer.android.
 
 ## 手順
 
-1. アプリバイナリに対して [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などのツールで [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を実行するか、[Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) などのツールで [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) (動的解析) を使用して、暗号化と復号化操作を実行する暗号関数の使用を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -36,3 +37,7 @@ Android では [破られた暗号アルゴリズム](https://developer.android.
 ## 評価
 
 [安全でないか非推奨の](../../../Document/0x04g-Testing-Cryptography.md#identifying-insecure-andor-deprecated-cryptographic-algorithms) 暗号アルゴリズムが使用されていることを見つけた場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
+
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、そのアルゴリズムが機密データを保護するためのセキュリティ関連のコンテキストで使用されているかどうかを判断します。
