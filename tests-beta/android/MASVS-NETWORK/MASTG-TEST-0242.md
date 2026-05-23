@@ -2,7 +2,7 @@
 title: Network Security Configuration での証明書ピン留めの欠如 (Missing Certificate Pinning in Network Security Configuration)
 platform: android
 id: MASTG-TEST-0242
-type: [static]
+type: [static, code]
 weakness: MASWE-0047
 profiles: [L2]
 knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
@@ -16,9 +16,10 @@ knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. AndroidManifest.xml を取得 ([AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md)) し、`<application>` タグに `networkSecurityConfig` が設定されているかどうかをチェックします。
-3. 参照しているネットワークセキュリティ構成ファイルを検査し、`<domain-config>` からピンセット (`<pin-set>`) があるすべてのドメインを抽出します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+3. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、`<application>` タグに `networkSecurityConfig` が設定されているかどうかをチェックします。
+4. [Network Security Configuration の解析 (Analyzing the Network Security Configuration)](../../../techniques/android/MASTG-TECH-0151.md) を使用して、Network Security Configuration ファイルから、ピンセット (`<pin-set>`) がある `<domain-config>` からのすべてのドメインを抽出します。
 
 ## 結果
 
