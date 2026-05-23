@@ -2,7 +2,7 @@
 title: Network Security Configuration での証明書ピン留めの期限切れ (Expired Certificate Pins in the Network Security Configuration)
 platform: android
 id: MASTG-TEST-0243
-type: [static]
+type: [static, code]
 weakness: MASWE-0047
 profiles: [L2]
 knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
@@ -20,8 +20,10 @@ knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. AndroidManifest.xml を検査し、`<application>` タグに `networkSecurityConfig` が設定されているかどうかをチェックします。設定されている場合、参照しているファイルを検査し、すべてのドメインの有効期限を抽出します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+3. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、`<application>` タグに `android:networkSecurityConfig` が設定されているかどうかをチェックします。
+4. [Network Security Configuration の解析 (Analyzing the Network Security Configuration)](../../../techniques/android/MASTG-TECH-0151.md) を使用して、Network Security Configuration ファイルからすべての証明書ピンの有効期限を抽出します。
 
 ## 結果
 
