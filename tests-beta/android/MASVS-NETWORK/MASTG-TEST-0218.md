@@ -1,8 +1,8 @@
 ---
 title: ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
-platform: network
+platform: android
 id: MASTG-TEST-0218
-type: [network]
+type: [dynamic, network]
 weakness: MASWE-0050
 profiles: [L1, L2]
 ---
@@ -17,8 +17,9 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/android/MASTG-TECH-0010.md) (Android の場合) または [基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/ios/MASTG-TECH-0062.md) (iOS の場合) をセットアップします。
-2. [Wireshark](../../../tools/network/MASTG-TOOL-0081.md) などを使用して TLS バージョンを確認します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/android/MASTG-TECH-0010.md) を使用して、アプリトラフィックをキャプチャします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
