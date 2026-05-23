@@ -2,7 +2,7 @@
 title: ユーザー提供の CA を信頼する古い Android バージョン (Outdated Android Version Allowing Trust in User-Provided CAs)
 platform: android
 id: MASTG-TEST-0285
-type: [static]
+type: [static, code]
 deprecated_since: 24
 weakness: MASWE-0052
 profiles: [L1, L2]
@@ -17,8 +17,9 @@ knowledge: [MASTG-KNOW-0014]
 
 ## 手順
 
-1. AndroidManifest.xml を取得します ([AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md))。
-2. `<uses-sdk>` 要素から `minSdkVersion` 属性の値を読み取ります。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+3. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、`<uses-sdk>` 要素から `minSdkVersion` 属性の値を読み取ります。
 
 ## 結果
 
