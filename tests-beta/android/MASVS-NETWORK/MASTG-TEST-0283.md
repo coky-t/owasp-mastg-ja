@@ -2,7 +2,7 @@
 title: サーバーホスト名検証の正しくない実装 (Incorrect Implementation of Server Hostname Verification)
 platform: android
 id: MASTG-TEST-0283
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0052
 profiles: [L1, L2]
 ---
@@ -15,8 +15,8 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. ソースコードを検査し、静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行し、`HostnameVerifier` のすべての使用箇所を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -26,11 +26,11 @@ profiles: [L1, L2]
 
 サーバーのホスト名が証明書と一致することをアプリが適切に検証 **しない** 場合、そのテストケースは不合格です。
 
-これには以下のようなケースを含みます。
+**さらなるバリデーションが必要となります:**
+
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、以下のようなケースを探します。
 
 - **ホスト名を常に受け入れること:** `verify(...)` をオーバーライドして、実際のホスト名や証明書に関係なく、無条件に `true` を返します。
 - **過度に広範なマッチングルール:** 意図しないドメインにマッチする寛容なワイルドカードロジックを使用します。
 - **不完全な検証カバレッジ:** `SSLSocket` で作成されたチャネルや再ネゴシエーション時に作成されたチャネルなど、すべての SSL/TLS チャネルでホスト名検証を呼び出していません。
 - **手動検証の欠如:** 低レベル `SSLSocket` API を使用する場合など、ホスト名検証が自動的に行われない場合には、ホスト名検証を実行しません。
-
-自動化ツールを使用してテストする場合、リバースエンジニアされたコードで報告されたすべての場所を検査して、正しくない実装を確認する必要があります ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md))。
