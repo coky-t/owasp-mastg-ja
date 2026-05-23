@@ -2,7 +2,7 @@
 platform: android
 title:  複数の目的で使用される非対称鍵ペアへの参照 (References to Asymmetric Key Pairs Used For Multiple Purposes)
 id: MASTG-TEST-0307
-type: [static]
+type: [static, code]
 weakness: MASWE-0012
 profiles: [L2]
 knowledge: [MASTG-KNOW-0012]
@@ -24,7 +24,8 @@ Android では、非対称鍵は一般的に [`android.security.keystore.KeyGenP
 
 ## 手順
 
-1. アプリに対して [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を実行して、非対称鍵の鍵生成コードを探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
