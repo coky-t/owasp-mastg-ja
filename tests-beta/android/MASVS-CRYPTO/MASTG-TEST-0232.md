@@ -2,7 +2,7 @@
 title: 不備のある対称暗号モード (Broken Symmetric Encryption Modes)
 platform: android
 id: MASTG-TEST-0232
-type: [static, dynamic]
+type: [static, code, manual]
 weakness: MASWE-0020
 best-practices: [MASTG-BEST-0005]
 profiles: [L1, L2]
@@ -12,7 +12,7 @@ profiles: [L1, L2]
 
 Android アプリで [不備のある暗号モードの使用](../../../Document/0x04g-Testing-Cryptography.md#broken-block-cipher-modes) をテストするには、暗号モードを構成および適用するために使用される暗号フレームワークやライブラリのメソッドに注目する必要があります。
 
-Android 開発では、Java Cryptography Architecture (JCA) の `Cipher` クラスが暗号操作の暗号モードを指定できる主要な API です。[`Cipher.getInstance`](https://developer.android.com/reference/javax/crypto/Cipher#getInstance(java.lang.String)) は、暗号アルゴリズム、操作モード、パディングスキームを含む、変形文字列を定義します。一般的な書式は `"Algorithm/Mode/Padding"` です。たとえば、以下のとおりです。
+Android 開発では、Java Cryptography Architecture (JCA) の `Cipher` クラスが暗号操作の暗号モードを指定するための主要な API です。[`Cipher.getInstance`](https://developer.android.com/reference/javax/crypto/Cipher#getInstance(java.lang.String)) は、暗号アルゴリズム、操作モード、パディングスキームを含む、変形文字列を定義します。一般的な書式は `"Algorithm/Mode/Padding"` です。たとえば、以下のとおりです。
 
 ```kotlin
 Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -37,7 +37,8 @@ ECB やその他のモードについては [NIST SP 800-38A - Recommendation fo
 
 ## 手順
 
-1. アプリバイナリに対して [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などのツールで [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を実行するか、[Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) などのツールで [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) (動的解析) を使用して、暗号モードを安全でないモードに指定する暗号関数を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -46,3 +47,7 @@ ECB やその他のモードについては [NIST SP 800-38A - Recommendation fo
 ## 評価
 
 アプリ内で不備のあるモードが特定された場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
+
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、それが機密データの暗号化または復号化操作を実行するために使用されているかどうかを判断します。
