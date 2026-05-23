@@ -2,7 +2,7 @@
 platform: android
 title: 複数の目的で使用される非対称鍵ペアの実行時使用 (Runtime Use of Asymmetric Key Pairs Used For Multiple Purposes)
 id: MASTG-TEST-0308
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0012
 profiles: [L2]
 knowledge: [MASTG-KNOW-0012]
@@ -24,7 +24,9 @@ knowledge: [MASTG-KNOW-0012]
 
 ## 手順
 
-1. 非対称鍵を使用して暗号操作を実行するすべての関数を対象にメソッドトレース ([メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md)) を実行します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
