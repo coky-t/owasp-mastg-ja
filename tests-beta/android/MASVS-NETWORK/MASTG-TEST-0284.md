@@ -2,7 +2,7 @@
 title: WebView での正しくない SSL エラー処理 (Incorrect SSL Error Handling in WebViews)
 platform: android
 id: MASTG-TEST-0284
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0052
 best-practices: [MASTG-BEST-0021]
 profiles: [L1, L2]
@@ -19,8 +19,8 @@ knowledge: [MASTG-KNOW-0010]
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. ソースコードを検査し、静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行し、`onReceivedSslError(...)` のすべての使用箇所を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -30,12 +30,12 @@ knowledge: [MASTG-KNOW-0010]
 
 `onReceivedSslError(...)` がオーバーライドされ、適切なバリデーションやユーザーの関与なしで証明書エラーが無視される場合、そのテストケースは不合格です。
 
-これには以下のようなケースを含みます。
+**さらなるバリデーションが必要となります:**
+
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、以下のようなケースを探します。
 
 - **SSL エラーを無条件に受け入れること:** エラーの性質をチェックせずに `proceed()` を呼び出します。
 - **プライマリエラーコードのみに依存すること:** プライマリエラーが `SSL_UNTRUSTED` でない場合に処理を続行するといった意思決定に [`getPrimaryError()`](https://developer.android.com/reference/android/net/http/SslError#getPrimaryError()) を使用すると、チェーン内の追加のエラーを見逃す可能性があります。
 - **例外をサイレントに抑制すること:** [`cancel()`](https://developer.android.com/reference/android/webkit/SslErrorHandler#cancel()) を呼び出さずに `onReceivedSslError(...)` で例外をキャッチすることで、接続をサイレントに継続できます。
 
 [公式の Android ガイダンス](https://developer.android.com/reference/android/webkit/WebViewClient.html#onReceivedSslError(android.webkit.WebView,%20android.webkit.SslErrorHandler,%20android.net.http.SslError)) によると、アプリは SSL エラーに応答して `proceed()` を呼び出すべきではありません。正しい動作は、潜在的に安全でない接続からユーザーを保護するために、リクエストをキャンセルすることです。また、ユーザーは SSL の問題を確実に評価できないため、ユーザープロンプトも推奨されません。
-
-自動化ツールを使用してテストする場合、リバースエンジニアされたコードで報告されたすべての場所を検査して、正しくない実装を確認する必要があります ([逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md))。
