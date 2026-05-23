@@ -2,7 +2,7 @@
 title: コード内にハードコードされた暗号鍵の使用 (Use of Hardcoded Cryptographic Keys in Code)
 platform: android
 id: MASTG-TEST-0212
-type: [static]
+type: [static, code]
 weakness: MASWE-0014
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0012]
@@ -14,7 +14,8 @@ knowledge: [MASTG-KNOW-0012]
 
 ## 手順
 
-1. [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などのツールで [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用するか、[Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) などのツールで [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) (動的解析) を使用して、コード内の対称鍵暗号のインスタンスをすべて特定し、ハードコードされた暗号鍵の使用を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
