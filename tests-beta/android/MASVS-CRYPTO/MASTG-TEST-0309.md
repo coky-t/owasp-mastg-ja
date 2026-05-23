@@ -2,7 +2,7 @@
 platform: android
 title: 対称暗号化での再使用される初期化ベクトルへの参照 (References to Reused Initialization Vectors in Symmetric Encryption)
 id: MASTG-TEST-0309
-type: [static]
+type: [static, code]
 weakness: MASWE-0022
 status: placeholder
 profiles: [L2]
