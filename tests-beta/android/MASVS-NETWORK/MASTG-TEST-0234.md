@@ -2,7 +2,7 @@
 title: SSLSocket でのサーバーホスト名検証の実装の欠如 (Missing Implementation of Server Hostname Verification with SSLSockets)
 platform: android
 id: MASTG-TEST-0234
-type: [static]
+type: [static, code]
 weakness: MASWE-0052
 profiles: [L1, L2]
 ---
@@ -19,8 +19,8 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. アプリに対して静的解析 ([Android での静的解析 (Static Analysis on Android)](../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、`SSLSocket` と `HostnameVerifier` のすべての使用箇所を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
