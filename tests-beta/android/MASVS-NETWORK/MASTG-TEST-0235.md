@@ -2,7 +2,7 @@
 title: クリアテキストトラフィックを許可する Android アプリ構成 (Android App Configurations Allowing Cleartext Traffic)
 platform: android
 id: MASTG-TEST-0235
-type: [static]
+type: [static, code]
 weakness: MASWE-0050
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0014]
@@ -17,12 +17,10 @@ Android 9 (API レベル 28) 以降、クリアテキストの HTTP トラフィ
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. AndroidManifest.xml を取得します。
-3. Network Security Configuration を取得します。
-4. AndroidManifest.xml から `usesCleartextTraffic` の値を読み取ります。
-5. NSC `<base-config>` 要素から `cleartextTrafficPermitted` の値を読み取ります。
-6. NSC `<domain-config>` 要素から `cleartextTrafficPermitted` の値を読み取ります。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+3. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、`android:usesCleartextTraffic` の値を読み取り、`android:networkSecurityConfig` が存在するかどうかをチェックします。
+4. [Network Security Configuration の解析 (Analyzing the Network Security Configuration)](../../../techniques/android/MASTG-TECH-0151.md) を使用して、Network Security Configuration ファイルから `<base-config>` 要素と `<domain-config>` 要素の `cleartextTrafficPermitted` の値を読み取ります。
 
 ## 結果
 
