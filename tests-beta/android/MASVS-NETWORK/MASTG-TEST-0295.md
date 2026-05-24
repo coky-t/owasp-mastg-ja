@@ -2,7 +2,7 @@
 title: 更新されていない GMS セキュリティプロバイダ (GMS Security Provider Not Updated)
 platform: android
 id: MASTG-TEST-0295
-type: [static]
+type: [static, code]
 weakness: MASWE-0052
 profiles: [L2]
 best-practices: [MASTG-BEST-0020]
@@ -15,8 +15,8 @@ knowledge: [MASTG-KNOW-0011, MASTG-KNOW-0010]
 
 ## 手順
 
-1. アプリをリバースエンジニアします ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md))。
-2. 静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) を使用して、`ProviderInstaller.installIfNeeded` や `ProviderInstaller.installIfNeededAsync` の使用箇所を探します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
