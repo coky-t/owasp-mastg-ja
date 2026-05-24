@@ -2,7 +2,7 @@
 title: スクリーンキャプチャ防止 API への参照 (References to Screen Capturing Prevention APIs)
 platform: android
 id: MASTG-TEST-0291
-type: [static]
+type: [static, code]
 profiles: [L2]
 best-practices: [MASTG-BEST-0014]
 weakness: MASWE-0055
@@ -17,7 +17,8 @@ knowledge: [MASTG-KNOW-0053]
 
 ## 手順
 
-1. 静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、関連する API のインスタンスを識別します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
