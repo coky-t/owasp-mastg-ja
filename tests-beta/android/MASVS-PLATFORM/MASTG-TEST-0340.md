@@ -3,7 +3,7 @@ platform: android
 title: オーバーレイ攻撃保護への参照 (References to Overlay Attack Protections)
 id: MASTG-TEST-0340
 apis: [onFilterTouchEventForSecurity, setFilterTouchesWhenObscured, FLAG_WINDOW_IS_OBSCURED, FLAG_WINDOW_IS_PARTIALLY_OBSCURED]
-type: [static]
+type: [static, code]
 weakness: MASWE-0053
 best-practices: [MASTG-BEST-0040]
 profiles: [L2]
@@ -28,8 +28,11 @@ Android はタッチフィルタリングを通じたオーバーレイ攻撃か
 
 ## 手順
 
-1. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、オーバーレイ保護メカニズムへの参照を検索します。
-2. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](MASTG-TECH-0117.md) を使用して、AndroidManifest.xml ファイルを取得し、`targetSdkVersion` および関連するパーミッションをチェックします。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
+3. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+4. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、AndroidManifest.xml ファイルから `targetSdkVersion` を取得します。
+5. [アプリパーミッションの取得 (Obtaining App Permissions)](../../../techniques/android/MASTG-TECH-0126.md) を使用して、関連するパーミッションを取得します。
 
 ## 結果
 
