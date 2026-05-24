@@ -2,7 +2,7 @@
 platform: android
 title: 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)
 id: MASTG-TEST-0320
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0118
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0028]
@@ -27,14 +27,15 @@ prerequisites:
 
 このテストは動的解析を使用して、関連する API 呼び出しとファイルシステム操作を監視します。アプリがこれらの API を直接使用しているかどうかに関係なく、WebView はコンテンツをレンダリングする際に内部的にそれらを使用する可能性があります (例: `localStorage` を使用する JavaScript コード)。そのため、`open`, `openat`, `opendir`, `unlinkat` などの API の呼び出しをトレースすることで、WebView ストレージディレクトリ内のファイル操作を特定できます。
 
+アプリを動かす際、クリーンアップされることを期待する機密データのリストを必ず保持してください。そうすることでアプリを閉じた後も WebView ストレージディレクトリに依然として存在するかどうかを検証できます。
+
 ## 手順
 
-1. デバイスにアプリをインストールします ([アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md))。
-2. [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用して、ストレージの有効化とクリーンアップについて WebView API をターゲットにします。
-3. アプリを開きます。
-4. アプリを広範に使用して、関連するすべての WebView がカバーされ、機密データがロードされることを確認します。クリーンアップする必要がある機密データのリストを保管しておきます。
-5. アプリを閉じます。
-6. [ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md) を使用して `/data/data/<app_package>/app_webview/` ディレクトリの内容を取得するか、単純にそのディレクトリ内で WebView で使用されている機密データを検索します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
+4. アプリを閉じます。
+5. [ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md) を使用して `/data/data/<app_package>/app_webview/` ディレクトリの内容を取得するか、単純にそのディレクトリ内で WebView で使用されている機密データを検索します。
 
 ## 結果
 
