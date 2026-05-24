@@ -2,7 +2,7 @@
 platform: android
 title: テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 id: MASTG-TEST-0316
-type: [static, manual]
+type: [static, code, manual]
 weakness: MASWE-0053
 profiles: [L2]
 ---
@@ -38,8 +38,7 @@ SecureTextField(
 ## 手順
 
 1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
-2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、テキストフィールドクラスとテキスト難読化 API への参照を探します。
-3. アクセスコードまたは検証コードの使用のためのフィールドを手動で評価して絞り込みます。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -52,5 +51,10 @@ SecureTextField(
 - `TextField` が使用されている
 - `SecureTextField` が使用されているが、`TextObfuscationMode.Visible` が設定されている
 
-> [!NOTE]
-> アプリが `TextField` や `SecureTextField` のような標準クラスに依存しないカスタムテキスト入力コントロールを使用している場合 (カスタム UI フレームワークやゲームエンジンなど)、このテストは偽陰性を生み出す可能性があります。
+**さらなるバリデーションが必要となります:**
+
+アクセスコードや検証コードを扱うフィールドは状況によって異なるため、[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、そのフィールドが機密データを扱っているかどうか、および適切にマスクされているかどうかを判断します。
+
+**予想される検出漏れ:**
+
+アプリが `TextField` や `SecureTextField` のような標準クラスに依存しないカスタムテキスト入力コントロールを使用している場合 (カスタム UI フレームワークやゲームエンジンなど)、このテストは検出漏れを生み出す可能性があります。
