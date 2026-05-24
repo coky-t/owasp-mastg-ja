@@ -2,7 +2,7 @@
 title: アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)
 platform: android
 id: MASTG-TEST-0289
-type: [dynamic, manual]
+type: [dynamic, filesystem, manual]
 profiles: [L2]
 best-practices: [MASTG-BEST-0014]
 weakness: MASWE-0055
@@ -18,7 +18,7 @@ knowledge: [MASTG-KNOW-0053]
 ## 手順
 
 1. 機密として識別される各画面になるまでアプリを動かします。これらの画面ごとに、アプリをバックグラウンドに移動 (たとえば **ホーム** を押したり、**最近の画面** を開いて終了するなど) し、次の画面に進みます。
-2. 完了したら、[ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md) を使用して、システムによって撮影されたスクリーンショットをラップトップにコピーし、さらに解析します。システムはスクリーンショットをコンテナ `/data/system_ce/0/snapshots` または `/data/system` に保存します。
+2. [ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md) を使用して、システムによって撮影されたスクリーンショットをラップトップにコピーし、さらに解析します。システムはスクリーンショットをコンテナ `/data/system_ce/0/snapshots` または `/data/system` に保存します。
 
 ## 結果
 
@@ -27,3 +27,7 @@ knowledge: [MASTG-KNOW-0053]
 ## 評価
 
 いずれかのスクリーンショットが保護される必要がある機密データを表示している場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
+
+各スクリーンショットを目視で検査し、パスワード、トークン、個人を識別できる情報、アプリがバックグラウンドにある場合に開示されるべきではないその他の機密コンテンツなどの機密情報を探します。
