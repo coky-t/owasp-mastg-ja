@@ -4,7 +4,7 @@ title: WebView におけるローカルファイルアクセスへの参照 (Ref
 alias: references-to-local-file-access-in-webviews
 id: MASTG-TEST-0252
 apis: [WebView, WebSettings, getSettings, setAllowFileAccess, setAllowFileAccessFromFileURLs, setAllowUniversalAccessFromFileURLs]
-type: [static]
+type: [static, code]
 weakness: MASWE-0069
 best-practices: [MASTG-BEST-0010, MASTG-BEST-0011, MASTG-BEST-0012]
 profiles: [L1, L2]
@@ -29,7 +29,7 @@ knowledge: [MASTG-KNOW-0018]
 
 ある銀行アプリが WebView を使用して動的コンテンツを表示し、開発者が三つの安全でない設定をすべて有効にしているとします。さらに、WebView で JavaScript が有効になっています。
 
-1. 攻撃者は、その攻撃者が (リバースエンジニアリングのおかけなどで) _分かっている_ WebView がアクセスする場所に、悪意のある HTML ファイルを (フィッシングやその他のエクスプロイトによって) デバイスに注入します。たとえば、アプリの利用規約を表示するための HTML ファイルなどです。
+1. 攻撃者は、その攻撃者が (リバースエンジニアリングのおかけなどで) _分かっている_ WebView がアクセスする場所に、悪意のある HTML ファイルを (フィッシングやその他のエクスプロイトによって) デバイスに注入します。たとえば、HTML ファイルはアプリの利用規約を表示するために使用されます。
 2. WebView は `setAllowFileAccess(true)` により悪意のあるファイルをロードできます。
 3. `setJavaScriptEnabled(true)` と `setAllowFileAccessFromFileURLs(true)` のおかげで、悪意のある (`file://` コンテキストで実行されている) ファイル内の JavaScript は `file://` URL を使用して他のローカルファイルにアクセスできます。
 4. 攻撃者が制御するスクリプトはデバイスから外部サーバーに機密データを流出します。
@@ -53,18 +53,21 @@ Error reading file: 0
 
 ## 手順
 
-1. アプリの `minSdkVersion` を確認します。
-2. semgrep などのツールを使用して、以下への参照を探します。
-      - `WebView` クラス。
-      - `WebSettings` クラス。
-      - `setJavaScriptEnabled` メソッド。
-      - `WebSettings` クラスの `setAllowFileAccess`, `setAllowFileAccessFromFileURLs`, `setAllowUniversalAccessFromFileURLs` メソッド。
-
-この場合、**`setAllow*` メソッドへの参照がないことが特に重要であり**、確認する必要があることに注意してください。これは、アプリがデフォルト値を使用している可能性があり、場合によっては安全でない可能性があるためです。このため、 アプリ内のすべての WebView インスタンスを識別することを強くお勧めします。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
+3. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+4. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、AndroidManifest.xml ファイルから `minSdkVersion` を取得します。
 
 ## 結果
 
-出力には上記のメソッドが使用されている WebView インスタンスのリストを含む可能性があります。
+出力には上記したメソッドを使用する WebView インスタンスのリストを含む可能性があります。特に以下のようなものです。
+
+- `WebView` クラス。
+- `WebSettings` クラス。
+- `setJavaScriptEnabled` メソッド。
+- `WebSettings` クラスの `setAllowFileAccess`, `setAllowFileAccessFromFileURLs`, `setAllowUniversalAccessFromFileURLs` メソッド。
+
+この場合、**`setAllow*` メソッドへの参照がないことが特に重要であり**、確認する必要があることに注意してください。これは、アプリがデフォルト値を使用している可能性があり、場合によっては安全でない可能性があるためです。このため、 アプリ内のすべての WebView インスタンスを識別することを強くお勧めします。
 
 ## 評価
 
