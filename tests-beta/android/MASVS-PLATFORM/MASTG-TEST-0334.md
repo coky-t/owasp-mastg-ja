@@ -2,7 +2,7 @@
 platform: android
 title: WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)
 id: MASTG-TEST-0334
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0069
 best-practices: [MASTG-BEST-0011, MASTG-BEST-0012, MASTG-BEST-0013, MASTG-BEST-0035]
 profiles: [L1, L2]
@@ -22,7 +22,7 @@ prerequisites:
 ## 手順
 
 1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
-2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) ツールを実行して、関連する WebView API への参照を探します。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
@@ -34,11 +34,14 @@ prerequisites:
 
 - `setJavaScriptEnabled` は明示的に `true` に設定されている。
 - `addJavascriptInterface` は少なくとも一度使用されている。
-- `@JavascriptInterface` で注釈付けられたメソッドのうち少なくとも一つが機密データまたはアクションを扱い、信頼できないコンテンツに到達可能である。下記参照。
+- `@JavascriptInterface` で注釈付けられたメソッドのうち少なくとも一つが機密データまたはアクションを扱い、信頼できないコンテンツに到達可能である。
 
-**状況に関する考慮事項**:
+**さらなるバリデーションが必要となります:**
 
-誤検出を減らすため、関連するコードが安全でないと報告する前に、ブリッジが使用されているコンテキストを必ず理解します。機密データやアクションを保護するためのセキュリティ関連コンテキストで使用されていること、および信頼できないコンテンツから到達可能であることを確認します。たとえば、WebView が任意の URL や十分に検証されていない URL をロードできる場合、またはアプリがブリッジに対して適切なオリジン許可リストを実装していない場合です。
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、そのブリッジがセキュリティ関連のコンテキストで使用されているかどうかを判断します。
+
+- 公開されているメソッドが機密データやセキュリティ上重要なアクションを扱っているかどうかを判断します。
+- たとえば WebView が任意の URL や検証が不十分な URL をロードできる場合や、アプリが適切なオリジン許可リストを実装していない場合に、ブリッジが信頼できないコンテンツから到達できるかどうかを判断します。
 
 **WebView-Native ブリッジのテストにおけるよく知られた課題**:
 
