@@ -2,7 +2,7 @@
 title: WebView のデバッグが有効 (Debugging Enabled for WebViews)
 platform: android
 id: MASTG-TEST-0227
-type: [static]
+type: [static, code]
 weakness: MASWE-0067
 best-practices: [MASTG-BEST-0008]
 profiles: [R]
@@ -13,13 +13,12 @@ knowledge: [MASTG-KNOW-0028]
 
 `WebView.setWebContentsDebuggingEnabled(true)` API はアプリケーション内の **すべて** の WebView に対してデバッグを有効にします。この機能は開発時には便利ですが、本番で有効のままにしておくと重大なセキュリティリスクをもたらします。有効にすると、接続された PC はアプリケーション内の任意の WebView 内の通信をデバッグ、盗聴、改変できます。詳細については ["Android ドキュメント"](https://developer.chrome.com/docs/devtools/remote-debugging/webviews/#configure_webviews_for_debugging) をご覧ください。
 
-このフラグは `AndroidManifest.xml` の `debuggable` 属性とは独立して機能することに注意してください ([AndroidManifest で有効になっているデバッグフラグ (Debuggable Flag Enabled in the AndroidManifest)](MASTG-TEST-0226.md) を参照)。アプリが debuggable としてマークされていない場合でも、この API を呼び出すことで依然として WebView をデバッグできます。
+このフラグは `AndroidManifest.xml` の `debuggable` 属性 (`ApplicationInfo.FLAG_DEBUGGABLE`) とは独立して機能することに注意してください ([AndroidManifest で有効になっているデバッグフラグ (Debuggable Flag Enabled in the AndroidManifest)](MASTG-TEST-0226.md) を参照)。アプリが debuggable としてマークされていない場合でも、この API を呼び出すことで依然として WebView をデバッグできます。
 
 ## 手順
 
-1. アプリバイナリに対して [re-flutter](../../../tools/generic/MASTG-TOOL-0100.md) などのツールで [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を実行し、以下の使用箇所を探します。
-    - `WebView.setWebContentsDebuggingEnabled` に `true` を設定している。
-    - `ApplicationInfo.FLAG_DEBUGGABLE`
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
