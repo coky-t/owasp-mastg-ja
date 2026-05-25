@@ -2,7 +2,7 @@
 platform: android
 title: 機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)
 id: MASTG-TEST-0318
-type: [static]
+type: [static, code]
 weakness: MASWE-0112
 profiles: [P]
 ---
@@ -18,7 +18,7 @@ profiles: [P]
 ## 手順
 
 1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
-2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、機密ユーザーデータが SDK に渡される可能性があるこれらのメソッドの使用を探します。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
