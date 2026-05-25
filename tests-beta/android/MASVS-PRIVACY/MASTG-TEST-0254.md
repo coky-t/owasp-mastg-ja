@@ -2,7 +2,7 @@
 title: 危険なアプリパーミッション (Dangerous App Permissions)
 platform: android
 id: MASTG-TEST-0254
-type: [static]
+type: [static, code]
 weakness: MASWE-0117
 profiles: [P]
 knowledge: [MASTG-KNOW-0017]
@@ -16,8 +16,8 @@ Android アプリでは、カメラ、位置情報、ストレージなどの情
 
 アプリで使用しているパーミッションを見つけるのに役立つツールは複数あります。[AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を参照して、記載されているいずれかのツールを使用します。
 
-1. APK から `AndroidManifest.xml` ファイルを抽出します ([AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を参照)。
-2. 宣言されているパーミッションのリストを取得します ([アプリパーミッションの取得 (Obtaining App Permissions)](../../../techniques/android/MASTG-TECH-0126.md) を参照)。
+1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+2. [アプリパーミッションの取得 (Obtaining App Permissions)](../../../techniques/android/MASTG-TECH-0126.md) を使用して、関連するパーミッションを取得します。
 
 ## 結果
 
