@@ -3,7 +3,7 @@ platform: android
 title: ログ記録 API の実行時使用 (Runtime Use of Logging APIs)
 id: MASTG-TEST-0203
 apis: [Log, Logger, System.out.print, System.err.print, java.lang.Throwable#printStackTrace]
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0001
 best-practices: [MASTG-BEST-0002]
 profiles: [L1, L2, P]
@@ -16,9 +16,9 @@ Android プラットフォームでは、`Log`, `Logger`, `System.out.print`, `S
 
 ## 手順
 
-1. アプリをインストールして実行します。
-2. ログ出力を解析したいモバイルアプリの画面に移動します。
-3. 実行中のアプリにアタッチし、ログ記録 API をターゲットにしてメソッドトレース ([メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md)) ([Frida (Android)](../../../tools/android/MASTG-TOOL-0001.md) などを使用) を実行し、出力を保存します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
