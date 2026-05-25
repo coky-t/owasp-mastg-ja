@@ -13,7 +13,7 @@
 - [MASTG-TEST-0231](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0231.md) ログ記録 API への参照 (References to Logging APIs)
 - [MASTG-TEST-0262](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0262.md) 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)
 - [MASTG-TEST-0287](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md) SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)
-- [MASTG-TEST-0304](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0304.md) SQLite 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via SQLite)
+- [MASTG-TEST-0304](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0304.md) Android Room Database 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Unencrypted via Android Room Database)
 - [MASTG-TEST-0305](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0305.md) DataStore 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via DataStore)
 - [MASTG-TEST-0306](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0306.md) Android Room DB 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via Android Room DB)
 

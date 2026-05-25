@@ -1,8 +1,8 @@
 ---
-title: SQLite 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via SQLite)
+title: Android Room Database 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Unencrypted via Android Room Database)
 platform: android
 id: MASTG-TEST-0304
-type: [static, dynamic]
+type: [static, code]
 weakness: MASWE-0006
 best-practices: []
 profiles: [L1, L2]
