@@ -2,7 +2,7 @@
 platform: android
 title: 外部ストレージに書き込まれたファイル (Files Written to External Storage)
 id: MASTG-TEST-0200
-type: [dynamic]
+type: [dynamic, filesystem, manual]
 weakness: MASWE-0007
 profiles: [L1, L2]
 ---
@@ -13,12 +13,11 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [adb](../../../tools/android/MASTG-TOOL-0004.md) がインストールされていることを確認します。
-2. アプリをインストールします ([アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md))。
-3. アプリを実行する前に、外部ストレージの現在のファイルリストを取得します ([ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md))。
-4. アプリを実行します。
-5. アプリを実行した後、外部ストレージのファイルリストを再度取得します。
-6. 二つのリスト間の差を算出します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md) を使用して、外部ストレージの現在のファイルリストを取得します。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
+4. [ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/android/MASTG-TECH-0002.md) を使用して、外部ストレージの現在のファイルリストを再び取得します。
+5. 二つのリスト間の差を算出します。
 
 ## 結果
 
@@ -28,4 +27,9 @@ profiles: [L1, L2]
 
 上記で見つかったファイルが暗号化されておらず、機密データが漏洩している場合、テストケースは不合格です。
 
-これを確認するには、アプリをリバースエンジニア ([Java コードの逆コンパイル (Decompiling Java Code)](../../../techniques/android/MASTG-TECH-0017.md)) して、コードを調査 ([逆コンパイルした Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md)) します。
+**さらなるバリデーションが必要となります:**
+
+報告された各ファイルの内容を検査して、データが機密であるかどうかを判断します。
+
+- ファイルが機密情報 (個人データ、クレデンシャル、トークンなど) を含むかどうかを判断します。
+- データが暗号化なしで保存されているかどうかを判断します。
