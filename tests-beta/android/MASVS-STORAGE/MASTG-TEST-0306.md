@@ -1,8 +1,8 @@
 ---
-title: Android Room DB 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via Android Room DB)
+title: Android Room DB 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via Android Room DB)
 platform: android
 id: MASTG-TEST-0306
-type: [static, dynamic]
+type: [static, code]
 weakness: MASWE-0006
 best-practices: []
 profiles: [L1, L2]

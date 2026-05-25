@@ -329,7 +329,7 @@
       - [MASTG-TEST-0287 SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md)
       - [MASTG-TEST-0304 Android Room Database 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Unencrypted via Android Room Database)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0304.md)
       - [MASTG-TEST-0305 DataStore 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via DataStore)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0305.md)
-      - [MASTG-TEST-0306 Android Room DB 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via Android Room DB)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0306.md)
+      - [MASTG-TEST-0306 Android Room DB 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via Android Room DB)](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0306.md)
 
     - MASVS-CRYPTO: 暗号
       - [MASTG-TEST-0204 安全でないランダム API の使用 (Insecure Random API Usage)](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0204.md)
