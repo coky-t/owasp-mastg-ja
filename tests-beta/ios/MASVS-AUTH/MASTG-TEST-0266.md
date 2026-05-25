@@ -3,10 +3,10 @@ platform: ios
 title: イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)
 id: MASTG-TEST-0266
 apis: [LAContext.evaluatePolicy]
-type: [static]
+type: [static, code]
 weakness: MASWE-0044
 profiles: [L2]
-knowledge: [MASTG-KNOW-0056]
+knowledge: [MASTG-KNOW-0056, MASTG-KNOW-0057]
 ---
 
 ## 概要
@@ -17,10 +17,12 @@ knowledge: [MASTG-KNOW-0056]
 
 対照的に、**Keychain** API は機密データを安全に保存し、`kSecAccessControl` フラグを介してアクセス制御ポリシー (例: 生体認証などのユーザーの存在を要求するなど) を設定できます。これは、認証が単なる一回限りのブール値ではなく、**安全なデータ取得パス (プロセス外)** の一部であることを確保するため、認証のバイパスが著しく難しくなります。
 
+Keychain API は、機密データアクセスにユーザー認証を強制するための `SecItemAdd`, `SecItemCopyMatching`, `SecAccessControlCreateWithFlags` (`kSecAccessControlUserPresence` などのフラグと一緒に) を含みます。詳細については [キーチェーンサービス (Keychain Services)](../../../knowledge/ios/MASVS-AUTH/MASTG-KNOW-0057.md) を参照してください。
+
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、`LAContext.evaluatePolicy` の使用を検出します。
-2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、Keychain API、特に `SecAccessControlCreateWithFlags` (`SecItemAdd` や `SecItemCopyMatching` などの他の API と一緒に使用する必要がある) の使用を検出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
