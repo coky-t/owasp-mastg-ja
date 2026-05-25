@@ -2,7 +2,7 @@
 platform: android
 title: StrictMode API の実行時使用 (Runtime Use of StrictMode APIs)
 id: MASTG-TEST-0264
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0094
 best-practices: []
 profiles: [R]
@@ -16,7 +16,9 @@ profiles: [R]
 
 ## 手順
 
-1. 実行時メソッドフック ([メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) 参照) を使用し、`StrictMode` API の使用箇所を探します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
@@ -24,4 +26,4 @@ profiles: [R]
 
 ## 評価
 
-Frida スクリプトの出力が `StrictMode` API の実行時使用を示す場合、そのテストケースは不合格です。
+出力が `StrictMode` API の実行時使用を示す場合、そのテストケースは不合格です。
