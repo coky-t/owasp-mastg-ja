@@ -3,7 +3,7 @@ platform: android
 title: 安全な画面ロックを検出するための API への参照 (References to APIs for Detecting Secure Screen Lock)
 id: MASTG-TEST-0247
 apis: [KeyguardManager, BiometricManager#canAuthenticate]
-type: [static]
+type: [static, code]
 weakness: MASWE-0008
 best-practices: []
 profiles: [L2]
@@ -20,7 +20,8 @@ knowledge: [MASTG-KNOW-0001]
 
 ## 手順
 
-1. [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) を使用して、安全な画面ロックが設定されているかどうかをチェックする API を特定します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
