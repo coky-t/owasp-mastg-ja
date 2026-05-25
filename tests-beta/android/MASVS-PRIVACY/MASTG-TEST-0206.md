@@ -19,8 +19,8 @@ profiles: [P]
 
 ## 手順
 
-1. デバイスを起動します。
-2. ネットワークトラフィックからの機密データのログ記録を開始します ([ネットワークトラフィックからの機密データのログ記録 (Logging Sensitive Data from Network Traffic)](../../../techniques/android/MASTG-TECH-0100.md))。たとえば、[mitmproxy](../../../tools/network/MASTG-TOOL-0097.md) を使用します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [ネットワークトラフィックからの機密データのログ記録 (Logging Sensitive Data from Network Traffic)](../../../techniques/android/MASTG-TECH-0100.md) を使用して、アプリのネットワークトラフィックをキャプチャしログ記録します。
 3. アプリを起動して使用し、さまざまなワークフローを実行しながら、可能な場所で機密データを入力します。特に、ネットワークトラフィックをトリガーすることが分かっている場所で行います。
 
 ## 結果
@@ -31,4 +31,4 @@ profiles: [P]
 
 アプリのマーケットプレイスのプライバシー宣言 (Google Play の Data Safety セクションなど) やそのプライバシーポリシーに宣言されていない、アプリに入力した PII を見つけることができた場合、そのテストケースは不合格です。
 
-このテストは、機密データがネットワーク経由で送信されるコードの場所を提供しないことに注意してください。コードの場所を特定するには、[semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などの静的解析ツールや [Frida](../../../tools/generic/MASTG-TOOL-0031.md) などの動的解析ツールを使用できます。詳細については、それぞれ [機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0318.md) および [機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0319.md) を参照してください。
+このテストは、機密データがネットワーク経由で送信されるコードの場所を提供しないことに注意してください。コードの場所を特定するには [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) や [MASTG-TECH-0015 Android での動的解析 (Dynamic Analysis on Android)](../../../techniques/android/MASTG-TECH-0015.md) を使用できます。詳細については、それぞれ [機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0318.md) および [機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0319.md) を参照してください。
