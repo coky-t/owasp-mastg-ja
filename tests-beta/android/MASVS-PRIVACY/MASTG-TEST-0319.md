@@ -13,9 +13,13 @@ profiles: [P]
 
 このテストは [機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0318.md) と対をなす動的テストです。
 
+この場合、機密性の高いユーザーデータを扱うことが知られている SDK メソッドをすべてフックします。
+
 ## 手順
 
-1. [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用して、機密ユーザーデータを扱うことが知られている SDK メソッドをフックします。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
