@@ -3,7 +3,7 @@ platform: android
 title: ネイティブバイナリのデバッグシンボル (Debugging Symbols in Native Binaries)
 alias: debugging-symbols-in-native-binaries
 id: MASTG-TEST-0288
-type: [static]
+type: [static, code]
 weakness: MASWE-0093
 best-practices: []
 profiles: [R]
@@ -15,7 +15,7 @@ profiles: [R]
 
 ## 手順
 
-1. 静的解析 ([デバッグ情報とシンボルの取得 (Obtaining Debugging Information and Symbols)](../../../techniques/android/MASTG-TECH-0140.md)) を実行して、ネイティブバイナリ内に存在するデバッグ情報を取得します。
+1. [デバッグ情報とシンボルの取得 (Obtaining Debugging Information and Symbols)](../../../techniques/android/MASTG-TECH-0140.md) を使用して、ネイティブバイナリ内に存在するデバッグ情報を取得します。
 
 ## 結果
 
