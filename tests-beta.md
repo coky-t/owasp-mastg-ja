@@ -12,7 +12,7 @@
 - [MASTG-TEST-0216](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0216.md) バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
 - [MASTG-TEST-0231](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0231.md) ログ記録 API への参照 (References to Logging APIs)
 - [MASTG-TEST-0262](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0262.md) 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)
-- [MASTG-TEST-0287](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md) SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)
+- [MASTG-TEST-0287](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md) SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)
 - [MASTG-TEST-0304](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0304.md) SQLite 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via SQLite)
 - [MASTG-TEST-0305](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0305.md) DataStore 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via DataStore)
 - [MASTG-TEST-0306](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0306.md) Android Room DB 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via Android Room DB)
@@ -30,6 +30,9 @@
 - [MASTG-TEST-0309](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0309.md) 対称暗号化での再使用される初期化ベクトルへの参照 (References to Reused Initialization Vectors in Symmetric Encryption)
 - [MASTG-TEST-0310](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0310.md) 対称暗号化での再使用される初期化ベクトルの実行時使用 (Runtime Use of Reused Initialization Vectors in Symmetric Encryption)
 - [MASTG-TEST-0312](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0312.md) 暗号 API での明示的なセキュリティプロバイダへの参照 (References to Explicit Security Provider in Cryptographic APIs)
+<!--
+- [MASTG-TEST-0350](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0350.md) 不備のある対称暗号モードの実行時使用 (Runtime Use of Broken Symmetric Encryption Modes)
+-->
 
 ### MASVS-AUTH: 認証と認可
 
@@ -140,6 +143,9 @@
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 - [MASTG-TEST-0311](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0311.md) 安全でないランダム API の使用 (Insecure Random API Usage)
 - [MASTG-TEST-0317](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0317.md) 不備のある対称暗号モード (Broken Symmetric Encryption Modes)
+<!--
+- [MASTG-TEST-0349](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0349.md) 安全でないランダム API の実行時使用 (Runtime Use of Insecure Random APIs)
+-->
 
 ### MASVS-AUTH: 認証と認可
 
@@ -160,6 +166,7 @@
 - [MASTG-TEST-0343](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0343.md) URLSession TLS プロトコル構成 (URLSession TLS Protocol Configuration)
 - [MASTG-TEST-0344](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0344.md) Network.framework TLS プロトコル構成 (Network.framework TLS Protocol Configuration)
 - [MASTG-TEST-0345](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0345.md) 組み込みまたはサードパーティ TLS スタック構成 (Embedded or Third-party TLS Stack Configuration)
+- [MASTG-TEST-0348](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0348.md) ネットワークトラフィックの安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
 -->
 
 ### MASVS-PLATFORM: プラットフォーム連携

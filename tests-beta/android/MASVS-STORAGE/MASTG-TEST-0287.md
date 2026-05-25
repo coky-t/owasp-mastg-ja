@@ -1,8 +1,8 @@
 ---
-title: SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)
+title: SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)
 platform: android
 id: MASTG-TEST-0287
-type: [static, dynamic]
+type: [static, code]
 weakness: MASWE-0006
 best-practices: []
 profiles: [L1, L2]
