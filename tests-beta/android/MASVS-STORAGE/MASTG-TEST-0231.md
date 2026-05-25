@@ -3,7 +3,7 @@ platform: android
 title: ログ記録 API への参照 (References to Logging APIs)
 id: MASTG-TEST-0231
 apis: [Log, Logger, System.out.print, System.err.print, java.lang.Throwable#printStackTrace, android.util.Log]
-type: [static]
+type: [static, code]
 weakness: MASWE-0001
 best-practices: [MASTG-BEST-0002]
 profiles: [L1, L2, P]
@@ -16,7 +16,8 @@ knowledge: [MASTG-KNOW-0049]
 
 ## 手順
 
-1. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を [semgrep](../../../tools/generic/MASTG-TOOL-0110.md) などのツールとともに使用して、すべてのログ記録 API を特定します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
