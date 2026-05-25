@@ -2,7 +2,7 @@
 title: AndroidManifest で有効になっているデバッグフラグ (Debuggable Flag Enabled in the AndroidManifest)
 platform: android
 id: MASTG-TEST-0226
-type: [static]
+type: [static, code]
 weakness: MASWE-0067
 best-practices: [MASTG-BEST-0007]
 profiles: [R]
@@ -17,10 +17,8 @@ knowledge: [MASTG-KNOW-0007]
 
 ## 手順
 
-1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して `AndroidManifest.xml` ファイルを取得します。
-2. `debuggable` を検索します。
-    - [Apktool](../../../tools/android/MASTG-TOOL-0011.md) などのツールを使用して素の XML を解析する場合は `android:debuggable` を探します。
-    - [aapt2](../../../tools/android/MASTG-TOOL-0124.md) を使用する場合は `application-debuggable` を探します。
+1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+2. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、`debuggable` フラグを取得します。
 
 ## 結果
 
