@@ -3,7 +3,7 @@ platform: ios
 title: 非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)
 id: MASTG-TEST-0268
 apis: [kSecAccessControlUserPresence, kSecAccessControlDevicePasscode, SecAccessControlCreateWithFlags]
-type: [static]
+type: [static, code]
 weakness: MASWE-0045
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
@@ -11,7 +11,7 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 概要
 
-このテストでは、アプリが生体認証ではなくユーザーのパスコードに依存する認証メカニズムを使用しているか、または生体認証が失敗した場合にデバイスのパスコードへのフォールバックを許可する認証メカニズムを使用しているかをチェックします。具体的には、[`kSecAccessControlDevicePasscode`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/devicepasscode) または [`kSecAccessControlUserPresence`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/userpresence) の使用をチェックします。
+このテストでは、アプリが生体認証ではなくユーザーのパスコードに依存する認証メカニズムを使用しているか、または生体認証が失敗した場合にデバイスのパスコードへのフォールバックを許可する認証メカニズムを使用しているかをチェックします。具体的には、[`kSecAccessControlDevicePasscode`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/devicepasscode) または [`kSecAccessControlUserPresence`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/userpresence) フラグを指定した [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags) の使用をチェックします。
 
 `kSecAccessControlUserPresence` フラグは「現在の状況に応じて、システムにメカニズムを選択させる」ため、一般的に使用されるオプションとして Apple のドキュメントに記載されています。しかし、これは場合によっては (生体認証がまだ設定されていない場合など) パスコードへのフォールバックを可能にします。パスコードは (ショルダーサーフィンなどによる) 侵害の影響を受けやすいため、生体認証のみを要求する場合よりも脆弱であると考えられています。
 
@@ -19,7 +19,8 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) で静的解析スキャンを実行し、`kSecAccessControlUserPresence` または `kSecAccessControlDevicePasscode` フラグを指定した `SecAccessControlCreateWithFlags` の使用を検出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
