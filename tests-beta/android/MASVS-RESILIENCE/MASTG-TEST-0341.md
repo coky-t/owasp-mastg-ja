@@ -2,7 +2,7 @@
 platform: android
 title: ランタイムフック検出のテスト (Testing Runtime Hook Detection)
 id: MASTG-TEST-0341
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0107
 best-practices: [MASTG-BEST-0041]
 profiles: [R]
@@ -29,8 +29,8 @@ prerequisites:
 ## 手順
 
 1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
-2. [メソッドトレース (Method Tracing)](../../../techniques/android/MASTG-TECH-0033.md) を使用して、セキュリティ関連の Java メソッド (認証、証明書バリデーションなど) やネイティブ関数をフックします。
-3. 予期しないセッション終了イベントやエラーを含め、出力をキャプチャします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
