@@ -2,7 +2,7 @@
 platform: android
 title: 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)
 id: MASTG-TEST-0262
-type: [static]
+type: [static, code]
 weakness: MASWE-0004
 best-practices: [MASTG-BEST-0004]
 profiles: [L1, L2, P]
@@ -15,10 +15,10 @@ knowledge: [MASTG-KNOW-0050]
 
 "Android バックアップ" ([バックアップ (Backups)](../../../knowledge/android/MASVS-STORAGE/MASTG-KNOW-0050.md)) は [自動バックアップ](https://developer.android.com/identity/data/autobackup) (Android 6.0 (API レベル 23) 以降) および [キーバリューバックアップ](https://developer.android.com/identity/data/keyvaluebackup) (Android 2.2 (API レベル 8) 以降) によって実装できます。自動バックアップはデフォルトで有効になっており、実装に手間がかからないため、Android で推奨されているアプローチです。
 
-自動バックアップを使用する際に特定のファイルを除外するには、開発者は `exclude` タグで除外ルールを明示的に定義しなければなりません。
+AndroidManifest.xml ファイルでは、`allowBackup` フラグによってアプリのデータをバックアップできるかどうかを制御します。さらに、`fullBackupContent` 属性 (Android 11 以前) または `dataExtractionRules` (Android 12 以降) を使用して、`exclude` タグでバックアップに含めるファイルと除外するファイルを指定する XML ファイルを参照できます。これらのファイルは一般的に以下のように名前付けされています。
 
-- `data_extraction_rules.xml` (Android 12 以降の場合は `android:dataExtractionRules` を使用)
 - `backup_rules.xml` (Android 11 以前の場合は `android:fullBackupContent` を使用)
+- `data_extraction_rules.xml` (Android 12 以降の場合は `android:dataExtractionRules` を使用)
 
 `cloud-backup` および `device-transfer` パラメータを使用して、それぞれクラウドバックアップとデバイス間転送からファイルを除外できます。
 
@@ -28,10 +28,9 @@ knowledge: [MASTG-KNOW-0050]
 
 ## 手順
 
-1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して `AndroidManifest.xml` ファイルを取得します。
-2. `AndroidManifest.xml` に対して `allowBackup` フラグを検索します。
-3. `AndroidManifest.xml` に対して `fullBackupContent` 属性 (Android 11 以前の場合) または `dataExtractionRules` 属性 (Android 12 以降の場合) を検索します。
-4. `backup_rules.xml` または `data_extraction_rules.xml` ファイルを取得します。
+1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+2. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、AndroidManifest.xml から関連するフラグと属性を取得します。
+3. [アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md) を使用して、アプリパッケージから `backup_rules.xml` または `data_extraction_rules.xml` ファイルを抽出します。
 
 ## 結果
 
