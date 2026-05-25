@@ -2,7 +2,7 @@
 platform: android
 title: StrictMode API への参照 (References to StrictMode APIs)
 id: MASTG-TEST-0265
-type: [static]
+type: [static, code]
 weakness: MASWE-0094
 best-practices: []
 profiles: [R]
@@ -14,7 +14,8 @@ profiles: [R]
 
 ## 手順
 
-1. 静的解析 ([Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md)) ツールを実行して、`StrictMode` API のすべてのインスタンスを特定します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
