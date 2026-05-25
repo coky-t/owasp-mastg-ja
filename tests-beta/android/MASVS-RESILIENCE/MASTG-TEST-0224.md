@@ -2,7 +2,7 @@
 title: 安全でない APK 署名バージョンの使用 (Usage of Insecure APK Signature Version)
 platform: android
 id: MASTG-TEST-0x39-1
-type: [static]
+type: [static, code]
 available_since: 24
 weakness: MASWE-0104
 best-practices: [MASTG-BEST-0006]
@@ -20,8 +20,9 @@ APK 署名スキームの詳細については、["署名プロセス"](../../..
 
 ## 手順
 
-1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) などで AndroidManifest.xml から `minSdkVersion` 属性を取得します。
-2. [APK 署名に関する情報の取得 (Obtaining Information about the APK Signature)](../../../techniques/android/MASTG-TECH-0116.md) に示されているように、使用されているすべての署名スキームをリストします。
+1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
+2. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、AndroidManifest.xml ファイルから `minSdkVersion` を取得します。
+3. [APK 署名に関する情報の取得 (Obtaining Information about the APK Signature)](../../../techniques/android/MASTG-TECH-0116.md) を使用して、使用されているすべての署名スキームをリストします。
 
 ## 結果
 
