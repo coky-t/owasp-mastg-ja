@@ -2,7 +2,7 @@
 platform: android
 title: ルート検出メカニズムへの参照 (References to Root Detection Mechanisms)
 id: MASTG-TEST-0324
-type: [static]
+type: [static, code]
 weakness: MASWE-0097
 best-practices: [MASTG-BEST-0029, MASTG-BEST-0030]
 profiles: [R]
@@ -23,7 +23,8 @@ knowledge: [MASTG-KNOW-0027]
 
 ## 手順
 
-1. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を適切なパターンで使用して、逆コンパイルされたコードのルート検出 API とメソッドを検索します。
+1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
+2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
 ## 結果
 
