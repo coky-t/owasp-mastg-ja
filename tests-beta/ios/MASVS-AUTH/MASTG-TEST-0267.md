@@ -3,7 +3,7 @@ platform: ios
 title: イベントバウンド型生体認証の実行時使用 (Runtime Use Of Event-Bound Biometric Authentication)
 id: MASTG-TEST-0267
 apis: [LAContext.evaluatePolicy]
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0044
 best-practices: []
 profiles: [L2]
@@ -14,9 +14,13 @@ knowledge: [MASTG-KNOW-0056]
 
 このテストは [イベントバウンド型生体認証用の API への参照 (References to APIs for Event-Bound Biometric Authentication)](MASTG-TEST-0266.md) と対をなす動的テストです。
 
+この場合は [`LAContext.evaluatePolicy(...)`](https://developer.apple.com/documentation/localauthentication/lacontext/evaluatepolicy(_:localizedreason:reply:)) と [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) を、すべてのフラグを含め、フックします。
+
 ## 手順
 
-1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、 [LAContext.evaluatePolicy(...)](https://developer.apple.com/documentation/localauthentication/lacontext/evaluatepolicy(_:localizedreason:reply:)) と [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) の使用をすべてのフラグを含めて探します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
