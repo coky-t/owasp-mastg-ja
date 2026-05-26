@@ -3,7 +3,7 @@ platform: ios
 title: 生体認証登録の変更を検出する API の実行時使用 (Runtime Use Of APIs Detecting Biometric Enrollment Changes)
 id: MASTG-TEST-0271
 apis: [kSecAccessControlBiometryCurrentSet,SecAccessControlCreateWithFlags]
-type: [static]
+type: [dynamic, hooks]
 weakness: MASWE-0046
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
