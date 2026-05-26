@@ -3,7 +3,7 @@ platform: ios
 title: 生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)
 id: MASTG-TEST-0270
 apis: [kSecAccessControlBiometryCurrentSet,SecAccessControlCreateWithFlags]
-type: [static]
+type: [static, code]
 weakness: MASWE-0046
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
@@ -17,7 +17,8 @@ knowledge: [MASTG-KNOW-0056]
 
 ## 手順
 
-1. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析スキャンを実行し、[`kSecAccessControlBiometryCurrentSet`](https://developer.apple.com/documentation/security/secaccesscontrolcreateflags/biometrycurrentset) フラグを指定した [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) API の使用を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
