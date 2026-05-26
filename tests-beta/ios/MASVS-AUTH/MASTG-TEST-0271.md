@@ -13,9 +13,13 @@ knowledge: [MASTG-KNOW-0056]
 
 このテストは [生体認証登録の変更を検出する API への参照 (References to APIs Detecting Biometric Enrollment Changes)](MASTG-TEST-0270.md) と対をなす動的テストです。
 
+このケースでは [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) とその特定のフラグをフックします。
+
 ## 手順
 
-1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、[`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) と特定のフラグの使用を探します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
