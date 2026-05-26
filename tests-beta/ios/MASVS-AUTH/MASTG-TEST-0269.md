@@ -3,7 +3,7 @@ platform: ios
 title: 非生体認証へのフォールバックを許可する API の実行時使用 (Runtime Use Of APIs Allowing Fallback to Non-Biometric Authentication)
 id: MASTG-TEST-0269
 apis: [kSecAccessControlUserPresence, kSecAccessControlDevicePasscode, SecAccessControlCreateWithFlags]
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0045
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
@@ -13,9 +13,13 @@ knowledge: [MASTG-KNOW-0056]
 
 このテストは [非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)](MASTG-TEST-0268.md) と対をなす動的テストです。
 
+この場合は [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) とその特定のフラグをフックします。
+
 ## 手順
 
-1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、[`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) と特定のフラグの使用を探します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
