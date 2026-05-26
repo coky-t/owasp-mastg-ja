@@ -2,14 +2,14 @@
 platform: ios
 title: 不十分な鍵サイズ (Insufficient Key Sizes)
 id: MASTG-TEST-0209
-type: [static, dynamic]
+type: [static, code]
 weakness: MASWE-0009
 profiles: [L1, L2]
 ---
 
 ## 概要
 
-このテストケースでは、iOS アプリでの不十分な鍵サイズの使用を探します。そのためには、iOS で利用できる暗号フレームワークとライブラリ、および暗号鍵の生成に使用されるメソッドに注目する必要があります。
+このテストケースでは、iOS アプリでの不十分な鍵サイズの使用を探します。そのためには、iOS で利用できる暗号フレームワークとライブラリの API、および暗号鍵の生成に使用されるメソッドに注目する必要があります。
 
 - **CommonCrypto**: [`CCCrypt`](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/CCCrypt.3cc.html) 関数は対称暗号化と復号に使用され、五番目のパラメータ `keyLength` で鍵サイズまたは鍵長を指定します。
 - **Security**: [`SecKeyCreateRandomKey`](https://developer.apple.com/documentation/security/1823694-seckeycreaterandomkey) 関数は [`kSecAttrKeyType`](https://developer.apple.com/documentation/security/ksecattrkeytype) や [`kSecAttrKeySizeInBits`](https://developer.apple.com/documentation/security/ksecattrkeysizeinbits) などの特定の属性を使用してランダム鍵を生成するために使用されます。[`SecKeyGeneratePair`](https://developer.apple.com/documentation/security/1395339-seckeygeneratepair) 関数は iOS 16 で非推奨になりました。
@@ -19,7 +19,8 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行するか、[Frida (iOS)](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを使用して、鍵を生成する暗号関数の使用を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
