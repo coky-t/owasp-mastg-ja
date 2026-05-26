@@ -13,7 +13,7 @@ knowledge: [MASTG-KNOW-0056]
 
 このテストは [非生体認証へのフォールバックを許可する API への参照 (References to APIs Allowing Fallback to Non-Biometric Authentication)](MASTG-TEST-0268.md) と対をなす動的テストです。
 
-この場合は [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) とその特定のフラグをフックします。
+このケースでは [`SecAccessControlCreateWithFlags`](https://developer.apple.com/documentation/security/secaccesscontrolcreatewithflags(_:_:_:_:)) とその特定のフラグをフックします。
 
 ## 手順
 
