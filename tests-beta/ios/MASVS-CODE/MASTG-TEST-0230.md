@@ -2,7 +2,7 @@
 title: 自動参照カウント (ARC) が有効でない (Automatic Reference Counting (ARC) not enabled)
 platform: ios
 id: MASTG-TEST-0230
-type: [static]
+type: [static, code]
 weakness: MASWE-0116
 profiles: [L2]
 knowledge: [MASTG-KNOW-0061]
@@ -20,9 +20,9 @@ ARC が有効な場合、バイナリには `objc_autorelease` や `objc_retainA
 
 ## 手順
 
-1. アプリケーションを抽出して、メインバイナリを特定します ([アプリの取得と抽出 (Obtaining and Extracting Apps)](../../../techniques/ios/MASTG-TECH-0054.md))。
-2. すべての共有ライブラリを特定します ([共有ライブラリの取得 (Get Shared Libraries)](../../../techniques/ios/MASTG-TECH-0082.md))。
-3. メインバイナリと各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) を実行して、`objc_autorelease` や `objc_retainAutorelease` などの ARC シンボルを探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [共有ライブラリの取得 (Get Shared Libraries)](../../../techniques/ios/MASTG-TECH-0082.md) を使用して、すべての共有ライブラリを特定します。
+3. [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) をメインバイナリと各共有ライブラリに使用して、`objc_autorelease` や `objc_retainAutorelease` などの ARC シンボルを探します。
 
 ## 結果
 
