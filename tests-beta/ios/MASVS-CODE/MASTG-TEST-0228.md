@@ -2,7 +2,7 @@
 title: 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) not Enabled)
 platform: ios
 id: MASTG-TEST-0228
-type: [static]
+type: [static, code]
 weakness: MASWE-0116
 profiles: [L2]
 knowledge: [MASTG-KNOW-0061]
@@ -21,8 +21,8 @@ iOS アプリケーションの Mach-O ファイルフォーマットの場合:
 
 ## 手順
 
-1. アプリケーションを抽出して、メインバイナリを特定します ([アプリの取得と抽出 (Obtaining and Extracting Apps)](../../../techniques/ios/MASTG-TECH-0054.md))。
-2. メインバイナリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) を実行して、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) をメインバイナリに使用して、"pic" または選択したツールで使用される対応するキーワードを grep で検索します。
 
 ## 結果
 
