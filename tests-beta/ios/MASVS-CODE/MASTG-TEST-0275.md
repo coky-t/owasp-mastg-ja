@@ -13,7 +13,7 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. 開発チームに CycloneDX 形式の SBOM を共有するように依頼するか、元のソースコードにアクセスできる場合は、[dependency-track](../../../tools/generic/MASTG-TOOL-0132.md) に従って SBOM を作成します。
+1. [SBOM を作成することによる iOS 依存関係のソフトウェアコンポジション分析 (SCA) (Software Composition Analysis (SCA) of iOS Dependencies by Creating a SBOM)](../../../techniques/ios/MASTG-TECH-0132.md) を使用して、SBOM を生成するか、開発チームから CycloneDX 形式のものをリクエストします。
 2. SBOM を [dependency-track](../../../tools/generic/MASTG-TOOL-0132.md) にアップロードします。
 3. [dependency-track](../../../tools/generic/MASTG-TOOL-0132.md) プロジェクトに脆弱な依存関係の使用がないか検査します。
 
