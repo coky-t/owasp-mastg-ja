@@ -2,7 +2,7 @@
 platform: ios
 title: 使用後にクリアされないペーストボードコンテンツ (Pasteboard Contents Not Cleared After Use)
 id: MASTG-TEST-0278
-type: [static]
+type: [static, code]
 weakness: MASWE-0053
 threat: [app]
 profiles: [L2]
@@ -13,12 +13,12 @@ knowledge: [MASTG-KNOW-0083]
 
 このテストは、アプリがバックグラウンドに移動したり終了する際に、汎用 [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) のコンテンツをクリアするかどうかをチェックします。ペーストボードに機密データが残っていると、他のアプリからアクセスされ、データ漏洩につながる可能性があります。
 
-アプリは `applicationDidEnterBackground:` や `applicationWillTerminate:` などの適切なライフサイクルメソッドで `UIPasteboard.general.items = []` を設定することで、汎用ペーストボードのコンテンツをクリアできます。
+アプリは `applicationDidEnterBackground:` や `applicationWillTerminate:` などの適切なライフサイクルメソッドで `UIPasteboard.general.items = []` を設定することで、汎用ペーストボードのコンテンツをクリアできます。これはリバースエンジニアされたコードでは [`UIPasteboard.general`](https://developer.apple.com/documentation/uikit/uipasteboard/1622106-generalpasteboard "UIPasteboard generalPasteboard") および [`UIPasteboard.setItems`](https://developer.apple.com/documentation/uikit/uipasteboard/setitems(_:options:) "UIPasteboard setItems") を空の配列 (`[]`) で呼び出すことに相当します。
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析スキャンを実行し、[`UIPasteboard.general`](https://developer.apple.com/documentation/uikit/uipasteboard/1622106-generalpasteboard "UIPasteboard generalPasteboard") プロパティの使用を検出します。
-2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析スキャンを実行し、[`UIPasteboard.setItems`](https://developer.apple.com/documentation/uikit/uipasteboard/setitems(_:options:) "UIPasteboard setItems") メソッドの使用を検出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
