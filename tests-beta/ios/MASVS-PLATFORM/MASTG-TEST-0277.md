@@ -2,7 +2,7 @@
 platform: ios
 title: 実行時の iOS の汎用ペーストボード内の機密データ (Sensitive Data in the iOS General Pasteboard at Runtime)
 id: MASTG-TEST-0277
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0053
 threat: [app]
 prerequisites:
@@ -19,8 +19,9 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 手順
 
-1. [ペーストボードの監視 (Monitoring the Pasteboard)](../../../techniques/ios/MASTG-TECH-0134.md) を使用して、ペーストボードに機密データがないか監視します。
-2. アプリを実行し、パスワードや個人情報のコピーなど、機密データをペーストボードに書き込む可能性のあるアクションを実行します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [ペーストボードの監視 (Monitoring the Pasteboard)](../../../techniques/ios/MASTG-TECH-0134.md) を使用して、機密データについてペーストボードを監視します。
+3. アプリを実行し、パスワードや個人情報のコピーなど、機密データをペーストボードに書き込む可能性のあるアクションを実行します。
 
 ## 結果
 
