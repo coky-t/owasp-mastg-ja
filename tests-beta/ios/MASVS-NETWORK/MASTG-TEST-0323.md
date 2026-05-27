@@ -2,7 +2,7 @@
 platform: ios
 title: クリアテキストトラフィックのための低レベルネットワーク API の使用 (Uses of Low-Level Networking APIs for Cleartext Traffic)
 id: MASTG-TEST-0323
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0050
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0073]
@@ -24,9 +24,8 @@ ATS 適用の際の詳細については [iOS App Transport Security](../../../k
 
 ## 手順
 
-1. [iOS アプリのリバースエンジニアリング (Reverse Engineering iOS Apps)](../../../techniques/ios/MASTG-TECH-0065.md) を使用して、アプリをリバースエンジニアします。
-2. [相互参照の取得 (Retrieving Cross References)](../../../techniques/ios/MASTG-TECH-0072.md) を使用して、アプリバイナリ内の低レベルネットワーク API の使用を探します。
-3. [逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して、関連するコードパスを解析し、クリアテキスト接続を確立できるかどうかを判断します。たとえば、`Network` フレームワークを使用している場合、`NWParameters` の `.tls` パラメータを使用して TLS が適切に構成されていることを検証します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -35,3 +34,10 @@ ATS 適用の際の詳細については [iOS App Transport Security](../../../k
 ## 評価
 
 アプリが低レベルネットワーク API を使用してクリアテキスト接続を確立する場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
+
+[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査し、クリアテキストが確立されているかどうかを判断します。
+
+- `Network` フレームワーク接続で TLS が構成されているかどうかを判断します。たとえば、`NWParameters` に `.tls` が含まれているかどうかをチェックします。
+- `CFNetwork` または BSD ソケット接続が任意の TLS ラッパーを使用するかどうかを判断します。
