@@ -2,7 +2,7 @@
 platform: ios
 title: Info.plist 内の脆弱な ATS TLS ポリシー例外への参照 (References to Weak ATS TLS Policy Exceptions in Info.plist)
 id: MASTG-TEST-0342
-type: [static]
+type: [static, code]
 weakness: MASWE-0050
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0042]
@@ -22,10 +22,9 @@ knowledge: [MASTG-KNOW-0071]
 
 ## 手順
 
-1. アプリを抽出します ([アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md))。
-2. アプリバンドル内の `Info.plist` を探します。
-3. 必要に応じて [Plist ファイルを JSON に変換する (Convert Plist Files to JSON)](../../../techniques/ios/MASTG-TECH-0138.md) を使用して `Info.plist` を読み取り可能な形式に変換します。
-4. TLS ポリシー例外、特に `NSExceptionMinimumTLSVersion`, `NSExceptionRequiresForwardSecrecy`, `NSAllowsArbitraryLoads` について、`NSAppTransportSecurity` ディクショナリを調べます。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージを unzip します。
+2. [Info.plist ファイルの取得 (Retrieving Info.plist Files)](../../../techniques/ios/MASTG-TECH-0153.md) を使用して、`Info.plist` ファイルを取得します。
+3. [ATS 構成の解析 (Analyzing the ATS Configuration)](../../../techniques/ios/MASTG-TECH-0155.md) を使用して、TLS ポリシー例外、特に `NSExceptionMinimumTLSVersion`, `NSExceptionRequiresForwardSecrecy`, `NSAllowsArbitraryLoads`、について ATS 構成を解析します。
 
 ## 結果
 
