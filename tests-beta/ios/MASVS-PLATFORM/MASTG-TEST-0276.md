@@ -2,7 +2,7 @@
 platform: ios
 title: iOS の汎用ペーストボードの使用 (Use of the iOS General Pasteboard)
 id: MASTG-TEST-0276
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0053
 threat: [app]
 prerequisites:
@@ -24,8 +24,8 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析を実行し、汎用ペーストボードの使用を検出します。
-2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析を実行し、機密データを取り扱う可能性のあるペーストボードメソッドの使用を検出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -35,4 +35,8 @@ knowledge: [MASTG-KNOW-0083]
 
 `UIPasteboard.generalPasteboard` への呼び出しが行われ、機密データがそこに書き込まれる場合、そのテストケースは不合格です。
 
-機密データを構成するものの判断はコンテキストに依存するため、静的に検出することは困難なことがあります。前述の方法を使用して機密データがペーストボードに書き込まれているかどうかをチェックするには、リバースエンジニアされたコードで報告されたコード位置を検査します ([逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を参照)。
+**さらなるバリデーションが必要となります:**
+
+機密データを構成するものを判断することは状況によって異なるため、[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査します。
+
+- ペーストボードに書き込まれたデータが機密 (パスワード、トークン、個人データなど) であるかどうかを判断します。
