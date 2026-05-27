@@ -2,7 +2,7 @@
 platform: ios
 title: クリアテキストトラフィックを許可する App Transport Security 構成 (App Transport Security Configurations Allowing Cleartext Traffic)
 id: MASTG-TEST-0322
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0050
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0071]
@@ -27,10 +27,9 @@ ATS 構成の詳細については、[iOS App Transport Security](../../../knowl
 
 ## 手順
 
-1. アプリを抽出します ([アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md))。
-2. アプリバンドルから `Info.plist` ファイルを取得します。
-3. [Plist ファイルを JSON に変換する (Convert Plist Files to JSON)](../../../techniques/ios/MASTG-TECH-0138.md) を使用して `Info.plist` を読み取り可能な形式に変換します (必要に応じて)。
-4. `NSAppTransportSecurity` ディクショナリでクリアテキストトラフィック例外を調べます。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージを unzip します。
+2. [Info.plist ファイルの取得 (Retrieving Info.plist Files)](../../../techniques/ios/MASTG-TECH-0153.md) を使用して、`Info.plist` ファイルを取得します。
+3. [ATS 構成の解析 (Analyzing the ATS Configuration)](../../../techniques/ios/MASTG-TECH-0155.md) を使用して、クリアテキストトラフィックの例外について ATS 構成を解析します。
 
 ## 結果
 
@@ -46,6 +45,9 @@ ATS 構成の詳細については、[iOS App Transport Security](../../../knowl
 4. `NSAllowsLocalNetworking = true`
 5. `NSExceptionDomains` でのいずれかのドメインが `NSExceptionAllowsInsecureHTTPLoads = true` を設定している。
 
-**コンテキストに関する考慮事項**:
+**さらなるバリデーションが必要となります:**
 
-ATS 例外はアプリのコンテキストを考慮して検討する必要があることに注意します。アプリはその本来の目的を果たすために ATS 例外を定義 **しなければならない** ことがあります。たとえば、ブラウザアプリは、HTTP を使用するウェブサイトを含む、任意のウェブサイトに接続する必要があります。そのようなケースでは、適切な [正当な理由を示す文字列](https://developer.apple.com/documentation/security/preventing-insecure-network-connections#Provide-Justification-for-Exceptions) が提供されていれば、例外は許容される可能性があります。但し、Apple は、可能な限りクライアントサイド ATS 例外よりもサーバーサイドの修正を優先することを推奨しています。
+特定した ATS 例外を検査して、アプリの本来の目的に照らして正当なものかどうかを判断します。
+
+- アプリがコア機能を果たすために、その例外が必要であるかどうかを判断します (たとえば、ブラウザアプリは HTTP を使用するものを含む任意のウェブサイトに接続する必要があります)。
+- 可能であれば、適切な [正当な理由を示す文字列](https://developer.apple.com/documentation/security/preventing-insecure-network-connections#Provide-Justification-for-Exceptions) が提供されていることを検証します。この情報はアプリバイナリには含まれていないため、これは開発者と連絡が取れる場合にのみ可能です。
