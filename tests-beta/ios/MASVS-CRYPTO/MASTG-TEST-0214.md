@@ -2,7 +2,7 @@
 title: ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 platform: ios
 id: MASTG-TEST-0214
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0014
 profiles: [L1, L2]
 ---
@@ -19,7 +19,8 @@ profiles: [L1, L2]
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行して、上記のような文字列やバイトシーケンスを探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -29,4 +30,8 @@ profiles: [L1, L2]
 
 ハードコードされた暗号鍵がソースコードまたはバイナリ内に見つかった場合、そのテストケースは不合格です。
 
-特定された鍵が本当にセキュリティ関連の目的で使用される暗号鍵であることを確認します。鍵の使用コンテキストを検証して誤検知を回避します (たとえば、構成設定やセキュリティに関連しない定数が暗号鍵として誤って特定されるかもしれません)。
+**さらなるバリデーションが必要となります:**
+
+[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査し、特定したデータが本当に以下のようなセキュリティ関連の目的で使用される暗号鍵であるかどうかを判断します。
+
+- 特定した値が暗号鍵であるかどうかを判断します (構成設定やセキュリティに関連しない定数が暗号鍵として誤って特定されるかもしれません)。
