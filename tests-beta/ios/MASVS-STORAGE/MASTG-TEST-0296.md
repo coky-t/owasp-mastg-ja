@@ -2,7 +2,7 @@
 platform: ios
 title: 安全でないログ記録による機密データ露出 (Sensitive Data Exposure Through Insecure Logging)
 id: MASTG-TEST-0296
-type: [dynamic]
+type: [dynamic, logs]
 weakness: MASWE-0001
 prerequisites:
 - identify-sensitive-data
@@ -19,14 +19,14 @@ knowledge: [MASTG-KNOW-0101]
 
 > [!WARNING]
 > 制限事項
-> - ログをアプリの特定の場所にリンクするのは困難なことがあり、コードを手動で解析する必要があります。代替手段として [Frida (iOS)](../../../tools/ios/MASTG-TOOL-0039.md) で動的解析を使用できます。
+> - ログをアプリの特定の場所にリンクするのは困難なことがあり、コードを手動で解析する必要があります。代替手段として [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用できます。
 > - 動的解析は、アプリと広範囲にやり取りする場合に最も機能します。しかし、それでもすべてのデバイスで実行するのが困難または不可能なコーナーケースがある可能性があります。そのため、このテストの結果は網羅的ではない可能性があります。
 ## 手順
 
-1. デバイスにアプリをインストールします ([アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md)).
-2. [システムログの監視 (Monitoring System Logs)](../../../techniques/ios/MASTG-TECH-0060.md) でログを監視します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [システムログの監視 (Monitoring System Logs)](../../../techniques/ios/MASTG-TECH-0060.md) を使用して、デバイスログを監視します。
 3. アプリを開きます。
-4. ログ出力を解析したいモバイルアプリに移動します。
+4. ログ出力を解析したい画面に移動します。
 5. アプリを閉じます。
 
 ## 結果
