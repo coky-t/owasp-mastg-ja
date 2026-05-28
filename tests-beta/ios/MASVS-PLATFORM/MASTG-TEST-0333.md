@@ -2,7 +2,7 @@
 platform: ios
 title: WebView での過度に広範なファイル読み取りアクセス (Overly Broad File Read Access in WebViews)
 id: MASTG-TEST-0333
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0069
 best-practices: [MASTG-BEST-0033]
 knowledge: [MASTG-KNOW-0076]
@@ -17,8 +17,8 @@ iOS アプリは [`loadFileURL(_:allowingReadAccessTo:)`](https://developer.appl
 
 ## 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) の説明に従ってアプリを抽出します。
-2. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、`WKWebView.loadFileURL(_:allowingReadAccessTo:)` への呼び出しを探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -28,7 +28,9 @@ iOS アプリは [`loadFileURL(_:allowingReadAccessTo:)`](https://developer.appl
 
 `loadFileURL(_:allowingReadAccessTo:)` への呼び出しにおいて `readAccessURL` 引数が過度に広範な読み取りアクセス (たとえば `Documents` ディレクトリ全体や、アプリコンテナのルートなど) を付与している場合、そのテストケースは不合格です。
 
-[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して、報告された各呼び出し箇所を検査します。
+**さらなるバリデーションが必要となります:**
+
+[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査します。
 
 - `fileURL` 引数を検査し、攻撃者が制御する入力によって影響される可能性があるかどうかを判断します。
 - `readAccessURL` 引数を検査し、必要以上に広範なアクセスを付与しているかどうかを判断します。
