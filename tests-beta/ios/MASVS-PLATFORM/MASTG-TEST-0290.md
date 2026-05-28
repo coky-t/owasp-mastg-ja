@@ -2,7 +2,7 @@
 title: アプリのバックグラウンド時のスクリーンショットでの機密コンテンツ露出の実行時検証 (Runtime Verification of Sensitive Content Exposure in Screenshots During App Backgrounding)
 platform: ios
 id: MASTG-TEST-0290
-type: [dynamic, manual]
+type: [dynamic, filesystem]
 profiles: [L2]
 weakness: MASWE-0055
 prerequisites:
@@ -17,7 +17,7 @@ knowledge: [MASTG-KNOW-0099]
 ## 手順
 
 1. 機密として識別される各画面になるまでアプリを動かします。これらの画面ごとに、アプリをバックグラウンドに移動 (たとえば **ホーム** を押したり、**アプリスイッチャー** を開いて終了するなど) し、次の画面に続けます。
-2. 完了したら、[ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/ios/MASTG-TECH-0053.md) を使用して、システムによって撮影されたスクリーンショットを解析ワークステーションにコピーします。システムはそれらを `/var/mobile/Containers/Data/Application/<APP_ID>/Library/SplashBoard/Snapshots/sceneID:<APP_NAME>-default/` に保存します。正確なパスと構造は iOS のバージョンによって異なる可能性があることに注意してください。
+2. [ホストとデバイス間のデータ転送 (Host-Device Data Transfer)](../../../techniques/ios/MASTG-TECH-0053.md) を使用して、システムによって撮影されたスクリーンショットを解析ワークステーションにコピーします。システムはそれらを `/var/mobile/Containers/Data/Application/<APP_ID>/Library/SplashBoard/Snapshots/sceneID:<APP_NAME>-default/` に保存します。正確なパスと構造は iOS のバージョンによって異なる可能性があることに注意してください。
 
 ## 結果
 
