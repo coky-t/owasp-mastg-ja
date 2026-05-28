@@ -2,7 +2,7 @@
 platform: ios
 title: バックアップ除外としてマークされていない機密データ (Sensitive Data Not Marked For Backup Exclusion)
 id: MASTG-TEST-0215
-type: [static]
+type: [static, code]
 weakness: MASWE-0004
 best-practices: [MASTG-BEST-0023]
 profiles: [L1, L2, P]
@@ -22,7 +22,8 @@ knowledge: [MASTG-KNOW-0102]
 
 ## 手順
 
-1. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行するか、[Frida (iOS)](../../../tools/ios/MASTG-TOOL-0039.md) などの動的解析ツールを使用して、`isExcludedFromBackup` API の使用を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
