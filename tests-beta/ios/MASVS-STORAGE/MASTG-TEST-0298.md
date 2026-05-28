@@ -2,7 +2,7 @@
 platform: ios
 title: バックアップ対象のファイルの実行時監視 (Runtime Monitoring of Files Eligible for Backup)
 id: MASTG-TEST-0298
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0004
 best-practices: [MASTG-BEST-0023]
 profiles: [L1, L2, P]
@@ -11,12 +11,15 @@ knowledge: [MASTG-KNOW-0102]
 
 ## 概要
 
-このテストは、`/var/mobile/Containers/Data/Application/$APP_ID` のアプリのデータコンテナに書き込まれたすべてのファイルをログ記録し、バックアップ対象となるファイルを識別します。`tmp` または `Library/Caches` サブディレクトリに保存されたファイルは、バックアップされないため、ログ記録されません。
+このテストは、`/var/mobile/Containers/Data/Application/$APP_ID` のアプリのデータコンテナにファイルを作成または書き込む `open`, `fopen`, `NSFileManager`, `FileHandle` などのファイルシステム API の使用をすべてログ記録し、バックアップ対象となるファイルを識別します。
+
+`tmp` または `Library/Caches` サブディレクトリに保存されたファイルは、バックアップされないため、ログ記録されません。
 
 ## 手順
 
-1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用し、ファイルを作成や書き込みを行う `open`, `fopen`, `NSFileManager`, `FileHandle` などのファイルシステム API の使用を探します。
-2. アプリを実行して、ファイル作成と書き込みをトリガーします。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
