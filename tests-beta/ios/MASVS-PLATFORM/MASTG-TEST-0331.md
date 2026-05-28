@@ -2,7 +2,7 @@
 platform: ios
 title: 非推奨の WebView API の使用 (Use of Deprecated WebView APIs)
 id: MASTG-TEST-0331
-type: [static]
+type: [static, code]
 available_since: 2.0
 deprecated_since: 12.0
 weakness: MASWE-0072
@@ -17,8 +17,8 @@ knowledge: [MASTG-KNOW-0076]
 
 ## 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) の説明に従ってアプリを抽出します。
-2. すべての実行ファイルとライブラリに対して [アプリケーションバイナリから情報の抽出 (Extracting Information from the Application Binary)](../../../techniques/ios/MASTG-TECH-0070.md) を使用して、アプリの `UIWebView` への参照を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
