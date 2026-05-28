@@ -2,7 +2,7 @@
 platform: ios
 title: ローカルデバイスに制限されていないペーストボードコンテンツ (Pasteboard Contents Not Restricted to Local Device)
 id: MASTG-TEST-0280
-type: [static]
+type: [static, code]
 weakness: MASWE-0053
 threat: [app]
 profiles: [L2]
@@ -11,12 +11,12 @@ knowledge: [MASTG-KNOW-0083]
 
 ## 概要
 
-このテストは、アプリが `UIPasteboard.setItems(_:options:)` メソッドに `UIPasteboard.OptionsKey.localOnly` オプションを使用して、汎用 [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) のコンテンツをローカルデバイスに制限しているかどうかをチェックします。この制限なしに機密データが汎用ペーストボードに配置されると、ユニバーサルクリップボードを介してデバイス間で同期され、データ漏洩につながる可能性があります。
+このテストは、アプリが [`UIPasteboard.setItems(_:options:)`](https://developer.apple.com/documentation/uikit/uipasteboard/setitems(_:options:) "UIPasteboard setItems(_:options:)") メソッドに `UIPasteboard.OptionsKey.localOnly` オプションを使用して、汎用ペーストボード ([`UIPasteboard.general`](https://developer.apple.com/documentation/uikit/uipasteboard/general "UIPasteboard generalPasteboard")) のコンテンツをローカルデバイスに制限しているかどうかをチェックします。この制限なしに機密データが汎用ペーストボードに配置されると、ユニバーサルクリップボードを介してデバイス間で同期され、データ漏洩につながる可能性があります。汎用ペーストボードの詳細については [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) を参照してください。
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析スキャンを実行し、[`UIPasteboard.general`](https://developer.apple.com/documentation/uikit/uipasteboard/1622106-generalpasteboard "UIPasteboard generalPasteboard") プロパティの使用を検出します。
-2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して静的解析スキャンを実行し、`UIPasteboard.setItems(_:options:)` メソッドの使用を検出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
