@@ -2,7 +2,7 @@
 platform: ios
 title: 設定により緩和される WebView のファイルオリジンアクセス (WebView File Origin Access Relaxed by Configuration)
 id: MASTG-TEST-0335
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0069
 best-practices: [MASTG-BEST-0033]
 profiles: [L1, L2]
@@ -21,8 +21,8 @@ knowledge: [MASTG-KNOW-0076]
 
 ## 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) の説明に従ってアプリを抽出します。
-2. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、関連する設定値への参照を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -32,7 +32,9 @@ knowledge: [MASTG-KNOW-0076]
 
 ローカル `file://` コンテンツをロードする `WKWebView` に対してアプリが `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` を有効にしている場合、そのテストケースは不合格です。
 
-[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して、報告された各呼び出し箇所を検査します。
+**さらなるバリデーションが必要となります:**
+
+[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査します。
 
 - `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` が明示的に使用され、たとえば `setValue:forKey:` や同等の Swift 呼び出しを使用して、`true` に設定されているかどうかを判断します。
 - どの `WKWebView` インスタンスがその設定を受け取り、それが機密情報や機能を扱っているかどうかを判断します。
