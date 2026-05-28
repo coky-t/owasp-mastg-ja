@@ -2,7 +2,7 @@
 platform: ios
 title: 脱獄検出技法の実行時使用 (Runtime Use of Jailbreak Detection Techniques)
 id: MASTG-TEST-0241
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0097
 false_negative_prone: true
 profiles: [R]
@@ -11,13 +11,14 @@ knowledge: [MASTG-KNOW-0084]
 
 ## 概要
 
-このテストではモバイルアプリケーションが、それが実行されている iOS デバイスが脱獄されているかどうかを識別できるかどうかを検証します。これはアプリバイナリを動的に解析して、[一般的な脱獄検出チェック](../../../Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#common-jailbreak-detection-checks) を探し、それらのバイパスを試みることによって行います。たとえば、脱獄済みデバイスを示す特定のファイルやディレクトリの存在のチェックを検出するかもしれません。
+このテストではモバイルアプリケーションが、それが実行されている iOS デバイスが脱獄されているかどうかを識別できるかどうかを検証します。これはアプリバイナリを動的に解析して、一般的な脱獄検出チェック ([脱獄検出 (Jailbreak Detection)](../../../knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0084.md)) を探し、それらのバイパスを試みることによって行います。たとえば、脱獄済みデバイスを示す特定のファイルやディレクトリの存在のチェックを検出するかもしれません。
 
 脱獄検出バイパスツールの使用には限界があることを考慮すべきです。アプリは、使用されているツールでは検出されない、より洗練された脱獄検出技法を使用する可能性があります。そのような場合、脱獄検出チェックを識別するには、慎重な手作業によるリバースエンジニアリングと難読化解除が必要になります。また、脱獄検出チェックをバイパスするには、追加の動的解析作業が必要になることもあります。
 
 ## 手順
 
-1. アプリに対して [objection](../../../tools/generic/MASTG-TOOL-0038.md) などの動的解析ツールを実行して、[自動化された脱獄検出のバイパスのコマンド](../../../Document/0x06j-Testing-Resiliency-Against-Reverse-Engineering.md#automated-jailbreak-detection-bypass) を実行します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [脱獄検出のバイパス (Bypassing Jailbreak Detection)](../../../techniques/ios/MASTG-TECH-0152.md) を使用して、脱獄検出をバイパスします。
 
 ## 結果
 
