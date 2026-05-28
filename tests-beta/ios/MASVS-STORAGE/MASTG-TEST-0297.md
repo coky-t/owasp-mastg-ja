@@ -2,7 +2,7 @@
 platform: ios
 title: ログへの機密データの挿入 (Insertion of Sensitive Data into Logs)
 id: MASTG-TEST-0297
-type: [static]
+type: [static, code]
 weakness: MASWE-0001
 prerequisites:
 - identify-sensitive-data
@@ -19,7 +19,8 @@ iOS プラットフォームでは、`NSLog`, `NSAssert`, `NSCAssert`, `print`, 
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールをアプリバイナリに対して実行して、ログ記録 API の使用を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
