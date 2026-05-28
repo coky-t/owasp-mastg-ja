@@ -2,7 +2,7 @@
 platform: ios
 title: WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)
 id: MASTG-TEST-0336
-type: [dynamic]
+type: [dynamic, hooks, manual]
 weakness: MASWE-0069
 best-practices: [MASTG-BEST-0033]
 profiles: [L1, L2]
@@ -17,14 +17,6 @@ knowledge: [MASTG-KNOW-0076]
 
 このテストは、ローカル `file://` コンテンツをロードする `WKWebView` に対して、アプリケーションがこれらのせっていのいずれかを有効にしているかどうかを実行時に検証します。
 
-## 手順
-
-1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) で説明されているように、アプリをデバイスやシミュレータにデプロイします。
-2. [Frida (iOS)](../../../tools/ios/MASTG-TOOL-0039.md) などの実行時計装ツールでアプリを起動します。
-3. 関連する WebKit API をフックして、アプリが緩和されたファイルオリジンポリシーを有効にし、ローカルコンテンツを `WKWebView` にロードするかどうかを確認します。
-4. `WKWebView` を作成および構成するコードパスをトリガーします。
-5. キャプチャしたランタイム引数を検査します。
-
 監視する代表的な API は以下のとおりです。
 
 - `WKPreferences _setAllowFileAccessFromFileURLs:`
@@ -33,15 +25,23 @@ knowledge: [MASTG-KNOW-0076]
 - `WKWebView loadFileURL:allowingReadAccessToURL:`
 - `WKWebView loadHTMLString:baseURL:` (`file://` ベース URL が使用される可能性がある場合)
 
+## 手順
+
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
+
 ## 結果
 
-出力には、アプリケーションが実行時に `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` を有効にしているかどうか、および影響を受ける `WKWebView` がローカル `file://` コンテンツをロードするかどうかを示す可能性があります。
+出力には、`allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` を設定する関数の使用、ローカルの `file://` コンテンツのロード、関連する各呼び出しのバックトレースを示す可能性があります。
 
 ## 評価
 
 ローカル `file://` コンテンツをロードする `WKWebView` に対して、アプリケーションが `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` を有効にしている場合、そのテストケースは不合格です。
 
-[逆アセンブルされたネイティブコードのレビュー (Reviewing Disassembled Native Code)](../../../techniques/ios/MASTG-TECH-0077.md) を使用して、報告された各呼び出し箇所を検査します。
+**さらなるバリデーションが必要となります:**
+
+フック出力からのバックトレースを使用して、[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用してコード箇所を検査します。
 
 - `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` が明示的に使用され、`true` に設定しているかどうかを判断します。
 - どの `WKWebView` インスタンスがその設定を受け取り、機密情報や機能を取り扱っているかどうかを判断します。
