@@ -2,7 +2,7 @@
 platform: ios
 title: テキスト入力フィールドの機密データを隠す API の実行時使用 (Runtime Use of APIs Hiding Sensitive Data in Text Input Fields)
 id: MASTG-TEST-0347
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0053
 profiles: [L2]
 best-practices: [MASTG-BEST-0044]
@@ -21,6 +21,7 @@ knowledge: [MASTG-KNOW-0121]
 
 1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
 2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
