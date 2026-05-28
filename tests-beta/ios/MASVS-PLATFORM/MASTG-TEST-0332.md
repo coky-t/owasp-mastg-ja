@@ -2,7 +2,7 @@
 platform: ios
 title: WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)
 id: MASTG-TEST-0332
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0071
 best-practices: [MASTG-BEST-0034]
 profiles: [L1, L2, P]
@@ -32,8 +32,8 @@ iOS アプリはさまざまな URL ロードメソッドを使用して [`WKWeb
 
 ## 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) の説明に従ってアプリを抽出します。
-2. アプリバイナリに対して [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、`WKWebView` URL ロード API への呼び出しを探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -42,6 +42,8 @@ iOS アプリはさまざまな URL ロードメソッドを使用して [`WKWeb
 ## 評価
 
 `WKWebView` URL ロード API への呼び出しが、適切なバリデーションなしで攻撃者が制御する入力に由来する URL で見つかった場合、そのテストケースは不合格です。
+
+**さらなるバリデーションが必要となります:**
 
 [逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査します。
 
