@@ -20,16 +20,16 @@ profiles: [P]
 
 これらのリファレンスを使用して、アプリ内のハードコードされたドメインや動的にアクセスされるドメインを照合し、プライバシーマニフェストに適切な宣言が存在するかどうかを検証できます。
 
+API に関して、アプリが外部サーバーと通信できるようにする、`URLSession`, `NSURLSession`, `NSURLConnection` などのネットワーク API や、サードパーティのネットワークライブラリ (Alamofire, AFNetworking など) を検討する必要があります。さらに、トラッキング機能の存在を示す可能性のある、よく知られたトラッキングライブラリ (Facebook SDK, Google Analytics など) への参照を探します。
+
 ## 手順
 
-1. [PrivacyInfo.xcprivacy ファイルの取得 (Retrieving PrivacyInfo.xcprivacy Files)](../../../techniques/ios/MASTG-TECH-0136.md) を使用して、サードパーティ SDK やフレームワークのものを含む、アプリのプライバシーマニフェストファイルを抽出します。
-2. [PrivacyInfo.xcprivacy ファイルの解析 (Analyzing PrivacyInfo.xcprivacy Files)](../../../techniques/ios/MASTG-TECH-0137.md) を使用して、プライバシーマニフェストファイルから宣言されたトラッキングドメインのリストを取得します。
-3. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) を使用して、静的解析スキャンを実行します。
-    - 既知のトラッキングドメインへのハードコードされたリファレンスを検索します。
-    - よく知られたトラッキングライブラリへのコードリファレンスを特定します。
-4. [mitmproxy](../../../tools/network/MASTG-TOOL-0097.md) でネットワーク解析を実行します。
-    - すべての送信ネットワークトラフィックを傍受してログ記録します。
-    - 実行時に接触したすべてのドメイン名を抽出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
+3. [文字列の取得 (Retrieving Strings)](../../../techniques/ios/MASTG-TECH-0071.md) を使用して、既知のトラッキングドメインを表すハードコードされた文字列を検索します。
+4. [PrivacyInfo.xcprivacy ファイルの取得 (Retrieving PrivacyInfo.xcprivacy Files)](../../../techniques/ios/MASTG-TECH-0136.md) を使用して、サードパーティ SDK やフレームワークのものを含め、アプリのプライバシーマニフェストファイルを抽出します。
+5. [PrivacyInfo.xcprivacy ファイルの解析 (Analyzing PrivacyInfo.xcprivacy Files)](../../../techniques/ios/MASTG-TECH-0137.md) を使用して、プライバシーマニフェストファイルから宣言されたトラッキングドメインのリストを取得します。
+6. [基本的なネットワークモニタリングとスニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/ios/MASTG-TECH-0062.md) を使用して、すべての送信ネットワークトラフィックを傍受してログ記録します。
 
 ## 結果
 
@@ -37,6 +37,7 @@ profiles: [P]
 
 - アプリから抽出されたすべてのプライバシーマニフェスト。
 - マニフェスト内の `NSPrivacyTrackingDomains` キーで宣言されたトラッキングドメインのリスト (関連コンポーネントがあることが望ましい)。
+- 実行時に接触したすべてのドメインを抽出できる、ネットワークトラフィックのキャプチャ。
 - 動的テスト時に接触したすべてのドメインのリスト。
 - 静的解析から得られた、既知のトラッキングドメインまたはトラッキングライブラリのコードマッチのリスト。
 
