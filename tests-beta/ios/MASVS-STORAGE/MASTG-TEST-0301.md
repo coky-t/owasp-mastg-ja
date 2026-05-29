@@ -2,7 +2,7 @@
 platform: ios
 title: プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
 id: MASTG-TEST-0301
-type: [dynamic]
+type: [dynamic, hooks]
 profiles: [L2]
 weakness: MASWE-0006
 best-practices: [MASTG-BEST-0024]
@@ -19,9 +19,9 @@ knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 
 ## 手順
 
-1. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用して、ファイルを作成または書き込むファイルシステム API の使用を探します。
-2. ランタイムメソッドフック ([メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) 参照) を使用して、キーチェーン API の使用を探します。
-3. 機密データを処理できるアプリ機能 (認証フロー、セッション確立、オフラインキャッシュ、プロファイルの閲覧/編集、暗号操作、セキュアメッセージング、支払い、トークンリフレッシュロジック) を実行します。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
