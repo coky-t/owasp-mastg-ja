@@ -2,7 +2,7 @@
 platform: ios
 title: テキストフィールドのキーボードキャッシュを防止するための API への参照 (References to APIs for Preventing Keyboard Caching of Text Fields)
 id: MASTG-TEST-0313
-type: [static]
+type: [static, code, manual]
 weakness: MASWE-0053
 profiles: [L2]
 best-practices: [MASTG-BEST-0026]
@@ -21,13 +21,10 @@ knowledge: [MASTG-KNOW-0100]
 
 **注:** デフォルトでは、テキスト入力はキーボードキャッシュの対象となり、アプリはテキストフィールドを作成する際に `UITextAutocorrectionType` を明示的に設定する必要はありません。さらに、UI は Storyboard で構成される可能性があります。結果として、このテストは多くの真陽性を見逃す可能性があります。完全なカバレッジには、[キーボードキャッシュの対象となるテキストフィールドの実行時監視 (Runtime Monitoring of Text Fields Eligible for Keyboard Caching)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0314.md) を使用することをお勧めします。
 
-**注:** アプリが、カスタム UI フレームワークやゲームエンジンなど、`UITextField` や `UITextView` のような標準 UIKit クラスに依存しないカスタムテキスト入力コントロールを使用している場合、またはテキスト入力が、保存時の入力特性を確実に監視できない、非標準の抽象化によって処理されている場合、このテストは偽陰性を生み出す可能性があります。
-
 ## 手順
 
-1. [iOS アプリのリバースエンジニアリング (Reverse Engineering iOS Apps)](../../../techniques/ios/MASTG-TECH-0065.md) を使用して、アプリをリバースエンジニアします。
-2. [相互参照の取得 (Retrieving Cross References)](../../../techniques/ios/MASTG-TECH-0072.md) を使用して、関連する入力属性を設定する API への参照を探します。
-3. [逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して、関連するコードパスを解析し、これらの属性に割り当てられた値を特定します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
@@ -44,5 +41,13 @@ knowledge: [MASTG-KNOW-0100]
 - `autocorrectionType` が `default` または `yes` に設定されている場合、または
 - `spellCheckingType` が `default` または `yes` に設定されている場合。
 
+**さらなるバリデーションが必要となります:**
+
+[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査し、入力属性に割り当てられている値と、テキストフィールドが機密データを扱っているかどうかを判断します。
+
 > [!NOTE]
 > アプリの脅威モデルによっては、一部のテキストフィールドでスペルチェックを無効にする必要がないことがあります。但し、`isSecureTextEntry` を有効にするとオートコレクトとスペルチェックの両方が暗黙的に無効になり、明示的な保証も限られるため、機密情報を扱う可能性のあるテキストフィールドでは一般的に三つの属性すべてを無効にすることをお勧めします。
+
+**予想される検出漏れ:**
+
+アプリが、カスタム UI フレームワークやゲームエンジンなど、`UITextField` や `UITextView` のような標準 UIKit クラスに依存しないカスタムテキスト入力コントロールを使用している場合、またはテキスト入力が、保存時の入力特性を確実に監視できない、非標準の抽象化によって処理されている場合、このテストは検出漏れを生み出す可能性があります。
