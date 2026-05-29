@@ -2,7 +2,7 @@
 platform: ios
 title: キーボードキャッシュの対象となるテキストフィールドの実行時監視 (Runtime Monitoring of Text Fields Eligible for Keyboard Caching)
 id: MASTG-TEST-0314
-type: [dynamic]
+type: [dynamic, hooks]
 weakness: MASWE-0053
 profiles: [L2]
 prerequisites:
@@ -18,8 +18,8 @@ knowledge: [MASTG-KNOW-0100]
 ## 手順
 
 1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
-2. [iOS での動的解析 (Dynamic Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0067.md) を使用して、アプリの UI のテキスト入力フィールドを探し、関連する属性を使用しているものを特定します。
-3. 特定された各入力フィールドに現実的な機密情報 (ユーザー名、パスワード、電子メールアドレス、クレジットカード番号、リカバリコードなど) を入力し、アプリを徹底的に実行します。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
 ## 結果
 
@@ -37,5 +37,6 @@ knowledge: [MASTG-KNOW-0100]
 - `autocorrectionType` が `default` または `yes` に設定されている場合、または
 - `spellCheckingType` が `default` または `yes` に設定されている場合。
 
-> [!NOTE]
-> アプリが `UITextField` や `UITextView` のような標準 UIKit クラスに依存しないカスタムテキスト入力コントロール (カスタム UI フレームワークやゲームエンジンなど) を使用している場合、またはテキスト入力が、実行時の入力特性を確実に監視できない、非標準の抽象化によって処理されている場合、このテストは偽陰性を生み出す可能性があります。
+**予想される検出漏れ:**
+
+アプリが `UITextField` や `UITextView` のような標準 UIKit クラスに依存しないカスタムテキスト入力コントロール (カスタム UI フレームワークやゲームエンジンなど) を使用している場合、またはテキスト入力が、実行時の入力特性を確実に監視できない、非標準の抽象化によって処理されている場合、このテストは検出漏れを生み出す可能性があります。
