@@ -2,7 +2,7 @@
 platform: ios
 title: プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)
 id: MASTG-TEST-0300
-type: [static]
+type: [static, code]
 profiles: [L2]
 best-practices: [MASTG-BEST-0024]
 weakness: MASWE-0006
@@ -20,8 +20,8 @@ knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 
 ## 手順
 
-1. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、ファイルを作成または書き込むファイルシステム API の使用を探します。
-2. [radare2 (iOS)](../../../tools/ios/MASTG-TOOL-0073.md) などの静的解析ツールを実行し、キーチェーン API の使用を探します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
 ## 結果
 
