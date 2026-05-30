@@ -70,6 +70,8 @@ static boolean detect_threadCpuTimeNanos(){
 
 ## JDWP 関連のデータ構造への干渉
 
+### DvmGlobals 構造体 (Android 5.0 以前)
+
 Dalvik では、グローバル仮想マシンの状態は `DvmGlobals` 構造体を介してアクセス可能です。グローバル変数 gDvm はこの構造体へのポイントを保持しています。 `DvmGlobals` には JDWP デバッグに重要なさまざまな変数やポインタが含まれており、改竄可能です。
 
 ```c
@@ -103,6 +105,8 @@ JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
   gDvm.methDalvikDdmcServer_dispatch = NULL;
 }
 ```
+
+### JdwpAdbState 構造体 (Android 5.0 および以降)
 
 gDvm 変数が利用できない場合でも、 ART で同様の技法を使用してデバッグを無効にできます。 ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、 vtable はクラスメソッドのポインタを保持するテーブルです) 。これには `JdwpSocketState` および `JdwpAdbState` クラスの vtable を含んでおり、これらはネットワークソケットと [adb](../../../tools/android/MASTG-TOOL-0004.md) を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作は [関連する vtable のメソッドポインタを上書きすることにより](https://web.archive.org/web/20200307152820/https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art "Anti-Debugging Fun with Android ART") (archived) 操作できます。
 
@@ -180,9 +184,9 @@ Linux では、 [`ptrace` システムコール](http://man7.org/linux/man-pages
 
 > **これはネイティブコードにのみ適用される** ことに注意します。 Java/Kotlin のみのアプリをデバッグする場合には "TracerPid" フィールドの値は 0 になります。
 
-この技法は通常 JNI ネイティブライブラリ内の C で適用されます。これは [Google の gperftools (Google Performance Tools)) Heap Checker](https://github.com/gperftools/gperftools/blob/google-perftools-1.10/src/heap-checker.cc#L111 "heap-checker.cc - IsDebuggerAttached") 実装の `IsDebuggerAttached` メソッドに示されています。ただし、このチェックを Java/Kotlin コードの一部として含める場合は、 [Tim Strazzere の Anti-Emulator プロジェクト](https://github.com/strazzere/anti-emulator/ "anti-emulator") から `hasTracerPid` メソッドの Java 実装を参照します。
+この技法は通常 JNI ネイティブライブラリ内の C で適用されます。これは [TracerPid と ptrace でのネイティブなアンチデバッグチェック (Native Anti-Debugging Checks with TracerPid and ptrace)](../../demos/android/MASVS-RESILIENCE/MASTG-DEMO-0116/MASTG-DEMO-0116.md) に示されています。ただし、このチェックを Java/Kotlin コードの一部として含める場合は、 [Tim Strazzere の Anti-Emulator プロジェクト](https://github.com/strazzere/anti-emulator/ "anti-emulator") から `hasTracerPid` メソッドの Java 実装を参照します。
 
-このようなメソッドを自分で実装しようとする場合は、 [adb](../../../tools/android/MASTG-TOOL-0004.md) で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni "hello-jni sample") を使用して、 Android Studio のデバッガをアタッチした後にチェックを実行しています。
+このようなメソッドを自分で実装しようとする場合は、 [adb](../../../tools/android/MASTG-TOOL-0004.md) で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni "hello-jni sample") を使用して、lldb ([lldb (Android)](../../tools/android/MASTG-TOOL-0152.md)) をアタッチした後にチェックを実行しています。
 
 ```bash
 $ adb shell ps -A | grep com.example.hellojni
@@ -190,7 +194,7 @@ u0_a271      11657   573 4302108  50600 ptrace_stop         0 t com.example.hell
 $ adb shell cat /proc/11657/status | grep -e "^TracerPid:" | sed "s/^TracerPid:\t//"
 TracerPid:      11839
 $ adb shell ps -A | grep 11839
-u0_a271      11839 11837   14024   4548 poll_schedule_timeout 0 S lldb-server
+root      11839 11837   14024   4548 poll_schedule_timeout 0 S lldb-server
 ```
 
 com.example.hellojni (PID=11657) のステータスファイルに 11839 の TracerPID がどのように含まれているかを確認できます。これは lldb-server プロセスとして識別できます。
