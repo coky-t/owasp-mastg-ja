@@ -72,6 +72,10 @@
 - [MASTG-TOOL-0147](tools/android/MASTG-TOOL-0147.md) Android RASP
 - [MASTG-TOOL-0148](tools/android/MASTG-TOOL-0148.md) apkeep
 - [MASTG-TOOL-0149](tools/android/MASTG-TOOL-0149.md) LSPosed
+<!--
+- [MASTG-TOOL-0151](tools/android/MASTG-TOOL-0151.md) debugmepLS
+- [MASTG-TOOL-0152](tools/android/MASTG-TOOL-0152.md) lldb (Android)
+-->
 
 ## iOS
 
@@ -92,7 +96,7 @@
 - [MASTG-TOOL-0054](tools/ios/MASTG-TOOL-0054.md) ios-deploy
 - [MASTG-TOOL-0055](tools/ios/MASTG-TOOL-0055.md) iproxy
 - [MASTG-TOOL-0056](tools/ios/MASTG-TOOL-0056.md) Keychain-Dumper
-- [MASTG-TOOL-0057](tools/ios/MASTG-TOOL-0057.md) lldb
+- [MASTG-TOOL-0057](tools/ios/MASTG-TOOL-0057.md) lldb (iOS)
 - [MASTG-TOOL-0058](tools/ios/MASTG-TOOL-0058.md) MachOView
 - [MASTG-TOOL-0059](tools/ios/MASTG-TOOL-0059.md) optool
 - [MASTG-TOOL-0060](tools/ios/MASTG-TOOL-0060.md) otool

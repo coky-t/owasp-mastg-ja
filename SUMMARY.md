@@ -678,7 +678,7 @@
     - [MASTG-TOOL-0054 ios-deploy](tools/ios/MASTG-TOOL-0054.md)
     - [MASTG-TOOL-0055 iproxy](tools/ios/MASTG-TOOL-0055.md)
     - [MASTG-TOOL-0056 Keychain-Dumper](tools/ios/MASTG-TOOL-0056.md)
-    - [MASTG-TOOL-0057 lldb](tools/ios/MASTG-TOOL-0057.md)
+    - [MASTG-TOOL-0057 lldb (iOS)](tools/ios/MASTG-TOOL-0057.md)
     - [MASTG-TOOL-0058 MachOView](tools/ios/MASTG-TOOL-0058.md)
     - [MASTG-TOOL-0059 optool](tools/ios/MASTG-TOOL-0059.md)
     - [MASTG-TOOL-0060 otool](tools/ios/MASTG-TOOL-0060.md)
