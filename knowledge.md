@@ -141,9 +141,6 @@
 - [MASTG-KNOW-0102](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0102.md) バックアップ (Backups)
 <!--
 - [MASTG-KNOW-0103](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0103.md) プロセスメモリ (Process Memory)
--->
-- [MASTG-KNOW-0104](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0104.md) プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)
-<!--
 - [MASTG-KNOW-0108](knowledge/ios/MASVS-STORAGE/MASTG-KNOW-0108.md) アプリサンドボックスディレクトリ (App Sandbox Directories)
 -->
 
@@ -183,8 +180,21 @@
 <!--
 - [MASTG-KNOW-0082](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0082.md) App Extension (App extensions)
 - [MASTG-KNOW-0083](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) ペーストボード (Pasteboard)
+- [MASTG-KNOW-0104](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0104.md) 低レベルシステム IPC メカニズム (Low-Level System IPC Mechanisms)
 -->
 - [MASTG-KNOW-0121](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0121.md) iOS のテキスト入力フィールドのマスク (Text Input Field Masking in iOS)
+<!--
+- [MASTG-KNOW-0122](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0122.md) ドキュメントピッカー、ドキュメントインタラクション、オープンインプレース (Document Picker, Document Interaction, and Open in Place)
+- [MASTG-KNOW-0123](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0123.md) ハンドオフ (Handoff)
+- [MASTG-KNOW-0124](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0124.md) SiriKit と Siri ショートカット (SiriKit and Siri Shortcuts)
+- [MASTG-KNOW-0125](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0125.md) アプリグループ (App Groups)
+- [MASTG-KNOW-0126](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0126.md) キーチェーンアクセスグループ (Keychain Access Groups)
+- [MASTG-KNOW-0127](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0127.md) ファイル調整 API (File Coordination APIs)
+- [MASTG-KNOW-0128](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0128.md) Bonjour (Bonjour)
+- [MASTG-KNOW-0129](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0129.md) アプリインテンツと AI エージェントの開示 (App Intents and AI Agent Exposure)
+- [MASTG-KNOW-0130](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0130.md) Core Bluetooth (Core Bluetooth)
+- [MASTG-KNOW-0131](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0131.md) Core NFC (Core NFC)
+-->
 
 ### MASVS-CODE: コード品質
 
