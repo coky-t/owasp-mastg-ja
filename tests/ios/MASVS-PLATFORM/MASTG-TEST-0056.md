@@ -9,6 +9,9 @@ masvs_v1_levels:
 - L1
 - L2
 profiles: [L1, L2]
+status: deprecated
+covered_by: []
+deprecation_note: このテストの内容は適切に移植するには不十分でした。IPC メカニズムの詳細については [低レベルシステム IPC メカニズム (Low-Level System IPC Mechanisms)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0104.md) および関連するナレッジを参照してください。今後、特定の IPC メカニズムとそのセキュリティ上の影響をカバーする新しいテストが追加される予定です。
 ---
 
 ## 概要
