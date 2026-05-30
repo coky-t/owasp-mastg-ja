@@ -7,6 +7,7 @@
 - [MASTG-TECH-0049](techniques/generic/MASTG-TECH-0049.md) 動的解析 (Dynamic Analysis)
 - [MASTG-TECH-0050](techniques/generic/MASTG-TECH-0050.md) バイナリ解析 (Binary Analysis)
 - [MASTG-TECH-0051](techniques/generic/MASTG-TECH-0051.md) 改竄と実行時計装 (Tampering and Runtime Instrumentation)
+- [MASTG-TECH-0071](techniques/generic/MASTG-TECH-0071.md) 文字列の取得 (Retrieving Strings)
 - [MASTG-TECH-0119](techniques/generic/MASTG-TECH-0119.md) アプリケーション層でネットワーク API をフックして HTTP トラフィックを傍受する (Intercepting HTTP Traffic by Hooking Network APIs at the Application Layer)
 - [MASTG-TECH-0120](techniques/generic/MASTG-TECH-0120.md) 傍受プロキシを使用して HTTP トラフィックを傍受する (Intercepting HTTP Traffic Using an Interception Proxy)
 - [MASTG-TECH-0121](techniques/generic/MASTG-TECH-0121.md) 傍受プロキシを使用して非 HTTP トラフィックを傍受する (Intercepting Non-HTTP Traffic Using an Interception Proxy)
@@ -148,7 +149,6 @@
 <!--
 - [MASTG-TECH-0070](techniques/ios/MASTG-TECH-0070.md) アプリケーションバイナリから情報の抽出 (Extracting Information from the Application Binary)
 -->
-- [MASTG-TECH-0071](techniques/ios/MASTG-TECH-0071.md) 文字列の取得 (Retrieving Strings)
 - [MASTG-TECH-0072](techniques/ios/MASTG-TECH-0072.md) 相互参照の取得 (Retrieving Cross References)
 - [MASTG-TECH-0073](techniques/ios/MASTG-TECH-0073.md) 情報収集 - API 使用 (Information Gathering - API Usage)
 - [MASTG-TECH-0074](techniques/ios/MASTG-TECH-0074.md) 情報収集 - ネットワーク通信 (Information Gathering - Network Communication)
