@@ -73,9 +73,7 @@
 - [MASTG-TOOL-0148](tools/android/MASTG-TOOL-0148.md) apkeep
 - [MASTG-TOOL-0149](tools/android/MASTG-TOOL-0149.md) LSPosed
 - [MASTG-TOOL-0151](tools/android/MASTG-TOOL-0151.md) debugmepLS
-<!--
 - [MASTG-TOOL-0152](tools/android/MASTG-TOOL-0152.md) lldb (Android)
--->
 
 ## iOS
 

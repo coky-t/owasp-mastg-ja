@@ -660,6 +660,7 @@
     - [MASTG-TOOL-0148 apkeep](tools/android/MASTG-TOOL-0148.md)
     - [MASTG-TOOL-0149 LSPosed](tools/android/MASTG-TOOL-0149.md)
     - [MASTG-TOOL-0151 debugmepLS](tools/android/MASTG-TOOL-0151.md)
+    - [MASTG-TOOL-0152 lldb (Android)](tools/android/MASTG-TOOL-0152.md)
 
   - iOS
     - [MASTG-TOOL-0039 Frida (iOS)](tools/ios/MASTG-TOOL-0039.md)
