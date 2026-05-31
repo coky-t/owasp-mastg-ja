@@ -70,6 +70,8 @@ Apple は Apple が承認したコード、つまり Apple により署名され
 - [Code Signing (Apple Developer Documentation)](https://developer.apple.com/support/code-signing/)
 - [Demystifying iOS Code Signature](https://medium.com/csit-tech-blog/demystifying-ios-code-signature-309d52c2ff1d)
 
+アプリおよびライブラリ固有の署名要件については、[アプリ署名 (App Signing)](../knowledge/ios/MASVS-CODE/MASTG-KNOW-0058.md) を参照してください。
+
 ### 暗号化とデータ保護
 
 _FairPlay コード暗号化_ は App Store からダウンロードしたアプリに適用されます。FairPlay はマルチメディアコンテンツを購入する際の DRM として開発されました。もともと、FairPlay の暗号化は MPEG や QuickTime ストリームに適用されていましたが、同じ基本概念を実行可能ファイルにも適用できます。基本的な考え方は次の通りです。新しい Apple ユーザーアカウントまたは Apple ID を登録すると、公開鍵と秘密鍵 (private key) のペアが作成され、アカウントに割り当てられます。その秘密鍵 (private key) はデバイス上にセキュアに格納されます。つまり FairPlay で暗号化されたコードはアカウントに関連付けられたデバイス上でのみ復号できます。FairPlay 暗号のリバースは通常、デバイス上でアプリを実行し、メモリから復号されたコードをダンプして取得します (「iOS アプリのテスト環境構築」も参照してください) 。
