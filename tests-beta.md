@@ -106,7 +106,12 @@
 - [MASTG-TEST-0288](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0288.md) ネイティブバイナリのデバッグシンボル (Debugging Symbols in Native Binaries)
 - [MASTG-TEST-0324](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0324.md) ルート検出メカニズムへの参照 (References to Root Detection Mechanisms)
 - [MASTG-TEST-0325](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0325.md) ルート検出技法の実行時使用 (Runtime Use of Root Detection Techniques)
-- [MASTG-TEST-0341](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0341.md) ランタイムフック検出のテスト (Testing Runtime Hook Detection)
+- [MASTG-TEST-0341](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0341.md) フック検出技法の実行時使用 (Runtime Use of Hook Detection Techniques)
+<!--
+- [MASTG-TEST-0351](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0351.md) エミュレータ検出技法の実行時使用 (Runtime Use of Emulator Detection Techniques)
+- [MASTG-TEST-0352](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0352.md) デバッグ検出 API への参照 (References to Debugging Detection APIs)
+- [MASTG-TEST-0353](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0353.md) デバッグ検出 API の実行時使用 (Runtime Use of Debugging Detection APIs)
+-->
 
 ### MASVS-PRIVACY: プライバシー
 
@@ -204,6 +209,9 @@
 - [MASTG-TEST-0246](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0246.md) 安全な画面ロック検出 API の実行時使用 (Runtime Use of Secure Screen Lock Detection APIs)
 - [MASTG-TEST-0248](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0248.md) 安全な画面ロックを検出するための API への参照 (References to APIs for Detecting Secure Screen Lock)
 - [MASTG-TEST-0261](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0261.md) entitlements.plist で有効になっているデバッグ可能なエンタイトルメント (Debuggable Entitlement Enabled in the entitlements.plist)
+<!--
+- [MASTG-TEST-0354](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0354.md) フック検出技法の実行時使用 (Runtime Use of Hook Detection Techniques)
+-->
 
 ### MASVS-PRIVACY: プライバシー
 
