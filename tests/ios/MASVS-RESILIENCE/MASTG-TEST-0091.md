@@ -8,6 +8,9 @@ title: リバースエンジニアリングツール検出のテスト (Testing 
 masvs_v1_levels:
 - R
 profiles: [R]
+status: deprecated
+covered_by: [MASTG-TEST-0354]
+deprecation_note: "New version available in MASTG V2"
 ---
 
 ## 概要
