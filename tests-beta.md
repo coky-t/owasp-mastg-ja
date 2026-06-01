@@ -30,9 +30,7 @@
 - [MASTG-TEST-0309](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0309.md) 対称暗号化での再使用される初期化ベクトルへの参照 (References to Reused Initialization Vectors in Symmetric Encryption)
 - [MASTG-TEST-0310](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0310.md) 対称暗号化での再使用される初期化ベクトルの実行時使用 (Runtime Use of Reused Initialization Vectors in Symmetric Encryption)
 - [MASTG-TEST-0312](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0312.md) 暗号 API での明示的なセキュリティプロバイダへの参照 (References to Explicit Security Provider in Cryptographic APIs)
-<!--
 - [MASTG-TEST-0350](tests-beta/android/MASVS-CRYPTO/MASTG-TEST-0350.md) 不備のある対称暗号モードの実行時使用 (Runtime Use of Broken Symmetric Encryption Modes)
--->
 
 ### MASVS-AUTH: 認証と認可
 
