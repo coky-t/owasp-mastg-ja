@@ -17,12 +17,12 @@ knowledge: [MASTG-KNOW-0006]
 
 ## 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../techniques/android/MASTG-TECH-0007.md) を使用して、アプリパッケージからネイティブライブラリを抽出します。
-2. 各共有ライブラリで [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler Provided Security Features)](MASTG-TECH-0115) を使用して、"canary" または選択したツールで使用される対応するキーワードを grep で検索します。
+1. [バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)](../../../techniques/android/MASTG-TECH-0157.md) を使用して、アプリパッケージからネイティブライブラリを抽出します。
+2. [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/android/MASTG-TECH-0115.md) を各ネイティブライブラリに使用して、コンパイラが提供するセキュリティ機能を取得します。
 
 ## 結果
 
-出力にはスタックカナリアが有効か無効かを表示する可能性があります。
+出力にはスタックカナリアを含む各ネイティブライブラリで有効になっているすべてのセキュリティ機能を示す可能性があります。
 
 ## 評価
 
