@@ -20,9 +20,8 @@ ARC が有効な場合、バイナリには `objc_autorelease` や `objc_retainA
 
 ## 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
-2. [共有ライブラリの取得 (Get Shared Libraries)](../../../techniques/ios/MASTG-TECH-0082.md) を使用して、すべての共有ライブラリを特定します。
-3. [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) をメインバイナリと各共有ライブラリに使用して、`objc_autorelease` や `objc_retainAutorelease` などの ARC シンボルを探します。
+1. [共有ライブラリの取得 (Get Shared Libraries)](../../../techniques/ios/MASTG-TECH-0082.md) を使用して、すべてのバンドルされているライブラリを特定します。
+2. [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/ios/MASTG-TECH-0118.md) をメインバイナリと各共有ライブラリに使用して、コンパイラが提供するセキュリティ機能に関連するすべての関連アーティファクトを取得します。
 
 ## 結果
 
