@@ -14,8 +14,6 @@ Android アプリでは、カメラ、位置情報、ストレージなどの情
 
 ## 手順
 
-アプリで使用しているパーミッションを見つけるのに役立つツールは複数あります。[AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を参照して、記載されているいずれかのツールを使用します。
-
 1. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
 2. [アプリパーミッションの取得 (Obtaining App Permissions)](../../../techniques/android/MASTG-TECH-0126.md) を使用して、関連するパーミッションを取得します。
 
