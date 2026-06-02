@@ -46,3 +46,11 @@
 - [MASTG-BEST-0043](best-practices/MASTG-BEST-0043.md) ATS が適用されない場合に強力な TLS を強制する (Enforce Strong TLS Settings When ATS Doesn't Apply)
 -->
 - [MASTG-BEST-0044](best-practices/MASTG-BEST-0044.md) テキスト入力フィールド内の機密データをマスクする (Mask Sensitive Data in Text Input Fields)
+<!--
+- [MASTG-BEST-0045](best-practices/MASTG-BEST-0045.md) iOS IPC チャネルを介した機密データの開示を制限する (Limit Sensitive Data Exposure Through iOS IPC Channels)
+-->
+- [MASTG-BEST-0046](best-practices/MASTG-BEST-0046.md) エミュレーションに対する堅牢化 (Hardening Against Emulation)
+<!--
+- [MASTG-BEST-0047](best-practices/MASTG-BEST-0047.md) 継続的なアンチデバッグチェック (Continuous Anti-Debugging Checks)
+- [MASTG-BEST-0048](best-practices/MASTG-BEST-0048.md) リバースエンジニアリングツールに対する堅牢化 (Hardening Against Reverse Engineering Tools)
+-->

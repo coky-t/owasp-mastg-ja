@@ -91,6 +91,7 @@
   - [MASTG-BEST-0039 コンテンツプロバイダでの SQL インジェクションを防止する (Prevent SQL Injection in ContentProviders)](best-practices/MASTG-BEST-0039.md)
   - [MASTG-BEST-0040 オーバーレイ攻撃を防止する (Preventing Overlay Attacks)](best-practices/MASTG-BEST-0040.md)
   - [MASTG-BEST-0044 テキスト入力フィールド内の機密データをマスクする (Mask Sensitive Data in Text Input Fields)](best-practices/MASTG-BEST-0044.md)
+  - [MASTG-BEST-0046 エミュレーションに対する堅牢化 (Hardening Against Emulation)](best-practices/MASTG-BEST-0046.md)
 
 ### ナレッジ
 
