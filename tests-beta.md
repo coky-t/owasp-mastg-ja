@@ -13,6 +13,9 @@
 - [MASTG-TEST-0231](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0231.md) ログ記録 API への参照 (References to Logging APIs)
 - [MASTG-TEST-0262](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0262.md) 機密データを除外しないバックアップ構成への参照 (References to Backup Configurations Not Excluding Sensitive Data)
 - [MASTG-TEST-0287](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md) SharedPreferences API を介してアプリサンドボックスに暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via the SharedPreferences API to the App Sandbox)
+<!--
+- [MASTG-TEST-0287](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0287.md) SharedPreferences API を介した暗号化されていないデータの実行時保存 (Runtime Storage of Unencrypted Data via the SharedPreferences API)
+-->
 - [MASTG-TEST-0304](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0304.md) Android Room Database 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Unencrypted via Android Room Database)
 - [MASTG-TEST-0305](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0305.md) DataStore 経由で暗号化されずに保存される機密データ (Sensitive Data Stored Unencrypted via DataStore)
 - [MASTG-TEST-0306](tests-beta/android/MASVS-STORAGE/MASTG-TEST-0306.md) Android Room DB 経由で暗号化されずに保存される機密データへの参照 (References to Sensitive Data Stored Unencrypted via Android Room DB)
@@ -78,6 +81,11 @@
 - [MASTG-TEST-0320](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0320.md) 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)
 - [MASTG-TEST-0334](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0334.md) WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)
 - [MASTG-TEST-0340](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0340.md) オーバーレイ攻撃保護への参照 (References to Overlay Attack Protections)
+<!--
+- [MASTG-TEST-0355](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0355.md) コンテンツプロバイダを通じた不正なデータベースアクセスへの参照 (References to Unauthorized Database Access through Content Providers)
+- [MASTG-TEST-0356](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0356.md) コンテンツプロバイダを通じた不正なデータベースアクセスの実行時検証 (Runtime Verification of Unauthorized Database Access through Content Providers)
+- [MASTG-TEST-0357](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0357.md) ファイルベースのコンテンツプロバイダのオーバーシェアリングへの参照 (References to Oversharing of File-Based Content Providers)
+-->
 
 ### MASVS-CODE: コード品質
 
@@ -126,8 +134,11 @@
 ### MASVS-STORAGE: ストレージ
 
 - [MASTG-TEST-0215](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0215.md) バックアップ除外としてマークされていない機密データ (Sensitive Data Not Marked For Backup Exclusion)
-- [MASTG-TEST-0296](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0296.md) 安全でないログ記録による機密データ露出 (Sensitive Data Exposure Through Insecure Logging)
+- [MASTG-TEST-0296](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0296.md) ログ内の機密データ露出 (Sensitive Data Exposure in Logs)
 - [MASTG-TEST-0297](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0297.md) ログへの機密データの挿入 (Insertion of Sensitive Data into Logs)
+<!--
+- [MASTG-TEST-0297](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0297.md) ログ記録 API を通じた機密データ露出 (Sensitive Data Exposure Through Logging APIs)
+-->
 - [MASTG-TEST-0298](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0298.md) バックアップ対象のファイルの実行時監視 (Runtime Monitoring of Files Eligible for Backup)
 - [MASTG-TEST-0299](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md) プライベートストレージでのファイルのデータ保護クラス (Data Protection Classes for Files in Private Storage)
 - [MASTG-TEST-0300](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0300.md) プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)
@@ -209,6 +220,8 @@
 - [MASTG-TEST-0261](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0261.md) entitlements.plist で有効になっているデバッグ可能なエンタイトルメント (Debuggable Entitlement Enabled in the entitlements.plist)
 <!--
 - [MASTG-TEST-0354](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0354.md) フック検出技法の実行時使用 (Runtime Use of Hook Detection Techniques)
+- [MASTG-TEST-0358](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0358.md) ログ記録 API を通じた実装詳細の露出 (Implementation Details Exposure Through Logging APIs)
+- [MASTG-TEST-0359](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0359.md) ログ内の実装詳細の露出 (Implementation Details Exposure in Logs)
 -->
 
 ### MASVS-PRIVACY: プライバシー

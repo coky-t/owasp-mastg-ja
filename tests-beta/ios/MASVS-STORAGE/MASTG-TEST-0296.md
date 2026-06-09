@@ -1,6 +1,6 @@
 ---
 platform: ios
-title: 安全でないログ記録による機密データ露出 (Sensitive Data Exposure Through Insecure Logging)
+title: ログ内の機密データ露出 (Sensitive Data Exposure in Logs)
 id: MASTG-TEST-0296
 type: [dynamic, logs]
 weakness: MASWE-0001
@@ -13,9 +13,9 @@ knowledge: [MASTG-KNOW-0101]
 
 ## 概要
 
-このテストは [ログへの機密データの挿入 (Insertion of Sensitive Data into Logs)](MASTG-TEST-0297.md) と対をなす動的テストです。
+このテストは [ログ記録 API を通じた機密データ露出 (Sensitive Data Exposure Through Logging APIs)](MASTG-TEST-0297.md) と対をなす動的テストです。
 
-このテストでは、デバイスログを監視およびキャプチャして、機密データについて解析します。
+このテストでは、デバイスログが監視され、キャプチャされ、機密データについて解析されます。
 
 > [!WARNING]
 > 制限事項
@@ -31,8 +31,8 @@ knowledge: [MASTG-KNOW-0101]
 
 ## 結果
 
-出力にはすべてのログ記録されたデータを含む可能性があります。
+出力には実行時にキャプチャされたログ記録されたデータを含む可能性があります。
 
 ## 評価
 
-出力内に機密データを見つけた場合、そのテストケースは不合格です。
+機密データが出力内に見つけられた場合、そのテストケースは不合格です。
