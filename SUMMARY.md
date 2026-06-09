@@ -428,7 +428,7 @@
     - MASVS-STORAGE: ストレージ
       - [MASTG-TEST-0215 バックアップ除外としてマークされていない機密データ (Sensitive Data Not Marked For Backup Exclusion)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0215.md)
       - [MASTG-TEST-0296 ログ内の機密データ露出 (Sensitive Data Exposure in Logs)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0296.md)
-      - [MASTG-TEST-0297 ログへの機密データの挿入 (Insertion of Sensitive Data into Logs)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0297.md)
+      - [MASTG-TEST-0297 ログ記録 API を通じた機密データ露出 (Sensitive Data Exposure Through Logging APIs)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0297.md)
       - [MASTG-TEST-0298 バックアップ対象のファイルの実行時監視 (Runtime Monitoring of Files Eligible for Backup)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0298.md)
       - [MASTG-TEST-0299 プライベートストレージでのファイルのデータ保護クラス (Data Protection Classes for Files in Private Storage)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0299.md)
       - [MASTG-TEST-0300 プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)](tests-beta/ios/MASVS-STORAGE/MASTG-TEST-0300.md)
