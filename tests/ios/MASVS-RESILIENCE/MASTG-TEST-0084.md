@@ -8,6 +8,9 @@ title: デバッグコードと詳細エラーログのテスト (Testing for De
 masvs_v1_levels:
 - R
 profiles: [R]
+status: deprecated
+covered_by: [MASTG-TEST-0358, MASTG-TEST-0359]
+deprecation_note: "New version available in MASTG v2"
 ---
 
 ## 概要
