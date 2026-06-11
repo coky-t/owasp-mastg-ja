@@ -14,13 +14,13 @@ knowledge: [MASTG-KNOW-0062]
 
 ## 手順
 
-1. [MachO バイナリからエンタイトルメントの抽出 (Extracting Entitlements from MachO Binaries)](../../../techniques/ios/MASTG-TECH-0111.md) を使用してバイナリからエンタイトルメントを抽出します。
-2. `get-task-allow` キーを検索します。
+1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージを unzip します。
+2. [MachO バイナリからエンタイトルメントの抽出 (Extracting Entitlements from MachO Binaries)](../../../techniques/ios/MASTG-TECH-0111.md) を使用して、メインバイナリからエンタイトルメントを抽出します。
 
 ## 結果
 
-出力には `get-task-allow` エンタイトルメントの値を含む可能性があります。
+出力にはアプリに埋め込まれたエンタイトルメントを含む可能性があります。
 
 ## 評価
 
-`get-task-allow` エンタイトルメントが `true` の場合、そのテストケースは不合格です。
+`get-task-allow` エンタイトルメントが存在し、`true` に設定されている場合、そのテストケースは不合格です。
