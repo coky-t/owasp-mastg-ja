@@ -167,6 +167,7 @@
       - [MASTG-KNOW-0033 難読化 (Obfuscation)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0033.md)
       - [MASTG-KNOW-0034 デバイスバインディング (Device Binding)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0034.md)
       - [MASTG-KNOW-0035 Google Play Integrity API](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md)
+      - [MASTG-KNOW-0119 キーアテステーション (Key Attestation)](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0119.md)
 
     - MASVS-PRIVACY: プライバシー
       - [MASTG-KNOW-0026 アプリに組み込まれたサードパーティサービス (Third-party Services Embedded in the App)](knowledge/android/MASVS-PRIVACY/MASTG-KNOW-0026.md)

@@ -87,6 +87,11 @@
 - [MASTG-KNOW-0105](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md) ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)
 - [MASTG-KNOW-0106](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md) アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)
 - [MASTG-KNOW-0107](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md) スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)
+<!--
+- [MASTG-KNOW-0132](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0132.md) Android アクティビティ (Android Activities)
+- [MASTG-KNOW-0133](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0133.md) Android サービス (Android Services)
+- [MASTG-KNOW-0134](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0134.md) Android ブロードキャストレシーバ (Android Broadcast Receivers)
+-->
 
 ### MASVS-CODE: コード品質
 
@@ -108,6 +113,9 @@
 - [MASTG-KNOW-0028](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0028.md) アンチデバッグ (Anti-Debugging)
 - [MASTG-KNOW-0029](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0029.md) ファイル完全性チェック (File Integrity Checks)
 - [MASTG-KNOW-0030](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0030.md) リバースエンジニアリングツールの検出 (Detection of Reverse Engineering Tools)
+<!--
+- [MASTG-KNOW-0030](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0030.md) リバースエンジニアリングツールの検出 (Reverse Engineering Tool Detection)
+-->
 - [MASTG-KNOW-0031](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0031.md) エミュレータの検出 (Emulator Detection)
 - [MASTG-KNOW-0032](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0032.md) ランタイム完全性検証 (Runtime Integrity Verification)
 - [MASTG-KNOW-0033](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0033.md) 難読化 (Obfuscation)
@@ -115,7 +123,9 @@
 - [MASTG-KNOW-0035](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0035.md) Google Play Integrity API
 <!--
 - [MASTG-KNOW-0118](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0118.md) Runtime Application Self-Protection (RASP)
+-->
 - [MASTG-KNOW-0119](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0119.md) キーアテステーション (Key Attestation)
+<!--
 - [MASTG-KNOW-0120](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0120.md) デバイスアテステーション (Device Attestation)
 -->
 
@@ -205,6 +215,9 @@
 - [MASTG-KNOW-0062](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md) デバッグ可能アプリ (Debuggable Apps)
 - [MASTG-KNOW-0063](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md) デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)
 - [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) デバッグコードとエラーログ (Debugging Code and Error Logging)
+<!--
+- [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) 非本番リソース (Non-Production Resources)
+-->
 - [MASTG-KNOW-0065](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md) 例外処理 (Exception Handling)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
