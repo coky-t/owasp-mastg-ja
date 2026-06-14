@@ -404,7 +404,7 @@ APK から AndroidManifest.xml ファイルを取得 ([AndroidManifest から情
 
 ### アプリコンポーネント
 
-Android アプリは複数の上位コンポーネントで構成されています。主なコンポーネントは以下のとおりです。
+Android アプリは複数の上位の [アプリコンポーネント](https://developer.android.com/guide/components/fundamentals#Components) で構成されています。主なコンポーネントは以下のとおりです。
 
 - アクティビティ
 - フラグメント
@@ -414,32 +414,13 @@ Android アプリは複数の上位コンポーネントで構成されていま
 
 これらの要素はすべて、API を介して利用可能な定義済みクラスの形式で、 Android オペレーティングシステムにより提供されています。
 
+これらのコンポーネントタイプのうちの四つ (アクティビティ、サービス、ブロードキャストレシーバ、コンテンツプロバイダ) はプロセス間通信 (IPC) のエントリポイントとして機能し、他のアプリがアプリとどのようにやり取りできるかを決定する上で重要です。これらはナレッジベースで詳細にカバーされています。この概要ではそれぞれの概要と関連する箇所へのリンクを示します。
+
 #### アクティビティ
 
-アクティビティはアプリの表示部分を構成します。画面ごとにひとつのアクティビティがあるため、三つの異なる画面を持つアプリは三つの異なるアクティビティを実装します。アクティビティは Activity クラスを拡張することにより宣言されます。これらにはフラグメント、ビュー、レイアウトのすべてのユーザーインタフェース要素が含まれています。
+アクティビティはアプリの表示部分を構成し、画面ごとに一つのアクティビティがあります。各アクティビティは [`Activity`](https://developer.android.com/reference/android/app/Activity) クラスを拡張し、画面のユーザーインタフェース要素をホストします。`AndroidManifest.xml` ファイルに [`<activity>`](https://developer.android.com/guide/topics/manifest/activity-element) 要素で宣言する必要があります。アクティビティはシステムによって管理される独自の [ライフサイクル](https://developer.android.com/guide/components/activities/activity-lifecycle) があり、onCreate`, `onStart`, `onResume`, `onPause`, `onStop`, `onDestroy` などのコールバックがあります。
 
-各アクティビティは以下の構文で Android Manifest に宣言する必要があります。
-
-```xml
-<activity android:name="ActivityName">
-</activity>
-```
-
-マニフェストに宣言されていないアクティビティは表示できず、それらを実行しようとすると例外が発生します。
-
-アプリと同様に、アクティビティも独自のライフサイクルを持ち、システムの変化を監視してそれらを処理する必要があります。アクティビティには active, paused, stopped, inactive の状態があります。これらの状態は Android オペレーティングシステムにより管理されます。したがって、アクティビティは以下のイベントマネージャを実装します。
-
-- onCreate
-- onSaveInstanceState
-- onStart
-- onResume
-- onRestoreInstanceState
-- onPause
-- onStop
-- onRestart
-- onDestroy
-
-アプリは明示的にすべてのイベントマネージャを実装していないことがあり、その場合にはデフォルトアクションがとられます。一般的には、少なくとも `onCreate` マネージャはアプリ開発者によりオーバーライドされます。これはほとんどのユーザーインタフェースコンポーネントを宣言および初期化する方法です。リソース (ネットワーク接続やデータベースへの接続など) を明示的に解放しなければならない場合や、アプリのシャットダウン時に特定のアクションを実行しなければならない場合、 `onDestroy` がオーバーライドされることがあります。
+他のアプリはエクスポートされたアクティビティを開始でき、アクティビティを IPC エントリポイントとします。アクティビティ、インテントフィルタ、`android:exported` 属性の詳細については、[Android アクティビティ (Android Activities)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0132.md) を参照してください。
 
 #### フラグメント
 
@@ -489,213 +470,33 @@ var fm = fragmentManager
 
 #### コンテンツプロバイダ
 
-Android は SQLite を使用して、データを永続的に格納しています。 Linux の場合と同様に、データはファイルに格納されます。 SQLite は軽量で効率的なオープンソースのリレーショナルデータストレージテクノロジであり、処理能力をあまり必要としないため、モバイルでの使用に理想的です。特定のクラス (Cursor, ContentValues, SQLiteOpenHelper, ContentProvider, ContentResolver, など) を使用して API 全体を利用できます。
-SQLite は別のプロセスとして実行されるのではなく、アプリの一部となります。
-デフォルトでは、特定のアプリに属するデータベースはこのアプリからのみアクセスできます。しかし、コンテンツプロバイダはデータソース (データベースやフラットファイルを含む) を抽象化する優れたメカニズムを提供します。また、ネイティブアプリを含むアプリ間でデータを共有するための標準的で効率的なメカニズムも提供します。他のアプリからアクセスできるようにするには、コンテンツプロバイダは共有するアプリのマニフェストファイルで明示的に宣言する必要があります。コンテンツプロバイダが宣言されない限り、それらはエクスポートされず、それらを作成するアプリによってのみ呼び出すことができます。
+[コンテンツプロバイダ](https://developer.android.com/guide/topics/providers/content-providers) は、`content://` スキームを使用した URI ベースのインタフェースを通じて、構造化データを他のアプリやシステムコンポーネントに公開します。プロバイダは作成、読み取り、更新、削除の操作をサポートします。通常は SQLite データベースによって支援されていますが、データソースを使用できます。プロバイダは `AndroidManifest.xml` ファイルに [`<provider>`](https://developer.android.com/guide/topics/manifest/provider-element) 要素で宣言される必要があり、エクスポートされた場合にのみ他のアプリから到達可能になります。これは IPC エントリポイントとなります。
 
-コンテンツプロバイダは URI アドレッシングスキームを通じて実装されます。それらはすべて content:// モデルを使用します。ソースのタイプ (SQLite データベース、フラットファイル、など) に関係なく、アドレッシングスキームは常に同じであるため、ソースを抽象化し、開発者に一意のスキームを提供します。コンテンツプロバイダはすべての通常のデータベース操作 (作成、読取、更新、削除) を提供します。つまり、マニフェストファイルに適切な権限を持つアプリは他のアプリからデータを操作できます。
+コンテンツプロバイダ、その URI 構造、アクセス制御の詳細については、[Android コンテンツプロバイダ (Android ContentProvider)](../knowledge/android/MASVS-CODE/MASTG-KNOW-0117.md) を参照してください。
 
 #### サービス
 
-サービスはユーザーインタフェースを表示せずにバックグラウンドでタスク (データ処理、インテント起動、通知など) を実行する (Service クラスをベースとした) Android OS コンポーネントです。サービスはプロセスを長期的に実行することを目的としています。それらのシステム優先度はアクティブアプリのものより低くなりますが、非アクティブなアプリのものよりも高くなります。したがって、システムがリソースを必要とする場合にそれらが強制終了される可能性は低く、十分なリソースが利用可能になった際には自動的に再起動するように設定することも可能です。このため、サービスはバックグラウンドタスクを実行するのに最適な候補となります。アクティビティと同様に、サービスはメインアプリスレッドで実行されることに注意してください。特に指定しない限り、サービスは独自のスレッドを作成せず、別のプロセスで実行しません。
+[サービス](https://developer.android.com/guide/components/services) は、データ処理やネットワークトランザクションなど、ユーザーインタフェースなしでバックグラウンドのタスクを実行するアプリコンポーネント ([`Service`](https://developer.android.com/reference/android/app/Service) クラスに基づく) です。サービスは `AndroidManifest.xml` ファイルに [`<service>`](https://developer.android.com/guide/topics/manifest/service-element) 要素で宣言される必要があります。他のアプリはエクスポートされたサービスを開始またはバインドできます。これはサービスを IPC エントリポイントにします。サービスは他に設定がない限りホストプロセスのメインスレッドで実行します。
+
+開始およびバインドされたサービス、そのインタフェース、アクセス制御の詳細については、[Android サービス (Android Services)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0133.md) を参照してください。
 
 ### プロセス間通信
 
-すでに学んだように、すべての Android プロセスには独自のサンドボックス化されたアドレス空間があります。プロセス間通信機能によりアプリが信号とデータをセキュアに交換できます。デフォルトの Linux IPC 機能に依存する代わりに、 Android の IPC では OpenBinder のカスタム実装である Binder をベースとしています。 Android システムサービスの多くとすべての高レベル IPC サービスが Binder に依存しています。
+すべての Android プロセスはそれぞれ独自のサンドボックス化されたアドレス空間を持っています。プロセス間通信 (IPC) 機能は、アプリとシステムがこれらの境界を越えてデータを交換できます。デフォルトの Linux IPC 機能に依存するのではなく、Android の IPC は [Binder](https://developer.android.com/reference/android/os/Binder) に基づいています。これは OpenBinder から派生したカスタム実装です。ほとんどの Android システムサービスとすべての高レベル IPC メカニズムは Binder に依存しており、クライアントサーバーモデルを採用しています。呼び出し元がプロキシオブジェクトのメソッドを呼び出し、フレームワークがパラメータをパーセルにマーシャルし、トランザクションが Binder サーバーに送信され、これは呼び出しをターゲットオブジェクトにディスパッチします。
 
-_Binder_ という用語は以下のようなさまざまなことを表しています。
-
-- Binder ドライバ: カーネルレベルドライバ
-- Binder プロトコル: binder ドライバとの通信に使用される低レベル ioctl ベースのプロトコル
-- IBinder インタフェース: Binder オブジェクトが実装する定義済みの動作
-- Binder オブジェクト: IBinder インタフェースの一般的な実装
-- Binder サービス: Binder オブジェクトの実装、例えば、位置情報サービスやセンサーサービス
-- Binder クライアント: Binder サービスを使用するオブジェクト
-
-Binder フレームワークではクライアント・サーバー通信モデルが含まれています。 IPC を使用するには、アプリがプロキシオブジェクトの IPC メソッドを呼び出します。プロキシオブジェクトは呼び出しパラメータを透過的に _parcel_ に _marshall_ し、 Binder サーバーにトランザクションを送信します。これはキャラクタードライバ (/dev/binder) として実装されています。サーバーは着信要求を処理するためのスレッドプールを保持し、宛先オブジェクトにメッセージを配信します。クライアントアプリの視点から見ると、これらはすべて通常のメソッド呼び出しのように見えますが、すべての重い作業は Binder フレームワークにより行われています。
-
-<img src="Images/Chapters/0x05a/binder.jpg" width="400px" />
-
-- _Binder Overview - Image source: [Android Binder by Thorsten Schreiber](https://web.archive.org/web/20240112052034/https://1library.net/document/z33dd47z-android-android-interprocess-communication-thorsten-schreiber-somorovsky-bussmeyer.html "Android Binder")_
-
-他のアプリケーションがそれらにバインドできるようにするサービスは _バインドされたサービス_ と呼ばれます。これらのサービスはクライアントに IBinder インタフェースを提供する必要があります。開発者は Android Interface Descriptor Language (AIDL) を使用して、リモートサービスのインタフェースを記述します。
-
-ServiceManager はシステムサービスの登録と検索を管理するシステムデーモンです。すべての登録済みサービスの名前と Binder のペアのリストを維持します。サービスは `android.os.ServiceManager` の `addService` メソッドで追加され、静的な `getService` メソッドで名前により取得されます。
-
-Java の例:
-
-```java
-public static IBinder getService(String name) {
-        try {
-            IBinder service = sCache.get(name);
-            if (service != null) {
-                return service;
-            } else {
-                return getIServiceManager().getService(name);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "error in getService", e);
-        }
-        return null;
-    }
-```
-
-Kotlin の例:
-
-```kotlin
-companion object {
-        private val sCache: Map<String, IBinder> = ArrayMap()
-        fun getService(name: String): IBinder? {
-            try {
-                val service = sCache[name]
-                return service ?: getIServiceManager().getService(name)
-            } catch (e: RemoteException) {
-                Log.e(FragmentActivity.TAG, "error in getService", e)
-            }
-            return null
-        }
-    }
-```
-
-`service list` コマンドでシステムサービスのリストをクエリできます。
-
-```bash
-$ adb shell service list
-Found 99 services:
-0 carrier_config: [com.android.internal.telephony.ICarrierConfigLoader]
-1 phone: [com.android.internal.telephony.ITelephony]
-2 isms: [com.android.internal.telephony.ISms]
-3 iphonesubinfo: [com.android.internal.telephony.IPhoneSubInfo]
-```
+Binder の上に、Android は [`Intent`](https://developer.android.com/reference/android/content/Intent) メッセージングシステムと四つのアプリコンポーネント IPC エントリポイント (アクティビティ、サービス、ブロードキャストレシーバ、コンテンツプロバイダ) を構築します。IPC モデル、Binder、インテントの詳細については、[プロセス間通信 (IPC) メカニズム (Inter-Process Communication (IPC) Mechanisms)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0020.md) を参照してください。
 
 #### インテント
 
-_インテントメッセージング_ は Binder の上に構築された非同期通信フレームワークです。このフレームワークではポイントツーポイントとパブリッシュ・サブスクライブの両方のメッセージングが可能です。 _インテント_ は別のアプリコンポーネントからアクションをリクエストするために使用できるメッセージオブジェクトです。インテントはいくつかの方法でコンポーネント間通信を手助けしますが、三つの基本的なユースケースがあります。
+_インテント_ はアプリの別のコンポーネントにアクションを要求するために使用されるメッセージングオブジェクトです。インテントは、アクティビティの開始、サービスの開始またはバインド、ブロードキャストの配信という三つの基本的なユースケースをサポートします。インテントは **明示的** (ターゲットコンポーネントを指定する) または **暗黙的** (システムが  [`<intent-filter>`](https://developer.android.com/guide/topics/manifest/intent-filter-element) 宣言に基づいたコンポーネントに解決するアクションを記述する) になります。
 
-- アクティビティの開始
-    - アクティビティはアプリ内の単一の画面を表します。 `startActivity` にインテントを渡すことによりアクティビティの新しいインスタンスを開始できます。インテントはアクティビティを記述し、必要なデータを伝えます。
-- サービスの開始
-    - サービスはユーザーインタフェースなしでバックグラウンドd操作を実行するコンポーネントです。 Android 5.0 (API レベル 21) 以降では、 JobScheduler でサービスを開始できます。
-- ブロードキャストの配信
-    - ブロードキャストはどのアプリでも受信できるメッセージです。システムはシステムの起動や充電の初期化など、システムイベントについてのブロードキャストを配信します。 `sendBroadcast` または `sendOrderedBroadcast` にインテントを渡すことにより、他のアプリにブロードキャストを配信できます。
-
-インテントには二つのタイプがあります。明示的インテントは開始されるコンポーネントに名前を付けます (完全修飾クラス名) 。以下に例を示します。
-
-Java の例:
-
-```java
-Intent intent = new Intent(this, myActivity.myClass);
-```
-
-Kotlin の例:
-
-```kotlin
-var intent = Intent(this, myActivity.myClass)
-```
-
-暗黙的インテントは OS に送信され、特定のデータセット (以下の例では OWASP ウェブサイトの URL) に対して特定のアクションを実行します。どのアプリまたはクラスが対応するサービスを実行するかを決定するのはシステム次第です。以下に例を示します。
-
-Java の例:
-
-```java
-Intent intent = new Intent(Intent.MY_ACTION, Uri.parse("https://www.owasp.org"));
-```
-
-Kotlin の例:
-
-```kotlin
-var intent = Intent(Intent.MY_ACTION, Uri.parse("https://www.owasp.org"))
-```
-
-_インテントフィルタ_ はコンポーネントが受け取りたいインテントのタイプを指定する Android Manifest ファイル内の式です。例えば、アクティビティに対するインテントフィルタを宣言することにより、他のアプリが特定の種類のインテントで直接アクティビティを開始できるようになります。同様に、アクティビティのインテントフィルタを宣言しない場合には、明示的インテントでのみアクティビティを開始できます。
-
-Android はインテントを使用して、アプリへのメッセージ (着信や SMS など) 、重要な電源情報 (バッテリ低下など) 、ネットワーク変更 (接続喪失など) をブロードキャストします。インテントには Extra データを追加できます (`putExtra`/`getExtras` を介して) 。
-
-以下はオペレーティングシステムにより送信されるインテントの短いリストです。すべての定数は Intent クラスで定義されており、リスト全体は公式の Android ドキュメントにあります。
-
-- ACTION_CAMERA_BUTTON
-- ACTION_MEDIA_EJECT
-- ACTION_NEW_OUTGOING_CALL
-- ACTION_TIMEZONE_CHANGED
-
-セキュリティとプライバシーを向上させるために、 Local Broadcast Manager を使用してアプリ内でインテントの送受信し、オペレーティングシステムの他の部分にインテントを送信しません。これは機密データやプライベートデータ (位置情報データなど) がアプリ境界線から外に出ないようにするために非常に役立ちます。
+明示的インテントと暗黙的インテントの詳細については、[暗黙的インテント (Implicit Intents)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) を参照してください。関連するインテントベースの概念については [ペンディングインテント (Pending Intents)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) および [ディープリンク (Deep Links)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0019.md) でカバーされています。
 
 #### ブロードキャストレシーバ
 
-ブロードキャストレシーバはアプリが他のアプリやシステム自体からの通知を受信できるようにするコンポーネントです。これにより、アプリはイベント (内部的なもの、他のアプリにより開始されたもの、オペレーティングシステムにより開始されたもの) に反応できます。これらは一般的に、ユーザーインタフェースの更新、サービスの開始、コンテンツの更新、ユーザー通知の作成に使用されます。
+[ブロードキャストレシーバ](https://developer.android.com/guide/components/broadcasts) は、アプリがパブリッシュサブスクライブモデルを通じて他のアプリやシステムから通知を受信できます。レシーバは `AndroidManifest.xml` ファイルに [`<receiver>`](https://developer.android.com/guide/topics/manifest/receiver-element) 要素で宣言されるか、関連する `registerReceiver()` メソッドで実行時に登録できます。アプリは `sendBroadcast()` や `sendOrderedBroadcast()` でブロードキャストを送信します。
 
-ブロードキャストレシーバをシステムに認識させる方法は二つあります。一つの方法は Android Manifest ファイルで宣言することです。マニフェストではブロードキャストレシーバとインテントフィルタの間の関連付けを指定して、レシーバが受け付けるアクションを示す必要があります。
-
-マニフェストにインテントフィルタを持つブロードキャストレシーバ宣言の例です。
-
-```xml
-<receiver android:name=".MyReceiver" >
-    <intent-filter>
-        <action android:name="com.owasp.myapplication.MY_ACTION" />
-    </intent-filter>
-</receiver>
-```
-
-この例では、ブロードキャストレシーバに [`android:exported`](https://developer.android.com/guide/topics/manifest/receiver-element "receiver element") 属性が含まれていないことに注意します。少なくとも一つのフィルタが定義されているため、デフォルト値は "true" に設定されます。フィルタがない場合、 "false" に設定されます。
-
-もう一つの方法はコード内で動的にレシーバを作成することです。レシーバは [`Context.registerReceiver`](https://developer.android.com/reference/android/content/Context.html#registerReceiver%28android.content.BroadcastReceiver,%2520android.content.IntentFilter%29 "Context.registerReceiver") メソッドで登録することができます。
-
-ブロードキャストレシーバを動的に登録する例です。
-
-Java の例:
-
-```java
-// Define a broadcast receiver
-BroadcastReceiver myReceiver = new BroadcastReceiver() {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Intent received by myReceiver");
-    }
-};
-// Define an intent filter with actions that the broadcast receiver listens for
-IntentFilter intentFilter = new IntentFilter();
-intentFilter.addAction("com.owasp.myapplication.MY_ACTION");
-// To register the broadcast receiver
-registerReceiver(myReceiver, intentFilter);
-// To un-register the broadcast receiver
-unregisterReceiver(myReceiver);
-```
-
-Kotlin の例:
-
-```kotlin
-// Define a broadcast receiver
-val myReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        Log.d(FragmentActivity.TAG, "Intent received by myReceiver")
-    }
-}
-// Define an intent filter with actions that the broadcast receiver listens for
-val intentFilter = IntentFilter()
-intentFilter.addAction("com.owasp.myapplication.MY_ACTION")
-// To register the broadcast receiver
-registerReceiver(myReceiver, intentFilter)
-// To un-register the broadcast receiver
-unregisterReceiver(myReceiver)
-```
-
-関連したインテントが発生すると、システムは登録されたレシーバでアプリを自動的に起動することに注意します。
-
-[ブロードキャストの概要](https://developer.android.com/guide/components/broadcasts "Broadcasts Overview") によると、ブロードキャストがアプリを具体的に対象としていない場合には、 "暗黙的" とみなされます。暗黙的ブロードキャストを受信した後、 Android はフィルタに特定のアクションを登録したすべてのアプリをリストします。同じアクションに対して複数のアプリが登録されている場合、 Android はユーザーに利用可能なアプリのリストから選択するように求めます。
-
-ブロードキャストレシーバの興味深い機能は優先度付けできることです。このようにして、インテントは優先度に従ってすべての認可されたレシーバに配信されます。優先度は `android:priority` 属性を介してマニフェストのインテントフィルタに割り当てることができますし、 [`IntentFilter.setPriority`](https://developer.android.com/reference/android/content/IntentFilter#setPriority%28int%29 "IntentFilter.setPriority") メソッドを介してプログラム的にもできます。ただし、同じ優先度のレシーバは [任意の順序で実行](https://developer.android.com/guide/components/broadcasts.html#sending-broadcasts "Sending Broadcasts") されることに注意します。
-
-アプリがアプリ間でブロードキャストを送信することを想定していない場合には、 Local Broadcast Manager ([`LocalBroadcastManager`](https://developer.android.com/reference/androidx/localbroadcastmanager/content/LocalBroadcastManager.html "LocalBroadcastManager")) を使用します。これらは内部アプリからのみインテントを受信することを確保するために使用でき、他のアプリからのインテントは破棄されます。これはプロセス間通信が関与しないため、アプリのセキュリティと効率を向上させるために非常に役に立ちます。ただし、 `LocalBroadcastManager` クラスは [非推奨](https://developer.android.com/reference/androidx/localbroadcastmanager/content/LocalBroadcastManager.html "LocalBroadcastManager") であり、 Google は [`LiveData`](https://developer.android.com/reference/androidx/lifecycle/LiveData.html "LiveData") などの代替手段を推奨しています。
-
-ブロードキャストレシーバに関するセキュリティ上の考慮事項については、 [セキュリティに関する考慮事項とお勧めの方法](https://developer.android.com/guide/components/broadcasts.html#security-and-best-practices "Security Considerations and Best Practices") を参照してください。
-
-#### 暗黙的ブロードキャストレシーバの制限
-
-[バックグラウンドの処理の最適化](https://developer.android.com/topic/performance/background-optimization "Background Optimizations") によると、 Android 7.0 (API レベル 24) 以降をターゲットとするアプリはブロードキャストレシーバを `Context.registerReceiver()` で登録しない限り `CONNECTIVITY_ACTION` ブロードキャストを受信しなくなりました。システムは `ACTION_NEW_PICTURE` および `ACTION_NEW_VIDEO` ブロードキャストも送信しません。
-
-[バックグラウンドでの実行の制限](https://developer.android.com/about/versions/oreo/background.html#broadcasts "Background Execution Limits") によると、Android 8.0 (API レベル 26) 以降をターゲットとするアプリは [暗黙的なブロードキャストの例外](https://developer.android.com/guide/components/broadcast-exceptions "Implicit Broadcast Exceptions") にリストされているものを除き、マニフェストに暗黙的ブロードキャストのブロードキャストレシーバを登録できなくなりました。実行時に `Context.registerReceiver` を呼び出して作成されたブロードキャストレシーバはこの制限の影響を受けません。
-
-[システムブロードキャストの変更](https://developer.android.com/guide/components/broadcasts#changes-system-broadcasts "Changes to System Broadcasts") によると、 Android 9 (API レベル 28) 以降、 `NETWORK_STATE_CHANGED_ACTION` ブロードキャストはユーザーの位置情報や個人を識別できるデータに関する情報を受信しません。
+ブロードキャストレシーバ、その登録、アクセス制御の詳細については、[Android ブロードキャストレシーバ (Android Broadcast Receivers)](../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0134.md) を参照してください。
 
 ## Android アプリケーションの公開
 
