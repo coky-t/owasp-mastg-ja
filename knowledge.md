@@ -125,9 +125,7 @@
 - [MASTG-KNOW-0118](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0118.md) Runtime Application Self-Protection (RASP)
 -->
 - [MASTG-KNOW-0119](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0119.md) キーアテステーション (Key Attestation)
-<!--
 - [MASTG-KNOW-0120](knowledge/android/MASVS-RESILIENCE/MASTG-KNOW-0120.md) デバイスアテステーション (Device Attestation)
--->
 
 ### MASVS-PRIVACY: プライバシー
 
