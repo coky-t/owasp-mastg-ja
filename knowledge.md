@@ -212,10 +212,7 @@
 - [MASTG-KNOW-0061](knowledge/ios/MASVS-CODE/MASTG-KNOW-0061.md) バイナリ保護メカニズム (Binary Protection Mechanisms)
 - [MASTG-KNOW-0062](knowledge/ios/MASVS-CODE/MASTG-KNOW-0062.md) デバッグ可能アプリ (Debuggable Apps)
 - [MASTG-KNOW-0063](knowledge/ios/MASVS-CODE/MASTG-KNOW-0063.md) デバッグ情報とデバッグシンボル (Debugging Information and Debug Symbols)
-- [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) デバッグコードとエラーログ (Debugging Code and Error Logging)
-<!--
 - [MASTG-KNOW-0064](knowledge/ios/MASVS-CODE/MASTG-KNOW-0064.md) 非本番リソース (Non-Production Resources)
--->
 - [MASTG-KNOW-0065](knowledge/ios/MASVS-CODE/MASTG-KNOW-0065.md) 例外処理 (Exception Handling)
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
