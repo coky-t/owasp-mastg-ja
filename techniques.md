@@ -61,6 +61,9 @@
 - [MASTG-TECH-0027](techniques/android/MASTG-TECH-0027.md) オープンファイルの取得 (Get Open Files)
 - [MASTG-TECH-0028](techniques/android/MASTG-TECH-0028.md) オープンコネクションの取得 (Get Open Connections)
 - [MASTG-TECH-0029](techniques/android/MASTG-TECH-0029.md) ロードされたネイティブライブラリの取得 (Get Loaded Native Libraries)
+<!--
+- [MASTG-TECH-0029](techniques/android/MASTG-TECH-0029.md) ロードされたネイティブライブラリのリスト (Listing Loaded Native Libraries)
+-->
 - [MASTG-TECH-0030](techniques/android/MASTG-TECH-0030.md) サンドボックス検査 (Sandbox Inspection)
 <!--
 - [MASTG-TECH-0031](techniques/android/MASTG-TECH-0031.md) デバッグ (Debugging)
@@ -89,7 +92,6 @@
 - [MASTG-TECH-0100](techniques/android/MASTG-TECH-0100.md) ネットワークトラフィックからの機密データのログ記録 (Logging Sensitive Data from Network Traffic)
 - [MASTG-TECH-0108](techniques/android/MASTG-TECH-0108.md) 汚染解析 (Taint Analysis)
 - [MASTG-TECH-0109](techniques/android/MASTG-TECH-0109.md) Flutter HTTPS トラフィックの傍受 (Intercepting Flutter HTTPS Traffic)
-- [MASTG-TECH-0112](techniques/android/MASTG-TECH-0112.md) Flutter アプリケーションのリバースエンジニアリング (Reverse Engineering Flutter Applications)
 -->
 - [MASTG-TECH-0115](techniques/android/MASTG-TECH-0115.md) コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)
 - [MASTG-TECH-0116](techniques/android/MASTG-TECH-0116.md) APK 署名に関する情報の取得 (Obtaining Information about the APK Signature)
@@ -114,6 +116,17 @@
 <!--
 - [MASTG-TECH-0150](techniques/android/MASTG-TECH-0150.md) AndroidManifest の解析 (Analyzing the AndroidManifest)
 - [MASTG-TECH-0151](techniques/android/MASTG-TECH-0151.md) Network Security Configuration の解析 (Analyzing the Network Security Configuration)
+- [MASTG-TECH-0156](techniques/android/MASTG-TECH-0156.md) Flutter アプリケーションのリバースエンジニアリング (Reverse Engineering Flutter Applications)
+- [MASTG-TECH-0157](techniques/android/MASTG-TECH-0157.md) バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)
+-->
+- [MASTG-TECH-0159](techniques/android/MASTG-TECH-0159.md) ファイルベースのコンテンツプロバイダの使用の検証 (Verify Usage of File-Based Content Providers)
+<!--
+- [MASTG-TECH-0160](techniques/android/MASTG-TECH-0160.md) アクティビティの列挙 (Enumerating Activities)
+- [MASTG-TECH-0161](techniques/android/MASTG-TECH-0161.md) サービスの列挙 (Enumerating Services)
+- [MASTG-TECH-0162](techniques/android/MASTG-TECH-0162.md) ブロードキャストレシーバの列挙 (Enumerating Broadcast Receivers)
+- [MASTG-TECH-0163](techniques/android/MASTG-TECH-0163.md) コンテンツプロバイダの列挙 (Enumerating Content Providers)
+- [MASTG-TECH-0164](techniques/android/MASTG-TECH-0164.md) 暗黙的インテントとブロードキャストの傍受 (Sniffing Implicit Intents and Broadcasts)
+- [MASTG-TECH-0165](techniques/android/MASTG-TECH-0165.md) Android アプリのコンパイラ、難読化、パッカーの識別 (Identifying Compilers, Obfuscators, and Packers in Android Apps)
 -->
 
 ## iOS
@@ -164,7 +177,7 @@
 - [MASTG-TECH-0080](techniques/ios/MASTG-TECH-0080.md) オープンファイルの取得 (Get Open Files)
 - [MASTG-TECH-0081](techniques/ios/MASTG-TECH-0081.md) オープンコネクションの取得 (Get Open Connections)
 <!--
-- [MASTG-TECH-0082](techniques/ios/MASTG-TECH-0082.md) 共有ライブラリの取得 (Get Shared Libraries)
+- [MASTG-TECH-0082](techniques/ios/MASTG-TECH-0082.md) バンドルされているライブラリの抽出 (Extracting Bundled Libraries)
 -->
 - [MASTG-TECH-0083](techniques/ios/MASTG-TECH-0083.md) TBD
 <!--
@@ -220,4 +233,5 @@
 - [MASTG-TECH-0153](techniques/ios/MASTG-TECH-0153.md) Info.plist ファイルの取得 (Retrieving Info.plist Files)
 - [MASTG-TECH-0154](techniques/ios/MASTG-TECH-0154.md) Info.plist ファイルの解析 (Analyzing Info.plist Files)
 - [MASTG-TECH-0155](techniques/ios/MASTG-TECH-0155.md) ATS 構成の解析 (Analyzing the ATS Configuration)
+- [MASTG-TECH-0158](techniques/ios/MASTG-TECH-0158.md) ロードされているライブラリの抽出 (Extracting Loaded Libraries)
 -->
