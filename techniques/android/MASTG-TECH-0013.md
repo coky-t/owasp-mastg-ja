@@ -9,4 +9,4 @@ Android のオープン性は、リバースエンジニアにとって好まし
 
 Java ベースの Android 環境と、Android のベースとなっている Linux OS とカーネルの両方についての実務知識が少なくとも必要でしょう。また、Java 仮想マシンで動作するバイトコードと、ネイティブコードの両方を扱うための適切なツールセットも必要です。
 
-Android アプリをリバースエンジニアするには、次の技法を検討します: [コードを Smali へ逆アセンブル (Disassembling Code to Smali)](MASTG-TECH-0016.md)、[Java コードの逆コンパイル (Decompiling Java Code)](MASTG-TECH-0017)、[ネイティブコードの逆アセンブル (Disassembling Native Code)](MASTG-TECH-0018)。
+Android アプリをリバースエンジニアするには、次の技法を検討します: [コードを Smali へ逆アセンブル (Disassembling Code to Smali)](MASTG-TECH-0016.md)、[Java コードの逆コンパイル (Decompiling Java Code)](MASTG-TECH-0017.md)、[ネイティブコードの逆アセンブル (Disassembling Native Code)](MASTG-TECH-0018.md)。
