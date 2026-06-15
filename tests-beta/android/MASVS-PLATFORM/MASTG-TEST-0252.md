@@ -25,15 +25,6 @@ knowledge: [MASTG-KNOW-0018]
 
 これらのメソッド (デフォルト値、非推奨ステータス、セキュリティへの影響)、アクセスできる特定のファイル、アクセスできる条件の詳細については [Android WebView のローカルファイルアクセス設定](../../../Document/0x05h-Testing-Platform-Interaction.md#webview-local-file-access-settings) を参照してください。
 
-**攻撃シナリオの例**:
-
-ある銀行アプリが WebView を使用して動的コンテンツを表示し、開発者が三つの安全でない設定をすべて有効にしているとします。さらに、WebView で JavaScript が有効になっています。
-
-1. 攻撃者は、その攻撃者が (リバースエンジニアリングのおかけなどで) _分かっている_ WebView がアクセスする場所に、悪意のある HTML ファイルを (フィッシングやその他のエクスプロイトによって) デバイスに注入します。たとえば、HTML ファイルはアプリの利用規約を表示するために使用されます。
-2. WebView は `setAllowFileAccess(true)` により悪意のあるファイルをロードできます。
-3. `setJavaScriptEnabled(true)` と `setAllowFileAccessFromFileURLs(true)` のおかげで、悪意のある (`file://` コンテキストで実行されている) ファイル内の JavaScript は `file://` URL を使用して他のローカルファイルにアクセスできます。
-4. 攻撃者が制御するスクリプトはデバイスから外部サーバーに機密データを流出します。
-
 **注 1**: 攻撃が機能するには、`setAllowFileAccessFromFileURLs` または `setAllowUniversalAccessFromFileURLs` のいずれかを `true` に設定しなければなりません。両方の設定が `false` に設定されている場合、`logcat` に以下のエラーが表示されます。
 
 ```bash
