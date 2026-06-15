@@ -22,14 +22,6 @@ JavaScript コードは以下のようにデバイス上のあらゆるコンテ
 
 `setAllowContentAccess` メソッド、アクセスできる特定のファイル、アクセスできる条件の詳細については、[WebView (WebViews)](../../../knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0018.md) を参照してください。
 
-**攻撃シナリオの例:**
-
-ある銀行アプリが WebView を使用して動的コンテンツを表示しているとします。開発者は `setAllowContentAccess` メソッドを明示的に設定していないため、デフォルトで `true` です。さらに、WebView で JavaScript が有効であり、`setAllowUniversalAccessFromFileURLs` メソッドも使用されています。
-
-1. 攻撃者は脆弱性 (XSS 欠陥など) を悪用し、WebView に悪意のある JavaScript を注入します。これは、WebView が適切なバリデーションなしでロードする、危殆化したリンクや悪意のあるリンクによって発生する可能性があります。
-2. `setAllowUniversalAccessFromFileURLs(true)` のおかげで、悪意のある JavaScript は `content://` URI へのリクエストを発行し、ローカルに保存されているファイルやコンテンツプロバイダで公開されているデータを読み取ることができます。悪意のあるコードは信頼できるコードと同じプロセスとオリジンで実行されているため、エクスポートされていないアプリのコンテンツプロバイダにもアクセスできます。
-3. 攻撃者が制御するスクリプトがデバイスから外部サーバーに機密データを流出します。
-
 **注 1:** Android バージョンに関係なく `setAllowContentAccess` はデフォルトで `true` になるため、`minSdkVersion` は考慮しません。
 
 **注 2:** プロバイダの `android:grantUriPermissions` 属性は、アプリ自体が自身のコンテンツプロバイダにアクセスする際には影響しないため、このシナリオでは無関係です。`permission` 属性や `android:exported="false"` などの制限が設定されている場合でも、**他のアプリ** がプロバイダから URI に一時的にアクセスできるようになります。また、アプリが `FileProvider` を使用する場合、[定義](https://developer.android.com/reference/androidx/core/content/FileProvider#:~:text=Set%20the%20android:grantUriPermissions%20attribute%20to%20true%2C%20to%20allow%20you%20to%20grant%20temporary%20access%20to%20files.%20) によって `android:grantUriPermissions` 属性が `true` に設定されていなければなりません (そうしないと `SecurityException: Provider must grant uri permissions"` が発生します)。
