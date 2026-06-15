@@ -74,6 +74,7 @@
 - [MASTG-TOOL-0149](tools/android/MASTG-TOOL-0149.md) LSPosed
 - [MASTG-TOOL-0151](tools/android/MASTG-TOOL-0151.md) debugmepLS
 - [MASTG-TOOL-0152](tools/android/MASTG-TOOL-0152.md) lldb (Android)
+- [MASTG-TOOL-0153](tools/android/MASTG-TOOL-0153.md) dProtect
 
 ## iOS
 
