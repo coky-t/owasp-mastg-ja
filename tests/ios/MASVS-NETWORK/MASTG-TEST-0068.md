@@ -8,6 +8,9 @@ title: カスタム証明書ストアおよび証明書ピン留めのテスト 
 masvs_v1_levels:
 - L2
 profiles: [L2]
+status: deprecated
+covered_by: [MASTG-TEST-0385]
+deprecation_note: "New version available in MASTG V2"
 ---
 
 ## 概要
