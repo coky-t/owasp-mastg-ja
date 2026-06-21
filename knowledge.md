@@ -103,6 +103,8 @@
 - [MASTG-KNOW-0010](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) 例外処理 (Exception Handling)
 <!--
 - [MASTG-KNOW-0117](knowledge/android/MASVS-CODE/MASTG-KNOW-0117.md) Android コンテンツプロバイダ (Android ContentProvider)
+- [MASTG-KNOW-0137](knowledge/android/MASVS-CODE/MASTG-KNOW-0137.md) Android 暗黙的インテント (Android Implicit Intents)
+- [MASTG-KNOW-0138](knowledge/android/MASVS-CODE/MASTG-KNOW-0138.md) Android インテント結果の URI スキーム (URI Schemes in Android Intent Results)
 -->
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
@@ -201,7 +203,10 @@
 - [MASTG-KNOW-0128](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0128.md) Bonjour (Bonjour)
 - [MASTG-KNOW-0129](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0129.md) アプリインテンツと AI エージェントの開示 (App Intents and AI Agent Exposure)
 - [MASTG-KNOW-0130](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0130.md) Core Bluetooth (Core Bluetooth)
+-->
 - [MASTG-KNOW-0131](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0131.md) Core NFC (Core NFC)
+<!--
+- [MASTG-KNOW-0139](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0139.md) WKContentWorld (WKContentWorld)
 -->
 
 ### MASVS-CODE: コード品質
@@ -222,5 +227,12 @@
 - [MASTG-KNOW-0086](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0086.md) ファイル完全性チェック (File Integrity Checks)
 - [MASTG-KNOW-0087](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0087.md) リバースエンジニアリングツール検出 (Reverse Engineering Tools Detection)
 - [MASTG-KNOW-0088](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) エミュレータ検出 (Emulator Detection)
+<!--
+- [MASTG-KNOW-0088](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) iOS シミュレータ検出 (iOS Simulator Detection)
+-->
 - [MASTG-KNOW-0089](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0089.md) 難読化 (Obfuscation)
 - [MASTG-KNOW-0090](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0090.md) デバイスバインディング (Device Binding)
+<!--
+- [MASTG-KNOW-0135](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0135.md) 仮想デバイス検出 (Virtual Devices Detection)
+- [MASTG-KNOW-0136](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0136.md) macOS 上で動作する iOS アプリの検出 (iOS Apps Running on macOS Detection)
+-->
