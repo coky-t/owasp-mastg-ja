@@ -85,6 +85,10 @@
 - [MASTG-TEST-0355](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0355.md) コンテンツプロバイダを通じた不正なデータベースアクセスへの参照 (References to Unauthorized Database Access through Content Providers)
 - [MASTG-TEST-0356](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0356.md) コンテンツプロバイダを通じた不正なデータベースアクセスの実行時検証 (Runtime Verification of Unauthorized Database Access through Content Providers)
 - [MASTG-TEST-0357](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0357.md) ファイルベースのコンテンツプロバイダのオーバーシェアリングへの参照 (References to Oversharing of File-Based Content Providers)
+- [MASTG-TEST-0364](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0364.md) 機密機能を露出するエクスポートおよび保護されていないアクティビティ (Exported And Unprotected Activities That Expose Sensitive Functionality)
+- [MASTG-TEST-0365](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0365.md) 機密機能を露出するエクスポートおよび保護されていないサービス (Exported And Unprotected Services That Expose Sensitive Functionality)
+- [MASTG-TEST-0366](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0366.md) 機密機能を露出するエクスポートおよび保護されていないブロードキャストレシーバ (Exported And Unprotected Broadcast Receivers That Expose Sensitive Functionality)
+- [MASTG-TEST-0381](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0381.md) 安全でない PendingIntent 作成への参照 (References to Insecure PendingIntent Creation)
 -->
 
 ### MASVS-CODE: コード品質
@@ -95,8 +99,15 @@
 - [MASTG-TEST-0272](tests-beta/android/MASVS-CODE/MASTG-TEST-0272.md) Android プロジェクトでの既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities in the Android Project)
 - [MASTG-TEST-0274](tests-beta/android/MASVS-CODE/MASTG-TEST-0274.md) アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)
 - [MASTG-TEST-0337](tests-beta/android/MASVS-CODE/MASTG-TEST-0337.md) 信頼できないデータのオブジェクトデシリアライゼーションへの参照 (References to Object Deserialization of Untrusted Data)
-- [MASTG-TEST-0338](tests-beta/android/MASVS-CODE/MASTG-TEST-0338.md) ローカルストレージデータの完全性と真正性のバリデーション (Integrity and Authenticity Validation of Local Storage Data)
 - [MASTG-TEST-0339](tests-beta/android/MASVS-CODE/MASTG-TEST-0339.md) コンテンツプロバイダでの SQL インジェクション (SQL Injection in Content Providers)
+<!--
+- [MASTG-TEST-0372](tests-beta/android/MASVS-CODE/MASTG-TEST-0372.md) アプリ内部通信に使用される暗黙的インテント (Implicit Intents Used for Internal App Communication)
+- [MASTG-TEST-0373](tests-beta/android/MASVS-CODE/MASTG-TEST-0373.md) 意図せずエクスポートされる内部コンポーネント (Internal Component Unintentionally Exported)
+- [MASTG-TEST-0374](tests-beta/android/MASVS-CODE/MASTG-TEST-0374.md) 機密性の高い追加情報をもたらす暗黙的インテントへの参照 (References to Implicit Intents Carrying Sensitive Extras)
+- [MASTG-TEST-0375](tests-beta/android/MASVS-CODE/MASTG-TEST-0375.md) 暗黙的インテントから返されるデータのバリデーションの欠如 (Missing Validation of Data Returned from Implicit Intents)
+- [MASTG-TEST-0381](tests-beta/android/MASVS-CODE/MASTG-TEST-0381.md) 強制更新 API への参照 (References to Enforced Updating APIs)
+- [MASTG-TEST-0382](tests-beta/android/MASVS-CODE/MASTG-TEST-0382.md) 強制更新 API への実行時使用 (Runtime Use of Enforced Updating APIs)
+-->
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
@@ -112,11 +123,16 @@
 - [MASTG-TEST-0288](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0288.md) ネイティブバイナリのデバッグシンボル (Debugging Symbols in Native Binaries)
 - [MASTG-TEST-0324](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0324.md) ルート検出メカニズムへの参照 (References to Root Detection Mechanisms)
 - [MASTG-TEST-0325](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0325.md) ルート検出技法の実行時使用 (Runtime Use of Root Detection Techniques)
+<!--
+- [MASTG-TEST-0338](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0338.md) ストレージ完全性チェック API への参照 (References to Storage Integrity Check APIs)
+-->
 - [MASTG-TEST-0341](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0341.md) フック検出技法の実行時使用 (Runtime Use of Hook Detection Techniques)
 <!--
 - [MASTG-TEST-0351](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0351.md) エミュレータ検出技法の実行時使用 (Runtime Use of Emulator Detection Techniques)
 - [MASTG-TEST-0352](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0352.md) デバッグ検出 API への参照 (References to Debugging Detection APIs)
 - [MASTG-TEST-0353](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0353.md) デバッグ検出 API の実行時使用 (Runtime Use of Debugging Detection APIs)
+- [MASTG-TEST-0368](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0368.md) セキュリティ関連の Java/Kotlin コードの不十分な難読化 (Insufficient Obfuscation of Security-Relevant Java/Kotlin Code)
+- [MASTG-TEST-0369](tests-beta/android/MASVS-RESILIENCE/MASTG-TEST-0369.md) セキュリティ関連のネイティブコードの不十分な難読化 (Insufficient Obfuscation of Security-Relevant Native Code)
 -->
 
 ### MASVS-PRIVACY: プライバシー
@@ -178,6 +194,7 @@
 - [MASTG-TEST-0344](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0344.md) Network.framework TLS プロトコル構成 (Network.framework TLS Protocol Configuration)
 - [MASTG-TEST-0345](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0345.md) 組み込みまたはサードパーティ TLS スタック構成 (Embedded or Third-party TLS Stack Configuration)
 - [MASTG-TEST-0348](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0348.md) ネットワークトラフィックの安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
+- [MASTG-TEST-0385](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0385.md) ATS での証明書ピン留めの欠如 (Missing Certificate Pinning in ATS)
 -->
 
 ### MASVS-PLATFORM: プラットフォーム連携
@@ -197,6 +214,15 @@
 - [MASTG-TEST-0346](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0346.md) テキスト入力フィールドの機密データを隠す API への参照 (References to APIs Hiding Sensitive Data in Text Input Fields)
 -->
 - [MASTG-TEST-0347](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0347.md) テキスト入力フィールドの機密データを隠す API の実行時使用 (Runtime Use of APIs Hiding Sensitive Data in Text Input Fields)
+<!--
+- [MASTG-TEST-0370](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0370.md) カスタム URL スキームハンドラでの入力バリデーションの欠如 (Missing Input Validation in Custom URL Scheme Handlers)
+- [MASTG-TEST-0371](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0371.md) カスタム URL スキームハンドラでのソースバリデーションの欠如 (Missing Source Validation in Custom URL Scheme Handlers)
+- [MASTG-TEST-0376](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0376.md) WebView でのネイティブブリッジ API への参照 (References to Native Bridge APIs in WebViews)
+- [MASTG-TEST-0377](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0377.md) `WKScriptMessageHandler` でブリッジリプライとして使用される `evaluateJavaScript` への参照 (References to `evaluateJavaScript` Used as Bridge Reply in `WKScriptMessageHandler`)
+- [MASTG-TEST-0378](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0378.md) WebView でロードされた HTML でのパスワードフィールドへの参照 (References to Password Fields in WebView-Loaded HTML)
+- [MASTG-TEST-0379](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0379.md) コンテンツワールド分離なしでの `evaluateJavaScript` への参照 (References to `evaluateJavaScript` Without Content World Isolation)
+- [MASTG-TEST-0380](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0380.md) WebView DOM 内に機密データを書き込む `evaluateJavaScript` への参照 (References to `evaluateJavaScript` Writing Sensitive Data into WebView DOM)
+-->
 
 ### MASVS-CODE: コード品質
 
@@ -205,6 +231,11 @@
 - [MASTG-TEST-0230](tests-beta/ios/MASVS-CODE/MASTG-TEST-0230.md) 自動参照カウント (ARC) が有効でない (Automatic Reference Counting (ARC) not enabled)
 - [MASTG-TEST-0273](tests-beta/ios/MASVS-CODE/MASTG-TEST-0273.md) 依存関係マネージャのアーティファクトをスキャンして既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities by Scanning Dependency Managers Artifacts)
 - [MASTG-TEST-0275](tests-beta/ios/MASVS-CODE/MASTG-TEST-0275.md) アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)
+<!--
+- [MASTG-TEST-0383](tests-beta/ios/MASVS-CODE/MASTG-TEST-0383.md) 強制更新 API への参照 (References to Enforced Updating APIs)
+- [MASTG-TEST-0384](tests-beta/ios/MASVS-CODE/MASTG-TEST-0384.md) 強制更新 API の実行時使用 (Runtime Use of Enforced Updating APIs)
+- [MASTG-TEST-0386](tests-beta/ios/MASVS-CODE/MASTG-TEST-0386.md) 信頼できないデータのオブジェクトデシリアライゼーションへの参照 (References to Object Deserialization of Untrusted Data)
+-->
 
 ### MASVS-RESILIENCE: リバースエンジニアリングと改竄に対する耐性
 
@@ -219,8 +250,16 @@
 - [MASTG-TEST-0354](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0354.md) フック検出技法の実行時使用 (Runtime Use of Hook Detection Techniques)
 - [MASTG-TEST-0358](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0358.md) ログ記録 API を通じた実装詳細の露出 (Implementation Details Exposure Through Logging APIs)
 - [MASTG-TEST-0359](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0359.md) ログ内の実装詳細の露出 (Implementation Details Exposure in Logs)
+- [MASTG-TEST-0367](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0367.md) 仮想デバイス検出技法の実行時使用 (Runtime Use of Virtual Device Detection Techniques)
+- [MASTG-TEST-0x01](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0x01.md) ストレージ完全性チェック API への参照 (References to Storage Integrity Check APIs)
 -->
 
 ### MASVS-PRIVACY: プライバシー
 
 - [MASTG-TEST-0281](tests-beta/ios/MASVS-PRIVACY/MASTG-TEST-0281.md) 未宣言の既知のトラッキングドメイン (Undeclared Known Tracking Domains)
+<!--
+- [MASTG-TEST-0360](tests-beta/ios/MASVS-PRIVACY/MASTG-TEST-0360.md) 到達可能な保護されたリソースへのアクセスのための目的文字列の的確さ (Purpose String Accuracy for Reachable Protected Resource Access)
+- [MASTG-TEST-0361](tests-beta/ios/MASVS-PRIVACY/MASTG-TEST-0361.md) 的確な目的文字列なしでの保護されたリソース API の実行時使用 (Runtime Use of Protected Resource APIs Without Accurate Purpose Strings)
+- [MASTG-TEST-0362](tests-beta/ios/MASVS-PRIVACY/MASTG-TEST-0362.md) 不当なケイパビリティ暴露に対するエンタイトルメント (Entitlements for Unjustified Capability Exposure)
+- [MASTG-TEST-0363](tests-beta/ios/MASVS-PRIVACY/MASTG-TEST-0363.md) 不当なケイパビリティ暴露に対するエンタイトルメント支援の API の実行時使用 (Runtime Use of Entitlement-Backed APIs for Unjustified Capability Exposure)
+-->
