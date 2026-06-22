@@ -9,6 +9,9 @@ title: ファイル完全性チェックのテスト (Testing File Integrity Che
 masvs_v1_levels:
 - R
 profiles: [R]
+status: deprecated
+covered_by: [MASTG-TEST-0x01]
+deprecation_note: New version available in MASTG V2
 ---
 
 ## 概要
