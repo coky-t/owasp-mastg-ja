@@ -84,6 +84,9 @@
 - [MASTG-KNOW-0024](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0024.md) ペンディングインテント (Pending Intents)
 -->
 - [MASTG-KNOW-0025](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) 暗黙的インテント (Implicit Intents)
+<!--
+- [MASTG-KNOW-0025](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0025.md) 明示的インテントと暗黙的インテント (Explicit vs Implicit Intents)
+-->
 - [MASTG-KNOW-0105](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0105.md) ユーザーによるスクリーンショットとスクリーン録画 (User-Initiated Screenshots and Screen Recording)
 - [MASTG-KNOW-0106](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0106.md) アプリによるスクリーンショットとスクリーン録画 (App-Initiated Screenshots and Screen Recording)
 - [MASTG-KNOW-0107](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0107.md) スクリーンショットとスクリーン録画の検出 (Screenshots and Screen Recording Detection)
@@ -103,7 +106,6 @@
 - [MASTG-KNOW-0010](knowledge/android/MASVS-CODE/MASTG-KNOW-0010.md) 例外処理 (Exception Handling)
 <!--
 - [MASTG-KNOW-0117](knowledge/android/MASVS-CODE/MASTG-KNOW-0117.md) Android コンテンツプロバイダ (Android ContentProvider)
-- [MASTG-KNOW-0137](knowledge/android/MASVS-CODE/MASTG-KNOW-0137.md) Android 暗黙的インテント (Android Implicit Intents)
 - [MASTG-KNOW-0138](knowledge/android/MASVS-CODE/MASTG-KNOW-0138.md) Android インテント結果の URI スキーム (URI Schemes in Android Intent Results)
 -->
 
@@ -208,6 +210,7 @@
 <!--
 - [MASTG-KNOW-0139](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0139.md) WKContentWorld (WKContentWorld)
 -->
+- [MASTG-KNOW-0141](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0141.md) カスタムキーボード (Custom Keyboards)
 
 ### MASVS-CODE: コード品質
 
@@ -225,6 +228,9 @@
 - [MASTG-KNOW-0084](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0084.md) 脱獄検出 (Jailbreak Detection)
 - [MASTG-KNOW-0085](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0085.md) アンチデバッグ検出 (Anti-Debugging Detection)
 - [MASTG-KNOW-0086](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0086.md) ファイル完全性チェック (File Integrity Checks)
+<!--
+- [MASTG-KNOW-0086](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0086.md) ストレージ完全性チェック (Storage Integrity Checks)
+-->
 - [MASTG-KNOW-0087](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0087.md) リバースエンジニアリングツール検出 (Reverse Engineering Tools Detection)
 - [MASTG-KNOW-0088](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0088.md) エミュレータ検出 (Emulator Detection)
 <!--
@@ -235,4 +241,5 @@
 <!--
 - [MASTG-KNOW-0135](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0135.md) 仮想デバイス検出 (Virtual Devices Detection)
 - [MASTG-KNOW-0136](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0136.md) macOS 上で動作する iOS アプリの検出 (iOS Apps Running on macOS Detection)
+- [MASTG-KNOW-0140](knowledge/ios/MASVS-RESILIENCE/MASTG-KNOW-0140.md) ソースコード完全性チェック (Source Code Integrity Checks)
 -->
