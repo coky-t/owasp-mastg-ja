@@ -4,19 +4,17 @@ platform: android
 source: https://developer.android.com/tools/releases/platform-tools
 ---
 
-# MASTG-TOOL-0006 Android SDK
-
 ローカル Android SDK のインストールは Android Studio を介して管理されます。Android Studio で空のプロジェクトを作成し、**Tools** -> **SDK Manager** を選択して SDK Manager GUI を開きます。**SDK Platforms** タブで複数の API レベルの SDK をインストールします。最近の API レベルは以下のとおりです。
 
-* Android 11.0 (API レベル 30)
-* Android 10.0 (API レベル 29)
-* Android 9.0 (API レベル 28)
-* Android 8.1 (API レベル 27)
-* Android 8.0 (API レベル 26)
+- Android 11.0 (API レベル 30)
+- Android 10.0 (API レベル 29)
+- Android 9.0 (API レベル 28)
+- Android 8.1 (API レベル 27)
+- Android 8.0 (API レベル 26)
 
-すべての Android コードネーム、そのバージョン番号、API レベルの概要は [Android 開発者向けドキュメント](https://source.android.com/setup/start/build-numbers) にあります。
+すべての Android コードネーム、そのバージョン番号、API レベルの概要は [Android 開発者向けドキュメント](https://source.android.com/setup/start/build-numbers "Codenames, Tags, and Build Numbers") にあります。
 
-![](../../.gitbook/assets/sdk_manager.jpg)
+<img src="../../Document/Images/Chapters/0x05c/sdk_manager.jpg" width="100%" />
 
 インストールされた SDK は以下のパスにあります。
 

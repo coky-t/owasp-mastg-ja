@@ -4,17 +4,15 @@ platform: android
 source: https://github.com/radare/radare2
 ---
 
-# MASTG-TOOL-0028 radare2 for Android
-
 radare2 (r2) は、バイナリの逆アセンブル、デバッグ、パッチ適用、解析のための人気のあるオープンソースリバースエンジニアリングフレームワークであり、スクリプト化可能で、Android や iOS アプリを含む多くのアーキテクチャとファイル形式をサポートしています。Android では、Dalvik DEX (odex, multidex)、ELF (実行可能ファイル、.so、ART)、Java (JNI および Java クラス) がサポートされています。また、従来のツールが機能しない場合に役立つ、低レベルの逆アセンブルと安全な静的解析を提供するため、モバイルアプリケーション解析時に役立つ便利なスクリプトもいくつか含みます。
 
-radare2 は前述のタスクを実行できる豊富なコマンドラインインタフェース (CLI) を実装しています。しかし、リバースエンジニアリングに CLI を使うことにあまり慣れていない場合は、Web UI (`-H` フラグを使用) や、[iaito](https://github.com/radareorg/iaito) と呼ばれるさらに便利な Qt および C++ GUI バージョンを使用することを検討するとよいかもしれません。CLI や、より具体的にはそのビジュアルモードやそのスクリプティング機能 ([r2pipe](https://github.com/radare/radare2-r2pipe)) が radare2 のパワーの中核であり、その使い方を学ぶ価値が間違いなくあることを心に留めてください。
+radare2 は前述のタスクを実行できる豊富なコマンドラインインタフェース (CLI) を実装しています。しかし、リバースエンジニアリングに CLI を使うことにあまり慣れていない場合は、Web UI (`-H` フラグを使用) や、[iaito](https://github.com/radareorg/iaito "iaito") と呼ばれるさらに便利な Qt および C++ GUI バージョンを使用することを検討するとよいかもしれません。CLI や、より具体的にはそのビジュアルモードやそのスクリプティング機能 ([r2pipe](https://github.com/radare/radare2-r2pipe "r2pipe")) が radare2 のパワーの中核であり、その使い方を学ぶ価値が間違いなくあることを心に留めてください。
 
-### radare2 のインストール
+## radare2 のインストール
 
-[radare2 の公式インストール手順](https://github.com/radare/radare2/blob/master/README.md) を参照してください。radare2 は APT などの一般的なパッケージマネージャではなく、常に GibHub バージョンからインストールすることを強くお勧めします。radare2 は非常に活発に開発されているため、サードパーティのリポジトリは古くなっていることがよくあります。
+[radare2 の公式インストール手順](https://github.com/radare/radare2/blob/master/README.md "radare2 installation instructions") を参照してください。radare2 は APT などの一般的なパッケージマネージャではなく、常に GibHub バージョンからインストールすることを強くお勧めします。radare2 は非常に活発に開発されているため、サードパーティのリポジトリは古くなっていることがよくあります。
 
-### radare2 の使用
+## radare2 の使用
 
 radare2 フレームワークは一連の小さなユーティリティで構成され、r2 シェルから使用したり、CLI ツールとして単独で使用できます。これらのユーティリティには `rabin2`、`rasm2`、`rahash2`、`radiff2`、`rafind2`、`ragg2`、`rarun2`、`rax2`、そしてもちろんメインの `r2` を含みます。
 
@@ -33,7 +31,7 @@ $ rafind2 -ZS service AndroidManifest.xml
 $ rafind2 -ZS receiver AndroidManifest.xml
 ```
 
-また、[rabin2](../generic/MASTG-TOOL-0129.md) を使用して、バイナリファイルに関する情報を取得します。
+また、[rabin2](../../tools/generic/MASTG-TOOL-0129.md) を使用して、バイナリファイルに関する情報を取得します。
 
 メインの `r2` ユーティリティを使用して **r2 シェル** にアクセスします。他のバイナリと同様に DEX バイナリをロードできます。
 
@@ -41,7 +39,7 @@ $ rafind2 -ZS receiver AndroidManifest.xml
 r2 classes.dex
 ```
 
-`r2 -h` を入力して、利用な可能なすべてのオプションを表示します。非常によく使用されるフラグは `-A` で、ターゲットバイナリをロードした後に解析をトリガーします。しかし、これは非常に時間とリソースを消費するため、小さなバイナリで控えめに使用すべきです。この詳細については [ネイティブコードの逆アセンブル (Disassembling Native Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0018.md) をご覧ください。
+`r2 -h` を入力して、利用な可能なすべてのオプションを表示します。非常によく使用されるフラグは `-A` で、ターゲットバイナリをロードした後に解析をトリガーします。しかし、これは非常に時間とリソースを消費するため、小さなバイナリで控えめに使用すべきです。この詳細については [ネイティブコードの逆アセンブル (Disassembling Native Code)](../../techniques/android/MASTG-TECH-0018.md) をご覧ください。
 
 r2 シェルに入ると、他の radare2 ユーティリティが提供する機能にもアクセスできます。たとえば、`i` を実行すると、`rabin2 -I` と同様にバイナリの情報を出力します。
 
@@ -154,20 +152,20 @@ verify_Landroid_view_View__V
 
 r2 コマンドは通常、オプションを受け入れます (`pd?` を参照)。たとえば、数字 ("N") を追加してコマンド `pd N` にすることで、表示されるオペコードを制限できます。
 
-![](../../.gitbook/assets/r2_pd_10.png)
+<img src="../../Document/Images/Chapters/0x05b/r2_pd_10.png" width="100%" />
 
 コンソールに逆アセンブリを出力するだけでなく、`V` をタイプして、いわゆる **ビジュアルモード** に入りたいかもしれません。
 
-![](../../.gitbook/assets/r2_visualmode_hex.png)
+<img src="../../Document/Images/Chapters/0x05b/r2_visualmode_hex.png" width="100%" />
 
 デフォルトでは、16進表記で出力します。`p` をタイプすることで、逆アセンブリ表記など、さまざまな表記に切り替えることができます。
 
-![](../../.gitbook/assets/r2_visualmode_disass.png)
+<img src="../../Document/Images/Chapters/0x05b/r2_visualmode_disass.png" width="100%" />
 
 radare2 には **グラフモード** があり、コードのフローを追うのに非常に役立ちます。ビジュアルモードから `V` をタイプすることでアクセスできます。
 
-![](../../.gitbook/assets/r2_graphmode.png)
+<img src="../../Document/Images/Chapters/0x05b/r2_graphmode.png" width="100%" />
 
 これは Android バイナリから一部の基本的な情報を取得し始めるための radare2 コマンドの一部にすぎません。radare2 は非常に強力で、[radare2 コマンドドキュメント](https://book.rada.re/first_steps/commandline_flags.html) で見つかる多数のコマンドがあります。radare2 は、コードのリバース、デバッグ、バイナリ解析の実行など、さまざまな目的でガイド全体を通して使用されます。また、他のフレームワーク、特に Frida と組み合わせて使用することもあります (詳細については r2frida セクションを参照してください)。
 
-Android での radare2 の詳しい使い方、特にネイティブライブラリを解析する際には、[ネイティブコードの逆アセンブル (Disassembling Native Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0018.md) を参照してください。また [公式の radare2 ブック](https://book.rada.re/) も読みたいと思うかもしれません。
+Android での radare2 の詳しい使い方、特にネイティブライブラリを解析する際には、[ネイティブコードの逆アセンブル (Disassembling Native Code)](../../techniques/android/MASTG-TECH-0018.md) を参照してください。また [公式の radare2 ブック](https://book.rada.re/ "Radare2 book") も読みたいと思うかもしれません。
