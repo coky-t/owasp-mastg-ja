@@ -1,21 +1,13 @@
 ---
 platform: android
-title: >-
-  テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text
-  Input Fields)
+title: テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 id: MASTG-TEST-0316
-type:
-  - static
-  - code
-  - manual
+type: [static, code, manual]
 weakness: MASWE-0053
-profiles:
-  - L2
+profiles: [L2]
 ---
 
-# MASTG-TEST-0316 テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
-
-### 概要
+## 概要
 
 このテストは、アプリがユーザー入力を正しく処理することを検証し、アクセスコード (パスワードまたは PIN) と検証コード (OTP) がテキスト入力フィールド内にプレーンテキストで露出されていないことを確認します。
 
@@ -40,27 +32,28 @@ SecureTextField(
 )
 ```
 
-> \[!NOTE] `SecureTextField` がデフォルトの `TextObfuscationMode.RevealLastTyped` を使用している場合や、明示的に `RevealLastTyped` または `Hidden` を設定している場合でも、後でプログラムによって `Visible` に変更できます。
+> [!NOTE]
+> `SecureTextField` がデフォルトの `TextObfuscationMode.RevealLastTyped` を使用している場合や、明示的に `RevealLastTyped` または `Hidden` を設定している場合でも、後でプログラムによって `Visible` に変更できます。
 
-### 手順
+## 手順
 
 1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
 2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
-### 結果
+## 結果
 
 出力にはアクセスコードまたは検証コードのテキスト入力フィールドが使用される場所のリストを含む可能性があります。
 
-### 評価
+## 評価
 
 アクセスコードまたは検証コードに使用されるテキスト入力フィールドがマスクされていないことが判明した場合、このテストケースは不合格です。たとえば、以下の理由が考えられます。
 
-* `TextField` が使用されている
-* `SecureTextField` が使用されているが、`TextObfuscationMode.Visible` が設定されている
+- `TextField` が使用されている
+- `SecureTextField` が使用されているが、`TextObfuscationMode.Visible` が設定されている
 
 **さらなるバリデーションが必要となります:**
 
-アクセスコードや検証コードを扱うフィールドは状況によって異なるため、[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、そのフィールドが機密データを扱っているかどうか、および適切にマスクされているかどうかを判断します。
+アクセスコードや検証コードを扱うフィールドは状況によって異なるため、[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、そのフィールドが機密データを扱っているかどうか、および適切にマスクされているかどうかを判断します。
 
 **予想される検出漏れ:**
 
