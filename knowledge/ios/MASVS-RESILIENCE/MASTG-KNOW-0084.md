@@ -4,13 +4,11 @@ platform: ios
 title: 脱獄検出 (Jailbreak Detection)
 ---
 
-# MASTG-KNOW-0084
-
 脱獄検出メカニズムがリバースエンジニアリング防御に追加されると、脱獄済みデバイス上でのアプリ実行がより困難になります。これによりリバースエンジニアが使用したいツールや技法の一部がブロックされます。他のほとんどの種類の防御の場合と同様に、脱獄検出自体はあまり効果的ではありませんが、アプリのソースコード全体にチェックを分散されることで改竄防止スキーム全体の有効性を向上させることができます。
 
-> 脱獄検出やルート検出についての詳細は Dana Geist と Marat Nigmatullin による調査研究 ["Jailbreak/Root Detection Evasion Study on iOS and Android"](https://github.com/crazykid95/Backup-Mobile-Security-Report/blob/master/Jailbreak-Root-Detection-Evasion-Study-on-iOS-and-Android.pdf) を参照してください。
+> 脱獄検出やルート検出についての詳細は Dana Geist と Marat Nigmatullin による調査研究 ["Jailbreak/Root Detection Evasion Study on iOS and Android"](https://github.com/crazykid95/Backup-Mobile-Security-Report/blob/master/Jailbreak-Root-Detection-Evasion-Study-on-iOS-and-Android.pdf "Jailbreak/Root Detection Evasion Study on iOS and Android") を参照してください。
 
-### 一般的な脱獄検出チェック
+## 一般的な脱獄検出チェック
 
 ここでは三つの典型的な脱獄検出技法を紹介します。
 
@@ -82,6 +80,6 @@ if let url = URL(string: "cydia://package/com.example.package"), UIApplication.s
 }
 ```
 
-### 脱獄検出のバイパス
+## 脱獄検出のバイパス
 
-その存在の検出だけでなく、これらのチェックは動的計装ツールや手動リバースエンジニアリングを使用して回避できることが多くあります。[脱獄検出のバイパス (Bypassing Jailbreak Detection)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0152.md) では脱獄検出の実装を特定してバイパスするために使用される技法を説明しています。
+その存在の検出だけでなく、これらのチェックは動的計装ツールや手動リバースエンジニアリングを使用して回避できることが多くあります。[脱獄検出のバイパス (Bypassing Jailbreak Detection)](../../../techniques/ios/MASTG-TECH-0152.md) では脱獄検出の実装を特定してバイパスするために使用される技法を説明しています。
