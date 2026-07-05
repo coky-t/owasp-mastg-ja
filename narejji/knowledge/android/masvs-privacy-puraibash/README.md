@@ -1,2 +1,0 @@
-# MASVS-PRIVACY: プライバシー
-
