@@ -2,40 +2,32 @@
 title: 不備のある対称暗号モードの実行時使用 (Runtime Use of Broken Symmetric Encryption Modes)
 platform: android
 id: MASTG-TEST-0350
-type:
-  - dynamic
-  - hooks
-  - manual
+type: [dynamic, hooks, manual]
 weakness: MASWE-0020
-best-practices:
-  - MASTG-BEST-0005
-profiles:
-  - L1
-  - L2
+best-practices: [MASTG-BEST-0005]
+profiles: [L1, L2]
 ---
 
-# MASTG-TEST-0350 不備のある対称暗号モードの実行時使用 (Runtime Use of Broken Symmetric Encryption Modes)
-
-### 概要
+## 概要
 
 アプリが実行時に暗号操作を不備のある暗号モードに構成した場合、機密データはパターンリークやその他の暗号上の脆弱性にさらされる可能性があります。このテストは、実行中のアプリがセキュリティに関わる暗号フローにおいて、ECB などの安全でないブロックモードを設定しているかどうかをチェックします。
 
-### 手順
+## 手順
 
-1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
-2. [メソッドフック (Method Hooking)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
 3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
-### 結果
+## 結果
 
 出力には、変換文字列引数や各呼び出しのバックトレースを含む、暗号構成 API の呼び出しの一覧を含む可能性があります。
 
-### 評価
+## 評価
 
 不備のある暗号モードがセキュリティ関連の暗号操作に使用されている場合、そのテストケースは不合格です。
 
-**さらなるバリデーションが必要となります:**
+ **さらなるバリデーションが必要となります:**
 
-フック出力からのバックトレースを使用して、[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0023.md) を使用してコード箇所を検査し、暗号化が以下のような機密データに適用されているかどうかを判断します。
+フック出力からのバックトレースを使用して、[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用してコード箇所を検査し、暗号化が以下のような機密データに適用されているかどうかを判断します。
 
-* 暗号化または復号化されているデータが機密 (個人データ、認証トークン、暗号鍵、セッション識別子など) であるかどうかを判断します。
+- 暗号化または復号化されているデータが機密 (個人データ、認証トークン、暗号鍵、セッション識別子など) であるかどうかを判断します。
