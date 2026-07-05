@@ -1,23 +1,14 @@
 ---
-title: >-
-  Network Security Configuration での証明書ピン留めの期限切れ (Expired Certificate Pins in the
-  Network Security Configuration)
+title: Network Security Configuration での証明書ピン留めの期限切れ (Expired Certificate Pins in the Network Security Configuration)
 platform: android
 id: MASTG-TEST-0243
-type:
-  - static
-  - code
+type: [static, code]
 weakness: MASWE-0047
-profiles:
-  - L2
-knowledge:
-  - MASTG-KNOW-0014
-  - MASTG-KNOW-0015
+profiles: [L2]
+knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
 ---
 
-# MASTG-TEST-0243 Network Security Configuration での証明書ピン留めの期限切れ (Expired Certificate Pins in the Network Security Configuration)
-
-### 概要
+## 概要
 
 アプリは Network Security Configuration (NSC) ([Android Network Security Configuration](../../../knowledge/android/MASVS-NETWORK/MASTG-KNOW-0014.md)) で `expiration` 属性を使用して、ピン留めされた証明書の有効期限を設定できます。ピンが期限切れになると、アプリは証明書のピン留めを強制しなくなり、代わりに構成されたトラストアンカーに依存します。つまり、サーバーが信頼できる CA (システム CA やアプリの構成で定義されたカスタム CA など) からの有効な証明書を提示した場合、接続は成功します。しかし、信頼できる証明書が利用できない場合、接続は失敗します。
 
@@ -27,17 +18,17 @@ knowledge:
 
 このテストの目的は、有効期限が過ぎていないかどうかをチェックすることです。
 
-### 手順
+## 手順
 
 1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
 2. [AndroidManifest から情報の取得 (Obtaining Information from the AndroidManifest)](../../../techniques/android/MASTG-TECH-0117.md) を使用して、AndroidManifest.xml を取得します。
-3. [AndroidManifest の解析 (Analyzing the AndroidManifest)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0150.md) を使用して、`<application>` タグに `android:networkSecurityConfig` が設定されているかどうかをチェックします。
-4. [Network Security Configuration の解析 (Analyzing the Network Security Configuration)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0151.md) を使用して、Network Security Configuration ファイルからすべての証明書ピンの有効期限を抽出します。
+3. [AndroidManifest の解析 (Analyzing the AndroidManifest)](../../../techniques/android/MASTG-TECH-0150.md) を使用して、`<application>` タグに `android:networkSecurityConfig` が設定されているかどうかをチェックします。
+4. [Network Security Configuration の解析 (Analyzing the Network Security Configuration)](../../../techniques/android/MASTG-TECH-0151.md) を使用して、Network Security Configuration ファイルからすべての証明書ピンの有効期限を抽出します。
 
-### 結果
+## 結果
 
 出力にはピン留めされた証明書の有効期限のリストを含む可能性があります。
 
-### 評価
+## 評価
 
 いずれかの有効期限が過ぎている場合、そのテストケースは不合格です。

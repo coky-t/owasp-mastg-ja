@@ -2,48 +2,39 @@
 title: 安全でないカスタムトラスト評価 (Unsafe Custom Trust Evaluation)
 platform: android
 id: MASTG-TEST-0282
-type:
-  - static
-  - code
-  - manual
+type: [static, code, manual]
 weakness: MASWE-0052
-best-practices:
-  - MASTG-BEST-0021
-profiles:
-  - L1
-  - L2
-knowledge:
-  - MASTG-KNOW-0010
+best-practices: [MASTG-BEST-0021]
+profiles: [L1, L2]
+knowledge: [MASTG-KNOW-0010]
 ---
 
-# MASTG-TEST-0282 安全でないカスタムトラスト評価 (Unsafe Custom Trust Evaluation)
+## 概要
 
-### 概要
-
-このテストは、Android アプリがカスタム `TrustManager` の一部として [`checkServerTrusted(...)`](https://developer.android.com/reference/javax/net/ssl/X509TrustManager#checkServerTrusted%28java.security.cert.X509Certificate\[],%20java.lang.String%29) を [安全でない方法で](https://developer.android.com/privacy-and-security/risks/unsafe-trustmanager) 使用し、その `TrustManager` を使用するように構成された接続で証明書バリデーションをスキップするかどうかを評価します。
+このテストは、Android アプリがカスタム `TrustManager` の一部として [`checkServerTrusted(...)`](https://developer.android.com/reference/javax/net/ssl/X509TrustManager#checkServerTrusted%28java.security.cert.X509Certificate[],%20java.lang.String%29) を [安全でない方法で](https://developer.android.com/privacy-and-security/risks/unsafe-trustmanager) 使用し、その `TrustManager` を使用するように構成された接続で証明書バリデーションをスキップするかどうかを評価します。
 
 このような安全でない実装は、攻撃者が有効な (または自己署名された) 証明書で [MITM 攻撃](../../../Document/0x04f-Testing-Network-Communication.md#intercepting-network-traffic-through-mitm) を実行し、アプリのトラフィックを傍受または改竄することを可能にします。
 
-### 手順
+## 手順
 
 1. [Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)](../../../techniques/android/MASTG-TECH-0013.md) を使用して、アプリをリバースエンジニアします。
 2. [Android での静的解析 (Static Analysis on Android)](../../../techniques/android/MASTG-TECH-0014.md) を使用して、関連する API を探します。
 
-### 結果
+## 結果
 
 出力には `checkServerTrusted(...)` が使用されている場所のリストを含む可能性があります。
 
-### 評価
+## 評価
 
 `checkServerTrusted(...)` がカスタム `X509TrustManager` に実装されており、サーバー証明書を正しく検証 **しない** 場合、そのテストケースは不合格です。
 
 **さらなるバリデーションが必要となります:**
 
-[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、以下のようなケースを探します。
+[逆コンパイルされた Java コードのレビュー (Reviewing Decompiled Java Code)](../../../techniques/android/MASTG-TECH-0023.md) を使用して、報告された各コード箇所を検査し、以下のようなケースを探します。
 
-* NSC で十分であるのに、エラーが発生しやすい **`checkServerTrusted(...)` を使用すること**。
-* **何もしないトラストマネージャ:** `checkServerTrusted(...)` をオーバーライドして、たとえば証明書チェーンを検証せずにすぐに返したり、常に `true` を返すことで、バリデーションなしですべての証明書を受け入れます。
-* **エラーを無視すること:** バリデーションの失敗時に [適切な例外をスロー](https://support.google.com/faqs/answer/6346016) (例: [`CertificateException`](https://developer.android.com/reference/java/security/cert/CertificateException.html) や [`IllegalArgumentException`](https://developer.android.com/reference/java/lang/IllegalArgumentException)) することに失敗するか、それらをキャッチして抑制しています。
-* **完全なバリデーションの代わりに** [**`checkValidity()`**](https://developer.android.com/reference/java/security/cert/X509Certificate#checkValidity\(\)) **を使用すること:** `checkValidity()` のみに依存すると、証明書が有効期限切れか、まだ有効でないかをチェックしますが、トラストやホスト名の一致は検証 **しません**。
-* **明示的にトラストを緩めること:** 開発時やテスト時の利便性のために、トラストチェックを無効にして、自己署名証明書や信頼されていない証明書を受け入れます。
-* [**`getAcceptedIssuers()`**](https://developer.android.com/reference/javax/net/ssl/X509TrustManager#getAcceptedIssuers\(\)) **の誤用**: 適切な処理を行わずに `null` または空の配列を返すと、発行者バリデーションを事実上無効になる可能性があります。
+- NSC で十分であるのに、エラーが発生しやすい **`checkServerTrusted(...)` を使用すること**。
+- **何もしないトラストマネージャ:** `checkServerTrusted(...)` をオーバーライドして、たとえば証明書チェーンを検証せずにすぐに返したり、常に `true` を返すことで、バリデーションなしですべての証明書を受け入れます。
+- **エラーを無視すること:** バリデーションの失敗時に [適切な例外をスロー](https://support.google.com/faqs/answer/6346016) (例: [`CertificateException`](https://developer.android.com/reference/java/security/cert/CertificateException.html) や [`IllegalArgumentException`](https://developer.android.com/reference/java/lang/IllegalArgumentException)) することに失敗するか、それらをキャッチして抑制しています。
+- **完全なバリデーションの代わりに [`checkValidity()`](https://developer.android.com/reference/java/security/cert/X509Certificate#checkValidity()) を使用すること:** `checkValidity()` のみに依存すると、証明書が有効期限切れか、まだ有効でないかをチェックしますが、トラストやホスト名の一致は検証 **しません**。
+- **明示的にトラストを緩めること:** 開発時やテスト時の利便性のために、トラストチェックを無効にして、自己署名証明書や信頼されていない証明書を受け入れます。
+- **[`getAcceptedIssuers()`](https://developer.android.com/reference/javax/net/ssl/X509TrustManager#getAcceptedIssuers()) の誤用**: 適切な処理を行わずに `null` または空の配列を返すと、発行者バリデーションを事実上無効になる可能性があります。
