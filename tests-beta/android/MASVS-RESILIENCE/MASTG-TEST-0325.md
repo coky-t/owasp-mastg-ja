@@ -2,22 +2,14 @@
 platform: android
 title: ルート検出技法の実行時使用 (Runtime Use of Root Detection Techniques)
 id: MASTG-TEST-0325
-type:
-  - dynamic
-  - hooks
+type: [dynamic, hooks]
 weakness: MASWE-0097
-best-practices:
-  - MASTG-BEST-0029
-  - MASTG-BEST-0030
-profiles:
-  - R
-knowledge:
-  - MASTG-KNOW-0027
+best-practices: [MASTG-BEST-0029, MASTG-BEST-0030]
+profiles: [R]
+knowledge: [MASTG-KNOW-0027]
 ---
 
-# MASTG-TEST-0325 ルート検出技法の実行時使用 (Runtime Use of Root Detection Techniques)
-
-### 概要
+## 概要
 
 このテストは、よくあるルート検出メカニズムへのフックを試行することで、アプリが実行時ルート検出を実装しているかどうかを検証します。これらは、ルート化デバイスに通常関連付けられるファイルやアーティファクトのチェック、既知のルート検出 API やライブラリへの呼び出しを含むことがあります。
 
@@ -27,23 +19,24 @@ knowledge:
 
 テスト時にルート検出メカニズムがトリガーされるように、ルート化デバイスまたはエミュレータを使用してこのテストを実行することをお勧めします。但し、ルート化されていないデバイスであっても、アプリがルートアクセスを必要としないチェック (たとえば、ルート関連ファイルやシステムプロパティの存在のチェック) を実行する場合、このテストは依然としてルート検出ロジックを表面化できます。
 
-> \[!NOTE] "スコープ外"\
+> [!NOTE]
+> "スコープ外"  
 > このテストはルート検出メカニズムの堅牢性や有効性はカバーしていません。自動テストのみで評価するのは非常に困難であり、手作業でのリバースエンジニアリングやカスタム計装を必要とすることがあります。ルート検出を効果的に実装するためのベストプラクティスについては [ルート検出を実装する (Implementing Root Detection)](../../../best-practices/MASTG-BEST-0030.md) を参照してください。
 
-このテストでは、一般的なルート検出 API にフックし、関連するシステムコールをトレースすることで、実行時にルート検出メカニズムの存在を特定するアプローチに焦点を当てています。しかし、オプションとして、[ルート検出のバイパス (Bypassing Root Detection)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0144.md) を使用して、アプリ内のルート検出チェックをバイパスし、その結果を観察することもできます。たとえば、特定のチェックのバイパスに成功した場合や検出に失敗した場合はルート検出メカニズムの存在を示唆してる可能性があります。
+このテストでは、一般的なルート検出 API にフックし、関連するシステムコールをトレースすることで、実行時にルート検出メカニズムの存在を特定するアプローチに焦点を当てています。しかし、オプションとして、[ルート検出のバイパス (Bypassing Root Detection)](../../../techniques/android/MASTG-TECH-0144.md) を使用して、アプリ内のルート検出チェックをバイパスし、その結果を観察することもできます。たとえば、特定のチェックのバイパスに成功した場合や検出に失敗した場合はルート検出メカニズムの存在を示唆してる可能性があります。
 
-### 手順
+## 手順
 
-1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
-2. [メソッドフック (Method Hooking)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
-3. [実行トレース (Execution Tracing)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0032.md) を使用して、関連するシステム API 呼び出しをトレースします。
+1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+3. [実行トレース (Execution Tracing)](../../../techniques/android/MASTG-TECH-0032.md) を使用して、関連するシステム API 呼び出しをトレースします。
 4. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
-### 結果
+## 結果
 
 出力には、ルート検出チェックのインスタンスと、フックされたメソッドまたは API を含む可能性があります。
 
-### 評価
+## 評価
 
 ルート検出チェックのインスタンスが観察されない場合、このテストケースは不合格です。但し、このテストからの結果はルート検出ロジックの存在の証跡として解釈されるべきであり、その堅牢性や有効性の評価としてではありません。[ルート検出を実装する (Implementing Root Detection)](../../../best-practices/MASTG-BEST-0030.md) を参照してください。
 
