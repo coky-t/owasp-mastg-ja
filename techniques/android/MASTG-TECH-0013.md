@@ -3,12 +3,10 @@ title: Android アプリのリバースエンジニアリング (Reverse Enginee
 platform: android
 ---
 
-# MASTG-TECH-0013 Android アプリのリバースエンジニアリング (Reverse Engineering Android Apps)
-
 Android のオープン性は、リバースエンジニアにとって好ましい環境であり、iOS にはない大きな利点を提供します。Android はオープンソースであるため、Android Open Source Project (AOSP) でソースコードを調べて、OS とその標準ツールを好きなように変更できます。市販の標準的なデバイスでも、開発者モードの有効化やアプリのサイドローディングなど、面倒な作業なしに実行できます。SDK に含まれる強力なツールから、利用可能な幅広いリバースエンジニアリングツールまで、作業を楽にする数多くの機能があります。
 
 しかし、Android 特有の課題もいくつかあります。たとえば、Java バイトコードとネイティブコードの両方を扱う必要があるかもしれません。Java Native Interface (JNI) はリバースエンジニアリングを混乱させるために意図的に使用されることがあります (公平を期すために言うと、パフォーマンスの向上やレガシーコードのサポートなど、JNI を使用する正当な理由もあります)。開発者は、データや機能を「隠す」ためにネイティブレイヤーを使用することがあり、実行が二つのレイヤーを頻繁に行き来するようにアプリを構成することもあります。
 
 Java ベースの Android 環境と、Android のベースとなっている Linux OS とカーネルの両方についての実務知識が少なくとも必要でしょう。また、Java 仮想マシンで動作するバイトコードと、ネイティブコードの両方を扱うための適切なツールセットも必要です。
 
-Android アプリをリバースエンジニアするには、次の技法を検討します: [コードを Smali へ逆アセンブル (Disassembling Code to Smali)](MASTG-TECH-0016.md)、[Java コードの逆コンパイル (Decompiling Java Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0017.md)、[ネイティブコードの逆アセンブル (Disassembling Native Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0018.md)。
+Android アプリをリバースエンジニアするには、次の技法を検討します: [コードを Smali へ逆アセンブル (Disassembling Code to Smali)](MASTG-TECH-0016.md)、[Java コードの逆コンパイル (Decompiling Java Code)](MASTG-TECH-0017.md)、[ネイティブコードの逆アセンブル (Disassembling Native Code)](MASTG-TECH-0018.md)。

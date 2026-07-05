@@ -3,27 +3,26 @@ title: 非ルート化デバイスでの動的解析 (Dynamic Analysis on Non-Ro
 platform: android
 ---
 
-# MASTG-TECH-0026 非ルート化デバイスでの動的解析 (Dynamic Analysis on Non-Rooted Devices)
-
 ルート化されたデバイスにアクセスできない場合、対象アプリにパッチ適用して再パッケージ化し、起動時に動的ライブラリ (Frida ガジェットなど) をロードして、Frida や objection などの関連ツールを用いた動的テストを可能にします。iOS とは異なり、Android アプリは FairPlay で暗号化されていないため、デバイスから直接 APK を抽出したり、ルートアクセスなしで代替ストアからダウンロードできます。
 
-> \[!NOTE] "Android エミュレータの使用"\
+> [!NOTE]
+> "Android エミュレータの使用"  
 > 研究者や楽手者にとって、多くの場合、Android エミュレータは最もシンプルな出発点となります。エミュレータで実行しているアプリは物理デバイスと同じハードウェア基盤の制限の影響をうけません。Frida ガジェットを使用せず (単に `frida -U` を使用するだけ)、バイナリにパッチ適用せず、アプリを再署名することなく、Frida をプロセスに直接アタッチできます。これにより、エミュレータは、実機テストに移行する前の、実験、スクリプト作成、動的解析技法の学習に最適になります。
 
 以下のセクションでは、ルート化されていない実機でのプロセスの各ステップを順を追って説明します。
 
-### 手順 1: APK を取得する
+## 手順 1: APK を取得する
 
-[アプリの取得と抽出 (Obtaining and Extracting Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0003.md) に従い、テストしたいアプリの APK を取得します。
+[アプリの取得と抽出 (Obtaining and Extracting Apps)](MASTG-TECH-0003.md) に従い、テストしたいアプリの APK を取得します。
 
-### 手順 2: Frida ガジェットを注入する
+## 手順 2: Frida ガジェットを注入する
 
-[ライブラリインジェクション (Library Injection)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0041.md) に従い、APK にパッチ適用し、Frida ガジェットライブラリを注入します。[objection](../../tools/generic/MASTG-TOOL-0038.md) などのツールは [アプリの再パッケージ化 (Repackaging Apps)](MASTG-TECH-0004.md) で記述されているようにこのプロセスの大部分を自動化できます。
+[ライブラリインジェクション (Library Injection)](MASTG-TECH-0041.md) に従い、APK にパッチ適用し、Frida ガジェットライブラリを注入します。[objection](../../tools/generic/MASTG-TOOL-0038.md) などのツールは [アプリの再パッケージ化 (Repackaging Apps)](MASTG-TECH-0004.md) で記述されているようにこのプロセスの大部分を自動化できます。
 
-### 手順 3: APK に署名する
+## 手順 3: APK に署名する
 
 [再パッケージ化と再署名 (Repackaging & Re-Signing)](MASTG-TECH-0039.md) に従い、パッチ適用済み APK に再署名します。標準の Android デバッグキーストアで十分です。開発者アカウントや特別な証明書は必要ありません。
 
-### 手順 4: アプリをインストールする
+## 手順 4: アプリをインストールする
 
-[アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0005.md) に従い、再署名した APK をデバイスにインストールします。元のアプリが既にインストールされている場合は、Android は署名証明書が変更されたインストールを拒否するため、まずアンインストールする必要があります。
+[アプリのインストール (Installing Apps)](MASTG-TECH-0005.md) に従い、再署名した APK をデバイスにインストールします。元のアプリが既にインストールされている場合は、Android は署名証明書が変更されたインストールを拒否するため、まずアンインストールする必要があります。
