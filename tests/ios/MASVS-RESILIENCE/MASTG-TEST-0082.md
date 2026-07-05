@@ -1,27 +1,23 @@
 ---
 masvs_v1_id:
-  - MSTG-CODE-2
+- MSTG-CODE-2
 masvs_v2_id:
-  - MASVS-RESILIENCE-4
+- MASVS-RESILIENCE-4
 platform: ios
 title: アプリがデバッグ可能かどうかのテスト (Testing whether the App is Debuggable)
 masvs_v1_levels:
-  - R
-profiles:
-  - R
+- R
+profiles: [R]
 status: deprecated
-covered_by:
-  - MASTG-TEST-0261
+covered_by: [MASTG-TEST-0261]
 deprecation_note: New version available in MASTG V2
 ---
 
-# MASTG-TEST-0082 アプリがデバッグ可能かどうかのテスト (Testing whether the App is Debuggable)
+## 概要
 
-### 概要
+## 静的解析
 
-### 静的解析
-
-アプリのエンタイトルメントを抽出 ([MachO バイナリからエンタイトルメントの抽出 (Extracting Entitlements from MachO Binaries)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0111.md)) して、`get-task-allow` キーの値を確認します。 `true` に設定されていれば、そのアプリはデバッグ可能です。
+アプリのエンタイトルメントを抽出 ([MachO バイナリからエンタイトルメントの抽出 (Extracting Entitlements from MachO Binaries)](../../../techniques/ios/MASTG-TECH-0111.md)) して、`get-task-allow` キーの値を確認します。 `true` に設定されていれば、そのアプリはデバッグ可能です。
 
 ```bash
 $ ldid -e iGoat-Swift.app/iGoat-Swift
@@ -46,8 +42,8 @@ $ ldid -e iGoat-Swift.app/iGoat-Swift
 </plist>
 ```
 
-### 動的解析
+## 動的解析
 
-[デバッグ (Debugging)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0084.md) で説明されているように、直接デバッガをアタッチできるかどうかを確認します。
+[デバッグ (Debugging)](../../../techniques/ios/MASTG-TECH-0084.md) で説明されているように、直接デバッガをアタッチできるかどうかを確認します。
 
 注意: アプリケーションにアンチリバースエンジニアリングコントロールが装備されている場合、デバッガを検出して停止することがあります。
