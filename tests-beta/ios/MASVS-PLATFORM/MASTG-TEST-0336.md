@@ -1,26 +1,15 @@
 ---
 platform: ios
-title: >-
-  WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File
-  Origin Policies)
+title: WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)
 id: MASTG-TEST-0336
-type:
-  - dynamic
-  - hooks
-  - manual
+type: [dynamic, hooks, manual]
 weakness: MASWE-0069
-best-practices:
-  - MASTG-BEST-0033
-profiles:
-  - L1
-  - L2
-knowledge:
-  - MASTG-KNOW-0076
+best-practices: [MASTG-BEST-0033]
+profiles: [L1, L2]
+knowledge: [MASTG-KNOW-0076]
 ---
 
-# MASTG-TEST-0336 WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)
-
-### 概要
+## 概要
 
 このテストは [設定により緩和される WebView のファイルオリジンアクセス (WebView File Origin Access Relaxed by Configuration)](MASTG-TEST-0335.md) と対をなす動的テストです。
 
@@ -30,33 +19,33 @@ knowledge:
 
 監視する代表的な API は以下のとおりです。
 
-* `WKPreferences _setAllowFileAccessFromFileURLs:`
-* `WKWebViewConfiguration _setAllowUniversalAccessFromFileURLs:`
-* `WKPreferences setJavaScriptEnabled:`
-* `WKWebView loadFileURL:allowingReadAccessToURL:`
-* `WKWebView loadHTMLString:baseURL:` (`file://` ベース URL が使用される可能性がある場合)
+- `WKPreferences _setAllowFileAccessFromFileURLs:`
+- `WKWebViewConfiguration _setAllowUniversalAccessFromFileURLs:`
+- `WKPreferences setJavaScriptEnabled:`
+- `WKWebView loadFileURL:allowingReadAccessToURL:`
+- `WKWebView loadHTMLString:baseURL:` (`file://` ベース URL が使用される可能性がある場合)
 
-### 手順
+## 手順
 
-1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
-2. [メソッドフック (Method Hooking)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
 3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
-### 結果
+## 結果
 
 出力には、`allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` を設定する関数の使用、ローカルの `file://` コンテンツのロード、関連する各呼び出しのバックトレースを示す可能性があります。
 
-### 評価
+## 評価
 
 ローカル `file://` コンテンツをロードする `WKWebView` に対して、アプリケーションが `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` を有効にしている場合、そのテストケースは不合格です。
 
 **さらなるバリデーションが必要となります:**
 
-フック出力からのバックトレースを使用して、[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0076.md) を使用してコード箇所を検査します。
+フック出力からのバックトレースを使用して、[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用してコード箇所を検査します。
 
-* `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` が明示的に使用され、`true` に設定しているかどうかを判断します。
-* どの `WKWebView` インスタンスがその設定を受け取り、機密情報や機能を取り扱っているかどうかを判断します。
-* その `WKWebView` が、たとえば `loadFileURL(_:allowingReadAccessTo:)` や `loadHTMLString(_:baseURL:)` などの API を `file://` ベース URL とともに使用して、ローカル `file://` コンテンツをロードするかどうかを判断します。
+- `allowFileAccessFromFileURLs` または `allowUniversalAccessFromFileURLs` が明示的に使用され、`true` に設定しているかどうかを判断します。
+- どの `WKWebView` インスタンスがその設定を受け取り、機密情報や機能を取り扱っているかどうかを判断します。
+- その `WKWebView` が、たとえば `loadFileURL(_:allowingReadAccessTo:)` や `loadHTMLString(_:baseURL:)` などの API を `file://` ベース URL とともに使用して、ローカル `file://` コンテンツをロードするかどうかを判断します。
 
 一部のアプリではこれらの値を設定するために変数や構成ロジックを使用することがあり、静的解析だけでは特定することが困難となる可能性があることに留意します。動的解析は実行時に設定が有効になっているかどうかを確認するのに役立ちます。
 
