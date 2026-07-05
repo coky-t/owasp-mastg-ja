@@ -3,8 +3,6 @@ title: インストール済みアプリの一覧表示 (Listing Installed Apps)
 platform: ios
 ---
 
-# MASTG-TECH-0057 インストール済みアプリの一覧表示 (Listing Installed Apps)
-
 デバイスにインストールされているアプリをターゲットにする場合、まず解析したいアプリケーションの正しいバンドル識別子を判定する必要があります。`frida-ps -Uai` を使用して、接続されている USB デバイス (`-U`) に現在インストールされている (`-i`) すべてのアプリ (`-a`) を取得できます。
 
 ```bash
@@ -24,4 +22,4 @@ $ frida-ps -Uai
 
 [Grapefruit](../../tools/ios/MASTG-TOOL-0061.md) を直接開き、iOS デバイスを選択すると、インストール済みアプリの一覧を取得できます。
 
-![](../../.gitbook/assets/grapefruit_installed_apps.png)
+<img src="../../Document/Images/Chapters/0x06b/grapefruit_installed_apps.png" width="400px" />

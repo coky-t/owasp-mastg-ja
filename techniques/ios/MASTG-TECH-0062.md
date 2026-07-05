@@ -3,9 +3,7 @@ title: 基本的なネットワークモニタリング/スニッフィング (B
 platform: ios
 ---
 
-# MASTG-TECH-0062 基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)
-
-iOS デバイス用に [Remote Virtual Interface を作成すること](https://stackoverflow.com/questions/9555403/capturing-mobile-phone-traffic-on-wireshark/33175819#33175819) で、iOS 上のすべてのトラフィックをリアルタイムでリモートから傍受できます。まず、macOS ホストコンピュータに [Wireshark](../../tools/network/MASTG-TOOL-0081.md) がインストールされていることを確認します。
+iOS デバイス用に [Remote Virtual Interface を作成すること](https://stackoverflow.com/questions/9555403/capturing-mobile-phone-traffic-on-wireshark/33175819#33175819 "Wireshark + OSX + iOS") で、iOS 上のすべてのトラフィックをリアルタイムでリモートから傍受できます。まず、macOS ホストコンピュータに [Wireshark](../../tools/network/MASTG-TOOL-0081.md) がインストールされていることを確認します。
 
 1. iOS デバイスを USB 経由で macOS ホストコンピュータに接続します。
 2. スニッフィングを開始する前に、iOS デバイスの UDID を知る必要があります。UDID を取得するには ["iOS デバイスの UDID を取得する"](../../Document/0x06b-iOS-Security-Testing.md#obtaining-the-udid-of-an-ios-device) セクションをチェックしてください。macOS で Terminal を開き、UDID を iOS デバイスの UDID に置き換えて以下のコマンドを実行します。
@@ -22,6 +20,6 @@ Starting device <UDID> [SUCCEEDED] with interface rvi0
 ip.addr == 192.168.1.1 && http
 ```
 
-![](../../.gitbook/assets/wireshark_filters.png)
+<img src="../../Document/Images/Chapters/0x06b/wireshark_filters.png" width="100%" />
 
-Wireshark のドキュメントでは [Capture Filters](https://wiki.wireshark.org/CaptureFilters) の例を多数提供しており、トラフィックをフィルタして必要な情報を取得するのに役立つはずです。
+Wireshark のドキュメントでは [Capture Filters](https://wiki.wireshark.org/CaptureFilters "Capture Filters") の例を多数提供しており、トラフィックをフィルタして必要な情報を取得するのに役立つはずです。
