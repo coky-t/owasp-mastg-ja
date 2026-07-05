@@ -1,32 +1,41 @@
 ---
 platform: ios
-title: 実行時の iOS の汎用ペーストボード内の機密データ (Sensitive Data in the iOS General Pasteboard at Runtime)
+title: >-
+  実行時の iOS の汎用ペーストボード内の機密データ (Sensitive Data in the iOS General Pasteboard at
+  Runtime)
 id: MASTG-TEST-0277
-type: [dynamic, hooks]
+type:
+  - dynamic
+  - hooks
 weakness: MASWE-0053
-threat: [app]
+threat:
+  - app
 prerequisites:
-- identify-sensitive-data
-profiles: [L2]
-knowledge: [MASTG-KNOW-0083]
+  - identify-sensitive-data
+profiles:
+  - L2
+knowledge:
+  - MASTG-KNOW-0083
 ---
 
-## 概要
+# MASTG-TEST-0277 実行時の iOS の汎用ペーストボード内の機密データ (Sensitive Data in the iOS General Pasteboard at Runtime)
+
+### 概要
 
 このテストは [iOS の汎用ペーストボードの使用 (Use of the iOS General Pasteboard)](MASTG-TEST-0276.md) と対をなす動的テストです。
 
-このケースでは、実行時に [ペーストボード (Pasteboard)](../../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) に機密データが書き込まれていないか監視します。テストを実行している間にアプリを実行していて、ペーストボードが変更される必要があるため、これを検出するのは困難となる可能性があることに注意してください。テスト実行中にパスワードや個人情報などの機密データをアプリに手作業で入力することで、ペーストボードをトリガーできます。または、ユーザー入力をシミュレートしたり、ペーストボードを直接変更するスクリプトを使用して、自動的にトリガーすることもできます。
+このケースでは、実行時に [ペーストボード (Pasteboard)](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0083.md) に機密データが書き込まれていないか監視します。テストを実行している間にアプリを実行していて、ペーストボードが変更される必要があるため、これを検出するのは困難となる可能性があることに注意してください。テスト実行中にパスワードや個人情報などの機密データをアプリに手作業で入力することで、ペーストボードをトリガーできます。または、ユーザー入力をシミュレートしたり、ペーストボードを直接変更するスクリプトを使用して、自動的にトリガーすることもできます。
 
-## 手順
+### 手順
 
-1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
-2. [ペーストボードの監視 (Monitoring the Pasteboard)](../../../techniques/ios/MASTG-TECH-0134.md) を使用して、機密データについてペーストボードを監視します。
+1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [ペーストボードの監視 (Monitoring the Pasteboard)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0134.md) を使用して、機密データについてペーストボードを監視します。
 3. アプリを実行し、パスワードや個人情報のコピーなど、機密データをペーストボードに書き込む可能性のあるアクションを実行します。
 
-## 結果
+### 結果
 
 出力にはテスト中に書き込まれたペーストボードアイテムのリストを含む可能性があります。
 
-## 評価
+### 評価
 
 特に汎用ペーストボードへの書き込み操作時に機密データがトレースされた場合、そのテストケースは不合格です。

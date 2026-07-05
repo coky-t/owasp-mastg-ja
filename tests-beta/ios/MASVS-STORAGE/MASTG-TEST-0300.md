@@ -1,35 +1,46 @@
 ---
 platform: ios
-title: プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)
+title: >-
+  プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing
+  Unencrypted Data in Private Storage)
 id: MASTG-TEST-0300
-type: [static, code]
-profiles: [L2]
-best-practices: [MASTG-BEST-0024]
+type:
+  - static
+  - code
+profiles:
+  - L2
+best-practices:
+  - MASTG-BEST-0024
 weakness: MASWE-0006
-knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
+knowledge:
+  - MASTG-KNOW-0091
+  - MASTG-KNOW-0057
+  - MASTG-KNOW-0108
 ---
 
-## 概要
+# MASTG-TEST-0300 プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)
+
+### 概要
 
 このテストは、アプリが暗号化されていない機密データをプライベートストレージに書き込むかどうかをチェックします。以下に焦点を当てています。
 
-- アプリサンドボックスディレクトリにデータを保持する API。Foundation `FileManager` メソッド、低レベルの POSIX および BSD ファイル I/O 呼び出し、`UserDefaults`、Core Data、SQLite ラッパーなどの高レベル API を含みます。
-- 以下に使用されているキーチェーン API:
-    - 機密データをキーチェーン内に直接保存している。
-    - キーチェーンの鍵を管理している (プライベートストレージに書き込む前にデータを暗号化するために使用できます)。
+* アプリサンドボックスディレクトリにデータを保持する API。Foundation `FileManager` メソッド、低レベルの POSIX および BSD ファイル I/O 呼び出し、`UserDefaults`、Core Data、SQLite ラッパーなどの高レベル API を含みます。
+* 以下に使用されているキーチェーン API:
+  * 機密データをキーチェーン内に直接保存している。
+  * キーチェーンの鍵を管理している (プライベートストレージに書き込む前にデータを暗号化するために使用できます)。
 
-## 手順
+### 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
 2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
-## 結果
+### 結果
 
 出力には以下を含む可能性があります。
 
-- アプリがプライベートストレージにデータを書き込む場所、または書き込む可能性がある場所のリスト。
-- アプリがキーチェーン API を使用する場所のリスト。アクセス制御とアクセシビリティ属性を含みます。
+* アプリがプライベートストレージにデータを書き込む場所、または書き込む可能性がある場所のリスト。
+* アプリがキーチェーン API を使用する場所のリスト。アクセス制御とアクセシビリティ属性を含みます。
 
-## 評価
+### 評価
 
 機密データがプライベートストレージに書き込まれる前に暗号化されていない場合、または機密データを保存するためにキーチェーン API が使用されていない場合、そのテストケースは不合格です。

@@ -3,6 +3,8 @@ title: 情報収集 - ネットワーク通信 (Information Gathering - Network 
 platform: android
 ---
 
+# MASTG-TECH-0022 情報収集 - ネットワーク通信 (Information Gathering - Network Communication)
+
 遭遇する可能性のあるアプリのほとんどはリモートエンドポイントに接続します。動的解析 (トラフィックのキャプチャと解析など) を実行する前であっても、アプリケーションが通信すると思われるドメインを列挙することで、初期入力やエントリポイントを取得できます。
 
 通常、これらのドメインはアプリケーションのバイナリ内に文字列として存在します。これを行う方法の一つは、[Apkleaks](../../tools/android/MASTG-TOOL-0125.md) や [MobSF](../../tools/generic/MASTG-TOOL-0035.md) などの自動化ツールを使用することです。
@@ -13,4 +15,4 @@ platform: android
 
 安全な接続の実装と検証は複雑なプロセスになる可能性があり、考慮すべき点が数多くあります。たとえば、多くのアプリケーションは、XMPP やプレーン TCP パケットなど、HTTP 以外のプロトコルを使用したり、MITM 攻撃を阻止しようとするために証明書ピン留めを実行しますが、残念ながら、実装に重大な論理的バグがあったり、セキュリティネットワーク構成が本質的に間違っていることがあります。
 
-多くの場合、静的解析を使用するだけでは十分ではなく、より信頼できる結果を得られる動的解析 (傍受プロキシを使用するなど) と比較すると、極めて非効率的になるかもしれないことを覚えておいてください。このセクションでは、表面を少し触れただけです。[基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](MASTG-TECH-0010.md) を参照し、"[Android のネットワーク通信](../../Document/0x05g-Testing-Network-Communication.md)" の章のテストケースもチェックしてください。
+多くの場合、静的解析を使用するだけでは十分ではなく、より信頼できる結果を得られる動的解析 (傍受プロキシを使用するなど) と比較すると、極めて非効率的になるかもしれないことを覚えておいてください。このセクションでは、表面を少し触れただけです。[基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0010.md) を参照し、"[Android のネットワーク通信](../../Document/0x05g-Testing-Network-Communication.md)" の章のテストケースもチェックしてください。

@@ -4,33 +4,35 @@ platform: android
 source: https://github.com/frida/frida
 ---
 
-Frida は [Java API](https://www.frida.re/docs/javascript-api/#java "Frida - Java API") を通じて Android Java ランタイムとのインタラクションをサポートしています。プロセスとそのネイティブライブラリ内で Java とネイティブの両方の関数をフックして呼び出すことができます。JavaScript スニペットはメモリにフルアクセスでき、たとえば任意の構造化データを読み書きできます。
+# MASTG-TOOL-0001 Frida (Android)
+
+Frida は [Java API](https://www.frida.re/docs/javascript-api/#java) を通じて Android Java ランタイムとのインタラクションをサポートしています。プロセスとそのネイティブライブラリ内で Java とネイティブの両方の関数をフックして呼び出すことができます。JavaScript スニペットはメモリにフルアクセスでき、たとえば任意の構造化データを読み書きできます。
 
 Frida API が提供するタスクのうち、Android に関連するものや Android 専用のものをいくつか紹介します。
 
-- Java オブジェクトをインスタンス化し、静的および非静的クラスメソッドを呼び出します ([Java API](https://www.frida.re/docs/javascript-api/#java "Frida - Java API"))。
-- Java メソッド実装を置き換えます ([Java API](https://www.frida.re/docs/javascript-api/#java "Frida - Java API"))。
-- Java ヒープをスキャンして、特定のクラスのライブインスタンスを列挙します ([Java API](https://www.frida.re/docs/javascript-api/#java "Frida - Java API"))。
-- プロセスメモリをスキャンして文字列の存在を探します ([Memory API](https://www.frida.re/docs/javascript-api/#memory "Frida - Memory API"))。
-- ネイティブ関数呼び出しをインターセプトして、関数の開始時と終了時に独自のコードを実行します ([Interceptor API](https://www.frida.re/docs/javascript-api/#interceptor "Frida - Interceptor API"))。
+* Java オブジェクトをインスタンス化し、静的および非静的クラスメソッドを呼び出します ([Java API](https://www.frida.re/docs/javascript-api/#java))。
+* Java メソッド実装を置き換えます ([Java API](https://www.frida.re/docs/javascript-api/#java))。
+* Java ヒープをスキャンして、特定のクラスのライブインスタンスを列挙します ([Java API](https://www.frida.re/docs/javascript-api/#java))。
+* プロセスメモリをスキャンして文字列の存在を探します ([Memory API](https://www.frida.re/docs/javascript-api/#memory))。
+* ネイティブ関数呼び出しをインターセプトして、関数の開始時と終了時に独自のコードを実行します ([Interceptor API](https://www.frida.re/docs/javascript-api/#interceptor))。
 
 Android では、Frida CLI (`frida`)、`frida-ps`、`frida-ls-devices`、`frida-trace` など、Frida のインストール時に提供されるビルトインツールも利用できることを心に留めてください。
 
-Frida は [Xposed](MASTG-TOOL-0027.d) や [LSPosed](MASTG-TOOL-0149.md) とよく比較されます。しかし、両フレームワークは異なる目標を念頭に設計されているため、この比較は公平とは言えません。アプリのセキュリティテスト担当者として、どのような状況でどちらのフレームワークを使うべきかを知るために、これを理解しておくことは重要です。
+Frida は [Xposed](https://github.com/coky-t/owasp-mastg-ja/blob/master/tools/android/MASTG-TOOL-0027.d) や [LSPosed](https://github.com/coky-t/owasp-mastg-ja/blob/master/tools/android/MASTG-TOOL-0149.md) とよく比較されます。しかし、両フレームワークは異なる目標を念頭に設計されているため、この比較は公平とは言えません。アプリのセキュリティテスト担当者として、どのような状況でどちらのフレームワークを使うべきかを知るために、これを理解しておくことは重要です。
 
-- Frida はスタンドアロンです。必要なのはターゲットの Android デバイスの既知の場所から frida-server バイナリを実行するだけです (下記の「Fridaのインストール」を参照)。つまり、Xposed とは対照的に、ターゲット OS に _深く_ インストールされるわけではありません。
-- アプリのリバースは反復的なプロセスです。前のポイントの結果として、フックを適用したり単純に更新するために (ソフト) リブートする必要がないため、テスト時のフィードバックループがより短くなります。そのため、より永続的なフックを実装する場合には Xposed を使用する方がいいかもしれません。
-- プロセスの実行中にいつでもオンザフライで Frida JavaScript コードを注入したり更新できます (iOS の Cycript と同様)。このようにして、Frida にアプリを生成させることで、いわゆる _早期計装_ を実行できます。また、特定の状態にした実行中のアプリにアタッチすることも可能です。
-- Frida は Java とネイティブコード (JNI) の両方を処理でき、その両方を変更できます。これは、残念ながら、ネイティブコードのサポートがない Xposed の制限です。
+* Frida はスタンドアロンです。必要なのはターゲットの Android デバイスの既知の場所から frida-server バイナリを実行するだけです (下記の「Fridaのインストール」を参照)。つまり、Xposed とは対照的に、ターゲット OS に _深く_ インストールされるわけではありません。
+* アプリのリバースは反復的なプロセスです。前のポイントの結果として、フックを適用したり単純に更新するために (ソフト) リブートする必要がないため、テスト時のフィードバックループがより短くなります。そのため、より永続的なフックを実装する場合には Xposed を使用する方がいいかもしれません。
+* プロセスの実行中にいつでもオンザフライで Frida JavaScript コードを注入したり更新できます (iOS の Cycript と同様)。このようにして、Frida にアプリを生成させることで、いわゆる _早期計装_ を実行できます。また、特定の状態にした実行中のアプリにアタッチすることも可能です。
+* Frida は Java とネイティブコード (JNI) の両方を処理でき、その両方を変更できます。これは、残念ながら、ネイティブコードのサポートがない Xposed の制限です。
 
-## Android に Frida をインストールする
+### Android に Frida をインストールする
 
 Android デバイスに Frida をセットアップするには、以下のようにします。
 
-- デバイスがルート化されていない場合は、Frida を使用することもできます。[Termux](MASTG-TECH-0026.md) を参照してください。
-- ルート化済みデバイスをお持ちの場合は、[公式の手順](https://www.frida.re/docs/android/ "Frida - Setting up your Android device") に従うか、以下のヒントに従ってください。
+* デバイスがルート化されていない場合は、Frida を使用することもできます。[Termux](https://github.com/coky-t/owasp-mastg-ja/blob/master/tools/android/MASTG-TECH-0026.md) を参照してください。
+* ルート化済みデバイスをお持ちの場合は、[公式の手順](https://www.frida.re/docs/android/) に従うか、以下のヒントに従ってください。
 
-ここでは特に断りがない限り、ルート化済みデバイスを想定しています。[Frida リリースページ](https://github.com/frida/frida/releases) から frida-server バイナリをダウンロードします。Android デバイスまたはエミュレータのアーキテクチャ (x86, x86_64, arm, arm64) に適した frida-server バイナリをダウンロードしてください。サーバーバージョン (少なくともメジャーバージョン番号) がローカルの Frida インストールのバージョンと一致することを確認してください。通常 PyPI は最新の Frida をインストールします。どのバージョンがインストールされているかわからない場合は、Frida コマンドラインツールで確認できます。
+ここでは特に断りがない限り、ルート化済みデバイスを想定しています。[Frida リリースページ](https://github.com/frida/frida/releases) から frida-server バイナリをダウンロードします。Android デバイスまたはエミュレータのアーキテクチャ (x86, x86\_64, arm, arm64) に適した frida-server バイナリをダウンロードしてください。サーバーバージョン (少なくともメジャーバージョン番号) がローカルの Frida インストールのバージョンと一致することを確認してください。通常 PyPI は最新の Frida をインストールします。どのバージョンがインストールされているかわからない場合は、Frida コマンドラインツールで確認できます。
 
 ```bash
 frida --version
@@ -50,7 +52,7 @@ adb shell "chmod 755 /data/local/tmp/frida-server"
 adb shell "su -c /data/local/tmp/frida-server &" # or if su needs a uid: adb shell "su 0 /data/local/tmp/frida-server &"
 ```
 
-## Android で Frida を使用する
+### Android で Frida を使用する
 
 frida-server が動作していれば、以下のコマンドで実行中のプロセスのリストを取得できるはずです (接続されている USB デバイスまたはエミュレータを使用するように Frida に指示するには `-U` オプションを使用します)。
 
@@ -87,7 +89,7 @@ $ frida-ps -Uai
 
 これは、すべての名前と識別子を表示します。現在実行中の場合には、それらの PID も表示します。リストでアプリを検索し、PID またはその名前/識別子を書き留めます。今後はそれらのいずれかを使用してアプリを参照します。PID はアプリを実行するたびに変化するため、識別子を使用することをお勧めします。たとえば、`com.android.chrome` を取得してみましょう。この文字列は Frida CLI、frida-trace、Python スクリプトなど、すべての Frida ツールで使用できるようになりました。
 
-## frida-trace でのネイティブライブラリのトレース
+### frida-trace でのネイティブライブラリのトレース
 
 特定の (低レベルの) ライブラリコールをトレースするには、`frida-trace` コマンドラインツールを使用できます。
 
@@ -97,9 +99,9 @@ frida-trace -U com.android.chrome -i "open"
 
 これは `__handlers__/libc.so/open.js` に小さな JavaScript を生成し、Frida がプロセスに注入します。このスクリプトは `libc.so` の `open` 関数へのすべてのコールをトレースします。生成されたスクリプトは必要に応じて Frida [JavaScript API](https://www.frida.re/docs/javascript-api/) で変更できます。
 
-残念ながら、Java クラスの高レベルメソッドのトレースはまだサポートしていません (しかし [将来的には](https://github.com/frida/frida-python/issues/70 "Support for tracing high-level methods of Java Classes via patterns") するかもしれません)。
+残念ながら、Java クラスの高レベルメソッドのトレースはまだサポートしていません (しかし [将来的には](https://github.com/frida/frida-python/issues/70) するかもしれません)。
 
-## Frida CLI と Java API
+### Frida CLI と Java API
 
 Frida CLI ツール (`frida`) を使用して、Frida を対話的に操作します。プロセスにフックし、Frida の API へのコマンドラインインタフェースを提供します。
 
@@ -113,7 +115,7 @@ frida -U com.android.chrome
 frida -U -l myscript.js com.android.chrome
 ```
 
-Frida は [Java API](https://www.frida.re/docs/javascript-api/#java "Frida - Java API") も提供しており、Android アプリを扱うのに特に役立ちます。これは Java クラスやオブジェクトを直接操作できます。Activity クラスの `onResume` 関数を上書きするスクリプトを以下に示します。
+Frida は [Java API](https://www.frida.re/docs/javascript-api/#java) も提供しており、Android アプリを扱うのに特に役立ちます。これは Java クラスやオブジェクトを直接操作できます。Activity クラスの `onResume` 関数を上書きするスクリプトを以下に示します。
 
 ```java
 Java.perform(function () {
@@ -129,7 +131,7 @@ Java.perform(function () {
 
 [jadx](MASTG-TOOL-0018.md) はグラフィカルコードブラウザを通じて Frida スニペットを生成できます。この機能を使用するには、`jadx-gui` で APK または DEX を開き、ターゲットのメソッドをブラウズしてメソッド名を右クリックし、"Copy as frida snippet (f)" を選択します。たとえば MASTG [Android UnCrackable L1](../../apps/android/MASTG-APP-0003.md) を使用すると以下のようになります。
 
-<img src="../../Document/Images/Chapters/0x08a/jadx_copy_frida_snippet.png" width="100%" />
+![](../../.gitbook/assets/jadx_copy_frida_snippet.png)
 
 上記の手順により、以下の出力がペーストボードに配置され、JavaScript ファイルに貼り付けて `frida -U -l` に渡すことができます。
 

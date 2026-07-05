@@ -1,30 +1,36 @@
 ---
 platform: android
-title: 機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)
+title: >-
+  機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle
+  Sensitive User Data)
 id: MASTG-TEST-0319
-type: [dynamic]
+type:
+  - dynamic
 weakness: MASWE-0112
 prerequisites:
   - identify-sensitive-data
-profiles: [P]
+profiles:
+  - P
 ---
 
-## 概要
+# MASTG-TEST-0319 機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)
+
+### 概要
 
 このテストは [機密ユーザーデータを扱うことが知られている SDK API への参照 (References to SDK APIs Known to Handle Sensitive User Data)](MASTG-TEST-0318.md) と対をなす動的テストです。
 
 この場合、機密性の高いユーザーデータを扱うことが知られている SDK メソッドをすべてフックします。
 
-## 手順
+### 手順
 
-1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
-2. [メソッドフック (Method Hooking)](../../../techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
+1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0043.md) を使用して、関連する API 呼び出しをフックします。
 3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
-## 結果
+### 結果
 
 出力には、SDK メソッドが呼び出される場所、そのスタックトレース (その呼び出しに至る呼び出し階層)、実行時に SDK メソッドに渡される引数 (値) をリストする可能性があります。
 
-## 評価
+### 評価
 
 アプリコードでこれらの SDK メソッドに渡されている機密ユーザーデータを見つけることができた場合、そのテストケースは不合格です。これはアプリがサードパーティ SDK と機密ユーザーデータを共有していることを示します。

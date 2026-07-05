@@ -2,29 +2,35 @@
 title: スタックカナリアが有効でない (Stack Canaries Not Enabled)
 platform: android
 id: MASTG-TEST-0223
-type: [static, code]
+type:
+  - static
+  - code
 weakness: MASWE-0116
-profiles: [L2]
-knowledge: [MASTG-KNOW-0006]
+profiles:
+  - L2
+knowledge:
+  - MASTG-KNOW-0006
 ---
 
-## 概要
+# MASTG-TEST-0223 スタックカナリアが有効でない (Stack Canaries Not Enabled)
+
+### 概要
 
 このテストケースでは、アプリのネイティブライブラリがバッファオーバーフロー攻撃に対する緩和技法であるスタックスマッシュ保護などの一般的なバイナリ保護メカニズム ([バイナリ保護メカニズム (Binary Protection Mechanisms)](../../../knowledge/android/MASVS-CODE/MASTG-KNOW-0006.md)) なしでコンパイルされているかどうかをチェックします。
 
-- NDK ライブラリでは、スタックカナリアが有効になっているはずです。[コンパイラがデフォルトでそれを行っている](https://android.googlesource.com/platform/ndk/%2B/master/docs/BuildSystemMaintainers.md#additional-required-arguments) ためです。
-- 他のカスタム C/C++ ライブラリでは、スタックカナリアが有効になっていないかもしれません。必要なコンパイラフラグ (`-fstack-protector-strong` または `-fstack-protector-all`) が欠如していたり、カナリアがコンパイラによって最適化により削除されてしまうためです。
+* NDK ライブラリでは、スタックカナリアが有効になっているはずです。[コンパイラがデフォルトでそれを行っている](https://android.googlesource.com/platform/ndk/%2B/master/docs/BuildSystemMaintainers.md#additional-required-arguments) ためです。
+* 他のカスタム C/C++ ライブラリでは、スタックカナリアが有効になっていないかもしれません。必要なコンパイラフラグ (`-fstack-protector-strong` または `-fstack-protector-all`) が欠如していたり、カナリアがコンパイラによって最適化により削除されてしまうためです。
 
-## 手順
+### 手順
 
-1. [バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)](../../../techniques/android/MASTG-TECH-0157.md) を使用して、アプリパッケージからネイティブライブラリを抽出します。
+1. [バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0157.md) を使用して、アプリパッケージからネイティブライブラリを抽出します。
 2. [コンパイラが提供するセキュリティ機能の取得 (Obtaining Compiler-Provided Security Features)](../../../techniques/android/MASTG-TECH-0115.md) を各ネイティブライブラリに使用して、コンパイラが提供するセキュリティ機能を取得します。
 
-## 結果
+### 結果
 
 出力にはスタックカナリアを含む各ネイティブライブラリで有効になっているすべてのセキュリティ機能を示す可能性があります。
 
-## 評価
+### 評価
 
 スタックカナリアが無効になっている場合、そのテストケースは不合格です。
 
@@ -34,15 +40,15 @@ knowledge: [MASTG-KNOW-0006]
 
 以下の例は遭遇する可能性のある誤検出のケースをいくつか示しています。
 
-### メモリセーフ言語の使用
+#### メモリセーフ言語の使用
 
 Flutter フレームワークは、[Dart がバッファオーバーフローを緩和する](https://docs.flutter.dev/reference/security-false-positives#shared-objects-should-use-stack-canary-values) 方法のため、スタックカナリアを使用しません。
 
-### コンパイラによる最適化
+#### コンパイラによる最適化
 
-場合によっては、ライブラリのサイズとコンパイラによって適用される最適化により、ライブラリがもともとスタックカナリアを備えてコンパイルされていても、最適化により削除されてしまう可能性があります。たとえば、一部の [react native アプリ](https://github.com/facebook/react-native/issues/36870#issuecomment-1714007068) がこれに該当します。これらは `-fstack-protector-strong` でビルドされていますが、`.so` ファイル内で stack_chk_fail` を探してみても見つかりません。
+場合によっては、ライブラリのサイズとコンパイラによって適用される最適化により、ライブラリがもともとスタックカナリアを備えてコンパイルされていても、最適化により削除されてしまう可能性があります。たとえば、一部の [react native アプリ](https://github.com/facebook/react-native/issues/36870#issuecomment-1714007068) がこれに該当します。これらは `-fstack-protector-strong` でビルドされていますが、`.so` ファイル内で stack\_chk\_fail\` を探してみても見つかりません。
 
-- **空の .so ファイル**: libruntimeexecutor.so` や `libreact_render_debug.so` などの一部の .so ファイルはリリースでは実質的に空であるため、シンボルを含みません。`-fstack-protector-all` でビルドしようとしても、そこにはメソッド呼び出しがないため、`stack_chk_fail` 文字列を見ることはできないでしょう。
-- **スタックバッファ呼び出しの欠如**: `libreact_utils.so`, `libreact_config.so`, `libreact_debug.so` などの他のファイルは空ではなく、メソッド呼び出しを含みますが、それらのメソッドはスタックバッファ呼び出しを含まないため、その中には `stack_chk_fail` 文字列はありません。
+* **空の .so ファイル**: libruntimeexecutor.so`や`libreact\_render\_debug.so `などの一部の .so ファイルはリリースでは実質的に空であるため、シンボルを含みません。`-fstack-protector-all `でビルドしようとしても、そこにはメソッド呼び出しがないため、`stack\_chk\_fail\` 文字列を見ることはできないでしょう。
+* **スタックバッファ呼び出しの欠如**: `libreact_utils.so`, `libreact_config.so`, `libreact_debug.so` などの他のファイルは空ではなく、メソッド呼び出しを含みますが、それらのメソッドはスタックバッファ呼び出しを含まないため、その中には `stack_chk_fail` 文字列はありません。
 
 このケースで React Native 開発者は `-fstack-protector-all` を追加しないと宣言しています。それは [そうすることでセキュリティ上の効果が得られず、パフォーマンスが低下すると考えている](https://github.com/OWASP/mastg/pull/3049#pullrequestreview-2420837259) ためです。

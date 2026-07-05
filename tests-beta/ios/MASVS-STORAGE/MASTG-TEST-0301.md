@@ -1,15 +1,26 @@
 ---
 platform: ios
-title: プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
+title: >-
+  プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing
+  Unencrypted Data in Private Storage)
 id: MASTG-TEST-0301
-type: [dynamic, hooks]
-profiles: [L2]
+type:
+  - dynamic
+  - hooks
+profiles:
+  - L2
 weakness: MASWE-0006
-best-practices: [MASTG-BEST-0024]
-knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
+best-practices:
+  - MASTG-BEST-0024
+knowledge:
+  - MASTG-KNOW-0091
+  - MASTG-KNOW-0057
+  - MASTG-KNOW-0108
 ---
 
-## 概要
+# MASTG-TEST-0301 プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
+
+### 概要
 
 このテストは [プライベートストレージに暗号化されていないデータを保存するための API への参照 (References to APIs for Storing Unencrypted Data in Private Storage)](MASTG-TEST-0300.md) と対をなす動的テストであり、[プライベートストレージファイル内の暗号化されていない機密データ (Sensitive Data Unencrypted in Private Storage Files)](MASTG-TEST-0302.md) と併用するように設計されています。
 
@@ -17,20 +28,20 @@ knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
 
 ターゲット API の中には、I/O をシステムデーモンを通じてルーティングしたり、直接 `open` および `write` システムコールを避けるものがあることに注意してください。そのため、システムコールのみをトレースするのではなく、関連する Objective C や Seift API をフックする必要があります。
 
-## 手順
+### 手順
 
-1. [アプリのインストール (Installing Apps)](../../../techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
-2. [メソッドフック (Method Hooking)](../../../techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
+1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0056.md) を使用して、アプリをインストールします。
+2. [メソッドフック (Method Hooking)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0095.md) を使用して、関連する API をフックします。
 3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
-## 結果
+### 結果
 
 出力には以下を含む可能性があります。
 
-- 関連するキーチェーン API の呼び出しのリスト
-- 関連するファイルシステム API の呼び出しのリスト
+* 関連するキーチェーン API の呼び出しのリスト
+* 関連するファイルシステム API の呼び出しのリスト
 
-## 評価
+### 評価
 
 機密データがプライベートストレージに書き込まれる前に暗号化されていない場合、または機密データを保存するためにキーチェーン API が使用されていない場合、そのテストケースは不合格です。
 

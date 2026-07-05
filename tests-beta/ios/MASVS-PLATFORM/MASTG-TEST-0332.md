@@ -2,14 +2,24 @@
 platform: ios
 title: WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)
 id: MASTG-TEST-0332
-type: [static, code, manual]
+type:
+  - static
+  - code
+  - manual
 weakness: MASWE-0071
-best-practices: [MASTG-BEST-0034]
-profiles: [L1, L2, P]
-knowledge: [MASTG-KNOW-0076]
+best-practices:
+  - MASTG-BEST-0034
+profiles:
+  - L1
+  - L2
+  - P
+knowledge:
+  - MASTG-KNOW-0076
 ---
 
-## 概要
+# MASTG-TEST-0332 WebView での攻撃者制御の URI (Attacker-Controlled URI in WebViews)
+
+### 概要
 
 iOS アプリはさまざまな URL ロードメソッドを使用して [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview) にコンテンツを動的にロードできます。これらのメソッドはリモートウェブコンテンツとローカルに保存されたファイルの両方を描画できます。
 
@@ -17,36 +27,36 @@ iOS アプリはさまざまな URL ロードメソッドを使用して [`WKWeb
 
 **リモート URL ローディング:**
 
-- [`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:))
+* [`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load\(_:\))
 
 **ローカル URL およびコンテンツのローディング:**
 
-- [`loadFileRequest(_:allowingReadAccessTo:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadfilerequest(_:allowingreadaccessto:))
-- [`loadFileURL(_:allowingReadAccessTo:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadfileurl(_:allowingreadaccessto:))
-- [`loadHTMLString(_:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadhtmlstring(_:baseurl:))
-- [`load(_:mimeType:characterEncodingName:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:mimetype:characterencodingname:baseurl:))
+* [`loadFileRequest(_:allowingReadAccessTo:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadfilerequest\(_:allowingreadaccessto:\))
+* [`loadFileURL(_:allowingReadAccessTo:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadfileurl\(_:allowingreadaccessto:\))
+* [`loadHTMLString(_:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/loadhtmlstring\(_:baseurl:\))
+* [`load(_:mimeType:characterEncodingName:baseURL:)`](https://developer.apple.com/documentation/webkit/wkwebview/load\(_:mimetype:characterencodingname:baseurl:\))
 
 そのソースに関わらず、攻撃者が制御する入力 (たとえば、ディープリンク、カスタム URL スキーム、UI からのユーザー提供データを通じて) に由来する URL を `WKWebView` URL ロードメソッドに直接渡すと、不正なリダイレクト、クロスサイトスクリプティング (XSS)、ローカルファイルの露出といった脆弱性につながる可能性があります。
 
 このテストはアプリが適切な URL バリデーションなしで攻撃者が制御する入力を `WKWebView` URL ロード API に渡しているかどうかをチェックします。
 
-## 手順
+### 手順
 
-1. [アプリパッケージの探索 (Exploring the App Package)](../../../techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
+1. [アプリパッケージの探索 (Exploring the App Package)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0058.md) を使用して、アプリパッケージから関連するバイナリを抽出します。
 2. [iOS での静的解析 (Static Analysis on iOS)](../../../techniques/ios/MASTG-TECH-0066.md) を使用して、アプリバイナリ内の関連する API を探します。
 
-## 結果
+### 結果
 
 出力にはバイナリ内で `WKWebView` URL ロード API が呼び出される場所のリストを含む可能性があります。
 
-## 評価
+### 評価
 
 `WKWebView` URL ロード API への呼び出しが、適切なバリデーションなしで攻撃者が制御する入力に由来する URL で見つかった場合、そのテストケースは不合格です。
 
 **さらなるバリデーションが必要となります:**
 
-[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](../../../techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査します。
+[逆アセンブルされた Objective-C と Swift のコードをレビューする (Reviewing Disassembled Objective-C and Swift Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0076.md) を使用して報告された各コード箇所を検査します。
 
-- URL の由来を追跡します。
-- URL が攻撃者によって制御された入力 (たとえば、カスタム URL スキームパラメータ、ディープリンクコンポーネント、UI からのサニタイズされていないユーザー入力) に由来するかどうかを判断します。
-- URL が `WKWebView` URL ロード API に渡される前に適切に検証されていることを確認します。
+* URL の由来を追跡します。
+* URL が攻撃者によって制御された入力 (たとえば、カスタム URL スキームパラメータ、ディープリンクコンポーネント、UI からのサニタイズされていないユーザー入力) に由来するかどうかを判断します。
+* URL が `WKWebView` URL ロード API に渡される前に適切に検証されていることを確認します。

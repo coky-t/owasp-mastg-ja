@@ -3,9 +3,11 @@ title: メソッドトレース (Method Tracing)
 platform: ios
 ---
 
+# MASTG-TECH-0086 メソッドトレース (Method Tracing)
+
 Objective-C メソッドの傍受は有用な iOS セキュリティテスト技法です。たとえば、データストレージ操作やネットワークリクエストに関心があるかもしれません。以下の例では、iOS の標準 HTTP API 経由で行われた HTTP(S) リクエストをログ記録するためのシンプルなトレーサーを作成します。また、このトレーサーを Safari に注入する方法も示します。
 
-以下の例では、脱獄済みデバイスで作業していることを想定しています。そうでない場合、まず [Frida Gadget を IPA に自動的に注入する (Injecting Frida Gadget into an IPA Automatically)](MASTG-TECH-0090.md) で説明されている手順に従い、Safari アプリを Frida Gadget とともに再パッケージする必要があります。
+以下の例では、脱獄済みデバイスで作業していることを想定しています。そうでない場合、まず [Frida Gadget を IPA に自動的に注入する (Injecting Frida Gadget into an IPA Automatically)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/ios/MASTG-TECH-0090.md) で説明されている手順に従い、Safari アプリを Frida Gadget とともに再パッケージする必要があります。
 
 Frida には関数トレースツールである `frida-trace` が付属しています。`frida-trace` は `-m` フラグで Objective-C メソッドを受け付けます。ワイルドカードを渡すこともできます。たとえば、`-[NSURL *]` では `frida-trace` がすべての `NSURL` クラスセレクタに自動的にフックをインストールします。これを使用して、ユーザーが URL を開いたときに Safari がどのライブラリ関数を呼び出すかを大まかに把握します。
 

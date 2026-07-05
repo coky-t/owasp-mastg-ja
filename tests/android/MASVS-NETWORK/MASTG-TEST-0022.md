@@ -1,23 +1,31 @@
 ---
 masvs_v1_id:
-- MSTG-NETWORK-4
+  - MSTG-NETWORK-4
 masvs_v2_id:
-- MASVS-NETWORK-2
+  - MASVS-NETWORK-2
 platform: android
-title: カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)
+title: >-
+  カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate
+  Pinning)
 masvs_v1_levels:
-- L2
-profiles: [L2]
+  - L2
+profiles:
+  - L2
 status: deprecated
-covered_by: [MASTG-TEST-0242, MASTG-TEST-0243, MASTG-TEST-0244]
+covered_by:
+  - MASTG-TEST-0242
+  - MASTG-TEST-0243
+  - MASTG-TEST-0244
 deprecation_note: New version available in MASTG V2
 ---
 
-## 概要
+# MASTG-TEST-0022 カスタム証明書ストアおよび証明書ピン留めのテスト (Testing Custom Certificate Stores and Certificate Pinning)
 
-## 静的解析
+### 概要
 
-### Network Security Configuration
+### 静的解析
+
+#### Network Security Configuration
 
 Network Security Configuration を調べて `<pin-set>` 要素を探します。 `expiration` の日付がないか調べます。有効期限が切れると、影響を受けるドメインでは証明書ピン留めが無効になります。
 
@@ -27,13 +35,13 @@ Network Security Configuration を調べて `<pin-set>` 要素を探します。
 I/X509Util: Failed to validate the certificate chain, error: Pin verification failed
 ```
 
-### TrustManager
+#### TrustManager
 
 証明書ピン留めの実装には主に三つのステップがあります。
 
-- 目的のホストの証明書を取得します。
-- 証明書が .bks フォーマットであることを確認します。
-- 証明書をデフォルトの Apache Httpclient のインスタンスにピン留めします。
+* 目的のホストの証明書を取得します。
+* 証明書が .bks フォーマットであることを確認します。
+* 証明書をデフォルトの Apache Httpclient のインスタンスにピン留めします。
 
 証明書ピン留めの正しい実装を解析するには、HTTP クライアントがキーストアをロードする必要があります。
 
@@ -56,9 +64,9 @@ sslContext.init(null, tmf.getTrustManagers(), null);
 
 アプリの実装は証明書の公開鍵のみに対してピン留め、証明書全体に対して、証明書チェーン全体に対してとさまざまです。
 
-### ネットワークライブラリと WebView
+#### ネットワークライブラリと WebView
 
-サードパーティーネットワークライブラリを使用するアプリケーションはライブラリの証明書ピン留め機能を利用できます。例えば、[okhttp](https://github.com/square/okhttp/wiki/HTTPS "okhttp library") では `CertificatePinner` を使用して以下のようにセットアップできます。
+サードパーティーネットワークライブラリを使用するアプリケーションはライブラリの証明書ピン留め機能を利用できます。例えば、[okhttp](https://github.com/square/okhttp/wiki/HTTPS) では `CertificatePinner` を使用して以下のようにセットアップできます。
 
 ```java
 OkHttpClient client = new OkHttpClient.Builder()
@@ -94,7 +102,7 @@ myWebView.setWebViewClient(new WebViewClient(){
 
 あるいは、ピンが設定された OkHttpClient を使用し、それを `WebViewClient` の `shouldInterceptRequest` をオーバーライドするプロキシとして機能させるのがよいでしょう。
 
-### Xamarin アプリケーション (レガシー – サポート終了)
+#### Xamarin アプリケーション (レガシー – サポート終了)
 
 Xamarin は 2024 年 5 月 1 日をもって [サポート終了 (End of Support, EoS)](https://dotnet.microsoft.com/en-us/apps/xamarin) となり、今後セキュリティパッチやアップデートの提供はありません。新しいプロジェクトでは Microsoft がサポートするクロスプラットフォームの後継である [.NET MAUI](https://dotnet.microsoft.com/en-us/apps/maui) をターゲットにする必要があります。
 
@@ -134,18 +142,18 @@ Xamarin で開発されたアプリケーションは一般的に `ServicePointM
 
 この例では証明書チェーンの中間 CA をピン留めしています。HTTP レスポンスの出力はシステムログにあります。
 
-前述の例のサンプル Xamarin アプリは [MASTG リポジトリ](https://github.com/OWASP/mastg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk "Xamarin app with certificate pinning") から入手できます。
+前述の例のサンプル Xamarin アプリは [MASTG リポジトリ](https://github.com/OWASP/mastg/raw/master/Samples/Android/02_CertificatePinning/certificatePinningXamarin.apk) から入手できます。
 
 APK ファイルを展開した後、dotPeak, ILSpy, dnSpy などの .NET 逆コンパイラを使用して、'Assemblies' フォルダ内に格納されているアプリ dll を逆コンパイルし、ServicePointManager の使用箇所を確認します。
 
 詳しくはこちら。
 
-- Certificate and Public Key Pinning with Xamarin - <https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin>
-- ServicePointManager - <https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx>
+* Certificate and Public Key Pinning with Xamarin - [https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin](https://thomasbandt.com/certificate-and-public-key-pinning-with-xamarin)
+* ServicePointManager - [https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager(v=vs.110).aspx](https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager\(v=vs.110\).aspx)
 
-### Cordova アプリケーション
+#### Cordova アプリケーション
 
-Cordova ベースのハイブリッドアプリケーションはネイティブに証明書ピン留めをサポートしていないため、プラグインを使用してこれを達成します。 もっとも一般的なものは [PhoneGap SSL Certificate Checker](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin "PhoneGap SSL Certificate Checker plugin") です。`check` メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
+Cordova ベースのハイブリッドアプリケーションはネイティブに証明書ピン留めをサポートしていないため、プラグインを使用してこれを達成します。 もっとも一般的なものは [PhoneGap SSL Certificate Checker](https://github.com/EddyVerbruggen/SSLCertificateChecker-PhoneGap-Plugin) です。`check` メソッドを使用してフィンガープリントを確認し、コールバックが次のステップを決定します。
 
 ```javascript
   // Endpoint to verify against certificate pinning.
@@ -177,17 +185,17 @@ Cordova ベースのハイブリッドアプリケーションはネイティブ
 
 APK ファイルを展開した後、Cordova/Phonegap ファイルは /assets/www フォルダに置かれます。'plugins' フォルダに使用するプラグインがあります。アプリケーションの JavaScript コードでこのメソッドを検索して、その使用箇所を確認する必要があります。
 
-## 動的解析
+### 動的解析
 
 [エンドポイント同一性検証のテスト (Testing Endpoint Identify Verification)](MASTG-TEST-0021.md) の指示に従います。これを行ってもトラフィックがプロキシされない場合、証明書ピン留めが実際に実装され、すべてのセキュリティ対策が実施されていることを意味しているかもしれません。すべてのドメインで同じことが起こるでしょうか？
 
-簡単なスモークテストとしては、[証明書ピン留めのバイパス (Bypassing Certificate Pinning)](../../../techniques/android/MASTG-TECH-0012.md) で説明しているように [objection](../../../tools/generic/MASTG-TOOL-0038.md) を使用して証明書ピン留めをバイパスしてみることができます。objection によってフックされているピン留め関連の API は objection の出力に表示されるはずです。
+簡単なスモークテストとしては、[証明書ピン留めのバイパス (Bypassing Certificate Pinning)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0012.md) で説明しているように [objection](../../../tools/generic/MASTG-TOOL-0038.md) を使用して証明書ピン留めをバイパスしてみることができます。objection によってフックされているピン留め関連の API は objection の出力に表示されるはずです。
 
-<img src="../../../Document/Images/Chapters/0x05b/android_ssl_pinning_bypass.png" width="600px"/>
+![](../../../.gitbook/assets/android_ssl_pinning_bypass.png)
 
 ただし、以下に注意してください。
 
-- API は完全ではないかもしれません。
-- 何もフックされていないとしても、必ずしもアプリがピン留めを実装していないとは限りません。
+* API は完全ではないかもしれません。
+* 何もフックされていないとしても、必ずしもアプリがピン留めを実装していないとは限りません。
 
 いずれの場合にも、アプリやそのコンポーネントの一部が [objection でサポートされている](https://github.com/sensepost/objection/blob/master/agent/src/android/pinning.ts) 方法でカスタムピン留めを実装している可能性があります。具体的なピン留めの指標やより詳細なテストについては静的解析のセクションをご確認ください。

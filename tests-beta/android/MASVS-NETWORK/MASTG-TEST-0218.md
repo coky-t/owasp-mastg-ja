@@ -2,12 +2,18 @@
 title: ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
 platform: android
 id: MASTG-TEST-0218
-type: [dynamic, network]
+type:
+  - dynamic
+  - network
 weakness: MASWE-0050
-profiles: [L1, L2]
+profiles:
+  - L1
+  - L2
 ---
 
-## 概要
+# MASTG-TEST-0218 ネットワークトラフィックにおける安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
+
+### 概要
 
 静的解析は安全でない TLS バージョンを許可する構成を識別できますが、ライブ通信で使用される実際のプロトコルを正確に反映していない可能性があります。これは、実行時にクライアント (アプリ) とサーバーの間で TLS のバージョンネゴシエーションが行われ、最も安全で相互にサポートしているバージョンに合意するためです。
 
@@ -15,16 +21,16 @@ profiles: [L1, L2]
 
 静的解析が不完全または実行不可能な場合には、ネットワークトラフィックを調べることで、安全でない TLS バージョン (TLS 1.0 や TLS 1.1 など) がアクティブに使用されているインスタンスを明らかにできます。
 
-## 手順
+### 手順
 
-1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
-2. [基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](../../../techniques/android/MASTG-TECH-0010.md) を使用して、アプリトラフィックをキャプチャします。
+1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+2. [基本的なネットワークモニタリング/スニッフィング (Basic Network Monitoring/Sniffing)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0010.md) を使用して、アプリトラフィックをキャプチャします。
 3. アプリを徹底的に動かして、できるだけ多くのフローをトリガーし、可能な限り機密データを入力します。
 
-## 結果
+### 結果
 
 出力には接続時に実際に使用されている TLS バージョンを含む可能性があります。
 
-## 評価
+### 評価
 
 [安全でない TLS バージョン](../../../Document/0x04f-Testing-Network-Communication.md#recommended-tls-settings) が使用されている場合、テストケースは不合格です。

@@ -3,13 +3,15 @@ title: システムログの監視 (Monitoring System Logs)
 platform: android
 ---
 
-Android では、[`Logcat`](https://developer.android.com/tools/debugging/debugging-log.html "Debugging with Logcat") を使用することで、システムメッセージのログを簡単に調査できます。Logcat を実行するには二つの方法があります。
+# MASTG-TECH-0009 システムログの監視 (Monitoring System Logs)
 
-- Android Studio では、アプリがデバッグモードで実行している場合、ログ出力は **Logcat** ウィンドウに表示されます (**View** -> **Tool Windows** -> **Logcat** でアクセスできます)。Logcat でパターンを定義することで、アプリのログ出力をフィルタできます。
+Android では、[`Logcat`](https://developer.android.com/tools/debugging/debugging-log.html) を使用することで、システムメッセージのログを簡単に調査できます。Logcat を実行するには二つの方法があります。
 
-<img src="../../Document/Images/Chapters/0x05b/log_output_Android_Studio.png" width="100%" />
+* Android Studio では、アプリがデバッグモードで実行している場合、ログ出力は **Logcat** ウィンドウに表示されます (**View** -> **Tool Windows** -> **Logcat** でアクセスできます)。Logcat でパターンを定義することで、アプリのログ出力をフィルタできます。
 
-- [adb](../../tools/android/MASTG-TOOL-0004.md) で Logcat を実行すると、ログ出力を永続的に保存できます。
+![](<../../.gitbook/assets/log_output_Android_Studio (1).png>)
+
+* [adb](../../tools/android/MASTG-TOOL-0004.md) で Logcat を実行すると、ログ出力を永続的に保存できます。
 
 ```bash
 adb logcat > logcat.log

@@ -4,17 +4,19 @@ platform: android
 title: アンチデバッグ (Anti-Debugging)
 ---
 
+# MASTG-KNOW-0028 アンチデバッグ (Anti-Debugging)
+
 デバッグはアプリのランタイム動作を解析する非常に効果的な方法です。これによりリバースエンジニアがコードをステップ実行し、任意の箇所でアプリの実行を停止し、変数の状態を検査し、メモリを読み取りおよび変更し、さらに多くのことを可能にします。
 
 アンチデバッグ機能には予防型と反応型があります。名前が示すように、予防型アンチデバッグはまず第一にデバッガがアタッチすることを防ぎます。反応型アンチデバッグはデバッガを検出し、何らかの方法でそれに反応します (アプリの終了や隠された動作のトリガなど) 。「多ければ多いほど良い」ルールが適用されます。効果を最大限にするため、防御側は、さまざまな API レイヤーで動作しアプリ全体に分散される、複数の予防と検出の手法を組み合わせます。
 
 "リバースエンジニアリングと改竄" の章で述べたように、 Android では二つの異なるデバッグプロトコルを扱う必要があります。 JDWP を使用した Java レベルと、 ptrace ベースのデバッガを使用したネイティブレイヤーでデバッグが可能です。優れたアンチデバッグスキームでは両方のデバッグタイプに対して防御する必要があります。
 
-## JDWP アンチデバッグ
+### JDWP アンチデバッグ
 
 "リバースエンジニアリングと改竄" の章では、デバッガと Java 仮想マシンとの間の通信に使用されるプロトコルである JDWP について説明しました。マニフェストファイルにパッチを適用して任意のアプリを容易にデバッグ可能にできることや、 `ro.debuggable` システムプロパティを変更することであらゆるアプリをデバッグ可能にできることを示しました。開発者が JDWP デバッガを検出および無効にするために行ういくつかのことを見てみます。
 
-## ApplicationInfo のデバッグ可能フラグの確認
+### ApplicationInfo のデバッグ可能フラグの確認
 
 すでに `android:debuggable` 属性は出てきています。 Android Manifest のこのフラグは JDWP スレッドがアプリに対して起動されるかどうかを決定します。その値はアプリの `ApplicationInfo` オブジェクトを使用してプログラムで決定できます。このフラグが設定されている場合、これはマニフェストが改竄されてデバッグ可能になっています。
 
@@ -26,7 +28,7 @@ title: アンチデバッグ (Anti-Debugging)
     }
 ```
 
-## isDebuggerConnected
+### isDebuggerConnected
 
 これはリバースエンジニアにとって当たり前かもしれませんが、 `android.os.Debug` クラスの `isDebuggerConnected` を使用してデバッガが接続されているかどうかを確認できます。
 
@@ -46,9 +48,9 @@ JNIEXPORT jboolean JNICALL Java_com_test_debugging_DebuggerConnectedJNI(JNIenv *
 }
 ```
 
-## タイマーチェック
+### タイマーチェック
 
-`Debug.threadCpuTimeNanos` は現在のスレッドがコードの実行に費やした時間量を示します。デバッグはプロセスの実行を遅くするため、 [実行時間の違いを使用して、デバッガがアタッチされているかどうかを推測することができます](https://www.yumpu.com/en/document/read/15228183/android-reverse-engineering-defenses-bluebox-labs "Bluebox Security - Android Reverse Engineering & Defenses") 。
+`Debug.threadCpuTimeNanos` は現在のスレッドがコードの実行に費やした時間量を示します。デバッグはプロセスの実行を遅くするため、 [実行時間の違いを使用して、デバッガがアタッチされているかどうかを推測することができます](https://www.yumpu.com/en/document/read/15228183/android-reverse-engineering-defenses-bluebox-labs) 。
 
 ```java
 static boolean detect_threadCpuTimeNanos(){
@@ -68,9 +70,9 @@ static boolean detect_threadCpuTimeNanos(){
 }
 ```
 
-## JDWP 関連のデータ構造への干渉
+### JDWP 関連のデータ構造への干渉
 
-### DvmGlobals 構造体 (Android 5.0 以前)
+#### DvmGlobals 構造体 (Android 5.0 以前)
 
 Dalvik では、グローバル仮想マシンの状態は `DvmGlobals` 構造体を介してアクセス可能です。グローバル変数 gDvm はこの構造体へのポイントを保持しています。 `DvmGlobals` には JDWP デバッグに重要なさまざまな変数やポインタが含まれており、改竄可能です。
 
@@ -98,7 +100,7 @@ struct DvmGlobals {
 };
 ```
 
-例えば、 [gDvm.methDalvikDdmcServer_dispatch 関数ポインタに NULL を設定すると JDWP スレッドがクラッシュします](https://github.com/crazykid95/Backup-Mobile-Security-Report/blob/master/AndroidREnDefenses201305.pdf "Bluebox Security - Android Reverse Engineering & Defenses")。
+例えば、 [gDvm.methDalvikDdmcServer\_dispatch 関数ポインタに NULL を設定すると JDWP スレッドがクラッシュします](https://github.com/crazykid95/Backup-Mobile-Security-Report/blob/master/AndroidREnDefenses201305.pdf)。
 
 ```c
 JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
@@ -106,9 +108,9 @@ JNIEXPORT jboolean JNICALL Java_poc_c_crashOnInit ( JNIEnv* env , jobject ) {
 }
 ```
 
-### JdwpAdbState 構造体 (Android 5.0 および以降)
+#### JdwpAdbState 構造体 (Android 5.0 および以降)
 
-gDvm 変数が利用できない場合でも、 ART で同様の技法を使用してデバッグを無効にできます。 ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、 vtable はクラスメソッドのポインタを保持するテーブルです) 。これには `JdwpSocketState` および `JdwpAdbState` クラスの vtable を含んでおり、これらはネットワークソケットと [adb](../../../tools/android/MASTG-TOOL-0004.md) を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作は [関連する vtable のメソッドポインタを上書きすることにより](https://web.archive.org/web/20200307152820/https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art "Anti-Debugging Fun with Android ART") (archived) 操作できます。
+gDvm 変数が利用できない場合でも、 ART で同様の技法を使用してデバッグを無効にできます。 ART ランタイムは JDWP 関連のクラスの vtable の一部をグローバルシンボルとしてエクスポートします (C++ では、 vtable はクラスメソッドのポインタを保持するテーブルです) 。これには `JdwpSocketState` および `JdwpAdbState` クラスの vtable を含んでおり、これらはネットワークソケットと [adb](../../../tools/android/MASTG-TOOL-0004.md) を介した JDWP 接続をそれぞれ処理します。デバッグランタイムの動作は [関連する vtable のメソッドポインタを上書きすることにより](https://web.archive.org/web/20200307152820/https://www.vantagepoint.sg/blog/88-anti-debugging-fun-with-android-art) (archived) 操作できます。
 
 メソッドポインタを上書きするための方法のひとつは `jdwpAdbState::ProcessIncoming` のアドレスを `JdwpAdbState::Shutdown` のアドレスで上書きすることです。これによりデバッガは直ちに切断されます。
 
@@ -174,19 +176,19 @@ JNIEXPORT void JNICALL Java_sg_vantagepoint_jdwptest_MainActivity_JDWPfun(
 }
 ```
 
-## 従来のアンチデバッグ
+### 従来のアンチデバッグ
 
-Linux では、 [`ptrace` システムコール](http://man7.org/linux/man-pages/man2/ptrace.2.html "Ptrace man page") を使用して、プロセス (_tracee_) の実行を監視および制御し、そのプロセスのメモリとレジスタを調べて変更します。 `ptrace` はネイティブコードでシステムコールトレースとブレークポイントデバッグを実装する主要な方法です。ほとんどの JDWP アンチデバッグトリック (タイマーベースのチェックには安全かもしれません) は `ptrace` をベースとする従来のデバッガをキャッチしないため、多くの Android アンチデバッグトリックには `ptrace` が含まれており、一つのプロセスにアタッチできるのは一度に一つのデバッガのみであるという事実を悪用することがよくあります。
+Linux では、 [`ptrace` システムコール](http://man7.org/linux/man-pages/man2/ptrace.2.html) を使用して、プロセス (_tracee_) の実行を監視および制御し、そのプロセスのメモリとレジスタを調べて変更します。 `ptrace` はネイティブコードでシステムコールトレースとブレークポイントデバッグを実装する主要な方法です。ほとんどの JDWP アンチデバッグトリック (タイマーベースのチェックには安全かもしれません) は `ptrace` をベースとする従来のデバッガをキャッチしないため、多くの Android アンチデバッグトリックには `ptrace` が含まれており、一つのプロセスにアタッチできるのは一度に一つのデバッガのみであるという事実を悪用することがよくあります。
 
-## TracerPid のチェック
+### TracerPid のチェック
 
-アプリをデバッグしてネイティブコードにブレークポイントを設定する際、 Android Studio はターゲットデバイスに必要なファイルをコピーし、プロセスにアタッチするために `ptrace` を使用する lldb-server を起動します。この時点で、デバッグされるプロセスの [ステータスファイル](http://man7.org/linux/man-pages/man5/proc.5.html "/proc/[pid]/status") (`/proc/<pid>/status` または `/proc/self/status`) を検査すると、 "TracerPid" フィールドは 0 とは異なる値を持つことがわかります。これはデバッグの兆候です。
+アプリをデバッグしてネイティブコードにブレークポイントを設定する際、 Android Studio はターゲットデバイスに必要なファイルをコピーし、プロセスにアタッチするために `ptrace` を使用する lldb-server を起動します。この時点で、デバッグされるプロセスの [ステータスファイル](http://man7.org/linux/man-pages/man5/proc.5.html) (`/proc/<pid>/status` または `/proc/self/status`) を検査すると、 "TracerPid" フィールドは 0 とは異なる値を持つことがわかります。これはデバッグの兆候です。
 
 > **これはネイティブコードにのみ適用される** ことに注意します。 Java/Kotlin のみのアプリをデバッグする場合には "TracerPid" フィールドの値は 0 になります。
 
-この技法は通常 JNI ネイティブライブラリ内の C で適用されます。これは [TracerPid と ptrace でのネイティブなアンチデバッグチェック (Native Anti-Debugging Checks with TracerPid and ptrace)](../../demos/android/MASVS-RESILIENCE/MASTG-DEMO-0116/MASTG-DEMO-0116.md) に示されています。ただし、このチェックを Java/Kotlin コードの一部として含める場合は、 [Tim Strazzere の Anti-Emulator プロジェクト](https://github.com/strazzere/anti-emulator/ "anti-emulator") から `hasTracerPid` メソッドの Java 実装を参照します。
+この技法は通常 JNI ネイティブライブラリ内の C で適用されます。これは [TracerPid と ptrace でのネイティブなアンチデバッグチェック (Native Anti-Debugging Checks with TracerPid and ptrace)](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/demos/android/MASVS-RESILIENCE/MASTG-DEMO-0116/MASTG-DEMO-0116.md) に示されています。ただし、このチェックを Java/Kotlin コードの一部として含める場合は、 [Tim Strazzere の Anti-Emulator プロジェクト](https://github.com/strazzere/anti-emulator/) から `hasTracerPid` メソッドの Java 実装を参照します。
 
-このようなメソッドを自分で実装しようとする場合は、 [adb](../../../tools/android/MASTG-TOOL-0004.md) で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni "hello-jni sample") を使用して、lldb ([lldb (Android)](../../tools/android/MASTG-TOOL-0152.md)) をアタッチした後にチェックを実行しています。
+このようなメソッドを自分で実装しようとする場合は、 [adb](../../../tools/android/MASTG-TOOL-0004.md) で TracerPid の値を手動で確認できます。以下のリストは Google の NDK サンプルアプリ [hello-jni (com.example.hellojni)](https://github.com/android/ndk-samples/tree/android-mk/hello-jni) を使用して、lldb ([lldb (Android)](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/tools/android/MASTG-TOOL-0152.md)) をアタッチした後にチェックを実行しています。
 
 ```bash
 $ adb shell ps -A | grep com.example.hellojni
@@ -199,7 +201,7 @@ root      11839 11837   14024   4548 poll_schedule_timeout 0 S lldb-server
 
 com.example.hellojni (PID=11657) のステータスファイルに 11839 の TracerPID がどのように含まれているかを確認できます。これは lldb-server プロセスとして識別できます。
 
-## fork と ptrace の使用
+### fork と ptrace の使用
 
 以下の簡単なコード例のようなコードを介して、子プロセスをフォークし、デバッガとして親プロセスにアタッチすることで、プロセスのデバッグを防止できます。
 
@@ -242,14 +244,14 @@ Exiting
 
 ただし、子プロセスを強制終了し、親プロセスがトレースから "解放" することで、この失敗を簡単にバイパスできます。したがって、複数のプロセスとスレッド、および改竄を阻止するための何らかの形の監視を含む、より緻密なスキームが通常見つかります。一般的な手法は以下のとおりです。
 
-- 互いにトレースする複数のプロセスをフォークします。
-- 実行中のプロセスを追跡して子プロセスが生存していることを確認します。
-- `/proc/pid/status` の TracerPID など、 `/proc` ファイルシステムの値を監視します。
+* 互いにトレースする複数のプロセスをフォークします。
+* 実行中のプロセスを追跡して子プロセスが生存していることを確認します。
+* `/proc/pid/status` の TracerPID など、 `/proc` ファイルシステムの値を監視します。
 
 上記の手法について簡単に改良してみましょう。最初の `fork` の後で、子プロセスのステータスを継続的に監視する追加のスレッドを親プロセスで起動します。アプリがデバッグモードまたはリリースモードのいずれでビルドされたか (マニフェストの `android:debuggable` フラグで示されます) に応じて、子プロセスは以下のいずれかを実行する必要があります。
 
-- リリースモードの場合: ptrace のコールが失敗し、子プロセスはセグメンテーションフォルト (終了コード 11) で直ちにクラッシュします。
-- デバッグモードの場合: ptrace のコールは機能し、子プロセスは無期限に実行されるはずです。したがって、 `waitpid(child_pid)` のコールは決して戻らないでしょう。もし戻るようであれば、何かが怪しいのでプロセスグループ全体を強制終了します。
+* リリースモードの場合: ptrace のコールが失敗し、子プロセスはセグメンテーションフォルト (終了コード 11) で直ちにクラッシュします。
+* デバッグモードの場合: ptrace のコールは機能し、子プロセスは無期限に実行されるはずです。したがって、 `waitpid(child_pid)` のコールは決して戻らないでしょう。もし戻るようであれば、何かが怪しいのでプロセスグループ全体を強制終了します。
 
 以下は JNI 関数でこの改善を実装するための完全なコードです。
 

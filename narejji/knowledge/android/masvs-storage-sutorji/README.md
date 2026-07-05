@@ -1,0 +1,2 @@
+# MASVS-STORAGE: ストレージ
+

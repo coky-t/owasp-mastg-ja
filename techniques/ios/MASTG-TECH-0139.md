@@ -3,7 +3,7 @@ title: WKWebView にアタッチする (Attach to WKWebView)
 platform: ios
 ---
 
-## Safari Web Inspector
+# MASTG-TECH-0139 WKWebView にアタッチする (Attach to WKWebView)
 
 iOS で [Safari Web Inspector](https://developer.apple.com/library/archive/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/GettingStarted/GettingStarted.html) を有効にすると、リモートで [macOS デバイスから WebView のコンテンツを検査](https://developer.apple.com/documentation/safari-developer-tools/inspecting-ios) できます。これは、ハイブリッドアプリなど、JavaScript ブリッジを使用してネイティブ API を公開するアプリで特に役立ちます。
 
@@ -17,7 +17,7 @@ if #available(iOS 16.4, *) {
 }
 ```
 
-App Store からインストールされたアプリでも、アプリが `WKWebView.isInspectable = true` を有効にしていれば、検査されます。脱獄済みデバイスでは、[GlobalWebInspect](../../tools/ios/MASTG-TOOL-0137.md) を使用して、自身がオプトインしていないアプリで WebView 検査を強制的に有効にできます。インストール後、Safari Web Inspector はこれらのアプリ内で `WKWebView` ([WebView (WebViews)](../../knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0076.md)) インスタンスにアタッチできます。
+App Store からインストールされたアプリでも、アプリが `WKWebView.isInspectable = true` を有効にしていれば、検査されます。脱獄済みデバイスでは、[GlobalWebInspect](../../tools/ios/MASTG-TOOL-0137.md) を使用して、自身がオプトインしていないアプリで WebView 検査を強制的に有効にできます。インストール後、Safari Web Inspector はこれらのアプリ内で `WKWebView` ([WebView (WebViews)](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0076.md)) インスタンスにアタッチできます。
 
 ウェブインスペクションを有効にするには、以下の手順に従います。
 
@@ -33,10 +33,8 @@ Web Inspector を開いて WebView をデバッグするには:
 
 これで、デスクトップブラウザで通常のウェブページと同様に、WebView をデバッグできます。
 
-<img src="../../Document/Images/Tools/TOOL-0137-safari-dev.png" width="400px"/>
+![](../../.gitbook/assets/TOOL-0137-safari-dev.png)
 
 すべてが正しく設定されていれば、Safari で任意の WebView にアタッチできます。
 
-<img src="../../Document/Images/Tools/TOOL-0137-attach-webview.png" width="400px"/>
-
-<img src="../../Document/Images/Tools/TOOL-0137-web-inspector.png" width="400px"/>
+![](../../.gitbook/assets/TOOL-0137-attach-webview.png) ![](../../.gitbook/assets/TOOL-0137-web-inspector.png)

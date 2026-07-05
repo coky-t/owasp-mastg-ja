@@ -2,14 +2,23 @@
 platform: android
 title: バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
 id: MASTG-TEST-0216
-type: [dynamic, filesystem]
+type:
+  - dynamic
+  - filesystem
 weakness: MASWE-0004
-best-practices: [MASTG-BEST-0004]
-profiles: [L1, L2, P]
-knowledge: [MASTG-KNOW-0050]
+best-practices:
+  - MASTG-BEST-0004
+profiles:
+  - L1
+  - L2
+  - P
+knowledge:
+  - MASTG-KNOW-0050
 ---
 
-## 概要
+# MASTG-TEST-0216 バックアップから除外されない機密データ (Sensitive Data Not Excluded From Backup)
+
+### 概要
 
 このテストでは、アプリデータのバックアップとリストアを実行し、復元されるファイルをチェックすることで、バックアップから機密ファイルを除外するように、アプリがシステムに正しく指示しているかどうかを検証します。
 
@@ -17,18 +26,18 @@ knowledge: [MASTG-KNOW-0050]
 
 Android はバックアップデーモンを起動してアプリファイルをバックアップおよびリストアする方法を提供しており、これを使用して、バックアップから実際にリストアされたファイルを検証できます。
 
-## 手順
+### 手順
 
-1. [アプリのインストール (Installing Apps)](../../../techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
+1. [アプリのインストール (Installing Apps)](https://github.com/coky-t/owasp-mastg-ja/blob/master/techniques/android/MASTG-TECH-0005.md) を使用して、アプリをインストールします。
 2. アプリを起動して使用し、さまざまなワークフローを実行しながら、可能な限り機密データを入力します。
 3. [アプリデータのバックアップとリストアの実行 (Performing a Backup and Restore of App Data)](../../../techniques/android/MASTG-TECH-0128.md) を使用して、アプリデータのバックアップとリストアを実行します。
 4. アプリをアンインストールして再インストールしますが、開きはしません。
 5. バックアップからデータをリストアして、リストアされたファイルのリストを取得します。
 
-## 結果
+### 結果
 
 出力にはバックアップからリストアされたファイルのリストを含む可能性があります。
 
-## 評価
+### 評価
 
 いずれかのファイルが機密であるとみなされる場合、そのテストケースは不合格です。

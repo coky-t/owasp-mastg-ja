@@ -4,22 +4,24 @@ platform: ios
 source: https://github.com/rockbruno/swiftshield
 ---
 
+# MASTG-TOOL-0068 SwiftShield
+
 SwiftShield は、iOS プロジェクトのオブジェクト (Pods や Storyboards など) に対して不可逆で暗号化された名前を生成するツールです。これはリバースエンジニアのハードルを上げ、class-dump や Frida などのリバースエンジニアリングツールを使用するときにあまり役に立たない出力を生成します。
 
 > 警告: SwiftShield はすべてのソースファイルを不可逆的に上書きします。理想的には、CI サーバー上およびリリースビルドでのみ実行すべきです。
 
 サンプルの Swift プロジェクトを使用して、SwiftShield の使い方を示します。
 
-- [sushi2k/SwiftSecurity](https://github.com/sushi2k/SwiftSecurity) をチェックアウトしてください。
-- Xcode でプロジェクトを開き、プロジェクトが正常にビルドされていることを確認します (Product / Build または Apple-Key + B)。
-- SwiftShield の最新リリースを [ダウンロード](https://github.com/rockbruno/swiftshield/releases "SwiftShield Download") して展開します。
-- SwiftShield をダウンロードしたディレクトリに移動し、swiftshield 実行ファイルを `/usr/local/bin` にコピーします。
+* [sushi2k/SwiftSecurity](https://github.com/sushi2k/SwiftSecurity) をチェックアウトしてください。
+* Xcode でプロジェクトを開き、プロジェクトが正常にビルドされていることを確認します (Product / Build または Apple-Key + B)。
+* SwiftShield の最新リリースを [ダウンロード](https://github.com/rockbruno/swiftshield/releases) して展開します。
+* SwiftShield をダウンロードしたディレクトリに移動し、swiftshield 実行ファイルを `/usr/local/bin` にコピーします。
 
 ```bash
 cp swiftshield/swiftshield /usr/local/bin/
 ```
 
-- ターミナルで SwiftSecurity ディレクトリ (手順 1 でチェックアウトしたもの) に移動し、swiftshield コマンド (手順 3 でダウンロードしたもの) を実行します。
+* ターミナルで SwiftSecurity ディレクトリ (手順 1 でチェックアウトしたもの) に移動し、swiftshield コマンド (手順 3 でダウンロードしたもの) を実行します。
 
 ```bash
 $ cd SwiftSecurity
@@ -39,11 +41,11 @@ Found declaration of checkExistenceOfSuspiciousFiles (s:13SwiftSecurity30Reverse
 
 オリジナルのソースコードでは、すべてのクラスとメソッドの識別子を確認できます。
 
-<img src="../../Document/Images/Chapters/0x06j/no_obfuscation.jpg" width="400px" />
+![](../../.gitbook/assets/no_obfuscation.jpg)
 
 ここで SwiftShield は、クラスやメソッドのオリジナルの名前や意図の痕跡を残さない、暗号化した値にそれらすべてを置き換えました。
 
-<img src="../../Document/Images/Chapters/0x06j/swiftshield_obfuscated.jpg" width="400px" />
+![](../../.gitbook/assets/swiftshield_obfuscated.jpg)
 
 `swiftshield` を実行すると、`swiftshield-output` という新しいディレクトリが作成されます。このディレクトリには、フォルダ名にタイムスタンプが付いた別のディレクトリが作成されます。このディレクトリには `conversionMap.txt` というテキストファイルがあり、暗号化した値とオリジナルの値をマップします。
 
@@ -64,6 +66,6 @@ Deny_Debugger ===> lKEITOpOvLWCFgSCKZdUtpuqiwlvxSjx
 Button_Emulator ===> akcVscrZFdBBYqYrcmhhyXAevNdXOKeG
 ```
 
-これは [暗号化されたクラッシュログの難読化を解除](https://github.com/rockbruno/swiftshield#-deobfuscating-encrypted-crash-logs "Deobfuscating encrypted Crash logs") するために必要です。
+これは [暗号化されたクラッシュログの難読化を解除](https://github.com/rockbruno/swiftshield#-deobfuscating-encrypted-crash-logs) するために必要です。
 
-別のサンプルプロジェクトが SwiftShield の [GitHub リポジトリ](https://github.com/rockbruno/swiftshield/tree/master/ExampleProject "SwiftShieldExample") にあり、SwiftShield の実行をテストするために使用できます。
+別のサンプルプロジェクトが SwiftShield の [GitHub リポジトリ](https://github.com/rockbruno/swiftshield/tree/master/ExampleProject) にあり、SwiftShield の実行をテストするために使用できます。

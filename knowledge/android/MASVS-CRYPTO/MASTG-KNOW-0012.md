@@ -4,6 +4,8 @@ platform: android
 title: 鍵生成 (Key Generation)
 ---
 
+# MASTG-KNOW-0012 鍵生成 (Key Generation)
+
 Android SDK は鍵をどのように生成し、どのような状況で使用できるかを指定できます。Android 6.0 (API レベル 23) ではアプリケーションで正しい鍵の使用を保証するために使用できる `KeyGenParameterSpec` クラスを導入しました。以下に例を示します。
 
 ```java
@@ -25,7 +27,7 @@ SecretKey secretKey = keyGenerator.generateKey();
 
 `KeyGenParameterSpec` は鍵を暗号化および復号化に使用できることを示しますが、署名や検証などの他の目的には使用できません。さらに、ブロックモード (CBC) 、パディング (PKCS #7) を指定し、ランダム化された暗号化が必要である (これがデフォルトです) ことを明示的に指定します。次に、`KeyGenerator.getInstance` 呼び出しでプロバイダの名前として `AndroidKeyStore` を入力し、鍵が Android KeyStore に保存されることを確保します。
 
-GCM は [認証付き暗号](https://en.wikipedia.org/wiki/Authenticated_encryption "Authenticated encryption") を提供する AES モードであり、HMAC などの別のメカニズムを必要とする CBC などの古いモードとは異なり、暗号化とデータ認証を単一プロセスに統合することでセキュリティを強化します。さらに、GCM はパディングを必要としないため、実装を簡易化し、脆弱性を最小限に抑えます。
+GCM は [認証付き暗号](https://en.wikipedia.org/wiki/Authenticated_encryption) を提供する AES モードであり、HMAC などの別のメカニズムを必要とする CBC などの古いモードとは異なり、暗号化とデータ認証を単一プロセスに統合することでセキュリティを強化します。さらに、GCM はパディングを必要としないため、実装を簡易化し、脆弱性を最小限に抑えます。
 
 上記の仕様に違反して生成された鍵の使用を試みるとセキュリティ例外が発生します。
 
@@ -114,8 +116,6 @@ public static SecretKey generateStrongAESKey(char[] password, int keyLength)
 
 上記の手法ではパスワードと必要なビット長の鍵 (例えば 128 または 256 ビットの AES 鍵) を含む文字配列が必要です。 PBKDF2 アルゴリズムにより使用される 10,000 ラウンドの反復回数を定義します。反復回数を増やすことでパスワードに対するブルートフォース攻撃の作業負荷が大幅に増加しますが、鍵導出にはより多くの計算能力が必要になるためパフォーマンスに影響を与える可能性があります。ビットからバイトに変換するために鍵長を 8 で除算した値に等しいソルトサイズを定義し、 `SecureRandom` クラスを使用してランダムにソルトを生成します。同じパスワードが与えられた際には何度でも同じ暗号鍵が生成されることを確実にするために、このソルトは一定に保つ必要があります。ソルトを `SharedPreferences` に非公開で格納できることに注意します。リスクの高いデータの場合には同期を防ぐために Android のバックアップメカニズムからソルトを除外することを推奨します。
 
-> [!NOTE]
-> ルート化デバイスやパッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、 `AndroidKeystore` に配置された鍵でソルトを暗号化するほうがよいかもしれません。 Password-Based Encryption (PBE) 鍵は Android 8.0 (API レベル 26) まで、推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。より高い API レベルでは、より長いハッシュ値を生成する `PBKDF2withHmacSHA256` を使用することが最適です。
+> \[!NOTE] ルート化デバイスやパッチ適用 (再パッケージなど) されたアプリケーションをデータの脅威として考慮すると、 `AndroidKeystore` に配置された鍵でソルトを暗号化するほうがよいかもしれません。 Password-Based Encryption (PBE) 鍵は Android 8.0 (API レベル 26) まで、推奨される `PBKDF2WithHmacSHA1` アルゴリズムを使用して生成されます。より高い API レベルでは、より長いハッシュ値を生成する `PBKDF2withHmacSHA256` を使用することが最適です。
 
-> [!NOTE]
-> NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムは効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを特定し、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Frida で抽出された鍵、またはその両方を組み合わせた [r2frida](../tools/generic/MASTG-TOOL-0036.md) (詳細は [ネイティブコードの逆アセンブル (Disassembling Native Code)](../techniques/android/MASTG-TECH-0018.md), [プロセス調査 (Process Exploration)](../techniques/android/MASTG-TECH-0044.md) を参照) で解析することができます。Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されていません。代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html "Android changes for NDK developers") で説明されているように隠蔽の有効性にさらに影響を与えます。
+> \[!NOTE] NDK を使用して暗号化操作とハードコードされた鍵を隠す必要があるという誤解が広まっています。しかし、このメカニズムは効果的ではありません。攻撃者は依然としてツールを使用して、使用されているメカニズムを特定し、メモリ内の鍵のダンプを作成します。次に、制御フローは例えば radare2 と、 Frida で抽出された鍵、またはその両方を組み合わせた [r2frida](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/android/tools/generic/MASTG-TOOL-0036.md) (詳細は [ネイティブコードの逆アセンブル (Disassembling Native Code)](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/android/techniques/android/MASTG-TECH-0018.md), [プロセス調査 (Process Exploration)](https://github.com/coky-t/owasp-mastg-ja/blob/master/knowledge/android/techniques/android/MASTG-TECH-0044.md) を参照) で解析することができます。Android 7.0 (API レベル 24) 以降では、プライベート API の使用が許可されていません。代わりにパブリック API を呼び出す必要があります。これは [Android 開発者ブログ](https://android-developers.googleblog.com/2016/06/android-changes-for-ndk-developers.html) で説明されているように隠蔽の有効性にさらに影響を与えます。
