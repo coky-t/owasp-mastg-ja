@@ -94,6 +94,7 @@
   - [MASTG-BEST-0046 エミュレーションに対する堅牢化 (Hardening Against Emulation)](best-practices/MASTG-BEST-0046.md)
   - [MASTG-BEST-0047 継続的なアンチデバッグチェック (Continuous Anti-Debugging Checks)](best-practices/MASTG-BEST-0047.md)
   - [MASTG-BEST-0055 カスタム URL スキームハンドラでソースアプリケーションを検証する (Validate Source Application in Custom URL Scheme Handlers)](best-practices/MASTG-BEST-0055.md)
+  - [MASTG-BEST-0056 内部 IPC には明示的なインテントを使用する (Use Explicit Intents for Internal IPC)](best-practices/MASTG-BEST-0056.md)
 
 ### ナレッジ
 

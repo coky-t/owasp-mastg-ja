@@ -61,8 +61,8 @@
 - [MASTG-BEST-0054](best-practices/MASTG-BEST-0054.md) カスタム URL スキームハンドラで入力パラメータを検証する (Validate Input Parameters in Custom URL Scheme Handlers)
 -->
 - [MASTG-BEST-0055](best-practices/MASTG-BEST-0055.md) カスタム URL スキームハンドラでソースアプリケーションを検証する (Validate Source Application in Custom URL Scheme Handlers)
-<!--
 - [MASTG-BEST-0056](best-practices/MASTG-BEST-0056.md) 内部 IPC には明示的なインテントを使用する (Use Explicit Intents for Internal IPC)
+<!--
 - [MASTG-BEST-0057](best-practices/MASTG-BEST-0057.md) 外部コンポーネントから取得したデータをサニタイズする (Sanitize Data Coming from External Components)
 - [MASTG-BEST-0058](best-practices/MASTG-BEST-0058.md) WebView ブリッジを介して開示されるネイティブ機能を制限する (Restrict Native Functionality Exposed Through WebView Bridges)
 - [MASTG-BEST-0059](best-practices/MASTG-BEST-0059.md) WebView 上でのネイティブビューとしてセンシティブ UI を描画する (Render Sensitive UI as Native Views Over the WebView)
