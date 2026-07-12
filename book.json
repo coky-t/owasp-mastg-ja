@@ -1,9 +1,0 @@
-{
-  "root" : ".",
-  "plugins" : [ "anchors" ],
-
-  "structure": {
-    "readme": "README.md"
-  }
-
-}
