@@ -65,7 +65,9 @@
 <!--
 - [MASTG-BEST-0057](best-practices/MASTG-BEST-0057.md) 外部コンポーネントから取得したデータをサニタイズする (Sanitize Data Coming from External Components)
 - [MASTG-BEST-0058](best-practices/MASTG-BEST-0058.md) WebView ブリッジを介して開示されるネイティブ機能を制限する (Restrict Native Functionality Exposed Through WebView Bridges)
+-->
 - [MASTG-BEST-0059](best-practices/MASTG-BEST-0059.md) WebView 上でのネイティブビューとしてセンシティブ UI を描画する (Render Sensitive UI as Native Views Over the WebView)
+<!--
 - [MASTG-BEST-0060](best-practices/MASTG-BEST-0060.md) WebView 上での機密性の高いテキストの入力にはネイティブビューを使用する (Use Native Views for Sensitive Text Entry Over a WebView)
 - [MASTG-BEST-0061](best-practices/MASTG-BEST-0061.md) DOM 検査スクリプトには WKContentWorld 分離を使用する (Use WKContentWorld Isolation for DOM Inspection Scripts)
 - [MASTG-BEST-0062](best-practices/MASTG-BEST-0062.md) WKScriptMessageHandlerWithReply を使用してデータを JavaScript に返す (Use WKScriptMessageHandlerWithReply to Return Data to JavaScript)
