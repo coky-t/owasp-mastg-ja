@@ -74,7 +74,9 @@
 - [MASTG-BEST-0063](best-practices/MASTG-BEST-0063.md) 明示的なインテントで不変な PendingIntents を使用する (Use Immutable PendingIntents with Explicit Intents)
 - [MASTG-BEST-0064](best-practices/MASTG-BEST-0064.md) オブジェクトデシリアライゼーションに安全な API を使用する (Use Safe APIs for Object Deserialization)
 - [MASTG-BEST-0065](best-practices/MASTG-BEST-0065.md) iOS のストレージ完全性チェックを実装する (Implementing Storage Integrity Checks on iOS)
+-->
 - [MASTG-BEST-0066](best-practices/MASTG-BEST-0066.md) Android のストレージ完全性チェックを実装する (Implementing Storage Integrity Checks on Android)
+<!--
 - [MASTG-BEST-0067](best-practices/MASTG-BEST-0067.md) iOS のソースコード完全性チェックを実装する (Implementing Source Code Integrity Checks on iOS)
 - [MASTG-BEST-0068](best-practices/MASTG-BEST-0068.md) App Extension とコンテナアプリ間での安全なデータ共有 (Secure Data Sharing Between App Extensions and Containing Apps)
 - [MASTG-BEST-0069](best-practices/MASTG-BEST-0069.md) 機密性の高い入力はシステムキーボードで行う (Keep Sensitive Input on the System Keyboard)

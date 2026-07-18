@@ -96,6 +96,7 @@
   - [MASTG-BEST-0055 カスタム URL スキームハンドラでソースアプリケーションを検証する (Validate Source Application in Custom URL Scheme Handlers)](best-practices/MASTG-BEST-0055.md)
   - [MASTG-BEST-0056 内部 IPC には明示的なインテントを使用する (Use Explicit Intents for Internal IPC)](best-practices/MASTG-BEST-0056.md)
   - [MASTG-BEST-0059 WebView 上でのネイティブビューとしてセンシティブ UI を描画する (Render Sensitive UI as Native Views Over the WebView)](best-practices/MASTG-BEST-0059.md)
+  - [MASTG-BEST-0066 Android のストレージ完全性チェックを実装する (Implementing Storage Integrity Checks on Android)](best-practices/MASTG-BEST-0066.md)
 
 ### ナレッジ
 
