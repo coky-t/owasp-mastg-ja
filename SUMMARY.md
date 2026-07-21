@@ -97,6 +97,7 @@
   - [MASTG-BEST-0056 内部 IPC には明示的なインテントを使用する (Use Explicit Intents for Internal IPC)](best-practices/MASTG-BEST-0056.md)
   - [MASTG-BEST-0059 WebView 上でのネイティブビューとしてセンシティブ UI を描画する (Render Sensitive UI as Native Views Over the WebView)](best-practices/MASTG-BEST-0059.md)
   - [MASTG-BEST-0066 Android のストレージ完全性チェックを実装する (Implementing Storage Integrity Checks on Android)](best-practices/MASTG-BEST-0066.md)
+  - [MASTG-BEST-0067 iOS のソースコード完全性チェックを実装する (Implementing Source Code Integrity Checks on iOS)](best-practices/MASTG-BEST-0067.md)
 
 ### ナレッジ
 
