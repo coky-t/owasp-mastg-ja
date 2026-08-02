@@ -85,8 +85,8 @@
 - [MASTG-TEST-0355](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0355.md) コンテンツプロバイダを通じた不正なデータベースアクセスへの参照 (References to Unauthorized Database Access through Content Providers)
 -->
 - [MASTG-TEST-0356](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0356.md) コンテンツプロバイダを通じた不正なデータベースアクセスの実行時検証 (Runtime Verification of Unauthorized Database Access through Content Providers)
-<!--
 - [MASTG-TEST-0357](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0357.md) ファイルベースのコンテンツプロバイダのオーバーシェアリングへの参照 (References to Oversharing of File-Based Content Providers)
+<!--
 - [MASTG-TEST-0364](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0364.md) 機密機能を露出するエクスポートおよび保護されていないアクティビティ (Exported And Unprotected Activities That Expose Sensitive Functionality)
 - [MASTG-TEST-0365](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0365.md) 機密機能を露出するエクスポートおよび保護されていないサービス (Exported And Unprotected Services That Expose Sensitive Functionality)
 - [MASTG-TEST-0366](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0366.md) 機密機能を露出するエクスポートおよび保護されていないブロードキャストレシーバ (Exported And Unprotected Broadcast Receivers That Expose Sensitive Functionality)

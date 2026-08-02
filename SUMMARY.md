@@ -399,6 +399,7 @@
       - [MASTG-TEST-0334 WebView を通じて露出するネイティブコード (Native Code Exposed Through WebViews)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0334.md)
       - [MASTG-TEST-0340 オーバーレイ攻撃保護への参照 (References to Overlay Attack Protections)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0340.md)
       - [MASTG-TEST-0356 コンテンツプロバイダを通じた不正なデータベースアクセスの実行時検証 (Runtime Verification of Unauthorized Database Access through Content Providers)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0356.md)
+      - [MASTG-TEST-0357 ファイルベースのコンテンツプロバイダのオーバーシェアリングへの参照 (References to Oversharing of File-Based Content Providers)](tests-beta/android/MASVS-PLATFORM/MASTG-TEST-0357.md)
 
     - MASVS-CODE: コード品質
       - [MASTG-TEST-0222 位置独立コード (PIC) が有効でない (Position Independent Code (PIC) Not Enabled)](tests-beta/android/MASVS-CODE/MASTG-TEST-0222.md)
