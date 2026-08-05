@@ -4,7 +4,7 @@ title: 非生体認証へのフォールバックを許可する API の実行�
 id: MASTG-TEST-0269
 apis: [kSecAccessControlUserPresence, kSecAccessControlDevicePasscode, SecAccessControlCreateWithFlags]
 type: [dynamic, hooks]
-weakness: MASWE-0045
+weakness: MASWE-0021
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
 ---
