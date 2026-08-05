@@ -3,7 +3,7 @@ title: ネットワークトラフィックでの証明書ピン留めの欠如 
 platform: network
 id: MASTG-TEST-0244
 type: [dynamic, network]
-weakness: MASWE-0047
+weakness: MASWE-0028
 profiles: [L2]
 knowledge: [MASTG-KNOW-0015]
 ---
