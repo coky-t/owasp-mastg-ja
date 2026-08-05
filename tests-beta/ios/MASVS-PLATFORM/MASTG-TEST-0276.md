@@ -3,7 +3,7 @@ platform: ios
 title: iOS の汎用ペーストボードの使用 (Use of the iOS General Pasteboard)
 id: MASTG-TEST-0276
 type: [static, code, manual]
-weakness: MASWE-0053
+weakness: MASWE-0036
 threat: [app]
 prerequisites:
 - identify-sensitive-data
