@@ -3,7 +3,7 @@ title: サーバーホスト名検証の正しくない実装 (Incorrect Impleme
 platform: android
 id: MASTG-TEST-0283
 type: [static, code, manual]
-weakness: MASWE-0052
+weakness: MASWE-0027
 profiles: [L1, L2]
 ---
 
