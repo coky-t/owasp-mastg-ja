@@ -3,7 +3,7 @@ platform: ios
 title: テキスト入力フィールドの機密データを隠す API の実行時使用 (Runtime Use of APIs Hiding Sensitive Data in Text Input Fields)
 id: MASTG-TEST-0347
 type: [dynamic, hooks]
-weakness: MASWE-0053
+weakness: MASWE-0036
 profiles: [L2]
 best-practices: [MASTG-BEST-0044]
 knowledge: [MASTG-KNOW-0121, MASTG-KNOW-0141]
