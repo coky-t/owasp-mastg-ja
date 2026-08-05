@@ -3,7 +3,7 @@ title: ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptog
 platform: ios
 id: MASTG-TEST-0214
 type: [static, code, manual]
-weakness: MASWE-0014
+weakness: MASWE-0003
 profiles: [L1, L2]
 ---
 
