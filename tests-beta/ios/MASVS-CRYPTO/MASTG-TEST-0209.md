@@ -3,7 +3,7 @@ platform: ios
 title: 不十分な鍵サイズ (Insufficient Key Sizes)
 id: MASTG-TEST-0209
 type: [static, code]
-weakness: MASWE-0009
+weakness: MASWE-0013
 profiles: [L1, L2]
 ---
 
