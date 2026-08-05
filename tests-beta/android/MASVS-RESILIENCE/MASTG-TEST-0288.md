@@ -4,7 +4,7 @@ title: ネイティブバイナリのデバッグシンボル (Debugging Symbols
 alias: debugging-symbols-in-native-binaries
 id: MASTG-TEST-0288
 type: [static, code]
-weakness: MASWE-0093
+weakness: MASWE-0061
 best-practices: []
 profiles: [R]
 ---
