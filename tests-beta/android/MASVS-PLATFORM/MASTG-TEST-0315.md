@@ -4,7 +4,7 @@ title: 通知を介して露出する機密データ (Sensitive Data Exposed via
 id: MASTG-TEST-0315
 apis: [NotificationManager]
 type: [static, code]
-weakness: MASWE-0054
+weakness: MASWE-0037
 prerequisites:
 - identify-sensitive-data
 profiles: [L2]
