@@ -3,7 +3,7 @@ platform: ios
 title: WebView のファイルオリジンポリシーを緩和する実行時設定 (Runtime Setting of Relaxed WebView File Origin Policies)
 id: MASTG-TEST-0336
 type: [dynamic, hooks, manual]
-weakness: MASWE-0069
+weakness: MASWE-0034
 best-practices: [MASTG-BEST-0033]
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0076]
