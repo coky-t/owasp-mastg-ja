@@ -3,7 +3,7 @@ title: WebView での正しくない SSL エラー処理 (Incorrect SSL Error Ha
 platform: android
 id: MASTG-TEST-0284
 type: [static, code, manual]
-weakness: MASWE-0052
+weakness: MASWE-0027
 best-practices: [MASTG-BEST-0021]
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0010]
