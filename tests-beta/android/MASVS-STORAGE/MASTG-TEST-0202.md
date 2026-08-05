@@ -4,7 +4,7 @@ title: 外部ストレージにアクセスするための API とパーミッ�
 id: MASTG-TEST-0202
 apis: [Environment#getExternalStoragePublicDirectory, Environment#getExternalStorageDirectory, Environment#getExternalFilesDir, Environment#getExternalCacheDir, MediaStore, WRITE_EXTERNAL_STORAGE, MANAGE_EXTERNAL_STORAGE]
 type: [static]
-weakness: MASWE-0007
+weakness: MASWE-0002
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0042]
 ---
