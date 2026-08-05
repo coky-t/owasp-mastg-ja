@@ -3,7 +3,7 @@ platform: android
 title: 外部ストレージに書き込まれたファイル (Files Written to External Storage)
 id: MASTG-TEST-0200
 type: [dynamic, filesystem, manual]
-weakness: MASWE-0007
+weakness: MASWE-0002
 profiles: [L1, L2]
 ---
 
