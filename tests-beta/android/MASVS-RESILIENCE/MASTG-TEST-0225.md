@@ -3,7 +3,7 @@ title: 安全でない APK 署名鍵サイズの使用 (Usage of Insecure APK Si
 platform: android
 id: MASTG-TEST-0225
 type: [static, code]
-weakness: MASWE-0104
+weakness: MASWE-0056
 profiles: [R]
 knowledge: [MASTG-KNOW-0003]
 ---
