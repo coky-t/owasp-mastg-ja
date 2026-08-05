@@ -3,7 +3,7 @@ platform: ios
 title: Info.plist 内の脆弱な ATS TLS ポリシー例外への参照 (References to Weak ATS TLS Policy Exceptions in Info.plist)
 id: MASTG-TEST-0342
 type: [static, code]
-weakness: MASWE-0050
+weakness: MASWE-0026
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0042]
 knowledge: [MASTG-KNOW-0071]
