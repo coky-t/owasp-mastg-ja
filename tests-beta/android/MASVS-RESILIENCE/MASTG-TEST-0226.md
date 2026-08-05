@@ -3,7 +3,7 @@ title: AndroidManifest で有効になっているデバッグフラグ (Debugga
 platform: android
 id: MASTG-TEST-0226
 type: [static, code]
-weakness: MASWE-0067
+weakness: MASWE-0063
 best-practices: [MASTG-BEST-0007]
 profiles: [R]
 knowledge: [MASTG-KNOW-0007]
