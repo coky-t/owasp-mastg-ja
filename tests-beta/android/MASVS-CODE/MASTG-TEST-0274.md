@@ -3,7 +3,7 @@ platform: android
 title: アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependencies with Known Vulnerabilities in the App's SBOM)
 id: MASTG-TEST-0274
 type: [static, developer]
-weakness: MASWE-0076
+weakness: MASWE-0044
 profiles: [L1, L2]
 ---
 
