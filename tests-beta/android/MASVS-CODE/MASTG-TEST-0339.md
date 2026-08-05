@@ -3,7 +3,7 @@ title: コンテンツプロバイダでの SQL インジェクション (SQL In
 platform: android
 id: MASTG-TEST-0339
 type: [static, code]
-weakness: MASWE-0086
+weakness: MASWE-0050
 best-practices: [MASTG-BEST-0039]
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0117]
