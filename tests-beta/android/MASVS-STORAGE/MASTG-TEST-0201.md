@@ -4,7 +4,7 @@ title: 外部ストレージにアクセスするための API の実行時使�
 id: MASTG-TEST-0201
 apis: [Environment#getExternalStorageDirectory, Environment#getExternalStorageDirectory, Environment#getExternalFilesDir, Environment#getExternalCacheDir, FileOutputStream]
 type: [dynamic, hooks, manual]
-weakness: MASWE-0007
+weakness: MASWE-0002
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0042]
 ---
