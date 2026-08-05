@@ -3,7 +3,7 @@ title: 更新されていない GMS セキュリティプロバイダ (GMS Secur
 platform: android
 id: MASTG-TEST-0295
 type: [static, code]
-weakness: MASWE-0052
+weakness: MASWE-0027
 profiles: [L2]
 best-practices: [MASTG-BEST-0020]
 knowledge: [MASTG-KNOW-0011, MASTG-KNOW-0010]
