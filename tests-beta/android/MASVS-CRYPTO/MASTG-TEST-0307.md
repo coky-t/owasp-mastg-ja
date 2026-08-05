@@ -3,7 +3,7 @@ platform: android
 title:  複数の目的で使用される非対称鍵ペアへの参照 (References to Asymmetric Key Pairs Used For Multiple Purposes)
 id: MASTG-TEST-0307
 type: [static, code]
-weakness: MASWE-0012
+weakness: MASWE-0007
 profiles: [L2]
 knowledge: [MASTG-KNOW-0012]
 ---
