@@ -3,7 +3,7 @@ platform: android
 title: 複数の目的で使用される非対称鍵ペアの実行時使用 (Runtime Use of Asymmetric Key Pairs Used For Multiple Purposes)
 id: MASTG-TEST-0308
 type: [dynamic, hooks]
-weakness: MASWE-0012
+weakness: MASWE-0007
 profiles: [L2]
 knowledge: [MASTG-KNOW-0012]
 ---
