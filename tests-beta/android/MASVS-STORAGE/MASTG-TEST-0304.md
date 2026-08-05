@@ -3,7 +3,7 @@ title: Android Room Database 経由で暗号化されずに保存される機密
 platform: android
 id: MASTG-TEST-0304
 type: [static, code]
-weakness: MASWE-0006
+weakness: MASWE-0001
 best-practices: []
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0037]
