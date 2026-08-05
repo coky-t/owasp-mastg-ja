@@ -5,7 +5,7 @@ id: MASTG-TEST-0294
 type: [static, code]
 profiles: [L2]
 best-practices: [MASTG-BEST-0014, MASTG-BEST-0018]
-weakness: MASWE-0055
+weakness: MASWE-0038
 knowledge: [MASTG-KNOW-0053]
 status: placeholder
 note: このテストでは、アプリが Jetpack Compose ダイアログのスクリーンショットとスクリーン録画で機密データがキャプチャされることを防止するかどうかを検証します。
