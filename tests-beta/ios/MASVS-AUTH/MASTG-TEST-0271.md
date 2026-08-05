@@ -4,7 +4,7 @@ title: 生体認証登録の変更を検出する API の実行時使用 (Runtim
 id: MASTG-TEST-0271
 apis: [kSecAccessControlBiometryCurrentSet,SecAccessControlCreateWithFlags]
 type: [dynamic, hooks]
-weakness: MASWE-0046
+weakness: MASWE-0022
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
 ---
