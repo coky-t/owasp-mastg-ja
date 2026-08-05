@@ -4,7 +4,7 @@ title: イベントバウンド型生体認証の実行時使用 (Runtime Use Of
 id: MASTG-TEST-0267
 apis: [LAContext.evaluatePolicy]
 type: [dynamic, hooks]
-weakness: MASWE-0044
+weakness: MASWE-0020
 best-practices: []
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
