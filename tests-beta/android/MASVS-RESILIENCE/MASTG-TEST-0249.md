@@ -4,7 +4,7 @@ title: 安全な画面ロック検出 API の実行時使用 (Runtime Use of Sec
 id: MASTG-TEST-0249
 apis: [KeyguardManager, BiometricManager#canAuthenticate]
 type: [dynamic, hooks]
-weakness: MASWE-0008
+weakness: MASWE-0017
 best-practices: []
 profiles: [L2]
 knowledge: [MASTG-KNOW-0001]
