@@ -3,7 +3,7 @@ title: クリアテキストトラフィックを転送するネットワーク 
 platform: android
 id: MASTG-TEST-0238
 type: [dynamic, hooks]
-weakness: MASWE-0050
+weakness: MASWE-0026
 status: placeholder
 note: Frida を使用すると、アプリのすべてのトラフィックをトレースできるため、トラフィックの原因であるアプリや場所がわからないという動的解析の制限を緩和できます。Frida (および `.backtrace()`) を使用すると、これが解析対象のアプリからであることが確認でき、正確な場所がわかります。新たな制限は、関連するすべてのネットワーク API を計装する必要があるということです。
 profiles: [L1, L2]
