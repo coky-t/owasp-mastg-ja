@@ -3,7 +3,7 @@ platform: ios
 title: キーボードキャッシュの対象となるテキストフィールドの実行時監視 (Runtime Monitoring of Text Fields Eligible for Keyboard Caching)
 id: MASTG-TEST-0314
 type: [dynamic, hooks]
-weakness: MASWE-0053
+weakness: MASWE-0036
 profiles: [L2]
 prerequisites:
 - identify-sensitive-data
