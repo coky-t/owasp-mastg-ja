@@ -3,7 +3,7 @@ title: コード内で明示的に許可された安全でない TLS プロト�
 platform: android
 id: MASTG-TEST-0217
 type: [static, code]
-weakness: MASWE-0050
+weakness: MASWE-0026
 profiles: [L1, L2]
 ---
 
