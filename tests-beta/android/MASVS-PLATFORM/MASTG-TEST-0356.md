@@ -3,7 +3,7 @@ platform: android
 title: コンテンツプロバイダを通じた不正なデータベースアクセスの実行時検証 (Runtime Verification of Unauthorized Database Access through Content Providers)
 id: MASTG-TEST-0356
 type: [dynamic, filesystem, manual]
-weakness: MASWE-0064
+weakness: MASWE-0018
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0049]
 knowledge: [MASTG-KNOW-0020, MASTG-KNOW-0117]
