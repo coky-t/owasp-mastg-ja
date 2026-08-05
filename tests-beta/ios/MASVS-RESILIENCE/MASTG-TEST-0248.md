@@ -4,7 +4,7 @@ title: 安全な画面ロックを検出するための API への参照 (Refere
 id: MASTG-TEST-0248
 apis: [LAContext.canEvaluatePolicy, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly]
 type: [static, code]
-weakness: MASWE-0008
+weakness: MASWE-0017
 best-practices: []
 profiles: [L2]
 knowledge: [MASTG-KNOW-0056]
