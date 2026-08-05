@@ -3,7 +3,7 @@ platform: android
 title: ルート検出技法の実行時使用 (Runtime Use of Root Detection Techniques)
 id: MASTG-TEST-0325
 type: [dynamic, hooks]
-weakness: MASWE-0097
+weakness: MASWE-0051
 best-practices: [MASTG-BEST-0029, MASTG-BEST-0030]
 profiles: [R]
 knowledge: [MASTG-KNOW-0027]
