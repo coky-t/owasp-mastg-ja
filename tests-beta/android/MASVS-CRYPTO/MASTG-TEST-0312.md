@@ -3,7 +3,7 @@ title: 暗号 API での明示的なセキュリティプロバイダへの参�
 platform: android
 id: MASTG-TEST-0312
 type: [static, code]
-weakness: MASWE-0020
+weakness: MASWE-0007
 best-practices: [MASTG-BEST-0020]
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0011]
