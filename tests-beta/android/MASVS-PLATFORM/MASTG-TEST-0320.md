@@ -3,7 +3,7 @@ platform: android
 title: 機密データをクリーンアップしない WebView (WebViews Not Cleaning Up Sensitive Data)
 id: MASTG-TEST-0320
 type: [dynamic, hooks]
-weakness: MASWE-0118
+weakness: MASWE-0001
 profiles: [L1, L2]
 best-practices: [MASTG-BEST-0028]
 knowledge: [MASTG-KNOW-0018]
