@@ -3,7 +3,7 @@ title: 安全でないカスタムトラスト評価 (Unsafe Custom Trust Evalua
 platform: android
 id: MASTG-TEST-0282
 type: [static, code, manual]
-weakness: MASWE-0052
+weakness: MASWE-0027
 best-practices: [MASTG-BEST-0021]
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0010]
