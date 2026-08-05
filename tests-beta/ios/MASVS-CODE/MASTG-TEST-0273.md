@@ -3,7 +3,7 @@ platform: ios
 title: 依存関係マネージャのアーティファクトをスキャンして既知の脆弱性を持つ依存関係を特定する (Identify Dependencies with Known Vulnerabilities by Scanning Dependency Managers Artifacts)
 id: MASTG-TEST-0273
 type: [static, code]
-weakness: MASWE-0076
+weakness: MASWE-0044
 profiles: [L1, L2]
 ---
 
