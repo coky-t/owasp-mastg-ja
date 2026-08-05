@@ -3,7 +3,7 @@ title: ネットワークトラフィックにおける安全でない TLS プ�
 platform: android
 id: MASTG-TEST-0218
 type: [dynamic, network]
-weakness: MASWE-0050
+weakness: MASWE-0026
 profiles: [L1, L2]
 ---
 
