@@ -3,7 +3,7 @@ platform: android
 title: 機密ユーザーデータを扱うことが知られている SDK API の実行時使用 (Runtime Use of SDK APIs Known to Handle Sensitive User Data)
 id: MASTG-TEST-0319
 type: [dynamic]
-weakness: MASWE-0112
+weakness: MASWE-0073
 prerequisites:
   - identify-sensitive-data
 profiles: [P]
