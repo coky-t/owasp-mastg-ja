@@ -3,7 +3,7 @@ title: Network Security Configuration での証明書ピン留めの欠如 (Miss
 platform: android
 id: MASTG-TEST-0242
 type: [static, code]
-weakness: MASWE-0047
+weakness: MASWE-0028
 profiles: [L2]
 knowledge: [MASTG-KNOW-0014, MASTG-KNOW-0015]
 ---
