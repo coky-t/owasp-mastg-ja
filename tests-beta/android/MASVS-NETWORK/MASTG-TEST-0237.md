@@ -3,7 +3,7 @@ title: クリアテキストトラフィックを許可するクロスプラッ�
 platform: android
 id: MASTG-TEST-0237
 type: [static, code]
-weakness: MASWE-0050
+weakness: MASWE-0026
 status: placeholder
 note: クロスプラットフォームフレームワーク (Flutter, React native など) は、一般的に HTTP ライブラリの独自実行があり、クリアテキストトラフィックを許可できます。
 profiles: [L1, L2]
