@@ -4,7 +4,7 @@ title: プラットフォームバージョン API への参照 (References to P
 id: MASTG-TEST-0245
 apis: [Build]
 type: [static, code]
-weakness: MASWE-0077
+weakness: MASWE-0041
 best-practices: []
 profiles: [L2]
 ---
