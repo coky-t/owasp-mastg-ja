@@ -3,14 +3,14 @@ platform: ios
 title: デバッグシンボルのテスト (Testing for Debugging Symbols)
 id: MASTG-TEST-0219
 type: [static, code]
-weakness: MASWE-0093
+weakness: MASWE-0061
 profiles: [R]
 knowledge: [MASTG-KNOW-0063]
 ---
 
 ## 概要
 
-このテストケースでは、アプリに含まれるすべてのバイナリの [デバッグシンボル](../../../weaknesses/MASVS-RESILIENCE/MASWE-0093.md) をチェックします。
+このテストケースでは、アプリに含まれるすべてのバイナリのデバッグシンボルをチェックします。
 
 デバッグシンボルは [開発を容易にするためにコンパイラ](https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information "Building your app to include debugging information") によって追加され、クラッシュのシンボル化を可能にします。しかし、これらはアプリのリバースエンジニアにも使用される可能性があり、リリースされるアプリには存在すべきではありません。別の dSYM ファイルで [シンボル化を実行することも可能です](https://developer.apple.com/documentation/xcode/adding-identifiable-symbol-names-to-a-crash-report "Adding identifiable symbol names to a crash report")。
 
