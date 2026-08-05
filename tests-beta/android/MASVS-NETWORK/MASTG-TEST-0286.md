@@ -3,7 +3,7 @@ title: ユーザー提供の CA を信頼する Network Security Configuration (
 platform: android
 id: MASTG-TEST-0286
 type: [static, code]
-weakness: MASWE-0052
+weakness: MASWE-0027
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0014]
 ---
