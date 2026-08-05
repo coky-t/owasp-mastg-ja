@@ -3,7 +3,7 @@ title: コード内にハードコードされた暗号鍵の使用 (Use of Hard
 platform: android
 id: MASTG-TEST-0212
 type: [static, code]
-weakness: MASWE-0014
+weakness: MASWE-0003
 profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0012]
 ---
