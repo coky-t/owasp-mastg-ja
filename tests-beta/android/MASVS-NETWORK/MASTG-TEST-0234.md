@@ -3,7 +3,7 @@ title: SSLSocket でのサーバーホスト名検証の実装の欠如 (Missing
 platform: android
 id: MASTG-TEST-0234
 type: [static, code]
-weakness: MASWE-0052
+weakness: MASWE-0027
 profiles: [L1, L2]
 ---
 
