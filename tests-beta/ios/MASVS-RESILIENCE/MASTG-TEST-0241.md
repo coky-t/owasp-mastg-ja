@@ -3,7 +3,7 @@ platform: ios
 title: 脱獄検出技法の実行時使用 (Runtime Use of Jailbreak Detection Techniques)
 id: MASTG-TEST-0241
 type: [dynamic, hooks]
-weakness: MASWE-0097
+weakness: MASWE-0051
 false_negative_prone: true
 profiles: [R]
 knowledge: [MASTG-KNOW-0084]
