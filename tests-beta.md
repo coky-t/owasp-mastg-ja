@@ -179,9 +179,7 @@
 - [MASTG-TEST-0214](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0214.md) ファイル内にハードコードされた暗号鍵 (Hardcoded Cryptographic Keys in Files)
 - [MASTG-TEST-0311](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0311.md) 安全でないランダム API の使用 (Insecure Random API Usage)
 - [MASTG-TEST-0317](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0317.md) 不備のある対称暗号モード (Broken Symmetric Encryption Modes)
-<!--
 - [MASTG-TEST-0349](tests-beta/ios/MASVS-CRYPTO/MASTG-TEST-0349.md) 安全でないランダム API の実行時使用 (Runtime Use of Insecure Random APIs)
--->
 
 ### MASVS-AUTH: 認証と認可
 
