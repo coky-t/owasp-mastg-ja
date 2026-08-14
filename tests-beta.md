@@ -200,7 +200,9 @@
 - [MASTG-TEST-0343](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0343.md) URLSession TLS プロトコル構成 (URLSession TLS Protocol Configuration)
 - [MASTG-TEST-0344](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0344.md) Network.framework TLS プロトコル構成 (Network.framework TLS Protocol Configuration)
 - [MASTG-TEST-0345](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0345.md) 組み込みまたはサードパーティ TLS スタック構成 (Embedded or Third-party TLS Stack Configuration)
+-->
 - [MASTG-TEST-0348](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0348.md) ネットワークトラフィックの安全でない TLS プロトコル (Insecure TLS Protocols in Network Traffic)
+<!--
 - [MASTG-TEST-0385](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0385.md) ATS での証明書ピン留めの欠如 (Missing Certificate Pinning in ATS)
 - [MASTG-TEST-0396](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0396.md) 証明書バリデーションをバイパスする URLSessionDelegate への参照 (References to URLSessionDelegate Bypassing Certificate Validation)
 - [MASTG-TEST-0397](tests-beta/ios/MASVS-NETWORK/MASTG-TEST-0397.md) 証明書バリデーションをバイパスする WKNavigationDelegate への参照 (References to WKNavigationDelegate Bypassing Certificate Validation)
