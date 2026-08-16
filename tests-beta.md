@@ -230,7 +230,9 @@
 - [MASTG-TEST-0371](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0371.md) カスタム URL スキームハンドラでのソースバリデーションの欠如 (Missing Source Validation in Custom URL Scheme Handlers)
 - [MASTG-TEST-0376](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0376.md) WebView でのネイティブブリッジ API への参照 (References to Native Bridge APIs in WebViews)
 - [MASTG-TEST-0377](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0377.md) `WKScriptMessageHandler` でブリッジリプライとして使用される `evaluateJavaScript` への参照 (References to `evaluateJavaScript` Used as Bridge Reply in `WKScriptMessageHandler`)
+-->
 - [MASTG-TEST-0378](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0378.md) WebView でロードされた HTML でのパスワードフィールドへの参照 (References to Password Fields in WebView-Loaded HTML)
+<!--
 - [MASTG-TEST-0379](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0379.md) コンテンツワールド分離なしでの `evaluateJavaScript` への参照 (References to `evaluateJavaScript` Without Content World Isolation)
 - [MASTG-TEST-0380](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0380.md) WebView DOM 内に機密データを書き込む `evaluateJavaScript` への参照 (References to `evaluateJavaScript` Writing Sensitive Data into WebView DOM)
 - [MASTG-TEST-0389](tests-beta/ios/MASVS-PLATFORM/MASTG-TEST-0389.md) カスタムキーボードのアプリ全体での制限への参照 (References to the App-Wide Restriction of Custom Keyboards)
