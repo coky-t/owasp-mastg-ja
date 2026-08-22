@@ -266,7 +266,9 @@
 - [MASTG-TEST-0354](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0354.md) フック検出技法の実行時使用 (Runtime Use of Hook Detection Techniques)
 - [MASTG-TEST-0358](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0358.md) ログ記録 API を通じた実装詳細の露出 (Implementation Details Exposure Through Logging APIs)
 - [MASTG-TEST-0359](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0359.md) ログ内の実装詳細の露出 (Implementation Details Exposure in Logs)
+-->
 - [MASTG-TEST-0367](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0367.md) 仮想デバイス検出技法の実行時使用 (Runtime Use of Virtual Device Detection Techniques)
+<!--
 - [MASTG-TEST-0387](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0387.md) ストレージ完全性チェック API への参照 (References to Storage Integrity Check APIs)
 - [MASTG-TEST-0391](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0391.md) セキュリティに関連するネイティブコードの不十分な難読化 (Insufficient Obfuscation of Security-Relevant Native Code)
 - [MASTG-TEST-0401](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0401.md) デバッグ検出 API への参照 (References to Debugging Detection APIs)

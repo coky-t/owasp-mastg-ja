@@ -503,6 +503,7 @@
       - [MASTG-TEST-0246 安全な画面ロック検出 API の実行時使用 (Runtime Use of Secure Screen Lock Detection APIs)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0246.md)
       - [MASTG-TEST-0248 安全な画面ロックを検出するための API への参照 (References to APIs for Detecting Secure Screen Lock)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0248.md)
       - [MASTG-TEST-0261 entitlements.plist で有効になっているデバッグ可能なエンタイトルメント (Debuggable Entitlement Enabled in the entitlements.plist)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0261.md)
+      - [MASTG-TEST-0367 仮想デバイス検出技法の実行時使用 (Runtime Use of Virtual Device Detection Techniques)](tests-beta/ios/MASVS-RESILIENCE/MASTG-TEST-0367.md)
 
     - MASVS-PRIVACY: プライバシー
       - [MASTG-TEST-0281 未宣言の既知のトラッキングドメイン (Undeclared Known Tracking Domains)](tests-beta/ios/MASVS-PRIVACY/MASTG-TEST-0281.md)
