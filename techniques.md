@@ -60,10 +60,7 @@
 - [MASTG-TECH-0026](techniques/android/MASTG-TECH-0026.md) 非ルート化デバイスでの動的解析 (Dynamic Analysis on Non-Rooted Devices)
 - [MASTG-TECH-0027](techniques/android/MASTG-TECH-0027.md) オープンファイルの取得 (Get Open Files)
 - [MASTG-TECH-0028](techniques/android/MASTG-TECH-0028.md) オープンコネクションの取得 (Get Open Connections)
-- [MASTG-TECH-0029](techniques/android/MASTG-TECH-0029.md) ロードされたネイティブライブラリの取得 (Get Loaded Native Libraries)
-<!--
 - [MASTG-TECH-0029](techniques/android/MASTG-TECH-0029.md) ロードされたネイティブライブラリのリスト (Listing Loaded Native Libraries)
--->
 - [MASTG-TECH-0030](techniques/android/MASTG-TECH-0030.md) サンドボックス検査 (Sandbox Inspection)
 <!--
 - [MASTG-TECH-0031](techniques/android/MASTG-TECH-0031.md) デバッグ (Debugging)
@@ -127,6 +124,9 @@
 - [MASTG-TECH-0163](techniques/android/MASTG-TECH-0163.md) コンテンツプロバイダの列挙 (Enumerating Content Providers)
 - [MASTG-TECH-0164](techniques/android/MASTG-TECH-0164.md) 暗黙的インテントとブロードキャストの傍受 (Sniffing Implicit Intents and Broadcasts)
 - [MASTG-TECH-0165](techniques/android/MASTG-TECH-0165.md) Android アプリのコンパイラ、難読化、パッカーの識別 (Identifying Compilers, Obfuscators, and Packers in Android Apps)
+- [MASTG-TECH-0172](techniques/android/MASTG-TECH-0172.md) ディープリンクのリスティング (Listing Deep Links)
+- [MASTG-TECH-0173](techniques/android/MASTG-TECH-0173.md) Frida での実行時にディープリンクハンドラの監視 (Monitoring Deep Link Handlers at Runtime with Frida)
+- [MASTG-TECH-0174](techniques/android/MASTG-TECH-0174.md) アプリリンクとウェブサイトの関連付けの検証 (Verifying App Link Website Association)
 -->
 
 ## iOS
@@ -234,4 +234,12 @@
 - [MASTG-TECH-0154](techniques/ios/MASTG-TECH-0154.md) Info.plist ファイルの解析 (Analyzing Info.plist Files)
 - [MASTG-TECH-0155](techniques/ios/MASTG-TECH-0155.md) ATS 構成の解析 (Analyzing the ATS Configuration)
 - [MASTG-TECH-0158](techniques/ios/MASTG-TECH-0158.md) ロードされているライブラリの抽出 (Extracting Loaded Libraries)
+- [MASTG-TECH-0166](techniques/ios/MASTG-TECH-0166.md) iOS アプリ内のカスタム URL スキーム登録の識別 (Identifying Custom URL Scheme Registrations in iOS Apps)
+- [MASTG-TECH-0167](techniques/ios/MASTG-TECH-0167.md) UIActivity データ共有の監視 (Monitoring UIActivity Data Sharing)
+- [MASTG-TECH-0168](techniques/ios/MASTG-TECH-0168.md) UIActivity データ受信の監視 (Monitoring UIActivity Data Receiving)
+- [MASTG-TECH-0169](techniques/ios/MASTG-TECH-0169.md) ディープリンクのオープン (Opening Deep Links)
+- [MASTG-TECH-0170](techniques/ios/MASTG-TECH-0170.md) App Extension の列挙 (Enumerating App Extensions)
+- [MASTG-TECH-0171](techniques/ios/MASTG-TECH-0171.md) App Extension とコンテナアプリ間でのデータ共有の監視 (Monitoring Data Sharing Between App Extensions and Containing Apps)
+- [MASTG-TECH-0175](techniques/ios/MASTG-TECH-0175.md) ユニバーサルリンクのドメイン関連付けの検証 (Verifying Universal Link Domain Association)
+- [MASTG-TECH-0176](techniques/ios/MASTG-TECH-0176.md) Frida で実行時にユニバーサルリンクハンドラの監視 (Monitoring Universal Link Handlers at Runtime with Frida)
 -->

@@ -545,7 +545,7 @@
     - [MASTG-TECH-0026 非ルート化デバイスでの動的解析 (Dynamic Analysis on Non-Rooted Devices)](techniques/android/MASTG-TECH-0026.md)
     - [MASTG-TECH-0027 オープンファイルの取得 (Get Open Files)](techniques/android/MASTG-TECH-0027.md)
     - [MASTG-TECH-0028 オープンコネクションの取得 (Get Open Connections)](techniques/android/MASTG-TECH-0028.md)
-    - [MASTG-TECH-0029 ロードされたネイティブライブラリの取得 (Get Loaded Native Libraries)](techniques/android/MASTG-TECH-0029.md)
+    - [MASTG-TECH-0029 ロードされたネイティブライブラリのリスト (Listing Loaded Native Libraries)](techniques/android/MASTG-TECH-0029.md)
     - [MASTG-TECH-0030 サンドボックス検査 (Sandbox Inspection)](techniques/android/MASTG-TECH-0030.md)
     - [MASTG-TECH-0033 メソッドトレース (Method Tracing)](techniques/android/MASTG-TECH-0033.md)
     - [MASTG-TECH-0035 JNI トレース (JNI Tracing)](techniques/android/MASTG-TECH-0035.md)
