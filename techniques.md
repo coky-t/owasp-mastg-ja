@@ -110,8 +110,8 @@
 -->
 - [MASTG-TECH-0145](techniques/android/MASTG-TECH-0145.md) XAPK ファイルの扱い (Working with XAPK Files)
 - [MASTG-TECH-0148](techniques/android/MASTG-TECH-0148.md) Android コンテンツプロバイダとのやり取り (Interacting with Android ContentProviders)
-<!--
 - [MASTG-TECH-0150](techniques/android/MASTG-TECH-0150.md) AndroidManifest の解析 (Analyzing the AndroidManifest)
+<!--
 - [MASTG-TECH-0151](techniques/android/MASTG-TECH-0151.md) Network Security Configuration の解析 (Analyzing the Network Security Configuration)
 - [MASTG-TECH-0156](techniques/android/MASTG-TECH-0156.md) Flutter アプリケーションのリバースエンジニアリング (Reverse Engineering Flutter Applications)
 - [MASTG-TECH-0157](techniques/android/MASTG-TECH-0157.md) バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)
