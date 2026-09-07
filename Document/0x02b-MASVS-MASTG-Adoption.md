@@ -59,7 +59,7 @@ BSI は "Federal Office for Information Security" の略で、ドイツにおけ
 
 2021 年に ioXt は [モバイルアプリケーションプロファイルを通じてセキュリティ原則を拡張](https://www.ioxtalliance.org/news-events-blog/ioxt-alliance-expands-certification-program-for-mobile-and-vpn-security) し、アプリ開発者は自らの製品が OWASP MASVS や VPN Trust Initiative などの高いサイバーセキュリティ標準で構築され維持できるようにしました。ioXt モバイルアプリケーションプロファイルはクラウドに接続されるあらゆるモバイルアプリに適用されるセキュリティ標準であり、利用者および商用モバイルアプリのセキュリティに市場で必要とされる透明性を提供します。
 
-- [ioXt Base Profile v2.0](https://static1.squarespace.com/static/5c6dbac1f8135a29c7fbb621/t/6078677c7d7b84799f1eaa5b/1618503553847/ioXt_Base_Profile.pdf)
+- [ioXt Base Profile v2.0](https://web.archive.org/web/20230828210402/https://static1.squarespace.com/static/5c6dbac1f8135a29c7fbb621/t/6078677c7d7b84799f1eaa5b/1618503553847/ioXt_Base_Profile.pdf)
 
 ## 政府機関
 
@@ -71,7 +71,7 @@ BSI は "Federal Office for Information Security" の略で、ドイツにおけ
 | ENISA (European Union Agency for Cybersecurity) | [Good Practices for Security of SMART CARS](https://www.enisa.europa.eu/publications/smart-cars) | 2019 |
 | Government of India, Ministry of Electronics & Information Technology | [Adoption of Mobile AppSec Verification Standard (MASVS) Version 1.0 of OWASP](http://egovstandards.gov.in/notified-standards-1) | 2019 |
 | Finish Transport and Communication Agency (TRAFICOM) | [Assessment guideline for electronic identification services (Draft)](https://www.traficom.fi/sites/default/files/media/file/DRAFT%20Traficom%20guideline%20211%202019%20conformity%20assessment%20of%20eID%20service.pdf) | 2019 |
-| Gobierno de España INCIBE | [Ciberseguridad en Smart Toys](https://www.incibe.es/sites/default/files/contenidos/guias/doc/guia_smarttoys_final.pdf) | 2019 |
+| Gobierno de España INCIBE | [Ciberseguridad en Smart Toys](https://web.archive.org/web/20250429140632/https://www.incibe.es/sites/default/files/contenidos/guias/doc/guia_smarttoys_final.pdf) | 2019 |
 
 ## 教育機関
 
