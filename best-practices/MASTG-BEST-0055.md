@@ -6,7 +6,7 @@ platform: ios
 knowledge: [MASTG-KNOW-0079]
 ---
 
-カスタム URL スキームが特権的あるいは不可逆なアクションをトリガーする場合、リクエストを処理する前に [`UIOpenURLContext.options`](https://developer.apple.com/documentation/uikit/uiopenurl/options) から [`sourceApplication`](https://developer.apple.com/documentation/uikit/uiscene/connectionoptions/sourceapplication) をチェックします。これは呼び出し元アプリのバンドル ID を許可リストに対して検証することで可能です。
+カスタム URL スキームが特権的あるいは不可逆なアクションをトリガーする場合、リクエストを処理する前に [`UIOpenURLContext.options`](https://developer.apple.com/documentation/uikit/uiopenurlcontext/options) から [`sourceApplication`](https://developer.apple.com/documentation/uikit/uiscene/connectionoptions/sourceapplication) をチェックします。これは呼び出し元アプリのバンドル ID を許可リストに対して検証することで可能です。
 
 ```swift
 let allowedSources: Set<String> = ["com.example.myapp", "com.example.companion"]
