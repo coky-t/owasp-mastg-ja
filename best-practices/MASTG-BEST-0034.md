@@ -6,7 +6,7 @@ platform: ios
 knowledge: [MASTG-KNOW-0076]
 ---
 
-アプリによって完全に制御されている場合を除き、[`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview) に渡されるデータを常に信頼できないものとして扱います。これは、[`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:)) を通じてロードされる URL、[`loadFileURL`](https://developer.apple.com/documentation/webkit/wkwebview/loadfileurl(_:allowingreadaccessto:)) を通じてロードされるローカルファイル、[`loadHTMLString`](https://developer.apple.com/documentation/webkit/wkwebview/loadhtmlstring(_:baseurl:)) に渡される HTML、[`evaluateJavaScript`](https://developer.apple.com/documentation/webkit/wkwebview/evaluatejavascript(_:completionhandler:)) に渡される JavaScript、および描画ページに挿入される任意のデータを含みます。
+アプリによって完全に制御されている場合を除き、[`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview) に渡されるデータを常に信頼できないものとして扱います。これは、[`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:)-5siv6) を通じてロードされる URL、[`loadFileURL`](https://developer.apple.com/documentation/webkit/wkwebview/loadfileurl(_:allowingreadaccessto:)) を通じてロードされるローカルファイル、[`loadHTMLString`](https://developer.apple.com/documentation/webkit/wkwebview/loadhtmlstring(_:baseurl:)) に渡される HTML、[`evaluateJavaScript`](https://developer.apple.com/documentation/webkit/wkwebview/evaluatejavascript(_:completionhandler:)) に渡される JavaScript、および描画ページに挿入される任意のデータを含みます。
 
 アプリが `WKWebView` に URL をロードする場合、その URL はパースされ、想定されるスキーム、ホスト、パス、その他の関連コンポーネントの厳格な許可リストに対して検証される必要があります。ディープリンク、カスタム URL スキーム、ペーストされたテキスト、サーバーが提供する値など、攻撃者が制御できる入力が、任意の WebView の宛先を決定することを許可してはいけません。
 
