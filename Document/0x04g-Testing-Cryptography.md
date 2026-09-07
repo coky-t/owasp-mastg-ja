@@ -175,7 +175,7 @@ Advanced Encryption Standard (AES) はモバイルアプリの対称暗号化の
 
 #### 予測可能な初期化ベクトル
 
-CBC, OFB, CFB, PCBC, GCM モードでは暗号の初期入力として初期化ベクトル (IV) が必要です。IV は秘密であり続ける必要はありませんが、予測可能であってはいけません。暗号化されたメッセージごとにランダムで一意であり、繰り返し不可であるべきです。IV が暗号論的にセキュアな乱数生成器を使用して生成されていることを確認します。IV の詳細については、[Crypto Fail の初期化ベクトルの記事](http://www.cryptofails.com/post/70059609995/crypto-noobs-1-initialization-vectors "Crypto Noobs #1: Initialization Vectors") を参照してください。
+CBC, OFB, CFB, PCBC, GCM モードでは暗号の初期入力として初期化ベクトル (IV) が必要です。IV は秘密であり続ける必要はありませんが、予測可能であってはいけません。暗号化されたメッセージごとにランダムで一意であり、繰り返し不可であるべきです。IV が暗号論的にセキュアな乱数生成器を使用して生成されていることを確認します。IV の詳細については、[Crypto Fail の初期化ベクトルの記事](https://web.archive.org/web/20260310010638/https://www.cryptofails.com/post/70059609995/crypto-noobs-1-initialization-vectors "Crypto Noobs #1: Initialization Vectors") を参照してください。
 
 コードで使用される暗号化ライブラリに注意してください。多くのオープンソースライブラリはバッドプラクティス (ハードコードされた IV の使用など) となる可能性のある例をドキュメントで提供しています。よくある間違いは IV 値を変更せずにサンプルコードをコピーペーストすることです。
 
@@ -191,7 +191,7 @@ CTR および GCM モードを使用する場合、IV の使用法は異なる�
 
 非対称暗号を行う際に、以前は パディングメカニズムとして [PKCS1.5](https://tools.ietf.org/html/rfc2313 "PCKS1.5 in RFC2313") パディング (コード内では `PKCS1Padding`) が使用されていました。現在の Java 環境では PKCS #5 として参照しています。このメカニズムはパディングオラクル攻撃に対して脆弱です。したがって、[PKCS#1 v2.0](https://tools.ietf.org/html/rfc2437 "PKCS1 v2.0 in RFC 2437") (コード内では `OAEPPadding`, `OAEPwithSHA-256andMGF1Padding`, `OAEPwithSHA-224andMGF1Padding`, `OAEPwithSHA-384andMGF1Padding`, `OAEPwithSHA-512andMGF1Padding`) でキャプチャされた OAEP (Optimal Asymmetric Encryption Padding) を使用することがベストです。OAEP を使用している場合でも、[Kudelskisecurity のブログ](https://research.kudelskisecurity.com/2018/04/05/breaking-rsa-oaep-with-mangers-attack/ "Kudelskisecurity") で説明されているように Manger の攻撃としてよく知られている問題に遭遇する可能性があります。
 
-注意: PKCS #7 を使用する AES-CBC は、「パディングエラー」、「MAC エラー」、「復号化失敗」などの警告が得られる実装であるため、パディングオラクル攻撃に対しても脆弱です。例として [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack/ "The Padding Oracle Attack") および [The CBC Padding Oracle Problem](https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem") を参照してください。次に、平文を暗号化した後は HMAC を追加することがベストです。つまり、失敗した MAC を含む暗号文は復号化する必要がなくなり、破棄できるようになります。
+注意: PKCS #7 を使用する AES-CBC は、「パディングエラー」、「MAC エラー」、「復号化失敗」などの警告が得られる実装であるため、パディングオラクル攻撃に対しても脆弱です。例として [The Padding Oracle Attack](https://robertheaton.com/2013/07/29/padding-oracle-attack/ "The Padding Oracle Attack") および [The CBC Padding Oracle Problem](https://web.archive.org/web/20260217084424/https://eklitzke.org/the-cbc-padding-oracle-problem "The CBC Padding Oracle Problem") を参照してください。次に、平文を暗号化した後は HMAC を追加することがベストです。つまり、失敗した MAC を含む暗号文は復号化する必要がなくなり、破棄できるようになります。
 
 ### ストレージ内およびメモリ内の鍵を保護する
 
