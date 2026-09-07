@@ -3,7 +3,7 @@ title: React Native アプリのパッチ適用 (Patching React Native Apps)
 platform: ios
 ---
 
-[React Native](https://facebook.github.io/react-native "React Native") フレームワークを使用して開発する場合、メインのアプリケーションコードは `Payload/[APP].app/main.jsbundle` ファイルにあります。このファイルには JavaScript コードを含みます。ほとんどの場合、このファイルの JavaScript コードは minify されています。[JStillery](https://mindedsecurity.github.io/jstillery "JStillery") ツールを使用すると、このファイルの人間が読めるバージョンを再試行して、コード解析を可能になります。オンラインバージョンより [JStillery の CLI バージョン](https://github.com/mindedsecurity/jstillery/ "CLI version of JStillery") とローカルサーバーを推奨します。オンラインバージョンはサードパーティにソースを公開するためです。
+[React Native](https://reactnative.dev/ "React Native") フレームワークを使用して開発する場合、メインのアプリケーションコードは `Payload/[APP].app/main.jsbundle` ファイルにあります。このファイルには JavaScript コードを含みます。ほとんどの場合、このファイルの JavaScript コードは minify されています。[JStillery](https://mindedsecurity.github.io/jstillery "JStillery") ツールを使用すると、このファイルの人間が読めるバージョンを再試行して、コード解析を可能になります。オンラインバージョンより [JStillery の CLI バージョン](https://github.com/mindedsecurity/jstillery/ "CLI version of JStillery") とローカルサーバーを推奨します。オンラインバージョンはサードパーティにソースを公開するためです。
 
 インストール時に、iOS 10 以降ではアプリケーションアーカイブが `/private/var/containers/Bundle/Application/[GUID]/[APP].app` フォルダにアンパックされるため、メインの JavaScript アプリケーションファイルはこの場所で変更可能です。
 
