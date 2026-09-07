@@ -11,7 +11,7 @@ knowledge: [MASTG-KNOW-0102]
 
 ## 概要
 
-このテストは、アプリが `isExcludedFromBackup` を使用して、機密ファイルをバックアップから除外するようにシステムに指示しているかどうかを検証します。この API は [実際の除外を保証するものではありません](https://developer.apple.com/documentation/foundation/optimizing_your_app_s_data_for_icloud_backup/#3928527)。ドキュメントによると以下のようになります。
+このテストは、アプリが `isExcludedFromBackup` を使用して、機密ファイルをバックアップから除外するようにシステムに指示しているかどうかを検証します。この API は [実際の除外を保証するものではありません](https://developer.apple.com/documentation/foundation/optimizing-your-app-s-data-for-icloud-backup)。ドキュメントによると以下のようになります。
 
 > 「`isExcludedFromBackup` リソース値は、除外できるファイルやディレクトリについてのガイダンスをシステムに提供するためにのみ存在します。これらのアイテムがバックアップやリストアされたデバイスに決して現れないことを保証するメカニズムではありません。」
 
