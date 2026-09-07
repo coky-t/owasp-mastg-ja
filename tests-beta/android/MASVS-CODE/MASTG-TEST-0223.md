@@ -40,7 +40,7 @@ Flutter フレームワークは、[Dart がバッファオーバーフローを
 
 ### コンパイラによる最適化
 
-場合によっては、ライブラリのサイズとコンパイラによって適用される最適化により、ライブラリがもともとスタックカナリアを備えてコンパイルされていても、最適化により削除されてしまう可能性があります。たとえば、一部の [react native アプリ](https://github.com/facebook/react-native/issues/36870#issuecomment-1714007068) がこれに該当します。これらは `-fstack-protector-strong` でビルドされていますが、`.so` ファイル内で stack_chk_fail` を探してみても見つかりません。
+場合によっては、ライブラリのサイズとコンパイラによって適用される最適化により、ライブラリがもともとスタックカナリアを備えてコンパイルされていても、最適化により削除されてしまう可能性があります。たとえば、一部の [react native アプリ](https://github.com/react/react-native/issues/36870#issuecomment-1714007068) がこれに該当します。これらは `-fstack-protector-strong` でビルドされていますが、`.so` ファイル内で stack_chk_fail` を探してみても見つかりません。
 
 - **空の .so ファイル**: libruntimeexecutor.so` や `libreact_render_debug.so` などの一部の .so ファイルはリリースでは実質的に空であるため、シンボルを含みません。`-fstack-protector-all` でビルドしようとしても、そこにはメソッド呼び出しがないため、`stack_chk_fail` 文字列を見ることはできないでしょう。
 - **スタックバッファ呼び出しの欠如**: `libreact_utils.so`, `libreact_config.so`, `libreact_debug.so` などの他のファイルは空ではなく、メソッド呼び出しを含みますが、それらのメソッドはスタックバッファ呼び出しを含まないため、その中には `stack_chk_fail` 文字列はありません。
