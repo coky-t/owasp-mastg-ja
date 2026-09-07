@@ -291,7 +291,7 @@ DevOps はソフトウェア開発 (一般に Devs と呼ばれる) と運用 (�
 
 "DevOps" という用語は開発チームと運用チームの間のコラボレーションのみを表していると思われるかもしれませんが、DevOps についてリーダーの Gene Kim が次のように発言しています。「一見したところ、その問題は Devs と Ops の間にあるように見えるかもしれませんが、そこにはテストがあり、情報セキュリティの目標があり、システムとデータを保護する必要があります。これらは経営における最上位の重要事項であり、DevOps 全体像の一部となっています。」
 
-言い換えると、DevOps コラボレーションには品質チーム、セキュリティチーム、およびプロジェクトに関連する他の多くのチームが含まれます。今日 "DevOps" を耳にしたら、あなたはおそらく [DevOpsQATestInfoSec](https://techbeacon.com/evolution-devops-new-thinking-gene-kim "The evolution of DevOps: Gene Kim on getting to continuous delivery") のようなものを考えるべきです。実際、DevOps の価値はスピードだけではなく、品質、セキュリティ、信頼性、安定性、および耐性の向上にも関係しています。
+言い換えると、DevOps コラボレーションには品質チーム、セキュリティチーム、およびプロジェクトに関連する他の多くのチームが含まれます。今日 "DevOps" を耳にしたら、あなたはおそらく [DevOpsQATestInfoSec](https://web.archive.org/web/20180918115528/https://techbeacon.com/evolution-devops-new-thinking-gene-kim "The evolution of DevOps: Gene Kim on getting to continuous delivery") のようなものを考えるべきです。実際、DevOps の価値はスピードだけではなく、品質、セキュリティ、信頼性、安定性、および耐性の向上にも関係しています。
 
 セキュリティはアプリの全体的な品質、パフォーマンス、使いやすさと同様にビジネスの成功にとっても重要です。開発サイクルが短縮され、デリバリー頻度が増加するにつれて、品質とセキュリティが最初から組み込まれていることが不可欠になります。**DevSecOps** は DevOps プロセスにセキュリティを追加することに関するすべてです。ほとんどの欠陥は本稼働中に特定されます。DevOps は多くの欠陥をライフサイクルの早い段階で特定し、リリースされたアプリの欠陥数を最小限に抑えるためのベストプラクティスを明示します。
 
