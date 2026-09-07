@@ -17,7 +17,7 @@ iOS アプリはさまざまな URL ロードメソッドを使用して [`WKWeb
 
 **リモート URL ローディング:**
 
-- [`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:))
+- [`load(_:)`](https://developer.apple.com/documentation/webkit/wkwebview/load(_:)-5siv6)
 
 **ローカル URL およびコンテンツのローディング:**
 
