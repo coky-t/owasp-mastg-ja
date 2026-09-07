@@ -146,7 +146,7 @@ secret は認証サーバーとバックエンドサービスとの間で共有�
 
 **ベストプラクティス:**
 
-実装が JWT [ベストプラクティス](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html) に準拠していることを検証します。
+実装が JWT [ベストプラクティス](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html) に準拠していることを検証します。
 
 - トークンを含むすべての着信リクエストについて HMAC がチェックされていることを検証します。
 - 秘密署名鍵 (private signing key) や HMAC 秘密鍵 (HMAC secret key) がクライアントと決して共有されていないことを検証します。発行者および検証者のみが利用できるようにすべきです。
@@ -162,7 +162,7 @@ secret は認証サーバーとバックエンドサービスとの間で共有�
 - [JSON Web Token Attacker](https://portswigger.net/bappstore/82d6c60490b540369d6d5d01822bdf61 "JSON Web Token Attacker")
 - [JSON Web Tokens](https://portswigger.net/bappstore/f923cbf91698420890354c1d8958fee6 "JSON Web Tokens")
 
-また、追加情報として [OWASP JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html "JSON Web Token (JWT) Cheat Sheet for Java") も確認してください。
+また、追加情報として [OWASP JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html "JSON Web Token (JWT) Cheat Sheet for Java") も確認してください。
 
 ## OAuth 2.0
 
