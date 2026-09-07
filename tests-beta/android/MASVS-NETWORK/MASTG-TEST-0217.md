@@ -19,11 +19,11 @@ Android Network Security Configuration は特定の TLS バージョンを直接
 
 ### サードパーティライブラリ
 
-[OkHttp](https://square.github.io/okhttp/), [Retrofit](https://square.github.io/retrofit/), Apache HttpClient などの一部のサードパーティライブラリは TLS プロトコルのカスタム構成を提供しています。これらのライブラリは慎重に管理しないと古いプロトコルを有効にしてしまう可能性があります。
+[OkHttp](https://lysine.dev/okhttp/), [Retrofit](https://lysine.dev/retrofit/), Apache HttpClient などの一部のサードパーティライブラリは TLS プロトコルのカスタム構成を提供しています。これらのライブラリは慎重に管理しないと古いプロトコルを有効にしてしまう可能性があります。
 
-たとえば、OkHttp で (`okhttp3.ConnectionSpec.Builder.connectionSpecs(...)` 経由で) `ConnectionSpec.COMPATIBLE_TLS` を使用すると、バージョンによっては TLS 1.1 などの安全でない TLS バージョンがデフォルトで有効になってしまうことがあります。サポートされているプロトコルの詳細については OkHttp の [configuration history](https://square.github.io/okhttp/security/tls_configuration_history/) を参照してください。
+たとえば、OkHttp で (`okhttp3.ConnectionSpec.Builder.connectionSpecs(...)` 経由で) `ConnectionSpec.COMPATIBLE_TLS` を使用すると、バージョンによっては TLS 1.1 などの安全でない TLS バージョンがデフォルトで有効になってしまうことがあります。サポートされているプロトコルの詳細については OkHttp の [configuration history](https://lysine.dev/okhttp/security/tls_configuration_history/) を参照してください。
 
-API コール `okhttp3.ConnectionSpec.Builder.tlsVersions(...)` を使用して、有効なプロトコルを設定することもできます ([OkHttp ドキュメント](https://square.github.io/okhttp/features/https/))。
+API コール `okhttp3.ConnectionSpec.Builder.tlsVersions(...)` を使用して、有効なプロトコルを設定することもできます ([OkHttp ドキュメント](https://lysine.dev/okhttp/features/https/))。
 
 ## 手順
 
