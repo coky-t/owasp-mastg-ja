@@ -18,7 +18,7 @@ deprecation_note: New version available in MASTG V2
 
 ## 静的解析
 
-Swift では、 [`SecRandomCopyBytes` API](https://developer.apple.com/reference/security/1399291-secrandomcopybytes "SecRandomCopyBytes (Swift)") は以下のように定義されています。
+Swift では、 [`SecRandomCopyBytes` API](https://developer.apple.com/documentation/security/secrandomcopybytes(_:_:_:) "SecRandomCopyBytes (Swift)") は以下のように定義されています。
 
 ```default
 func SecRandomCopyBytes(_ rnd: SecRandomRef?,
@@ -26,7 +26,7 @@ func SecRandomCopyBytes(_ rnd: SecRandomRef?,
                       _ bytes: UnsafeMutablePointer<UInt8>) -> Int32
 ```
 
-[Objective-C バージョン](https://developer.apple.com/reference/security/1399291-secrandomcopybytes?language=objc "SecRandomCopyBytes (Objective-C)") は以下の通りです。
+[Objective-C バージョン](https://developer.apple.com/documentation/security/secrandomcopybytes(_:_:_:)?language=objc "SecRandomCopyBytes (Objective-C)") は以下の通りです。
 
 ```objectivec
 int SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
