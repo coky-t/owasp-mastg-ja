@@ -47,4 +47,4 @@ Flutter フレームワークは、[Dart がバッファオーバーフローを
 
 ### コンパイラの最適化
 
-場合によっては、ライブラリのサイズやコンパイラによって適用される最適化によって、そのライブラリがもともとスタックカナリアを備えてコンパイルされていても、最適化によって削除されてしまう可能性があります。たとえば、一部の [react native アプリ](https://github.com/facebook/react-native/issues/36870#issuecomment-1714007068) がこれに該当します。これらは `-fstack-protector-strong` でビルドされていますが、バイナリファイル内の `stack_chk_fail` を探してみても見つかりません。このケースで React Native 開発者は `-fstack-protector-all` を追加しないと宣言しています。それは [そうすることでセキュリティ上の効果が得られず、パフォーマンスが低下する考えている](https://github.com/facebook/react-native/issues/36870#issuecomment-1714007068) ためです。
+場合によっては、ライブラリのサイズやコンパイラによって適用される最適化によって、そのライブラリがもともとスタックカナリアを備えてコンパイルされていても、最適化によって削除されてしまう可能性があります。たとえば、一部の [react native アプリ](https://github.com/react/react-native/issues/36870#issuecomment-1714007068) がこれに該当します。これらは `-fstack-protector-strong` でビルドされていますが、バイナリファイル内の `stack_chk_fail` を探してみても見つかりません。このケースで React Native 開発者は `-fstack-protector-all` を追加しないと宣言しています。それは [そうすることでセキュリティ上の効果が得られず、パフォーマンスが低下する考えている](https://github.com/react/react-native/issues/36870#issuecomment-1714007068) ためです。
