@@ -114,8 +114,8 @@
 <!--
 - [MASTG-TECH-0151](techniques/android/MASTG-TECH-0151.md) Network Security Configuration の解析 (Analyzing the Network Security Configuration)
 - [MASTG-TECH-0156](techniques/android/MASTG-TECH-0156.md) Flutter アプリケーションのリバースエンジニアリング (Reverse Engineering Flutter Applications)
-- [MASTG-TECH-0157](techniques/android/MASTG-TECH-0157.md) バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)
 -->
+- [MASTG-TECH-0157](techniques/android/MASTG-TECH-0157.md) バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)
 - [MASTG-TECH-0159](techniques/android/MASTG-TECH-0159.md) ファイルベースのコンテンツプロバイダの使用の検証 (Verify Usage of File-Based Content Providers)
 <!--
 - [MASTG-TECH-0160](techniques/android/MASTG-TECH-0160.md) アクティビティの列挙 (Enumerating Activities)

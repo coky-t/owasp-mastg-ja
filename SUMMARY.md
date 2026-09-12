@@ -567,6 +567,7 @@
     - [MASTG-TECH-0145 XAPK ファイルの扱い (Working with XAPK Files)](techniques/android/MASTG-TECH-0145.md)
     - [MASTG-TECH-0148 Android コンテンツプロバイダとのやり取り (Interacting with Android ContentProviders)](techniques/android/MASTG-TECH-0148.md)
     - [MASTG-TECH-0150 AndroidManifest の解析 (Analyzing the AndroidManifest)](techniques/android/MASTG-TECH-0150.md)
+    - [MASTG-TECH-0157 バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)](techniques/android/MASTG-TECH-0157.md)
     - [MASTG-TECH-0159 ファイルベースのコンテンツプロバイダの使用の検証 (Verify Usage of File-Based Content Providers)](techniques/android/MASTG-TECH-0159.md)
 
   - iOS
