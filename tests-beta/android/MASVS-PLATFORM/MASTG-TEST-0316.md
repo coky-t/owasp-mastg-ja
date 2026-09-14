@@ -3,7 +3,7 @@ platform: android
 title: テキスト入力フィールドにユーザー認証データを露出するアプリ (App Exposing User Authentication Data in Text Input Fields)
 id: MASTG-TEST-0316
 type: [static, code, manual]
-weakness: MASWE-0036
+maswe: [MASWE-0036, MASWE-0040]
 profiles: [L2]
 ---
 
