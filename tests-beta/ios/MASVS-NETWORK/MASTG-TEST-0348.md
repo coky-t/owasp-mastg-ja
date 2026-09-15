@@ -3,7 +3,7 @@ title: ネットワークトラフィックの安全でない TLS プロトコ�
 platform: ios
 id: MASTG-TEST-0348
 type: [dynamic, network]
-weakness: MASWE-0026
+maswe: [MASWE-0026]
 profiles: [L1, L2]
 ---
 
