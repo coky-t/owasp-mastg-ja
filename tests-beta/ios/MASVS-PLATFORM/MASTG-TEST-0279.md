@@ -3,7 +3,7 @@ platform: ios
 title: 期限切れにならないペーストボードコンテンツ (Pasteboard Contents Not Expiring)
 id: MASTG-TEST-0279
 type: [static, code]
-weakness: MASWE-0036
+maswe: [MASWE-0036]
 threat: [app]
 profiles: [L2]
 knowledge: [MASTG-KNOW-0083]
