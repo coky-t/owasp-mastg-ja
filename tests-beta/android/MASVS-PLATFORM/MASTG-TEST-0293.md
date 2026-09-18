@@ -3,7 +3,6 @@ title: SurfaceView でのスクリーンショットを防止するために使�
 platform: android
 id: MASTG-TEST-0293
 type: [static, code]
-profiles: [L2]
 best-practices: [MASTG-BEST-0014, MASTG-BEST-0017]
 maswe: [MASWE-0038]
 knowledge: [MASTG-KNOW-0053]
