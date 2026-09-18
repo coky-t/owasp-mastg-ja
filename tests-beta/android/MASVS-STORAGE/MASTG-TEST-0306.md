@@ -5,7 +5,6 @@ id: MASTG-TEST-0306
 type: [static, code]
 maswe: [MASWE-0001]
 best-practices: []
-profiles: [L1, L2]
 status: placeholder
 note: このテストは、アプリが Android Room Persistence Library を使用して、機密データ (トークン、PII など) を暗号化レイヤ (SQLCipher など) を統合せずに保存しているかどうかをチェックします。データベースファイルがアプリのプライベートサンドボックス内にプレーンテキストで保存されていることを確認します。
 ---
