@@ -4,7 +4,6 @@ title:  複数の目的で使用される非対称鍵ペアへの参照 (Referen
 id: MASTG-TEST-0307
 type: [static, code]
 maswe: [MASWE-0007]
-profiles: [L2]
 knowledge: [MASTG-KNOW-0012]
 ---
 
