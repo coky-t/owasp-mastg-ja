@@ -5,6 +5,5 @@ id: MASTG-TEST-0257
 maswe: [MASWE-0066]
 status: placeholder
 note: このテストではアプリが付与されたパーミッションへの不要なアクセスを削除していないかどうかをチェックします。 https://developer.android.com/training/permissions/requesting#remove-access を参照してください。
-profiles: [P]
 knowledge: [MASTG-KNOW-0017]
 ---
