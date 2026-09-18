@@ -4,7 +4,6 @@ title: 機密ユーザーデータを扱うことが知られている SDK API �
 id: MASTG-TEST-0318
 type: [static, code]
 maswe: [MASWE-0073]
-profiles: [P]
 ---
 
 ## 概要
