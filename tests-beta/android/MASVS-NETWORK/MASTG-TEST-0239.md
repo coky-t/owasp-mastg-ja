@@ -6,5 +6,4 @@ type: [static, code]
 maswe: [MASWE-0026]
 status: placeholder
 note: このテストは MASWE-0047 用でもありますが、複数の脆弱性をサポートする必要があります。
-profiles: [L1, L2]
 ---
