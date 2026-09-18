@@ -4,7 +4,6 @@ title: テキスト入力フィールドにユーザー認証データを露出�
 id: MASTG-TEST-0316
 type: [static, code, manual]
 maswe: [MASWE-0036, MASWE-0040]
-profiles: [L2]
 ---
 
 ## 概要
