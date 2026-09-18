@@ -4,7 +4,6 @@ title: 複数の目的で使用される非対称鍵ペアの実行時使用 (Ru
 id: MASTG-TEST-0308
 type: [dynamic, hooks]
 maswe: [MASWE-0007]
-profiles: [L2]
 knowledge: [MASTG-KNOW-0012]
 ---
 
