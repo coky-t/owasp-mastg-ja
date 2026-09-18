@@ -4,7 +4,6 @@ title: 機密データをクリーンアップしない WebView (WebViews Not Cl
 id: MASTG-TEST-0320
 type: [dynamic, hooks]
 maswe: [MASWE-0001]
-profiles: [L1, L2]
 best-practices: [MASTG-BEST-0028]
 knowledge: [MASTG-KNOW-0018]
 prerequisites:
