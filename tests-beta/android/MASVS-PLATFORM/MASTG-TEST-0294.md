@@ -3,7 +3,6 @@ title: Compose ダイアログのスクリーンショットを防止するた�
 platform: android
 id: MASTG-TEST-0294
 type: [static, code]
-profiles: [L2]
 best-practices: [MASTG-BEST-0014, MASTG-BEST-0018]
 maswe: [MASWE-0038]
 knowledge: [MASTG-KNOW-0053]
