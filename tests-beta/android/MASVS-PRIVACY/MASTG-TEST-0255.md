@@ -5,6 +5,5 @@ id: MASTG-TEST-0255
 maswe: [MASWE-0066]
 status: placeholder
 note: このテストではアプリがプライバシーを保護する代替手段を持つパーミッションを要求しているかどうかをチェックします。
-profiles: [P]
 knowledge: [MASTG-KNOW-0017]
 ---
