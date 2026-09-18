@@ -4,7 +4,6 @@ title: 外部ストレージに書き込まれたファイル (Files Written to 
 id: MASTG-TEST-0200
 type: [dynamic, filesystem, manual]
 maswe: [MASWE-0002]
-profiles: [L1, L2]
 ---
 
 ## 概要
