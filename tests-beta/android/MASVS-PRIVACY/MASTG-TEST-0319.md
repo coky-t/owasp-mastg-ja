@@ -6,7 +6,6 @@ type: [dynamic]
 maswe: [MASWE-0073]
 prerequisites:
   - identify-sensitive-data
-profiles: [P]
 ---
 
 ## 概要
