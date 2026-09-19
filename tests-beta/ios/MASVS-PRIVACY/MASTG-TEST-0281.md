@@ -4,7 +4,6 @@ title: 未宣言の既知のトラッキングドメイン (Undeclared Known Tra
 id: MASTG-TEST-0281
 type: [static, dynamic]
 maswe: [MASWE-0074]
-profiles: [P]
 ---
 
 ## 概要
