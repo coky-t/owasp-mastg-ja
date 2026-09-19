@@ -4,7 +4,6 @@ title: アプリの SBOM での既知の脆弱性を持つ依存関係 (Dependen
 id: MASTG-TEST-0275
 type: [static, developer]
 maswe: [MASWE-0044]
-profiles: [L1, L2]
 ---
 
 ## 概要
