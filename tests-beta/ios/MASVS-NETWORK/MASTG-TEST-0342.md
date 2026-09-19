@@ -4,7 +4,6 @@ title: Info.plist 内の脆弱な ATS TLS ポリシー例外への参照 (Refere
 id: MASTG-TEST-0342
 type: [static, code]
 maswe: [MASWE-0026]
-profiles: [L1, L2]
 best-practices: [MASTG-BEST-0042]
 knowledge: [MASTG-KNOW-0071]
 ---
