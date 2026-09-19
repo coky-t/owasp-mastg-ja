@@ -4,7 +4,6 @@ title: ハードコードされた HTTP URL (Hardcoded HTTP URLs)
 id: MASTG-TEST-0321
 type: [static, code]
 maswe: [MASWE-0026]
-profiles: [L1, L2]
 ---
 
 ## 概要
