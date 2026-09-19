@@ -4,7 +4,6 @@ title: 依存関係マネージャのアーティファクトをスキャンし�
 id: MASTG-TEST-0273
 type: [static, code]
 maswe: [MASWE-0044]
-profiles: [L1, L2]
 ---
 
 ## 概要
