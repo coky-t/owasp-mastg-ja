@@ -4,7 +4,6 @@ title: 安全でないランダム API の実行時使用 (Runtime Use of Insecu
 id: MASTG-TEST-0349
 type: [dynamic, hooks, manual]
 maswe: [MASWE-0012]
-profiles: [L1, L2]
 best-practices: [MASTG-BEST-0025]
 knowledge: [MASTG-KNOW-0070]
 ---
