@@ -4,7 +4,6 @@ title: クリアテキストトラフィックを許可する App Transport Secu
 id: MASTG-TEST-0322
 type: [static, code, manual]
 maswe: [MASWE-0026]
-profiles: [L1, L2]
 knowledge: [MASTG-KNOW-0071]
 ---
 
