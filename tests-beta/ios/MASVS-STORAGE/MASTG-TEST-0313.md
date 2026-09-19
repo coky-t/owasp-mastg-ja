@@ -4,7 +4,6 @@ title: テキストフィールドのキーボードキャッシュを防止す�
 id: MASTG-TEST-0313
 type: [static, code, manual]
 maswe: [MASWE-0036]
-profiles: [L2]
 best-practices: [MASTG-BEST-0026]
 knowledge: [MASTG-KNOW-0100]
 ---
