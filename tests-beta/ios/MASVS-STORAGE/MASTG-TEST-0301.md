@@ -3,7 +3,6 @@ platform: ios
 title: プライベートストレージに暗号化されていないデータを保存するための API の実行時使用 (Runtime Use of APIs for Storing Unencrypted Data in Private Storage)
 id: MASTG-TEST-0301
 type: [dynamic, hooks]
-profiles: [L2]
 maswe: [MASWE-0001]
 best-practices: [MASTG-BEST-0024]
 knowledge: [MASTG-KNOW-0091, MASTG-KNOW-0057, MASTG-KNOW-0108]
