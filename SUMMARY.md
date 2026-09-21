@@ -568,6 +568,7 @@
     - [MASTG-TECH-0150 AndroidManifest の解析 (Analyzing the AndroidManifest)](techniques/android/MASTG-TECH-0150.md)
     - [MASTG-TECH-0157 バンドルされているネイティブライブラリの抽出 (Extracting Bundled Native Libraries)](techniques/android/MASTG-TECH-0157.md)
     - [MASTG-TECH-0159 ファイルベースのコンテンツプロバイダの使用の検証 (Verify Usage of File-Based Content Providers)](techniques/android/MASTG-TECH-0159.md)
+    - [MASTG-TECH-0164 暗黙的インテントとブロードキャストの傍受 (Sniffing Implicit Intents and Broadcasts)](techniques/android/MASTG-TECH-0164.md)
 
   - iOS
     - [MASTG-TECH-0055 再パッケージ化したアプリをデバッグモードで起動する (Launching a Repackaged App in Debug Mode)](techniques/ios/MASTG-TECH-0055.md)
