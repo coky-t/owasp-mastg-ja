@@ -124,8 +124,8 @@
 - [MASTG-TECH-0163](techniques/android/MASTG-TECH-0163.md) コンテンツプロバイダの列挙 (Enumerating Content Providers)
 -->
 - [MASTG-TECH-0164](techniques/android/MASTG-TECH-0164.md) 暗黙的インテントとブロードキャストの傍受 (Sniffing Implicit Intents and Broadcasts)
-<!--
 - [MASTG-TECH-0165](techniques/android/MASTG-TECH-0165.md) Android アプリのコンパイラ、難読化、パッカーの識別 (Identifying Compilers, Obfuscators, and Packers in Android Apps)
+<!--
 - [MASTG-TECH-0172](techniques/android/MASTG-TECH-0172.md) ディープリンクのリスティング (Listing Deep Links)
 - [MASTG-TECH-0173](techniques/android/MASTG-TECH-0173.md) Frida での実行時にディープリンクハンドラの監視 (Monitoring Deep Link Handlers at Runtime with Frida)
 - [MASTG-TECH-0174](techniques/android/MASTG-TECH-0174.md) アプリリンクとウェブサイトの関連付けの検証 (Verifying App Link Website Association)
