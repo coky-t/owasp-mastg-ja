@@ -606,6 +606,7 @@
     - [MASTG-TECH-0139 WKWebView にアタッチする (Attach to WKWebView)](techniques/ios/MASTG-TECH-0139.md)
     - [MASTG-TECH-0146 非脱獄デバイスでの動的解析 (Dynamic Analysis on Non-Jailbroken Devices)](techniques/ios/MASTG-TECH-0146.md)
     - [MASTG-TECH-0152 脱獄検出のバイパス (Bypassing Jailbreak Detection)](techniques/ios/MASTG-TECH-0152.md)
+    - [MASTG-TECH-0153 Info.plist ファイルの取得 (Retrieving Info.plist Files)](techniques/ios/MASTG-TECH-0153.md)
 
 ### ツール
 
