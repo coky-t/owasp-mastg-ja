@@ -232,8 +232,8 @@
 -->
 - [MASTG-TECH-0152](techniques/ios/MASTG-TECH-0152.md) 脱獄検出のバイパス (Bypassing Jailbreak Detection)
 - [MASTG-TECH-0153](techniques/ios/MASTG-TECH-0153.md) Info.plist ファイルの取得 (Retrieving Info.plist Files)
-<!--
 - [MASTG-TECH-0154](techniques/ios/MASTG-TECH-0154.md) Info.plist ファイルの解析 (Analyzing Info.plist Files)
+<!--
 - [MASTG-TECH-0155](techniques/ios/MASTG-TECH-0155.md) ATS 構成の解析 (Analyzing the ATS Configuration)
 - [MASTG-TECH-0158](techniques/ios/MASTG-TECH-0158.md) ロードされているライブラリの抽出 (Extracting Loaded Libraries)
 - [MASTG-TECH-0166](techniques/ios/MASTG-TECH-0166.md) iOS アプリ内のカスタム URL スキーム登録の識別 (Identifying Custom URL Scheme Registrations in iOS Apps)
