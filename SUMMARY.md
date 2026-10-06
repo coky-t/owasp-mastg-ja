@@ -608,6 +608,7 @@
     - [MASTG-TECH-0152 脱獄検出のバイパス (Bypassing Jailbreak Detection)](techniques/ios/MASTG-TECH-0152.md)
     - [MASTG-TECH-0153 Info.plist ファイルの取得 (Retrieving Info.plist Files)](techniques/ios/MASTG-TECH-0153.md)
     - [MASTG-TECH-0154 Info.plist ファイルの解析 (Analyzing Info.plist Files)](techniques/ios/MASTG-TECH-0154.md)
+    - [MASTG-TECH-0155 ATS 構成の解析 (Analyzing the ATS Configuration)](techniques/ios/MASTG-TECH-0155.md)
 
 ### ツール
 
