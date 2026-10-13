@@ -610,6 +610,7 @@
     - [MASTG-TECH-0153 Info.plist ファイルの取得 (Retrieving Info.plist Files)](techniques/ios/MASTG-TECH-0153.md)
     - [MASTG-TECH-0154 Info.plist ファイルの解析 (Analyzing Info.plist Files)](techniques/ios/MASTG-TECH-0154.md)
     - [MASTG-TECH-0155 ATS 構成の解析 (Analyzing the ATS Configuration)](techniques/ios/MASTG-TECH-0155.md)
+    - [MASTG-TECH-0166 iOS アプリ内のカスタム URL スキーム登録の識別 (Identifying Custom URL Scheme Registrations in iOS Apps)](techniques/ios/MASTG-TECH-0166.md)
 
 ### ツール
 

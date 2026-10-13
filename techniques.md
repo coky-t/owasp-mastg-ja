@@ -236,7 +236,9 @@
 - [MASTG-TECH-0155](techniques/ios/MASTG-TECH-0155.md) ATS 構成の解析 (Analyzing the ATS Configuration)
 <!--
 - [MASTG-TECH-0158](techniques/ios/MASTG-TECH-0158.md) ロードされているライブラリの抽出 (Extracting Loaded Libraries)
+-->
 - [MASTG-TECH-0166](techniques/ios/MASTG-TECH-0166.md) iOS アプリ内のカスタム URL スキーム登録の識別 (Identifying Custom URL Scheme Registrations in iOS Apps)
+<!--
 - [MASTG-TECH-0167](techniques/ios/MASTG-TECH-0167.md) UIActivity データ共有の監視 (Monitoring UIActivity Data Sharing)
 - [MASTG-TECH-0168](techniques/ios/MASTG-TECH-0168.md) UIActivity データ受信の監視 (Monitoring UIActivity Data Receiving)
 - [MASTG-TECH-0169](techniques/ios/MASTG-TECH-0169.md) ディープリンクのオープン (Opening Deep Links)
