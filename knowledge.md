@@ -48,6 +48,7 @@
 - [MASTG-KNOW-0054](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0054.md) アプリ通知 (App Notifications)
 <!--
 - [MASTG-KNOW-0055](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0055.md) キーボードキャッシュ (Keyboard Cache)
+- [MASTG-KNOW-0142](knowledge/android/MASVS-STORAGE/MASTG-KNOW-0142.md) Android データストア (Android DataStore)
 -->
 
 ### MASVS-CRYPTO: 暗号
@@ -197,7 +198,9 @@
 - [MASTG-KNOW-0121](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0121.md) iOS のテキスト入力フィールドのマスク (Text Input Field Masking in iOS)
 <!--
 - [MASTG-KNOW-0122](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0122.md) ドキュメントピッカー、ドキュメントインタラクション、オープンインプレース (Document Picker, Document Interaction, and Open in Place)
+-->
 - [MASTG-KNOW-0123](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0123.md) ハンドオフ (Handoff)
+<!--
 - [MASTG-KNOW-0124](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0124.md) SiriKit と Siri ショートカット (SiriKit and Siri Shortcuts)
 - [MASTG-KNOW-0125](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0125.md) アプリグループ (App Groups)
 - [MASTG-KNOW-0126](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0126.md) キーチェーンアクセスグループ (Keychain Access Groups)
