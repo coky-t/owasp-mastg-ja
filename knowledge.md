@@ -202,7 +202,9 @@
 - [MASTG-KNOW-0123](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0123.md) ハンドオフ (Handoff)
 <!--
 - [MASTG-KNOW-0124](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0124.md) SiriKit と Siri ショートカット (SiriKit and Siri Shortcuts)
+-->
 - [MASTG-KNOW-0125](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0125.md) アプリグループ (App Groups)
+<!--
 - [MASTG-KNOW-0126](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0126.md) キーチェーンアクセスグループ (Keychain Access Groups)
 - [MASTG-KNOW-0127](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0127.md) ファイル調整 API (File Coordination APIs)
 - [MASTG-KNOW-0128](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0128.md) Bonjour (Bonjour)

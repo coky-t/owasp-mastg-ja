@@ -215,6 +215,7 @@
       - [MASTG-KNOW-0081 UIActivity 共有 (UIActivity Sharing)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0081.md)
       - [MASTG-KNOW-0121 iOS のテキスト入力フィールドのマスク (Text Input Field Masking in iOS)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0121.md)
       - [MASTG-KNOW-0123 ハンドオフ (Handoff)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0123.md)
+      - [MASTG-KNOW-0125 アプリグループ (App Groups)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0125.md)
       - [MASTG-KNOW-0131 Core NFC (Core NFC)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0131.md)
       - [MASTG-KNOW-0141 カスタムキーボード (Custom Keyboards)](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0141.md)
 
