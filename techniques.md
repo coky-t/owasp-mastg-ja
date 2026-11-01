@@ -129,7 +129,9 @@
 - [MASTG-TECH-0172](techniques/android/MASTG-TECH-0172.md) ディープリンクのリスティング (Listing Deep Links)
 - [MASTG-TECH-0173](techniques/android/MASTG-TECH-0173.md) Frida での実行時にディープリンクハンドラの監視 (Monitoring Deep Link Handlers at Runtime with Frida)
 - [MASTG-TECH-0174](techniques/android/MASTG-TECH-0174.md) アプリリンクとウェブサイトの関連付けの検証 (Verifying App Link Website Association)
+- [MASTG-TECH-0177](techniques/android/MASTG-TECH-0177.md) UI 階層の評価 (Inspecting the UI Hierarchy)
 -->
+- [MASTG-TECH-0178](techniques/android/MASTG-TECH-0178.md) スクリーンショットの撮影 (Taking Screenshots)
 
 ## iOS
 
