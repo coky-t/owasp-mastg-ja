@@ -24,6 +24,7 @@
 - [MASTG-TOOL-0134](tools/generic/MASTG-TOOL-0134.md) cdxgen
 - [MASTG-TOOL-0144](tools/generic/MASTG-TOOL-0144.md) gitleaks
 - [MASTG-TOOL-0145](tools/generic/MASTG-TOOL-0145.md) Frooky
+- [MASTG-TOOL-0154](tools/generic/MASTG-TOOL-0154.md) Maestro
 
 ## Android
 
@@ -75,6 +76,9 @@
 - [MASTG-TOOL-0151](tools/android/MASTG-TOOL-0151.md) debugmepLS
 - [MASTG-TOOL-0152](tools/android/MASTG-TOOL-0152.md) lldb (Android)
 - [MASTG-TOOL-0153](tools/android/MASTG-TOOL-0153.md) dProtect
+<!--
+- [MASTG-TOOL-0155](tools/android/MASTG-TOOL-0155.md) Android CLI
+-->
 
 ## iOS
 

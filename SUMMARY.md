@@ -640,6 +640,7 @@
     - [MASTG-TOOL-0134 cdxgen](tools/generic/MASTG-TOOL-0134.md)
     - [MASTG-TOOL-0144 gitleaks](tools/generic/MASTG-TOOL-0144.md)
     - [MASTG-TOOL-0145 Frooky](tools/generic/MASTG-TOOL-0145.md)
+    - [MASTG-TOOL-0154 Maestro](tools/generic/MASTG-TOOL-0154.md)
 
   - Android
     - [MASTG-TOOL-0001 Frida (Android)](tools/android/MASTG-TOOL-0001.md)
