@@ -691,6 +691,7 @@
     - [MASTG-TOOL-0151 debugmepLS](tools/android/MASTG-TOOL-0151.md)
     - [MASTG-TOOL-0152 lldb (Android)](tools/android/MASTG-TOOL-0152.md)
     - [MASTG-TOOL-0153 dProtect](tools/android/MASTG-TOOL-0153.md)
+    - [MASTG-TOOL-0155 Android CLI](tools/android/MASTG-TOOL-0155.md)
 
   - iOS
     - [MASTG-TOOL-0039 Frida (iOS)](tools/ios/MASTG-TOOL-0039.md)
