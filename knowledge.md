@@ -95,6 +95,7 @@
 - [MASTG-KNOW-0132](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0132.md) Android アクティビティ (Android Activities)
 - [MASTG-KNOW-0133](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0133.md) Android サービス (Android Services)
 - [MASTG-KNOW-0134](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0134.md) Android ブロードキャストレシーバ (Android Broadcast Receivers)
+- [MASTG-KNOW-0143](knowledge/android/MASVS-PLATFORM/MASTG-KNOW-0143.md) アクセシビリティデータのセンシティビティ (Accessibility Data Sensitivity)
 -->
 
 ### MASVS-CODE: コード品質
@@ -204,8 +205,8 @@
 - [MASTG-KNOW-0124](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0124.md) SiriKit と Siri ショートカット (SiriKit and Siri Shortcuts)
 -->
 - [MASTG-KNOW-0125](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0125.md) アプリグループ (App Groups)
-<!--
 - [MASTG-KNOW-0126](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0126.md) キーチェーンアクセスグループ (Keychain Access Groups)
+<!--
 - [MASTG-KNOW-0127](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0127.md) ファイル調整 API (File Coordination APIs)
 - [MASTG-KNOW-0128](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0128.md) Bonjour (Bonjour)
 - [MASTG-KNOW-0129](knowledge/ios/MASVS-PLATFORM/MASTG-KNOW-0129.md) アプリインテンツと AI エージェントの開示 (App Intents and AI Agent Exposure)
